@@ -84,7 +84,7 @@ class PhotoTest extends TestCase
      */
     public function testPlainTextGetMutator()
     {
-        $this->assertEquals('A photo', $this->Photos->findById(1)->first()->plain_description);
+        $this->assertEquals('A photo', $this->Photos->find()->extract('plain_description')->first());
         $this->assertEmpty((new Photo)->plain_description);
     }
 

@@ -63,12 +63,9 @@ class AppControllerTest extends IntegrationTestCase
      */
     public function testInitialize()
     {
-        $componentsInstance = $this->Controller->components();
-
-        $components = collection($componentsInstance->loaded())
-            ->map(function ($value) use ($componentsInstance) {
-                return get_class($componentsInstance->{$value});
-            })->toList();
+        $componentsClasses = array_map(function ($name) {
+            return get_class($this->Controller->components()->get($name));
+        }, $this->Controller->components()->loaded());
 
         $this->assertEquals([
             'Cake\Controller\Component\CookieComponent',
@@ -77,7 +74,7 @@ class AppControllerTest extends IntegrationTestCase
             'Cake\Controller\Component\RequestHandlerComponent',
             ME_TOOLS . '\Controller\Component\UploaderComponent',
             'Recaptcha\Controller\Component\RecaptchaComponent',
-        ], $components);
+        ], $componentsClasses);
 
         $this->assertFalse($this->Controller->Cookie->config('encryption'));
     }

@@ -96,8 +96,8 @@ class AuthHelperTest extends TestCase
         $this->Auth->initialize(['group' => ['name' => 'admin']]);
 
         $this->assertTrue($this->Auth->isGroup('admin'));
-        $this->assertFalse($this->Auth->isGroup('manager'));
         $this->assertTrue($this->Auth->isGroup(['admin', 'manager']));
+        $this->assertFalse($this->Auth->isGroup('manager'));
         $this->assertFalse($this->Auth->isGroup(['manager', 'otherGroup']));
     }
 

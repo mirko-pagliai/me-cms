@@ -95,9 +95,7 @@ class PagesTableTest extends PostsAndPagesTablesTestCase
             'text' => 'My text',
         ]);
         $this->assertFalse($this->Table->save($entity));
-        $this->assertEquals([
-            'category_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
-        ], $entity->getErrors());
+        $this->assertEquals(['category_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
     }
 
     /**

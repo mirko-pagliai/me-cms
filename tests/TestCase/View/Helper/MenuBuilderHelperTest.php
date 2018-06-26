@@ -68,7 +68,6 @@ class MenuBuilderHelperTest extends TestCase
             return $this->invokeMethod($this->MenuBuilder, 'getMenuMethods', [$plugin]);
         };
 
-        $result = $getMenuMethodsMethod(ME_CMS);
         $expected = [
             'posts',
             'pages',
@@ -78,20 +77,18 @@ class MenuBuilderHelperTest extends TestCase
             'backups',
             'systems',
         ];
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $getMenuMethodsMethod(ME_CMS));
 
         //Checks that methods exist
         foreach (['_invalidMethod', '__otherInvalidMethod', 'articles', 'other_items'] as $method) {
             $this->assertTrue(method_exists('\TestPlugin\View\Helper\MenuHelper', $method));
         }
 
-        $result = $getMenuMethodsMethod('TestPlugin');
         $expected = ['articles', 'other_items'];
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $getMenuMethodsMethod('TestPlugin'));
 
         //This plugin has no menu methods
-        $result = $getMenuMethodsMethod('TestPluginTwo');
-        $this->assertEmpty($result);
+        $this->assertEmpty($getMenuMethodsMethod('TestPluginTwo'));
     }
 
     /**

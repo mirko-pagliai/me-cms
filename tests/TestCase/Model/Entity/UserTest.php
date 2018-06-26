@@ -47,17 +47,8 @@ class UserTest extends TestCase
     {
         parent::tearDown();
 
-        foreach ((new Folder(USER_PICTURES))->find() as $file) {
-            if ($file === 'empty') {
-                continue;
-            }
-
-            unlink(USER_PICTURES . DS . $file);
-        }
-
-        if (file_exists(WWW_ROOT . 'img' . DS . 'no-avatar.jpg')) {
-            unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
-        }
+        safe_unlink_recursive(USER_PICTURES, 'empty');
+        safe_unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
     }
 
     /**

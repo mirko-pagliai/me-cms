@@ -84,9 +84,7 @@ class PagesCategoriesTableTest extends TestCase
             'slug' => 'my-slug-2',
         ]);
         $this->assertFalse($this->PagesCategories->save($entity));
-        $this->assertEquals([
-            'parent_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
-        ], $entity->getErrors());
+        $this->assertEquals(['parent_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
     }
 
     /**

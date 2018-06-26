@@ -71,9 +71,8 @@ class PhotoValidatorTest extends ValidationTestCase
     public function testValidationForAlbumId()
     {
         $this->example['album_id'] = 'string';
-        $this->assertEquals([
-            'album_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION],
-        ], $this->Photos->newEntity($this->example)->getErrors());
+        $errors = $this->Photos->newEntity($this->example)->getErrors();
+        $this->assertEquals(['album_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION]], $errors);
     }
 
     /**
@@ -84,9 +83,8 @@ class PhotoValidatorTest extends ValidationTestCase
     {
         foreach (['pic', 'text.txt'] as $value) {
             $this->example['filename'] = $value;
-            $this->assertEquals([
-                'filename' => ['extension' => 'Valid extensions: gif, jpg, jpeg, png'],
-            ], $this->Photos->newEntity($this->example)->getErrors());
+            $errors = $this->Photos->newEntity($this->example)->getErrors();
+            $this->assertEquals(['filename' => ['extension' => 'Valid extensions: gif, jpg, jpeg, png']], $errors);
         }
     }
 }

@@ -85,7 +85,7 @@ class PostTest extends TestCase
      */
     public function testPlainTextGetMutator()
     {
-        $this->assertEquals('Text of the first post', $this->Posts->findById(1)->first()->plain_text);
+        $this->assertEquals('Text of the first post', $this->Posts->find()->extract('plain_text')->first());
         $this->assertEmpty((new Post)->plain_text);
     }
 
@@ -95,13 +95,13 @@ class PostTest extends TestCase
      */
     public function testTagsAsStringGetMutator()
     {
-        $post = $this->Posts->findById(1)->contain('Tags')->first();
-        $this->assertEquals('cat, dog, bird', $post->tags_as_string);
-
-        $post = $this->Posts->findById(3)->contain('Tags')->first();
-        $this->assertEquals('cat', $post->tags_as_string);
-
-        $post = $this->Posts->findById(4)->contain('Tags')->first();
-        $this->assertNull($post->tags_as_string);
+        foreach ([
+            1 => 'cat, dog, bird',
+            3 => 'cat',
+            4 => null,
+        ] as $postId => $expectedTags) {
+            $result = $this->Posts->findById($postId)->contain('Tags')->extract('tags_as_string')->first();
+            $this->assertEquals($expectedTags, $result);
+        }
     }
 }

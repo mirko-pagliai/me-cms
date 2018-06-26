@@ -62,30 +62,29 @@ class UserShellTest extends ConsoleIntegrationTestCase
     public function testAdd()
     {
         $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
-        $id = 1 + $this->Users->find()->order(['id' => 'DESC'])->extract('id')->first();
+        $id = $this->Users->find()->extract('id')->last();
 
         $this->exec('me_cms.user add', array_merge($example, ['3']));
         $this->assertExitWithSuccess();
         $this->assertOutputContains('<question>Group ID</question>');
         $this->assertOutputContains('<success>The operation has been performed correctly</success>');
-        $this->assertOutputContains('<success>The user was created with ID ' . $id . '</success>');
+        $this->assertOutputContains('<success>The user was created with ID ' . ++$id . '</success>');
 
         //Checks the user has been created
-        $user = $this->Users->find()->where(compact('id'))->first();
+        $user = $this->Users->findById($id)->first();
         $this->assertNotEmpty($user);
         $this->assertEquals(3, $user->group_id);
 
         $this->Users->delete($this->Users->get($id));
-        $id++;
 
         //Tries using the `group` param
         $this->exec('me_cms.user add --group 2', $example);
         $this->assertExitWithSuccess();
         $this->assertOutputContains('<success>The operation has been performed correctly</success>');
-        $this->assertOutputContains('<success>The user was created with ID ' . $id . '</success>');
+        $this->assertOutputContains('<success>The user was created with ID ' . ++$id . '</success>');
 
         //Checks the user has been created
-        $user = $this->Users->find()->where(compact('id'))->first();
+        $user = $this->Users->findById($id)->first();
         $this->assertNotEmpty($user);
         $this->assertEquals(2, $user->group_id);
 
@@ -118,7 +117,7 @@ class UserShellTest extends ConsoleIntegrationTestCase
         $this->assertErrorContains('<error>Field `password_repeat`: passwords don\'t match</error>');
 
         //Tries with no groups
-        $this->assertNotEquals(0, $this->Users->Groups->deleteAll(['id >=' => '1']));
+        $this->Users->Groups->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.user add -v');
         $this->assertExitWithError();
         $this->assertErrorContains('<error>Before you can manage users, you have to create at least a user group</error>');
@@ -145,7 +144,7 @@ class UserShellTest extends ConsoleIntegrationTestCase
         ], $this->_out->messages());
 
         //Deletes all groups
-        $this->assertNotEquals(0, $this->Users->Groups->deleteAll(['id >=' => '1']));
+        $this->Users->Groups->deleteAll(['id >=' => '1']);
 
         $this->exec('me_cms.user groups');
         $this->assertExitWithError();
@@ -173,7 +172,7 @@ class UserShellTest extends ConsoleIntegrationTestCase
         ], $this->_out->messages());
 
         //Deletes all users
-        $this->assertNotEquals(0, $this->Users->deleteAll(['id >=' => '1']));
+        $this->Users->deleteAll(['id >=' => '1']);
 
         $this->exec('me_cms.user users');
         $this->assertExitWithError();
@@ -195,6 +194,6 @@ class UserShellTest extends ConsoleIntegrationTestCase
             'users',
         ], $parser->subcommands());
         $this->assertEquals('Shell to handle users and user groups', $parser->getDescription());
-        $this->assertEquals(['help', 'quiet', 'verbose'], array_keys($parser->options()));
+        $this->assertArrayKeysEqual(['help', 'quiet', 'verbose'], $parser->options());
     }
 }

@@ -197,10 +197,8 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         $this->assertExitWithError();
         $this->assertErrorContains('<error>Some user groups already exist</error>');
 
-        $groups = TableRegistry::get(ME_CMS . '.UsersGroups');
-
         //Deletes all groups
-        $this->assertNotEquals(0, $groups->deleteAll(['id >=' => '1']));
+        TableRegistry::get(ME_CMS . '.UsersGroups')->deleteAll(['id >=' => '1']);
 
         $this->exec('me_cms.install create_groups -v');
         $this->assertExitWithSuccess();

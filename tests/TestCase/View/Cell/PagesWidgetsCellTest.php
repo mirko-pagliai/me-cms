@@ -131,10 +131,7 @@ class PagesWidgetsCellTest extends TestCase
         //Tests cache
         $fromCache = Cache::read('widget_categories', $this->Pages->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertArrayKeysEqual([
-            'first-page-category',
-            'sub-sub-page-category',
-        ], $fromCache->toArray());
+        $this->assertArrayKeysEqual(['first-page-category', 'sub-sub-page-category'], $fromCache->toArray());
     }
 
     /**

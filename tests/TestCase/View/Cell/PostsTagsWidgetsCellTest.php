@@ -90,17 +90,14 @@ class PostsTagsWidgetsCellTest extends TestCase
      */
     public function testGetFontSizes()
     {
-        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [[]]);
-        $this->assertEquals([40, 12], $result);
+        $getFontSizesMethod = function (array $options = []) {
+            return $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [$options]);
+        };
 
-        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [['maxFont' => 20]]);
-        $this->assertEquals([20, 12], $result);
-
-        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [['minFont' => 20]]);
-        $this->assertEquals([40, 20], $result);
-
-        $result = $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [['maxFont' => 30, 'minFont' => 20]]);
-        $this->assertEquals([30, 20], $result);
+        $this->assertEquals([40, 12], $getFontSizesMethod());
+        $this->assertEquals([20, 12], $getFontSizesMethod(['maxFont' => 20]));
+        $this->assertEquals([40, 20], $getFontSizesMethod(['minFont' => 20]));
+        $this->assertEquals([30, 20], $getFontSizesMethod(['maxFont' => 30, 'minFont' => 20]));
     }
 
     /**

@@ -60,10 +60,13 @@ class WidgetHelperTest extends TestCase
      */
     public function testGetAll()
     {
-        $widgets = collection($this->invokeMethod($this->Widget, 'getAll'))
-            ->map(function ($widget) {
-                return collection(array_keys($widget))->first();
-            })->toList();
+        $getAllMethod = function () {
+            return $this->invokeMethod($this->Widget, 'getAll');
+        };
+
+        $widgets = array_map(function ($widget) {
+            return array_values(array_keys($widget))[0];
+        }, $getAllMethod());
 
         $this->assertEquals([
             ME_CMS . '.Pages::categories',
@@ -88,7 +91,6 @@ class WidgetHelperTest extends TestCase
             ['Fifth'],
         ]);
 
-        $widgets = $this->invokeMethod($this->Widget, 'getAll');
         $this->assertEquals([
             ['First' => []],
             ['Second' => []],
@@ -96,20 +98,18 @@ class WidgetHelperTest extends TestCase
             ['Third' => ['anotherKey' => 'anotherValue']],
             ['Fourth' => ['fourth' => 'fourthValue']],
             ['Fifth' => []]
-        ], $widgets);
+        ], $getAllMethod());
 
         //Test empty values from widgets
         foreach ([[], null, false] as $value) {
             Configure::write('Widgets.general', $value);
-            $result = $this->invokeMethod($this->Widget, 'getAll');
-            $this->assertEquals([], $result);
+            $this->assertEquals([], $getAllMethod());
         }
 
         //Sets some widgets for the homepage
         Configure::write('Widgets.homepage', ['ExampleForHomepage']);
 
-        $widgets = $this->invokeMethod($this->Widget, 'getAll');
-        $this->assertEquals([['ExampleForHomepage' => []]], $widgets);
+        $this->assertEquals([['ExampleForHomepage' => []]], $getAllMethod());
 
         //Resets
         Configure::write('Widgets.homepage', []);
@@ -124,14 +124,12 @@ class WidgetHelperTest extends TestCase
         //Sets some widgets
         Configure::write('Widgets.general', ['Example', 'TestPlugin.PluginExample']);
 
-        $result = $this->Widget->all();
-        $this->assertEquals('An example widget' . PHP_EOL . 'An example widget from a plugin', $result);
+        $this->assertEquals('An example widget' . PHP_EOL . 'An example widget from a plugin', $this->Widget->all());
 
         //Test empty values from widgets
         foreach ([[], null, false] as $value) {
             Configure::write('Widgets.general', $value);
-            $result = $this->Widget->all();
-            $this->assertEquals(null, $result);
+            $this->assertEquals(null, $this->Widget->all());
         }
     }
 

@@ -91,9 +91,9 @@ class AppViewTest extends TestCase
     public function testInitialize()
     {
         //Gets loaded helpers, as class names
-        $helpers = collection($this->View->helpers()->loaded())->map(function ($helper) {
+        $helpers = array_map(function ($helper) {
             return get_class($this->View->helpers()->get($helper));
-        })->toArray();
+        }, $this->View->helpers()->loaded());
 
         $this->assertEquals([
             ME_TOOLS . '\View\Helper\HtmlHelper',
@@ -117,8 +117,7 @@ class AppViewTest extends TestCase
      */
     public function testRenderLayout()
     {
-        $result = $this->View->render(false);
-        $this->assertNotEmpty($result);
+        $this->assertNotEmpty($this->View->render(false));
         $this->assertEquals('default', $this->View->getLayout());
         $this->assertEquals(null, $this->View->getTheme());
     }
@@ -137,8 +136,7 @@ class AppViewTest extends TestCase
         //Reloads the View
         $this->View = new View(new Request);
 
-        $result = $this->View->render(false);
-        $this->assertEquals('This is a layout from TestPlugin', $result);
+        $this->assertEquals('This is a layout from TestPlugin', $this->View->render(false));
         $this->assertEquals('default', $this->View->getLayout());
         $this->assertEquals($theme, $this->View->getTheme());
     }
@@ -149,18 +147,16 @@ class AppViewTest extends TestCase
      */
     public function testRenderLayoutFromApp()
     {
-        //Creates a layout
+        //Creates a new layout
         $layoutFromApp = array_values(App::path('Template/Plugin/' . ME_CMS . '/Layout'))[0] . 'default.ctp';
         file_put_contents($layoutFromApp, 'This is a layout from app');
 
-        $result = $this->View->render(false);
-
-        safe_unlink($layoutFromApp);
-
-        $this->assertEquals('This is a layout from app', $result);
+        $this->assertEquals('This is a layout from app', $this->View->render(false));
         $this->assertEquals('default', $this->View->getLayout());
         $this->assertEquals(ME_CMS, $this->View->plugin);
         $this->assertEquals(null, $this->View->getTheme());
+
+        safe_unlink($layoutFromApp);
     }
 
     /**

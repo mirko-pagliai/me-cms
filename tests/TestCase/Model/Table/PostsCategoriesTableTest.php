@@ -84,9 +84,7 @@ class PostsCategoriesTableTest extends TestCase
             'slug' => 'my-slug-2',
         ]);
         $this->assertFalse($this->PostsCategories->save($entity));
-        $this->assertEquals([
-            'parent_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
-        ], $entity->getErrors());
+        $this->assertEquals(['parent_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
     }
 
     /**
@@ -140,7 +138,7 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testHasManyChilds()
     {
-        $category = $this->PostsCategories->findById(1)->contain('Childs')->first();
+        $category = $this->PostsCategories->find()->contain('Childs')->first();
 
         $this->assertNotEmpty($category->childs);
 

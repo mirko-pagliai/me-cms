@@ -125,9 +125,9 @@ class ViewTest extends TestCase
     public function testInitialize()
     {
         //Gets loaded helpers, as class names
-        $helpers = collection($this->View->helpers()->loaded())->map(function ($helper) {
+        $helpers = array_map(function ($helper) {
             return get_class($this->View->helpers()->get($helper));
-        })->toArray();
+        }, $this->View->helpers()->loaded());
 
         $this->assertEquals([
             ME_TOOLS . '\View\Helper\HtmlHelper',

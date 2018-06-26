@@ -82,13 +82,11 @@ class SitemapBuilderTest extends IntegrationTestCase
      */
     public function testGetMethods()
     {
+        $extractNamesFromMethods = function ($methods) {
+            return collection($methods)->extract('name')->toArray();
+        };
+
         $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', [ME_CMS]);
-
-        foreach ($methods as $method) {
-            $this->assertEquals('MeCms\Utility\Sitemap', $method['class']);
-        }
-
-        $names = collection($methods)->extract('name')->toArray();
         $this->assertEquals([
             'pages',
             'photos',
@@ -96,18 +94,12 @@ class SitemapBuilderTest extends IntegrationTestCase
             'postsTags',
             'staticPages',
             'systems',
-        ], $names);
+        ], $extractNamesFromMethods($methods));
 
         Plugin::load('TestPlugin');
 
         $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['TestPlugin']);
-
-        foreach ($methods as $method) {
-            $this->assertEquals('TestPlugin\Utility\Sitemap', $method['class']);
-        }
-
-        $names = collection($methods)->extract('name')->toArray();
-        $this->assertEquals(['urlMethod1', 'urlMethod2'], $names);
+        $this->assertEquals(['urlMethod1', 'urlMethod2'], $extractNamesFromMethods($methods));
 
         //This plugin does not have the `Sitemap` class
         Plugin::load('TestPluginTwo');

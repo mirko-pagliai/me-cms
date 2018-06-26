@@ -131,10 +131,7 @@ class PhotosWidgetsCellTest extends TestCase
         //Tests cache
         $fromCache = Cache::read('widget_albums', $this->Photos->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertArrayKeysEqual([
-            'another-album-test',
-            'test-album',
-        ], $fromCache->toArray());
+        $this->assertArrayKeysEqual(['another-album-test', 'test-album'], $fromCache->toArray());
     }
 
     /**

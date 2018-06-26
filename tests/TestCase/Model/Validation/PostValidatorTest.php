@@ -78,9 +78,8 @@ class PostValidatorTest extends ValidationTestCase
     public function testValidationForCategoryId()
     {
         $this->example['category_id'] = 'string';
-        $this->assertEquals([
-            'category_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION],
-        ], $this->Posts->newEntity($this->example)->getErrors());
+        $errors = $this->Posts->newEntity($this->example)->getErrors();
+        $this->assertEquals(['category_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION]], $errors);
     }
 
     /**
@@ -91,16 +90,14 @@ class PostValidatorTest extends ValidationTestCase
     {
         foreach (['ab', str_repeat('a', 31)] as $value) {
             $this->example['tags_as_string'] = $value;
-            $this->assertEquals([
-                'tags' => ['validTagsLength' => 'Each tag must be between 3 and 30 chars'],
-            ], $this->Posts->newEntity($this->example)->getErrors());
+            $errors = $this->Posts->newEntity($this->example)->getErrors();
+            $this->assertEquals(['tags' => ['validTagsLength' => 'Each tag must be between 3 and 30 chars']], $errors);
         }
 
         foreach (['Abc', 'ab$', 'ab-c', 'ab_c'] as $value) {
             $this->example['tags_as_string'] = $value;
-            $this->assertEquals([
-                'tags' => ['validTagsChars' => 'Allowed chars: lowercase letters, numbers, space'],
-            ], $this->Posts->newEntity($this->example)->getErrors());
+            $errors = $this->Posts->newEntity($this->example)->getErrors();
+            $this->assertEquals(['tags' => ['validTagsChars' => 'Allowed chars: lowercase letters, numbers, space']], $errors);
         }
 
         foreach (['abc', str_repeat('a', 30)] as $value) {
