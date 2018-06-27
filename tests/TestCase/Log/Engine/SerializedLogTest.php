@@ -118,7 +118,6 @@ class SerializedLogTest extends TestCase
     /**
      * Test for `log()` method
      * @test
-     * @todo add `assertFilePerms()`
      */
     public function testLog()
     {
@@ -151,8 +150,8 @@ class SerializedLogTest extends TestCase
         }
 
         //Checks for fileperms
-        $this->assertContains(substr(sprintf('%o', fileperms(LOGS . 'error.log')), -4), ['0644', '0664']);
-        $this->assertContains(substr(sprintf('%o', fileperms(LOGS . 'error_serialized.log')), -4), ['0644', '0664']);
+        $this->assertFilePerms(LOGS . 'error.log', ['0644', '0664']);
+        $this->assertFilePerms(LOGS . 'error_serialized.log', ['0644', '0664']);
 
         //Deletes all logs, drops and reconfigure, adding `mask`
         safe_unlink_recursive(LOGS);
@@ -170,7 +169,7 @@ class SerializedLogTest extends TestCase
         $this->assertNotEmpty($logs);
 
         //Checks for fileperms
-        $this->assertEquals('0777', substr(sprintf('%o', fileperms(LOGS . 'error.log')), -4));
-        $this->assertEquals('0777', substr(sprintf('%o', fileperms(LOGS . 'error_serialized.log')), -4));
+        $this->assertFilePerms(LOGS . 'error.log', '0777');
+        $this->assertFilePerms(LOGS . 'error_serialized.log', '0777');
     }
 }
