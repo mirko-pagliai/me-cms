@@ -69,28 +69,14 @@ class SerializedLogTest extends TestCase
 #13 {main}';
 
         $result = $getLogAsObjectMethod('error', 'example of message');
-        $this->assertObjectPropertiesEqual([
-            'level',
-            'datetime',
-            'message',
-            'full',
-        ], $result);
+        $this->assertTrue($result->has(['level', 'datetime', 'message', 'full']));
         $this->assertEquals('error', $result->level);
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $result->datetime);
         $this->assertEquals('example of message', $result->message);
 
         $message = file_get_contents(TEST_APP . 'examples' . DS . 'stacktraces' . DS . 'example1');
         $result = $getLogAsObjectMethod('error', $message);
-        $this->assertObjectPropertiesEqual([
-            'level',
-            'datetime',
-            'exception',
-            'message',
-            'request',
-            'ip',
-            'trace',
-            'full',
-        ], $result);
+        $this->assertTrue($result->has(['level', 'datetime', 'exception', 'message', 'request', 'ip', 'trace', 'full']));
         $this->assertEquals('error', $result->level);
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $result->datetime);
         $this->assertEquals('Cake\Routing\Exception\MissingControllerException', $result->exception);
@@ -101,7 +87,7 @@ class SerializedLogTest extends TestCase
 
         $message = file_get_contents(TEST_APP . 'examples' . DS . 'stacktraces' . DS . 'example2');
         $result = $getLogAsObjectMethod('error', $message);
-        $this->assertObjectPropertiesEqual([
+        $this->assertTrue($result->has([
             'level',
             'datetime',
             'exception',
@@ -112,7 +98,7 @@ class SerializedLogTest extends TestCase
             'ip',
             'trace',
             'full',
-        ], $result);
+        ]));
         $this->assertEquals('error', $result->level);
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $result->datetime);
         $this->assertEquals('Cake\Routing\Exception\MissingControllerException', $result->exception);
@@ -155,21 +141,17 @@ class SerializedLogTest extends TestCase
         $logs = safe_unserialize(file_get_contents(LOGS . 'error_serialized.log'));
         $this->assertNotEmpty($logs);
 
-        $this->assertInstanceOf('stdClass', $logs[0]);
-        $this->assertEquals('critical', $logs[0]->level);
-        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $logs[0]->datetime);
-        $this->assertEquals('This is a critical message', $logs[0]->message);
-        $this->assertRegExp('/^[\d-:\s]{19} Critical: This is a critical message$/', $logs[0]->full);
-
-        $this->assertInstanceOf('stdClass', $logs[1]);
-        $this->assertEquals('error', $logs[1]->level);
-        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $logs[1]->datetime);
-        $this->assertEquals('This is an error message', $logs[1]->message);
-        $this->assertRegExp('/^[\d-:\s]{19} Error: This is an error message$/', $logs[1]->full);
+        foreach ($logs as $log) {
+            $this->assertInstanceOf('Cake\ORM\Entity', $log);
+            $this->assertContains($log->level, ['critical', 'error']);
+            $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}$/', $log->datetime);
+            $this->assertRegExp('/^This is (a critical|an error) message$/', $log->message);
+            $this->assertRegExp('/^[\d-:\s]{19} (Critical|Error)/', $log->full);
+        }
 
         //Checks for fileperms
-        $this->assertContains(substr(sprintf('%o', fileperms(LOGS . 'error.log')), -4), ['0644', '0664']);
-        $this->assertContains(substr(sprintf('%o', fileperms(LOGS . 'error_serialized.log')), -4), ['0644', '0664']);
+        $this->assertFilePerms(LOGS . 'error.log', ['0644', '0664']);
+        $this->assertFilePerms(LOGS . 'error_serialized.log', ['0644', '0664']);
 
         //Deletes all logs, drops and reconfigure, adding `mask`
         safe_unlink_recursive(LOGS);
@@ -187,7 +169,7 @@ class SerializedLogTest extends TestCase
         $this->assertNotEmpty($logs);
 
         //Checks for fileperms
-        $this->assertEquals('0777', substr(sprintf('%o', fileperms(LOGS . 'error.log')), -4));
-        $this->assertEquals('0777', substr(sprintf('%o', fileperms(LOGS . 'error_serialized.log')), -4));
+        $this->assertFilePerms(LOGS . 'error.log', '0777');
+        $this->assertFilePerms(LOGS . 'error_serialized.log', '0777');
     }
 }

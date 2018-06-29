@@ -129,9 +129,7 @@ class PhotosTableTest extends TestCase
 
         $entity = $this->Photos->newEntity(['album_id' => 999, 'filename' => 'pic2.jpg']);
         $this->assertFalse($this->Photos->save($entity));
-        $this->assertEquals([
-            'album_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
-        ], $entity->getErrors());
+        $this->assertEquals(['album_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
     }
 
     /**

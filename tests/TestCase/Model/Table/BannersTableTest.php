@@ -92,9 +92,7 @@ class BannersTableTest extends TestCase
 
         $entity = $this->Banners->newEntity(['position_id' => 999, 'filename' => 'pic2.jpg']);
         $this->assertFalse($this->Banners->save($entity));
-        $this->assertEquals([
-            'position_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
-        ], $entity->getErrors());
+        $this->assertEquals(['position_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
     }
 
     /**

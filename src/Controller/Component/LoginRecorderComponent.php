@@ -14,6 +14,7 @@ namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\I18n\Time;
+use Cake\ORM\Entity;
 use InvalidArgumentException;
 use SerializedArray\SerializedArray;
 
@@ -45,11 +46,7 @@ class LoginRecorderComponent extends Component
     {
         $ip = $this->getController()->request->clientIp();
 
-        if ($ip === '::1') {
-            return '127.0.0.1';
-        }
-
-        return $ip;
+        return $ip === '::1' ? '127.0.0.1' : $ip;
     }
 
     /**
@@ -119,7 +116,7 @@ class LoginRecorderComponent extends Component
         }
 
         //Adds the current request
-        array_unshift($data, (object)compact('agent', 'ip', 'time', 'platform', 'browser', 'version'));
+        array_unshift($data, new Entity(compact('agent', 'ip', 'time', 'platform', 'browser', 'version')));
 
         //Keeps only a specified number of records
         $data = array_slice($data, 0, getConfig('users.login_log'));

@@ -167,7 +167,7 @@ class PostsControllerTest extends IntegrationTestCase
         }
 
         //GET request with query string
-        $this->get(array_merge($url, ['?' => ['q' => $date]]));
+        $this->get($url + ['?' => ['q' => $date]]);
         $this->assertRedirect($url);
     }
 
@@ -214,7 +214,7 @@ class PostsControllerTest extends IntegrationTestCase
         $this->assertEmpty($this->viewVariable('posts'));
         $this->assertEmpty($this->viewVariable('pattern'));
 
-        $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
+        $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
 
@@ -236,18 +236,18 @@ class PostsControllerTest extends IntegrationTestCase
         $this->assertNotEmpty($pagingFromCache['Posts']);
 
         //GET request again. Now the data is in cache
-        $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
+        $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
 
-        $this->get(array_merge($url, ['?' => ['p' => 'a']]));
+        $this->get($url + ['?' => ['p' => 'a']]);
         $this->assertRedirect($url);
         $this->assertFlashMessage('You have to search at least a word of 4 characters');
 
         $this->session(['last_search' => ['id' => md5(time()), 'time' => time()]]);
 
-        $this->get(array_merge($url, ['?' => ['p' => $pattern]]));
+        $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertRedirect($url);
         $this->assertFlashMessage('You have to wait 10 seconds to perform a new search');
     }
@@ -258,10 +258,7 @@ class PostsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = $this->Posts->find('active')
-            ->where(['preview IS' => null])
-            ->extract('slug')
-            ->first();
+        $slug = $this->Posts->find('active')->where(['preview IS' => null])->extract('slug')->first();
 
         $this->get(['_name' => 'post', $slug]);
         $this->assertResponseOkAndNotEmpty();
@@ -287,10 +284,7 @@ class PostsControllerTest extends IntegrationTestCase
     {
         $this->setUserGroup('user');
 
-        $slug = $this->Posts->find('pending')
-            ->where(['preview IS' => null])
-            ->extract('slug')
-            ->first();
+        $slug = $this->Posts->find('pending')->where(['preview IS' => null])->extract('slug')->first();
 
         $this->get(['_name' => 'postsPreview', $slug]);
         $this->assertResponseOkAndNotEmpty();

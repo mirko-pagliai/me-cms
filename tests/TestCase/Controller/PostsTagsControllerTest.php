@@ -125,7 +125,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
 
         //GET request with query string
-        $this->get(array_merge($url, ['?' => ['q' => $slug]]));
+        $this->get($url + ['?' => ['q' => $slug]]);
         $this->assertRedirect($url);
 
         //GET request with a no existing tag

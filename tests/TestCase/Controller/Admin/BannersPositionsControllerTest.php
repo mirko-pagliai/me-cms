@@ -85,7 +85,7 @@ class BannersPositionsControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/BannersPositions/index.ctp');
 
@@ -100,7 +100,7 @@ class BannersPositionsControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $url = array_merge($this->url, ['action' => 'add']);
+        $url = $this->url + ['action' => 'add'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -131,7 +131,7 @@ class BannersPositionsControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $url = array_merge($this->url, ['action' => 'edit', 1]);
+        $url = $this->url + ['action' => 'edit', 1];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -165,14 +165,14 @@ class BannersPositionsControllerTest extends IntegrationTestCase
         $id = $this->BannersPositions->find()->where(['banner_count <' => 1])->extract('id')->first();
 
         //POST request. This position has no banner
-        $this->post(array_merge($this->url, ['action' => 'delete', $id]));
+        $this->post($this->url + ['action' => 'delete', $id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
 
         $id = $this->BannersPositions->find()->where(['banner_count >=' => 1])->extract('id')->first();
 
         //POST request. This position has some banners, so it cannot be deleted
-        $this->post(array_merge($this->url, ['action' => 'delete', $id]));
+        $this->post($this->url + ['action' => 'delete', $id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
     }

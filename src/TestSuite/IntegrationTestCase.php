@@ -33,6 +33,35 @@ class IntegrationTestCase extends BaseIntegrationTestCase
     protected $Controller;
 
     /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        //Deletes all logs
+        safe_unlink_recursive(LOGS);
+    }
+
+    /**
+     * Adds additional event spies to the controller/view event manager
+     * @param \Cake\Event\Event $event A dispatcher event
+     * @param \Cake\Controller\Controller|null $controller Controller instance
+     * @return void
+     */
+    public function controllerSpy($event, $controller = null)
+    {
+        parent::controllerSpy($event, $controller);
+
+        $this->_controller->viewBuilder()->setLayout('with_flash');
+
+        //Sets key for cookies
+        $this->_controller->loadComponent('Cookie');
+        $this->_controller->Cookie->setConfig('key', 'somerandomhaskeysomerandomhaskey');
+    }
+
+    /**
      * Asserts that groups are authorized
      * @param array $values Group name as key and boolean as value
      * @return void
@@ -67,24 +96,6 @@ class IntegrationTestCase extends BaseIntegrationTestCase
         foreach ($values as $id => $isAllowed) {
             $this->setUserId($id);
             $this->assertEquals($isAllowed, $this->Controller->isAuthorized());
-        }
-    }
-
-    /**
-     * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
-     * @param \Cake\Controller\Controller|null $controller Controller instance
-     * @return void
-     */
-    public function controllerSpy($event, $controller = null)
-    {
-        parent::controllerSpy($event, $controller);
-
-        $this->_controller->viewBuilder()->setLayout('with_flash');
-
-        //Sets key for cookies
-        if (!empty($this->_controller->Cookie)) {
-            $this->_controller->Cookie->setConfig('key', 'somerandomhaskeysomerandomhaskey');
         }
     }
 

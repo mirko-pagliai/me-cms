@@ -123,17 +123,19 @@ class LogsControllerTest extends IntegrationTestCase
     {
         $this->writeSomeLogs();
 
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Logs/index.ctp');
 
         $logsFromView = $this->viewVariable('logs');
-        $this->assertIsArray($logsFromView);
-        $this->assertEquals([
-            'filename' => 'error.log',
-            'hasSerialized' => true,
-            'size' => filesize(LOGS . 'error.log'),
-        ], (array)$logsFromView[0]);
+        $this->assertCount(1, $logsFromView);
+
+        foreach ($logsFromView as $log) {
+            $this->assertInstanceOf('Cake\ORM\Entity', $log);
+            $this->assertEquals($log->filename, 'error.log');
+            $this->assertTrue($log->hasSerialized);
+            $this->assertEquals($log->size, filesize(LOGS . 'error.log'));
+        }
     }
 
     /**
@@ -144,7 +146,7 @@ class LogsControllerTest extends IntegrationTestCase
     {
         $this->writeSomeLogs();
 
-        $this->get(array_merge($this->url, ['action' => 'view', 'error.log']));
+        $this->get($this->url + ['action' => 'view', 'error.log']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Logs/view.ctp');
 
@@ -164,18 +166,15 @@ class LogsControllerTest extends IntegrationTestCase
     {
         $this->writeSomeLogs();
 
-        $this->get(array_merge($this->url, ['action' => 'view', 'error.log', '?' => ['as' => 'serialized']]));
+        $this->get($this->url + ['action' => 'view', 'error.log', '?' => ['as' => 'serialized']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Logs/view_as_serialized.ctp');
 
-        $contentFromView = $this->viewVariable('content');
-        $messages = collection($contentFromView)->map(function ($log) {
-            return $log->message;
-        })->toArray();
+        $messagesFromView = collection($this->viewVariable('content'))->extract('message')->toArray();
         $this->assertEquals([
             'This is a critical message',
             'This is an error message',
-        ], $messages);
+        ], $messagesFromView);
 
         $filenameFromView = $this->viewVariable('filename');
         $this->assertEquals('error.log', $filenameFromView);
@@ -189,7 +188,7 @@ class LogsControllerTest extends IntegrationTestCase
     {
         $this->writeSomeLogs();
 
-        $this->get(array_merge($this->url, ['action' => 'download', 'error.log']));
+        $this->get($this->url + ['action' => 'download', 'error.log']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertFileResponse(LOGS . 'error.log');
     }
@@ -203,12 +202,12 @@ class LogsControllerTest extends IntegrationTestCase
         $this->writeSomeLogs();
 
         //POST request
-        $this->post(array_merge($this->url, ['action' => 'delete', 'error.log']));
+        $this->post($this->url + ['action' => 'delete', 'error.log']);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('The operation has been performed correctly');
 
         //POST request. The log file doesn't exist
-        $this->post(array_merge($this->url, ['action' => 'delete', 'noExisting.log']));
+        $this->post($this->url + ['action' => 'delete', 'noExisting.log']);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('The operation has not been performed correctly');
     }

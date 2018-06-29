@@ -117,7 +117,7 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Photos']);
 
         //GET request with query string
-        $this->get(array_merge($url, ['?' => ['q' => $slug]]));
+        $this->get($url + ['?' => ['q' => $slug]]);
         $this->assertRedirect($url);
     }
 }

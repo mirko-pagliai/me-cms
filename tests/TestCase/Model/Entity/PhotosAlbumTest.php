@@ -94,10 +94,9 @@ class PhotosAlbumTest extends TestCase
      */
     public function testPreviewGetMutator()
     {
-        $album = $this->PhotosAlbums->findById(1)->contain('Photos')->first();
+        $album = $this->PhotosAlbums->find()->contain('Photos')->first();
         $this->assertEquals(PHOTOS . $album->id . DS . 'photo1.jpg', $album->preview);
 
-        $album = $this->PhotosAlbums->findById(1)->first();
-        $this->assertNull($album->preview);
+        $this->assertNull($this->PhotosAlbums->find()->extract('preview')->first());
     }
 }

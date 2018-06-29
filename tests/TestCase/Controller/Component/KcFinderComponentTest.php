@@ -15,6 +15,8 @@ namespace MeCms\Test\TestCase\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 use MeCms\Controller\Component\KcFinderComponent;
+use MeCms\Utility\Checkups\KCFinder;
+use MeCms\Utility\Checkups\Webroot;
 use MeTools\TestSuite\TestCase;
 
 /**
@@ -22,11 +24,6 @@ use MeTools\TestSuite\TestCase;
  */
 class KcFinderComponentTest extends TestCase
 {
-    /**
-     * @var \Cake\Controller\ComponentRegistry
-     */
-    protected $ComponentRegistry;
-
     /**
      * @var \MeCms\Controller\Component\KcFinderComponent
      */
@@ -42,8 +39,7 @@ class KcFinderComponentTest extends TestCase
     {
         parent::setUp();
 
-        $this->ComponentRegistry = new ComponentRegistry(new Controller);
-        $this->KCFinder = new KcFinderComponent($this->ComponentRegistry);
+        $this->KCFinder = new KcFinderComponent(new ComponentRegistry(new Controller));
     }
 
     /**
@@ -52,8 +48,13 @@ class KcFinderComponentTest extends TestCase
      */
     public function testGetDefaultConfig()
     {
-        $defaultConfig = $this->invokeMethod($this->KCFinder, 'getDefaultConfig');
-        $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
+        $getDefaultConfigMethod = function () {
+            $defaultConfig = $this->invokeMethod($this->KCFinder, 'getDefaultConfig');
+            $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
+
+            return $defaultConfig;
+        };
+
         $this->assertEquals([
             'denyExtensionRename' => true,
             'denyUpdateCheck' => true,
@@ -86,13 +87,11 @@ class KcFinderComponentTest extends TestCase
                     'rename' => false,
                 ],
             ],
-        ], $defaultConfig);
+        ], $getDefaultConfigMethod());
 
         //Tries with admin user
         $this->KCFinder->Auth->setUser(['group' => ['name' => 'admin']]);
 
-        $defaultConfig = $this->invokeMethod($this->KCFinder, 'getDefaultConfig');
-        $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
         $this->assertEquals([
             'denyExtensionRename' => true,
             'denyUpdateCheck' => true,
@@ -111,7 +110,7 @@ class KcFinderComponentTest extends TestCase
             'types' => [
                 'images' => '*img',
             ],
-        ], $defaultConfig);
+        ], $getDefaultConfigMethod());
     }
 
     /**
@@ -157,7 +156,7 @@ class KcFinderComponentTest extends TestCase
      */
     public function testInitializeDirNotWritable()
     {
-        $this->KCFinder->Checkup->Webroot = $this->getMockBuilder(get_class($this->KCFinder->Checkup->Webroot))
+        $this->KCFinder->Checkup->Webroot = $this->getMockBuilder(Webroot::class)
             ->getMock();
 
         $this->KCFinder->initialize([]);
@@ -171,7 +170,7 @@ class KcFinderComponentTest extends TestCase
      */
     public function testInitializeKCFinderNotAvailable()
     {
-        $this->KCFinder->Checkup->KCFinder = $this->getMockBuilder(get_class($this->KCFinder->Checkup->KCFinder))
+        $this->KCFinder->Checkup->KCFinder = $this->getMockBuilder(KCFinder::class)
             ->getMock();
 
         $this->KCFinder->initialize([]);

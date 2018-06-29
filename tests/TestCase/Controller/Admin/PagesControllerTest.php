@@ -74,15 +74,15 @@ class PagesControllerTest extends IntegrationTestCase
     public function testBeforeFilter()
     {
         foreach (['add', 'edit'] as $action) {
-            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->get($this->url + compact('action') + [1]);
             $this->assertNotEmpty($this->viewVariable('categories'));
         }
 
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertNotEmpty($this->viewVariable('categories'));
 
         //`indexStatics` still works
-        $this->get(array_merge($this->url, ['action' => 'indexStatics']));
+        $this->get($this->url + ['action' => 'indexStatics']);
         $this->assertEmpty($this->viewVariable('categories'));
     }
 
@@ -96,13 +96,13 @@ class PagesControllerTest extends IntegrationTestCase
         $this->Pages->Categories->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
-            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->get($this->url + compact('action') + [1]);
             $this->assertRedirect(['controller' => 'PagesCategories', 'action' => 'index']);
             $this->assertFlashMessage('You must first create a category');
         }
 
         //`indexStatics` still works
-        $this->get(array_merge($this->url, ['action' => 'indexStatics']));
+        $this->get($this->url + ['action' => 'indexStatics']);
         $this->assertEmpty($this->viewVariable('categories'));
     }
 
@@ -162,7 +162,7 @@ class PagesControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Pages/index.ctp');
 
@@ -177,7 +177,7 @@ class PagesControllerTest extends IntegrationTestCase
      */
     public function testIndexStatics()
     {
-        $this->get(array_merge($this->url, ['action' => 'indexStatics']));
+        $this->get($this->url + ['action' => 'indexStatics']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Pages/index_statics.ctp');
 
@@ -192,7 +192,7 @@ class PagesControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $url = array_merge($this->url, ['action' => 'add']);
+        $url = $this->url + ['action' => 'add'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -228,7 +228,7 @@ class PagesControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $url = array_merge($this->url, ['action' => 'edit', 1]);
+        $url = $this->url + ['action' => 'edit', 1];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -262,7 +262,7 @@ class PagesControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $this->post(array_merge($this->url, ['action' => 'delete', 1]));
+        $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('The operation has been performed correctly');
     }

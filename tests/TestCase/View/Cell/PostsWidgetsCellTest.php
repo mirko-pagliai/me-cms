@@ -131,10 +131,7 @@ class PostsWidgetsCellTest extends TestCase
         //Tests cache
         $fromCache = Cache::read('widget_categories', $this->Posts->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertArrayKeysEqual([
-            'first-post-category',
-            'sub-sub-post-category',
-        ], $fromCache->toArray());
+        $this->assertArrayKeysEqual(['first-post-category', 'sub-sub-post-category'], $fromCache->toArray());
     }
 
     /**
@@ -317,10 +314,7 @@ class PostsWidgetsCellTest extends TestCase
         //Tests cache
         $fromCache = Cache::read('widget_months', $this->Posts->cache);
         $this->assertEquals(2, $fromCache->count());
-        $this->assertArrayKeysEqual([
-            '2016/12',
-            '2016/11',
-        ], $fromCache->toArray());
+        $this->assertArrayKeysEqual(['2016/12', '2016/11'], $fromCache->toArray());
 
         foreach ($fromCache as $key => $entity) {
             $this->assertInstanceOf('Cake\I18n\FrozenDate', $entity->month);

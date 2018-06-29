@@ -73,7 +73,7 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
     public function testBeforeFilter()
     {
         foreach (['add', 'edit'] as $action) {
-            $this->get(array_merge($this->url, compact('action'), [1]));
+            $this->get($this->url + compact('action') + [1]);
             $this->assertNotEmpty($this->viewVariable('categories'));
         }
     }
@@ -107,7 +107,7 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/PagesCategories/index.ctp');
 
@@ -122,7 +122,7 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $url = array_merge($this->url, ['action' => 'add']);
+        $url = $this->url + ['action' => 'add'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -153,7 +153,7 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $url = array_merge($this->url, ['action' => 'edit', 1]);
+        $url = $this->url + ['action' => 'edit', 1];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -187,14 +187,14 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         $id = $this->PagesCategories->find()->where(['page_count <' => 1])->extract('id')->first();
 
         //POST request. This category has no pages
-        $this->post(array_merge($this->url, ['action' => 'delete', $id]));
+        $this->post($this->url + ['action' => 'delete', $id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
 
         $id = $this->PagesCategories->find()->where(['page_count >=' => 1])->extract('id')->first();
 
         //POST request. This category has some pages, so it cannot be deleted
-        $this->post(array_merge($this->url, ['action' => 'delete', $id]));
+        $this->post($this->url + ['action' => 'delete', $id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
     }

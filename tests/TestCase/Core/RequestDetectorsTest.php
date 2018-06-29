@@ -162,14 +162,12 @@ class RequestDetectorsTest extends TestCase
         $this->assertTrue($this->Request->isOffline());
         $this->assertTrue($this->Request->is('offline'));
 
-        $this->Request = new Request;
-        $this->Request = $this->Request->withParam('prefix', ADMIN_PREFIX);
+        $this->Request = (new Request)->withParam('prefix', ADMIN_PREFIX);
 
         $this->assertFalse($this->Request->isOffline());
         $this->assertFalse($this->Request->is('offline'));
 
-        $this->Request = new Request;
-        $this->Request = $this->Request->withParam('action', 'offline');
+        $this->Request = (new Request)->withParam('action', 'offline');
 
         $this->assertFalse($this->Request->isOffline());
         $this->assertFalse($this->Request->is('offline'));

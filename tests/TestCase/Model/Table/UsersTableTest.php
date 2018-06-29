@@ -124,10 +124,9 @@ class UsersTableTest extends TestCase
         $this->example['group_id'] = 999;
 
         $entity = $this->Users->newEntity($this->example);
+        $expected = $expected + ['group_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]];
         $this->assertFalse($this->Users->save($entity));
-        $this->assertEquals(array_merge([
-            'group_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
-        ], $expected), $entity->getErrors());
+        $this->assertEquals($expected, $entity->getErrors());
     }
 
     /**

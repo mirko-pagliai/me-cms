@@ -55,9 +55,9 @@ class AdminViewTest extends TestCase
     public function testInitialize()
     {
         //Gets loaded helpers, as class names
-        $helpers = collection($this->View->helpers()->loaded())->map(function ($helper) {
+        $helpers = array_map(function ($helper) {
             return get_class($this->View->helpers()->get($helper));
-        })->toArray();
+        }, $this->View->helpers()->loaded());
 
         $this->assertEquals([
             ME_TOOLS . '\View\Helper\HtmlHelper',
@@ -81,13 +81,12 @@ class AdminViewTest extends TestCase
     {
         $this->View->render(false);
 
-        $priorities = $this->View->get('priorities');
         $this->assertEquals([
             1 => '1 - Very low',
             2 => '2 - Low',
             3 => '3 - Normal',
             4 => '4 - High',
             5 => '5 - Very high',
-        ], $priorities);
+        ], $this->View->get('priorities'));
     }
 }

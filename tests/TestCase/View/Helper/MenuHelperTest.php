@@ -42,10 +42,8 @@ class MenuHelperTest extends TestCase
     {
         parent::setUp();
 
-        $view = new View;
-
-        $this->Menu = new MenuHelper($view);
-        $this->Html = new HtmlHelper($view);
+        $this->Menu = new MenuHelper(new View);
+        $this->Html = new HtmlHelper(new View);
     }
 
     /**
@@ -55,9 +53,9 @@ class MenuHelperTest extends TestCase
      */
     protected function buildLinks($links)
     {
-        return collection($links)->map(function ($link) {
+        return array_map(function ($link) {
             return $this->Html->link($link[0], $link[1]);
-        })->toArray();
+        }, $links);
     }
 
     /**

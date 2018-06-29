@@ -85,7 +85,7 @@ class PhotosAlbumsTableTest extends TestCase
 
         $this->assertNotEmpty($this->PhotosAlbums->save($entity));
         $this->assertFileExists($entity->path);
-        $this->assertEquals('0777', substr(sprintf('%o', fileperms($entity->path)), -4));
+        $this->assertFilePerms($entity->path, '0777');
 
         safe_rmdir($entity->path);
     }

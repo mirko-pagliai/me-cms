@@ -61,7 +61,6 @@ class BannersControllerTest extends IntegrationTestCase
         $this->assertRedirect($banner->target);
 
         //Checks the `click_count` has been incremented
-        $newClickCount = $this->Banners->findById(1)->first()->click_count;
-        $this->assertEquals($newClickCount, $banner->click_count + 1);
+        $this->assertEquals(++$banner->click_count, $this->Banners->findById(1)->extract('click_count')->first());
     }
 }

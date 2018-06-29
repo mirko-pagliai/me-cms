@@ -15,6 +15,7 @@ namespace MeCms\Controller\Admin;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
+use Cake\ORM\Entity;
 use MeCms\Controller\AppController;
 
 /**
@@ -85,12 +86,12 @@ class LogsController extends AppController
         //Gets all log files, except those serialized
         $logs = collection((new Folder(LOGS))->find('(?!.*_serialized).+\.log'))
             ->map(function ($log) {
-                return (object)[
+                return new Entity([
                     'filename' => $log,
                     'hasSerialized' => is_readable($this->getPath($log, true)),
                     'size' => filesize(LOGS . $log),
-                ];
-            })->toList();
+                ]);
+            });
 
         $this->set(compact('logs'));
     }

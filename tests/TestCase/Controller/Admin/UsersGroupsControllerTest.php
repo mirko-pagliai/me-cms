@@ -85,7 +85,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->get(array_merge($this->url, ['action' => 'index']));
+        $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/UsersGroups/index.ctp');
 
@@ -100,7 +100,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $url = array_merge($this->url, ['action' => 'add']);
+        $url = $this->url + ['action' => 'add'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -131,7 +131,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $url = array_merge($this->url, ['action' => 'edit', 2]);
+        $url = $this->url + ['action' => 'edit', 2];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -163,7 +163,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $url = array_merge($this->url, ['action' => 'delete']);
+        $url = $this->url + ['action' => 'delete'];
 
         $id = $this->UsersGroups->find()
             ->where(['id <=' => 3, 'user_count' => 0])
@@ -171,7 +171,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
             ->first();
 
         //Cannot delete a default group
-        $this->post(array_merge($url, [$id]));
+        $this->post($url + [$id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('You cannot delete this users group');
 
@@ -180,7 +180,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
             ->extract('id')
             ->first();
 
-        $this->post(array_merge($url, [$id]));
+        $this->post($url + [$id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
 
@@ -189,7 +189,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
             ->extract('id')
             ->first();
 
-        $this->post(array_merge($url, [$id]));
+        $this->post($url + [$id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('The operation has been performed correctly');
     }
