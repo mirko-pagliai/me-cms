@@ -206,11 +206,42 @@ class InstallShellTest extends ConsoleIntegrationTestCase
     }
 
     /**
+     * Tests for `createVendorsLinks()` method
+     * @test
+     */
+    public function testCreateVendorsLinks()
+    {
+        $links = $this->getProperty($this->InstallShell, 'links');
+
+        //Removes links that are already created by MeTools
+        foreach ([
+            'bootstrap-datetimepicker',
+            'fancybox',
+            'font-awesome',
+            'kcfinder',
+            'moment',
+        ] as $name) {
+            unset($links[array_search($name, $links)]);
+        }
+
+        $this->exec('me_cms.install create_vendors_links -v');
+        $this->assertExitWithSuccess();
+
+        foreach ($links as $link) {
+            $this->assertOutputContains('Link `' . rtr(WWW_ROOT) . 'vendor' . DS . $link . '` has been created');
+        }
+    }
+
+    /**
      * Test for `fixKcfinder()` method
      * @test
      */
     public function testFixKcfinder()
     {
+        //This makes it believe that KCFinder is installed
+        safe_mkdir(KCFINDER, 0777, true);
+        file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
+
         safe_unlink(KCFINDER . '.htaccess');
 
         $this->exec('me_cms.install fix_kcfinder -v');

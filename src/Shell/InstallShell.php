@@ -63,7 +63,7 @@ class InstallShell extends BaseInstallShell
 
         //Merges assets for which create symbolic links
         $this->links = array_merge($this->links, [
-            'js-cookie' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
+            'npm-asset' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
             'sunhater' . DS . 'kcfinder' => 'kcfinder',
             'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
         ]);
