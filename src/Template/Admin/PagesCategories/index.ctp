@@ -46,14 +46,14 @@ $this->append('actions', $this->Html->button(
                     </strong>
                     <?php
                     $actions = [
-                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $category->id], ['icon' => 'pencil']),
+                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $category->id], ['icon' => 'pencil-alt']),
                     ];
 
                     //Only admins can delete pages categories
                     if ($this->Auth->isGroup('admin')) {
                         $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $category->id], [
                             'class' => 'text-danger',
-                            'icon' => 'trash-o',
+                            'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
                         ]);
                     }
@@ -62,7 +62,7 @@ $this->append('actions', $this->Html->button(
                         $actions[] = $this->Html->link(
                             I18N_OPEN,
                             ['_name' => 'pagesCategory', $category->slug],
-                            ['icon' => 'external-link', 'target' => '_blank']
+                            ['icon' => 'external-link-alt', 'target' => '_blank']
                         );
                     }
 

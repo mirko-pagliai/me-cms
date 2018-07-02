@@ -15,7 +15,7 @@ $this->assign('title', $user->full_name);
 $this->append('actions', $this->Html->button(
     I18N_EDIT,
     ['action' => 'edit', $user->id],
-    ['class' => 'btn-success', 'icon' => 'pencil']
+    ['class' => 'btn-success', 'icon' => 'pencil-alt']
 ));
 
 //Only admins can activate accounts and delete users
@@ -36,7 +36,7 @@ if ($this->Auth->isGroup('admin')) {
     $this->append('actions', $this->Form->postButton(
         I18N_DELETE,
         ['action' => 'delete', $user->id],
-        ['class' => 'btn-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
+        ['class' => 'btn-danger', 'icon' => 'trash-alt', 'confirm' => I18N_SURE_TO_DELETE]
     ));
 }
 ?>

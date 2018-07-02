@@ -40,7 +40,11 @@ article header .info {
 }
 
 /* Header, info (author, date, etc), icons */
-article header .info .fa {
+article header .info .fa,
+article header .info .fab,
+article header .info .fal,
+article header .info .far,
+article header .info .fas {
     min-width: .95rem;
 }
 

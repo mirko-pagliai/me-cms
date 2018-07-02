@@ -32,12 +32,12 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
             echo $this->Form->control('id', [
                 'default' => $this->request->getQuery('id'),
                 'placeholder' => I18N_ID,
-                'size' => 2,
+                'size' => 1,
             ]);
             echo $this->Form->control('title', [
                 'default' => $this->request->getQuery('title'),
                 'placeholder' => I18N_TITLE,
-                'size' => 16,
+                'size' => 13,
             ]);
             echo $this->Form->control('active', [
                 'default' => $this->request->getQuery('active'),
@@ -60,12 +60,12 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 'data-date-format' => 'YYYY-MM',
                 'default' => $this->request->getQuery('created'),
                 'placeholder' => __d('me_cms', 'month'),
-                'size' => 5,
+                'size' => 3,
             ]);
             echo $this->Form->control('tag', [
                 'default' => $this->request->getQuery('tag'),
                 'placeholder' => __d('me_cms', 'tag'),
-                'size' => 10,
+                'size' => 8,
             ]);
             echo $this->Form->submit(null, ['icon' => 'search']);
         ?>
@@ -126,14 +126,14 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 
                     //Only admins and managers can edit all posts. Users can edit only their own posts
                     if ($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($post->user->id)) {
-                        $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $post->id], ['icon' => 'pencil']);
+                        $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $post->id], ['icon' => 'pencil-alt']);
                     }
 
                     //Only admins and managers can delete posts
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
                         $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $post->id], [
                             'class' => 'text-danger',
-                            'icon' => 'trash-o',
+                            'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
                         ]);
                     }
@@ -143,13 +143,13 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                         $actions[] = $this->Html->link(
                             I18N_OPEN,
                             ['_name' => 'post', $post->slug],
-                            ['icon' => 'external-link', 'target' => '_blank']
+                            ['icon' => 'external-link-alt', 'target' => '_blank']
                         );
                     } else {
                         $actions[] = $this->Html->link(
                             I18N_PREVIEW,
                             ['_name' => 'postsPreview', $post->slug],
-                            ['icon' => 'external-link', 'target' => '_blank']
+                            ['icon' => 'external-link-alt', 'target' => '_blank']
                         );
                     }
 

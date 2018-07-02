@@ -46,7 +46,7 @@ $this->extend('/Admin/Common/Banners/index');
                 $actions = [
                     $this->Html->button(null, ['action' => 'edit', $banner->id], [
                         'class' => 'btn-link',
-                        'icon' => 'pencil',
+                        'icon' => 'pencil-alt',
                         'title' => I18N_EDIT,
                     ]),
                 ];
@@ -54,7 +54,7 @@ $this->extend('/Admin/Common/Banners/index');
                 if ($banner->target) {
                     $actions[] = $this->Html->button(null, $banner->target, [
                         'class' => 'btn-link',
-                        'icon' => 'external-link',
+                        'icon' => 'external-link-alt',
                         'title' => I18N_OPEN,
                         'target' => '_blank',
                     ]);
@@ -70,7 +70,7 @@ $this->extend('/Admin/Common/Banners/index');
                 if ($this->Auth->isGroup('admin')) {
                     $actions[] = $this->Form->postButton(null, ['action' => 'delete', $banner->id], [
                         'class' => 'btn-link text-danger',
-                        'icon' => 'trash-o',
+                        'icon' => 'trash-alt',
                         'title' => I18N_DELETE,
                         'confirm' => I18N_SURE_TO_DELETE,
                     ]);

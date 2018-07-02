@@ -26,12 +26,12 @@ $this->append('actions', $this->Html->button(
             echo $this->Form->control('id', [
                 'default' => $this->request->getQuery('id'),
                 'placeholder' => I18N_ID,
-                'size' => 2,
+                'size' => 1,
             ]);
             echo $this->Form->control('name', [
                 'default' => $this->request->getQuery('name'),
                 'placeholder' => I18N_NAME,
-                'size' => 16,
+                'size' => 13,
             ]);
             echo $this->Form->submit(null, ['icon' => 'search']);
         ?>
@@ -66,14 +66,14 @@ $this->append('actions', $this->Html->button(
                     $actions[] = $this->Html->link(
                         I18N_EDIT,
                         ['controller' => 'PostsTags', 'action' => 'edit', $tag->id],
-                        ['icon' => 'pencil']
+                        ['icon' => 'pencil-alt']
                     );
                 }
 
                 $actions[] = $this->Html->link(
                     I18N_OPEN,
                     ['_name' => 'postsTag', $tag->slug],
-                    ['icon' => 'external-link', 'target' => '_blank']
+                    ['icon' => 'external-link-alt', 'target' => '_blank']
                 );
 
                 echo $this->Html->ul($actions, ['class' => 'actions mt-0 p-0']);
