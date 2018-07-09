@@ -32,7 +32,7 @@ $this->Asset->script(ME_CMS . '.admin/tags', ['block' => 'script_bottom']);
         }
 
         echo $this->Form->control('category_id', [
-            'default' => count($categories) < 2 ? collection($categories)->first() : false,
+            'default' => $categories->count() < 2 ? $categories->first() : false,
             'label' => I18N_CATEGORY,
         ]);
         echo $this->Form->datetimepicker('created', [

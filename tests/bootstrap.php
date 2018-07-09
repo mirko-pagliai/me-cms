@@ -128,6 +128,8 @@ Plugin::load('RecaptchaMailhide', [
     'routes' => true,
 ]);
 
+Configure::write('Thumber', ['driver' => 'gd']);
+
 Configure::write('Tokens.usersClassOptions', [
     'foreignKey' => 'user_id',
     'className' => 'Users',
