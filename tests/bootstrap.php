@@ -95,7 +95,7 @@ Cache::setConfig([
 ]);
 
 // Ensure default test connection is defined
-ConnectionManager::setConfig('test', ['url' => 'mysql://root@localhost/test']);
+ConnectionManager::setConfig('test', ['url' => 'mysql://travis@localhost/test']);
 
 Configure::write('Session', ['defaults' => 'php']);
 
