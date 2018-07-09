@@ -49,11 +49,11 @@ $this->append('actions', $this->Html->button(
                         $actions[] = $this->Html->link(
                             I18N_EDIT,
                             ['action' => 'edit', $position->id],
-                            ['icon' => 'pencil']
+                            ['icon' => 'pencil-alt']
                         );
                         $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $position->id], [
                             'class' => 'text-danger',
-                            'icon' => 'trash-o',
+                            'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
                         ]);
                         $actions[] = $this->Html->link(

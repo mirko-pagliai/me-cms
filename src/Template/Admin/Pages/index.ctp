@@ -32,12 +32,12 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
         echo $this->Form->control('id', [
             'default' => $this->request->getQuery('id'),
             'placeholder' => I18N_ID,
-            'size' => 2,
+            'size' => 1,
         ]);
         echo $this->Form->control('title', [
             'default' => $this->request->getQuery('title'),
             'placeholder' => I18N_TITLE,
-            'size' => 16,
+            'size' => 13,
         ]);
         echo $this->Form->control('active', [
             'default' => $this->request->getQuery('active'),
@@ -56,7 +56,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
             'data-date-format' => 'YYYY-MM',
             'default' => $this->request->getQuery('created'),
             'placeholder' => __d('me_cms', 'month'),
-            'size' => 5,
+            'size' => 3,
         ]);
         echo $this->Form->submit(null, ['icon' => 'search']);
         ?>
@@ -103,7 +103,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                         $actions[] = $this->Html->link(
                             I18N_EDIT,
                             ['action' => 'edit', $page->id],
-                            ['icon' => 'pencil']
+                            ['icon' => 'pencil-alt']
                         );
                     }
 
@@ -111,7 +111,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     if ($this->Auth->isGroup('admin')) {
                         $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $page->id], [
                             'class' => 'text-danger',
-                            'icon' => 'trash-o',
+                            'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
                         ]);
                     }
@@ -119,12 +119,12 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     //If the page is active and is not scheduled
                     if ($page->active && !$page->created->isFuture()) {
                         $actions[] = $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->slug], [
-                            'icon' => 'external-link',
+                            'icon' => 'external-link-alt',
                             'target' => '_blank',
                         ]);
                     } else {
                         $actions[] = $this->Html->link(I18N_PREVIEW, ['_name' => 'pagesPreview', $page->slug], [
-                            'icon' => 'external-link',
+                            'icon' => 'external-link-alt',
                             'target' => '_blank',
                         ]);
                     }

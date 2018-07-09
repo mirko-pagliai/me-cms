@@ -50,12 +50,12 @@ $this->extend('/Admin/Common/Banners/index');
                     }
 
                     $actions = [
-                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $banner->id], ['icon' => 'pencil']),
+                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $banner->id], ['icon' => 'pencil-alt']),
                     ];
 
                     if ($banner->target) {
                         $actions[] = $this->Html->link(I18N_OPEN, $banner->target, [
-                            'icon' => 'external-link',
+                            'icon' => 'external-link-alt',
                             'target' => '_blank',
                         ]);
                     }
@@ -70,7 +70,7 @@ $this->extend('/Admin/Common/Banners/index');
                     if ($this->Auth->isGroup('admin')) {
                         $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $banner->id], [
                             'class' => 'text-danger',
-                            'icon' => 'trash-o',
+                            'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
                         ]);
                     }

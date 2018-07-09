@@ -45,10 +45,10 @@ $this->append('actions', $this->Html->button(
                     </strong>
                     <?php
                         $actions = [
-                            $this->Html->link(I18N_EDIT, ['action' => 'edit', $group->id], ['icon' => 'pencil']),
+                            $this->Html->link(I18N_EDIT, ['action' => 'edit', $group->id], ['icon' => 'pencil-alt']),
                             $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $group->id], [
                                 'class' => 'text-danger',
-                                'icon' => 'trash-o',
+                                'icon' => 'trash-alt',
                                 'confirm' => I18N_SURE_TO_DELETE,
                             ]),
                         ];

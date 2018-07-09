@@ -61,7 +61,7 @@ $this->append('actions', $this->Form->postButton(
                         $this->Form->postLink(
                             I18N_DELETE,
                             ['action' => 'delete', $backup->slug],
-                            ['class' => 'text-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
+                            ['class' => 'text-danger', 'icon' => 'trash-alt', 'confirm' => I18N_SURE_TO_DELETE]
                         ),
                     ];
 

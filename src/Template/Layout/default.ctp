@@ -22,7 +22,7 @@
 
             echo $this->Html->css([
                 'https://fonts.googleapis.com/css?family=Roboto|Abel',
-                '/vendor/font-awesome/css/font-awesome.min',
+                '/vendor/font-awesome/css/all',
             ], ['block' => true]);
             echo $this->Asset->css([
                 '/vendor/bootstrap/css/bootstrap.min',

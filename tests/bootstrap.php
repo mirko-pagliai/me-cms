@@ -95,7 +95,7 @@ Cache::setConfig([
 ]);
 
 // Ensure default test connection is defined
-ConnectionManager::setConfig('test', ['url' => 'mysql://root@localhost/test']);
+ConnectionManager::setConfig('test', ['url' => 'mysql://travis@localhost/test']);
 
 Configure::write('Session', ['defaults' => 'php']);
 
@@ -127,6 +127,8 @@ Plugin::load('RecaptchaMailhide', [
     'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-recaptcha-mailhide' . DS,
     'routes' => true,
 ]);
+
+Configure::write('Thumber', ['driver' => 'gd']);
 
 Configure::write('Tokens.usersClassOptions', [
     'foreignKey' => 'user_id',

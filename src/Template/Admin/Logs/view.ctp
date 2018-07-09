@@ -21,7 +21,7 @@ $this->append('actions', $this->Html->button(
 $this->append('actions', $this->Form->postButton(
     I18N_DELETE,
     ['action' => 'delete', $filename],
-    ['class' => 'btn-danger', 'icon' => 'trash-o', 'confirm' => I18N_SURE_TO_DELETE]
+    ['class' => 'btn-danger', 'icon' => 'trash-alt', 'confirm' => I18N_SURE_TO_DELETE]
 ));
 
 if (!empty($content)) {

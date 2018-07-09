@@ -72,7 +72,7 @@ class MenuHelperTest extends TestCase
             '<a href="/me-cms/admin/posts-tags" title="List tags">List tags</a>',
         ], $this->buildLinks($links));
         $this->assertEquals(I18N_POSTS, $title);
-        $this->assertEquals(['icon' => 'file-text-o'], $options);
+        $this->assertEquals(['icon' => 'far file-alt'], $options);
 
         $expected = [
             '<a href="/admin" title="List posts">List posts</a>',
@@ -108,7 +108,7 @@ class MenuHelperTest extends TestCase
             '<a href="/me-cms/admin/pages/index-statics" title="List static pages">List static pages</a>',
         ], $this->buildLinks($links));
         $this->assertEquals(I18N_PAGES, $title);
-        $this->assertEquals(['icon' => 'files-o'], $options);
+        $this->assertEquals(['icon' => 'far copy'], $options);
 
         $expected = [
             '<a href="/me-cms/admin/pages" title="List pages">List pages</a>',
