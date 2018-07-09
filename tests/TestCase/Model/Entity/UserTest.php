@@ -79,7 +79,7 @@ class UserTest extends TestCase
     public function testFullNameGetMutator()
     {
         $this->assertNull($this->User->full_name);
-        
+
         $this->User->first_name = 'Alfa';
         $this->User->last_name = 'Beta';
         $this->assertEquals($this->User->first_name . ' ' . $this->User->last_name, $this->User->full_name);
