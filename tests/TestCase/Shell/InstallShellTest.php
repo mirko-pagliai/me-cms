@@ -14,6 +14,7 @@ namespace MeCms\Test\TestCase\Shell;
 
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\Stub\ConsoleOutput;
+use Cake\Utility\Inflector;
 use MeCms\Core\Plugin;
 use MeCms\Shell\InstallShell;
 use MeTools\TestSuite\ConsoleIntegrationTestCase;
@@ -293,7 +294,7 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
 
         $expectedMethods = array_merge(get_child_methods(InstallShell::class), get_child_methods(get_parent_class(InstallShell::class)));
-        $expectedMethods = array_map(['Cake\Utility\Inflector', 'underscore'], array_diff($expectedMethods, ['main']));
+        $expectedMethods = array_map([Inflector::class, 'underscore'], array_diff($expectedMethods, ['main']));
 
         sort($expectedMethods);
 
