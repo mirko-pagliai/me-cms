@@ -6,8 +6,8 @@
 * `LoginRecorderComponent::write()` method writes logins as `Entity`;
 * `LogsController::index()` action sets a collection of entities;
 * some fixes for PHP 7.2;
-* updated for CakePHP 3.6, php-tools 1.0.9, me-tools 2.16.10 and
-    cakephp-database-backup 2.5.0.
+* updated for CakePHP 3.6, php-tools 1.0.9, me-tools 2.17 and
+    cakephp-database-backup 2.5.
 
 ## 2.23 branch
 ### 2.23.1
