@@ -25,7 +25,7 @@ function toggleFilterForm()
 {
     var form = $('.filter-form legend');
 
-    $('.fa', form).toggleClass('fa-eye fa-eye-slash');
+    $('.fas', form).toggleClass('fa-eye fa-eye-slash');
     $(form).nextAll().toggle();
 }
 

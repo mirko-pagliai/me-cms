@@ -15,7 +15,7 @@ $(function () {
         event.preventDefault();
 
         //Gets the icon
-        var icon = $(this).children('i.fa');
+        var icon = $(this).children('i.fas');
 
         //Gets the password field
         var oldField = $(this).closest('.input').find('input');
