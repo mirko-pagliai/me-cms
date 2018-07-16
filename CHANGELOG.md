@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.24 branch
+### 2.24.1
+* some fixes for Font Awesome icons.
+
 ### 2.24.0
 * `AppValidator` moved from `MeCms\Model\Validation` to `MeCms\Validation`;
 * `SerializedLog::getLogAsObject()` method returns a log as `Entity`;
