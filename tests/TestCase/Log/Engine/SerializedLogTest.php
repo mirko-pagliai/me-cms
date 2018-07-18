@@ -165,8 +165,7 @@ class SerializedLogTest extends TestCase
         $this->assertLogContains('Critical: This is a critical message', 'error');
 
         //Tests the serialized log is not empty
-        $logs = safe_unserialize(file_get_contents(LOGS . 'error_serialized.log'));
-        $this->assertNotEmpty($logs);
+        $this->assertNotEmpty(file_get_contents(LOGS . 'error_serialized.log'));
 
         //Checks for fileperms
         $this->assertFilePerms(LOGS . 'error.log', '0777');

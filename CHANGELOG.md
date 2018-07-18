@@ -1,8 +1,12 @@
 # 2.x branch
-## 2.24 branch
-### 2.24.1
+## 2.25 branch
+### 2.25.0
+* fixed `LoginRecorderComponent` class, some methods have changed their name;
+* fixed `SerializedLog` class`.
+* `mirko-pagliai/php-tools` package replaces `mirko-pagliai/serialized-array`;
 * some fixes for Font Awesome icons.
 
+## 2.24 branch
 ### 2.24.0
 * `AppValidator` moved from `MeCms\Model\Validation` to `MeCms\Validation`;
 * `SerializedLog::getLogAsObject()` method returns a log as `Entity`;

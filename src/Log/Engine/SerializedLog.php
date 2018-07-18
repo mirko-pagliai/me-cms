@@ -14,7 +14,7 @@ namespace MeCms\Log\Engine;
 
 use Cake\Log\Engine\FileLog;
 use Cake\ORM\Entity;
-use SerializedArray\SerializedArray;
+use Tools\FileArray;
 
 /**
  * File Storage stream for Logging. Writes logs to different files based on
@@ -123,13 +123,14 @@ class SerializedLog extends FileLog
         $mask = $this->_config['mask'];
 
         $data = $this->getLogAsObject($level, $message);
+        $FileArray = (new FileArray($pathname))->prepend($data);
 
         if (empty($mask)) {
-            return $parent && (new SerializedArray($pathname))->prepend($data);
+            return $parent && $FileArray->write();
         }
 
         $exists = file_exists($pathname);
-        $result = (new SerializedArray($pathname))->prepend($data);
+        $result = $FileArray->write();
         static $selfError = false;
 
         if (!$selfError && !$exists && !chmod($pathname, (int)$mask)) {
