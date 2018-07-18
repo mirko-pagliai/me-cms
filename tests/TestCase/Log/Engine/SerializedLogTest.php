@@ -31,17 +31,6 @@ class SerializedLogTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        Log::drop('error');
-    }
-
-    /**
      * Test for `getLogAsObject()` method
      * @test
      */
@@ -121,16 +110,6 @@ class SerializedLogTest extends TestCase
      */
     public function testLog()
     {
-        $config = [
-            'className' => 'MeCms\Log\Engine\SerializedLog',
-            'path' => LOGS,
-            'file' => 'error',
-            'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
-            'url' => env('LOG_ERROR_URL', null),
-        ];
-
-        Log::setConfig('error', $config);
-
         //Writes some logs
         $this->writeSomeLogs();
 
@@ -155,8 +134,9 @@ class SerializedLogTest extends TestCase
 
         //Deletes all logs, drops and reconfigure, adding `mask`
         safe_unlink_recursive(LOGS);
+        $oldConfig = Log::getConfig('error');
         Log::drop('error');
-        Log::setConfig('error', array_merge($config, ['mask' => 0777]));
+        Log::setConfig('error', $oldConfig + ['mask' => 0777]);
 
         //Writes some logs
         $this->writeSomeLogs();
@@ -170,5 +150,8 @@ class SerializedLogTest extends TestCase
         //Checks for fileperms
         $this->assertFilePerms(LOGS . 'error.log', '0777');
         $this->assertFilePerms(LOGS . 'error_serialized.log', '0777');
+
+        Log::drop('error');
+        Log::setConfig('error', $oldConfig);
     }
 }

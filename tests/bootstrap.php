@@ -156,12 +156,18 @@ define('LOGIN_RECORDS', TMP . 'login' . DS);
 
 Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
 
-//Sets debug log
+//Sets debug and serialized logs
 Log::setConfig('debug', [
     'className' => 'File',
     'path' => LOGS,
     'levels' => ['notice', 'info', 'debug'],
     'file' => 'debug',
+]);
+Log::setConfig('error', [
+    'className' => \MeCms\Log\Engine\SerializedLog::class,
+    'path' => LOGS,
+    'file' => 'error',
+    'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
 ]);
 
 Email::setConfigTransport('debug', ['className' => 'Debug']);
