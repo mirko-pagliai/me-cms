@@ -42,7 +42,7 @@ class LogsController extends AppController
      * Internal method to read a log content
      * @param string $filename Filename
      * @param bool $serialized `true` for a serialized log
-     * @return string Log content
+     * @return string|array Log as array for serialized logs, otherwise a string
      * @throws InternalErrorException
      * @uses getPath()
      */
@@ -56,11 +56,7 @@ class LogsController extends AppController
 
         $log = file_get_contents($log);
 
-        if ($serialized) {
-            return safe_unserialize($log);
-        }
-
-        return trim($log);
+        return $serialized ? safe_unserialize($log) : trim($log);
     }
 
     /**

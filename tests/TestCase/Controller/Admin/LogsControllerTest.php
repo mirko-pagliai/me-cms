@@ -14,6 +14,7 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Log\Log;
 use MeCms\Controller\Admin\LogsController;
+use MeCms\Log\Engine\SerializedLog;
 use MeCms\TestSuite\IntegrationTestCase;
 
 /**
@@ -52,7 +53,7 @@ class LogsControllerTest extends IntegrationTestCase
 
         Log::drop('error');
         Log::setConfig('error', [
-            'className' => 'MeCms\Log\Engine\SerializedLog',
+            'className' => SerializedLog::class,
             'path' => LOGS,
             'file' => 'error',
             'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
