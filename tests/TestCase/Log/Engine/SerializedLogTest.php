@@ -154,4 +154,22 @@ class SerializedLogTest extends TestCase
         Log::drop('error');
         Log::setConfig('error', $oldConfig);
     }
+
+    /**
+     * Test for `log()` method on failure
+     * @expectedException PHPUnit\Framework\Error\Warning
+     * @test
+     */
+    public function testLogOnFailure()
+    {
+        $SerializedLog = $this->getMockBuilder(SerializedLog::class)
+            ->setConstructorArgs([['mask' => 0777, 'path' => LOGS]])
+            ->setMethods(['checkPermissionMask'])
+            ->getMock();
+
+        $SerializedLog->method('checkPermissionMask')
+            ->will($this->returnValue(false));
+
+        $SerializedLog->log('error', 'a message');
+    }
 }

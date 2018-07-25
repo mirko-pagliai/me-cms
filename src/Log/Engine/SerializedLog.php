@@ -85,6 +85,20 @@ class SerializedLog extends FileLog
     }
 
     /**
+     * Internal method to check the permission mask.
+     * Useful only for obtaining a stub method
+     * @param bool $selfError
+     * @param bool $exists
+     * @param string $pathname
+     * @param int $mask
+     * @return bool
+     */
+    protected function checkPermissionMask($selfError, $exists, $pathname, $mask)
+    {
+        return !(!$selfError && !$exists && !chmod($pathname, (int)$mask));
+    }
+
+    /**
      * Implements writing to log files.
      *
      * Each time that is called, it writes the normal log (using the
@@ -96,6 +110,7 @@ class SerializedLog extends FileLog
      * @param string $message The message you want to log.
      * @param array $context Additional information about the logged message
      * @return bool success of write
+     * @uses checkPermissionMask()
      * @uses getLogAsObject()
      */
     public function log($level, $message, array $context = [])
@@ -107,7 +122,7 @@ class SerializedLog extends FileLog
          * Now, it writes the serialized log
          */
 
-        $message = $this->_format(trim($message), $context);
+        $message = $this->_format($message, $context);
         $filename = $this->_getFilename($level);
 
         //It sets a new filename, adding the `_serialized` suffix.
@@ -133,7 +148,7 @@ class SerializedLog extends FileLog
         $result = $FileArray->write();
         static $selfError = false;
 
-        if (!$selfError && !$exists && !chmod($pathname, (int)$mask)) {
+        if (!$this->checkPermissionMask($selfError, $exists, $pathname, $mask)) {
             $selfError = true;
             trigger_error(vsprintf(
                 'Could not apply permission mask "%s" on log file "%s"',

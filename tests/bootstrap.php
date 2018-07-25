@@ -16,6 +16,7 @@ use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
+use MeCms\Log\Engine\SerializedLog;
 
 ini_set('intl.default_locale', 'en_US');
 date_default_timezone_set('UTC');
@@ -164,7 +165,7 @@ Log::setConfig('debug', [
     'file' => 'debug',
 ]);
 Log::setConfig('error', [
-    'className' => \MeCms\Log\Engine\SerializedLog::class,
+    'className' => SerializedLog::class,
     'path' => LOGS,
     'file' => 'error',
     'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
