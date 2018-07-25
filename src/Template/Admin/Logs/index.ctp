@@ -58,7 +58,7 @@ $this->append('actions', $this->Form->postButton(
                 );
                 $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $log->filename], [
                     'class' => 'text-danger',
-                    'icon' => 'trash-o',
+                    'icon' => 'trash-alt',
                     'confirm' => I18N_SURE_TO_DELETE,
                 ]);
 

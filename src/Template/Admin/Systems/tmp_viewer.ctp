@@ -24,7 +24,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
         <?= $this->Form->postButton(
             __d('me_cms', 'Clear all temporary files'),
             ['action' => 'tmpCleaner', 'all'],
-            ['class' => 'btn-success', 'icon' => 'trash-o']
+            ['class' => 'btn-success', 'icon' => 'trash-alt']
         ) ?>
     <?php endif; ?>
 </div>
@@ -47,7 +47,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
     <?= $this->Form->postButton(
         __d('me_cms', 'Clear cache'),
         ['action' => 'tmpCleaner', 'cache'],
-        ['class' => 'btn-success', 'icon' => 'trash-o']
+        ['class' => 'btn-success', 'icon' => 'trash-alt']
     ) ?>
 </div>
 
@@ -59,7 +59,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
         <?= $this->Form->postButton(
             __d('me_cms', 'Clear all assets'),
             ['action' => 'tmpCleaner', 'assets'],
-            ['class' => 'btn-success', 'icon' => 'trash-o']
+            ['class' => 'btn-success', 'icon' => 'trash-alt']
         ) ?>
     <?php endif; ?>
 </div>
@@ -72,7 +72,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
         <?= $this->Form->postButton(
             __d('me_cms', 'Clear all logs'),
             ['action' => 'tmpCleaner', 'logs'],
-            ['class' => 'btn-success', 'icon' => 'trash-o']
+            ['class' => 'btn-success', 'icon' => 'trash-alt']
         ) ?>
     <?php endif; ?>
 </div>
@@ -87,7 +87,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
         <?= $this->Form->postButton(
             __d('me_cms', 'Clear sitemap'),
             ['action' => 'tmpCleaner', 'sitemap'],
-            ['class' => 'btn-success', 'icon' => 'trash-o']
+            ['class' => 'btn-success', 'icon' => 'trash-alt']
         ) ?>
     <?php endif; ?>
 </div>
@@ -106,7 +106,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
         <?= $this->Form->postButton(
             __d('me_cms', 'Clear all thumbnails'),
             ['action' => 'tmpCleaner', 'thumbs'],
-            ['class' => 'btn-success', 'icon' => 'trash-o']
+            ['class' => 'btn-success', 'icon' => 'trash-alt']
         ) ?>
     <?php endif; ?>
 </div>

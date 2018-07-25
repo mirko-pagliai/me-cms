@@ -1,12 +1,20 @@
 # 2.x branch
+## 2.25 branch
+### 2.25.0
+* fixed `LoginRecorderComponent` class, some methods have changed their name;
+* fixed `SerializedLog` class`.
+* `mirko-pagliai/php-tools` package replaces `mirko-pagliai/serialized-array`;
+* some fixes for Font Awesome icons.
+
 ## 2.24 branch
 ### 2.24.0
 * `AppValidator` moved from `MeCms\Model\Validation` to `MeCms\Validation`;
 * `SerializedLog::getLogAsObject()` method returns a log as `Entity`;
 * `LoginRecorderComponent::write()` method writes logins as `Entity`;
 * `LogsController::index()` action sets a collection of entities;
-* updated for CakePHP 3.6, php-tools 1.0.9, me-tools 2.16.10 and
-    cakephp-database-backup 2.5.0.
+* some fixes for PHP 7.2;
+* updated for CakePHP 3.6, php-tools 1.0.9, Font Awesome 5.1, me-tools 2.17 and
+    cakephp-database-backup 2.5.
 
 ## 2.23 branch
 ### 2.23.1

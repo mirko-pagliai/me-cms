@@ -40,7 +40,11 @@ article header .info {
 }
 
 /* Header, info (author, date, etc), icons */
-article header .info .fa {
+article header .info .fa,
+article header .info .fab,
+article header .info .fal,
+article header .info .far,
+article header .info .fas {
     min-width: .95rem;
 }
 
@@ -134,7 +138,12 @@ article .buttons a:hover {
 
 /* Buttons, "read more" button, icon */
 article .buttons .readmore:after {
-    content: "\f178";
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
+    content: "\f30b";
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
     margin-left: .4rem;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
 }

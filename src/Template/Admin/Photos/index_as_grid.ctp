@@ -43,7 +43,7 @@ $this->extend('/Admin/Common/Photos/index');
                 $actions = [
                     $this->Html->button(null, ['action' => 'edit', $photo->id], [
                         'class' => 'btn-link',
-                        'icon' => 'pencil',
+                        'icon' => 'pencil-alt',
                         'title' => I18N_EDIT,
                     ]),
                     $this->Html->button(null, ['action' => 'download', $photo->id], [
@@ -57,7 +57,7 @@ $this->extend('/Admin/Common/Photos/index');
                 if ($this->Auth->isGroup(['admin', 'manager'])) {
                     $actions[] = $this->Form->postButton(null, ['action' => 'delete', $photo->id], [
                         'class' => 'btn-link text-danger',
-                        'icon' => 'trash-o',
+                        'icon' => 'trash-alt',
                         'title' => I18N_DELETE,
                         'confirm' => I18N_SURE_TO_DELETE,
                     ]);
@@ -71,14 +71,14 @@ $this->extend('/Admin/Common/Photos/index');
                         'id' => $photo->id,
                     ], [
                         'class' => 'btn-link',
-                        'icon' => 'external-link',
+                        'icon' => 'external-link-alt',
                         'target' => '_blank',
                         'title' => I18N_OPEN,
                     ]);
                 } else {
                     $actions[] = $this->Html->button(null, ['_name' => 'photosPreview', $photo->id], [
                         'class' => 'btn-link',
-                        'icon' => 'external-link',
+                        'icon' => 'external-link-alt',
                         'target' => '_blank',
                         'title' => I18N_PREVIEW,
                     ]);

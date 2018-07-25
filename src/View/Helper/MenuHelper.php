@@ -73,7 +73,7 @@ class MenuHelper extends Helper
             'prefix' => ADMIN_PREFIX,
         ]];
 
-        return [$links, I18N_POSTS, ['icon' => 'file-text-o']];
+        return [$links, I18N_POSTS, ['icon' => 'far file-alt']];
     }
 
     /**
@@ -118,7 +118,7 @@ class MenuHelper extends Helper
             'prefix' => ADMIN_PREFIX,
         ]];
 
-        return [$links, I18N_PAGES, ['icon' => 'files-o']];
+        return [$links, I18N_PAGES, ['icon' => 'far copy']];
     }
 
     /**

@@ -17,6 +17,7 @@ use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeTools\TestSuite\TestCase;
+use Tools\FileArray;
 
 /**
  * LoginRecorderTest class
@@ -45,7 +46,7 @@ class LoginRecorderComponentTest extends TestCase
      * @param array|null $userAgent Data returned by the `getUserAgent()` method
      * @return \MeCms\Controller\Component\LoginRecorderComponent
      */
-    protected function getLoginRecorderMock($userAgent = null)
+    protected function getLoginRecorderMock($userAgent = [])
     {
         $LoginRecorderComponent = $this->getMockBuilder(LoginRecorderComponent::class)
             ->setMethods(['getUserAgent'])
@@ -119,38 +120,38 @@ class LoginRecorderComponentTest extends TestCase
     }
 
     /**
-     * Test for `getSerializedArray()` method
+     * Test for `getFileArray()` method
      * @test
      */
-    public function testGetSerializedArray()
+    public function testGetFileArray()
     {
-        $result = $this->invokeMethod($this->LoginRecorder, 'getSerializedArray');
-        $this->assertInstanceOf('SerializedArray\SerializedArray', $result);
-        $this->assertEquals(LOGIN_RECORDS . 'user_1.log', $this->getProperty($result, 'file'));
+        $result = $this->LoginRecorder->getFileArray();
+        $this->assertInstanceOf(FileArray::class, $result);
+        $this->assertEquals(LOGIN_RECORDS . 'user_1.log', $this->getProperty($result, 'filename'));
     }
 
     /**
-     * Test for `getSerializedArray()` method, without the user ID
+     * Test for `getFileArray()` method, without the user ID
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage You have to set a valid user id
      * @test
      */
-    public function testGetSerializedArrayMissingUserId()
+    public function testGetFileArrayMissingUserId()
     {
         $this->LoginRecorder->setConfig('user', null);
-        $this->invokeMethod($this->LoginRecorder, 'getSerializedArray');
+        $this->LoginRecorder->getFileArray();
     }
 
     /**
-     * Test for `getSerializedArray()` method, with an invalid user ID
+     * Test for `getFileArray()` method, with an invalid user ID
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage You have to set a valid user id
      * @test
      */
-    public function testGetSerializedArrayInvalidUserId()
+    public function testGetFileArrayInvalidUserId()
     {
         $this->LoginRecorder->setConfig('user', 'string');
-        $this->invokeMethod($this->LoginRecorder, 'getSerializedArray');
+        $this->LoginRecorder->getFileArray();
     }
 
     /**
@@ -198,7 +199,7 @@ class LoginRecorderComponentTest extends TestCase
 
         //Creates an empty file. Now is always empty
         file_put_contents(LOGIN_RECORDS . 'user_1.log', null);
-        $result = $this->LoginRecorder->read();
+        $result = $this->getLoginRecorderInstance()->read();
         $this->assertEmpty($result);
         $this->assertIsArray($result);
     }

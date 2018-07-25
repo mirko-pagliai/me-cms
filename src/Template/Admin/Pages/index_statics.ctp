@@ -32,7 +32,7 @@ $this->assign('title', __d('me_cms', 'Static pages'));
                     <?php
                     $actions = [
                         $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->slug], [
-                            'icon' => 'external-link',
+                            'icon' => 'external-link-alt',
                             'target' => '_blank',
                         ]),
                     ];

@@ -16,6 +16,7 @@ use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
+use MeCms\Log\Engine\SerializedLog;
 
 ini_set('intl.default_locale', 'en_US');
 date_default_timezone_set('UTC');
@@ -95,7 +96,7 @@ Cache::setConfig([
 ]);
 
 // Ensure default test connection is defined
-ConnectionManager::setConfig('test', ['url' => 'mysql://root@localhost/test']);
+ConnectionManager::setConfig('test', ['url' => 'mysql://travis@localhost/test']);
 
 Configure::write('Session', ['defaults' => 'php']);
 
@@ -128,6 +129,8 @@ Plugin::load('RecaptchaMailhide', [
     'routes' => true,
 ]);
 
+Configure::write('Thumber', ['driver' => 'gd']);
+
 Configure::write('Tokens.usersClassOptions', [
     'foreignKey' => 'user_id',
     'className' => 'Users',
@@ -154,12 +157,18 @@ define('LOGIN_RECORDS', TMP . 'login' . DS);
 
 Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
 
-//Sets debug log
+//Sets debug and serialized logs
 Log::setConfig('debug', [
     'className' => 'File',
     'path' => LOGS,
     'levels' => ['notice', 'info', 'debug'],
     'file' => 'debug',
+]);
+Log::setConfig('error', [
+    'className' => SerializedLog::class,
+    'path' => LOGS,
+    'file' => 'error',
+    'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
 ]);
 
 Email::setConfigTransport('debug', ['className' => 'Debug']);

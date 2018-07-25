@@ -14,6 +14,7 @@ namespace MeCms\Test\TestCase\Shell;
 
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\Stub\ConsoleOutput;
+use Cake\Utility\Inflector;
 use MeCms\Core\Plugin;
 use MeCms\Shell\InstallShell;
 use MeTools\TestSuite\ConsoleIntegrationTestCase;
@@ -68,6 +69,8 @@ class InstallShellTest extends ConsoleIntegrationTestCase
     {
         parent::tearDown();
 
+        safe_unlink_recursive(WWW_ROOT . 'vendor', 'empty');
+
         Plugin::unload('TestPlugin');
     }
 
@@ -102,10 +105,8 @@ class InstallShellTest extends ConsoleIntegrationTestCase
     public function testAll()
     {
         //Gets all methods from `InstallShell`, except for the `all()` method
-        $methods = array_diff(array_merge(
-            get_child_methods(ME_TOOLS . '\Shell\InstallShell'),
-            get_child_methods(InstallShell::class)
-        ), ['all']);
+        $methods = array_merge(get_child_methods(get_parent_class(InstallShell::class)), get_child_methods(InstallShell::class));
+        $methods = array_diff($methods, ['all']);
 
         $this->InstallShell = $this->getMockBuilder(InstallShell::class)
             ->setMethods(array_merge(['in', '_stop'], $methods))
@@ -133,7 +134,6 @@ class InstallShellTest extends ConsoleIntegrationTestCase
             'called `fixComposerJson`',
             'called `createPluginsLinks`',
             'called `createVendorsLinks`',
-            'called `copyFonts`',
             'called `copyConfig`',
             'called `fixKcfinder`',
             'called `runFromOtherPlugins`',
@@ -292,21 +292,13 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         $parser = $this->InstallShell->getOptionParser();
 
         $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
-        $this->assertArrayKeysEqual([
-            'all',
-            'copy_config',
-            'copy_fonts',
-            'create_admin',
-            'create_directories',
-            'create_groups',
-            'create_plugins_links',
-            'create_robots',
-            'create_vendors_links',
-            'fix_composer_json',
-            'fix_kcfinder',
-            'run_from_other_plugins',
-            'set_permissions',
-        ], $parser->subcommands());
+
+        $expectedMethods = array_merge(get_child_methods(InstallShell::class), get_child_methods(get_parent_class(InstallShell::class)));
+        $expectedMethods = array_map([Inflector::class, 'underscore'], array_diff($expectedMethods, ['main']));
+
+        sort($expectedMethods);
+
+        $this->assertArrayKeysEqual($expectedMethods, $parser->subcommands());
         $this->assertEquals('Executes some tasks to make the system ready to work', $parser->getDescription());
         $this->assertArrayKeysEqual(['force', 'help', 'quiet', 'verbose'], $parser->options());
     }

@@ -50,15 +50,6 @@ class LogsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        Log::drop('error');
-        Log::setConfig('error', [
-            'className' => 'MeCms\Log\Engine\SerializedLog',
-            'path' => LOGS,
-            'file' => 'error',
-            'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
-            'url' => env('LOG_ERROR_URL', null),
-        ]);
-
         $this->setUserGroup('admin');
 
         $this->Controller = new LogsController;

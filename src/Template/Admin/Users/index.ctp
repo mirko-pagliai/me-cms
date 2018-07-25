@@ -32,12 +32,12 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
             echo $this->Form->control('id', [
                 'default' => $this->request->getQuery('id'),
                 'placeholder' => I18N_ID,
-                'size' => 2,
+                'size' => 1,
             ]);
             echo $this->Form->control('username', [
                 'default' => $this->request->getQuery('username'),
                 'placeholder' => __d('me_cms', 'username'),
-                'size' => 16,
+                'size' => 13,
             ]);
             echo $this->Form->control('status', [
                 'default' => $this->request->getQuery('status'),
@@ -56,7 +56,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                 'data-date-format' => 'YYYY-MM',
                 'default' => $this->request->getQuery('created'),
                 'placeholder' => __d('me_cms', 'month'),
-                'size' => 5,
+                'size' => 3,
             ]);
             echo $this->Form->submit(null, ['icon' => 'search']);
         ?>
@@ -98,7 +98,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
 
                     $actions = [
                         $this->Html->link(__d('me_cms', 'View'), ['action' => 'view', $user->id], ['icon' => 'eye']),
-                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $user->id], ['icon' => 'pencil']),
+                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $user->id], ['icon' => 'pencil-alt']),
                     ];
 
                     //Only admins can activate accounts and delete users
@@ -113,7 +113,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
 
                         $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $user->id], [
                             'class' => 'text-danger',
-                            'icon' => 'trash-o',
+                            'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
                         ]);
                     }

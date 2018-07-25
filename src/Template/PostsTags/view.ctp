@@ -19,7 +19,7 @@ $this->assign('title', $title = __d('me_cms', 'Tag {0}', $tag->tag));
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit tag'),
     ['controller' => 'PostsTags', 'action' => 'edit', 'prefix' => ADMIN_PREFIX, $tag->id],
-    ['class' => 'nav-link', 'icon' => 'pencil', 'target' => '_blank']
+    ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']
 ));
 
 /**

@@ -43,7 +43,7 @@ $this->extend('/Admin/Common/Photos/index');
                     }
 
                     $actions = [
-                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $photo->id], ['icon' => 'pencil']),
+                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $photo->id], ['icon' => 'pencil-alt']),
                         $this->Html->link(I18N_DOWNLOAD, ['action' => 'download', $photo->id], ['icon' => 'download']),
                     ];
 
@@ -51,7 +51,7 @@ $this->extend('/Admin/Common/Photos/index');
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
                         $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $photo->id], [
                             'class' => 'text-danger',
-                            'icon' => 'trash-o',
+                            'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
                         ]);
                     }
@@ -61,13 +61,13 @@ $this->extend('/Admin/Common/Photos/index');
                         $actions[] = $this->Html->link(
                             I18N_OPEN,
                             ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id],
-                            ['icon' => 'external-link', 'target' => '_blank']
+                            ['icon' => 'external-link-alt', 'target' => '_blank']
                         );
                     } else {
                         $actions[] = $this->Html->link(
                             I18N_PREVIEW,
                             ['_name' => 'photosPreview', $photo->id],
-                            ['icon' => 'external-link', 'target' => '_blank']
+                            ['icon' => 'external-link-alt', 'target' => '_blank']
                         );
                     }
 

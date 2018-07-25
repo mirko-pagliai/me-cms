@@ -70,6 +70,11 @@ class CheckupTest extends TestCase
      */
     public function testKCFinder()
     {
+        //This makes it believe that KCFinder is installed
+        safe_mkdir(KCFINDER, 0777, true);
+        file_put_contents(KCFINDER . '.htaccess', null);
+        file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
+
         $this->assertInstanceof('MeCms\Utility\Checkups\KCFinder', $this->Checkup->KCFinder);
         $this->assertEquals(['htaccess', 'isAvailable', 'version'], get_class_methods($this->Checkup->KCFinder));
         $this->assertTrue($this->Checkup->KCFinder->htaccess());

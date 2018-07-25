@@ -16,7 +16,7 @@ use Cake\Controller\Component;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
 use InvalidArgumentException;
-use SerializedArray\SerializedArray;
+use Tools\FileArray;
 
 /**
  * This component allows you to save and retrieve user logins, through a special
@@ -34,9 +34,9 @@ use SerializedArray\SerializedArray;
 class LoginRecorderComponent extends Component
 {
     /**
-     * @var \MeTools\Utility\SerializedArray
+     * @var \Tools\FileArray
      */
-    protected $SerializedArray;
+    protected $FileArray;
 
     /**
      * Internal method to get the client ip
@@ -50,19 +50,24 @@ class LoginRecorderComponent extends Component
     }
 
     /**
-     * Gets the `SerializedArray` instance
-     * @return \MeTools\Utility\SerializedArray
+     * Gets the `FileArray` instance
+     * @return \Tools\FileArray
      * @throws InvalidArgumentException
+     * @uses $FileArray
      */
-    protected function getSerializedArray()
+    public function getFileArray()
     {
-        $user = $this->getConfig('user');
+        if (!$this->FileArray) {
+            $user = $this->getConfig('user');
 
-        if (!is_positive($user)) {
-            throw new InvalidArgumentException(__d('me_cms', 'You have to set a valid user id'));
+            if (!is_positive($user)) {
+                throw new InvalidArgumentException(__d('me_cms', 'You have to set a valid user id'));
+            }
+
+            $this->FileArray = new FileArray(LOGIN_RECORDS . 'user_' . $user . '.log');
         }
 
-        return $this->SerializedArray = new SerializedArray(LOGIN_RECORDS . 'user_' . $user . '.log');
+        return $this->FileArray;
     }
 
     /**
@@ -78,50 +83,40 @@ class LoginRecorderComponent extends Component
     }
 
     /**
-     * Gets data
+     * Reads data
      * @return array
-     * @uses getSerializedArray()
+     * @uses getFileArray()
      */
     public function read()
     {
-        return $this->getSerializedArray()->read();
+        return $this->getFileArray()->read();
     }
 
     /**
      * Saves data
      * @return bool
      * @uses getClientIp()
-     * @uses getSerializedArray()
+     * @uses getFileArray()
      * @uses getUserAgent()
-     * @uses read()
      */
     public function write()
     {
-        //Gets existing data
-        $data = $this->read();
-
-        $agent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
-        $ip = $this->getClientIp();
-        $time = new Time;
-        list($platform, $browser, $version) = array_values($this->getUserAgent());
+        $FileArray = $this->getFileArray();
+        $current = $this->getUserAgent() + compact('agent', 'ip');
+        $current += ['agent' => filter_input(INPUT_SERVER, 'HTTP_USER_AGENT'), 'ip' => $this->getClientIp()];
+        $last = $FileArray->exists(0) ? $FileArray->get(0) : [];
 
         //Removes the first record (last in order of time), if it has been saved
         //  less than an hour ago and if the user agent data are the same
-        if (!empty($data[0]) && (new Time($data[0]->time))->modify('+1 hour')->isFuture()
-            && $data[0]->agent === $agent && $data[0]->ip === $ip
-            && $data[0]->platform === $platform && $data[0]->browser === $browser
-            && $data[0]->version === $version
+        if ($last && (new Time($last->get('time')))->modify('+1 hour')->isFuture()
+            && $last->extract(['agent', 'browser', 'ip', 'platform', 'version']) == $current
         ) {
-            unset($data[0]);
+            $FileArray->delete(0);
         }
 
-        //Adds the current request
-        array_unshift($data, new Entity(compact('agent', 'ip', 'time', 'platform', 'browser', 'version')));
-
-        //Keeps only a specified number of records
-        $data = array_slice($data, 0, getConfig('users.login_log'));
-
-        //Writes
-        return $this->getSerializedArray()->write($data);
+        //Adds the current request, takes only a specified number of records and writes
+        return $FileArray->prepend(new Entity($current + ['time' => new Time]))
+            ->take(getConfig('users.login_log'))
+            ->write();
     }
 }

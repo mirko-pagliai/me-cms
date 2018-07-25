@@ -22,14 +22,14 @@ if (!$photo->active) {
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit photo'),
     ['action' => 'edit', $photo->id, 'prefix' => ADMIN_PREFIX],
-    ['class' => 'nav-link', 'icon' => 'pencil', 'target' => '_blank']
+    ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']
 ));
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete photo'),
     ['action' => 'delete', $photo->id, 'prefix' => ADMIN_PREFIX],
     [
         'class' => 'nav-link text-danger',
-        'icon' => 'trash-o',
+        'icon' => 'trash-alt',
         'confirm' => I18N_SURE_TO_DELETE,
         'target' => '_blank',
     ]

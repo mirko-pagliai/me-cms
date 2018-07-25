@@ -43,7 +43,15 @@ form.dropzone .dz-message {
 
 /* Preview, error mark and success mark, icons */
 #dropzone-preview .dz-error-mark .fa,
-#dropzone-preview .dz-success-mark .fa {
+#dropzone-preview .dz-error-mark .fab,
+#dropzone-preview .dz-error-mark .fal,
+#dropzone-preview .dz-error-mark .far,
+#dropzone-preview .dz-error-mark .fas
+#dropzone-preview .dz-success-mark .fa,
+#dropzone-preview .dz-success-mark .fab,
+#dropzone-preview .dz-success-mark .fal,
+#dropzone-preview .dz-success-mark .far,
+#dropzone-preview .dz-success-mark .fas {
     border-radius: 20px;
     color: #fff;
     font-size: 20px;
@@ -52,11 +60,19 @@ form.dropzone .dz-message {
 }
 
 /* Preview, error mark, icon */
-#dropzone-preview .dz-error-mark .fa {
+#dropzone-preview .dz-error-mark .fa,
+#dropzone-preview .dz-error-mark .fab,
+#dropzone-preview .dz-error-mark .fal,
+#dropzone-preview .dz-error-mark .far,
+#dropzone-preview .dz-error-mark .fas {
     background: #d9534f;
 }
 
 /* Preview,  success mark, icon */
-#dropzone-preview .dz-success-mark .fa {
+#dropzone-preview .dz-success-mark .fa,
+#dropzone-preview .dz-success-mark .fab,
+#dropzone-preview .dz-success-mark .fal,
+#dropzone-preview .dz-success-mark .far,
+#dropzone-preview .dz-success-mark .fas {
     background: #5cb85c;
 }

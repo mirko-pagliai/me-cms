@@ -34,12 +34,12 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
             echo $this->Form->control('id', [
                 'default' => $this->request->getQuery('id'),
                 'placeholder' => I18N_ID,
-                'size' => 2,
+                'size' => 1,
             ]);
             echo $this->Form->control('filename', [
                 'default' => $this->request->getQuery('filename'),
                 'placeholder' => lcfirst(I18N_FILENAME),
-                'size' => 16,
+                'size' => 13,
             ]);
             echo $this->Form->control('active', [
                 'default' => $this->request->getQuery('active'),
@@ -54,7 +54,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 'data-date-format' => 'YYYY-MM',
                 'default' => $this->request->getQuery('created'),
                 'placeholder' => __d('me_cms', 'month'),
-                'size' => 5,
+                'size' => 3,
             ]);
             echo $this->Form->submit(null, ['icon' => 'search']);
         ?>
