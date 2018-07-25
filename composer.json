@@ -10,7 +10,7 @@
     }],
     "require": {
         "php": ">=5.5.9",
-        "cakephp/cakephp": "3.6.1",
+        "cakephp/cakephp": "^3.6",
         "crabstudio/recaptcha": "^2.0",
         "donatj/phpuseragentparser": "*",
         "enyo/dropzone": "^5.1",
