@@ -87,10 +87,10 @@ class SerializedLog extends FileLog
     /**
      * Internal method to check the permission mask.
      * Useful only for obtaining a stub method
-     * @param bool $selfError
-     * @param bool $exists
-     * @param string $pathname
-     * @param int $mask
+     * @param bool $selfError Self error
+     * @param bool $exists If the log exists
+     * @param string $pathname Path
+     * @param int $mask Mask
      * @return bool
      */
     protected function checkPermissionMask($selfError, $exists, $pathname, $mask)
