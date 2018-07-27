@@ -1,5 +1,10 @@
 # 2.x branch
 ## 2.25 branch
+### 2.25.1
+* added  `MeCms\Form\Form` class. This solves issue
+    [12024](https://github.com/cakephp/cakephp/issues/12024) and allows to
+    upgrade CakePHP to a version higher than 3.6.1.
+
 ### 2.25.0
 * fixed `LoginRecorderComponent` class, some methods have changed their name;
 * fixed `SerializedLog` class`.
