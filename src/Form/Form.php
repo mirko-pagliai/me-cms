@@ -10,7 +10,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         https://github.com/cakephp/cakephp/issues/12024
- * @since       2.25.1
+ * @since       2.25.0
  */
 namespace MeCms\Form;
 
