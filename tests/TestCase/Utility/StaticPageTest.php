@@ -149,9 +149,7 @@ class StaticPageTest extends TestCase
         $slugs = collection($this->StaticPage->all())->extract('slug')->toList();
 
         //Now, on the contrary, gets all pages from slugs
-        $pages = array_map(function ($slug) {
-            return $this->StaticPage->get($slug);
-        }, $slugs);
+        $pages = array_map([$this->StaticPage, 'get'], $slugs);
 
         $this->assertEquals([
             '/StaticPages/page-from-app',

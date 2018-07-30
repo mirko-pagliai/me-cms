@@ -168,7 +168,7 @@ class PagesControllerTest extends IntegrationTestCase
 
         $pagesFromView = $this->viewVariable('pages');
         $this->assertNotEmpty($pagesFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Page', $pagesFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Page', $pagesFromView);
     }
 
     /**
@@ -183,7 +183,7 @@ class PagesControllerTest extends IntegrationTestCase
 
         $pagesFromView = $this->viewVariable('pages');
         $this->assertNotEmpty($pagesFromView);
-        $this->assertInstanceof('Cake\ORM\Entity', $pagesFromView);
+        $this->assertContainsInstanceof('Cake\ORM\Entity', $pagesFromView);
     }
 
     /**

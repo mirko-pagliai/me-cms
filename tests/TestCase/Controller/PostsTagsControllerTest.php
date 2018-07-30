@@ -67,7 +67,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
 
         $tagsFromView = $this->viewVariable('tags');
         $this->assertNotEmpty($tagsFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Tag', $tagsFromView);
 
         //Sets the cache name
         $cache = sprintf('tags_limit_%s_page_%s', getConfigOrFail('default.records') * 4, 1);
@@ -107,7 +107,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
 
         $postsFromView = $this->viewVariable('posts');
         $this->assertNotEmpty($postsFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
 
         //Sets the cache name
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);

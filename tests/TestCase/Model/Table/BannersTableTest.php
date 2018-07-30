@@ -113,7 +113,7 @@ class BannersTableTest extends TestCase
         $this->assertTrue($this->Banners->hasBehavior('Timestamp'));
         $this->assertTrue($this->Banners->hasBehavior('CounterCache'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\BannerValidator', [$this->Banners->getValidator()]);
+        $this->assertInstanceOf('MeCms\Model\Validation\BannerValidator', $this->Banners->getValidator());
     }
 
     /**

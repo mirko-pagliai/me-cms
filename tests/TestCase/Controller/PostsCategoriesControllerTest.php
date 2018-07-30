@@ -65,7 +65,7 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
 
         $categoriesFromView = $this->viewVariable('categories');
         $this->assertNotEmpty($categoriesFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoriesFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\PostsCategory', $categoriesFromView);
 
         $cache = Cache::read('categories_index', $this->PostsCategories->cache);
         $this->assertEquals($categoriesFromView->toArray(), $cache->toArray());
@@ -90,7 +90,7 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
 
         $postsFromView = $this->viewVariable('posts');
         $this->assertNotEmpty($postsFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
 
         //Sets the cache name
         $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);

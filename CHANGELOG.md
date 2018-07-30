@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.25 branch
+### 2.25.1
+* updated for `php-tools` 1.1.
+
 ### 2.25.0
 * added  `MeCms\Form\Form` class. This solves issue
     [12024](https://github.com/cakephp/cakephp/issues/12024) and allows to

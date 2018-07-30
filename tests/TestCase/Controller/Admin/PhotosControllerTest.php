@@ -178,7 +178,7 @@ class PhotosControllerTest extends IntegrationTestCase
 
         $photosFromView = $this->viewVariable('photos');
         $this->assertNotEmpty($photosFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Photo', $photosFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Photo', $photosFromView);
         $this->assertCookieIsEmpty('renderPhotos');
     }
 

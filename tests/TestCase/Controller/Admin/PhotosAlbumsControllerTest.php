@@ -101,7 +101,7 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
 
         $albumsFromView = $this->viewVariable('albums');
         $this->assertNotEmpty($albumsFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumsFromView);
     }
 
     /**

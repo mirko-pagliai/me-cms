@@ -92,7 +92,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
 
         $tagsFromView = $this->viewVariable('tags');
         $this->assertNotEmpty($tagsFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Tag', $tagsFromView);
     }
 
     /**

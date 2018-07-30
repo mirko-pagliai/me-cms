@@ -146,7 +146,7 @@ class BackupsControllerTest extends IntegrationTestCase
 
         $backupsFromView = $this->viewVariable('backups');
         $this->assertNotEmpty($backupsFromView->toArray());
-        $this->assertInstanceof('Cake\ORM\Entity', $backupsFromView);
+        $this->assertContainsInstanceof('Cake\ORM\Entity', $backupsFromView);
     }
 
     /**

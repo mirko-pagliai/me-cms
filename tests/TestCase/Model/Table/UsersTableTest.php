@@ -155,7 +155,7 @@ class UsersTableTest extends TestCase
         $this->assertTrue($this->Users->hasBehavior('Timestamp'));
         $this->assertTrue($this->Users->hasBehavior('CounterCache'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\UserValidator', [$this->Users->getValidator()]);
+        $this->assertInstanceOf('MeCms\Model\Validation\UserValidator', $this->Users->getValidator());
     }
 
     /**
