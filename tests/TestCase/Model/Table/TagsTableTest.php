@@ -96,7 +96,7 @@ class TagsTableTest extends TestCase
 
         $this->assertTrue($this->Tags->hasBehavior('Timestamp'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\TagValidator', [$this->Tags->getValidator()]);
+        $this->assertInstanceOf('MeCms\Model\Validation\TagValidator', $this->Tags->getValidator());
     }
 
     /**

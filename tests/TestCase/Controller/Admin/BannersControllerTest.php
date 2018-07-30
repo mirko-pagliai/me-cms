@@ -179,7 +179,7 @@ class BannersControllerTest extends IntegrationTestCase
 
         $bannersFromView = $this->viewVariable('banners');
         $this->assertNotEmpty($bannersFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Banner', $bannersFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Banner', $bannersFromView);
     }
 
     /**

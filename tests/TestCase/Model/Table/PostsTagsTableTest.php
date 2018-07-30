@@ -97,6 +97,6 @@ class PostsTagsTableTest extends TestCase
 
         $this->assertTrue($this->PostsTags->hasBehavior('CounterCache'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PostsTagValidator', [$this->PostsTags->getValidator()]);
+        $this->assertInstanceOf('MeCms\Model\Validation\PostsTagValidator', $this->PostsTags->getValidator());
     }
 }

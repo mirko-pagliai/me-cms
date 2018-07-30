@@ -126,7 +126,7 @@ class PhotosAlbumsTableTest extends TestCase
 
         $this->assertTrue($this->PhotosAlbums->hasBehavior('Timestamp'));
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PhotosAlbumValidator', [$this->PhotosAlbums->getValidator()]);
+        $this->assertInstanceOf('MeCms\Model\Validation\PhotosAlbumValidator', $this->PhotosAlbums->getValidator());
     }
 
     /**

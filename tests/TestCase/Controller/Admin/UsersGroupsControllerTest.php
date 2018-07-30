@@ -91,7 +91,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
 
         $groupsFromView = $this->viewVariable('groups');
         $this->assertNotEmpty($groupsFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\UsersGroup', $groupsFromView);
     }
 
     /**

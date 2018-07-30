@@ -206,7 +206,7 @@ class PostsControllerTest extends IntegrationTestCase
 
         $postsFromView = $this->viewVariable('posts');
         $this->assertNotEmpty($postsFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
     }
 
     /**
@@ -261,7 +261,7 @@ class PostsControllerTest extends IntegrationTestCase
 
         //Checks for tags
         $this->assertNotEmpty($postFromView->tags);
-        $this->assertInstanceof('MeCms\Model\Entity\Tag', $postFromView->tags);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Tag', $postFromView->tags);
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);

@@ -213,7 +213,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         $usersFromView = $this->viewVariable('users');
         $this->assertNotEmpty($usersFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\User', $usersFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\User', $usersFromView);
     }
 
     /**

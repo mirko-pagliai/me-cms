@@ -113,7 +113,7 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
 
         $categoriesFromView = $this->viewVariable('categories');
         $this->assertNotEmpty($categoriesFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoriesFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\PostsCategory', $categoriesFromView);
     }
 
     /**

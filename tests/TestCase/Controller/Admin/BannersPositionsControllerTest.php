@@ -91,7 +91,7 @@ class BannersPositionsControllerTest extends IntegrationTestCase
 
         $positionsFromView = $this->viewVariable('positions');
         $this->assertNotEmpty($positionsFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\BannersPosition', $positionsFromView);
     }
 
     /**

@@ -90,7 +90,7 @@ class PostsControllerTest extends IntegrationTestCase
 
         $postsFromView = $this->viewVariable('posts');
         $this->assertNotEmpty($postsFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
 
         //Sets the cache name
         $cache = sprintf('index_limit_%s_page_%s', getConfigOrFail('default.records'), 1);
@@ -126,7 +126,7 @@ class PostsControllerTest extends IntegrationTestCase
 
         $postsFromView = $this->viewVariable('posts');
         $this->assertNotEmpty($postsFromView->toArray());
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
 
         $startFromView = $this->viewVariable('start');
         $this->assertInstanceof('Cake\I18n\Time', $startFromView);
@@ -184,7 +184,7 @@ class PostsControllerTest extends IntegrationTestCase
 
         $postsFromView = $this->viewVariable('posts');
         $this->assertNotEmpty($postsFromView->toArray());
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
     }
 
     /**
@@ -220,8 +220,8 @@ class PostsControllerTest extends IntegrationTestCase
 
         $postsFromView = $this->viewVariable('posts');
         $this->assertNotEmpty($postsFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postsFromView);
-        $this->assertContains($pattern, $postsFromView->toArray()[0]->text);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
+        $this->assertContains($pattern, $postsFromView->first()->text);
 
         $this->assertEquals($this->viewVariable('pattern'), $pattern);
 
@@ -273,7 +273,7 @@ class PostsControllerTest extends IntegrationTestCase
 
         $relatedPostsFromView = $this->viewVariable('related');
         $this->assertNotEmpty($relatedPostsFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $relatedPostsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $relatedPostsFromView);
     }
 
     /**
@@ -296,6 +296,6 @@ class PostsControllerTest extends IntegrationTestCase
 
         $relatedPostsFromView = $this->viewVariable('related');
         $this->assertNotEmpty($relatedPostsFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $relatedPostsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $relatedPostsFromView);
     }
 }

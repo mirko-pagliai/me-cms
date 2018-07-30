@@ -62,8 +62,8 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
 
         $albumsFromView = $this->viewVariable('albums');
         $this->assertNotEmpty($albumsFromView);
-        $this->assertInstanceOf('MeCms\Model\Entity\PhotosAlbum', $albumsFromView);
-        $this->assertInstanceOf('MeCms\Model\Entity\Photo', $albumsFromView->toArray()[0]->photos[0]);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumsFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Photo', $albumsFromView->first()->photos);
 
         $cache = Cache::read('albums_index', $this->PhotosAlbums->cache);
         $this->assertEquals($albumsFromView->toArray(), $cache->toArray());
@@ -99,7 +99,7 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
 
         $photosFromView = $this->viewVariable('photos');
         $this->assertNotEmpty($photosFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Photo', $photosFromView);
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Photo', $photosFromView);
 
         //Sets the cache name
         $cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.photos'), 1);
