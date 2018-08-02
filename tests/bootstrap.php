@@ -29,7 +29,6 @@ if (!defined('DS')) {
 // Path constants to a few helpful things.
 define('ROOT', dirname(__DIR__) . DS);
 define('VENDOR', ROOT . 'vendor' . DS);
-define('CAKE_CORE_INCLUDE_PATH', VENDOR . 'cakephp' . DS . 'cakephp');
 define('CORE_PATH', VENDOR . 'cakephp' . DS . 'cakephp' . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
 define('TESTS', ROOT . 'tests' . DS);
@@ -117,6 +116,10 @@ Configure::write('DatabaseBackup.target', TMP . 'backups');
 Plugin::load('DatabaseBackup', [
     'bootstrap' => true,
     'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-database-backup' . DS,
+]);
+
+Plugin::load('EntityFileLog', [
+    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-entity-file-log' . DS,
 ]);
 
 Plugin::load('Recaptcha', [

@@ -21,6 +21,7 @@ use Cake\I18n\Time;
 use Cake\Log\Log;
 use Cake\Network\Request;
 use Cake\Routing\DispatcherFactory;
+use EntityFileLog\Log\Engine\EntityFileLog;
 
 $isCli = PHP_SAPI === 'cli';
 $request = new Request;
@@ -106,20 +107,8 @@ if (!getConfig('RecaptchaMailhide.encryptKey')) {
     Configure::write('RecaptchaMailhide.encryptKey', getConfigOrFail('Recaptcha.private'));
 }
 
-//Adds log for users actions
-if (!Log::getConfig('users')) {
-    Log::setConfig('users', [
-        'className' => 'MeCms\Log\Engine\SerializedLog',
-        'path' => LOGS,
-        'levels' => [],
-        'file' => 'users.log',
-        'scopes' => ['users'],
-        'url' => env('LOG_DEBUG_URL', null),
-    ]);
-}
-
 //Loads other plugins
-$pluginsToLoad = ['DatabaseBackup', 'Recaptcha', 'RecaptchaMailhide', 'Thumber', 'Tokens'];
+$pluginsToLoad = ['DatabaseBackup', 'EntityFileLog', 'Recaptcha', 'RecaptchaMailhide', 'Thumber', 'Tokens'];
 
 foreach ($pluginsToLoad as $plugin) {
     if (!Plugin::loaded($plugin)) {
@@ -139,6 +128,18 @@ if (!$isCli) {
 
 if (!getConfig(DATABASE_BACKUP . '.mailSender')) {
     Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail(ME_CMS . '.email.webmaster'));
+}
+
+//Adds log for users actions
+if (!Log::getConfig('users')) {
+    Log::setConfig('users', [
+        'className' => EntityFileLog::class,
+        'path' => LOGS,
+        'levels' => [],
+        'file' => 'users.log',
+        'scopes' => ['users'],
+        'url' => env('LOG_DEBUG_URL', null),
+    ]);
 }
 
 //Sets the locale based on the current user
