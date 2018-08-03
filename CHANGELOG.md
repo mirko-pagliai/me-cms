@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.26 branch
+### 2.26.0
+* removed `SerializedLog`. Use instead `EntityFileLog\Log\Engine\EntityFileLog`.
+
 ## 2.25 branch
 ### 2.25.1
 * uses the `cakephp-entity-file-log` package, so now `SerializedLog` extends
