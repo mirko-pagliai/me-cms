@@ -14,6 +14,7 @@ namespace MeCms\Mailer;
 
 use InvalidArgumentException;
 use MeCms\Mailer\Mailer;
+use MeCms\Model\Entity\User;
 
 /**
  * UserMailer class
@@ -30,11 +31,11 @@ class UserMailer extends Mailer
      * @see MeCms\Controller\Admin\UsersController::signup()
      * @throws InvalidArgumentException
      */
-    public function activation($user)
+    public function activation(User $user)
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
-            if (!property_exists($user, $property)) {
+            if (!$user->has($property)) {
                 throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` property from data', $property));
             }
         }
@@ -54,11 +55,11 @@ class UserMailer extends Mailer
      * @see MeCms\Controller\Admin\UsersController::changePassword()
      * @throws InvalidArgumentException
      */
-    public function changePassword($user)
+    public function changePassword(User $user)
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
-            if (!property_exists($user, $property)) {
+            if (!$user->has($property)) {
                 throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` property from data', $property));
             }
         }
@@ -78,11 +79,11 @@ class UserMailer extends Mailer
      * @see MeCms\Controller\UsersController::passwordForgot()
      * @throws InvalidArgumentException
      */
-    public function passwordForgot($user)
+    public function passwordForgot(User $user)
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
-            if (!property_exists($user, $property)) {
+            if (!$user->has($property)) {
                 throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` property from data', $property));
             }
         }
