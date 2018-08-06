@@ -48,7 +48,6 @@ class UsersController extends AppController
         $user = $this->Auth->identify();
 
         if (!$user || !$user['active'] || $user['banned']) {
-            //Internal function to logout
             return $this->buildLogout();
         }
 
@@ -65,11 +64,9 @@ class UsersController extends AppController
      */
     protected function buildLogout()
     {
-        //Deletes some cookies
+        //Deletes some cookies and KCFinder session
         $this->Cookie->delete('login');
         $this->Cookie->delete('sidebar-lastmenu');
-
-        //Deletes the KCFinder session
         $this->request->session()->delete('KCFINDER');
 
         return $this->redirect($this->Auth->logout());
@@ -86,7 +83,6 @@ class UsersController extends AppController
         //Creates the token
         $token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
 
-        //Sends email
         return $this->getMailer(ME_CMS . '.User')
             ->set('url', Router::url(['_name' => 'activation', $user->id, $token], true))
             ->send('activation', [$user]);
@@ -239,7 +235,6 @@ class UsersController extends AppController
                         $this->Flash->error(__d('me_cms', 'Your account has not been activated yet'));
                     }
 
-                    //Internal function to logout
                     return $this->buildLogout();
                 }
 
@@ -312,7 +307,6 @@ class UsersController extends AppController
                     //Creates the token
                     $token = $this->Token->create($user->email, ['type' => 'password_forgot', 'user_id' => $user->id]);
 
-                    //Sends email
                     $this->getMailer(ME_CMS . '.User')
                         ->set('url', Router::url(['_name' => 'passwordReset', $user->id, $token], true))
                         ->send('passwordForgot', [$user]);
