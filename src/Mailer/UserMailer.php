@@ -34,7 +34,7 @@ class UserMailer extends Mailer
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
-            if (empty($user->$property)) {
+            if (!property_exists($user, $property)) {
                 throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` property from data', $property));
             }
         }
@@ -58,7 +58,7 @@ class UserMailer extends Mailer
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
-            if (empty($user->$property)) {
+            if (!property_exists($user, $property)) {
                 throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` property from data', $property));
             }
         }
@@ -82,7 +82,7 @@ class UserMailer extends Mailer
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
-            if (empty($user->$property)) {
+            if (!property_exists($user, $property)) {
                 throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` property from data', $property));
             }
         }

@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.25 branch
+### 2.25.2
+* fixed bug on required data check for mailer classes.
+
 ### 2.25.1
 * uses the `cakephp-entity-file-log` package, so now `SerializedLog` extends
     `EntityFileLog\Log\Engine\EntityFileLog`. In a future release
