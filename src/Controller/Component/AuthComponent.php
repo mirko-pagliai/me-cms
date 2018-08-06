@@ -32,7 +32,10 @@ class AuthComponent extends CakeAuthComponent
     {
         $defaultConfig = [
             'authenticate' => [
-                'Form' => ['contain' => 'Groups', 'userModel' => ME_CMS . '.Users'],
+                'Form' => [
+                    'finder' => 'auth',
+                    'userModel' => ME_CMS . '.Users',
+                ],
             ],
             'authError' => __d('me_cms', 'You are not authorized for this action'),
             'authorize' => 'Controller',

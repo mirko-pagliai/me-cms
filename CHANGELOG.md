@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.25 branch
 ### 2.25.2
+* `AuthComponent` now uses the `auth` find method (`UsersTable::findAuth()`);
 * fixed bug on required data check for mailer classes.
 
 ### 2.25.1
