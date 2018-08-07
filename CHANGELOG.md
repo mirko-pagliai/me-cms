@@ -1,10 +1,8 @@
 # 2.x branch
 ## 2.25 branch
-### 2.25.2
-* `AuthComponent` now uses the `auth` find method (`UsersTable::findAuth()`);
-* fixed bug on required data check for mailer classes.
-
 ### 2.25.1
+* `AuthComponent` now uses the `auth` find method (`UsersTable::findAuth()`);
+* fixed bug on required data check for mailer classes;
 * uses the `cakephp-entity-file-log` package, so now `SerializedLog` extends
     `EntityFileLog\Log\Engine\EntityFileLog`. In a future release
     `SerializedLog` will be removed;
