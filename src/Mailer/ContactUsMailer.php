@@ -35,7 +35,7 @@ class ContactUsMailer extends Mailer
     {
         //Checks that all required data is present
         foreach (['email', 'first_name', 'last_name', 'message'] as $key) {
-            if (empty($data[$key])) {
+            if (!array_key_exists($key, $data)) {
                 throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` key from data', $key));
             }
         }

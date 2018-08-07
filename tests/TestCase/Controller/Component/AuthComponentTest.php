@@ -28,13 +28,18 @@ class AuthComponentTest extends TestCase
     public $Auth;
 
     /**
-     * Internal method to get an Auth instance
-     * @return \MeCms\Controller\Component\AuthComponent
+     * @var bool
      */
-    protected function getAuthInstance()
-    {
-        return new AuthComponent(new ComponentRegistry(new Controller));
-    }
+    public $autoFixtures = false;
+
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.me_cms.users',
+        'plugin.me_cms.users_groups',
+    ];
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -46,7 +51,7 @@ class AuthComponentTest extends TestCase
     {
         parent::setUp();
 
-        $this->Auth = $this->getAuthInstance();
+        $this->Auth = new AuthComponent(new ComponentRegistry(new Controller));
     }
 
     /**
@@ -57,7 +62,10 @@ class AuthComponentTest extends TestCase
     {
         $expected = [
             'authenticate' => [
-                'Form' => ['contain' => 'Groups', 'userModel' => ME_CMS . '.Users'],
+                'Form' => [
+                    'finder' => 'auth',
+                    'userModel' => ME_CMS . '.Users',
+                ],
             ],
             'authorize' => 'Controller',
             'ajaxLogin' => null,
@@ -73,13 +81,34 @@ class AuthComponentTest extends TestCase
             'storage' => 'Session',
             'checkAuthIn' => 'Controller.startup',
         ];
-
         $this->assertEquals($expected, $this->Auth->getConfig());
 
         $this->Auth->setUser(['id' => 1]);
         $this->Auth->initialize([]);
         $expected['authError'] = 'You are not authorized for this action';
         $this->assertEquals($expected, $this->Auth->getConfig());
+    }
+
+    public function testSetUser()
+    {
+        $expected = [
+            'id' => 6,
+            'username' => 'zeta',
+            'email' => 'zeta@example.com',
+            'active' => true,
+            'banned' => false,
+            'full_name' => null,
+            'picture' => 'MeCms.no-avatar.jpg',
+        ];
+
+        $this->loadFixtures();
+
+        $this->Auth->constructAuthenticate();
+        $this->Auth->request = $this->Auth->request
+            ->withData('username', 'zeta')
+            ->withData('password', 'zeta');
+
+        $this->assertEquals($expected, $this->Auth->identify());
     }
 
     /**

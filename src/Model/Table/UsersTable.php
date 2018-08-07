@@ -82,6 +82,20 @@ class UsersTable extends AppTable
     }
 
     /**
+     * "auth" find method
+     * @param Query $query Query object
+     * @param array $options Options
+     * @return Query Query object
+     * @since 2.25.2
+     */
+    public function findAuth(Query $query, array $options)
+    {
+        $query->select(['id', 'username', 'password', 'email', 'active', 'banned']);
+
+        return $query;
+    }
+
+    /**
      * "banned" find method
      * @param Query $query Query object
      * @param array $options Options

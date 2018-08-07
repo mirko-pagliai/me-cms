@@ -222,6 +222,16 @@ class UsersTableTest extends TestCase
     }
 
     /**
+     * Test for `findAuth()` method
+     * @test
+     */
+    public function testFindAuth()
+    {
+        $query = $this->Users->find('auth');
+        $this->assertEquals('SELECT Users.id AS `Users__id`, Users.username AS `Users__username`, Users.password AS `Users__password`, Users.email AS `Users__email`, Users.active AS `Users__active`, Users.banned AS `Users__banned` FROM users Users', $query->sql());
+    }
+
+    /**
      * Test for `findBanned()` method
      * @test
      */
@@ -262,17 +272,10 @@ class UsersTableTest extends TestCase
     {
         $query = $this->Users->getActiveList();
         $this->assertContains('FROM users Users WHERE Users.active = :c0 ORDER BY username ASC', $query->sql());
-
-        $list = $query->toArray();
-        $this->assertEquals([
-            4 => 'Abc Def',
-            1 => 'Alfa Beta',
-            3 => 'Ypsilon Zeta',
-            5 => 'Mno Pqr',
-        ], $list);
+        $this->assertNotEmpty($query->toArray());
 
         $fromCache = Cache::read('active_users_list', $this->Users->cache)->toArray();
-        $this->assertEquals($fromCache, $list);
+        $this->assertEquals($fromCache, $query->toArray());
     }
 
     /**
