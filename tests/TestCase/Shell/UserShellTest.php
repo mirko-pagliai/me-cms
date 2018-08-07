@@ -71,9 +71,7 @@ class UserShellTest extends ConsoleIntegrationTestCase
         $this->assertOutputContains('<success>The user was created with ID ' . ++$id . '</success>');
 
         //Checks the user has been created
-        $user = $this->Users->findById($id)->first();
-        $this->assertNotEmpty($user);
-        $this->assertEquals(3, $user->group_id);
+        $this->assertEquals(3, $this->Users->findById($id)->extract('group_id')->first());
 
         $this->Users->delete($this->Users->get($id));
 
@@ -84,9 +82,7 @@ class UserShellTest extends ConsoleIntegrationTestCase
         $this->assertOutputContains('<success>The user was created with ID ' . ++$id . '</success>');
 
         //Checks the user has been created
-        $user = $this->Users->findById($id)->first();
-        $this->assertNotEmpty($user);
-        $this->assertEquals(2, $user->group_id);
+        $this->assertEquals(2, $this->Users->findById($id)->extract('group_id')->first());
 
         //Tries with a no existing group
         $this->exec('me_cms.user add --group 123', $example);
@@ -131,17 +127,20 @@ class UserShellTest extends ConsoleIntegrationTestCase
     {
         $this->exec('me_cms.user groups');
         $this->assertExitWithSuccess();
-        $this->assertEquals([
-            '+----+---------+---------+-------+',
-            '| <info>ID</info> | <info>Name</info>    | <info>Label</info>   | <info>Users</info> |',
-            '+----+---------+---------+-------+',
-            '| 1  | admin   | Admin   | 2     |',
-            '| 2  | manager | Manager | 0     |',
-            '| 3  | user    | User    | 3     |',
-            '| 4  | fans    | Fans    | 3     |',
-            '| 5  | people  | People  | 0     |',
-            '+----+---------+---------+-------+',
-        ], $this->_out->messages());
+
+        $messages = $this->_out->messages();
+        $this->assertRegExp('/^[\+\-]+$/', current($messages));
+        $headers = preg_replace('/\s*\<info\>(\w+)\<\/info\>\s*/', '${1}', array_filter(explode('|', next($messages))));
+        $this->assertEquals(['ID', 'Name', 'Label', 'Users'], array_values($headers));
+        $this->assertRegExp('/^[\+\-]+$/', end($messages));
+
+        //Removes the already checked lines
+        $lastLine = count($messages) - 1;
+        unset($messages[0], $messages[1], $messages[2], $messages[$lastLine]);
+
+        foreach ($messages as $line) {
+            $this->assertRegExp('/^|\s*\d+\s*|\s*\w+\s*|\s*\d+\s*|$/', $line);
+        }
 
         //Deletes all groups
         $this->Users->Groups->deleteAll(['id >=' => '1']);
@@ -159,17 +158,21 @@ class UserShellTest extends ConsoleIntegrationTestCase
     {
         $this->exec('me_cms.user users');
         $this->assertExitWithSuccess();
-        $this->assertEquals([
-            '+----+----------+-------+--------------+-------------------+-------+---------+------------------+',
-            '| <info>ID</info> | <info>Username</info> | <info>Group</info> | <info>Name</info>         | <info>Email</info>             | <info>Posts</info> | <info>Status</info>  | <info>Date</info>             |',
-            '+----+----------+-------+--------------+-------------------+-------+---------+------------------+',
-            '| 1  | alfa     | Admin | Alfa Beta    | alfa@test.com     | 2     | Active  | 2016/12/24 17:00 |',
-            '| 2  | gamma    | User  | Gamma Delta  | gamma@test.com    | 0     | Pending | 2016/12/24 17:01 |',
-            '| 3  | ypsilon  | User  | Ypsilon Zeta | ypsilon@test.com  | 0     | Banned  | 2016/12/24 17:02 |',
-            '| 4  | abc      | User  | Abc Def      | abc@example.com   | 1     | Active  | 2016/12/24 17:03 |',
-            '| 5  | delta    | Admin | Mno Pqr      | delta@example.com | 0     | Active  | 2016/12/24 17:04 |',
-            '+----+----------+-------+--------------+-------------------+-------+---------+------------------+',
-        ], $this->_out->messages());
+
+        $messages = $this->_out->messages();
+        $this->assertRegExp('/^[\+\-]+$/', current($messages));
+        $headers = preg_replace('/\s*\<info\>(\w+)\<\/info\>\s*/', '${1}', array_filter(explode('|', next($messages))));
+        $this->assertEquals(['ID', 'Username', 'Group', 'Name', 'Email', 'Posts', 'Status', 'Date'], array_values($headers));
+        $this->assertRegExp('/^[\+\-]+$/', next($messages));
+        $this->assertRegExp('/^[\+\-]+$/', end($messages));
+
+        //Removes the already checked lines
+        $lastLine = count($messages) - 1;
+        unset($messages[0], $messages[1], $messages[2], $messages[$lastLine]);
+
+        foreach ($messages as $line) {
+            $this->assertRegExp('/^\|\s*\d+\s*\|\s*\w+\s*\|\s*\w+\s*\|\s*\w+\s\w+\s*\|\s*\S+\s*\|\s*\d+\s*\|\s*\w+\s*\|\s*\S+\s\S+\s*\|$/', $line);
+        }
 
         //Deletes all users
         $this->Users->deleteAll(['id >=' => '1']);
@@ -188,11 +191,7 @@ class UserShellTest extends ConsoleIntegrationTestCase
         $parser = $this->UserShell->getOptionParser();
 
         $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
-        $this->assertArrayKeysEqual([
-            'add',
-            'groups',
-            'users',
-        ], $parser->subcommands());
+        $this->assertArrayKeysEqual(['add', 'groups', 'users'], $parser->subcommands());
         $this->assertEquals('Shell to handle users and user groups', $parser->getDescription());
         $this->assertArrayKeysEqual(['help', 'quiet', 'verbose'], $parser->options());
     }

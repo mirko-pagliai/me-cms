@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Mailer;
 
 use MeCms\Mailer\UserMailer;
+use MeCms\Model\Entity\User;
 use MeTools\TestSuite\TestCase;
 
 /**
@@ -40,10 +41,11 @@ class UserMailerTest extends TestCase
     {
         parent::setUp();
 
-        $this->example = (object)[
+        $this->example = new User([
             'email' => 'test@test.com',
-            'full_name' => 'James Blue',
-        ];
+            'first_name' => 'James',
+            'last_name' => 'Blue',
+        ]);
 
         $this->UserMailer = new UserMailer;
     }

@@ -13,6 +13,7 @@
 namespace MeCms\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
+use MeCms\Model\Entity\User;
 
 /**
  * UsersFixture
@@ -116,4 +117,29 @@ class UsersFixture extends TestFixture
             'created' => '2016-12-24 17:04:10',
         ],
     ];
+
+    /**
+     * Initialize the fixture
+     * @return void
+     */
+    public function init()
+    {
+        $user = new User([
+            'id' => 6,
+            'group_id' => 1,
+            'username' => 'zeta',
+            'email' => 'zeta@example.com',
+            'password' => 'zeta',
+            'first_name' => 'Zeta',
+            'last_name' => 'Zeta',
+            'active' => 1,
+            'banned' => 0,
+            'post_count' => 0,
+            'created' => '2016-12-24 17:05:10',
+        ]);
+
+        $this->records[] = $user->toArray();
+
+        parent::init();
+    }
 }
