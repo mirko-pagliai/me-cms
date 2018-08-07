@@ -97,7 +97,10 @@ class AuthComponentTest extends TestCase
             'email' => 'zeta@example.com',
             'active' => true,
             'banned' => false,
-            'full_name' => null,
+            'first_name' => 'Zeta',
+            'last_name' => 'Zeta',
+            'group' => ['name' => 'admin'],
+            'full_name' => 'Zeta Zeta',
             'picture' => 'MeCms.no-avatar.jpg',
         ];
 

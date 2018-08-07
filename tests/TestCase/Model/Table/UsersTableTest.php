@@ -228,7 +228,7 @@ class UsersTableTest extends TestCase
     public function testFindAuth()
     {
         $query = $this->Users->find('auth');
-        $this->assertEquals('SELECT Users.id AS `Users__id`, Users.username AS `Users__username`, Users.password AS `Users__password`, Users.email AS `Users__email`, Users.active AS `Users__active`, Users.banned AS `Users__banned` FROM users Users', $query->sql());
+        $this->assertStringEndsWith('FROM users Users INNER JOIN users_groups Groups ON Groups.id = (Users.group_id)', $query->sql());
     }
 
     /**
