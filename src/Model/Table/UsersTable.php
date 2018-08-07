@@ -86,7 +86,7 @@ class UsersTable extends AppTable
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
-     * @since 2.25.2
+     * @since 2.25.1
      */
     public function findAuth(Query $query, array $options)
     {
