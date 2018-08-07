@@ -90,7 +90,10 @@ class UsersTable extends AppTable
      */
     public function findAuth(Query $query, array $options)
     {
-        $query->select(['id', 'username', 'password', 'email', 'active', 'banned']);
+        $query->select(['id', 'username', 'password', 'email', 'active', 'banned', 'first_name', 'last_name'])
+            ->contain('Groups', function (Query $q) {
+                return $q->select(['name']);
+            });
 
         return $query;
     }
