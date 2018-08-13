@@ -35,7 +35,8 @@ class Form extends CakeForm
     {
         $validator = $this->getValidator();
         if (!$validator->count()) {
-            $validator = $this->validator();
+            //@codingStandardsIgnoreStart
+            $validator = @$this->validator();
         }
         $this->_errors = $validator->errors($data);
 
