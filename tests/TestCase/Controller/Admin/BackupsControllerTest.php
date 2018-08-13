@@ -173,7 +173,7 @@ class BackupsControllerTest extends IntegrationTestCase
         //POST request. Now data are valid
         $this->post($url, ['filename' => 'my_backup.sql']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertFileExists(getConfigOrFail(DATABASE_BACKUP . '.target') . DS . 'my_backup.sql');
     }
 
@@ -188,7 +188,7 @@ class BackupsControllerTest extends IntegrationTestCase
 
         $this->post($this->url + ['action' => 'delete', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertFileNotExists($file);
     }
 
@@ -203,7 +203,7 @@ class BackupsControllerTest extends IntegrationTestCase
 
         $this->post($this->url + ['action' => 'deleteAll']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertFileNotExists($files);
     }
 
@@ -233,7 +233,7 @@ class BackupsControllerTest extends IntegrationTestCase
 
         $this->post($this->url + ['action' => 'restore', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertFalse(Cache::read('firstKey'));
         $this->assertFalse(Cache::read('secondKey'));
     }
@@ -249,7 +249,7 @@ class BackupsControllerTest extends IntegrationTestCase
 
         $this->post($this->url + ['action' => 'send', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertLogContains(sprintf(
             'Called `send()` with args: `%s`, `%s`',
             $file,
