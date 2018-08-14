@@ -57,13 +57,10 @@ class BannersController extends AppController
      */
     public function isAuthorized($user = null)
     {
-        //Only admins can delete banners
-        if ($this->request->isDelete()) {
-            return $this->Auth->isGroup('admin');
-        }
+        //Only admins can delete banners. Admins and managers can access other actions
+        $allowedGroups = $this->request->isDelete() ? ['admin'] : ['admin', 'manager'];
 
-        //Admins and managers can access other actions
-        return $this->Auth->isGroup(['admin', 'manager']);
+        return $this->Auth->isGroup($allowedGroups);
     }
 
     /**
