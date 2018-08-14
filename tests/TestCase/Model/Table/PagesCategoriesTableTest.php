@@ -93,6 +93,7 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testInitialize()
     {
+        $this->assertEquals('Categories', $this->PagesCategories->getAlias());
         $this->assertEquals('pages_categories', $this->PagesCategories->getTable());
         $this->assertEquals('title', $this->PagesCategories->getDisplayField());
         $this->assertEquals('id', $this->PagesCategories->getPrimaryKey());

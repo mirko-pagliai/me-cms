@@ -12,6 +12,7 @@
  */
 namespace MeCms\Controller;
 
+use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -46,18 +47,14 @@ class PagesCategoriesController extends AppController
             return $this->redirect([$this->request->getQuery('q')]);
         }
 
-        $category = $this->PagesCategories->find('active')
+        $category = $this->PagesCategories->findActiveBySlug($slug)
             ->select(['id', 'title'])
-            ->where([sprintf('%s.slug', $this->PagesCategories->getAlias()) => $slug])
+            ->contain($this->PagesCategories->Pages->getAlias(), function (Query $q) {
+                return $q->find('active')->select(['category_id', 'slug', 'title']);
+            })
             ->cache(sprintf('category_%s', md5($slug)), $this->PagesCategories->cache)
             ->firstOrFail();
 
-        $pages = $this->PagesCategories->Pages->find('active')
-            ->select(['slug', 'title'])
-            ->where(['category_id' => $category->id])
-            ->cache(sprintf('category_%s_pages', md5($slug)), $this->PagesCategories->cache)
-            ->all();
-
-        $this->set(compact('category', 'pages'));
+        $this->set(compact('category'));
     }
 }

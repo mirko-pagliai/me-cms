@@ -32,7 +32,7 @@ $this->userbar($this->Form->postLink(
  */
 $this->Breadcrumbs->add($category->title, ['_name' => 'pagesCategory', $category->title]);
 
-$pages = collection($pages)->map(function ($page) {
+$pages = collection($category->pages)->map(function ($page) {
     return $this->Html->link($page->title, ['_name' => 'page', $page->slug]);
 })->toList();
 

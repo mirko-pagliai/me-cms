@@ -85,15 +85,11 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         $this->assertNotEmpty($categoryFromView);
         $this->assertInstanceof('MeCms\Model\Entity\PagesCategory', $categoryFromView);
 
-        $pagesFromView = $this->viewVariable('pages');
-        $this->assertNotEmpty($pagesFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Page', $pagesFromView);
+        $this->assertTrue($categoryFromView->has('pages'));
+        $this->assertContainsInstanceof('MeCms\Model\Entity\Page', $categoryFromView->pages);
 
         $categoryFromCache = Cache::read(sprintf('category_%s', md5($slug)), $this->PagesCategories->cache);
         $this->assertEquals($categoryFromView, $categoryFromCache->first());
-
-        $pagesFromCache = Cache::read(sprintf('category_%s_pages', md5($slug)), $this->PagesCategories->cache);
-        $this->assertEquals($pagesFromView->toArray(), $pagesFromCache->toArray());
 
         //GET request with query string
         $this->get($url + ['?' => ['q' => $slug]]);
