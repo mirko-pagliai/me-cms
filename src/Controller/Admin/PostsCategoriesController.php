@@ -13,7 +13,6 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
-use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
 use MeCms\Model\Entity\PostsCategory;
@@ -51,13 +50,10 @@ class PostsCategoriesController extends AppController
      */
     public function isAuthorized($user = null)
     {
-        //Only admins can delete posts categories
-        if ($this->request->isDelete()) {
-            return $this->Auth->isGroup('admin');
-        }
+        //Only admins can delete posts categories. Admins and managers can access other actions
+        $allowedGroups = $this->request->isDelete() ? ['admin'] : ['admin', 'manager'];
 
-        //Admins and managers can access other actions
-        return $this->Auth->isGroup(['admin', 'manager']);
+        return $this->Auth->isGroup($allowedGroups);
     }
 
     /**
@@ -68,9 +64,7 @@ class PostsCategoriesController extends AppController
     public function index()
     {
         $categories = $this->PostsCategories->find()
-            ->contain('Parents', function (Query $q) {
-                return $q->select(['title']);
-            })
+            ->contain(['Parents' => ['fields' => ['title']]])
             ->order([sprintf('%s.lft', $this->PostsCategories->alias()) => 'ASC'])
             ->formatResults(function (ResultSet $results) {
                 //Gets categories as tree list

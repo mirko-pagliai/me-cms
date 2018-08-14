@@ -14,7 +14,6 @@ namespace MeCms\Controller;
 
 use Cake\Event\Event;
 use Cake\ORM\Entity;
-use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
@@ -70,12 +69,8 @@ class PagesController extends AppController
             return $this->render($static);
         }
 
-        $page = $this->Pages->find('active')
-            ->select(['id', 'title', 'preview', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-            ->contain($this->Pages->Categories->getAlias(), function (Query $q) {
-                return $q->select(['title', 'slug']);
-            })
-            ->where([sprintf('%s.slug', $this->Pages->getAlias()) => $slug])
+        $page = $this->Pages->findActiveBySlug($slug)
+            ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
             ->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
             ->firstOrFail();
 
@@ -90,16 +85,11 @@ class PagesController extends AppController
      */
     public function preview($slug = null)
     {
-        $page = $this->Pages->find('pending')
-            ->select(['id', 'title', 'subtitle', 'slug', 'text', 'active', 'created', 'modified'])
-            ->contain($this->Pages->Categories->getAlias(), function (Query $q) {
-                return $q->select(['title', 'slug']);
-            })
-            ->where([sprintf('%s.slug', $this->Pages->getAlias()) => $slug])
+        $page = $this->Pages->findPendingBySlug($slug)
+            ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
             ->firstOrFail();
 
         $this->set(compact('page'));
-
         $this->render('view');
     }
 }

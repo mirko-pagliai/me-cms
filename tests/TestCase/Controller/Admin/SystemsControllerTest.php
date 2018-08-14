@@ -332,18 +332,21 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/tmp_viewer.ctp');
 
-        foreach ($this->_controller->viewVars as $var) {
+        $viewVars = $this->_controller->viewVars;
+        ksort($viewVars);
+
+        foreach ($viewVars as $var) {
             $this->assertNotEmpty($var);
         }
 
         $this->assertArrayKeysEqual([
             'assetsSize',
             'cacheSize',
+            'cacheStatus',
             'logsSize',
             'sitemapSize',
             'thumbsSize',
-            'cacheStatus',
             'totalSize',
-        ], $this->_controller->viewVars);
+        ], $viewVars);
     }
 }

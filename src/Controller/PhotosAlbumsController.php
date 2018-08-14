@@ -59,9 +59,8 @@ class PhotosAlbumsController extends AppController
         }
 
         //Gets album ID and title
-        $album = $this->PhotosAlbums->find('active')
+        $album = $this->PhotosAlbums->findActiveBySlug($slug)
             ->select(['id', 'title'])
-            ->where(compact('slug'))
             ->cache(sprintf('album_%s', md5($slug)), $this->PhotosAlbums->cache)
             ->firstOrFail();
 
@@ -79,9 +78,8 @@ class PhotosAlbumsController extends AppController
 
         //If the data are not available from the cache
         if (empty($photos) || empty($paging)) {
-            $query = $this->PhotosAlbums->Photos->find('active')
+            $query = $this->PhotosAlbums->Photos->findActiveByAlbumId($album->id)
                 ->select(['id', 'album_id', 'filename', 'description'])
-                ->where(['album_id' => $album->id])
                 ->order([
                     sprintf('%s.created', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
                     sprintf('%s.id', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',

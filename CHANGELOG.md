@@ -2,7 +2,8 @@
 ## 2.25 branch
 ### 2.25.2
 * optimized `MeCms\Controller\PagesCategoriesController::view()`, now it
-    executes a single query and pages are contained in the category entity.
+    executes a single query and pages are contained in the category entity;
+* simplified a lot of controllers code.
 
 ### 2.25.1
 * `AuthComponent` now uses the `auth` find method (`UsersTable::findAuth()`);

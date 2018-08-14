@@ -14,7 +14,6 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\Network\Exception\InternalErrorException;
-use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -79,9 +78,7 @@ class BannersController extends AppController
             $render = $this->Cookie->read('renderBanners');
         }
 
-        $query = $this->Banners->find()->contain('Positions', function (Query $q) {
-            return $q->select(['id', 'title']);
-        });
+        $query = $this->Banners->find()->contain(['Positions' => ['fields' => ['id', 'title']]]);
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
@@ -116,7 +113,7 @@ class BannersController extends AppController
 
         //If there's only one available position
         if (!$position && count($positions) < 2) {
-            $position = collection(array_keys($positions))->first();
+            $position = first_value(array_keys($positions));
             $this->request = $this->request->withQueryParams(compact('position'));
         }
 
@@ -141,14 +138,12 @@ class BannersController extends AppController
             ]);
 
             if ($entity->getErrors()) {
-                $this->setUploadError(collection(collection($entity->getErrors())->first())->first());
+                $this->setUploadError(first_value(first_value($entity->getErrors())));
 
                 return;
             }
 
-            $saved = $this->Banners->save($entity);
-
-            if (!$saved) {
+            if (!$this->Banners->save($entity)) {
                 $this->setUploadError(I18N_OPERATION_NOT_OK);
             }
         }
