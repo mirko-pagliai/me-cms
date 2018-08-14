@@ -14,7 +14,6 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
-use Cake\Network\Exception\InternalErrorException;
 use Cake\ORM\Entity;
 use MeCms\Controller\AppController;
 
@@ -43,16 +42,13 @@ class LogsController extends AppController
      * @param string $filename Filename
      * @param bool $serialized `true` for a serialized log
      * @return string|array Log as array for serialized logs, otherwise a string
-     * @throws InternalErrorException
      * @uses getPath()
      */
     protected function read($filename, $serialized)
     {
         $log = $this->getPath($filename, $serialized);
 
-        if (!is_readable($log)) {
-            throw new InternalErrorException(__d('me_tools', 'File or directory {0} not readable', rtr($log)));
-        }
+        is_readable_or_fail($log);
 
         $log = file_get_contents($log);
 
