@@ -36,7 +36,7 @@ class BackupsControllerTest extends IntegrationTestCase
      * Internal method to create a backup file
      * @return string File path
      */
-    protected function createBackup()
+    protected function createSingleBackup()
     {
         $file = getConfigOrFail(DATABASE_BACKUP . '.target') . DS . 'backup.sql';
         file_put_contents($file, null);
@@ -184,7 +184,7 @@ class BackupsControllerTest extends IntegrationTestCase
     public function testDelete()
     {
         //Creates a backup file
-        $file = $this->createBackup();
+        $file = $this->createSingleBackup();
 
         $this->post($this->url + ['action' => 'delete', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
@@ -214,7 +214,7 @@ class BackupsControllerTest extends IntegrationTestCase
     public function testDownload()
     {
         //Creates a backup file
-        $file = $this->createBackup();
+        $file = $this->createSingleBackup();
 
         $this->get($this->url + ['action' => 'download', urlencode(basename($file))]);
         $this->assertResponseOkAndNotEmpty();
@@ -228,7 +228,7 @@ class BackupsControllerTest extends IntegrationTestCase
     public function testRestore()
     {
         //Creates a backup file and writes some cache data
-        $file = $this->createBackup();
+        $file = $this->createSingleBackup();
         Cache::writeMany(['firstKey' => 'firstValue', 'secondKey' => 'secondValue']);
 
         $this->post($this->url + ['action' => 'restore', urlencode(basename($file))]);
@@ -245,7 +245,7 @@ class BackupsControllerTest extends IntegrationTestCase
     public function testSend()
     {
         //Creates a backup file
-        $file = $this->createBackup();
+        $file = $this->createSingleBackup();
 
         $this->post($this->url + ['action' => 'send', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
