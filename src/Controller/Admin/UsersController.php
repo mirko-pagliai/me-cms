@@ -15,7 +15,6 @@ namespace MeCms\Controller\Admin;
 use Cake\Event\Event;
 use Cake\Filesystem\Folder;
 use Cake\Mailer\MailerAwareTrait;
-use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 use Thumber\Utility\ThumbManager;
 
@@ -80,13 +79,10 @@ class UsersController extends AppController
             return true;
         }
 
-        //Only admins can activate account and delete users
-        if ($this->request->isAction(['activate', 'delete'])) {
-            return $this->Auth->isGroup('admin');
-        }
+        //Only admins can activate account and delete users. Admins and managers can access other actions
+        $allowedGroups = $this->request->isAction(['activate', 'delete']) ? ['admin'] : ['admin', 'manager'];
 
-        //Admins and managers can access other actions
-        return $this->Auth->isGroup(['admin', 'manager']);
+        return $this->Auth->isGroup($allowedGroups);
     }
 
     /**
@@ -96,10 +92,7 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $query = $this->Users->find()
-            ->contain('Groups', function (Query $q) {
-                return $q->select(['id', 'label']);
-            });
+        $query = $this->Users->find()->contain(['Groups' => ['fields' => ['id', 'label']]]);
 
         $this->paginate['order'] = ['username' => 'ASC'];
 
@@ -117,9 +110,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->find()
-            ->contain('Groups', function (Query $q) {
-                return $q->select(['label']);
-            })
+            ->contain(['Groups' => ['fields' => ['label']]])
             ->where([sprintf('%s.id', $this->Users->alias()) => $id])
             ->firstOrFail();
 
@@ -272,7 +263,7 @@ class UsersController extends AppController
         if ($this->request->getData('file')) {
             //Deletes any picture that already exists
             foreach (((new Folder(USER_PICTURES))->find($id . '\..+')) as $filename) {
-                unlink(USER_PICTURES . $filename);
+                safe_unlink(USER_PICTURES . $filename);
             }
 
             $filename = sprintf('%s.%s', $id, pathinfo($this->request->getData('file')['tmp_name'], PATHINFO_EXTENSION));

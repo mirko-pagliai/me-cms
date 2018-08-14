@@ -14,7 +14,6 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\Network\Exception\InternalErrorException;
-use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -58,11 +57,7 @@ class PhotosController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins and managers can delete photos
-        if ($this->request->isDelete()) {
-            return $this->Auth->isGroup(['admin', 'manager']);
-        }
-
-        return true;
+        return $this->request->isDelete() ? $this->Auth->isGroup(['admin', 'manager']) : true;
     }
 
     /**
@@ -81,9 +76,7 @@ class PhotosController extends AppController
             $render = $this->Cookie->read('renderPhotos');
         }
 
-        $query = $this->Photos->find()->contain('Albums', function (Query $q) {
-            return $q->select(['id', 'slug', 'title']);
-        });
+        $query = $this->Photos->find()->contain(['Albums' => ['fields' => ['id', 'slug', 'title']]]);
 
         $this->paginate['order'] = ['Photos.created' => 'DESC'];
 
@@ -118,7 +111,7 @@ class PhotosController extends AppController
 
         //If there's only one available album
         if (!$album && count($albums) < 2) {
-            $album = collection(array_keys($albums))->first();
+            $album = first_value(array_keys($albums));
             $this->request = $this->request->withQueryParams(compact('album'));
         }
 
@@ -143,14 +136,12 @@ class PhotosController extends AppController
             ]);
 
             if ($entity->getErrors()) {
-                $this->setUploadError(collection(collection($entity->getErrors())->first())->first());
+                $this->setUploadError(first_value(first_value($entity->getErrors())));
 
                 return;
             }
 
-            $saved = $this->Photos->save($entity);
-
-            if (!$saved) {
+            if (!$this->Photos->save($entity)) {
                 $this->setUploadError(I18N_OPERATION_NOT_OK);
             }
         }

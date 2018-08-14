@@ -228,7 +228,7 @@ class PostsControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, $this->example);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
@@ -266,7 +266,7 @@ class PostsControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
@@ -286,7 +286,7 @@ class PostsControllerTest extends IntegrationTestCase
     {
         $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
     }
 
     /**
@@ -302,7 +302,7 @@ class PostsControllerTest extends IntegrationTestCase
                 //Adds record
                 $this->post($this->url + ['action' => 'add'], ['user_id' => $userId] + $this->example);
                 $this->assertRedirect(['action' => 'index']);
-                $this->assertFlashMessage('The operation has been performed correctly');
+                $this->assertFlashMessage(I18N_OPERATION_OK);
 
                 $post = $this->Posts->find()->last();
                 $this->assertEquals($userId, $post->user_id);
@@ -310,7 +310,7 @@ class PostsControllerTest extends IntegrationTestCase
                 //Edits record, adding +1 to the `user_id`
                 $this->post($this->url + ['action' => 'edit', $post->id], ['user_id' => ++$userId] + $this->example);
                 $this->assertRedirect(['action' => 'index']);
-                $this->assertFlashMessage('The operation has been performed correctly');
+                $this->assertFlashMessage(I18N_OPERATION_OK);
 
                 $post = $this->Posts->findById($post->id)->first();
                 $this->assertEquals($userId, $post->user_id);
@@ -333,7 +333,7 @@ class PostsControllerTest extends IntegrationTestCase
             //Adds record
             $this->post($this->url + ['action' => 'add'], ['user_id' => $userId] + $this->example);
             $this->assertRedirect(['action' => 'index']);
-            $this->assertFlashMessage('The operation has been performed correctly');
+            $this->assertFlashMessage(I18N_OPERATION_OK);
 
             $post = $this->Posts->find()->last();
             $this->assertEquals(3, $post->user_id);
@@ -341,7 +341,7 @@ class PostsControllerTest extends IntegrationTestCase
             //Edits record, adding +1 to the `user_id`
             $this->post($this->url + ['action' => 'edit', $post->id], ['user_id' => ++$userId] + $this->example);
             $this->assertRedirect(['action' => 'index']);
-            $this->assertFlashMessage('The operation has been performed correctly');
+            $this->assertFlashMessage(I18N_OPERATION_OK);
 
             $post = $this->Posts->findById($post->id)->first();
             $this->assertEquals(3, $post->user_id);

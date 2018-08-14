@@ -236,9 +236,8 @@ class PostsController extends AppController
      */
     public function view($slug = null)
     {
-        $post = $this->Posts->find('active')
+        $post = $this->Posts->findActiveBySlug($slug)
             ->find('forIndex')
-            ->where([sprintf('%s.slug', $this->Posts->getAlias()) => $slug])
             ->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
             ->firstOrFail();
 
@@ -260,9 +259,8 @@ class PostsController extends AppController
      */
     public function preview($slug = null)
     {
-        $post = $this->Posts->find('pending')
+        $post = $this->Posts->findPendingBySlug($slug)
             ->find('forIndex')
-            ->where([sprintf('%s.slug', $this->Posts->getAlias()) => $slug])
             ->firstOrFail();
 
         $this->set(compact('post'));

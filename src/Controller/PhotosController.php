@@ -12,7 +12,6 @@
  */
 namespace MeCms\Controller;
 
-use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -32,21 +31,16 @@ class PhotosController extends AppController
         //This allows backward compatibility for URLs like `/photo/11`
         if (empty($slug)) {
             $slug = $this->Photos->findById($id)
-                ->contain($this->Photos->Albums->getAlias(), function (Query $q) {
-                    return $q->select(['slug']);
-                })
+                ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['slug']]])
                 ->extract('album.slug')
                 ->first();
 
             return $this->redirect(compact('id', 'slug'), 301);
         }
 
-        $photo = $this->Photos->find('active')
+        $photo = $this->Photos->findActiveById($id)
             ->select(['id', 'album_id', 'filename', 'active', 'modified'])
-            ->contain($this->Photos->Albums->getAlias(), function (Query $q) {
-                return $q->select(['id', 'title', 'slug']);
-            })
-            ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
+            ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
             ->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
             ->firstOrFail();
 
@@ -61,16 +55,12 @@ class PhotosController extends AppController
      */
     public function preview($id = null)
     {
-        $photo = $this->Photos->find('pending')
+        $photo = $this->Photos->findPendingById($id)
             ->select(['id', 'album_id', 'filename'])
-            ->contain($this->Photos->Albums->getAlias(), function (Query $q) {
-                return $q->select(['id', 'title', 'slug']);
-            })
-            ->where([sprintf('%s.id', $this->Photos->getAlias()) => $id])
+            ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
             ->firstOrFail();
 
         $this->set(compact('photo'));
-
         $this->render('view');
     }
 }

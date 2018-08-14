@@ -123,7 +123,7 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, ['title' => 'new category', 'slug' => 'category-slug']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
@@ -154,7 +154,7 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);

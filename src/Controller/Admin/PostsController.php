@@ -95,11 +95,7 @@ class PostsController extends AppController
         }
 
         //Only admins and managers can delete posts
-        if ($this->request->isDelete()) {
-            return $this->Auth->isGroup(['admin', 'manager']);
-        }
-
-        return true;
+        return $this->request->isDelete() ? $this->Auth->isGroup(['admin', 'manager']) : true;
     }
 
     /**
@@ -109,14 +105,13 @@ class PostsController extends AppController
      */
     public function index()
     {
-        $query = $this->Posts->find()
-            ->contain([
-                'Categories' => ['fields' => ['id', 'title']],
-                'Tags' => function (Query $q) {
-                    return $q->order(['tag' => 'ASC']);
-                },
-                'Users' => ['fields' => ['id', 'first_name', 'last_name']],
-            ]);
+        $query = $this->Posts->find()->contain([
+            'Categories' => ['fields' => ['id', 'title']],
+            'Tags' => function (Query $q) {
+                return $q->order(['tag' => 'ASC']);
+            },
+            'Users' => ['fields' => ['id', 'first_name', 'last_name']],
+        ]);
 
         $this->paginate['order'] = ['created' => 'DESC'];
 

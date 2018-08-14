@@ -77,8 +77,7 @@ class PostsTagsController extends AppController
 
         $slug = Text::slug($slug, ['replacement' => ' ']);
 
-        $tag = $this->PostsTags->Tags->find('active')
-            ->where(['tag' => $slug])
+        $tag = $this->PostsTags->Tags->findActiveByTag($slug)
             ->cache((sprintf('tag_%s', md5($slug))), $this->PostsTags->cache)
             ->firstOrFail();
 

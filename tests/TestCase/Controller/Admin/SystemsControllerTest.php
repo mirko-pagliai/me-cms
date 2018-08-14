@@ -290,7 +290,7 @@ class SystemsControllerTest extends IntegrationTestCase
         //POST request. Cleans all
         $this->post($url + ['all']);
         $this->assertRedirect(['action' => 'tmpViewer']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertCacheIsEmpty();
         $this->assertFileNotExists($files);
 
@@ -299,14 +299,14 @@ class SystemsControllerTest extends IntegrationTestCase
         //POST request. Cleans the cache
         $this->post($url + ['cache']);
         $this->assertRedirect(['action' => 'tmpViewer']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertCacheIsEmpty();
 
         //POST request. Cleans assets, logs, sitemap and thumbs
         foreach (['assets', 'logs', 'sitemap', 'thumbs'] as $tmpName) {
             $this->post($url + [$tmpName]);
             $this->assertRedirect(['action' => 'tmpViewer']);
-            $this->assertFlashMessage('The operation has been performed correctly');
+            $this->assertFlashMessage(I18N_OPERATION_OK);
             $this->assertFileNotExists($files[$tmpName]);
         }
 
@@ -332,18 +332,21 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/tmp_viewer.ctp');
 
-        foreach ($this->_controller->viewVars as $var) {
+        $viewVars = $this->_controller->viewVars;
+        ksort($viewVars);
+
+        foreach ($viewVars as $var) {
             $this->assertNotEmpty($var);
         }
 
         $this->assertArrayKeysEqual([
             'assetsSize',
             'cacheSize',
+            'cacheStatus',
             'logsSize',
             'sitemapSize',
             'thumbsSize',
-            'cacheStatus',
             'totalSize',
-        ], $this->_controller->viewVars);
+        ], $viewVars);
     }
 }

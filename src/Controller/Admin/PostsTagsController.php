@@ -30,11 +30,7 @@ class PostsTagsController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins and managers can edit tags
-        if ($this->request->isEdit()) {
-            return $this->Auth->isGroup(['admin', 'manager']);
-        }
-
-        return true;
+        return $this->request->isEdit() ? $this->Auth->isGroup(['admin', 'manager']) : true;
     }
 
     /**
@@ -44,8 +40,7 @@ class PostsTagsController extends AppController
      */
     public function index()
     {
-        $query = $this->PostsTags->Tags->find()
-            ->matching($this->PostsTags->Posts->alias());
+        $query = $this->PostsTags->Tags->find()->matching('Posts');
 
         $this->paginate['order'] = ['tag' => 'ASC'];
 

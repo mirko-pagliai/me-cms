@@ -68,6 +68,7 @@ class PagesCategoriesTable extends AppTable
     {
         parent::initialize($config);
 
+        $this->setAlias('Categories');
         $this->setTable('pages_categories');
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
