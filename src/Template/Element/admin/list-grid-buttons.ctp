@@ -17,12 +17,12 @@
         <?php
             echo $this->Html->button(
                 __d('me_cms', 'Show as list'),
-                ['?' => array_merge($this->request->getQueryParams(), ['render' => 'list'])],
+                ['?' => ['render' => 'list'] + $this->request->getQueryParams()],
                 ['class' => 'btn-primary', 'icon' => 'align-justify']
             );
             echo $this->Html->button(
                 __d('me_cms', 'Show as grid'),
-                ['?' => array_merge($this->request->getQueryParams(), ['render' => 'grid'])],
+                ['?' => ['render' => 'grid'] + $this->request->getQueryParams()],
                 ['class' => 'btn-primary', 'icon' => 'th-large']
             );
         ?>

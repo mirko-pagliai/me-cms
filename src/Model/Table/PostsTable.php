@@ -128,7 +128,7 @@ class PostsTable extends PostsAndPagesTables
      */
     public function getRelated(Post $post, $limit = 5, $images = true)
     {
-        if (empty($post->id) || !isset($post->tags)) {
+        if (!$post->has('id') || !$post->has('tags')) {
             throw new InvalidArgumentException(__d('me_cms', 'ID or tags of the post are missing'));
         }
 
@@ -138,14 +138,10 @@ class PostsTable extends PostsAndPagesTables
             $cache .= '_with_images';
         }
 
-        //Tries to gets related posts from cache.
-        //A `null` value means that there are no related post
-        $related = Cache::read($cache, $this->cache);
-
-        if (empty($related)) {
+        return Cache::remember($cache, function () use ($images, $limit, $post) {
             $related = [];
 
-            if (!empty($post->tags)) {
+            if ($post->has('tags')) {
                 //Sorts and takes tags by `post_count` field
                 $tags = collection($post->tags)->sortBy('post_count')->take($limit)->toList();
 
@@ -169,10 +165,8 @@ class PostsTable extends PostsAndPagesTables
                 }
             }
 
-            Cache::write($cache, $related, $this->cache);
-        }
-
-        return $related;
+            return $related;
+        }, $this->cache);
     }
 
     /**
