@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.25 branch
 ### 2.25.3
+* photo albums are now indexed by creation date. The creation date is shown in
+    the admin panel;
 * fixed bug in indexing photo albums on mobile devices.
 
 ### 2.25.2

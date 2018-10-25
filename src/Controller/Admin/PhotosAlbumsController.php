@@ -39,7 +39,7 @@ class PhotosAlbumsController extends AppController
      */
     public function index()
     {
-        $this->paginate['order'] = ['title' => 'ASC'];
+        $this->paginate['order'] = ['created' => 'DESC'];
 
         $albums = $this->paginate($this->PhotosAlbums->find());
 
