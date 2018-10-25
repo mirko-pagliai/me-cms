@@ -27,11 +27,7 @@ if (!function_exists('getConfig')) {
     {
         $value = Configure::read(sprintf('%s.%s', ME_CMS, $var));
 
-        if (!$value) {
-            $value = Configure::read($var, $default);
-        }
-
-        return $value;
+        return $value ?: Configure::read($var, $default);
     }
 }
 
@@ -51,10 +47,6 @@ if (!function_exists('getConfigOrFail')) {
     {
         $value = Configure::read(sprintf('%s.%s', ME_CMS, $var));
 
-        if (!$value) {
-            $value = Configure::readOrFail($var);
-        }
-
-        return $value;
+        return $value ?: Configure::readOrFail($var);
     }
 }

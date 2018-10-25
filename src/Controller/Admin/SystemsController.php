@@ -188,21 +188,22 @@ class SystemsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
 
         $assetsTarget = getConfigOrFail(ASSETS . '.target');
-        $success = false;
+        $success = true;
 
         switch ($type) {
             case 'all':
-                $success = clearDir($assetsTarget) && clearDir(LOGS)
-                    && self::clearCache() && self::clearSitemap() && (new ThumbManager)->clearAll();
+                safe_unlink_recursive($assetsTarget);
+                safe_unlink_recursive(LOGS);
+                $success = self::clearCache() && self::clearSitemap() && (new ThumbManager)->clearAll();
                 break;
             case 'cache':
                 $success = self::clearCache();
                 break;
             case 'assets':
-                $success = clearDir($assetsTarget);
+                safe_unlink_recursive($assetsTarget);
                 break;
             case 'logs':
-                $success = clearDir(LOGS);
+                safe_unlink_recursive(LOGS);
                 break;
             case 'sitemap':
                 $success = self::clearSitemap();
@@ -210,6 +211,8 @@ class SystemsController extends AppController
             case 'thumbs':
                 $success = (new ThumbManager)->clearAll();
                 break;
+            default:
+                $success = false;
         }
 
         if ($success) {
