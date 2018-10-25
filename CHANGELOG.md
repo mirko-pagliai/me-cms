@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.25 branch
+### 2.25.3
+* fixed bug in indexing photo albums on mobile devices.
+
 ### 2.25.2
 * optimized `MeCms\Controller\PagesCategoriesController::view()`, now it
     executes a single query and pages are contained in the category entity;
