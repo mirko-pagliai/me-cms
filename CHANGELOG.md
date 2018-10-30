@@ -3,7 +3,8 @@
 ### 2.25.3
 * photo albums are now indexed by creation date. The creation date is shown in
     the admin panel;
-* fixed bug in indexing photo albums on mobile devices.
+* fixed bug in indexing photo albums on mobile devices;
+* updated for me-tools 2.17.4.
 
 ### 2.25.2
 * optimized `MeCms\Controller\PagesCategoriesController::view()`, now it
