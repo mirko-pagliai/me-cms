@@ -30,7 +30,7 @@ require_once __DIR__ . DS . 'constants.php';
 
 //Loads MeTools plugins
 if (!Plugin::loaded('Assets')) {
-    Plugin::load('Assets', ['bootstrap' => true]);
+    Plugin::load('Assets', ['bootstrap' => true, 'routes' => true]);
 }
 if (!Plugin::loaded('MeTools')) {
     Plugin::load('MeTools', ['bootstrap' => true]);
