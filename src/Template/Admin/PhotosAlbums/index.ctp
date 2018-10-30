@@ -30,6 +30,7 @@ $this->append('actions', $this->Html->button(
             <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
             <th><?= $this->Paginator->sort('title', I18N_TITLE) ?></th>
             <th class="text-center"><?= I18N_DESCRIPTION ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('created', I18N_DATE) ?></th>
             <th class="text-nowrap text-center"><?= $this->Paginator->sort('photo_count', I18N_PHOTOS) ?></th>
         </tr>
     </thead>
@@ -76,6 +77,15 @@ $this->append('actions', $this->Html->button(
                 </td>
                 <td class="text-center">
                     <?= $album->description ?>
+                </td>
+                <td class="text-nowrap text-center">
+                    <div class="d-none d-lg-block">
+                        <?= $album->created->i18nFormat() ?>
+                    </div>
+                    <div class="d-lg-none">
+                        <div><?= $album->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
+                        <div><?= $album->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
+                    </div>
                 </td>
                 <td class="text-nowrap text-center">
                     <?php

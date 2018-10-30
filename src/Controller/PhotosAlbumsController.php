@@ -35,7 +35,7 @@ class PhotosAlbumsController extends AppController
                     ->select(['album_id', 'filename'])
                     ->order('rand()');
             })
-            ->order(['title' => 'ASC'])
+            ->order([sprintf('%s.created', $this->PhotosAlbums->getAlias()) => 'DESC'])
             ->cache('albums_index', $this->PhotosAlbums->cache);
 
         //If there is only one record, redirects
