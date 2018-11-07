@@ -45,11 +45,11 @@ class AppTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.photos',
-        'plugin.me_cms.posts',
-        'plugin.me_cms.posts_categories',
-        'plugin.me_cms.posts_tags',
-        'plugin.me_cms.users',
+        'plugin.me_cms.Photos',
+        'plugin.me_cms.Posts',
+        'plugin.me_cms.PostsCategories',
+        'plugin.me_cms.PostsTags',
+        'plugin.me_cms.Users',
     ];
 
     /**

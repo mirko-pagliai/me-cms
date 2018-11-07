@@ -37,8 +37,8 @@ class AuthComponentTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.users',
-        'plugin.me_cms.users_groups',
+        'plugin.me_cms.Users',
+        'plugin.me_cms.UsersGroups',
     ];
 
     /**

@@ -31,8 +31,8 @@ class PostsCategoriesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts',
-        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.Posts',
+        'plugin.me_cms.PostsCategories',
     ];
 
     /**

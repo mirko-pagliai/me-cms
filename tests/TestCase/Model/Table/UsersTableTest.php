@@ -37,10 +37,10 @@ class UsersTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts',
+        'plugin.me_cms.Posts',
         'plugin.me_cms.tokens',
-        'plugin.me_cms.users',
-        'plugin.me_cms.users_groups',
+        'plugin.me_cms.Users',
+        'plugin.me_cms.UsersGroups',
     ];
 
     /**

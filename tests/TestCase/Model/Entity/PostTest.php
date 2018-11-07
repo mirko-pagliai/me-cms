@@ -37,9 +37,9 @@ class PostTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts',
-        'plugin.me_cms.posts_tags',
-        'plugin.me_cms.tags',
+        'plugin.me_cms.Posts',
+        'plugin.me_cms.PostsTags',
+        'plugin.me_cms.Tags',
     ];
 
     /**

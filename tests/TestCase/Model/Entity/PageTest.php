@@ -37,7 +37,7 @@ class PageTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.pages',
+        'plugin.me_cms.Pages',
     ];
 
     /**

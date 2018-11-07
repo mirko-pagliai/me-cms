@@ -37,7 +37,7 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.PostsCategories',
     ];
 
     /**

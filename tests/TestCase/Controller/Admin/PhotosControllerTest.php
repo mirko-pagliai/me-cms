@@ -38,8 +38,8 @@ class PhotosControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.photos',
-        'plugin.me_cms.photos_albums',
+        'plugin.me_cms.Photos',
+        'plugin.me_cms.PhotosAlbums',
     ];
 
     /**

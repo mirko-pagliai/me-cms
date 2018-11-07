@@ -31,8 +31,8 @@ class PagesCategoriesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.pages',
-        'plugin.me_cms.pages_categories',
+        'plugin.me_cms.Pages',
+        'plugin.me_cms.PagesCategories',
     ];
 
     /**

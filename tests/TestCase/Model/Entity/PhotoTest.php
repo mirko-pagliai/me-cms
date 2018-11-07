@@ -37,7 +37,7 @@ class PhotoTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.photos',
+        'plugin.me_cms.Photos',
     ];
 
     /**

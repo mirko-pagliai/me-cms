@@ -37,7 +37,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.users_groups',
+        'plugin.me_cms.UsersGroups',
     ];
 
     /**
