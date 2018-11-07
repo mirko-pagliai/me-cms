@@ -40,8 +40,8 @@ class UsersControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.users',
-        'plugin.me_cms.users_groups',
+        'plugin.me_cms.Users',
+        'plugin.me_cms.UsersGroups',
     ];
 
     /**
@@ -272,7 +272,7 @@ class UsersControllerTest extends IntegrationTestCase
             'last_name' => 'Beta',
         ]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['username' => 'aa']);
@@ -303,7 +303,7 @@ class UsersControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, ['first_name' => 'Gamma']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['first_name' => 'aa']);
@@ -367,7 +367,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->post($url + [$userWithNoPosts]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
     }
 
     /**
@@ -380,7 +380,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->get($this->url + ['action' => 'activate', $pendingUser]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //The user is now active
         $this->assertTrue($this->Users->findById($pendingUser)->extract('active')->first());
@@ -416,7 +416,7 @@ class UsersControllerTest extends IntegrationTestCase
             'password_repeat' => 'newPassword!1',
         ]);
         $this->assertRedirect(['_name' => 'dashboard']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //The password has changed
         $this->assertNotEquals($user->password, $this->Users->findById(1)->extract('password')->first());

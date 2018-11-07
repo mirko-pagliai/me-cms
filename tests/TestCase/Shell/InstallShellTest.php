@@ -33,7 +33,9 @@ class InstallShellTest extends ConsoleIntegrationTestCase
      * Fixtures
      * @var array
      */
-    public $fixtures = ['plugin.me_cms.users_groups'];
+    public $fixtures = [
+        'plugin.me_cms.UsersGroups',
+    ];
 
     /**
      * @var \Cake\TestSuite\Stub\ConsoleOutput

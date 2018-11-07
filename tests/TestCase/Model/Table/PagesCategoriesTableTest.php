@@ -31,8 +31,8 @@ class PagesCategoriesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.pages',
-        'plugin.me_cms.pages_categories',
+        'plugin.me_cms.Pages',
+        'plugin.me_cms.PagesCategories',
     ];
 
     /**
@@ -93,6 +93,7 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testInitialize()
     {
+        $this->assertEquals('Categories', $this->PagesCategories->getAlias());
         $this->assertEquals('pages_categories', $this->PagesCategories->getTable());
         $this->assertEquals('title', $this->PagesCategories->getDisplayField());
         $this->assertEquals('id', $this->PagesCategories->getPrimaryKey());

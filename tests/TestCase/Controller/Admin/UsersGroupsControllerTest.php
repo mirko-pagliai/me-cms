@@ -37,7 +37,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.users_groups',
+        'plugin.me_cms.UsersGroups',
     ];
 
     /**
@@ -113,7 +113,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, ['name' => 'team', 'label' => 'Team']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['name' => 'aa']);
@@ -144,7 +144,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, ['description' => 'This is a description']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['label' => 'aa']);
@@ -191,6 +191,6 @@ class UsersGroupsControllerTest extends IntegrationTestCase
 
         $this->post($url + [$id]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
     }
 }

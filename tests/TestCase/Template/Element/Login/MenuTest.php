@@ -25,7 +25,7 @@ class MenuTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.users',
+        'plugin.me_cms.Users',
     ];
 
     /**

@@ -86,11 +86,14 @@ class UsersTable extends AppTable
      * @param Query $query Query object
      * @param array $options Options
      * @return Query Query object
-     * @since 2.25.2
+     * @since 2.25.1
      */
     public function findAuth(Query $query, array $options)
     {
-        $query->select(['id', 'username', 'password', 'email', 'active', 'banned']);
+        $query->select(['id', 'username', 'password', 'email', 'active', 'banned', 'first_name', 'last_name'])
+            ->contain('Groups', function (Query $q) {
+                return $q->select(['name']);
+            });
 
         return $query;
     }

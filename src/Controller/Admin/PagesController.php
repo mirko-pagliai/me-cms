@@ -13,7 +13,6 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
-use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
@@ -45,11 +44,8 @@ class PagesController extends AppController
             return;
         }
 
-        if ($this->request->isAction(['add', 'edit'])) {
-            $categories = $this->Pages->Categories->getTreeList();
-        } else {
-            $categories = $this->Pages->Categories->getList();
-        }
+        $methodToCall = $this->request->isAction(['add', 'edit']) ? 'getTreeList' : 'getList';
+        $categories = call_user_func([$this->Pages->Categories, $methodToCall]);
 
         if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
@@ -89,13 +85,10 @@ class PagesController extends AppController
             return true;
         }
 
-        //Only admins can delete pages
-        if ($this->request->isDelete()) {
-            return $this->Auth->isGroup('admin');
-        }
+        //Only admins can delete pages. Admins and managers can access other actions
+        $allowedGroups = $this->request->isDelete() ? ['admin'] : ['admin', 'manager'];
 
-        //Admins and managers can access other actions
-        return $this->Auth->isGroup(['admin', 'manager']);
+        return $this->Auth->isGroup($allowedGroups);
     }
 
     /**
@@ -105,9 +98,7 @@ class PagesController extends AppController
      */
     public function index()
     {
-        $query = $this->Pages->find()->contain('Categories', function (Query $q) {
-            return $q->select(['id', 'title']);
-        });
+        $query = $this->Pages->find()->contain(['Categories' => ['fields' => ['id', 'title']]]);
 
         $this->paginate['order'] = ['created' => 'DESC'];
 

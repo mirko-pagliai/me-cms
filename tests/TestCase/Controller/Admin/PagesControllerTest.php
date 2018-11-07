@@ -37,8 +37,8 @@ class PagesControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.pages',
-        'plugin.me_cms.pages_categories',
+        'plugin.me_cms.Pages',
+        'plugin.me_cms.PagesCategories',
     ];
 
     /**
@@ -210,7 +210,7 @@ class PagesControllerTest extends IntegrationTestCase
             'text' => 'new page text',
         ]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
@@ -244,7 +244,7 @@ class PagesControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
@@ -264,6 +264,6 @@ class PagesControllerTest extends IntegrationTestCase
     {
         $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
     }
 }

@@ -30,11 +30,7 @@ class PhotosAlbumsController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins and managers can delete albums
-        if ($this->request->isDelete()) {
-            return $this->Auth->isGroup(['admin', 'manager']);
-        }
-
-        return true;
+        return $this->request->isDelete() ? $this->Auth->isGroup(['admin', 'manager']) : true;
     }
 
     /**
@@ -43,7 +39,7 @@ class PhotosAlbumsController extends AppController
      */
     public function index()
     {
-        $this->paginate['order'] = ['title' => 'ASC'];
+        $this->paginate['order'] = ['created' => 'DESC'];
 
         $albums = $this->paginate($this->PhotosAlbums->find());
 

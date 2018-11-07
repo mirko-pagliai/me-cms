@@ -103,7 +103,7 @@ ob_start();
 <p>
     Per saperne di più sui loro cookie e le scelte di privacy che offrono,
     si prega di visitare i seguenti link:
-    <a href="http://www.google.com/intl/en/policies/privacy" target="_blank">Google Analytics</a>.
+    <a href="https://policies.google.com/privacy?hl=it" target="_blank">Google Analytics</a>.
 </p>
 
 <h3>4. Contenuto personalizzato</h3>

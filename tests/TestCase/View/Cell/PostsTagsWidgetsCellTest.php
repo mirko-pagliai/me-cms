@@ -45,7 +45,7 @@ class PostsTagsWidgetsCellTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.tags',
+        'plugin.me_cms.Tags',
     ];
 
     /**

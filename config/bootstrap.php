@@ -29,14 +29,15 @@ $request = new Request;
 require_once __DIR__ . DS . 'constants.php';
 
 //Loads MeTools plugins
+if (!Plugin::loaded('Assets')) {
+    Plugin::load('Assets', ['bootstrap' => true, 'routes' => true]);
+}
 if (!Plugin::loaded('MeTools')) {
     Plugin::load('MeTools', ['bootstrap' => true]);
 }
 
 foreach ([BANNERS, LOGIN_RECORDS, PHOTOS, UPLOADED, USER_PICTURES] as $dir) {
-    if (!file_exists($dir)) {
-        safe_mkdir($dir);
-    }
+    safe_mkdir($dir);
 
     if (!is_writeable($dir)) {
         trigger_error(sprintf('Directory %s not writeable', $dir), E_USER_ERROR);

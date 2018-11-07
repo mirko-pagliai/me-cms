@@ -53,7 +53,7 @@
                 if (getConfig('post.created') && $post->has('created')) {
                     echo $this->Html->time(
                         __d('me_cms', 'Posted on {0}', $post->created->i18nFormat()),
-                        ['class' => 'date', 'icon' => 'clock-o']
+                        ['class' => 'date', 'icon' => 'clock']
                     );
                 }
                 ?>

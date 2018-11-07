@@ -31,8 +31,8 @@ class BannersTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.banners',
-        'plugin.me_cms.banners_positions',
+        'plugin.me_cms.Banners',
+        'plugin.me_cms.BannersPositions',
     ];
 
     /**

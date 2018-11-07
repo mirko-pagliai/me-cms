@@ -17,7 +17,6 @@ use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\I18n\I18n;
-use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Core\Plugin;
@@ -79,7 +78,7 @@ class SystemsController extends AppController
 
         //If there's only one type, it automatically sets the query value
         if (!$type && count($types) < 2) {
-            $type = collection(array_keys($types))->first();
+            $type = first_value(array_keys($types));
             $this->request = $this->request->withQueryParams(compact('type'));
         }
 
@@ -174,43 +173,37 @@ class SystemsController extends AppController
      */
     protected function clearSitemap()
     {
-        if (!is_readable(SITEMAP)) {
-            return true;
-        }
-
-        return (new File(SITEMAP))->delete();
+        return is_readable(SITEMAP) ? (new File(SITEMAP))->delete() : true;
     }
 
     /**
      * Temporary cleaner (assets, cache, logs, sitemap and thumbnails)
      * @param string $type Type
      * @return \Cake\Network\Response|null|void
-     * @throws MethodNotAllowedException
      * @uses clearCache()
      * @uses clearSitemap()
      */
     public function tmpCleaner($type)
     {
-        if (!$this->request->is(['post', 'delete'])) {
-            throw new MethodNotAllowedException();
-        }
+        $this->request->allowMethod(['post', 'delete']);
 
         $assetsTarget = getConfigOrFail(ASSETS . '.target');
-        $success = false;
+        $success = true;
 
         switch ($type) {
             case 'all':
-                $success = clearDir($assetsTarget) && clearDir(LOGS)
-                    && self::clearCache() && self::clearSitemap() && (new ThumbManager)->clearAll();
+                safe_unlink_recursive($assetsTarget);
+                safe_unlink_recursive(LOGS);
+                $success = self::clearCache() && self::clearSitemap() && (new ThumbManager)->clearAll();
                 break;
             case 'cache':
                 $success = self::clearCache();
                 break;
             case 'assets':
-                $success = clearDir($assetsTarget);
+                safe_unlink_recursive($assetsTarget);
                 break;
             case 'logs':
-                $success = clearDir(LOGS);
+                safe_unlink_recursive(LOGS);
                 break;
             case 'sitemap':
                 $success = self::clearSitemap();
@@ -218,6 +211,8 @@ class SystemsController extends AppController
             case 'thumbs':
                 $success = (new ThumbManager)->clearAll();
                 break;
+            default:
+                $success = false;
         }
 
         if ($success) {
@@ -241,10 +236,8 @@ class SystemsController extends AppController
         $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
         $thumbsSize = (new Folder(getConfigOrFail(THUMBER . '.target')))->dirsize();
 
-        $this->set([
-            'cacheStatus' => Cache::enabled(),
-            'totalSize' => $assetsSize + $cacheSize + $logsSize + $sitemapSize + $thumbsSize,
-        ]);
+        $this->set('cacheStatus', Cache::enabled());
+        $this->set('totalSize', $assetsSize + $cacheSize + $logsSize + $sitemapSize + $thumbsSize);
         $this->set(compact('assetsSize', 'cacheSize', 'logsSize', 'sitemapSize', 'thumbsSize'));
     }
 }

@@ -28,10 +28,6 @@
 
     <p><?= __d('me_cms', 'Powered by {0}. Copyright {1}', ME_CMS, date('Y')) ?></p>
     <p>
-        <?= __d('me_cms', 'Developed by {0} for {1}', 'Mirko Pagliai', $this->Html->link(
-            'Nova Atlantis LTD',
-            'http://novatlantis.it',
-            ['target' => '_blank']
-        )) ?>
+        <?= __d('me_cms', 'Developed by {0}', $this->Html->link('Mirko Pagliai', '//github.com/mirko-pagliai', ['target' => '_blank'])) ?>
     </p>
 </footer>

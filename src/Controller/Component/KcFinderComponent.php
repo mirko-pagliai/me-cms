@@ -134,11 +134,7 @@ class KcFinderComponent extends Component
     {
         $result = $this->Checkup->Webroot->isWriteable();
 
-        if (empty($result) || !array_key_exists(UPLOADED, $result)) {
-            return false;
-        }
-
-        return $result[UPLOADED];
+        return $result && array_key_exists(UPLOADED, $result) ? $result[UPLOADED] : false;
     }
 
     /**

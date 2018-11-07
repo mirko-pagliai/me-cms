@@ -97,10 +97,7 @@ class UsersController extends AppController
     {
         parent::initialize();
 
-        $this->Cookie->configKey('login', [
-            'encryption' => 'aes',
-            'expires' => '+365 days',
-        ]);
+        $this->Cookie->configKey('login', ['encryption' => 'aes', 'expires' => '+365 days']);
 
         $this->loadComponent('Tokens.Token');
         $this->loadComponent(ME_CMS . '.LoginRecorder');
@@ -138,10 +135,9 @@ class UsersController extends AppController
             throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
         }
 
-        $update = $this->Users->find('pending')
+        $update = $this->Users->findPendingById($id)
             ->update()
             ->set(['active' => true])
-            ->where(compact('id'))
             ->execute();
 
         if ($update->count()) {
@@ -177,9 +173,7 @@ class UsersController extends AppController
             //Checks for reCAPTCHA, if requested
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
                 if (!$entity->getErrors()) {
-                    $user = $this->Users->find('pending')
-                        ->where(['email' => $this->request->getData('email')])
-                        ->first();
+                    $user = $this->Users->findPendingByEmail($this->request->getData('email'))->first();
 
                     if ($user) {
                         //Sends the activation mail
@@ -299,9 +293,7 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
-                $user = $this->Users->find('active')
-                    ->where(['email' => $this->request->getData('email')])
-                    ->first();
+                $user = $this->Users->findActiveByEmail($this->request->getData('email'))->first();
 
                 if ($user) {
                     //Creates the token
@@ -348,10 +340,7 @@ class UsersController extends AppController
             throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
         }
 
-        $user = $this->Users->find('active')
-            ->select(['id'])
-            ->where(compact('id'))
-            ->firstOrFail();
+        $user = $this->Users->findActiveById($id)->select(['id'])->firstOrFail();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());

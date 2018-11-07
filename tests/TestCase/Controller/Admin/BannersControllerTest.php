@@ -38,8 +38,8 @@ class BannersControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.banners',
-        'plugin.me_cms.banners_positions',
+        'plugin.me_cms.Banners',
+        'plugin.me_cms.BannersPositions',
     ];
 
     /**
@@ -328,7 +328,7 @@ class BannersControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, ['description' => 'New description for first banner']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['target' => 'invalidTarget']);
@@ -359,6 +359,6 @@ class BannersControllerTest extends IntegrationTestCase
     {
         $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
     }
 }

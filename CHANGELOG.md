@@ -4,11 +4,20 @@
 * removed `SerializedLog`. Use instead `EntityFileLog\Log\Engine\EntityFileLog`.
 
 ## 2.25 branch
+### 2.25.3
+* photo albums are now indexed by creation date. The creation date is shown in
+    the admin panel;
+* fixed bug in indexing photo albums on mobile devices;
+* updated for me-tools 2.17.4.
+
 ### 2.25.2
-* `AuthComponent` now uses the `auth` find method (`UsersTable::findAuth()`);
-* fixed bug on required data check for mailer classes.
+* optimized `MeCms\Controller\PagesCategoriesController::view()`, now it
+    executes a single query and pages are contained in the category entity;
+* simplified a lot of controllers code.
 
 ### 2.25.1
+* `AuthComponent` now uses the `auth` find method (`UsersTable::findAuth()`);
+* fixed bug on required data check for mailer classes;
 * uses the `cakephp-entity-file-log` package, so now `SerializedLog` extends
     `EntityFileLog\Log\Engine\EntityFileLog`. In a future release
     `SerializedLog` will be removed;

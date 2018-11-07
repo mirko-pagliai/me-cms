@@ -38,8 +38,8 @@ class PhotosControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.photos',
-        'plugin.me_cms.photos_albums',
+        'plugin.me_cms.Photos',
+        'plugin.me_cms.PhotosAlbums',
     ];
 
     /**
@@ -328,7 +328,7 @@ class PhotosControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, ['description' => 'New description for first banner']);
         $this->assertRedirect(['action' => 'index', 1]);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['album_id' => 'aa']);
@@ -359,6 +359,6 @@ class PhotosControllerTest extends IntegrationTestCase
     {
         $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index', 1]);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
     }
 }

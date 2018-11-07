@@ -30,9 +30,9 @@ class PostsTagsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts',
-        'plugin.me_cms.posts_tags',
-        'plugin.me_cms.tags',
+        'plugin.me_cms.Posts',
+        'plugin.me_cms.PostsTags',
+        'plugin.me_cms.Tags',
     ];
 
     /**
@@ -114,7 +114,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
         //POST request. Data are valid
         $this->post($url, ['tag' => 'another tag']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['tag' => 'aa']);

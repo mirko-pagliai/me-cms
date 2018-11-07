@@ -36,7 +36,7 @@ class BackupsControllerTest extends IntegrationTestCase
      * Internal method to create a backup file
      * @return string File path
      */
-    protected function createBackup()
+    protected function createSingleBackup()
     {
         $file = getConfigOrFail(DATABASE_BACKUP . '.target') . DS . 'backup.sql';
         file_put_contents($file, null);
@@ -173,7 +173,7 @@ class BackupsControllerTest extends IntegrationTestCase
         //POST request. Now data are valid
         $this->post($url, ['filename' => 'my_backup.sql']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertFileExists(getConfigOrFail(DATABASE_BACKUP . '.target') . DS . 'my_backup.sql');
     }
 
@@ -184,11 +184,11 @@ class BackupsControllerTest extends IntegrationTestCase
     public function testDelete()
     {
         //Creates a backup file
-        $file = $this->createBackup();
+        $file = $this->createSingleBackup();
 
         $this->post($this->url + ['action' => 'delete', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertFileNotExists($file);
     }
 
@@ -203,7 +203,7 @@ class BackupsControllerTest extends IntegrationTestCase
 
         $this->post($this->url + ['action' => 'deleteAll']);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertFileNotExists($files);
     }
 
@@ -214,7 +214,7 @@ class BackupsControllerTest extends IntegrationTestCase
     public function testDownload()
     {
         //Creates a backup file
-        $file = $this->createBackup();
+        $file = $this->createSingleBackup();
 
         $this->get($this->url + ['action' => 'download', urlencode(basename($file))]);
         $this->assertResponseOkAndNotEmpty();
@@ -228,12 +228,12 @@ class BackupsControllerTest extends IntegrationTestCase
     public function testRestore()
     {
         //Creates a backup file and writes some cache data
-        $file = $this->createBackup();
+        $file = $this->createSingleBackup();
         Cache::writeMany(['firstKey' => 'firstValue', 'secondKey' => 'secondValue']);
 
         $this->post($this->url + ['action' => 'restore', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertFalse(Cache::read('firstKey'));
         $this->assertFalse(Cache::read('secondKey'));
     }
@@ -245,11 +245,11 @@ class BackupsControllerTest extends IntegrationTestCase
     public function testSend()
     {
         //Creates a backup file
-        $file = $this->createBackup();
+        $file = $this->createSingleBackup();
 
         $this->post($this->url + ['action' => 'send', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('The operation has been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertLogContains(sprintf(
             'Called `send()` with args: `%s`, `%s`',
             $file,

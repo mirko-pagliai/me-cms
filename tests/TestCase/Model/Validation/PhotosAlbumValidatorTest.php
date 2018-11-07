@@ -36,7 +36,7 @@ class PhotosAlbumValidatorTest extends ValidationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.photos_albums',
+        'plugin.me_cms.PhotosAlbums',
     ];
 
     /**

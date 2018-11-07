@@ -38,12 +38,12 @@ class SystemsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.pages',
-        'plugin.me_cms.pages_categories',
-        'plugin.me_cms.photos',
-        'plugin.me_cms.photos_albums',
-        'plugin.me_cms.posts',
-        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.Pages',
+        'plugin.me_cms.PagesCategories',
+        'plugin.me_cms.Photos',
+        'plugin.me_cms.PhotosAlbums',
+        'plugin.me_cms.Posts',
+        'plugin.me_cms.PostsCategories',
     ];
 
     /**

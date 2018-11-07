@@ -37,8 +37,8 @@ class AuthComponentTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.users',
-        'plugin.me_cms.users_groups',
+        'plugin.me_cms.Users',
+        'plugin.me_cms.UsersGroups',
     ];
 
     /**
@@ -97,7 +97,10 @@ class AuthComponentTest extends TestCase
             'email' => 'zeta@example.com',
             'active' => true,
             'banned' => false,
-            'full_name' => null,
+            'first_name' => 'Zeta',
+            'last_name' => 'Zeta',
+            'group' => ['name' => 'admin'],
+            'full_name' => 'Zeta Zeta',
             'picture' => 'MeCms.no-avatar.jpg',
         ];
 

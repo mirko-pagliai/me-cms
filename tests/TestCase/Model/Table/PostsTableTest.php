@@ -37,11 +37,11 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts',
-        'plugin.me_cms.posts_categories',
-        'plugin.me_cms.posts_tags',
-        'plugin.me_cms.tags',
-        'plugin.me_cms.users',
+        'plugin.me_cms.Posts',
+        'plugin.me_cms.PostsCategories',
+        'plugin.me_cms.PostsTags',
+        'plugin.me_cms.Tags',
+        'plugin.me_cms.Users',
     ];
 
     /**
@@ -222,9 +222,9 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $query = $this->Table->find('forIndex');
         $sql = $query->sql();
 
-        $this->assertEquals(['title', 'slug'], $query->contain()['Categories']['fields']);
-        $this->assertTrue((new \ReflectionFunction($query->contain()['Tags']['queryBuilder']))->isClosure());
-        $this->assertEquals(['id', 'first_name', 'last_name'], $query->contain()['Users']['fields']);
+        $this->assertEquals(['title', 'slug'], $query->getContain()['Categories']['fields']);
+        $this->assertTrue((new \ReflectionFunction($query->getContain()['Tags']['queryBuilder']))->isClosure());
+        $this->assertEquals(['id', 'first_name', 'last_name'], $query->getContain()['Users']['fields']);
 
         $this->assertStringStartsWith('SELECT Posts.id AS `Posts__id`, Posts.title AS `Posts__title`, Posts.preview AS `Posts__preview`, Posts.subtitle AS `Posts__subtitle`, Posts.slug AS `Posts__slug`, Posts.text AS `Posts__text`, Posts.created AS `Posts__created`', $sql);
         $this->assertStringEndsWith('ORDER BY Posts.created DESC', $sql);

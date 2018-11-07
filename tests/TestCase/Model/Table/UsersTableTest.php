@@ -37,10 +37,10 @@ class UsersTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts',
+        'plugin.me_cms.Posts',
         'plugin.me_cms.tokens',
-        'plugin.me_cms.users',
-        'plugin.me_cms.users_groups',
+        'plugin.me_cms.Users',
+        'plugin.me_cms.UsersGroups',
     ];
 
     /**
@@ -228,7 +228,7 @@ class UsersTableTest extends TestCase
     public function testFindAuth()
     {
         $query = $this->Users->find('auth');
-        $this->assertEquals('SELECT Users.id AS `Users__id`, Users.username AS `Users__username`, Users.password AS `Users__password`, Users.email AS `Users__email`, Users.active AS `Users__active`, Users.banned AS `Users__banned` FROM users Users', $query->sql());
+        $this->assertStringEndsWith('FROM users Users INNER JOIN users_groups Groups ON Groups.id = (Users.group_id)', $query->sql());
     }
 
     /**
