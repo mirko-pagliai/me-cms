@@ -18,7 +18,7 @@ use MeTools\TestSuite\TestCase;
 /**
  * ValidationTestCase class
  */
-class ValidationTestCase extends TestCase
+abstract class ValidationTestCase extends TestCase
 {
     /**
      * Assert that all data are required.

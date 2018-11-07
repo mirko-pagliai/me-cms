@@ -93,9 +93,7 @@ class BannersFixture extends TestFixture
     {
         parent::drop($db);
 
-        foreach (glob(BANNERS . '*.*') as $file) {
-            unlink($file);
-        }
+        safe_unlink_recursive(BANNERS, 'empty');
     }
 
     /**
