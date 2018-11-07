@@ -24,7 +24,7 @@ use MeTools\TestSuite\IntegrationTestCase as BaseIntegrationTestCase;
  *  integration tests over mock objects as you can test more of your code
  *  easily and avoid some of the maintenance pitfalls that mock objects create.
  */
-class IntegrationTestCase extends BaseIntegrationTestCase
+abstract class IntegrationTestCase extends BaseIntegrationTestCase
 {
     /**
      * A controller instance
