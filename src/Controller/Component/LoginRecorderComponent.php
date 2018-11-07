@@ -101,21 +101,19 @@ class LoginRecorderComponent extends Component
      */
     public function write()
     {
-        $FileArray = $this->getFileArray();
-        $current = $this->getUserAgent() + compact('agent', 'ip');
-        $current += ['agent' => filter_input(INPUT_SERVER, 'HTTP_USER_AGENT'), 'ip' => $this->getClientIp()];
-        $last = $FileArray->exists(0) ? $FileArray->get(0) : [];
+        $current = $this->getUserAgent() + ['agent' => filter_input(INPUT_SERVER, 'HTTP_USER_AGENT'), 'ip' => $this->getClientIp()];
+        $last = $this->getFileArray()->exists(0) ? $this->getFileArray()->get(0) : [];
 
         //Removes the first record (last in order of time), if it has been saved
         //  less than an hour ago and if the user agent data are the same
         if ($last && (new Time($last->get('time')))->modify('+1 hour')->isFuture()
             && $last->extract(['agent', 'browser', 'ip', 'platform', 'version']) == $current
         ) {
-            $FileArray->delete(0);
+            $this->getFileArray()->delete(0);
         }
 
         //Adds the current request, takes only a specified number of records and writes
-        return $FileArray->prepend(new Entity($current + ['time' => new Time]))
+        return $this->getFileArray()->prepend(new Entity($current + ['time' => new Time]))
             ->take(getConfig('users.login_log'))
             ->write();
     }
