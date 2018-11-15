@@ -26,7 +26,7 @@ class Mailer extends CakeMailer
      * @return \Cake\Mailer\Email Email instance
      * @since 2.15.3
      */
-    protected function getEmailInstance()
+    public function getEmailInstance()
     {
         return $this->_email;
     }
@@ -34,7 +34,6 @@ class Mailer extends CakeMailer
     /**
      * Constructor
      * @param \Cake\Mailer\Email|null $email Email instance
-     * @uses Cake\Mailer\Mailer::__construct()
      * @uses getEmailInstance()
      */
     public function __construct(Email $email = null)
