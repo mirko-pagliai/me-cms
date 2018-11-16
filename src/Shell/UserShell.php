@@ -123,8 +123,7 @@ class UserShell extends Shell
     public function groups()
     {
         //Gets user groups
-        $groups = $this->Users->Groups->find()
-            ->select(['id', 'name', 'label', 'user_count']);
+        $groups = $this->Users->Groups->find();
 
         //Checks for user groups
         if (!$groups->count()) {
@@ -157,11 +156,9 @@ class UserShell extends Shell
     public function users()
     {
         //Gets users
-        $users = $this->Users->find()
-            ->select(['id', 'username', 'email', 'first_name', 'last_name', 'active', 'banned', 'post_count', 'created'])
-            ->contain('Groups', function (Query $q) {
-                return $q->select(['label']);
-            });
+        $users = $this->Users->find()->contain('Groups', function (Query $q) {
+            return $q->select(['label']);
+        });
 
         //Checks for users
         if (!$users->count()) {
