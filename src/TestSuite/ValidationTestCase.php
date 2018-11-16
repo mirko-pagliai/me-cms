@@ -14,6 +14,7 @@
 namespace MeCms\TestSuite;
 
 use Cake\Utility\Inflector;
+use Error;
 use MeTools\TestSuite\TestCase;
 use MeTools\TestSuite\Traits\MockTrait;
 
@@ -100,22 +101,6 @@ abstract class ValidationTestCase extends TestCase
             } catch (Error $e) {
                 return;
             }
-
-//            //Tries to retrieve all cache keys related to the table and associated tables
-//            foreach (array_merge([$this->Table], iterator_to_array($this->Table->associations())) as $table) {
-//                if (!empty($table->cache)) {
-//                    $this->cacheToClear[] = $table->cache;
-//                }
-//            }
         }
-
-//        //Clears all cache keys
-//        foreach ($this->cacheToClear as $cacheKey) {
-//            if (!Cache::getConfig($cacheKey)) {
-//                $this->fail('Cache key `' . $cacheKey . '` does not exist');
-//            }
-//
-//            Cache::clear(false, $cacheKey);
-//        }
     }
 }
