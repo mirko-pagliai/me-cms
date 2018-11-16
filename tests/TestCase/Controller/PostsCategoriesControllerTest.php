@@ -13,19 +13,15 @@
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\Post;
+use MeCms\Model\Entity\PostsCategory;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PostsCategoriesControllerTest class
  */
-class PostsCategoriesControllerTest extends IntegrationTestCase
+class PostsCategoriesControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\PostsCategoriesTable
-     */
-    protected $PostsCategories;
-
     /**
      * Fixtures
      * @var array
@@ -39,21 +35,6 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->PostsCategories = TableRegistry::get(ME_CMS . '.PostsCategories');
-
-        Cache::clear(false, $this->PostsCategories->cache);
-    }
-
-    /**
      * Tests for `index()` method
      * @test
      */
@@ -61,14 +42,11 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
     {
         $this->get(['_name' => 'postsCategories']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/PostsCategories/index.ctp');
+        $this->assertTemplate('PostsCategories/index.ctp');
+        $this->assertContainsInstanceof(PostsCategory::class, $this->viewVariable('categories'));
 
-        $categoriesFromView = $this->viewVariable('categories');
-        $this->assertNotEmpty($categoriesFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\PostsCategory', $categoriesFromView);
-
-        $cache = Cache::read('categories_index', $this->PostsCategories->cache);
-        $this->assertEquals($categoriesFromView->toArray(), $cache->toArray());
+        $cache = Cache::read('categories_index', $this->Table->cache);
+        $this->assertEquals($this->viewVariable('categories')->toArray(), $cache->toArray());
     }
 
     /**
@@ -77,29 +55,21 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = $this->PostsCategories->find('active')->extract('slug')->first();
+        $slug = $this->Table->find('active')->extract('slug')->first();
         $url = ['_name' => 'postsCategory', $slug];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/PostsCategories/view.ctp');
+        $this->assertTemplate('PostsCategories/view.ctp');
+        $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
+        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
 
-        $categoryFromView = $this->viewVariable('category');
-        $this->assertNotEmpty($categoryFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoryFromView);
-
-        $postsFromView = $this->viewVariable('posts');
-        $this->assertNotEmpty($postsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
-
-        //Sets the cache name
         $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->PostsCategories->cache
+            $this->Table->cache
         ));
-
-        $this->assertEquals($postsFromView->toArray(), $postsFromCache->toArray());
+        $this->assertEquals($this->viewVariable('posts')->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
 
         //GET request again. Now the data is in cache

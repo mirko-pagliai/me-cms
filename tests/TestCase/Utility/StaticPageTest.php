@@ -14,6 +14,8 @@ namespace MeCms\Test\TestCase\Utility;
 
 use Cake\Cache\Cache;
 use Cake\Core\App;
+use Cake\I18n\FrozenTime;
+use Cake\ORM\Entity;
 use MeCms\Core\Plugin;
 use MeCms\Utility\StaticPage;
 use MeTools\TestSuite\TestCase;
@@ -29,9 +31,7 @@ class StaticPageTest extends TestCase
     protected $StaticPage;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
@@ -46,7 +46,7 @@ class StaticPageTest extends TestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
@@ -83,15 +83,14 @@ class StaticPageTest extends TestCase
     public function testAll()
     {
         $pages = $this->StaticPage->all();
+        $this->assertContainsInstanceOf(Entity::class, $pages);
 
         foreach ($pages as $page) {
-            $this->assertInstanceOf('Cake\ORM\Entity', $page);
-            $this->assertInstanceOf('Cake\I18n\FrozenTime', $page->modified);
+            $this->assertInstanceOf(FrozenTime::class, $page->modified);
         }
 
         //Checks filenames
         $filenames = collection($pages)->extract('filename')->toList();
-
         $this->assertEquals([
             'page-from-app',
             'cookies-policy-it',
@@ -103,8 +102,7 @@ class StaticPageTest extends TestCase
 
         //Checks paths
         $paths = collection($pages)->extract('path')->toList();
-        $TestPluginPath = rtr(App::path('Template', 'TestPlugin')[0]);
-
+        $TestPluginPath = rtr(first_value(App::path('Template', 'TestPlugin')));
         $this->assertEquals([
             'tests/test_app/TestApp/Template/StaticPages/page-from-app.ctp',
             'src/Template/StaticPages/cookies-policy-it.ctp',
@@ -116,7 +114,6 @@ class StaticPageTest extends TestCase
 
         //Checks slugs
         $slugs = collection($pages)->extract('slug')->toList();
-
         $this->assertEquals([
             'page-from-app',
             'cookies-policy-it',
@@ -128,7 +125,6 @@ class StaticPageTest extends TestCase
 
         //Checks titles
         $titles = collection($pages)->extract('title')->toList();
-
         $this->assertEquals([
             'Page From App',
             'Cookies Policy It',
@@ -174,7 +170,6 @@ class StaticPageTest extends TestCase
 
         $originalDefaultlLocale = ini_get('intl.default_locale');
         ini_set('intl.default_locale', 'it');
-
         $this->assertEquals(ME_CMS . './StaticPages/cookies-policy-it', $this->StaticPage->get('cookies-policy'));
 
         ini_set('intl.default_locale', $originalDefaultlLocale);
@@ -187,13 +182,11 @@ class StaticPageTest extends TestCase
     public function testGetAllPaths()
     {
         $paths = $this->invokeMethod($this->StaticPage, 'getAllPaths');
-
         $this->assertEquals(Cache::read('paths', 'static_pages'), $paths);
 
         //Checks relative paths
         $paths = array_map('rtr', $paths);
-        $TestPluginPath = rtr(App::path('Template', 'TestPlugin')[0]);
-
+        $TestPluginPath = rtr(first_value(App::path('Template', 'TestPlugin')));
         $this->assertEquals([
             'tests/test_app/TestApp/Template/StaticPages/',
             'src/Template/StaticPages/',

@@ -13,19 +13,15 @@
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\Photo;
+use MeCms\Model\Entity\PhotosAlbum;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PhotosAlbumsControllerTest class
  */
-class PhotosAlbumsControllerTest extends IntegrationTestCase
+class PhotosAlbumsControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\PhotosAlbumsTable
-     */
-    protected $PhotosAlbums;
-
     /**
      * Fixtures
      * @var array
@@ -36,21 +32,6 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->PhotosAlbums = TableRegistry::get(ME_CMS . '.PhotosAlbums');
-
-        Cache::clear(false, $this->PhotosAlbums->cache);
-    }
-
-    /**
      * Tests for `index()` method
      * @test
      */
@@ -59,18 +40,18 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
         $this->get(['_name' => 'albums']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PhotosAlbums/index.ctp');
+        $this->assertContainsInstanceof(PhotosAlbum::class, $this->viewVariable('albums'));
 
-        $albumsFromView = $this->viewVariable('albums');
-        $this->assertNotEmpty($albumsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Photo', $albumsFromView->first()->photos);
+        foreach ($this->viewVariable('albums') as $album) {
+            $this->assertContainsInstanceof(Photo::class, $album->photos);
+        }
 
-        $cache = Cache::read('albums_index', $this->PhotosAlbums->cache);
-        $this->assertEquals($albumsFromView->toArray(), $cache->toArray());
+        $cache = Cache::read('albums_index', $this->Table->cache);
+        $this->assertEquals($this->viewVariable('albums')->toArray(), $cache->toArray());
 
         //Deletes all albums, except the first one and clears the cache
-        $this->PhotosAlbums->deleteAll(['id !=' => 1]);
-        Cache::clear(false, $this->PhotosAlbums->cache);
+        $this->Table->deleteAll(['id !=' => 1]);
+        Cache::clear(false, $this->Table->cache);
 
         //Now it redirects to the first album
         $this->get(['_name' => 'albums']);
@@ -83,32 +64,26 @@ class PhotosAlbumsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = $this->PhotosAlbums->find('active')->extract('slug')->first();
+        $slug = $this->Table->find('active')->extract('slug')->first();
         $url = ['_name' => 'album', $slug];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/PhotosAlbums/view.ctp');
+        $this->assertTemplate('PhotosAlbums/view.ctp');
+        $this->assertInstanceof(PhotosAlbum::class, $this->viewVariable('album'));
+        $this->assertContainsInstanceof(Photo::class, $this->viewVariable('photos'));
 
-        $albumFromView = $this->viewVariable('album');
-        $this->assertNotEmpty($albumFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PhotosAlbum', $albumFromView);
-
-        $cache = Cache::read(sprintf('album_%s', md5($slug)), $this->PhotosAlbums->cache);
-        $this->assertEquals($albumFromView, $cache->first());
-
-        $photosFromView = $this->viewVariable('photos');
-        $this->assertNotEmpty($photosFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Photo', $photosFromView);
+        $cache = Cache::read(sprintf('album_%s', md5($slug)), $this->Table->cache);
+        $this->assertEquals($this->viewVariable('album'), $cache->first());
 
         //Sets the cache name
         $cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.photos'), 1);
         list($photosFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->PhotosAlbums->cache
+            $this->Table->cache
         ));
 
-        $this->assertEquals($photosFromView->toArray(), $photosFromCache->toArray());
+        $this->assertEquals($this->viewVariable('photos')->toArray(), $photosFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Photos']);
 
         //GET request again. Now the data is in cache

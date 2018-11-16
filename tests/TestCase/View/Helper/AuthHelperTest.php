@@ -12,44 +12,23 @@
  */
 namespace MeCms\Test\TestCase\View\Helper;
 
-use Cake\View\View;
-use MeCms\View\Helper\AuthHelper;
-use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\HelperTestCase;
 
 /**
  * AuthHelperTest class
  */
-class AuthHelperTest extends TestCase
+class AuthHelperTest extends HelperTestCase
 {
-    /**
-     * @var \MeCms\View\Helper\AuthHelper
-     */
-    protected $Auth;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Auth = new AuthHelper(new View);
-    }
-
     /**
      * Tests for `initialize()` method
      * @test
      */
     public function testInitialize()
     {
-        $this->assertEmpty($this->getProperty($this->Auth, 'user'));
+        $this->assertEmpty($this->getProperty($this->Helper, 'user'));
 
-        $this->Auth->initialize(['id' => 1]);
-
-        $this->assertEquals(['id' => 1], $this->getProperty($this->Auth, 'user'));
+        $this->Helper->initialize(['id' => 1]);
+        $this->assertEquals(['id' => 1], $this->getProperty($this->Helper, 'user'));
     }
 
     /**
@@ -58,14 +37,13 @@ class AuthHelperTest extends TestCase
      */
     public function testHasId()
     {
-        $this->assertFalse($this->Auth->hasId(1));
+        $this->assertFalse($this->Helper->hasId(1));
 
-        $this->Auth->initialize(['id' => 1]);
-
-        $this->assertTrue($this->Auth->hasId(1));
-        $this->assertFalse($this->Auth->hasId(2));
-        $this->assertTrue($this->Auth->hasId([1, 2]));
-        $this->assertFalse($this->Auth->hasId([2, 3]));
+        $this->Helper->initialize(['id' => 1]);
+        $this->assertTrue($this->Helper->hasId(1));
+        $this->assertFalse($this->Helper->hasId(2));
+        $this->assertTrue($this->Helper->hasId([1, 2]));
+        $this->assertFalse($this->Helper->hasId([2, 3]));
     }
 
     /**
@@ -74,15 +52,13 @@ class AuthHelperTest extends TestCase
      */
     public function testIsFounder()
     {
-        $this->assertFalse($this->Auth->isFounder());
+        $this->assertFalse($this->Helper->isFounder());
 
-        $this->Auth->initialize(['id' => 1]);
+        $this->Helper->initialize(['id' => 1]);
+        $this->assertTrue($this->Helper->isFounder());
 
-        $this->assertTrue($this->Auth->isFounder());
-
-        $this->Auth->initialize(['id' => 2]);
-
-        $this->assertFalse($this->Auth->isFounder());
+        $this->Helper->initialize(['id' => 2]);
+        $this->assertFalse($this->Helper->isFounder());
     }
 
     /**
@@ -91,14 +67,13 @@ class AuthHelperTest extends TestCase
      */
     public function testIsGroup()
     {
-        $this->assertFalse($this->Auth->isGroup('admin'));
+        $this->assertFalse($this->Helper->isGroup('admin'));
 
-        $this->Auth->initialize(['group' => ['name' => 'admin']]);
-
-        $this->assertTrue($this->Auth->isGroup('admin'));
-        $this->assertTrue($this->Auth->isGroup(['admin', 'manager']));
-        $this->assertFalse($this->Auth->isGroup('manager'));
-        $this->assertFalse($this->Auth->isGroup(['manager', 'otherGroup']));
+        $this->Helper->initialize(['group' => ['name' => 'admin']]);
+        $this->assertTrue($this->Helper->isGroup('admin'));
+        $this->assertTrue($this->Helper->isGroup(['admin', 'manager']));
+        $this->assertFalse($this->Helper->isGroup('manager'));
+        $this->assertFalse($this->Helper->isGroup(['manager', 'otherGroup']));
     }
 
     /**
@@ -107,11 +82,10 @@ class AuthHelperTest extends TestCase
      */
     public function testIsLogged()
     {
-        $this->assertFalse($this->Auth->isLogged());
+        $this->assertFalse($this->Helper->isLogged());
 
-        $this->Auth->initialize(['id' => 1]);
-
-        $this->assertTrue($this->Auth->isLogged());
+        $this->Helper->initialize(['id' => 1]);
+        $this->assertTrue($this->Helper->isLogged());
     }
 
     /**
@@ -120,13 +94,12 @@ class AuthHelperTest extends TestCase
      */
     public function testUser()
     {
-        $this->assertNull($this->Auth->user());
-        $this->assertNull($this->Auth->user('id'));
+        $this->assertNull($this->Helper->user());
+        $this->assertNull($this->Helper->user('id'));
 
-        $this->Auth->initialize(['id' => 1, 'group' => ['name' => 'admin']]);
-
-        $this->assertEquals(['id' => 1, 'group' => ['name' => 'admin']], $this->Auth->user());
-        $this->assertEquals(1, $this->Auth->user('id'));
-        $this->assertNull($this->Auth->user('noExistingKey'));
+        $this->Helper->initialize(['id' => 1, 'group' => ['name' => 'admin']]);
+        $this->assertEquals(['id' => 1, 'group' => ['name' => 'admin']], $this->Helper->user());
+        $this->assertEquals(1, $this->Helper->user('id'));
+        $this->assertNull($this->Helper->user('noExistingKey'));
     }
 }

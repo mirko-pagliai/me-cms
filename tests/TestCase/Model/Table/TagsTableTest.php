@@ -12,19 +12,19 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use Cake\I18n\Time;
+use MeCms\Model\Validation\TagValidator;
+use MeCms\TestSuite\TableTestCase;
 
 /**
  * TagsTableTest class
  */
-class TagsTableTest extends TestCase
+class TagsTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\TagsTable
+     * @var bool
      */
-    protected $Tags;
+    public $autoFixtures = false;
 
     /**
      * Fixtures
@@ -37,27 +37,12 @@ class TagsTableTest extends TestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Tags = TableRegistry::get(ME_CMS . '.Tags');
-
-        Cache::clear(false, $this->Tags->cache);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
     public function testCacheProperty()
     {
-        $this->assertEquals('posts', $this->Tags->cache);
+        $this->assertEquals('posts', $this->Table->cache);
     }
 
     /**
@@ -66,14 +51,16 @@ class TagsTableTest extends TestCase
      */
     public function testBuildRules()
     {
+        $this->loadFixtures();
+
         $example = ['tag' => 'my tag'];
 
-        $entity = $this->Tags->newEntity($example);
-        $this->assertNotEmpty($this->Tags->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertNotEmpty($this->Table->save($entity));
 
         //Saves again the same entity
-        $entity = $this->Tags->newEntity($example);
-        $this->assertFalse($this->Tags->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals(['tag' => ['_isUnique' => I18N_VALUE_ALREADY_USED]], $entity->getErrors());
     }
 
@@ -83,20 +70,20 @@ class TagsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('tags', $this->Tags->getTable());
-        $this->assertEquals('tag', $this->Tags->getDisplayField());
-        $this->assertEquals('id', $this->Tags->getPrimaryKey());
+        $this->assertEquals('tags', $this->Table->getTable());
+        $this->assertEquals('tag', $this->Table->getDisplayField());
+        $this->assertEquals('id', $this->Table->getPrimaryKey());
 
-        $this->assertInstanceOf('Cake\ORM\Association\BelongsToMany', $this->Tags->Posts);
-        $this->assertEquals('tag_id', $this->Tags->Posts->getForeignKey());
-        $this->assertEquals('post_id', $this->Tags->Posts->getTargetForeignKey());
-        $this->assertEquals('posts_tags', $this->Tags->Posts->junction()->getTable());
-        $this->assertEquals(ME_CMS . '.Posts', $this->Tags->Posts->className());
-        $this->assertEquals(ME_CMS . '.PostsTags', $this->Tags->Posts->getThrough());
+        $this->assertBelongsToMany($this->Table->Posts);
+        $this->assertEquals('tag_id', $this->Table->Posts->getForeignKey());
+        $this->assertEquals('post_id', $this->Table->Posts->getTargetForeignKey());
+        $this->assertEquals('posts_tags', $this->Table->Posts->junction()->getTable());
+        $this->assertEquals(ME_CMS . '.Posts', $this->Table->Posts->className());
+        $this->assertEquals(ME_CMS . '.PostsTags', $this->Table->Posts->getThrough());
 
-        $this->assertTrue($this->Tags->hasBehavior('Timestamp'));
+        $this->assertHasBehavior('Timestamp');
 
-        $this->assertInstanceOf('MeCms\Model\Validation\TagValidator', $this->Tags->getValidator());
+        $this->assertInstanceOf(TagValidator::class, $this->Table->getValidator());
     }
 
     /**
@@ -105,10 +92,12 @@ class TagsTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $query = $this->Tags->find('active');
+        $this->loadFixtures();
+
+        $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM tags Tags INNER JOIN posts_tags PostsTags ON Tags.id = (PostsTags.tag_id) INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Posts.id = (PostsTags.post_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
     }
 
@@ -120,7 +109,7 @@ class TagsTableTest extends TestCase
     {
         $data = ['name' => 'test'];
 
-        $query = $this->Tags->queryFromFilter($this->Tags->find(), $data);
+        $query = $this->Table->queryFromFilter($this->Table->find(), $data);
         $this->assertStringEndsWith('FROM tags Tags WHERE Tags.tag like :c0', $query->sql());
         $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
     }

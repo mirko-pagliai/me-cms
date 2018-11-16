@@ -13,21 +13,25 @@
 namespace MeCms\Test\TestCase\Model\Table\Others;
 
 use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Table\PagesTable;
+use MeCms\Model\Table\PostsTable;
+use MeCms\TestSuite\TableTestCase;
+use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * AssociationsSameAliasesTest class
  */
-class AssociationsSameAliasesTest extends TestCase
+class AssociationsSameAliasesTest extends TableTestCase
 {
+    use MockTrait;
+
     /**
-     * @var \MeCms\Model\Table\PagesTable
+     * @var object
      */
     protected $Pages;
 
     /**
-     * @var \MeCms\Model\Table\PostsTable
+     * @var object
      */
     protected $Posts;
 
@@ -43,17 +47,15 @@ class AssociationsSameAliasesTest extends TestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
-        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
+        $this->Pages = $this->getMockForTable(PagesTable::class, null);
+        $this->Posts = $this->getMockForTable(PostsTable::class, null);
 
         Cache::clearAll();
         Cache::clear(false, $this->Pages->cache);
@@ -69,13 +71,13 @@ class AssociationsSameAliasesTest extends TestCase
         foreach (['Pages', 'Posts'] as $table) {
             $categories = $this->$table->Categories;
 
-            $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $categories);
+            $this->assertBelongsTo($categories);
             $this->assertEquals('Categories', $categories->getName());
             $this->assertEquals(ME_CMS . '.' . $table . 'Categories', $categories->className());
 
             $category = $categories->find()->first();
             $this->assertNotEmpty($category);
-            $this->assertInstanceof('MeCms\Model\Entity\\' . $table . 'Category', $category);
+            $this->assertInstanceof(ME_CMS . '\Model\Entity\\' . $table . 'Category', $category);
         }
     }
 }

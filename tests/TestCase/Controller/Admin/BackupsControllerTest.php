@@ -14,31 +14,23 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Log\Log;
-use MeCms\Controller\Admin\BackupsController;
-use MeCms\TestSuite\IntegrationTestCase;
+use Cake\ORM\Entity;
+use MeCms\Form\BackupForm;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * BackupsControllerTest class
  */
-class BackupsControllerTest extends IntegrationTestCase
+class BackupsControllerTest extends ControllerTestCase
 {
     /**
-     * @var \MeCms\Controller\Admin\BackupsController
-     */
-    protected $Controller;
-
-    /**
-     * @var array
-     */
-    protected $url;
-
-    /**
      * Internal method to create a backup file
+     * @param string $extension Extension
      * @return string File path
      */
-    protected function createSingleBackup()
+    protected function createSingleBackup($extension = 'sql')
     {
-        $file = getConfigOrFail(DATABASE_BACKUP . '.target') . DS . 'backup.sql';
+        $file = getConfigOrFail(DATABASE_BACKUP . '.target') . DS . sprintf('backup.%s', $extension);
         file_put_contents($file, null);
 
         return $file;
@@ -50,41 +42,19 @@ class BackupsControllerTest extends IntegrationTestCase
      */
     protected function createSomeBackups()
     {
-        foreach (['sql', 'sql.gz', 'sql.bz2'] as $k => $ext) {
-            $files[$k] = getConfigOrFail(DATABASE_BACKUP . '.target') . DS . 'backup.' . $ext;
-            file_put_contents($files[$k], null);
-        }
-
-        return $files;
+        return array_map([$this, 'createSingleBackup'], ['sql', 'sql.gz', 'sql.bz2']);
     }
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUserGroup('admin');
-
-        $this->Controller = new BackupsController;
-
-        $this->url = ['controller' => 'Backups', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
-    }
-
-    /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
     {
-        parent::tearDown();
-
         //Deletes all backups
         safe_unlink_recursive(getConfigOrFail(DATABASE_BACKUP . '.target'));
+
+        parent::tearDown();
     }
 
     /**
@@ -108,14 +78,13 @@ class BackupsControllerTest extends IntegrationTestCase
             ->setMethods(['send'])
             ->getMock();
 
-        $this->_controller->BackupManager->method('send')
-            ->will($this->returnCallback(function () {
-                $args = implode(', ', array_map(function ($arg) {
-                    return '`' . $arg . '`';
-                }, func_get_args()));
+        $this->_controller->BackupManager->method('send')->will($this->returnCallback(function () {
+            $args = implode(', ', array_map(function ($arg) {
+                return '`' . $arg . '`';
+            }, func_get_args()));
 
-                return Log::write('debug', 'Called `send()` with args: ' . $args);
-            }));
+            return Log::write('debug', 'Called `send()` with args: ' . $args);
+        }));
     }
 
     /**
@@ -137,16 +106,11 @@ class BackupsControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        //Creates some backup files
         $this->createSomeBackups();
-
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Backups/index.ctp');
-
-        $backupsFromView = $this->viewVariable('backups');
-        $this->assertNotEmpty($backupsFromView->toArray());
-        $this->assertContainsInstanceof('Cake\ORM\Entity', $backupsFromView);
+        $this->assertTemplate('Admin/Backups/index.ctp');
+        $this->assertContainsInstanceof(Entity::class, $this->viewVariable('backups'));
     }
 
     /**
@@ -159,22 +123,20 @@ class BackupsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Backups/add.ctp');
-
-        $backupFromView = $this->viewVariable('backup');
-        $this->assertNotEmpty($backupFromView);
-        $this->assertInstanceof('MeCms\Form\BackupForm', $backupFromView);
+        $this->assertTemplate('Admin/Backups/add.ctp');
+        $this->assertInstanceof(BackupForm::class, $this->viewVariable('backup'));
 
         //POST request. Data are invalid
         $this->post($url, ['filename' => 'backup.txt']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertFileNotExists(getConfigOrFail(DATABASE_BACKUP . '.target') . DS . 'backup.txt');
 
         //POST request. Now data are valid
-        $this->post($url, ['filename' => 'my_backup.sql']);
+        $this->post($url, ['filename' => 'backup.sql']);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertFileExists(getConfigOrFail(DATABASE_BACKUP . '.target') . DS . 'my_backup.sql');
+        $this->assertFileExists(getConfigOrFail(DATABASE_BACKUP . '.target') . DS . 'backup.sql');
     }
 
     /**
@@ -183,9 +145,7 @@ class BackupsControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        //Creates a backup file
         $file = $this->createSingleBackup();
-
         $this->post($this->url + ['action' => 'delete', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
@@ -198,9 +158,7 @@ class BackupsControllerTest extends IntegrationTestCase
      */
     public function testDeleteAll()
     {
-        //Creates some backup files
         $files = $this->createSomeBackups();
-
         $this->post($this->url + ['action' => 'deleteAll']);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
@@ -213,9 +171,7 @@ class BackupsControllerTest extends IntegrationTestCase
      */
     public function testDownload()
     {
-        //Creates a backup file
         $file = $this->createSingleBackup();
-
         $this->get($this->url + ['action' => 'download', urlencode(basename($file))]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertFileResponse($file);
@@ -227,10 +183,8 @@ class BackupsControllerTest extends IntegrationTestCase
      */
     public function testRestore()
     {
-        //Creates a backup file and writes some cache data
-        $file = $this->createSingleBackup();
         Cache::writeMany(['firstKey' => 'firstValue', 'secondKey' => 'secondValue']);
-
+        $file = $this->createSingleBackup();
         $this->post($this->url + ['action' => 'restore', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
@@ -244,16 +198,11 @@ class BackupsControllerTest extends IntegrationTestCase
      */
     public function testSend()
     {
-        //Creates a backup file
+        $email = getConfigOrFail(ME_CMS . '.email.webmaster');
         $file = $this->createSingleBackup();
-
         $this->post($this->url + ['action' => 'send', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertLogContains(sprintf(
-            'Called `send()` with args: `%s`, `%s`',
-            $file,
-            getConfigOrFail(ME_CMS . '.email.webmaster')
-        ), 'debug');
+        $this->assertLogContains(sprintf('Called `send()` with args: `%s`, `%s`', $file, $email), 'debug');
     }
 }

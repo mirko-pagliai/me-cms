@@ -14,19 +14,14 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\I18n\Time;
-use MeCms\Controller\SystemsController;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Form\ContactUsForm;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * SystemsControllerTest class
  */
-class SystemsControllerTest extends IntegrationTestCase
+class SystemsControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Controller\SystemsController
-     */
-    protected $Controller;
-
     /**
      * Does not automatically load fixtures
      * @var bool
@@ -45,19 +40,6 @@ class SystemsControllerTest extends IntegrationTestCase
         'plugin.me_cms.Posts',
         'plugin.me_cms.PostsCategories',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Controller = new SystemsController;
-    }
 
     /**
      * Tests for `acceptCookies()` method
@@ -83,20 +65,14 @@ class SystemsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Systems/contact_us.ctp');
-
-        $contactFromView = $this->viewVariable('contact');
-        $this->assertNotEmpty($contactFromView);
-        $this->assertInstanceof('MeCms\Form\ContactUsForm', $contactFromView);
+        $this->assertTemplate('Systems/contact_us.ctp');
+        $this->assertInstanceof(ContactUsForm::class, $this->viewVariable('contact'));
 
         //POST request. Data are invalid
         $this->post($url, ['first_name' => 'a']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-
-        $contactFromView = $this->viewVariable('contact');
-        $this->assertNotEmpty($contactFromView);
-        $this->assertInstanceof('MeCms\Form\ContactUsForm', $contactFromView);
+        $this->assertInstanceof(ContactUsForm::class, $this->viewVariable('contact'));
 
         //POST request. Now data are valid
         $this->post($url, [
@@ -113,10 +89,7 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->post($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
-
-        $contactFromView = $this->viewVariable('contact');
-        $this->assertNotEmpty($contactFromView);
-        $this->assertInstanceof('MeCms\Form\ContactUsForm', $contactFromView);
+        $this->assertInstanceof(ContactUsForm::class, $this->viewVariable('contact'));
 
         //Disabled
         Configure::write(ME_CMS . '.default.contact_us', false);
@@ -140,8 +113,8 @@ class SystemsControllerTest extends IntegrationTestCase
 
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Systems/ip_not_allowed.ctp');
-        $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
+        $this->assertTemplate('Systems/ip_not_allowed.ctp');
+        $this->assertLayout('login.ctp');
     }
 
     /**
@@ -157,8 +130,8 @@ class SystemsControllerTest extends IntegrationTestCase
         Configure::write(ME_CMS . '.default.offline', true);
         $this->get(['_name' => 'offline']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Systems/offline.ctp');
-        $this->assertLayout(ROOT . 'src/Template/Layout/login.ctp');
+        $this->assertTemplate('Systems/offline.ctp');
+        $this->assertLayout('login.ctp');
     }
 
     /**
@@ -168,7 +141,6 @@ class SystemsControllerTest extends IntegrationTestCase
     public function testSitemap()
     {
         $this->loadFixtures();
-
         safe_unlink(SITEMAP);
 
         //GET request. The sitemap will be created
@@ -177,14 +149,12 @@ class SystemsControllerTest extends IntegrationTestCase
         $this->assertContentType('application/x-gzip');
         $this->assertFileResponse(SITEMAP);
 
-        $filemtime = filemtime(SITEMAP);
-
         //GET request. The sitemap will be the same as the previous request
+        $filemtime = filemtime(SITEMAP);
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertContentType('application/x-gzip');
         $this->assertFileResponse(SITEMAP);
-
         $this->assertEquals($filemtime, filemtime(SITEMAP));
     }
 }

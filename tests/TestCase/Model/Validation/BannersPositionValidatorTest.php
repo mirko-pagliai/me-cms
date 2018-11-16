@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\ValidationTestCase;
 
 /**
@@ -21,15 +20,9 @@ use MeCms\TestSuite\ValidationTestCase;
 class BannersPositionValidatorTest extends ValidationTestCase
 {
     /**
-     * @var \MeCms\Model\Table\BannersPositionsTable
-     */
-    protected $BannersPositions;
-
-    /**
-     * Example data
      * @var array
      */
-    protected $example;
+    protected $example = ['title' => 'my-title'];
 
     /**
      * Fixtures
@@ -40,28 +33,13 @@ class BannersPositionValidatorTest extends ValidationTestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->BannersPositions = TableRegistry::get(ME_CMS . '.BannersPositions');
-
-        $this->example = ['title' => 'my-title'];
-    }
-
-    /**
      * Test validation.
      * It tests the proper functioning of the example data.
      * @test
      */
     public function testValidationExampleData()
     {
-        $this->assertAllDataAreRequired($this->BannersPositions, $this->example);
+        $this->assertAllDataAreRequired($this->example);
     }
 
     /**
@@ -70,15 +48,14 @@ class BannersPositionValidatorTest extends ValidationTestCase
      */
     public function testValidatorForTitle()
     {
-        foreach (['ab', str_repeat('a', 101)] as $value) {
-            $this->example['title'] = $value;
-            $errors = $this->BannersPositions->newEntity($this->example)->getErrors();
+        foreach (['ab', str_repeat('a', 101)] as $title) {
+            $errors = $this->Table->newEntity(compact('title') + $this->example)->getErrors();
             $this->assertEquals(['title' => ['lengthBetween' => 'Must be between 3 and 100 chars']], $errors);
         }
 
-        foreach (['abc', str_repeat('a', 100)] as $value) {
-            $this->example['title'] = $value;
-            $this->assertEmpty($this->BannersPositions->newEntity($this->example)->getErrors());
+        foreach (['abc', str_repeat('a', 100)] as $title) {
+            $errors = $this->Table->newEntity(compact('title') + $this->example)->getErrors();
+            $this->assertEmpty($errors);
         }
     }
 }

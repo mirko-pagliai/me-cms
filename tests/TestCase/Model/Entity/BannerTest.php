@@ -12,32 +12,13 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use MeCms\Model\Entity\Banner;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\EntityTestCase;
 
 /**
  * BannerTest class
  */
-class BannerTest extends TestCase
+class BannerTest extends EntityTestCase
 {
-    /**
-     * @var \MeCms\Model\Entity\Banner
-     */
-    protected $Banner;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Banner = new Banner;
-    }
-
     /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
@@ -45,8 +26,7 @@ class BannerTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $this->assertFalse($this->Banner->isAccessible('id'));
-        $this->assertFalse($this->Banner->isAccessible('modified'));
+        $this->assertHasNoAccessibleProperty(['id', 'modified']);
     }
 
     /**
@@ -55,7 +35,7 @@ class BannerTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['path', 'www'], $this->Banner->getVirtual());
+        $this->assertHasVirtualField(['path', 'www']);
     }
 
     /**
@@ -64,8 +44,8 @@ class BannerTest extends TestCase
      */
     public function testPathGetMutator()
     {
-        $this->Banner->filename = 'example.gif';
-        $this->assertEquals(BANNERS . 'example.gif', $this->Banner->path);
+        $this->Entity->filename = 'example.gif';
+        $this->assertEquals(BANNERS . 'example.gif', $this->Entity->path);
     }
 
     /**
@@ -74,7 +54,7 @@ class BannerTest extends TestCase
      */
     public function testWwwGetMutator()
     {
-        $this->Banner->filename = 'example.gif';
-        $this->assertEquals(BANNERS_WWW . 'example.gif', $this->Banner->www);
+        $this->Entity->filename = 'example.gif';
+        $this->assertEquals(BANNERS_WWW . 'example.gif', $this->Entity->www);
     }
 }

@@ -12,28 +12,30 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
-use Cake\Cache\Cache;
-use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
-use MeCms\Controller\Admin\UsersController;
+use Cake\ORM\Entity;
 use MeCms\Controller\Component\LoginRecorderComponent;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\User;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * UsersControllerTest class
  */
-class UsersControllerTest extends IntegrationTestCase
+class UsersControllerTest extends ControllerTestCase
 {
     /**
-     * @var \MeCms\Controller\Admin\UsersController
+     * @var array
      */
-    protected $Controller;
-
-    /**
-     * @var \MeCms\Model\Table\UsersTable
-     */
-    protected $Users;
+    protected static $example = [
+        'group_id' => 1,
+        'username' => 'new-username',
+        'email' => 'new-test-email@example.com',
+        'email_repeat' => 'new-test-email@example.com',
+        'password' => 'Password1!',
+        'password_repeat' => 'Password1!',
+        'first_name' => 'Alfa',
+        'last_name' => 'Beta',
+    ];
 
     /**
      * Fixtures
@@ -43,76 +45,6 @@ class UsersControllerTest extends IntegrationTestCase
         'plugin.me_cms.Users',
         'plugin.me_cms.UsersGroups',
     ];
-
-    /**
-     * @var array
-     */
-    protected $url;
-
-    /**
-     * Internal method to create a file to upload.
-     *
-     * It returns an array, similar to the `$_FILE` array that is created after
-     *  a upload
-     * @return array
-     */
-    protected function createFileToUpload()
-    {
-        $file = TMP . 'file_to_upload.jpg';
-
-        safe_copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
-
-        return [
-            'tmp_name' => $file,
-            'error' => UPLOAD_ERR_OK,
-            'name' => basename($file),
-            'type' => mime_content_type($file),
-            'size' => filesize($file),
-        ];
-    }
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUserGroup('admin');
-
-        $this->Controller = new UsersController;
-
-        $this->Users = TableRegistry::get(ME_CMS . '.Users');
-
-        Cache::clear(false, $this->Users->cache);
-
-        $this->url = ['controller' => 'Users', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
-    }
-
-    /**
-     * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
-     * @param \Cake\Controller\Controller|null $controller Controller instance
-     * @return void
-     */
-    public function controllerSpy($event, $controller = null)
-    {
-        parent::controllerSpy($event, $controller);
-
-        //Mocks the `Uploader` component
-        $this->_controller->Uploader = $this->getMockBuilder(get_class($this->_controller->Uploader))
-            ->setConstructorArgs([new ComponentRegistry])
-            ->setMethods(['move_uploaded_file'])
-            ->getMock();
-
-        $this->_controller->Uploader->method('move_uploaded_file')
-            ->will($this->returnCallback(function ($filename, $destination) {
-                return rename($filename, $destination);
-            }));
-    }
 
     /**
      * Tests for `beforeFilter()` method
@@ -138,7 +70,7 @@ class UsersControllerTest extends IntegrationTestCase
     public function testBeforeFilterNoGroups()
     {
         //Deletes all categories
-        $this->Users->Groups->deleteAll(['id IS NOT' => null]);
+        $this->Table->Groups->deleteAll(['id IS NOT' => null]);
 
         //`add` and `edit` actions don't work
         foreach (['index', 'add', 'edit'] as $action) {
@@ -159,11 +91,7 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testInitialize()
     {
-        $this->Controller = new UsersController;
-        $this->Controller->request = $this->Controller->request->withParam('action', 'index');
-        $this->Controller->initialize();
-
-        $this->assertContains('LoginRecorder', $this->Controller->components()->loaded());
+        $this->assertHasComponent('LoginRecorder');
     }
 
     /**
@@ -172,32 +100,22 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testIsAuthorized()
     {
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => false,
-        ]);
+        parent::testIsAuthorized();
 
-        //`changePassword` action
-        $this->Controller = new UsersController;
-        $this->Controller->request = $this->Controller->request->withParam('action', 'changePassword');
-
+        //With `changePassword` action
         $this->assertGroupsAreAuthorized([
             'admin' => true,
             'manager' => true,
             'user' => true,
-        ]);
+        ], 'changePassword');
 
-        //`activate` and `delete` actions
+        //With `activate` and `delete` actions
         foreach (['activate', 'delete'] as $action) {
-            $this->Controller = new UsersController;
-            $this->Controller->request = $this->Controller->request->withParam('action', $action);
-
             $this->assertGroupsAreAuthorized([
                 'admin' => true,
                 'manager' => false,
                 'user' => false,
-            ]);
+            ], $action);
         }
     }
 
@@ -209,11 +127,8 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Users/index.ctp');
-
-        $usersFromView = $this->viewVariable('users');
-        $this->assertNotEmpty($usersFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\User', $usersFromView);
+        $this->assertTemplate('Admin/Users/index.ctp');
+        $this->assertContainsInstanceof(User::class, $this->viewVariable('users'));
     }
 
     /**
@@ -222,26 +137,18 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        Configure::write(ME_CMS . '.users.login_log', 0);
-
         $url = $this->url + ['action' => 'view', 1];
 
+        Configure::write(ME_CMS . '.users.login_log', 0);
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Users/view.ctp');
-
-        $userFromView = $this->viewVariable('user');
-        $this->assertNotEmpty($userFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
-
-        $loginLogFromView = $this->viewVariable('loginLog');
-        $this->assertEmpty($loginLogFromView);
+        $this->assertTemplate('Admin/Users/view.ctp');
+        $this->assertInstanceof(User::class, $this->viewVariable('user'));
+        $this->assertEmpty($this->viewVariable('loginLog'));
 
         Configure::write(ME_CMS . '.users.login_log', 1);
-
         $this->get($url);
-        $loginLogFromView = $this->viewVariable('loginLog');
-        $this->assertNotNull($loginLogFromView);
+        $this->assertContainsInstanceof(Entity::class, $this->viewVariable('loginLog'));
     }
 
     /**
@@ -254,34 +161,19 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Users/add.ctp');
-
-        $userFromView = $this->viewVariable('user');
-        $this->assertNotEmpty($userFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
+        $this->assertTemplate('Admin/Users/add.ctp');
+        $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //POST request. Data are valid
-        $this->post($url, [
-            'group_id' => 1,
-            'username' => 'new-username',
-            'email' => 'new-test-email@example.com',
-            'email_repeat' => 'new-test-email@example.com',
-            'password' => 'Password1!',
-            'password_repeat' => 'Password1!',
-            'first_name' => 'Alfa',
-            'last_name' => 'Beta',
-        ]);
+        $this->post($url, self::$example);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['username' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
-
-        $userFromView = $this->viewVariable('user');
-        $this->assertNotEmpty($userFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(User::class, $this->viewVariable('user'));
     }
 
     /**
@@ -294,11 +186,8 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Users/edit.ctp');
-
-        $userFromView = $this->viewVariable('user');
-        $this->assertNotEmpty($userFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
+        $this->assertTemplate('Admin/Users/edit.ctp');
+        $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //POST request. Data are valid
         $this->post($url, ['first_name' => 'Gamma']);
@@ -308,13 +197,10 @@ class UsersControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['first_name' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
-        $userFromView = $this->viewVariable('user');
-        $this->assertNotEmpty($userFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
-
-        $url = $this->url + ['action' => 'edit', $this->Users->findByGroupId(1)->extract('id')->first()];
+        $url = $this->url + ['action' => 'edit', $this->Table->findByGroupId(1)->extract('id')->first()];
 
         //An admin cannot edit other admin users
         $this->get($url);
@@ -334,40 +220,39 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
+        $getUserId = function ($conditions = []) {
+            return $this->Table->find()->where($conditions)->extract('id')->first();
+        };
+        $idIsEmpty = function ($id) {
+            return $this->Table->findById($id)->isEmpty();
+        };
+
         $url = $this->url + ['action' => 'delete'];
 
         //Cannot delete the admin founder
         $this->post($url + [1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('You cannot delete the admin founder');
-
-        $adminUser = $this->Users->find()
-            ->where(['group_id' => 1, 'id !=' => 1])
-            ->extract('id')
-            ->first();
+        $this->assertFalse($idIsEmpty(1));
 
         //Only the admin founder can delete others admin users
-        $this->post($url + [$adminUser]);
+        $id = $getUserId(['group_id' => 1, 'id !=' => 1]);
+        $this->post($url + [$id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('Only the admin founder can do this');
+        $this->assertFalse($idIsEmpty($id));
 
-        $userWithPosts = $this->Users->find()
-            ->where(['group_id !=' => 1, 'post_count >=' => 1])
-            ->extract('id')
-            ->first();
-
-        $this->post($url + [$userWithPosts]);
+        $id = $getUserId(['group_id !=' => 1, 'post_count >=' => 1]);
+        $this->post($url + [$id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
+        $this->assertFalse($idIsEmpty($id));
 
-        $userWithNoPosts = $this->Users->find()
-            ->where(['group_id !=' => 1, 'post_count' => 0])
-            ->extract('id')
-            ->first();
-
-        $this->post($url + [$userWithNoPosts]);
+        $id = $getUserId(['group_id !=' => 1, 'post_count' => 0]);
+        $this->post($url + [$id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
+        $this->assertTrue($idIsEmpty($id));
     }
 
     /**
@@ -376,14 +261,13 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testActivate()
     {
-        $pendingUser = $this->Users->find('pending')->extract('id')->first();
-
-        $this->get($this->url + ['action' => 'activate', $pendingUser]);
+        $id = $this->Table->find('pending')->extract('id')->first();
+        $this->get($this->url + ['action' => 'activate', $id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //The user is now active
-        $this->assertTrue($this->Users->findById($pendingUser)->extract('active')->first());
+        $this->assertTrue($this->Table->findById($id)->extract('active')->first());
     }
 
     /**
@@ -397,17 +281,14 @@ class UsersControllerTest extends IntegrationTestCase
         $this->setUserId(1);
 
         //Saves the password for the first user
-        $user = $this->Users->get(1);
+        $user = $this->Table->get(1);
         $user->password = $oldPassword;
-        $this->Users->save($user);
+        $this->Table->save($user);
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Users/change_password.ctp');
-
-        $userFromView = $this->viewVariable('user');
-        $this->assertNotEmpty($userFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
+        $this->assertTemplate('Admin/Users/change_password.ctp');
+        $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //POST request. Data are valid
         $this->post($url, [
@@ -419,12 +300,12 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //The password has changed
-        $this->assertNotEquals($user->password, $this->Users->findById(1)->extract('password')->first());
+        $this->assertNotEquals($user->password, $this->Table->findById(1)->extract('password')->first());
 
         //Saves the password for the first user
-        $user = $this->Users->get(1);
+        $user = $this->Table->get(1);
         $user->password = $oldPassword;
-        $this->Users->save($user);
+        $this->Table->save($user);
 
         //POST request. Data are invalid (the old password is wrong)
         $this->post($url, [
@@ -433,14 +314,11 @@ class UsersControllerTest extends IntegrationTestCase
             'password_repeat' => 'newPassword!1',
         ]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //The password has not changed
-        $this->assertEquals($user->password, $this->Users->findById(1)->extract('password')->first());
-
-        $userFromView = $this->viewVariable('user');
-        $this->assertNotEmpty($userFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\User', $userFromView);
+        $this->assertEquals($user->password, $this->Table->findById(1)->extract('password')->first());
     }
 
     /**
@@ -450,14 +328,14 @@ class UsersControllerTest extends IntegrationTestCase
     public function testChangePicture()
     {
         $expectedPicture = USER_PICTURES . '1.jpg';
-        $file = $this->createFileToUpload();
+        $file = $this->createImageToUpload();
         $url = $this->url + ['action' => 'changePicture'];
         $this->setUserId(1);
 
         //GET request
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Users/change_picture.ctp');
+        $this->assertTemplate('Admin/Users/change_picture.ctp');
 
         //Creates some files that simulate previous user pictures. These files
         //  will be deleted before upload
@@ -484,12 +362,12 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testChangePictureErrorDuringUpload()
     {
-        $file = ['error' => UPLOAD_ERR_NO_FILE] + $this->createFileToUpload();
+        $file = ['error' => UPLOAD_ERR_NO_FILE] + $this->createImageToUpload();
 
         $this->post($this->url + ['action' => 'changePicture', '_ext' => 'json'], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"No file was uploaded"}');
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Users/json/change_picture.ctp');
+        $this->assertTemplate('Admin/Users/json/change_picture.ctp');
     }
 
     /**
@@ -498,37 +376,30 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testLastLogin()
     {
-        $this->LoginRecorder = $this->getMockBuilder(LoginRecorderComponent::class)
-            ->setMethods(['getController', 'getUserAgent'])
-            ->setConstructorArgs([new ComponentRegistry])
-            ->getMock();
+        $LoginRecorder = $this->getMockForComponent(LoginRecorderComponent::class, ['getController', 'getUserAgent']);
 
-        $this->LoginRecorder->method('getController')
-            ->will($this->returnValue($this->Controller));
+        $LoginRecorder->method('getController')->will($this->returnValue($this->Controller));
 
-        $this->LoginRecorder->method('getUserAgent')
+        $LoginRecorder->method('getUserAgent')
             ->will($this->returnValue([
                 'platform' => 'Linux',
                 'browser' => 'Chrome',
                 'version' => '55.0.2883.87',
             ]));
 
-        $this->LoginRecorder->config('user', 1);
+        $LoginRecorder->config('user', 1);
 
         //Writes a login log
-        $this->assertTrue($this->LoginRecorder->write());
-
-        $url = $this->url + ['action' => 'lastLogin'];
+        $this->assertTrue($LoginRecorder->write());
 
         $this->setUserId(1);
+        $url = $this->url + ['action' => 'lastLogin'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Users/last_login.ctp');
-
-        $loginLogFromView = $this->viewVariable('loginLog');
-        $this->assertNotEmpty($loginLogFromView);
-        $this->assertIsArray($loginLogFromView);
+        $this->assertTemplate('Admin/Users/last_login.ctp');
+        $this->assertNotEmpty($this->viewVariable('loginLog'));
+        $this->assertIsArray($this->viewVariable('loginLog'));
 
         //Disabled
         Configure::write(ME_CMS . '.users.login_log', false);

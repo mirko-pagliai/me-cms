@@ -12,39 +12,30 @@
  */
 namespace MeCms\Test\TestCase\View\Helper;
 
+use App\View\Cell\ExampleWidgetsCell;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use MeCms\View\Helper\WidgetHelper;
-use MeCms\View\View\AppView as View;
-use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\HelperTestCase;
+use TestPlugin\View\Cell\PluginExampleWidgetsCell;
 
 /**
  * WidgetHelperTest class
  */
-class WidgetHelperTest extends TestCase
+class WidgetHelperTest extends HelperTestCase
 {
     /**
-     * @var \MeCms\View\Helper\WidgetHelper
-     */
-    protected $Widget;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->Widget = new WidgetHelper(new View);
-
         Plugin::load('TestPlugin');
     }
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
@@ -61,13 +52,10 @@ class WidgetHelperTest extends TestCase
     public function testGetAll()
     {
         $getAllMethod = function () {
-            return $this->invokeMethod($this->Widget, 'getAll');
+            return $this->invokeMethod($this->Helper, 'getAll');
         };
 
-        $widgets = array_map(function ($widget) {
-            return array_values(array_keys($widget))[0];
-        }, $getAllMethod());
-
+        $widgets = array_map('first_value', array_map('array_keys', $getAllMethod()));
         $this->assertEquals([
             ME_CMS . '.Pages::categories',
             ME_CMS . '.Pages::pages',
@@ -90,7 +78,6 @@ class WidgetHelperTest extends TestCase
             'Fourth' => ['fourth' => 'fourthValue'],
             ['Fifth'],
         ]);
-
         $this->assertEquals([
             ['First' => []],
             ['Second' => []],
@@ -108,7 +95,6 @@ class WidgetHelperTest extends TestCase
 
         //Sets some widgets for the homepage
         Configure::write('Widgets.homepage', ['ExampleForHomepage']);
-
         $this->assertEquals([['ExampleForHomepage' => []]], $getAllMethod());
 
         //Resets
@@ -123,13 +109,12 @@ class WidgetHelperTest extends TestCase
     {
         //Sets some widgets
         Configure::write('Widgets.general', ['Example', 'TestPlugin.PluginExample']);
-
-        $this->assertEquals('An example widget' . PHP_EOL . 'An example widget from a plugin', $this->Widget->all());
+        $this->assertEquals('An example widget' . PHP_EOL . 'An example widget from a plugin', $this->Helper->all());
 
         //Test empty values from widgets
         foreach ([[], null, false] as $value) {
             Configure::write('Widgets.general', $value);
-            $this->assertEquals(null, $this->Widget->all());
+            $this->assertEquals(null, $this->Helper->all());
         }
     }
 
@@ -139,23 +124,22 @@ class WidgetHelperTest extends TestCase
      */
     public function testWidget()
     {
-        $cell = $this->Widget->widget('Example');
+        $cell = $this->Helper->widget('Example');
         $this->assertEquals('display', $cell->action);
         $this->assertEquals([], $cell->args);
         $this->assertEquals('display', $cell->template);
-        $this->assertInstanceOf('App\View\Cell\ExampleWidgetsCell', $cell);
+        $this->assertInstanceOf(ExampleWidgetsCell::class, $cell);
 
-        $cell = $this->Widget->widget('Example', ['example of value']);
+        $cell = $this->Helper->widget('Example', ['example of value']);
         $this->assertEquals('display', $cell->action);
         $this->assertEquals([0 => 'example of value'], $cell->args);
         $this->assertEquals('display', $cell->template);
-        $this->assertInstanceOf('App\View\Cell\ExampleWidgetsCell', $cell);
 
         //From plugin
-        $cell = $this->Widget->widget('TestPlugin.PluginExample');
+        $cell = $this->Helper->widget('TestPlugin.PluginExample');
         $this->assertEquals('display', $cell->action);
         $this->assertEquals([], $cell->args);
         $this->assertEquals('display', $cell->template);
-        $this->assertInstanceOf('TestPlugin\View\Cell\PluginExampleWidgetsCell', $cell);
+        $this->assertInstanceOf(PluginExampleWidgetsCell::class, $cell);
     }
 }

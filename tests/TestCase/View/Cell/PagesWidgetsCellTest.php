@@ -13,26 +13,19 @@
 namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
-use MeCms\View\Helper\WidgetHelper;
-use MeCms\View\View\AppView as View;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Table\PagesTable;
+use MeCms\TestSuite\CellTestCase;
 
 /**
  * PagesWidgetsCellTest class
  */
-class PagesWidgetsCellTest extends TestCase
+class PagesWidgetsCellTest extends CellTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PagesTable
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
-    protected $Pages;
-
-    /**
-     * @var \MeCms\View\Helper\WidgetHelper
-     */
-    protected $Widget;
+    protected $Table;
 
     /**
      * Fixtures
@@ -44,18 +37,16 @@ class PagesWidgetsCellTest extends TestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
+        parent::setUp();
+
         Cache::clearAll();
 
-        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
-
-        $this->Widget = new WidgetHelper(new View);
+        $this->Table = $this->getMockForTable(PagesTable::class, null);
     }
 
     /**
@@ -66,7 +57,6 @@ class PagesWidgetsCellTest extends TestCase
     {
         $widget = ME_CMS . '.Pages::categories';
 
-        $result = $this->Widget->widget($widget)->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -90,10 +80,10 @@ class PagesWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget)->render();
         $this->assertHtml($expected, $result);
 
         //Renders as list
-        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -121,29 +111,22 @@ class PagesWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
         $this->assertHtml($expected, $result);
 
         //Empty on categories index
-        $widget = $this->Widget->widget($widget);
-        $widget->request = $widget->request->withEnv('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
-        $this->assertEmpty($widget->render());
+        $result = $this->Widget->widget($widget);
+        $result->request = $result->request->withEnv('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
+        $this->assertEmpty($result->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_categories', $this->Pages->cache);
+        $fromCache = Cache::read('widget_categories', $this->Table->cache);
         $this->assertEquals(2, $fromCache->count());
         $this->assertArrayKeysEqual(['first-page-category', 'sub-sub-page-category'], $fromCache->toArray());
-    }
 
-    /**
-     * Test for `categories()` method, with no pages
-     * @test
-     */
-    public function testCategoriesNoPages()
-    {
-        $widget = ME_CMS . '.Pages::categories';
-
-        $this->Pages->deleteAll(['id >=' => 1]);
-
+        //With no pages
+        Cache::clearAll();
+        $this->Table->deleteAll(['id >=' => 1]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }
@@ -156,7 +139,6 @@ class PagesWidgetsCellTest extends TestCase
     {
         $widget = ME_CMS . '.Pages::pages';
 
-        $result = $this->Widget->widget($widget)->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -184,26 +166,21 @@ class PagesWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget)->render();
         $this->assertHtml($expected, $result);
 
         //Empty on categories index
-        $widget = $this->Widget->widget($widget);
-        $widget->request = $widget->request->withEnv('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
-        $this->assertEmpty($widget->render());
+        $result = $this->Widget->widget($widget);
+        $result->request = $result->request->withEnv('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
+        $this->assertEmpty($result->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_list', $this->Pages->cache);
+        $fromCache = Cache::read('widget_list', $this->Table->cache);
         $this->assertEquals(2, $fromCache->count());
-    }
 
-    /**
-     * Test for `pages()` method, with no pages
-     * @test
-     */
-    public function testPagesNoPages()
-    {
-        $this->Pages->deleteAll(['id >=' => 1]);
-
-        $this->assertEmpty($this->Widget->widget(ME_CMS . '.Pages::pages')->render());
+        //With no pages
+        Cache::clearAll();
+        $this->Table->deleteAll(['id >=' => 1]);
+        $this->assertEmpty($this->Widget->widget($widget)->render());
     }
 }

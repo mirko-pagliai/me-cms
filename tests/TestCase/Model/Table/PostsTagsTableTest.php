@@ -12,19 +12,18 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Validation\PostsTagValidator;
+use MeCms\TestSuite\TableTestCase;
 
 /**
  * PostsTableTest class
  */
-class PostsTagsTableTest extends TestCase
+class PostsTagsTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PostsTagsTable
+     * @var bool
      */
-    protected $PostsTags;
+    public $autoFixtures = false;
 
     /**
      * Fixtures
@@ -37,27 +36,12 @@ class PostsTagsTableTest extends TestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->PostsTags = TableRegistry::get(ME_CMS . '.PostsTags');
-
-        Cache::clear(false, $this->PostsTags->cache);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
     public function testCacheProperty()
     {
-        $this->assertEquals('posts', $this->PostsTags->cache);
+        $this->assertEquals('posts', $this->Table->cache);
     }
 
     /**
@@ -66,8 +50,10 @@ class PostsTagsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $entity = $this->PostsTags->newEntity(['tag_id' => 999, 'post_id' => 999]);
-        $this->assertFalse($this->PostsTags->save($entity));
+        $this->loadFixtures();
+
+        $entity = $this->Table->newEntity(['tag_id' => 999, 'post_id' => 999]);
+        $this->assertFalse($this->Table->save($entity));
 
         $this->assertEquals([
             'tag_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
@@ -81,22 +67,22 @@ class PostsTagsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('posts_tags', $this->PostsTags->getTable());
-        $this->assertEquals('id', $this->PostsTags->getDisplayField());
-        $this->assertEquals('id', $this->PostsTags->getPrimaryKey());
+        $this->assertEquals('posts_tags', $this->Table->getTable());
+        $this->assertEquals('id', $this->Table->getDisplayField());
+        $this->assertEquals('id', $this->Table->getPrimaryKey());
 
-        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PostsTags->Posts);
-        $this->assertEquals('post_id', $this->PostsTags->Posts->getForeignKey());
-        $this->assertEquals('INNER', $this->PostsTags->Posts->getJoinType());
-        $this->assertEquals(ME_CMS . '.Posts', $this->PostsTags->Posts->className());
+        $this->assertBelongsTo($this->Table->Posts);
+        $this->assertEquals('post_id', $this->Table->Posts->getForeignKey());
+        $this->assertEquals('INNER', $this->Table->Posts->getJoinType());
+        $this->assertEquals(ME_CMS . '.Posts', $this->Table->Posts->className());
 
-        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PostsTags->Tags);
-        $this->assertEquals('tag_id', $this->PostsTags->Tags->getForeignKey());
-        $this->assertEquals('INNER', $this->PostsTags->Tags->getJoinType());
-        $this->assertEquals(ME_CMS . '.Tags', $this->PostsTags->Tags->className());
+        $this->assertBelongsTo($this->Table->Tags);
+        $this->assertEquals('tag_id', $this->Table->Tags->getForeignKey());
+        $this->assertEquals('INNER', $this->Table->Tags->getJoinType());
+        $this->assertEquals(ME_CMS . '.Tags', $this->Table->Tags->className());
 
-        $this->assertTrue($this->PostsTags->hasBehavior('CounterCache'));
+        $this->assertHasBehavior('CounterCache');
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PostsTagValidator', $this->PostsTags->getValidator());
+        $this->assertInstanceOf(PostsTagValidator::class, $this->Table->getValidator());
     }
 }

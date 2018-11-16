@@ -12,36 +12,15 @@
  */
 namespace MeCms\Test\TestCase\Controller\Component;
 
-use Cake\Controller\ComponentRegistry;
-use Cake\Controller\Controller;
-use MeCms\Controller\Component\KcFinderComponent;
 use MeCms\Utility\Checkups\KCFinder;
 use MeCms\Utility\Checkups\Webroot;
-use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\ComponentTestCase;
 
 /**
  * KcFinderComponentTest class
  */
-class KcFinderComponentTest extends TestCase
+class KcFinderComponentTest extends ComponentTestCase
 {
-    /**
-     * @var \MeCms\Controller\Component\KcFinderComponent
-     */
-    protected $KCFinder;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->KCFinder = new KcFinderComponent(new ComponentRegistry(new Controller));
-    }
-
     /**
      * Test for `getDefaultConfig()` method
      * @test
@@ -49,7 +28,7 @@ class KcFinderComponentTest extends TestCase
     public function testGetDefaultConfig()
     {
         $getDefaultConfigMethod = function () {
-            $defaultConfig = $this->invokeMethod($this->KCFinder, 'getDefaultConfig');
+            $defaultConfig = $this->invokeMethod($this->Component, 'getDefaultConfig');
             $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
 
             return $defaultConfig;
@@ -90,7 +69,7 @@ class KcFinderComponentTest extends TestCase
         ], $getDefaultConfigMethod());
 
         //Tries with admin user
-        $this->KCFinder->Auth->setUser(['group' => ['name' => 'admin']]);
+        $this->Component->Auth->setUser(['group' => ['name' => 'admin']]);
 
         $this->assertEquals([
             'denyExtensionRename' => true,
@@ -119,11 +98,10 @@ class KcFinderComponentTest extends TestCase
      */
     public function testGetTypes()
     {
-        $this->assertEquals(['images' => '*img'], $this->KCFinder->getTypes());
+        $this->assertEquals(['images' => '*img'], $this->Component->getTypes());
 
         safe_mkdir(UPLOADED . 'docs');
-
-        $this->assertEquals(['docs' => '', 'images' => '*img'], $this->KCFinder->getTypes());
+        $this->assertEquals(['docs' => '', 'images' => '*img'], $this->Component->getTypes());
 
         safe_rmdir(UPLOADED . 'docs');
     }
@@ -145,7 +123,7 @@ class KcFinderComponentTest extends TestCase
             'uploadURL',
             'types',
             'access',
-        ], $this->KCFinder->request->getSession()->read('KCFINDER'));
+        ], $this->Component->request->getSession()->read('KCFINDER'));
     }
 
     /**
@@ -156,10 +134,8 @@ class KcFinderComponentTest extends TestCase
      */
     public function testInitializeDirNotWritable()
     {
-        $this->KCFinder->Checkup->Webroot = $this->getMockBuilder(Webroot::class)
-            ->getMock();
-
-        $this->KCFinder->initialize([]);
+        $this->Component->Checkup->Webroot = $this->getMockBuilder(Webroot::class)->getMock();
+        $this->Component->initialize([]);
     }
 
     /**
@@ -170,9 +146,7 @@ class KcFinderComponentTest extends TestCase
      */
     public function testInitializeKCFinderNotAvailable()
     {
-        $this->KCFinder->Checkup->KCFinder = $this->getMockBuilder(KCFinder::class)
-            ->getMock();
-
-        $this->KCFinder->initialize([]);
+        $this->Component->Checkup->KCFinder = $this->getMockBuilder(KCFinder::class)->getMock();
+        $this->Component->initialize([]);
     }
 }

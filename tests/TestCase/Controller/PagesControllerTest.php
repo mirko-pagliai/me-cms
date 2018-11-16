@@ -13,19 +13,21 @@
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Entity;
 use MeCms\Core\Plugin;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\Page;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PagesControllerTest class
  */
-class PagesControllerTest extends IntegrationTestCase
+class PagesControllerTest extends ControllerTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PagesTable
+     * Cache keys to clear for each test
+     * @var array
      */
-    protected $Pages;
+    protected $cacheToClear = ['static_pages'];
 
     /**
      * Fixtures
@@ -37,32 +39,25 @@ class PagesControllerTest extends IntegrationTestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
-        parent::setUp();
-
         Plugin::load('TestPlugin');
 
-        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
-
-        Cache::clear(false, $this->Pages->cache);
-        Cache::clear(false, 'static_pages');
+        parent::setUp();
     }
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
     {
-        parent::tearDown();
-
         Plugin::unload('TestPlugin');
+
+        parent::tearDown();
     }
 
     /**
@@ -71,18 +66,15 @@ class PagesControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = $this->Pages->find('active')->extract('slug')->first();
+        $slug = $this->Table->find('active')->extract('slug')->first();
 
         $this->get(['_name' => 'page', $slug]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Pages/view.ctp');
+        $this->assertTemplate('Pages/view.ctp');
+        $this->assertInstanceof(Page::class, $this->viewVariable('page'));
 
-        $pageFromView = $this->viewVariable('page');
-        $this->assertNotEmpty($pageFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
-
-        $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Pages->cache);
-        $this->assertEquals($pageFromView, $cache->first());
+        $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Table->cache);
+        $this->assertEquals($this->viewVariable('page'), $cache->first());
     }
 
     /**
@@ -94,11 +86,11 @@ class PagesControllerTest extends IntegrationTestCase
         $this->get(['_name' => 'page', 'page-from-app']);
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page');
-        $this->assertTemplate(APP . 'Template/StaticPages/page-from-app.ctp');
+        $this->assertTemplate('StaticPages/page-from-app.ctp');
 
         $pageFromView = $this->viewVariable('page');
-        $this->assertInstanceof('Cake\ORM\Entity', $pageFromView);
-        $this->assertInstanceof('Cake\ORM\Entity', $pageFromView->category);
+        $this->assertInstanceof(Entity::class, $pageFromView);
+        $this->assertInstanceof(Entity::class, $pageFromView->category);
         $this->assertEquals([
             'category' => ['slug' => null, 'title' => null],
             'title' => 'Page From App',
@@ -116,7 +108,7 @@ class PagesControllerTest extends IntegrationTestCase
         $this->get(['_name' => 'page', 'test-from-plugin']);
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page from a plugin');
-        $this->assertTemplate(APP . 'Plugin/TestPlugin/src/Template/StaticPages/test-from-plugin.ctp');
+        $this->assertTemplate('Plugin/TestPlugin/src/Template/StaticPages/test-from-plugin.ctp');
     }
 
     /**
@@ -126,14 +118,11 @@ class PagesControllerTest extends IntegrationTestCase
     public function testPreview()
     {
         $this->setUserGroup('user');
-        $slug = $this->Pages->find('pending')->extract('slug')->first();
+        $slug = $this->Table->find('pending')->extract('slug')->first();
 
         $this->get(['_name' => 'pagesPreview', $slug]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Pages/view.ctp');
-
-        $pageFromView = $this->viewVariable('page');
-        $this->assertNotEmpty($pageFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Page', $pageFromView);
+        $this->assertTemplate('Pages/view.ctp');
+        $this->assertInstanceof(Page::class, $this->viewVariable('page'));
     }
 }

@@ -12,9 +12,9 @@
  */
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
-use Cake\ORM\TableRegistry;
 use MeCms\Model\Table\PostsTable;
 use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\Traits\MockTrait;
 use MeTools\Utility\Youtube;
 
 /**
@@ -22,22 +22,22 @@ use MeTools\Utility\Youtube;
  */
 class GetPreviewsFromTextTraitTest extends TestCase
 {
+    use MockTrait;
+
     /**
-     * @var \MeCms\Model\Table\PostsTable
+     * @var object
      */
     protected $Posts;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
+        $this->Posts = $this->getMockForTable(PostsTable::class, null);
     }
 
     /**
@@ -158,7 +158,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
             return $this->invokeMethod($this->Posts, 'getPreviews', func_get_args());
         };
 
-        $this->Posts = $this->getMockForModel(PostsTable::class, ['getPreviewSize']);
+        $this->Posts = $this->getMockForTable(PostsTable::class, ['getPreviewSize']);
         $this->Posts->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         foreach ([

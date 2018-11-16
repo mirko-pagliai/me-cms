@@ -32,9 +32,7 @@ class UserMailerTest extends TestCase
     protected $example;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
@@ -47,7 +45,7 @@ class UserMailerTest extends TestCase
             'last_name' => 'Blue',
         ]);
 
-        $this->UserMailer = new UserMailer;
+        $this->Mailer = new UserMailer;
     }
 
     /**
@@ -56,15 +54,11 @@ class UserMailerTest extends TestCase
      */
     public function testActivation()
     {
-        $this->UserMailer->activation($this->example);
-
-        //Gets `Email` instance
-        $email = $this->getProperty($this->UserMailer, '_email');
-
-        $this->assertEquals(['test@test.com' => 'James Blue'], $email->getTo());
-        $this->assertEquals('Activate your account', $email->getSubject());
-        $this->assertEquals(ME_CMS . '.Users/activation', $email->getTemplate());
-        $this->assertEquals(['fullName' => 'James Blue'], $email->getViewVars());
+        $this->Mailer->activation($this->example);
+        $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getEmailInstance()->getTo());
+        $this->assertEquals('Activate your account', $this->Mailer->getEmailInstance()->getSubject());
+        $this->assertEquals(ME_CMS . '.Users/activation', $this->Mailer->getEmailInstance()->getTemplate());
+        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->getEmailInstance()->getViewVars());
     }
 
     /**
@@ -76,8 +70,7 @@ class UserMailerTest extends TestCase
     public function testActivationMissingData()
     {
         unset($this->example->email);
-
-        $this->UserMailer->activation($this->example);
+        $this->Mailer->activation($this->example);
     }
 
     /**
@@ -86,7 +79,7 @@ class UserMailerTest extends TestCase
      */
     public function testActivationWithSend()
     {
-        $result = $this->UserMailer->setTransport('debug')
+        $result = $this->Mailer->setTransport('debug')
             ->setLayout(false)
             ->setViewVars(['url' => 'http://example/link'])
             ->send('activation', [$this->example]);
@@ -100,7 +93,7 @@ class UserMailerTest extends TestCase
         $this->assertContains('Subject: Activate your account', $headers);
         $this->assertContains('Content-Type: text/html; charset=UTF-8', $headers);
 
-        //Checks the message
+        //Checks message
         $this->assertContains('Hello James Blue,', $message);
         $this->assertContains('you have signed on the site MeCms.', $message);
         $this->assertContains('To activate your account, click <a href="http://example/link" title="here">here</a>.', $message);
@@ -113,15 +106,11 @@ class UserMailerTest extends TestCase
      */
     public function testChangePassword()
     {
-        $this->UserMailer->changePassword($this->example);
-
-        //Gets `Email` instance
-        $email = $this->getProperty($this->UserMailer, '_email');
-
-        $this->assertEquals(['test@test.com' => 'James Blue'], $email->getTo());
-        $this->assertEquals('Your password has been changed', $email->getSubject());
-        $this->assertEquals(ME_CMS . '.Users/change_password', $email->getTemplate());
-        $this->assertEquals(['fullName' => 'James Blue'], $email->getViewVars());
+        $this->Mailer->changePassword($this->example);
+        $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getEmailInstance()->getTo());
+        $this->assertEquals('Your password has been changed', $this->Mailer->getEmailInstance()->getSubject());
+        $this->assertEquals(ME_CMS . '.Users/change_password', $this->Mailer->getEmailInstance()->getTemplate());
+        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->getEmailInstance()->getViewVars());
     }
 
     /**
@@ -133,8 +122,7 @@ class UserMailerTest extends TestCase
     public function testChangePasswordMissingData()
     {
         unset($this->example->email);
-
-        $this->UserMailer->changePassword($this->example);
+        $this->Mailer->changePassword($this->example);
     }
 
     /**
@@ -143,7 +131,7 @@ class UserMailerTest extends TestCase
      */
     public function testChangePasswordWithSend()
     {
-        $result = $this->UserMailer->setTransport('debug')
+        $result = $this->Mailer->setTransport('debug')
             ->setLayout(false)
             ->setViewVars(['url' => 'http://example/link'])
             ->send('changePassword', [$this->example]);
@@ -157,7 +145,7 @@ class UserMailerTest extends TestCase
         $this->assertContains('Subject: Your password has been changed', $headers);
         $this->assertContains('Content-Type: text/html; charset=UTF-8', $headers);
 
-        //Checks the message
+        //Checks message
         $this->assertContains('Hello James Blue,', $message);
         $this->assertContains('you have recently changed your password on our site MeCms.', $message);
         $this->assertContains('If you have not made this request, please contact an administrator.', $message);
@@ -169,15 +157,11 @@ class UserMailerTest extends TestCase
      */
     public function testPasswordForgot()
     {
-        $this->UserMailer->passwordForgot($this->example);
-
-        //Gets `Email` instance
-        $email = $this->getProperty($this->UserMailer, '_email');
-
-        $this->assertEquals(['test@test.com' => 'James Blue'], $email->getTo());
-        $this->assertEquals('Reset your password', $email->getSubject());
-        $this->assertEquals(ME_CMS . '.Users/password_forgot', $email->getTemplate());
-        $this->assertEquals(['fullName' => 'James Blue'], $email->getViewVars());
+        $this->Mailer->passwordForgot($this->example);
+        $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getEmailInstance()->getTo());
+        $this->assertEquals('Reset your password', $this->Mailer->getEmailInstance()->getSubject());
+        $this->assertEquals(ME_CMS . '.Users/password_forgot', $this->Mailer->getEmailInstance()->getTemplate());
+        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->getEmailInstance()->getViewVars());
     }
 
     /**
@@ -189,8 +173,7 @@ class UserMailerTest extends TestCase
     public function testPasswordForgotMissingData()
     {
         unset($this->example->email);
-
-        $this->UserMailer->passwordForgot($this->example);
+        $this->Mailer->passwordForgot($this->example);
     }
 
     /**
@@ -199,7 +182,7 @@ class UserMailerTest extends TestCase
      */
     public function testPasswordForgotWithSend()
     {
-        $result = $this->UserMailer->setTransport('debug')
+        $result = $this->Mailer->setTransport('debug')
             ->setLayout(false)
             ->setViewVars(['url' => 'http://example/link'])
             ->send('passwordForgot', [$this->example]);
@@ -213,7 +196,7 @@ class UserMailerTest extends TestCase
         $this->assertContains('Subject: Reset your password', $headers);
         $this->assertContains('Content-Type: text/html; charset=UTF-8', $headers);
 
-        //Checks the message
+        //Checks message
         $this->assertContains('Hello James Blue,', $message);
         $this->assertContains('you have requested to change your password on the site MeCms.', $message);
         $this->assertContains('To reset your password, click <a href="http://example/link" title="here">here</a>.', $message);

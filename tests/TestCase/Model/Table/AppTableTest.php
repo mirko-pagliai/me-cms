@@ -53,9 +53,7 @@ class AppTableTest extends TestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
@@ -154,10 +152,10 @@ class AppTableTest extends TestCase
         $query = $this->Posts->find('active');
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 AND Posts.created <= :c1)', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $entity) {
+        foreach ($query as $entity) {
             $this->assertTrue($entity->active && !$entity->created->isFuture());
         }
     }
@@ -171,9 +169,9 @@ class AppTableTest extends TestCase
         $query = $this->Posts->find('pending');
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 OR Posts.created > :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
 
-        foreach ($query->toArray() as $entity) {
+        foreach ($query as $entity) {
             $this->assertTrue(!$entity->active || $entity->created->isFuture());
         }
     }
@@ -200,16 +198,16 @@ class AppTableTest extends TestCase
         $query = $this->Photos->getList();
         $this->assertStringEndsWith('ORDER BY ' . $this->Photos->getDisplayField() . ' ASC', $query->sql());
 
-        $list = $query->toArray();
-        $this->assertEquals([
+        $expected = [
             1 => 'photo1.jpg',
             3 => 'photo3.jpg',
             4 => 'photo4.jpg',
             2 => 'photoa.jpg',
-        ], $list);
+        ];
+        $this->assertEquals($expected, $query->toArray());
 
         $fromCache = Cache::read('photos_list', $this->Photos->cache)->toArray();
-        $this->assertEquals($list, $fromCache);
+        $this->assertEquals($query->toArray(), $fromCache);
     }
 
     /**
@@ -221,16 +219,16 @@ class AppTableTest extends TestCase
         $query = $this->PostsCategories->getTreeList();
         $this->assertStringEndsNotWith('ORDER BY ' . $this->PostsCategories->getDisplayField() . ' ASC', $query->sql());
 
-        $list = $query->toArray();
-        $this->assertEquals([
+        $expected = [
             1 => 'First post category',
             3 => '—Sub post category',
             4 => '——Sub sub post category',
             2 => 'Another post category',
-        ], $list);
+        ];
+        $this->assertEquals($expected, $query->toArray());
 
         $fromCache = Cache::read('posts_categories_tree_list', $this->PostsCategories->cache)->toArray();
-        $this->assertEquals($list, $fromCache);
+        $this->assertEquals($query->toArray(), $fromCache);
     }
 
     /**

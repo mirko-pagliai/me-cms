@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeTools\TestSuite\IntegrationTestCase;
 
 /**
  * MenuTest class
@@ -93,16 +93,14 @@ class MenuTest extends IntegrationTestCase
     public function testDisabledOptions()
     {
         Configure::write(ME_CMS . '.users', ['signup' => false, 'reset_password' => false]);
-
         $this->get(['_name' => 'login']);
         $this->assertResponseNotContains('Sign up</a>');
         $this->assertResponseNotContains('Resend activation email</a>');
         $this->assertResponseNotContains('Forgot your password?</a>');
 
-        Configure::write(ME_CMS . '.users', ['signup' => true, 'activation' => 0]);
-
         //Signup is enaled, but the account does not need to be activated by
         //  the user
+        Configure::write(ME_CMS . '.users', ['signup' => true, 'activation' => 0]);
         $this->get(['_name' => 'login']);
         $this->assertResponseContains('Sign up</a>');
         $this->assertResponseNotContains('Resend activation email</a>');

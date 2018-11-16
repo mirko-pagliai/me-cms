@@ -12,19 +12,18 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Validation\UsersGroupValidator;
+use MeCms\TestSuite\TableTestCase;
 
 /**
  * UsersGroupsTableTest class
  */
-class UsersGroupsTableTest extends TestCase
+class UsersGroupsTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\UsersGroupsTable
+     * @var bool
      */
-    protected $UsersGroups;
+    public $autoFixtures = false;
 
     /**
      * Fixtures
@@ -36,27 +35,12 @@ class UsersGroupsTableTest extends TestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->UsersGroups = TableRegistry::get(ME_CMS . '.UsersGroups');
-
-        Cache::clear(false, $this->UsersGroups->cache);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
     public function testCacheProperty()
     {
-        $this->assertEquals('users', $this->UsersGroups->cache);
+        $this->assertEquals('users', $this->Table->cache);
     }
 
     /**
@@ -65,14 +49,16 @@ class UsersGroupsTableTest extends TestCase
      */
     public function testBuildRules()
     {
+        $this->loadFixtures();
+
         $example = ['name' => 'group', 'label' => 'Group label'];
 
-        $entity = $this->UsersGroups->newEntity($example);
-        $this->assertNotEmpty($this->UsersGroups->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertNotEmpty($this->Table->save($entity));
 
         //Saves again the same entity
-        $entity = $this->UsersGroups->newEntity($example);
-        $this->assertFalse($this->UsersGroups->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals([
             'name' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
             'label' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
@@ -85,32 +71,16 @@ class UsersGroupsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('users_groups', $this->UsersGroups->getTable());
-        $this->assertEquals('label', $this->UsersGroups->getDisplayField());
-        $this->assertEquals('id', $this->UsersGroups->getPrimaryKey());
+        $this->assertEquals('users_groups', $this->Table->getTable());
+        $this->assertEquals('label', $this->Table->getDisplayField());
+        $this->assertEquals('id', $this->Table->getPrimaryKey());
 
-        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->UsersGroups->Users);
-        $this->assertEquals('group_id', $this->UsersGroups->Users->getForeignKey());
-        $this->assertEquals(ME_CMS . '.Users', $this->UsersGroups->Users->className());
+        $this->assertHasMany($this->Table->Users);
+        $this->assertEquals('group_id', $this->Table->Users->getForeignKey());
+        $this->assertEquals(ME_CMS . '.Users', $this->Table->Users->className());
 
-        $this->assertTrue($this->UsersGroups->hasBehavior('Timestamp'));
+        $this->assertHasBehavior('Timestamp');
 
-        $this->assertInstanceOf('MeCms\Model\Validation\UsersGroupValidator', $this->UsersGroups->getValidator());
-    }
-
-    /**
-     * Test for the `hasMany` association with `Users`
-     * @test
-     */
-    public function testHasManyUsers()
-    {
-        $group = $this->UsersGroups->findById(3)->contain('Users')->first();
-
-        $this->assertNotEmpty($group->users);
-
-        foreach ($group->users as $user) {
-            $this->assertInstanceOf('MeCms\Model\Entity\User', $user);
-            $this->assertEquals(3, $user->group_id);
-        }
+        $this->assertInstanceOf(UsersGroupValidator::class, $this->Table->getValidator());
     }
 }

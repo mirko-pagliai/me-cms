@@ -16,15 +16,21 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\TableRegistry;
+use MeCms\Model\Table\PagesCategoriesTable;
+use MeCms\Model\Table\PhotosAlbumsTable;
+use MeCms\Model\Table\PostsCategoriesTable;
+use MeCms\Model\Table\TagsTable;
 use MeCms\Utility\Sitemap;
 use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * SitemapTest class
  */
 class SitemapTest extends TestCase
 {
+    use MockTrait;
+
     /**
      * Does not automatically load fixtures
      * @var bool
@@ -47,22 +53,18 @@ class SitemapTest extends TestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        Cache::clearAll();
-
         Plugin::load('TestPlugin');
     }
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
@@ -106,27 +108,15 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-
-        $table = TableRegistry::get(ME_CMS . '.PagesCategories');
-
+        $table = $this->getMockForTable(PagesCategoriesTable::class, null);
         $this->assertEquals($expected, Sitemap::pages());
 
         $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
-
         $this->assertEquals($expected, Sitemap::pages());
-    }
-
-    /**
-     * Test for `pages()` method, with no records
-     * @test
-     */
-    public function testPagesNoRecords()
-    {
-        $this->loadFixtures('Pages', 'PagesCategories');
 
         //Deletes all records
-        TableRegistry::get(ME_CMS . '.PagesCategories')->deleteAll(['id >=' => 1]);
-
+        $table->deleteAll(['id IS NOT' => null]);
+        Cache::clearAll();
         $this->assertEmpty(Sitemap::pages());
     }
 
@@ -170,27 +160,15 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-
-        $table = TableRegistry::get(ME_CMS . '.PhotosAlbums');
-
+        $table = $this->getMockForTable(PhotosAlbumsTable::class, null);
         $this->assertEquals($expected, Sitemap::photos());
 
         $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
-
         $this->assertEquals($expected, Sitemap::photos());
-    }
-
-    /**
-     * Test for `photos()` method, with no records
-     * @test
-     */
-    public function testPhotosNoRecords()
-    {
-        $this->loadFixtures('Photos', 'PhotosAlbums');
 
         //Deletes all records
-        TableRegistry::get(ME_CMS . '.PhotosAlbums')->deleteAll(['id >=' => 1]);
-
+        $table->deleteAll(['id IS NOT' => null]);
+        Cache::clearAll();
         $this->assertEmpty(Sitemap::photos());
     }
 
@@ -257,25 +235,15 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-
-        $table = TableRegistry::get(ME_CMS . '.PostsCategories');
-
+        $table = $this->getMockForTable(PostsCategoriesTable::class, null);
         $this->assertEquals($expected, Sitemap::posts());
 
         $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
-
         $this->assertEquals($expected, Sitemap::posts());
-    }
 
-    /**
-     * Test for `posts()` method, with no records
-     * @test
-     */
-    public function testPostsNoRecords()
-    {
         //Deletes all records
-        TableRegistry::get(ME_CMS . '.PostsCategories')->deleteAll(['id >=' => 1]);
-
+        $table->deleteAll(['id IS NOT' => null]);
+        Cache::clearAll();
         $this->assertEmpty(Sitemap::posts());
     }
 
@@ -314,25 +282,15 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-
-        $table = TableRegistry::get(ME_CMS . '.Tags');
-
+        $table = $this->getMockForTable(TagsTable::class, null);
         $this->assertEquals($expected, Sitemap::postsTags());
 
         $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
-
         $this->assertEquals($expected, Sitemap::postsTags());
-    }
 
-    /**
-     * Test for `postsTags()` method, with no records
-     * @test
-     */
-    public function testPostsTagsNoRecords()
-    {
         //Deletes all records
-        TableRegistry::get(ME_CMS . '.Tags')->deleteAll(['id >=' => 1]);
-
+        $table->deleteAll(['id IS NOT' => null]);
+        Cache::clearAll();
         $this->assertEmpty(Sitemap::postsTags());
     }
 

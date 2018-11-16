@@ -4,6 +4,13 @@
 * removed `SerializedLog`. Use instead `EntityFileLog\Log\Engine\EntityFileLog`.
 
 ## 2.25 branch
+### 2.25.4
+* `Mailer::getEmailInstance()` is now public;
+* added `CellTestCase`, `ControllerTestCase`, `EntityTestCase` and
+    `TableTestCase` abstract classes;
+* fixed `PostsAndPagesTablesTestCase` and `ValidationTestCase` abstract classes;
+* all the tests have been improved.
+
 ### 2.25.3
 * photo albums are now indexed by creation date. The creation date is shown in
     the admin panel;
@@ -52,7 +59,7 @@
 * added the `UpdateShell`. This shell provides subcommands to update your
     application;
 * `GetPreviewFromTextTrait` class renamed as `GetPreviewsFromTextTrait` and
-    `firstImage()` and `getPreview()` methods have been replaced by 
+    `firstImage()` and `getPreview()` methods have been replaced by
     `extractImages()` and `getPreviews()` methods. The `getPreviews()` method
     now returns an array of `Entity`. This allows you to get all the previews,
     not just the first one;
@@ -147,7 +154,7 @@
 * only one bootstrap file is used. Deleted `config/bootstrap_base.php`;
 * fixed bug for traslating i18n constants;
 * fixed bug for creating thumbnails.
- 
+
 ### 2.20.1
 * many i18n constants have been added. These make the code cleaner and more
     comprehensible;
@@ -203,7 +210,7 @@
 ### 2.18.0
 * the tags index now uses pagination;
 * widgets (cells) use collections;
-* fixed little bugs and improved code for `BannersController` and 
+* fixed little bugs and improved code for `BannersController` and
     `PhotosController` admin classes;
 * by default, cookies are not encrypted;
 * `AppTable::getList()`, `AppTable::getTreeList()` and
@@ -217,11 +224,11 @@
 ### 2.17.4
 * added `PostsController::getStartAndEndDate()` method;
 * removed `PostsController::indexCompatibility()` method;
-* `UserController::activateAccount()` becomes `activation()`, 
-    `UserController::forgotPassword()` becomes `passwordForgot()`, 
-    `UserController::resetPassword()` becomes `passwordReset()`, 
-    `UserController::resendActivation()` becomes `activationResend()`, 
-    `UserMailer::activateAccount()` becomes `activation()`, 
+* `UserController::activateAccount()` becomes `activation()`,
+    `UserController::forgotPassword()` becomes `passwordForgot()`,
+    `UserController::resetPassword()` becomes `passwordReset()`,
+    `UserController::resendActivation()` becomes `activationResend()`,
+    `UserMailer::activateAccount()` becomes `activation()`,
     `UserMailer::forgotPassword()` becomes `passwordForgot()`;
 * fixed bug on page preview;
 * fixed bug: `PostsTable::getRelated()` returns an empty array if there are no
@@ -250,7 +257,7 @@
     denied actions as `preview`;
 * fixed bug, the `created` field is formatted correctly in `edit` templates;
 * improved `StaticPage` class, added `_appPath()` and `_pluginPath()` methods;
-* added tests for `BannersController`, `PagesCategoriesController` and 
+* added tests for `BannersController`, `PagesCategoriesController` and
     `PagesController` classes.
 
 ### 2.17.0
@@ -266,7 +273,7 @@
 
 ## 2.16 branch
 ### 2.16.1
-* managers can delete photos and photos albums; 
+* managers can delete photos and photos albums;
 * fixed bug on redirect from the old address of the "contact us" form;
 * fixed bug in getting the active users list. Now it shows the full name;
 * fixed bug on `StaticPage::paths()`. Now it returns only existing paths;
@@ -278,7 +285,7 @@
     instance of `Time`;
 * static pages uses cache. `StaticPage::all()` returns an array of `Entity`;
 * improved `MeCms\Controller\Admin\LogController`, added `_read()` method and
-    removed the `viewSerialized` action (the `view` action can use the 
+    removed the `viewSerialized` action (the `view` action can use the
     `view_as_serialized` template);
 * added `MeCms\Model\Table\UsersTable\beforeMarshal()` method;
 * added `MeCms\Controller\Traits\CheckLastSearchTrait` trait;
@@ -288,7 +295,7 @@
 * the preview image for pages and posts always contains a full url;
 * global function `firstImageFromText()` renamed as `firstImage()`;
 * removed `AppController::_download()` method;
-* added tests for `isAuthorized()` and `download()` methods of all admin 
+* added tests for `isAuthorized()` and `download()` methods of all admin
     controllers;
 * added tests for virtual fields.
 
@@ -329,7 +336,7 @@
 
 ### 2.15.0
 * the layout is exclusively controlled by CakePHP. So, to override the layout
-    provided by MeCms, you have to use the 
+    provided by MeCms, you have to use the
     `src/Template/Plugin/MeCms/Layout/default.ctp` file;
 * the cells that act as widgets now have "Widgets" in the name, for class files
     and the template directory;
@@ -514,11 +521,11 @@
 * now pages have categories, with category widget;
 * now the install shell can create user groups;
 * added links on userbar for posts categories and tags;
-* added `userbar()` method for `AppViews`. This simplifies the code to add 
+* added `userbar()` method for `AppViews`. This simplifies the code to add
 	elements to the userbar;
-* added links to upload banners and photos from indexes of banner positions 
+* added links to upload banners and photos from indexes of banner positions
 	and photo albums;
-* routes have been split into multiple files; 
+* routes have been split into multiple files;
 * fixed bug for "only published" field on filter forms;
 * fixed cache code for widgets;
 * fixed bug for rotated logs;
@@ -530,9 +537,9 @@
 * the code to list posts by date has been greatly improved and simplified;
 * added preview for photos and albums;
 * added userbar for albums;
-* the banned ip list has been moved to a dedicated file 
+* the banned ip list has been moved to a dedicated file
 	(`Config/banned_ip.php`);
-* methods of the `UpdateShell` class are automatically detected and added to 
+* methods of the `UpdateShell` class are automatically detected and added to
 	the parser;
 * now the installer also runs the installer of other plugins;
 * tags are always sorted alphabetically;
@@ -549,7 +556,7 @@
 ### 2.9.0
 * added action to list posts by month (year and month);
 * added "posts by month" widget;
-* `Photos::albums`, `Posts::categories` and `Posts::categories` widgets can 
+* `Photos::albums`, `Posts::categories` and `Posts::categories` widgets can
 	now render as form (default) or list;
 * `PostsTags::popular` widget can now render as cloud (default), form or list;
 * added common templates for all admin views;
@@ -566,7 +573,7 @@
 
 ### 2.8.0
 * now uses the `UploaderComponent`;
-* improved the `AuthHelper`. Now it has its own methods and this makes user 
+* improved the `AuthHelper`. Now it has its own methods and this makes user
 	data safer;
 * improved the `AuthComponent`.
 
@@ -603,15 +610,15 @@
 * fixed bug ordering posts and pages.
 
 ### 2.6.2
-* improved the code to check the cache validity. Removed 
+* improved the code to check the cache validity. Removed
 	`checkIfCacheIsValid()` and `getNextToBePublished()` methods;
-* improved code for posts and pages that are drafts or to be published in the 
+* improved code for posts and pages that are drafts or to be published in the
 	future;
 * fixed bug on MenuBuilder helper;
 * updated Facebook's tags.
 
 ### 2.6.1
-* added userbar for frontend. It allows to edit an delete posts, pages and 
+* added userbar for frontend. It allows to edit an delete posts, pages and
 	photos.
 
 ### 2.6.0
@@ -649,7 +656,7 @@
 
 ### 2.4.5
 * logged users can view future posts, future pages and drafts;
-* the status of a record is properly shown in the admin panel, including 
+* the status of a record is properly shown in the admin panel, including
 	publication in the future;
 * added filter for tags;
 * added patterns table for database backups;
@@ -661,17 +668,17 @@
 * fixed bug on log advanced viewer.
 
 ### 2.4.3
-* added `Logs` controller and templates. Log management has improved. The log 
+* added `Logs` controller and templates. Log management has improved. The log
 	can be displayed as plain or serialized;
 * added "who is" and "map" functionalities for IP addresses on logs;
-* each time that is called, the `SerializedLog` adapter writes the normal log 
-	and a serialized copy of the log.  
+* each time that is called, the `SerializedLog` adapter writes the normal log
+	and a serialized copy of the log.
 
 ### 2.4.2
 * fixed bug on "popular tags" widget.
 
 ### 2.4.1
-* logs are turned into arrays when they are written. The system supports both 
+* logs are turned into arrays when they are written. The system supports both
 	plain logs and logs as array.
 
 ### 2.4.0
@@ -693,7 +700,7 @@
 ### 2.2.2
 * fixed bug in "album" and "posts categories" widgets;
 * widgets now use a common view. Rewritten the code of all widgets;
-* you can specify the minimum font, the maximum font and the tag prefix for 
+* you can specify the minimum font, the maximum font and the tag prefix for
 	the "popular tags" widget.
 
 ### 2.2.1
@@ -708,10 +715,10 @@
 * rewritten the log viewer. Now log files are parsed, with style;
 * added BBCode examples;
 * you can add post tags as keywords meta-tag;
-* added support for the "theme color" (the toolbar color for some mobile 
+* added support for the "theme color" (the toolbar color for some mobile
 	browser);
 * the favicon is automatically added to the layout. No need to manually add;
-* deleted ExceptionRenderer class and errors templates and layout. From now, 
+* deleted ExceptionRenderer class and errors templates and layout. From now,
 	errors will be managed only by the app.
 
 ## 2.1 branch
@@ -728,11 +735,11 @@
 ### 2.1.8
 * added the cookies policy functionality;
 * tags use space instead of the hyphen;
-* you can use static pages from plugins. The code for static pages has been 
+* you can use static pages from plugins. The code for static pages has been
 	rewritten;
 * now photos have the "created" date and are ordered using that;
 * support for some BBCode;
-* with the "<!-- read-more -->" tag, you can indicate manually where to 
+* with the "<!-- read-more -->" tag, you can indicate manually where to
 	truncate a text;
 * added Facebook's tag.
 
@@ -768,7 +775,7 @@
 * fixed a serious bug when trying to re-sort the results of paginated records;
 * filter forms are automatically hidden;
 * fixed a bug with forms on Firefox;
-* the integration with KCFinder has been improved. Now all directories are 
+* the integration with KCFinder has been improved. Now all directories are
 	read automatically;
 * small improvements for display on mobile devices.
 
@@ -794,21 +801,21 @@
 
 ## 2.0 branch
 ### 2.0.1-RC1
-* fixed bug, now the cache is flushed automatically, if there's a post-dated 
+* fixed bug, now the cache is flushed automatically, if there's a post-dated
 	post to be published;
 * fixed bug on login with cookie;
 * fixed permissions;
 * it automatically adds the meta tag for RSS resources;
-* the backend menus are generated fully automatically. You no longer need any 
+* the backend menus are generated fully automatically. You no longer need any
 	configuration;
 * now you can choise which post details display using the configuration file;
 * now you can set the timezone using the configuration file;
 * fixed bug with the posts date.
 
 ### 2.0.0-alpha
-* all the code has been completely rewritten for CakePHP 3.x. Several 
+* all the code has been completely rewritten for CakePHP 3.x. Several
 	optimizations have been applied;
-* uploading/adding files (for example, banners and photos) is much simplified 
+* uploading/adding files (for example, banners and photos) is much simplified
 	and is optimized;
 * the application can now rewrite the cache configuration;
 * engine and configuration for widgets have been simplified;
@@ -829,7 +836,7 @@
 * added a contact form;
 * pending users may require the activation email is sent again;
 * you can pass options to widgets;
-* some widgets accept the `limit` option, which indicates the number of 
+* some widgets accept the `limit` option, which indicates the number of
 	records to show.
 
 ### 1.2.1
@@ -842,15 +849,15 @@
 
 ### 1.2.0
 * added the log viewer and the changelogs viewer;
-* fixed bug on the backend topbar. The topbar is entirely shown only on 
+* fixed bug on the backend topbar. The topbar is entirely shown only on
 	mobile devices. Added the sidebar;
-* widgets are hidden on the pages that contain the same information or the 
+* widgets are hidden on the pages that contain the same information or the
 	same data;
 * checks if the latest search has been executed out of the minimum interval;
 * shows the version of Apache and PHP;
 * KCFinder permissions are based on MeCms users permissions;
-* many buttons are disabled after the click, to prevent some actions are 
+* many buttons are disabled after the click, to prevent some actions are
 	performed repeatedly;
-* usernames and the name of user groups cannot be changed. Improved 
+* usernames and the name of user groups cannot be changed. Improved
 	permissions about users and user groups;
 * added the changelog file.

@@ -12,31 +12,13 @@
  */
 namespace MeCms\Test\TestCase\View\Cell;
 
-use MeCms\View\Helper\WidgetHelper;
-use MeCms\View\View\AppView as View;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\CellTestCase;
 
 /**
  * HtmlWidgetsCellTest class
  */
-class HtmlWidgetsCellTest extends TestCase
+class HtmlWidgetsCellTest extends CellTestCase
 {
-    /**
-     * @var \MeCms\View\Helper\WidgetHelper
-     */
-    protected $Widget;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        $this->Widget = new WidgetHelper(new View);
-    }
-
     /**
      * Test for `display()` method
      * @test
@@ -48,7 +30,6 @@ class HtmlWidgetsCellTest extends TestCase
         $result = $this->Widget->widget($widget, ['template' => 'custom_html'])->render();
         $this->assertEquals('A custom widget', $result);
 
-        $result = $this->Widget->widget($widget, ['template' => 'custom_html2'])->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             ['div' => ['class' => 'widget-content']],
@@ -56,9 +37,9 @@ class HtmlWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget, ['template' => 'custom_html2'])->render();
         $this->assertHtml($expected, $result);
 
-        $result = $this->Widget->widget($widget, ['template' => 'custom_html3'])->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -69,6 +50,7 @@ class HtmlWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget, ['template' => 'custom_html3'])->render();
         $this->assertHtml($expected, $result);
     }
 }

@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\ValidationTestCase;
 
 /**
@@ -21,15 +20,15 @@ use MeCms\TestSuite\ValidationTestCase;
 class PostValidatorTest extends ValidationTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PostsTable
-     */
-    protected $Posts;
-
-    /**
-     * Example data
      * @var array
      */
-    protected $example;
+    protected $example = [
+        'category_id' => 1,
+        'user_id' => 1,
+        'title' => 'My title',
+        'slug' => 'my-slug',
+        'text' => 'My text',
+    ];
 
     /**
      * Fixtures
@@ -41,34 +40,13 @@ class PostValidatorTest extends ValidationTestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
-
-        $this->example = [
-            'category_id' => 1,
-            'user_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-        ];
-    }
-
-    /**
      * Test validation.
      * It tests the proper functioning of the example data.
      * @test
      */
     public function testValidationExampleData()
     {
-        $this->assertAllDataAreRequired($this->Posts, $this->example);
+        $this->assertAllDataAreRequired($this->example);
     }
 
     /**
@@ -77,8 +55,7 @@ class PostValidatorTest extends ValidationTestCase
      */
     public function testValidationForCategoryId()
     {
-        $this->example['category_id'] = 'string';
-        $errors = $this->Posts->newEntity($this->example)->getErrors();
+        $errors = $this->Table->newEntity(['category_id' => 'str'] + $this->example)->getErrors();
         $this->assertEquals(['category_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION]], $errors);
     }
 
@@ -88,21 +65,19 @@ class PostValidatorTest extends ValidationTestCase
      */
     public function testValidationForTags()
     {
-        foreach (['ab', str_repeat('a', 31)] as $value) {
-            $this->example['tags_as_string'] = $value;
-            $errors = $this->Posts->newEntity($this->example)->getErrors();
+        foreach (['ab', str_repeat('a', 31)] as $tags_as_string) {
+            $errors = $this->Table->newEntity(compact('tags_as_string') + $this->example)->getErrors();
             $this->assertEquals(['tags' => ['validTagsLength' => 'Each tag must be between 3 and 30 chars']], $errors);
         }
 
-        foreach (['Abc', 'ab$', 'ab-c', 'ab_c'] as $value) {
-            $this->example['tags_as_string'] = $value;
-            $errors = $this->Posts->newEntity($this->example)->getErrors();
+        foreach (['Abc', 'ab$', 'ab-c', 'ab_c'] as $tags_as_string) {
+            $errors = $this->Table->newEntity(compact('tags_as_string') + $this->example)->getErrors();
             $this->assertEquals(['tags' => ['validTagsChars' => 'Allowed chars: lowercase letters, numbers, space']], $errors);
         }
 
-        foreach (['abc', str_repeat('a', 30)] as $value) {
-            $this->example['tags_as_string'] = $value;
-            $this->assertEmpty($this->Posts->newEntity($this->example)->getErrors());
+        foreach (['abc', str_repeat('a', 30)] as $tags_as_string) {
+            $errors = $this->Table->newEntity(compact('tags_as_string') + $this->example)->getErrors();
+            $this->assertEmpty($errors);
         }
 
         foreach ([
@@ -116,8 +91,9 @@ class PostValidatorTest extends ValidationTestCase
             'first, second ',
             ' first, second ',
             ' first , second ',
-        ] as $value) {
-            $this->assertEmpty($this->Posts->newEntity($this->example)->getErrors());
+        ] as $tags_as_string) {
+            $this->Table->newEntity(compact('tags_as_string') + $this->example)->getErrors();
+            $this->assertEmpty($errors);
         }
     }
 }

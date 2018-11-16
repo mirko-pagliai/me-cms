@@ -12,33 +12,28 @@
  */
 namespace MeCms\Test\TestCase\Controller\Component;
 
-use Cake\Controller\ComponentRegistry;
-use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
+use Cake\I18n\Time;
+use Cake\ORM\Entity;
 use MeCms\Controller\Component\LoginRecorderComponent;
-use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\ComponentTestCase;
 use Tools\FileArray;
 
 /**
  * LoginRecorderTest class
  */
-class LoginRecorderComponentTest extends TestCase
+class LoginRecorderComponentTest extends ComponentTestCase
 {
-    /**
-     * @var \MeCms\Controller\Component\LoginRecorderComponent
-     */
-    protected $LoginRecorder;
-
     /**
      * Internal method to get a `LoginRecorder` instance
      * @return \MeCms\Controller\Component\LoginRecorderComponent
      */
     protected function getLoginRecorderInstance()
     {
-        $LoginRecorderComponent = new LoginRecorderComponent(new ComponentRegistry(new Controller));
-        $LoginRecorderComponent->setConfig('user', 1);
+        $component = $this->getMockForComponent(LoginRecorderComponent::class, null);
+        $component->setConfig('user', 1);
 
-        return $LoginRecorderComponent;
+        return $component;
     }
 
     /**
@@ -48,46 +43,40 @@ class LoginRecorderComponentTest extends TestCase
      */
     protected function getLoginRecorderMock($userAgent = [])
     {
-        $LoginRecorderComponent = $this->getMockBuilder(LoginRecorderComponent::class)
-            ->setMethods(['getUserAgent'])
-            ->setConstructorArgs([new ComponentRegistry(new Controller)])
-            ->getMock();
+        $component = $this->getMockForComponent(LoginRecorderComponent::class, ['getUserAgent']);
+        $component->setConfig('user', 1);
 
-        $LoginRecorderComponent->method('getUserAgent')
+        $component->method('getUserAgent')
             ->will($this->returnValue($userAgent ?: [
                 'platform' => 'Linux',
                 'browser' => 'Chrome',
                 'version' => '55.0.2883.87',
             ]));
 
-        $LoginRecorderComponent->setConfig('user', 1);
-
-        return $LoginRecorderComponent;
+        return $component;
     }
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
-        parent::setUp();
+        $this->Component = $this->getLoginRecorderMock();
 
-        $this->LoginRecorder = $this->getLoginRecorderMock();
+        parent::setUp();
     }
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
     {
-        parent::tearDown();
-
         //Deletes the file
         safe_unlink(LOGIN_RECORDS . 'user_1.log');
+
+        parent::tearDown();
     }
 
     /**
@@ -98,25 +87,17 @@ class LoginRecorderComponentTest extends TestCase
     {
         $LoginRecorderComponent = $this->getLoginRecorderInstance();
         $this->assertEmpty($this->invokeMethod($LoginRecorderComponent, 'getClientIp'));
-    }
 
-    /**
-     * Test for `getClientIp()` method on localhost
-     * @test
-     */
-    public function testGetClientIpOnLocalhost()
-    {
-        $request = $this->getMockBuilder(ServerRequest::class)
+        //On localhost
+        $this->Component->request = $this->getMockBuilder(ServerRequest::class)
             ->setMethods(['clientIp'])
             ->getMock();
 
-        $request->expects($this->once())
+        $this->Component->request->expects($this->once())
             ->method('clientIp')
             ->will($this->returnValue('::1'));
 
-        $this->LoginRecorder->request = $request;
-
-        $this->assertEquals('127.0.0.1', $this->invokeMethod($this->LoginRecorder, 'getClientIp'));
+        $this->assertEquals('127.0.0.1', $this->invokeMethod($this->Component, 'getClientIp'));
     }
 
     /**
@@ -125,7 +106,7 @@ class LoginRecorderComponentTest extends TestCase
      */
     public function testGetFileArray()
     {
-        $result = $this->LoginRecorder->getFileArray();
+        $result = $this->Component->getFileArray();
         $this->assertInstanceOf(FileArray::class, $result);
         $this->assertEquals(LOGIN_RECORDS . 'user_1.log', $this->getProperty($result, 'filename'));
     }
@@ -138,8 +119,8 @@ class LoginRecorderComponentTest extends TestCase
      */
     public function testGetFileArrayMissingUserId()
     {
-        $this->LoginRecorder->setConfig('user', null);
-        $this->LoginRecorder->getFileArray();
+        $this->Component->setConfig('user', null);
+        $this->Component->getFileArray();
     }
 
     /**
@@ -150,8 +131,8 @@ class LoginRecorderComponentTest extends TestCase
      */
     public function testGetFileArrayInvalidUserId()
     {
-        $this->LoginRecorder->setConfig('user', 'string');
-        $this->LoginRecorder->getFileArray();
+        $this->Component->setConfig('user', 'string');
+        $this->Component->getFileArray();
     }
 
     /**
@@ -160,23 +141,24 @@ class LoginRecorderComponentTest extends TestCase
      */
     public function testGetUserAgent()
     {
-        $result = $this->invokeMethod($this->LoginRecorder, 'getUserAgent');
-        $this->assertEquals([
+        $result = $this->invokeMethod($this->Component, 'getUserAgent');
+        $expected = [
             'platform' => 'Linux',
             'browser' => 'Chrome',
             'version' => '55.0.2883.87',
-        ], $result);
+        ];
+        $this->assertEquals($expected, $result);
 
-        $this->LoginRecorder = $this->getLoginRecorderInstance();
-
-        $result = $this->invokeMethod($this->LoginRecorder, 'getUserAgent', [
-            'Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0',
-        ]);
-        $this->assertEquals([
+        $component = $this->getLoginRecorderInstance();
+        $expected = [
             'platform' => 'Windows',
             'browser' => 'Firefox',
             'version' => '16.0',
-        ], $result);
+        ];
+        $result = $this->invokeMethod($component, 'getUserAgent', [
+            'Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0',
+        ]);
+        $this->assertEquals($expected, $result);
     }
 
     /**
@@ -186,14 +168,14 @@ class LoginRecorderComponentTest extends TestCase
     public function testRead()
     {
         //For now is empty
-        $result = $this->LoginRecorder->read();
+        $result = $this->Component->read();
         $this->assertEmpty($result);
         $this->assertIsArray($result);
 
-        $this->assertTrue($this->LoginRecorder->write());
+        $this->assertTrue($this->Component->write());
 
         //After save, is not empty
-        $result = $this->LoginRecorder->read();
+        $result = $this->Component->read();
         $this->assertNotEmpty($result);
         $this->assertIsArray($result);
 
@@ -212,7 +194,7 @@ class LoginRecorderComponentTest extends TestCase
      */
     public function testReadMissingUserId()
     {
-        $this->LoginRecorder->setConfig('user', null)->read();
+        $this->Component->setConfig('user', null)->read();
     }
 
     /**
@@ -221,13 +203,13 @@ class LoginRecorderComponentTest extends TestCase
      */
     public function testWrite()
     {
-        $this->assertTrue($this->LoginRecorder->write());
+        $this->assertTrue($this->Component->write());
 
-        $first = $this->LoginRecorder->read();
+        $first = $this->Component->read();
         $this->assertEquals(1, count($first));
-        $this->assertInstanceOf('Cake\ORM\Entity', $first[0]);
+        $this->assertInstanceOf(Entity::class, $first[0]);
         $this->assertEquals(false, $first[0]->ip);
-        $this->assertInstanceOf('Cake\I18n\Time', $first[0]->time);
+        $this->assertInstanceOf(Time::class, $first[0]->time);
         $this->assertEquals('Linux', $first[0]->platform);
         $this->assertEquals('Chrome', $first[0]->browser);
         $this->assertEquals('55.0.2883.87', $first[0]->version);
@@ -237,11 +219,11 @@ class LoginRecorderComponentTest extends TestCase
 
         //Calls again, as if the user had logged in again from the same client.
         //In this case, the previous record is deleted and a new one is written
-        $this->assertTrue($this->LoginRecorder->write());
+        $this->assertTrue($this->Component->write());
 
-        $second = $this->LoginRecorder->read();
+        $second = $this->Component->read();
         $this->assertEquals(1, count($second));
-        $this->assertInstanceOf('Cake\ORM\Entity', $second[0]);
+        $this->assertInstanceOf(Entity::class, $second[0]);
         $this->assertNotEquals($second, $first);
 
         sleep(1);
@@ -249,14 +231,14 @@ class LoginRecorderComponentTest extends TestCase
         //Calls again, with different user agent data, as if the user had logged
         //  in again, but from a different client. In this case, the previous
         //  record is not deleted
-        $this->LoginRecorder = $this->getLoginRecorderMock([
+        $component = $this->getLoginRecorderMock([
             'platform' => 'Windows',
             'browser' => 'Firefox',
             'version' => '1.2.3',
         ]);
-        $this->assertTrue($this->LoginRecorder->write());
+        $this->assertTrue($component->write());
 
-        $third = $this->LoginRecorder->read();
+        $third = $component->read();
         $this->assertEquals(2, count($third));
         $this->assertEquals($second[0], $third[1]);
         $this->assertGreaterThan($third[1]->time, $third[0]->time);
@@ -270,6 +252,6 @@ class LoginRecorderComponentTest extends TestCase
      */
     public function testWriteMissingUserId()
     {
-        $this->LoginRecorder->setConfig('user', null)->write();
+        $this->Component->setConfig('user', null)->write();
     }
 }

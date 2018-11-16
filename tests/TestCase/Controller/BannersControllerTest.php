@@ -12,20 +12,13 @@
  */
 namespace MeCms\Test\TestCase\Controller;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * BannersControllerTest class
  */
-class BannersControllerTest extends IntegrationTestCase
+class BannersControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\BannersTable
-     */
-    protected $Banners;
-
     /**
      * Fixtures
      * @var array
@@ -35,32 +28,16 @@ class BannersControllerTest extends IntegrationTestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Banners = TableRegistry::get(ME_CMS . '.Banners');
-
-        Cache::clear(false, $this->Banners->cache);
-    }
-
-    /**
      * Tests for `open()` method
      * @test
      */
     public function testOpen()
     {
-        $banner = $this->Banners->find('active')->first();
-
+        $banner = $this->Table->find('active')->first();
         $this->get(['_name' => 'banner', $banner->id]);
         $this->assertRedirect($banner->target);
 
         //Checks the `click_count` has been incremented
-        $this->assertEquals(++$banner->click_count, $this->Banners->findById(1)->extract('click_count')->first());
+        $this->assertEquals(++$banner->click_count, $this->Table->findById(1)->extract('click_count')->first());
     }
 }
