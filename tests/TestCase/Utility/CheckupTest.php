@@ -13,6 +13,13 @@
 namespace MeCms\Test\TestCase\Utility;
 
 use MeCms\Utility\Checkup;
+use MeCms\Utility\Checkups\Apache;
+use MeCms\Utility\Checkups\Backups;
+use MeCms\Utility\Checkups\KCFinder;
+use MeCms\Utility\Checkups\PHP;
+use MeCms\Utility\Checkups\Plugin;
+use MeCms\Utility\Checkups\TMP;
+use MeCms\Utility\Checkups\Webroot;
 use MeTools\TestSuite\TestCase;
 
 /**
@@ -26,9 +33,7 @@ class CheckupTest extends TestCase
     protected $Checkup;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
@@ -45,7 +50,7 @@ class CheckupTest extends TestCase
      */
     public function testApache()
     {
-        $this->assertInstanceof('MeCms\Utility\Checkups\Apache', $this->Checkup->Apache);
+        $this->assertInstanceof(Apache::class, $this->Checkup->Apache);
         $this->assertEquals(['modules', 'version'], get_class_methods($this->Checkup->Apache));
         $this->assertArrayKeysEqual(['expires', 'rewrite'], $this->Checkup->Apache->modules());
         $this->assertRegExp('/[\d\.]+/', $this->Checkup->Apache->version());
@@ -58,7 +63,7 @@ class CheckupTest extends TestCase
      */
     public function testBackups()
     {
-        $this->assertInstanceof('MeCms\Utility\Checkups\Backups', $this->Checkup->Backups);
+        $this->assertInstanceof(Backups::class, $this->Checkup->Backups);
         $this->assertEquals(['isWriteable'], get_class_methods($this->Checkup->Backups));
         $this->assertEquals([getConfig(DATABASE_BACKUP . '.target') => true], $this->Checkup->Backups->isWriteable());
     }
@@ -75,7 +80,7 @@ class CheckupTest extends TestCase
         file_put_contents(KCFINDER . '.htaccess', null);
         file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
 
-        $this->assertInstanceof('MeCms\Utility\Checkups\KCFinder', $this->Checkup->KCFinder);
+        $this->assertInstanceof(KCFinder::class, $this->Checkup->KCFinder);
         $this->assertEquals(['htaccess', 'isAvailable', 'version'], get_class_methods($this->Checkup->KCFinder));
         $this->assertTrue($this->Checkup->KCFinder->htaccess());
         $this->assertTrue($this->Checkup->KCFinder->isAvailable());
@@ -83,11 +88,11 @@ class CheckupTest extends TestCase
 
         //If the `isAvailable()` method returns `false`, the `version()` method
         //  will also return `false`
-        $this->Checkup->KCFinder = $this->getMockBuilder(get_class($this->Checkup->KCFinder))
+        $KCFinder = $this->getMockBuilder(KCFinder::class)
             ->setMethods(['isAvailable'])
             ->getMock();
-        $this->Checkup->KCFinder->method('isAvailable')->will($this->returnValue(false));
-        $this->assertFalse($this->Checkup->KCFinder->version());
+        $KCFinder->method('isAvailable')->will($this->returnValue(false));
+        $this->assertFalse($KCFinder->version());
     }
 
     /**
@@ -97,7 +102,7 @@ class CheckupTest extends TestCase
      */
     public function testPHP()
     {
-        $this->assertInstanceof('MeCms\Utility\Checkups\PHP', $this->Checkup->PHP);
+        $this->assertInstanceof(PHP::class, $this->Checkup->PHP);
         $this->assertEquals(['extensions'], get_class_methods($this->Checkup->PHP));
     }
 
@@ -108,7 +113,7 @@ class CheckupTest extends TestCase
      */
     public function testPlugin()
     {
-        $this->assertInstanceof('MeCms\Utility\Checkups\Plugin', $this->Checkup->Plugin);
+        $this->assertInstanceof(Plugin::class, $this->Checkup->Plugin);
         $this->assertEquals(['versions'], get_class_methods($this->Checkup->Plugin));
         $this->assertArrayKeysEqual(['me_cms', 'others'], $this->Checkup->Plugin->versions());
         $this->assertNotEmpty($this->Checkup->Plugin->versions()['me_cms']);
@@ -141,7 +146,7 @@ class CheckupTest extends TestCase
      */
     public function testWebroot()
     {
-        $this->assertInstanceof('MeCms\Utility\Checkups\Webroot', $this->Checkup->Webroot);
+        $this->assertInstanceof(Webroot::class, $this->Checkup->Webroot);
         $this->assertEquals(['__construct', 'isWriteable'], get_class_methods($this->Checkup->Webroot));
 
         $result = $this->Checkup->Webroot->isWriteable();

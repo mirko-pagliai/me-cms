@@ -24,33 +24,31 @@ class ContactUsFormTest extends TestCase
     use MailerAwareTrait;
 
     /**
-     * @var \MeCms\Form\ContactUsForm
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
-    public $ContactUsForm;
+    public $Form;
 
     /**
      * @var array
      */
-    protected $example;
+    protected $example = [
+        'email' => 'test@test.com',
+        'first_name' => 'First name',
+        'last_name' => 'Last name',
+        'message' => 'Example of message',
+    ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->ContactUsForm = new ContactUsForm;
-
-        $this->example = [
-            'email' => 'test@test.com',
-            'first_name' => 'First name',
-            'last_name' => 'Last name',
-            'message' => 'Example of message',
-        ];
+        $this->Form = $this->getMockBuilder(ContactUsForm::class)
+            ->setMethods(null)
+            ->getMock();
     }
 
     /**
@@ -60,17 +58,17 @@ class ContactUsFormTest extends TestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertTrue($this->ContactUsForm->validate($this->example));
-        $this->assertEmpty($this->ContactUsForm->errors());
+        $this->assertTrue($this->Form->validate($this->example));
+        $this->assertEmpty($this->Form->errors());
 
         foreach (array_keys($this->example) as $key) {
             //Create a copy of the example data and removes the current value
             $copy = $this->example;
             unset($copy[$key]);
 
-            $this->assertFalse($this->ContactUsForm->validate($copy));
-            $errors = $this->ContactUsForm->errors();
-            $this->assertEquals([$key => ['_required' => 'This field is required']], $errors);
+            $expected = [$key => ['_required' => 'This field is required']];
+            $this->assertFalse($this->Form->validate($copy));
+            $this->assertEquals($expected, $this->Form->errors());
         }
     }
 
@@ -80,19 +78,19 @@ class ContactUsFormTest extends TestCase
      */
     public function testValidationForMessage()
     {
+        $expected = ['message' => ['lengthBetween' => 'Must be between 10 and 1000 chars']];
         foreach ([str_repeat('a', 9), str_repeat('a', 1001)] as $value) {
             $this->example['message'] = $value;
 
-            $this->assertFalse($this->ContactUsForm->validate($this->example));
-            $errors = $this->ContactUsForm->errors();
-            $this->assertEquals(['message' => ['lengthBetween' => 'Must be between 10 and 1000 chars']], $errors);
+            $this->assertFalse($this->Form->validate($this->example));
+            $this->assertEquals($expected, $this->Form->errors());
         }
 
         foreach ([str_repeat('a', 10), str_repeat('a', 1000)] as $value) {
             $this->example['message'] = $value;
 
-            $this->assertTrue($this->ContactUsForm->validate($this->example));
-            $this->assertEmpty($this->ContactUsForm->errors());
+            $this->assertTrue($this->Form->validate($this->example));
+            $this->assertEmpty($this->Form->errors());
         }
     }
 
@@ -102,6 +100,6 @@ class ContactUsFormTest extends TestCase
      */
     public function testExecute()
     {
-        $this->assertArrayKeysEqual(['headers', 'message'], $this->ContactUsForm->execute($this->example));
+        $this->assertArrayKeysEqual(['headers', 'message'], $this->Form->execute($this->example));
     }
 }

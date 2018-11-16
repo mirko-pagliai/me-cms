@@ -13,19 +13,15 @@
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\Post;
+use MeCms\Model\Entity\Tag;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PostsTagsControllerTest class
  */
-class PostsTagsControllerTest extends IntegrationTestCase
+class PostsTagsControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\PostsTagsTable
-     */
-    protected $PostsTags;
-
     /**
      * Fixtures
      * @var array
@@ -39,21 +35,6 @@ class PostsTagsControllerTest extends IntegrationTestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->PostsTags = TableRegistry::get(ME_CMS . '.PostsTags');
-
-        Cache::clear(false, $this->PostsTags->cache);
-    }
-
-    /**
      * Tests for `index()` method
      * @test
      */
@@ -63,20 +44,15 @@ class PostsTagsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/PostsTags/index.ctp');
+        $this->assertTemplate('PostsTags/index.ctp');
+        $this->assertContainsInstanceof(Tag::class, $this->viewVariable('tags'));
 
-        $tagsFromView = $this->viewVariable('tags');
-        $this->assertNotEmpty($tagsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Tag', $tagsFromView);
-
-        //Sets the cache name
         $cache = sprintf('tags_limit_%s_page_%s', getConfigOrFail('default.records') * 4, 1);
         list($tagsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->PostsTags->cache
+            $this->Table->cache
         ));
-
-        $this->assertEquals($tagsFromView->toArray(), $tagsFromCache->toArray());
+        $this->assertEquals($this->viewVariable('tags')->toArray(), $tagsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Tags']);
 
         //GET request again. Now the data is in cache
@@ -91,32 +67,24 @@ class PostsTagsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = $this->PostsTags->Tags->find('active')->extract('slug')->first();
+        $slug = $this->Table->Tags->find('active')->extract('slug')->first();
         $url = ['_name' => 'postsTag', $slug];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/PostsTags/view.ctp');
+        $this->assertTemplate('PostsTags/view.ctp');
+        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
+        $this->assertInstanceof(Tag::class, $this->viewVariable('tag'));
 
-        $tagFromView = $this->viewVariable('tag');
-        $this->assertNotEmpty($tagFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagFromView);
+        $tagFromCache = Cache::read((sprintf('tag_%s', md5($slug))), $this->Table->cache);
+        $this->assertEquals($this->viewVariable('tag'), $tagFromCache->first());
 
-        $tagFromCache = Cache::read((sprintf('tag_%s', md5($slug))), $this->PostsTags->cache);
-        $this->assertEquals($tagFromView, $tagFromCache->first());
-
-        $postsFromView = $this->viewVariable('posts');
-        $this->assertNotEmpty($postsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
-
-        //Sets the cache name
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->PostsTags->cache
+            $this->Table->cache
         ));
-
-        $this->assertEquals($postsFromView->toArray(), $postsFromCache->toArray());
+        $this->assertEquals($this->viewVariable('posts')->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
 
         //GET request again. Now the data is in cache

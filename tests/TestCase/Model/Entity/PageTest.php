@@ -12,50 +12,13 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\Model\Entity\Page;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\EntityTestCase;
 
 /**
  * PageTest class
  */
-class PageTest extends TestCase
+class PageTest extends EntityTestCase
 {
-    /**
-     * @var \MeCms\Model\Entity\Page
-     */
-    protected $Page;
-
-    /**
-     * @var \MeCms\Model\Table\PagesTable
-     */
-    protected $Pages;
-
-    /**
-     * Fixtures
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.me_cms.Pages',
-    ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Page = new Page;
-        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
-
-        Cache::clear(false, $this->Pages->cache);
-    }
-
     /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
@@ -63,9 +26,7 @@ class PageTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $this->assertFalse($this->Page->isAccessible('id'));
-        $this->assertFalse($this->Page->isAccessible('preview'));
-        $this->assertFalse($this->Page->isAccessible('modified'));
+        $this->assertHasNoAccessibleProperty(['id', 'preview', 'modified']);
     }
 
     /**
@@ -74,7 +35,7 @@ class PageTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['plain_text'], $this->Page->getVirtual());
+        $this->assertHasVirtualField('plain_text');
     }
 
     /**
@@ -83,7 +44,14 @@ class PageTest extends TestCase
      */
     public function testPlainTextGetMutator()
     {
-        $this->assertEquals('Text of the first page', $this->Pages->find()->extract('plain_text')->first());
-        $this->assertEmpty((new Page)->plain_text);
+        $expected = 'This is a text';
+
+        $this->Entity->text = 'This is a [readmore /]text';
+        $this->assertEquals($expected, $this->Entity->plain_text);
+        $this->assertNotEquals($this->Entity->text, $this->Entity->plain_text);
+
+        $this->Entity->text = $expected;
+        $this->assertEquals($expected, $this->Entity->plain_text);
+        $this->assertEquals($this->Entity->text, $this->Entity->plain_text);
     }
 }

@@ -14,24 +14,13 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\I18n\I18n;
-use MeCms\Controller\Admin\SystemsController;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
- * PhotosControllerTest class
+ * SystemsControllerTest class
  */
-class SystemsControllerTest extends IntegrationTestCase
+class SystemsControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Controller\Admin\SystemsController
-     */
-    protected $Controller;
-
-    /**
-     * @var array
-     */
-    protected $url;
-
     /**
      * Asserts that the cache is empty.
      *
@@ -70,38 +59,30 @@ class SystemsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
-        parent::setUp();
-
         I18n::setLocale('en_US');
-
-        $this->setUserGroup('admin');
-
-        $this->Controller = new SystemsController;
 
         Cache::clearAll();
 
-        $this->url = ['controller' => 'Systems', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
+        parent::setUp();
     }
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
     {
-        parent::tearDown();
-
         //Deletes all temporary files
         safe_unlink_recursive(getConfigOrFail(ASSETS . '.target'));
         safe_unlink_recursive(getConfigOrFail(THUMBER . '.target'));
         safe_unlink(SITEMAP);
+
+        parent::tearDown();
     }
 
     /**
@@ -110,10 +91,7 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testInitialize()
     {
-        $this->Controller->request = $this->Controller->request->withParam('action', 'browser');
-        $this->Controller->initialize();
-
-        $this->assertContains('KcFinder', $this->Controller->components()->loaded());
+        $this->assertHasComponent('KcFinder', 'browser');
     }
 
     /**
@@ -122,25 +100,17 @@ class SystemsControllerTest extends IntegrationTestCase
      */
     public function testIsAuthorized()
     {
+        parent::testIsAuthorized();
+
+        //With `tmpCleaner` action
         $this->assertGroupsAreAuthorized([
             'admin' => true,
             'manager' => true,
             'user' => false,
-        ]);
-
-        //`tmpCleaner` action
-        $this->Controller = new SystemsController;
-        $this->Controller->request = $this->Controller->request->withParam('action', 'tmpCleaner');
-
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => false,
-        ]);
+        ], 'tmpCleaner');
 
         foreach (['all', 'logs'] as $param) {
             $this->Controller->request = $this->Controller->request->withParam('pass.0', $param);
-
             $this->assertGroupsAreAuthorized([
                 'admin' => true,
                 'manager' => false,
@@ -161,50 +131,32 @@ class SystemsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/browser.ctp');
-
-        $typesFromView = $this->viewVariable('types');
-        $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $typesFromView);
-
-        $kcfinderFromView = $this->viewVariable('kcfinder');
-        $this->assertEmpty($kcfinderFromView);
+        $this->assertTemplate('Admin/Systems/browser.ctp');
+        $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $this->viewVariable('types'));
+        $this->assertEmpty($this->viewVariable('kcfinder'));
 
         //GET request. Asks for `docs` type
         $this->get($url + ['?' => ['type' => 'docs']]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/browser.ctp');
-
-        $typesFromView = $this->viewVariable('types');
-        $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $typesFromView);
-
-        $kcfinderFromView = $this->viewVariable('kcfinder');
-        $this->assertEquals('http://localhost/vendor/kcfinder/browse.php?lang=en&type=docs', $kcfinderFromView);
-
-        I18n::setLocale('it');
+        $this->assertTemplate('Admin/Systems/browser.ctp');
+        $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $this->viewVariable('types'));
+        $this->assertContains('kcfinder/browse.php?lang=en&type=docs', $this->viewVariable('kcfinder'));
 
         //GET request. Now with `it` locale
+        I18n::setLocale('it');
         $this->get($url + ['?' => ['type' => 'docs']]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/browser.ctp');
-
-        $typesFromView = $this->viewVariable('types');
-        $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $typesFromView);
-
-        $kcfinderFromView = $this->viewVariable('kcfinder');
-        $this->assertEquals('http://localhost/vendor/kcfinder/browse.php?lang=it&type=docs', $kcfinderFromView);
-
-        safe_rmdir(UPLOADED . 'docs');
+        $this->assertTemplate('Admin/Systems/browser.ctp');
+        $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $this->viewVariable('types'));
+        $this->assertContains('kcfinder/browse.php?lang=it&type=docs', $this->viewVariable('kcfinder'));
 
         //GET request. Now only the `images` type exists
+        safe_rmdir(UPLOADED . 'docs');
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/browser.ctp');
-
-        $typesFromView = $this->viewVariable('types');
-        $this->assertEquals(['images' => 'images'], $typesFromView);
-
-        $kcfinderFromView = $this->viewVariable('kcfinder');
-        $this->assertEquals('http://localhost/vendor/kcfinder/browse.php?lang=it&type=images', $kcfinderFromView);
+        $this->assertTemplate('Admin/Systems/browser.ctp');
+        $this->assertEquals(['images' => 'images'], $this->viewVariable('types'));
+        $this->assertContains('kcfinder/browse.php?lang=it&type=images', $this->viewVariable('kcfinder'));
     }
 
     /**
@@ -217,22 +169,16 @@ class SystemsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/changelogs.ctp');
-
-        $filesFromView = $this->viewVariable('files');
-        $this->assertNotEmpty($filesFromView);
-        $this->assertIsArray($filesFromView);
-
-        $changelogFromView = $this->viewVariable('changelog');
-        $this->assertEmpty($changelogFromView);
+        $this->assertTemplate('Admin/Systems/changelogs.ctp');
+        $this->assertNotEmpty($this->viewVariable('files'));
+        $this->assertIsArray($this->viewVariable('files'));
+        $this->assertEmpty($this->viewVariable('changelog'));
 
         //GET request. Asks for a changelog file
         $this->get($url + ['?' => ['file' => ME_CMS]]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/changelogs.ctp');
-
-        $changelogFromView = $this->viewVariable('changelog');
-        $this->assertIsString($changelogFromView);
+        $this->assertTemplate('Admin/Systems/changelogs.ctp');
+        $this->assertIsString($this->viewVariable('changelog'));
     }
 
     /**
@@ -243,13 +189,9 @@ class SystemsControllerTest extends IntegrationTestCase
     {
         $this->get($this->url + ['action' => 'checkup']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/checkup.ctp');
+        $this->assertTemplate('Admin/Systems/checkup.ctp');
 
-        foreach ($this->_controller->viewVars as $var) {
-            $this->assertNotEmpty($var);
-        }
-
-        $this->assertArrayKeysEqual([
+        $expectedViewVars = [
             'webroot',
             'temporary',
             'plugins',
@@ -259,7 +201,10 @@ class SystemsControllerTest extends IntegrationTestCase
             'cache',
             'backups',
             'apache',
-        ], $this->_controller->viewVars);
+        ];
+        foreach ($expectedViewVars as $varName) {
+            $this->assertNotEmpty($this->viewVariable($varName));
+        }
     }
 
     /**
@@ -269,12 +214,11 @@ class SystemsControllerTest extends IntegrationTestCase
     public function testClearSitemap()
     {
         safe_unlink(SITEMAP);
-
         $this->assertTrue($this->invokeMethod($this->Controller, 'clearSitemap'));
 
         $this->createSomeTemporaryData();
-
         $this->assertTrue($this->invokeMethod($this->Controller, 'clearSitemap'));
+        $this->assertFileNotExists(SITEMAP);
     }
 
     /**
@@ -285,18 +229,16 @@ class SystemsControllerTest extends IntegrationTestCase
     {
         $url = $this->url + ['action' => 'tmpCleaner'];
 
-        $files = $this->createSomeTemporaryData();
-
         //POST request. Cleans all
+        $files = $this->createSomeTemporaryData();
         $this->post($url + ['all']);
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertCacheIsEmpty();
         $this->assertFileNotExists($files);
 
-        $files = $this->createSomeTemporaryData();
-
         //POST request. Cleans the cache
+        $files = $this->createSomeTemporaryData();
         $this->post($url + ['cache']);
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
@@ -313,7 +255,7 @@ class SystemsControllerTest extends IntegrationTestCase
         //POST request. Invalid type
         $this->post($url + ['invalidType']);
         $this->assertRedirect(['action' => 'tmpViewer']);
-        $this->assertFlashMessage('The operation has not been performed correctly');
+        $this->assertFlashMessage(I18N_OPERATION_NOT_OK);
 
         //GET request
         $this->get($url + ['all']);
@@ -327,26 +269,21 @@ class SystemsControllerTest extends IntegrationTestCase
     public function testTmpViewer()
     {
         $this->createSomeTemporaryData();
-
         $this->get($this->url + ['action' => 'tmpViewer']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Systems/tmp_viewer.ctp');
+        $this->assertTemplate('Admin/Systems/tmp_viewer.ctp');
 
-        $viewVars = $this->_controller->viewVars;
-        ksort($viewVars);
-
-        foreach ($viewVars as $var) {
-            $this->assertNotEmpty($var);
-        }
-
-        $this->assertArrayKeysEqual([
+        $expectedViewVars = [
             'assetsSize',
             'cacheSize',
-            'cacheStatus',
             'logsSize',
             'sitemapSize',
             'thumbsSize',
             'totalSize',
-        ], $viewVars);
+            'cacheStatus',
+        ];
+        foreach ($expectedViewVars as $varName) {
+            $this->assertNotEmpty($this->viewVariable($varName));
+        }
     }
 }

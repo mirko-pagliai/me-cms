@@ -21,15 +21,9 @@ use MeCms\TestSuite\ValidationTestCase;
 class TagValidatorTest extends ValidationTestCase
 {
     /**
-     * @var \MeCms\Model\Table\TagsTable
-     */
-    protected $Tags;
-
-    /**
-     * Example data
      * @var array
      */
-    protected $example;
+    protected $example = ['tag' => 'my tag'];
 
     /**
      * Fixtures
@@ -40,28 +34,13 @@ class TagValidatorTest extends ValidationTestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Tags = TableRegistry::get(ME_CMS . '.Tags');
-
-        $this->example = ['tag' => 'my tag'];
-    }
-
-    /**
      * Test validation.
      * It tests the proper functioning of the example data.
      * @test
      */
     public function testValidationExampleData()
     {
-        $this->assertEmpty($this->Tags->newEntity($this->example)->getErrors());
+        $this->assertEmpty($this->Table->newEntity($this->example)->getErrors());
     }
 
     /**
@@ -70,21 +49,19 @@ class TagValidatorTest extends ValidationTestCase
      */
     public function testValidationForTag()
     {
-        foreach (['AbC', 'ab_c', 'ab-c', 'abc$'] as $value) {
-            $this->example['tag'] = $value;
-            $errors = $this->Tags->newEntity($this->example)->getErrors();
+        foreach (['AbC', 'ab_c', 'ab-c', 'abc$'] as $tag) {
+            $errors = $this->Table->newEntity(compact('tag') + $this->example)->getErrors();
             $this->assertEquals(['tag' => ['validTagChars' => 'Allowed chars: lowercase letters, numbers, space']], $errors);
         }
 
-        foreach (['ab', str_repeat('a', 31)] as $value) {
-            $this->example['tag'] = $value;
-            $errors = $this->Tags->newEntity($this->example)->getErrors();
+        foreach (['ab', str_repeat('a', 31)] as $tag) {
+            $errors = $this->Table->newEntity(compact('tag') + $this->example)->getErrors();
             $this->assertEquals(['tag' => ['validTagLength' => 'Must be between 3 and 30 chars']], $errors);
         }
 
-        foreach (['abc', str_repeat('a', 30)] as $value) {
-            $this->example['tag'] = $value;
-            $this->assertEmpty($this->Tags->newEntity($this->example)->getErrors());
+        foreach (['abc', str_repeat('a', 30)] as $tag) {
+            $errors = $this->Table->newEntity(compact('tag') + $this->example)->getErrors();
+            $this->assertEmpty($errors);
         }
     }
 }

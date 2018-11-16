@@ -12,19 +12,18 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Validation\PhotosAlbumValidator;
+use MeCms\TestSuite\TableTestCase;
 
 /**
  * PhotosAlbumsTableTest class
  */
-class PhotosAlbumsTableTest extends TestCase
+class PhotosAlbumsTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PhotosAlbumsTable
+     * @var bool
      */
-    protected $PhotosAlbums;
+    public $autoFixtures = false;
 
     /**
      * Fixtures
@@ -36,18 +35,14 @@ class PhotosAlbumsTableTest extends TestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called after every test method
      * @return void
      */
-    public function setUp()
+    public function tearDown()
     {
-        parent::setUp();
+        safe_unlink_recursive(PHOTOS, 'empty');
 
-        $this->PhotosAlbums = TableRegistry::get(ME_CMS . '.PhotosAlbums');
-
-        Cache::clear(false, $this->PhotosAlbums->cache);
+        parent::tearDown();
     }
 
     /**
@@ -56,7 +51,7 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testCacheProperty()
     {
-        $this->assertEquals('photos', $this->PhotosAlbums->cache);
+        $this->assertEquals('photos', $this->Table->cache);
     }
 
     /**
@@ -65,13 +60,14 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $entity = $this->PhotosAlbums->newEntity(['title' => 'new album', 'slug' => 'new-album']);
+        $this->loadFixtures();
 
-        $this->assertNotEmpty($this->PhotosAlbums->save($entity));
+        $entity = $this->Table->newEntity(['title' => 'new album', 'slug' => 'new-album']);
+        $this->assertNotEmpty($this->Table->save($entity));
         $this->assertFileExists($entity->path);
 
         //Deletes the album
-        $this->assertTrue($this->PhotosAlbums->delete($entity));
+        $this->assertTrue($this->Table->delete($entity));
         $this->assertFileNotExists($entity->path);
     }
 
@@ -81,13 +77,12 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testAfterSave()
     {
-        $entity = $this->PhotosAlbums->newEntity(['title' => 'new album', 'slug' => 'new-album']);
+        $this->loadFixtures();
 
-        $this->assertNotEmpty($this->PhotosAlbums->save($entity));
+        $entity = $this->Table->newEntity(['title' => 'new album', 'slug' => 'new-album']);
+        $this->assertNotEmpty($this->Table->save($entity));
         $this->assertFileExists($entity->path);
         $this->assertFilePerms($entity->path, '0777');
-
-        safe_rmdir($entity->path);
     }
 
     /**
@@ -96,14 +91,16 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testBuildRules()
     {
+        $this->loadFixtures();
+
         $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
-        $entity = $this->PhotosAlbums->newEntity($example);
-        $this->assertNotEmpty($this->PhotosAlbums->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertNotEmpty($this->Table->save($entity));
 
         //Saves again the same entity
-        $entity = $this->PhotosAlbums->newEntity($example);
-        $this->assertFalse($this->PhotosAlbums->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals([
             'slug' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
             'title' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
@@ -116,33 +113,17 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('photos_albums', $this->PhotosAlbums->getTable());
-        $this->assertEquals('title', $this->PhotosAlbums->getDisplayField());
-        $this->assertEquals('id', $this->PhotosAlbums->getPrimaryKey());
+        $this->assertEquals('photos_albums', $this->Table->getTable());
+        $this->assertEquals('title', $this->Table->getDisplayField());
+        $this->assertEquals('id', $this->Table->getPrimaryKey());
 
-        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PhotosAlbums->Photos);
-        $this->assertEquals('album_id', $this->PhotosAlbums->Photos->getForeignKey());
-        $this->assertEquals(ME_CMS . '.Photos', $this->PhotosAlbums->Photos->className());
+        $this->assertHasMany($this->Table->Photos);
+        $this->assertEquals('album_id', $this->Table->Photos->getForeignKey());
+        $this->assertEquals(ME_CMS . '.Photos', $this->Table->Photos->className());
 
-        $this->assertTrue($this->PhotosAlbums->hasBehavior('Timestamp'));
+        $this->assertHasBehavior('Timestamp');
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PhotosAlbumValidator', $this->PhotosAlbums->getValidator());
-    }
-
-    /**
-     * Test for the `hasMany` association with `Photos`
-     * @test
-     */
-    public function testHasManyPhotos()
-    {
-        $album = $this->PhotosAlbums->findById(1)->contain('Photos')->first();
-
-        $this->assertNotEmpty($album->photos);
-
-        foreach ($album->photos as $photo) {
-            $this->assertInstanceOf('MeCms\Model\Entity\Photo', $photo);
-            $this->assertEquals(1, $photo->album_id);
-        }
+        $this->assertInstanceOf(PhotosAlbumValidator::class, $this->Table->getValidator());
     }
 
     /**
@@ -151,12 +132,14 @@ class PhotosAlbumsTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $query = $this->PhotosAlbums->find('active');
+        $this->loadFixtures();
+
+        $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM photos_albums PhotosAlbums INNER JOIN photos Photos ON (Photos.active = :c0 AND PhotosAlbums.id = (Photos.album_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $entity) {
+        foreach ($query as $entity) {
             $this->assertTrue($entity->_matchingData['Photos']->active);
         }
     }

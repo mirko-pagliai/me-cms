@@ -16,8 +16,8 @@ use Cake\Cache\Cache;
 use Cake\Core\Plugin;
 use Cake\I18n\Time;
 use Cake\Utility\Xml;
-use MeCms\TestSuite\IntegrationTestCase;
 use MeCms\Utility\SitemapBuilder;
+use MeTools\TestSuite\IntegrationTestCase;
 
 /**
  * SitemapTest class
@@ -50,9 +50,7 @@ class SitemapBuilderTest extends IntegrationTestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
@@ -65,7 +63,7 @@ class SitemapBuilderTest extends IntegrationTestCase
     }
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
@@ -97,13 +95,11 @@ class SitemapBuilderTest extends IntegrationTestCase
         ], $extractNamesFromMethods($methods));
 
         Plugin::load('TestPlugin');
-
         $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['TestPlugin']);
         $this->assertEquals(['urlMethod1', 'urlMethod2'], $extractNamesFromMethods($methods));
 
         //This plugin does not have the `Sitemap` class
         Plugin::load('TestPluginTwo');
-
         $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['TestPluginTwo']);
         $this->assertEquals([], $methods);
     }
@@ -150,7 +146,6 @@ class SitemapBuilderTest extends IntegrationTestCase
         $this->loadFixtures();
 
         $map = $this->SitemapBuilder->generate();
-
         $this->assertStringStartsWith(
             '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL .
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL .
@@ -160,7 +155,6 @@ class SitemapBuilderTest extends IntegrationTestCase
         $this->assertStringEndsWith('  </url>' . PHP_EOL . '</urlset>', $map);
 
         $mapAsArray = Xml::toArray(Xml::build($map))['urlset']['url'];
-
         $this->assertGreaterThan(0, count($mapAsArray));
 
         foreach ($mapAsArray as $url) {
@@ -180,13 +174,11 @@ class SitemapBuilderTest extends IntegrationTestCase
         Plugin::load('TestPlugin');
 
         $map = $this->SitemapBuilder->generate();
-
         $this->assertContains('first-folder/page-on-first-from-plugin', $map);
         $this->assertContains('first-folder/second_folder/page_on_second_from_plugin', $map);
         $this->assertContains('test-from-plugin', $map);
 
         $mapAsArray = Xml::toArray(Xml::build($map))['urlset']['url'];
-
         $this->assertGreaterThan(0, count($mapAsArray));
     }
 }

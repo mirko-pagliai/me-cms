@@ -12,32 +12,13 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use MeCms\Model\Entity\PostsCategory;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\EntityTestCase;
 
 /**
  * PostsCategoryTest class
  */
-class PostsCategoryTest extends TestCase
+class PostsCategoryTest extends EntityTestCase
 {
-    /**
-     * @var \MeCms\Model\Entity\PostsCategory
-     */
-    protected $PostsCategory;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->PostsCategory = new PostsCategory;
-    }
-
     /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
@@ -45,8 +26,6 @@ class PostsCategoryTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $this->assertFalse($this->PostsCategory->isAccessible('id'));
-        $this->assertFalse($this->PostsCategory->isAccessible('post_count'));
-        $this->assertFalse($this->PostsCategory->isAccessible('modified'));
+        $this->assertHasNoAccessibleProperty(['id', 'post_count', 'modified']);
     }
 }

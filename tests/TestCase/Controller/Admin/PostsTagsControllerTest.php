@@ -12,19 +12,14 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
-use MeCms\Controller\Admin\PostsTagsController;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\Tag;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PhotosControllerTest class
  */
-class PostsTagsControllerTest extends IntegrationTestCase
+class PostsTagsControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Controller\Admin\PostsTagsController
-     */
-    protected $Controller;
-
     /**
      * Fixtures
      * @var array
@@ -34,28 +29,6 @@ class PostsTagsControllerTest extends IntegrationTestCase
         'plugin.me_cms.PostsTags',
         'plugin.me_cms.Tags',
     ];
-
-    /**
-     * @var array
-     */
-    protected $url;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUserGroup('admin');
-
-        $this->Controller = new PostsTagsController;
-
-        $this->url = ['controller' => 'PostsTags', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
-    }
 
     /**
      * Tests for `isAuthorized()` method
@@ -69,15 +42,12 @@ class PostsTagsControllerTest extends IntegrationTestCase
             'user' => true,
         ]);
 
-        //`edit` action
-        $this->Controller = new PostsTagsController;
-        $this->Controller->request = $this->Controller->request->withParam('action', 'edit');
-
+        //With `edit` action
         $this->assertGroupsAreAuthorized([
             'admin' => true,
             'manager' => true,
             'user' => false,
-        ]);
+        ], 'edit');
     }
 
     /**
@@ -88,11 +58,8 @@ class PostsTagsControllerTest extends IntegrationTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/PostsTags/index.ctp');
-
-        $tagsFromView = $this->viewVariable('tags');
-        $this->assertNotEmpty($tagsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Tag', $tagsFromView);
+        $this->assertTemplate('Admin/PostsTags/index.ctp');
+        $this->assertContainsInstanceof(Tag::class, $this->viewVariable('tags'));
     }
 
     /**
@@ -105,11 +72,8 @@ class PostsTagsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/PostsTags/edit.ctp');
-
-        $tagFromView = $this->viewVariable('tag');
-        $this->assertNotEmpty($tagFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagFromView);
+        $this->assertTemplate('Admin/PostsTags/edit.ctp');
+        $this->assertInstanceof(Tag::class, $this->viewVariable('tag'));
 
         //POST request. Data are valid
         $this->post($url, ['tag' => 'another tag']);
@@ -119,10 +83,7 @@ class PostsTagsControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['tag' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
-
-        $tagFromView = $this->viewVariable('tag');
-        $this->assertNotEmpty($tagFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Tag', $tagFromView);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(Tag::class, $this->viewVariable('tag'));
     }
 }

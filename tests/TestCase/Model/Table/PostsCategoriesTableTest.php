@@ -12,19 +12,20 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use Cake\I18n\Time;
+use MeCms\Model\Entity\PostsCategory;
+use MeCms\Model\Validation\PostsCategoryValidator;
+use MeCms\TestSuite\TableTestCase;
 
 /**
  * PostsCategoriesTableTest class
  */
-class PostsCategoriesTableTest extends TestCase
+class PostsCategoriesTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PostsCategoriesTable
+     * @var bool
      */
-    protected $PostsCategories;
+    public $autoFixtures = false;
 
     /**
      * Fixtures
@@ -36,27 +37,12 @@ class PostsCategoriesTableTest extends TestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->PostsCategories = TableRegistry::get(ME_CMS . '.PostsCategories');
-
-        Cache::clear(false, $this->PostsCategories->cache);
-    }
-
-    /**
      * Test for `cache` property
      * @test
      */
     public function testCacheProperty()
     {
-        $this->assertEquals('posts', $this->PostsCategories->cache);
+        $this->assertEquals('posts', $this->Table->cache);
     }
 
     /**
@@ -65,25 +51,27 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testBuildRules()
     {
+        $this->loadFixtures();
+
         $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
-        $entity = $this->PostsCategories->newEntity($example);
-        $this->assertNotEmpty($this->PostsCategories->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertNotEmpty($this->Table->save($entity));
 
         //Saves again the same entity
-        $entity = $this->PostsCategories->newEntity($example);
-        $this->assertFalse($this->PostsCategories->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals([
             'slug' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
             'title' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
         ], $entity->getErrors());
 
-        $entity = $this->PostsCategories->newEntity([
+        $entity = $this->Table->newEntity([
             'parent_id' => 999,
             'title' => 'My title 2',
             'slug' => 'my-slug-2',
         ]);
-        $this->assertFalse($this->PostsCategories->save($entity));
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals(['parent_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
     }
 
@@ -93,26 +81,25 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('posts_categories', $this->PostsCategories->getTable());
-        $this->assertEquals('title', $this->PostsCategories->getDisplayField());
-        $this->assertEquals('id', $this->PostsCategories->getPrimaryKey());
+        $this->assertEquals('posts_categories', $this->Table->getTable());
+        $this->assertEquals('title', $this->Table->getDisplayField());
+        $this->assertEquals('id', $this->Table->getPrimaryKey());
 
-        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PostsCategories->Parents);
-        $this->assertEquals('parent_id', $this->PostsCategories->Parents->getForeignKey());
-        $this->assertEquals(ME_CMS . '.PostsCategories', $this->PostsCategories->Parents->className());
+        $this->assertBelongsTo($this->Table->Parents);
+        $this->assertEquals('parent_id', $this->Table->Parents->getForeignKey());
+        $this->assertEquals(ME_CMS . '.PostsCategories', $this->Table->Parents->className());
 
-        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PostsCategories->Childs);
-        $this->assertEquals('parent_id', $this->PostsCategories->Childs->getForeignKey());
-        $this->assertEquals(ME_CMS . '.PostsCategories', $this->PostsCategories->Childs->className());
+        $this->assertHasMany($this->Table->Childs);
+        $this->assertEquals('parent_id', $this->Table->Childs->getForeignKey());
+        $this->assertEquals(ME_CMS . '.PostsCategories', $this->Table->Childs->className());
 
-        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PostsCategories->Posts);
-        $this->assertEquals('category_id', $this->PostsCategories->Posts->getForeignKey());
-        $this->assertEquals(ME_CMS . '.Posts', $this->PostsCategories->Posts->className());
+        $this->assertHasMany($this->Table->Posts);
+        $this->assertEquals('category_id', $this->Table->Posts->getForeignKey());
+        $this->assertEquals(ME_CMS . '.Posts', $this->Table->Posts->className());
 
-        $this->assertTrue($this->PostsCategories->hasBehavior('Timestamp'));
-        $this->assertTrue($this->PostsCategories->hasBehavior('Tree'));
+        $this->assertHasBehavior(['Timestamp', 'Tree']);
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PostsCategoryValidator', $this->PostsCategories->getValidator());
+        $this->assertInstanceOf(PostsCategoryValidator::class, $this->Table->getValidator());
     }
     /**
      * Test for the `belongsTo` association with `PostsCategories` parents
@@ -120,13 +107,15 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testBelongsToParents()
     {
-        $category = $this->PostsCategories->findById(4)->contain('Parents')->first();
+        $this->loadFixtures();
+
+        $category = $this->Table->findById(4)->contain('Parents')->first();
 
         $this->assertNotEmpty($category->parent);
         $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $category->parent);
         $this->assertEquals(3, $category->parent->id);
 
-        $category = $this->PostsCategories->findById($category->parent->id)->contain('Parents')->first();
+        $category = $this->Table->findById($category->parent->id)->contain('Parents')->first();
 
         $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $category->parent);
         $this->assertEquals(1, $category->parent->id);
@@ -138,38 +127,20 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testHasManyChilds()
     {
-        $category = $this->PostsCategories->find()->contain('Childs')->first();
+        $this->loadFixtures();
 
-        $this->assertNotEmpty($category->childs);
+        $childs = $this->Table->find()->contain('Childs')->extract('childs')->first();
+        $this->assertContainsInstanceOf(PostsCategory::class, $childs);
 
-        foreach ($category->childs as $children) {
-            $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $children);
+        foreach ($childs as $children) {
             $this->assertEquals(1, $children->parent_id);
 
-            $category = $this->PostsCategories->findById($children->id)->contain('Childs')->first();
+            $childs = $this->Table->findById($children->id)->contain('Childs')->extract('childs')->first();
+            $this->assertContainsInstanceOf(PostsCategory::class, $childs);
 
-            $this->assertNotEmpty($category->childs);
-
-            foreach ($category->childs as $children) {
-                $this->assertInstanceOf('MeCms\Model\Entity\PostsCategory', $children);
+            foreach ($childs as $children) {
                 $this->assertEquals(3, $children->parent_id);
             }
-        }
-    }
-
-    /**
-     * Test for the `hasMany` association with `Posts`
-     * @test
-     */
-    public function testHasManyPosts()
-    {
-        $category = $this->PostsCategories->find()->contain('Posts')->first();
-
-        $this->assertNotEmpty($category->posts);
-
-        foreach ($category->posts as $post) {
-            $this->assertInstanceOf('MeCms\Model\Entity\Post', $post);
-            $this->assertEquals($category->id, $post->category_id);
         }
     }
 
@@ -179,13 +150,15 @@ class PostsCategoriesTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $query = $this->PostsCategories->find('active');
-        $this->assertStringEndsWith('FROM posts_categories Categories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Categories.id = (Posts.category_id))', $query->sql());
+        $this->loadFixtures();
+
+        $query = $this->Table->find('active');
+        $this->assertStringEndsWith('FROM posts_categories PostsCategories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND PostsCategories.id = (Posts.category_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $entity) {
+        foreach ($query as $entity) {
             $this->assertTrue($entity->_matchingData['Posts']->active &&
                 !$entity->_matchingData['Posts']->created->isFuture());
         }

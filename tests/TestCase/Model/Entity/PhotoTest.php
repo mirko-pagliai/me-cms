@@ -12,48 +12,23 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\Model\Entity\Photo;
-use MeTools\TestSuite\TestCase;
+use Cake\ORM\Entity;
+use MeCms\TestSuite\EntityTestCase;
 
 /**
  * PhotoTest class
  */
-class PhotoTest extends TestCase
+class PhotoTest extends EntityTestCase
 {
     /**
-     * @var \MeCms\Model\Entity\Photo
-     */
-    protected $Photo;
-
-    /**
-     * @var \MeCms\Model\Table\PhotosTable
-     */
-    protected $Photos;
-
-    /**
-     * Fixtures
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.me_cms.Photos',
-    ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called after every test method
      * @return void
      */
-    public function setUp()
+    public function tearDown()
     {
-        parent::setUp();
+        safe_unlink_recursive(PHOTOS, 'empty');
 
-        $this->Photo = new Photo;
-        $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
-
-        Cache::clear(false, $this->Photos->cache);
+        parent::tearDown();
     }
 
     /**
@@ -63,8 +38,7 @@ class PhotoTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $this->assertFalse($this->Photo->isAccessible('id'));
-        $this->assertFalse($this->Photo->isAccessible('modified'));
+        $this->assertHasNoAccessibleProperty(['id', 'modified']);
     }
 
     /**
@@ -73,9 +47,9 @@ class PhotoTest extends TestCase
      */
     public function testPathGetMutator()
     {
-        $this->Photo->album_id = 1;
-        $this->Photo->filename = 'photo.jpg';
-        $this->assertEquals(PHOTOS . $this->Photo->album_id . DS . $this->Photo->filename, $this->Photo->path);
+        $this->Entity->album_id = 1;
+        $this->Entity->filename = 'photo.jpg';
+        $this->assertEquals(PHOTOS . $this->Entity->album_id . DS . $this->Entity->filename, $this->Entity->path);
     }
 
     /**
@@ -84,8 +58,15 @@ class PhotoTest extends TestCase
      */
     public function testPlainTextGetMutator()
     {
-        $this->assertEquals('A photo', $this->Photos->find()->extract('plain_description')->first());
-        $this->assertEmpty((new Photo)->plain_description);
+        $expected = 'This is a text';
+
+        $this->Entity->description = 'This is a [readmore /]text';
+        $this->assertEquals($expected, $this->Entity->plain_description);
+        $this->assertNotEquals($this->Entity->description, $this->Entity->plain_description);
+
+        $this->Entity->description = $expected;
+        $this->assertEquals($expected, $this->Entity->plain_description);
+        $this->assertEquals($this->Entity->description, $this->Entity->plain_description);
     }
 
     /**
@@ -94,12 +75,14 @@ class PhotoTest extends TestCase
      */
     public function testPreviewGetMutator()
     {
-        $photo = $this->Photos->get(1);
+        $this->Entity->album_id = 1;
+        $this->Entity->filename = 'photo1.jpg';
+        file_put_contents(PHOTOS . $this->Entity->album_id . DS . $this->Entity->filename, $this->Entity->path, null);
 
-        $this->assertInstanceof('Cake\ORM\Entity', $photo->preview);
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $photo->preview->url);
-        $this->assertEquals(400, $photo->preview->width);
-        $this->assertEquals(400, $photo->preview->height);
+        $this->assertInstanceof(Entity::class, $this->Entity->preview);
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $this->Entity->preview->url);
+        $this->assertEquals(null, $this->Entity->preview->width);
+        $this->assertEquals(null, $this->Entity->preview->height);
     }
 
     /**
@@ -108,6 +91,6 @@ class PhotoTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['path', 'plain_description', 'preview'], $this->Photo->getVirtual());
+        $this->assertHasVirtualField(['path', 'plain_description', 'preview']);
     }
 }

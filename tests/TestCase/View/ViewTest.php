@@ -17,21 +17,22 @@ use Cake\Core\Plugin;
 use Cake\Network\Request;
 use MeCms\View\View;
 use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * ViewTest class
  */
 class ViewTest extends TestCase
 {
+    use MockTrait;
+
     /**
      * @var \MeCms\View\View
      */
     protected $View;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
@@ -40,13 +41,15 @@ class ViewTest extends TestCase
 
         $request = new Request;
         $request = $request->withEnv('REQUEST_URI', '/some-page');
-
-        $this->View = new View($request);
+        $this->View = $this->getMockBuilder(View::class)
+            ->setMethods(null)
+            ->setConstructorArgs([$request])
+            ->getMock();
         $this->View->plugin = ME_CMS;
     }
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
@@ -69,10 +72,7 @@ class ViewTest extends TestCase
         Plugin::load($theme);
         Configure::write(ME_CMS . '.default.theme', $theme);
 
-        //Reloads the View
-        $this->View = new View(new Request);
-
-        $this->assertEquals($theme, $this->View->getTheme());
+        $this->assertEquals($theme, (new View)->getTheme());
     }
 
     /**
@@ -88,7 +88,6 @@ class ViewTest extends TestCase
         //Writes the main title on configuration
         $mainTitle = 'main title';
         Configure::write(ME_CMS . '.main.title', $mainTitle);
-
         $this->assertEquals($getTitleForLayoutMethod(), $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), $mainTitle);
 
@@ -166,7 +165,7 @@ class ViewTest extends TestCase
         safe_unlink(WWW_ROOT . 'favicon.ico');
 
         //Checks for title and favicon
-        $this->assertRegExp('/' . preg_quote('<title>title from controller - ' . ME_CMS . '</title>', '/') . '/', $result);
-        $this->assertRegExp('/' . preg_quote('<link href="favicon.ico" type="image/x-icon" rel="icon"/><link href="favicon.ico" type="image/x-icon" rel="shortcut icon"/>', '/') . '/', $result);
+        $this->assertContains('<title>title from controller - ' . ME_CMS . '</title>', $result);
+        $this->assertContains('<link href="favicon.ico" type="image/x-icon" rel="icon"/><link href="favicon.ico" type="image/x-icon" rel="shortcut icon"/>', $result);
     }
 }

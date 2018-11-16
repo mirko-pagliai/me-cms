@@ -12,24 +12,22 @@
  */
 namespace MeCms\Test\TestCase\Shell;
 
-use Cake\ORM\TableRegistry;
-use MeCms\Shell\UserShell;
+use Cake\Console\ConsoleOptionParser;
+use MeCms\Model\Table\UsersTable;
 use MeTools\TestSuite\ConsoleIntegrationTestCase;
+use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * InstallShellTest class
  */
 class UserShellTest extends ConsoleIntegrationTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\UsersTable
-     */
-    protected $Users;
+    use MockTrait;
 
     /**
-     * @var \MeCms\Shell\UserShell
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
-    protected $UserShell;
+    protected $Table;
 
     /**
      * Fixtures
@@ -41,18 +39,14 @@ class UserShellTest extends ConsoleIntegrationTestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->Users = TableRegistry::get(ME_CMS . '.Users');
-
-        $this->UserShell = new UserShell;
+        $this->Table = $this->getMockForTable(UsersTable::class, null);
     }
 
     /**
@@ -62,27 +56,28 @@ class UserShellTest extends ConsoleIntegrationTestCase
     public function testAdd()
     {
         $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
-        $id = $this->Users->find()->extract('id')->last();
+        $expectedUserId = $this->Table->find()->extract('id')->last() + 1;
 
         $this->exec('me_cms.user add', array_merge($example, ['3']));
         $this->assertExitWithSuccess();
         $this->assertOutputContains('<question>Group ID</question>');
         $this->assertOutputContains('<success>The operation has been performed correctly</success>');
-        $this->assertOutputContains('<success>The user was created with ID ' . ++$id . '</success>');
+        $this->assertOutputContains('<success>The user was created with ID ' . $expectedUserId . '</success>');
+        $this->assertErrorEmpty();
 
         //Checks the user has been created
-        $this->assertEquals(3, $this->Users->findById($id)->extract('group_id')->first());
-
-        $this->Users->delete($this->Users->get($id));
+        $this->assertEquals(3, $this->Table->findById($expectedUserId)->extract('group_id')->first());
+        $this->Table->delete($this->Table->get($expectedUserId));
 
         //Tries using the `group` param
         $this->exec('me_cms.user add --group 2', $example);
         $this->assertExitWithSuccess();
         $this->assertOutputContains('<success>The operation has been performed correctly</success>');
-        $this->assertOutputContains('<success>The user was created with ID ' . ++$id . '</success>');
+        $this->assertOutputContains('<success>The user was created with ID ' . ++$expectedUserId . '</success>');
+        $this->assertErrorEmpty();
 
         //Checks the user has been created
-        $this->assertEquals(2, $this->Users->findById($id)->extract('group_id')->first());
+        $this->assertEquals(2, $this->Table->findById($expectedUserId)->extract('group_id')->first());
 
         //Tries with a no existing group
         $this->exec('me_cms.user add --group 123', $example);
@@ -113,7 +108,7 @@ class UserShellTest extends ConsoleIntegrationTestCase
         $this->assertErrorContains('<error>Field `password_repeat`: passwords don\'t match</error>');
 
         //Tries with no groups
-        $this->Users->Groups->deleteAll(['id >=' => '1']);
+        $this->Table->Groups->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.user add -v');
         $this->assertExitWithError();
         $this->assertErrorContains('<error>Before you can manage users, you have to create at least a user group</error>');
@@ -125,26 +120,16 @@ class UserShellTest extends ConsoleIntegrationTestCase
      */
     public function testGroups()
     {
+        $expectedRows = $this->Table->Groups->find()->map(function ($row) {
+            return [(string)$row->id, $row->name, $row->label, $row->user_count];
+        });
         $this->exec('me_cms.user groups');
         $this->assertExitWithSuccess();
-
-        $messages = $this->_out->messages();
-        $this->assertRegExp('/^[\+\-]+$/', current($messages));
-        $headers = preg_replace('/\s*\<info\>(\w+)\<\/info\>\s*/', '${1}', array_filter(explode('|', next($messages))));
-        $this->assertEquals(['ID', 'Name', 'Label', 'Users'], array_values($headers));
-        $this->assertRegExp('/^[\+\-]+$/', end($messages));
-
-        //Removes the already checked lines
-        $lastLine = count($messages) - 1;
-        unset($messages[0], $messages[1], $messages[2], $messages[$lastLine]);
-
-        foreach ($messages as $line) {
-            $this->assertRegExp('/^|\s*\d+\s*|\s*\w+\s*|\s*\d+\s*|$/', $line);
-        }
+        $this->assertTableHeadersEquals(['ID', 'Name', 'Label', 'Users']);
+        $this->assertTableRowsEquals($expectedRows->toList());
 
         //Deletes all groups
-        $this->Users->Groups->deleteAll(['id >=' => '1']);
-
+        $this->Table->Groups->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.user groups');
         $this->assertExitWithError();
         $this->assertErrorContains('<error>There are no user groups</error>');
@@ -156,27 +141,33 @@ class UserShellTest extends ConsoleIntegrationTestCase
      */
     public function testUsers()
     {
+        $expectedRows = $this->Table->find()->contain('Groups')->map(function ($user) {
+            if ($user->banned) {
+                $user->status = __d('me_cms', 'Banned');
+            } elseif (!$user->active) {
+                $user->status = __d('me_cms', 'Pending');
+            } else {
+                $user->status = __d('me_cms', 'Active');
+            }
+
+            return [
+                $user->id,
+                $user->username,
+                $user->group->label,
+                $user->full_name,
+                $user->email,
+                $user->post_count,
+                $user->status,
+                $user->created->i18nFormat('yyyy/MM/dd HH:mm'),
+            ];
+        });
         $this->exec('me_cms.user users');
         $this->assertExitWithSuccess();
-
-        $messages = $this->_out->messages();
-        $this->assertRegExp('/^[\+\-]+$/', current($messages));
-        $headers = preg_replace('/\s*\<info\>(\w+)\<\/info\>\s*/', '${1}', array_filter(explode('|', next($messages))));
-        $this->assertEquals(['ID', 'Username', 'Group', 'Name', 'Email', 'Posts', 'Status', 'Date'], array_values($headers));
-        $this->assertRegExp('/^[\+\-]+$/', next($messages));
-        $this->assertRegExp('/^[\+\-]+$/', end($messages));
-
-        //Removes the already checked lines
-        $lastLine = count($messages) - 1;
-        unset($messages[0], $messages[1], $messages[2], $messages[$lastLine]);
-
-        foreach ($messages as $line) {
-            $this->assertRegExp('/^\|\s*\d+\s*\|\s*\w+\s*\|\s*\w+\s*\|\s*\w+\s\w+\s*\|\s*\S+\s*\|\s*\d+\s*\|\s*\w+\s*\|\s*\S+\s\S+\s*\|$/', $line);
-        }
+        $this->assertTableHeadersEquals(['ID', 'Username', 'Group', 'Name', 'Email', 'Posts', 'Status', 'Date']);
+        $this->assertTableRowsEquals($expectedRows->toList());
 
         //Deletes all users
-        $this->Users->deleteAll(['id >=' => '1']);
-
+        $this->Table->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.user users');
         $this->assertExitWithError();
         $this->assertErrorContains('<error>There are no users</error>');
@@ -188,11 +179,10 @@ class UserShellTest extends ConsoleIntegrationTestCase
      */
     public function testGetOptionParser()
     {
-        $parser = $this->UserShell->getOptionParser();
-
-        $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
-        $this->assertArrayKeysEqual(['add', 'groups', 'users'], $parser->subcommands());
+        $parser = $this->Shell->getOptionParser();
+        $this->assertInstanceOf(ConsoleOptionParser::class, $parser);
         $this->assertEquals('Shell to handle users and user groups', $parser->getDescription());
         $this->assertArrayKeysEqual(['help', 'quiet', 'verbose'], $parser->options());
+        $this->assertArrayKeysEqual(['add', 'groups', 'users'], $parser->subcommands());
     }
 }

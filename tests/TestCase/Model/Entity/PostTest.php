@@ -12,52 +12,14 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\Model\Entity\Post;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Entity\Tag;
+use MeCms\TestSuite\EntityTestCase;
 
 /**
  * PostTest class
  */
-class PostTest extends TestCase
+class PostTest extends EntityTestCase
 {
-    /**
-     * @var \MeCms\Model\Entity\Post
-     */
-    protected $Post;
-
-    /**
-     * @var \MeCms\Model\Table\PostsTable
-     */
-    protected $Posts;
-
-    /**
-     * Fixtures
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsTags',
-        'plugin.me_cms.Tags',
-    ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Post = new Post;
-        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
-
-        Cache::clear(false, $this->Posts->cache);
-    }
-
     /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
@@ -65,9 +27,7 @@ class PostTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $this->assertFalse($this->Post->isAccessible('id'));
-        $this->assertFalse($this->Post->isAccessible('preview'));
-        $this->assertFalse($this->Post->isAccessible('modified'));
+        $this->assertHasNoAccessibleProperty(['id', 'preview', 'modified']);
     }
 
     /**
@@ -76,7 +36,7 @@ class PostTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['plain_text', 'tags_as_string'], $this->Post->getVirtual());
+        $this->assertHasVirtualField(['plain_text', 'tags_as_string']);
     }
 
     /**
@@ -85,8 +45,15 @@ class PostTest extends TestCase
      */
     public function testPlainTextGetMutator()
     {
-        $this->assertEquals('Text of the first post', $this->Posts->find()->extract('plain_text')->first());
-        $this->assertEmpty((new Post)->plain_text);
+        $expected = 'This is a text';
+
+        $this->Entity->text = 'This is a [readmore /]text';
+        $this->assertEquals($expected, $this->Entity->plain_text);
+        $this->assertNotEquals($this->Entity->text, $this->Entity->plain_text);
+
+        $this->Entity->text = $expected;
+        $this->assertEquals($expected, $this->Entity->plain_text);
+        $this->assertEquals($this->Entity->text, $this->Entity->plain_text);
     }
 
     /**
@@ -95,13 +62,21 @@ class PostTest extends TestCase
      */
     public function testTagsAsStringGetMutator()
     {
-        foreach ([
-            1 => 'cat, dog, bird',
-            3 => 'cat',
-            4 => null,
-        ] as $postId => $expectedTags) {
-            $result = $this->Posts->findById($postId)->contain('Tags')->extract('tags_as_string')->first();
-            $this->assertEquals($expectedTags, $result);
-        }
+        $tags[] = new Tag(['tag' => 'cat']);
+        $tags[] = new Tag(['tag' => 'dog']);
+        $tags[] = new Tag(['tag' => 'bird']);
+
+        $this->assertNull($this->Entity->tags_as_string);
+
+        $this->Entity->tags = $tags;
+        $this->assertEquals('cat, dog, bird', $this->Entity->tags_as_string);
+
+        array_pop($tags);
+        $this->Entity->tags = $tags;
+        $this->assertEquals('cat, dog', $this->Entity->tags_as_string);
+
+        array_pop($tags);
+        $this->Entity->tags = $tags;
+        $this->assertEquals('cat', $this->Entity->tags_as_string);
     }
 }

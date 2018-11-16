@@ -12,32 +12,13 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use MeCms\Model\Entity\PostsTag;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\EntityTestCase;
 
 /**
  * PostsTagTest class
  */
-class PostsTagTest extends TestCase
+class PostsTagTest extends EntityTestCase
 {
-    /**
-     * @var \MeCms\Model\Entity\PostsTag
-     */
-    protected $PostsTag;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->PostsTag = new PostsTag;
-    }
-
     /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
@@ -45,6 +26,6 @@ class PostsTagTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $this->assertFalse($this->PostsTag->isAccessible('id'));
+        $this->assertHasNoAccessibleProperty('id');
     }
 }

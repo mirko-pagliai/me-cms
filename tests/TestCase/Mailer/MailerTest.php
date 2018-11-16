@@ -28,13 +28,10 @@ class MailerTest extends TestCase
     {
         $mailer = new Mailer;
 
-        //Gets `Email` instance
-        $email = $this->invokeMethod($mailer, 'getEmailInstance');
-
-        $this->assertEquals([ME_TOOLS . '.Html'], $email->getHelpers());
-        $this->assertEquals(['email@example.com' => ME_CMS], $email->getSender());
-        $this->assertEquals(['email@example.com' => ME_CMS], $email->getFrom());
-        $this->assertEquals('html', $email->getEmailFormat());
-        $this->assertEquals([], $email->getViewVars());
+        $this->assertEquals([ME_TOOLS . '.Html'], $mailer->viewBuilder()->getHelpers());
+        $this->assertEquals(['email@example.com' => ME_CMS], $mailer->getEmailInstance()->getSender());
+        $this->assertEquals(['email@example.com' => ME_CMS], $mailer->getEmailInstance()->getFrom());
+        $this->assertEquals('html', $mailer->getEmailInstance()->getEmailFormat());
+        $this->assertEquals([], $mailer->getEmailInstance()->getViewVars());
     }
 }

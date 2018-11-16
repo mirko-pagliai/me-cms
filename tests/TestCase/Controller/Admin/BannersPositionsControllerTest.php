@@ -12,26 +12,14 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\Controller\Admin\BannersPositionsController;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\BannersPosition;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * BannersPositionsControllerTest class
  */
-class BannersPositionsControllerTest extends IntegrationTestCase
+class BannersPositionsControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\BannersPositionsTable
-     */
-    protected $BannersPositions;
-
-    /**
-     * @var \MeCms\Controller\Admin\BannersPositionsController
-     */
-    protected $Controller;
-
     /**
      * Fixtures
      * @var array
@@ -39,32 +27,6 @@ class BannersPositionsControllerTest extends IntegrationTestCase
     public $fixtures = [
         'plugin.me_cms.BannersPositions',
     ];
-
-    /**
-     * @var array
-     */
-    protected $url;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUserGroup('admin');
-
-        $this->BannersPositions = TableRegistry::get(ME_CMS . '.BannersPositions');
-
-        $this->Controller = new BannersPositionsController;
-
-        Cache::clear(false, $this->BannersPositions->cache);
-
-        $this->url = ['controller' => 'BannersPositions', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
-    }
 
     /**
      * Tests for `isAuthorized()` method
@@ -87,11 +49,8 @@ class BannersPositionsControllerTest extends IntegrationTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/BannersPositions/index.ctp');
-
-        $positionsFromView = $this->viewVariable('positions');
-        $this->assertNotEmpty($positionsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\BannersPosition', $positionsFromView);
+        $this->assertTemplate('Admin/BannersPositions/index.ctp');
+        $this->assertContainsInstanceof(BannersPosition::class, $this->viewVariable('positions'));
     }
 
     /**
@@ -104,11 +63,8 @@ class BannersPositionsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/BannersPositions/add.ctp');
-
-        $positionFromView = $this->viewVariable('position');
-        $this->assertNotEmpty($positionFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
+        $this->assertTemplate('Admin/BannersPositions/add.ctp');
+        $this->assertInstanceof(BannersPosition::class, $this->viewVariable('position'));
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'new-position-title', 'descriptions' => 'position description']);
@@ -118,11 +74,8 @@ class BannersPositionsControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
-
-        $positionFromView = $this->viewVariable('position');
-        $this->assertNotEmpty($positionFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(BannersPosition::class, $this->viewVariable('position'));
     }
 
     /**
@@ -135,11 +88,8 @@ class BannersPositionsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/BannersPositions/edit.ctp');
-
-        $positionFromView = $this->viewVariable('position');
-        $this->assertNotEmpty($positionFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
+        $this->assertTemplate('Admin/BannersPositions/edit.ctp');
+        $this->assertInstanceof(BannersPosition::class, $this->viewVariable('position'));
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another-title']);
@@ -149,11 +99,8 @@ class BannersPositionsControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
-
-        $positionFromView = $this->viewVariable('position');
-        $this->assertNotEmpty($positionFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\BannersPosition', $positionFromView);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(BannersPosition::class, $this->viewVariable('position'));
     }
 
     /**
@@ -162,18 +109,18 @@ class BannersPositionsControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $id = $this->BannersPositions->find()->where(['banner_count <' => 1])->extract('id')->first();
-
         //POST request. This position has no banner
+        $id = $this->Table->findByBannerCount(0)->extract('id')->first();
         $this->post($this->url + ['action' => 'delete', $id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-
-        $id = $this->BannersPositions->find()->where(['banner_count >=' => 1])->extract('id')->first();
+        $this->assertTrue($this->Table->findById($id)->isEmpty());
 
         //POST request. This position has some banners, so it cannot be deleted
+        $id = $this->Table->find()->where(['banner_count >=' => 1])->extract('id')->first();
         $this->post($this->url + ['action' => 'delete', $id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
+        $this->assertFalse($this->Table->findById($id)->isEmpty());
     }
 }

@@ -12,32 +12,13 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use MeCms\Model\Entity\BannersPosition;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\EntityTestCase;
 
 /**
  * BannersPositionTest class
  */
-class BannersPositionTest extends TestCase
+class BannersPositionTest extends EntityTestCase
 {
-    /**
-     * @var \MeCms\Model\Entity\BannersPosition
-     */
-    protected $BannersPosition;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->BannersPosition = new BannersPosition;
-    }
-
     /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
@@ -45,8 +26,6 @@ class BannersPositionTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $this->assertFalse($this->BannersPosition->isAccessible('id'));
-        $this->assertFalse($this->BannersPosition->isAccessible('banner_count'));
-        $this->assertFalse($this->BannersPosition->isAccessible('modified'));
+        $this->assertHasNoAccessibleProperty(['id', 'banner_count', 'modified']);
     }
 }

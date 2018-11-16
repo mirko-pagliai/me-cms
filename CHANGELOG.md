@@ -1,7 +1,11 @@
 # 2.x branch
 ## 2.25 branch
 ### 2.25.4
-* `Mailer::getEmailInstance()` is now public.
+* `Mailer::getEmailInstance()` is now public;
+* added `CellTestCase`, `ControllerTestCase`, `EntityTestCase` and
+    `TableTestCase` abstract classes;
+* fixed `PostsAndPagesTablesTestCase` and `ValidationTestCase` abstract classes;
+* all the tests have been improved.
 
 ### 2.25.3
 * photo albums are now indexed by creation date. The creation date is shown in

@@ -12,22 +12,27 @@
  */
 namespace MeCms\Test\TestCase\Shell;
 
-use Cake\ORM\TableRegistry;
-use Cake\TestSuite\Stub\ConsoleOutput;
+use Cake\Console\ConsoleOptionParser;
 use Cake\Utility\Inflector;
 use MeCms\Core\Plugin;
+use MeCms\Model\Table\UsersGroupsTable;
 use MeCms\Shell\InstallShell;
 use MeTools\TestSuite\ConsoleIntegrationTestCase;
+use MeTools\TestSuite\Traits\MockTrait;
+use Tools\ReflectionTrait;
 
 /**
  * InstallShellTest class
  */
 class InstallShellTest extends ConsoleIntegrationTestCase
 {
+    use MockTrait;
+    use ReflectionTrait;
+
     /**
-     * @var \MeCms\Shell\InstallShell
+     * @var array
      */
-    protected $InstallShell;
+    protected $debug = [];
 
     /**
      * Fixtures
@@ -38,33 +43,7 @@ class InstallShellTest extends ConsoleIntegrationTestCase
     ];
 
     /**
-     * @var \Cake\TestSuite\Stub\ConsoleOutput
-     */
-    protected $out;
-
-    /**
-     * @var \Cake\TestSuite\Stub\ConsoleOutput
-     */
-    protected $err;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->out = new ConsoleOutput;
-        $this->err = new ConsoleOutput;
-
-        $this->InstallShell = new InstallShell;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
@@ -83,7 +62,7 @@ class InstallShellTest extends ConsoleIntegrationTestCase
     public function testConstruct()
     {
         foreach (['config', 'links', 'paths'] as $property) {
-            $this->assertNotEmpty($this->getProperty($this->InstallShell, $property));
+            $this->assertNotEmpty($this->Shell->$property);
         }
     }
 
@@ -93,11 +72,10 @@ class InstallShellTest extends ConsoleIntegrationTestCase
      */
     public function testGetOtherPlugins()
     {
-        $this->assertEmpty($this->invokeMethod($this->InstallShell, 'getOtherPlugins'));
+        $this->assertEmpty($this->invokeMethod($this->Shell, 'getOtherPlugins'));
 
         Plugin::load('TestPlugin');
-
-        $this->assertEquals(['TestPlugin'], $this->invokeMethod($this->InstallShell, 'getOtherPlugins'));
+        $this->assertEquals(['TestPlugin'], $this->invokeMethod($this->Shell, 'getOtherPlugins'));
     }
 
     /**
@@ -110,50 +88,40 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         $methods = array_merge(get_child_methods(get_parent_class(InstallShell::class)), get_child_methods(InstallShell::class));
         $methods = array_diff($methods, ['all']);
 
-        $this->InstallShell = $this->getMockBuilder(InstallShell::class)
-            ->setMethods(array_merge(['in', '_stop'], $methods))
-            ->getMock();
-
-        $this->InstallShell->method('in')->will($this->returnValue('y'));
+        $InstallShell = $this->getMockForShell(InstallShell::class, array_merge(['in', '_stop'], $methods));
+        $InstallShell->method('in')->will($this->returnValue('y'));
 
         //Sets a callback for each method
         foreach ($methods as $method) {
-            $this->InstallShell->method($method)
-                ->will($this->returnCallback(function () use ($method) {
-                    $this->out->write(sprintf('called `%s`', $method));
-                }));
+            $InstallShell->method($method)->will($this->returnCallback(function () use ($method) {
+                $this->debug[] = $method;
+            }));
         }
 
-        Plugin::load('TestPlugin');
-
         //Calls with `force` options
-        $this->InstallShell->params['force'] = true;
-        $this->InstallShell->all();
+        Plugin::load('TestPlugin');
+        $InstallShell->params['force'] = true;
+        $InstallShell->all();
 
         $expectedMethodsCalledInOrder = [
-            'called `setPermissions`',
-            'called `createRobots`',
-            'called `fixComposerJson`',
-            'called `createPluginsLinks`',
-            'called `createVendorsLinks`',
-            'called `copyConfig`',
-            'called `fixKcfinder`',
-            'called `runFromOtherPlugins`',
+            'setPermissions',
+            'createRobots',
+            'fixComposerJson',
+            'createPluginsLinks',
+            'createVendorsLinks',
+            'copyConfig',
+            'fixKcfinder',
+            'runFromOtherPlugins',
         ];
-
-        $this->assertEquals($expectedMethodsCalledInOrder, $this->out->messages());
-
-        //Resets out messages()
-        $this->setProperty($this->out, '_out', []);
+        $this->assertEquals($expectedMethodsCalledInOrder, $this->debug);
 
         //Calls with no interactive mode
-        unset($this->InstallShell->params['force']);
-        array_unshift($expectedMethodsCalledInOrder, 'called `createDirectories`');
-        array_push($expectedMethodsCalledInOrder, 'called `createGroups`', 'called `createAdmin`');
-        $this->InstallShell->all();
-
-        $this->assertEquals($expectedMethodsCalledInOrder, $this->out->messages());
-        $this->assertEmpty($this->err->messages());
+        $this->debug = [];
+        unset($InstallShell->params['force']);
+        array_unshift($expectedMethodsCalledInOrder, 'createDirectories');
+        array_push($expectedMethodsCalledInOrder, 'createGroups', 'createAdmin');
+        $InstallShell->all();
+        $this->assertEquals($expectedMethodsCalledInOrder, $this->debug);
     }
 
     /**
@@ -165,7 +133,7 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         $this->exec('me_cms.install copy_config -v');
         $this->assertExitWithSuccess();
 
-        foreach ($this->getProperty($this->InstallShell, 'config') as $file) {
+        foreach ($this->Shell->config as $file) {
             $file = rtr(CONFIG . pluginSplit($file)[1] . '.php');
             $this->assertOutputContains('File or directory `' . $file . '` already exists');
         }
@@ -177,15 +145,11 @@ class InstallShellTest extends ConsoleIntegrationTestCase
      */
     public function testCreateAdmin()
     {
-        $this->InstallShell = $this->getMockBuilder(InstallShell::class)
-            ->setMethods(['in', '_stop', 'dispatchShell'])
-            ->getMock();
-
-        $this->InstallShell->expects($this->once())
+        $InstallShell = $this->getMockForShell(InstallShell::class, ['in', '_stop', 'dispatchShell']);
+        $InstallShell->expects($this->once())
             ->method('dispatchShell')
             ->with(ME_CMS . '.user', 'add', '--group', 1);
-
-        $this->InstallShell->createAdmin();
+        $InstallShell->createAdmin();
     }
 
     /**
@@ -197,14 +161,14 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         //A group already exists
         $this->exec('me_cms.install create_groups -v');
         $this->assertExitWithError();
-        $this->assertErrorContains('<error>Some user groups already exist</error>');
+        $this->assertErrorContains('Some user groups already exist');
 
         //Deletes all groups
-        TableRegistry::get(ME_CMS . '.UsersGroups')->deleteAll(['id >=' => '1']);
-
+        $this->getMockForTable(UsersGroupsTable::class, null)->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.install create_groups -v');
         $this->assertExitWithSuccess();
         $this->assertOutputContains('The user groups have been created');
+        $this->assertErrorEmpty();
     }
 
     /**
@@ -213,18 +177,9 @@ class InstallShellTest extends ConsoleIntegrationTestCase
      */
     public function testCreateVendorsLinks()
     {
-        $links = $this->getProperty($this->InstallShell, 'links');
-
-        //Removes links that are already created by MeTools
-        foreach ([
-            'bootstrap-datetimepicker',
-            'fancybox',
-            'font-awesome',
-            'kcfinder',
-            'moment',
-        ] as $name) {
-            unset($links[array_search($name, $links)]);
-        }
+        $parentClass = get_parent_class(InstallShell::class);
+        $links = array_diff($this->Shell->links, (new $parentClass)->links);
+        unset($links[array_search('kcfinder', $links)]);
 
         $this->exec('me_cms.install create_vendors_links -v');
         $this->assertExitWithSuccess();
@@ -243,14 +198,12 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         //This makes it believe that KCFinder is installed
         safe_mkdir(KCFINDER, 0777, true);
         file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
-
         safe_unlink(KCFINDER . '.htaccess');
-
         $this->exec('me_cms.install fix_kcfinder -v');
         $this->assertExitWithSuccess();
         $this->assertOutputContains('Creating file ' . KCFINDER . '.htaccess');
         $this->assertOutputContains('<success>Wrote</success> `' . KCFINDER . '.htaccess' . '`');
-
+        $this->assertErrorEmpty();
         $this->assertStringEqualsFile(
             KCFINDER . '.htaccess',
             'php_value session.cache_limiter must-revalidate' . PHP_EOL .
@@ -260,15 +213,13 @@ class InstallShellTest extends ConsoleIntegrationTestCase
             'php_value session.name CAKEPHP'
         );
 
+        //For now KCFinder is not available
         $browseFile = KCFINDER . 'browse.php';
         $browseFileContent = file_get_contents($browseFile);
         safe_unlink($browseFile);
-
-        //For now KCFinder is not available
         $this->exec('me_cms.install fix_kcfinder -v');
         $this->assertExitWithError();
-        $this->assertErrorContains('<error>KCFinder is not available</error>');
-
+        $this->assertErrorContains('KCFinder is not available');
         file_put_contents($browseFile, $browseFileContent);
     }
 
@@ -278,11 +229,10 @@ class InstallShellTest extends ConsoleIntegrationTestCase
      */
     public function testRunFromOtherPlugins()
     {
-        $this->assertEmpty($this->InstallShell->runFromOtherPlugins());
+        $this->assertEmpty($this->Shell->runFromOtherPlugins());
 
         Plugin::load('TestPlugin');
-
-        $this->assertEquals(['TestPlugin' => 0], $this->InstallShell->runFromOtherPlugins());
+        $this->assertEquals(['TestPlugin' => 0], $this->Shell->runFromOtherPlugins());
     }
 
     /**
@@ -291,17 +241,12 @@ class InstallShellTest extends ConsoleIntegrationTestCase
      */
     public function testGetOptionParser()
     {
-        $parser = $this->InstallShell->getOptionParser();
-
-        $this->assertInstanceOf('Cake\Console\ConsoleOptionParser', $parser);
-
-        $expectedMethods = array_merge(get_child_methods(InstallShell::class), get_child_methods(get_parent_class(InstallShell::class)));
-        $expectedMethods = array_map([Inflector::class, 'underscore'], array_diff($expectedMethods, ['main']));
-
-        sort($expectedMethods);
-
-        $this->assertArrayKeysEqual($expectedMethods, $parser->subcommands());
+        $parser = $this->Shell->getOptionParser();
+        $this->assertInstanceOf(ConsoleOptionParser::class, $parser);
         $this->assertEquals('Executes some tasks to make the system ready to work', $parser->getDescription());
         $this->assertArrayKeysEqual(['force', 'help', 'quiet', 'verbose'], $parser->options());
+
+        $expectedMethods = array_map([Inflector::class, 'underscore'], $this->getShellMethods());
+        $this->assertArrayKeysEqual($expectedMethods, $parser->subcommands());
     }
 }

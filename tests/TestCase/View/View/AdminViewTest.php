@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\View\View;
 
-use Cake\Network\Request;
 use MeCms\View\View\AdminView as View;
 use MeTools\TestSuite\TestCase;
 
@@ -22,21 +21,21 @@ use MeTools\TestSuite\TestCase;
 class AdminViewTest extends TestCase
 {
     /**
-     * @var \MeCms\View\View\AdminView
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $View;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->View = new View(new Request);
+        $this->View = $this->getMockBuilder(View::class)
+            ->setMethods(null)
+            ->getMock();
     }
 
     /**
@@ -80,7 +79,6 @@ class AdminViewTest extends TestCase
     public function testRender()
     {
         $this->View->render(false);
-
         $this->assertEquals([
             1 => '1 - Very low',
             2 => '2 - Low',

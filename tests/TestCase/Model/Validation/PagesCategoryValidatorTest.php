@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\ValidationTestCase;
 
 /**
@@ -21,15 +20,9 @@ use MeCms\TestSuite\ValidationTestCase;
 class PagesCategoryValidatorTest extends ValidationTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PagesCategoriesTable
-     */
-    protected $PagesCategories;
-
-    /**
-     * Example data
      * @var array
      */
-    protected $example;
+    protected $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
     /**
      * Fixtures
@@ -40,27 +33,12 @@ class PagesCategoryValidatorTest extends ValidationTestCase
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->PagesCategories = TableRegistry::get(ME_CMS . '.PagesCategories');
-
-        $this->example = ['title' => 'My title', 'slug' => 'my-slug'];
-    }
-
-    /**
      * Test validation.
      * It tests the proper functioning of the example data.
      * @test
      */
     public function testValidationExampleData()
     {
-        $this->assertAllDataAreRequired($this->PagesCategories, $this->example);
+        $this->assertAllDataAreRequired($this->example);
     }
 }
