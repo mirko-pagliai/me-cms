@@ -44,6 +44,8 @@ class PageTest extends EntityTestCase
      */
     public function testPlainTextGetMutator()
     {
+        $this->assertNull($this->Entity->plain_text);
+
         $expected = 'This is a text';
 
         $this->Entity->text = 'This is a [readmore /]text';

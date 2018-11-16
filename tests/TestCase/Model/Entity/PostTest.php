@@ -45,6 +45,8 @@ class PostTest extends EntityTestCase
      */
     public function testPlainTextGetMutator()
     {
+        $this->assertNull($this->Entity->plain_text);
+
         $expected = 'This is a text';
 
         $this->Entity->text = 'This is a [readmore /]text';
@@ -62,11 +64,11 @@ class PostTest extends EntityTestCase
      */
     public function testTagsAsStringGetMutator()
     {
+        $this->assertNull($this->Entity->tags_as_string);
+
         $tags[] = new Tag(['tag' => 'cat']);
         $tags[] = new Tag(['tag' => 'dog']);
         $tags[] = new Tag(['tag' => 'bird']);
-
-        $this->assertNull($this->Entity->tags_as_string);
 
         $this->Entity->tags = $tags;
         $this->assertEquals('cat, dog, bird', $this->Entity->tags_as_string);
