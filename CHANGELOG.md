@@ -3,8 +3,8 @@
 ### 2.25.4
 * fixed bug for `Photo::_getPath()` and `Photo::_getPreview()` methods;
 * `Mailer::getEmailInstance()` is now public;
-* added `CellTestCase`, `ControllerTestCase`, `EntityTestCase` and
-    `TableTestCase` abstract classes;
+* added `CellTestCase`, `ControllerTestCase`, `EntityTestCase`,
+    `PostAndPageEntityTestCase` and `TableTestCase` abstract classes;
 * fixed `PostsAndPagesTablesTestCase` and `ValidationTestCase` abstract classes;
 * all the tests have been improved.
 

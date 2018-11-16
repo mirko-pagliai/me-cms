@@ -13,23 +13,13 @@
 namespace MeCms\Test\TestCase\Model\Entity;
 
 use MeCms\Model\Entity\Tag;
-use MeCms\TestSuite\EntityTestCase;
+use MeCms\TestSuite\PostAndPageEntityTestCase;
 
 /**
  * PostTest class
  */
-class PostTest extends EntityTestCase
+class PostTest extends PostAndPageEntityTestCase
 {
-    /**
-     * Test for fields that cannot be mass assigned using newEntity() or
-     *  patchEntity()
-     * @test
-     */
-    public function testNoAccessibleProperties()
-    {
-        $this->assertHasNoAccessibleProperty(['id', 'preview', 'modified']);
-    }
-
     /**
      * Test for virtual fields
      * @test
@@ -37,25 +27,6 @@ class PostTest extends EntityTestCase
     public function testVirtualFields()
     {
         $this->assertHasVirtualField(['plain_text', 'tags_as_string']);
-    }
-
-    /**
-     * Test for `_getPlainText()` method
-     * @test
-     */
-    public function testPlainTextGetMutator()
-    {
-        $this->assertNull($this->Entity->plain_text);
-
-        $expected = 'This is a text';
-
-        $this->Entity->text = 'This is a [readmore /]text';
-        $this->assertEquals($expected, $this->Entity->plain_text);
-        $this->assertNotEquals($this->Entity->text, $this->Entity->plain_text);
-
-        $this->Entity->text = $expected;
-        $this->assertEquals($expected, $this->Entity->plain_text);
-        $this->assertEquals($this->Entity->text, $this->Entity->plain_text);
     }
 
     /**
