@@ -12,28 +12,20 @@
  */
 namespace MeCms\Test\TestCase\Model\Table\Others;
 
-use Cake\Cache\Cache;
 use MeCms\Model\Table\PagesTable;
 use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\TableTestCase;
-use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * AssociationsSameAliasesTest class
  */
 class AssociationsSameAliasesTest extends TableTestCase
 {
-    use MockTrait;
-
     /**
-     * @var object
+     * If `true`, a mock instance of the table will be created
+     * @var bool
      */
-    protected $Pages;
-
-    /**
-     * @var object
-     */
-    protected $Posts;
+    protected $autoInitializeClass = false;
 
     /**
      * Fixtures
@@ -47,37 +39,22 @@ class AssociationsSameAliasesTest extends TableTestCase
     ];
 
     /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Pages = $this->getMockForTable(PagesTable::class, null);
-        $this->Posts = $this->getMockForTable(PostsTable::class, null);
-
-        Cache::clearAll();
-        Cache::clear(false, $this->Pages->cache);
-        Cache::clear(false, $this->Posts->cache);
-    }
-
-    /**
      * Test for associations with the same alias
      * @test
      */
     public function testAssociationsSameAliases()
     {
-        foreach (['Pages', 'Posts'] as $table) {
-            $categories = $this->$table->Categories;
+        $tables[] = $this->getMockForTable(PagesTable::class, null);
+        $tables[] = $this->getMockForTable(PostsTable::class, null);
+
+        foreach ($tables as $table) {
+            $categories = $table->Categories;
 
             $this->assertBelongsTo($categories);
             $this->assertEquals('Categories', $categories->getName());
-            $this->assertEquals(ME_CMS . '.' . $table . 'Categories', $categories->className());
+            $this->assertEquals(sprintf('%s.%sCategories', ME_CMS, $table->getAlias()), $categories->className());
 
-            $category = $categories->find()->first();
-            $this->assertNotEmpty($category);
-            $this->assertInstanceof(ME_CMS . '\Model\Entity\\' . $table . 'Category', $category);
+            $this->assertInstanceof(sprintf('%s\Model\Entity\%sCategory', ME_CMS, $table->getAlias()), $categories->find()->first());
         }
     }
 }

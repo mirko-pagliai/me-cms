@@ -36,6 +36,12 @@ abstract class TableTestCase extends TestCase
     protected $Table;
 
     /**
+     * If `true`, a mock instance of the table will be created
+     * @var bool
+     */
+    protected $autoInitializeClass = true;
+
+    /**
      * Cache keys to clear for each test
      * @var array
      */
@@ -98,7 +104,7 @@ abstract class TableTestCase extends TestCase
     {
         parent::setUp();
 
-        if (!$this->Table) {
+        if (!$this->Table && $this->autoInitializeClass) {
             $parts = explode('\\', get_class($this));
             array_splice($parts, 1, 2, []);
             $parts[] = substr(array_pop($parts), 0, -4);
