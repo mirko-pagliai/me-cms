@@ -70,9 +70,7 @@ abstract class IntegrationTestCase extends BaseIntegrationTestCase
      */
     public function assertGroupsAreAuthorized($values)
     {
-        if (empty($this->Controller)) {
-            $this->fail('The property `$this->Controller` has not been set');
-        }
+        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         foreach ($values as $group => $isAllowed) {
             $this->setUserGroup($group);
@@ -89,9 +87,7 @@ abstract class IntegrationTestCase extends BaseIntegrationTestCase
      */
     public function assertUsersAreAuthorized($values)
     {
-        if (empty($this->Controller)) {
-            $this->fail('The property `$this->Controller` has not been set');
-        }
+        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         foreach ($values as $id => $isAllowed) {
             $this->setUserId($id);

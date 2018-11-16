@@ -37,9 +37,7 @@ abstract class EntityTestCase extends TestCase
      */
     public function assertHasNoAccessibleProperty($property)
     {
-        if (empty($this->Entity)) {
-            $this->fail('The property `$this->Entity` has not been set');
-        }
+        $this->Entity ?: $this->fail('The property `$this->Entity` has not been set');
 
         foreach ((array)$property as $name) {
             $this->assertFalse($this->Entity->isAccessible($name));
@@ -54,9 +52,7 @@ abstract class EntityTestCase extends TestCase
      */
     public function assertHasVirtualField($virtualField)
     {
-        if (empty($this->Entity)) {
-            $this->fail('The property `$this->Entity` has not been set');
-        }
+        $this->Entity ?: $this->fail('The property `$this->Entity` has not been set');
 
         foreach ((array)$virtualField as $name) {
             $this->assertContains($name, $this->Entity->getVirtual());

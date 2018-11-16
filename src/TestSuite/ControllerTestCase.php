@@ -57,9 +57,7 @@ abstract class ControllerTestCase extends IntegrationTestCase
      */
     public function assertHasComponent($component, $action = null)
     {
-        if (empty($this->Controller)) {
-            $this->fail('The property `$this->Controller` has not been set');
-        }
+        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
 
@@ -83,9 +81,7 @@ abstract class ControllerTestCase extends IntegrationTestCase
      */
     public function assertGroupsAreAuthorized($values, $action = null)
     {
-        if (empty($this->Controller)) {
-            $this->fail('The property `$this->Controller` has not been set');
-        }
+        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
         $controller->request->clearDetectorCache();
@@ -112,9 +108,7 @@ abstract class ControllerTestCase extends IntegrationTestCase
      */
     public function assertUsersAreAuthorized($values, $action = null)
     {
-        if (empty($this->Controller)) {
-            $this->fail('The property `$this->Controller` has not been set');
-        }
+        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
         $controller->request->clearDetectorCache();
@@ -180,10 +174,7 @@ abstract class ControllerTestCase extends IntegrationTestCase
 
         //Clears all cache keys
         foreach ($this->cacheToClear as $cacheKey) {
-            if (!Cache::getConfig($cacheKey)) {
-                $this->fail('Cache key `' . $cacheKey . '` does not exist');
-            }
-
+            Cache::getConfig($cacheKey) ?: $this->fail('Cache key `' . $cacheKey . '` does not exist');
             Cache::clear(false, $cacheKey);
         }
 
@@ -292,9 +283,7 @@ abstract class ControllerTestCase extends IntegrationTestCase
      */
     public function testIsAuthorized()
     {
-        if (empty($this->Controller)) {
-            $this->fail('The property `$this->Controller` has not been set');
-        }
+        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         if (!$this->Controller->request->getParam('prefix')) {
             $this->assertTrue($this->Controller->isAuthorized());
