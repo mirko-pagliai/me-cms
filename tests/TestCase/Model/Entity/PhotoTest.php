@@ -47,6 +47,8 @@ class PhotoTest extends EntityTestCase
      */
     public function testPathGetMutator()
     {
+        $this->assertNull($this->Entity->path);
+
         $this->Entity->album_id = 1;
         $this->Entity->filename = 'photo.jpg';
         $this->assertEquals(PHOTOS . $this->Entity->album_id . DS . $this->Entity->filename, $this->Entity->path);
@@ -58,6 +60,8 @@ class PhotoTest extends EntityTestCase
      */
     public function testPlainTextGetMutator()
     {
+        $this->assertNull($this->Entity->plain_description);
+
         $expected = 'This is a text';
 
         $this->Entity->description = 'This is a [readmore /]text';
@@ -75,6 +79,8 @@ class PhotoTest extends EntityTestCase
      */
     public function testPreviewGetMutator()
     {
+        $this->assertNull($this->Entity->preview);
+
         $this->Entity->album_id = 1;
         $this->Entity->filename = 'photo1.jpg';
         file_put_contents(PHOTOS . $this->Entity->album_id . DS . $this->Entity->filename, $this->Entity->path, null);

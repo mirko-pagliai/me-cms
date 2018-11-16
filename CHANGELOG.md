@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.25 branch
 ### 2.25.4
+* fixed bug for `Photo::_getPath()` and `Photo::_getPreview()` methods;
 * `Mailer::getEmailInstance()` is now public;
 * added `CellTestCase`, `ControllerTestCase`, `EntityTestCase` and
     `TableTestCase` abstract classes;
