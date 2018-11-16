@@ -1,7 +1,9 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.0
-* removed `SerializedLog`. Use instead `EntityFileLog\Log\Engine\EntityFileLog`.
+* removed `SerializedLog`. Use instead `EntityFileLog\Log\Engine\EntityFileLog`;
+* removed `IntegrationTestCase` abstract class. Use instead
+    `MeTools\TestSuite\IntegrationTestCase`.
 
 ## 2.25 branch
 ### 2.25.4
