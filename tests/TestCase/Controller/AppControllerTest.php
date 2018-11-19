@@ -144,27 +144,16 @@ class AppControllerTest extends ControllerTestCase
      */
     public function testIsAuthorized()
     {
-        //No prefix
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => true,
-        ]);
+        parent::testIsAuthorized();
 
-        //Admin prefix
+        //With `admin` prefix
         $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => false,
-        ]);
+        $this->Controller->request->clearDetectorCache();
+        parent::testIsAuthorized();
 
-        //Other prefix
+        //With other prefix
         $this->Controller->request = $this->Controller->request->withParam('prefix', 'otherPrefix');
-        $this->assertGroupsAreAuthorized([
-            'admin' => false,
-            'manager' => false,
-            'user' => false,
-        ]);
+        $this->Controller->request->clearDetectorCache();
+        parent::testIsAuthorized();
     }
 }
