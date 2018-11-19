@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use MeCms\Model\Entity\Banner;
 use MeCms\Model\Validation\BannersPositionValidator;
 use MeCms\TestSuite\TableTestCase;
 
