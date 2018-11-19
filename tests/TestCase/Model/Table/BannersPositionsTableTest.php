@@ -12,43 +12,28 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Entity\Banner;
+use MeCms\Model\Validation\BannersPositionValidator;
+use MeCms\TestSuite\TableTestCase;
 
 /**
  * BannersPositionsTableTest class
  */
-class BannersPositionsTableTest extends TestCase
+class BannersPositionsTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\BannersPositionsTable
+     * @var bool
      */
-    protected $BannersPositions;
+    public $autoFixtures = false;
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.banners',
-        'plugin.me_cms.banners_positions',
+        'plugin.me_cms.Banners',
+        'plugin.me_cms.BannersPositions',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->BannersPositions = TableRegistry::get(ME_CMS . '.BannersPositions');
-
-        Cache::clear(false, $this->BannersPositions->cache);
-    }
 
     /**
      * Test for `cache` property
@@ -56,7 +41,7 @@ class BannersPositionsTableTest extends TestCase
      */
     public function testCacheProperty()
     {
-        $this->assertEquals('banners', $this->BannersPositions->cache);
+        $this->assertEquals('banners', $this->Table->cache);
     }
 
     /**
@@ -65,14 +50,15 @@ class BannersPositionsTableTest extends TestCase
      */
     public function testBuildRules()
     {
+        $this->loadFixtures();
         $example = ['title' => 'my-title'];
 
-        $entity = $this->BannersPositions->newEntity($example);
-        $this->assertNotEmpty($this->BannersPositions->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertNotEmpty($this->Table->save($entity));
 
         //Tries to save again the same entity
-        $entity = $this->BannersPositions->newEntity($example);
-        $this->assertFalse($this->BannersPositions->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals(['title' => ['_isUnique' => I18N_VALUE_ALREADY_USED]], $entity->getErrors());
     }
 
@@ -82,31 +68,16 @@ class BannersPositionsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('banners_positions', $this->BannersPositions->getTable());
-        $this->assertEquals('title', $this->BannersPositions->getDisplayField());
-        $this->assertEquals('id', $this->BannersPositions->getPrimaryKey());
+        $this->assertEquals('banners_positions', $this->Table->getTable());
+        $this->assertEquals('title', $this->Table->getDisplayField());
+        $this->assertEquals('id', $this->Table->getPrimaryKey());
 
-        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->BannersPositions->Banners);
-        $this->assertEquals('position_id', $this->BannersPositions->Banners->getForeignKey());
-        $this->assertEquals(ME_CMS . '.Banners', $this->BannersPositions->Banners->className());
+        $this->assertHasMany($this->Table->Banners);
+        $this->assertEquals('position_id', $this->Table->Banners->getForeignKey());
+        $this->assertEquals(ME_CMS . '.Banners', $this->Table->Banners->className());
 
-        $this->assertTrue($this->BannersPositions->hasBehavior('Timestamp'));
+        $this->assertHasBehavior('Timestamp');
 
-        $this->assertInstanceOf('MeCms\Model\Validation\BannersPositionValidator', $this->BannersPositions->getValidator());
-    }
-
-    /**
-     * Test for the `hasMany` association with `Banners`
-     * @test
-     */
-    public function testHasManyBanners()
-    {
-        $position = $this->BannersPositions->find()->contain('Banners')->first();
-        $this->assertNotEmpty($position->banners);
-
-        foreach ($position->banners as $banner) {
-            $this->assertInstanceOf('MeCms\Model\Entity\Banner', $banner);
-            $this->assertEquals(1, $banner->position_id);
-        }
+        $this->assertInstanceOf(BannersPositionValidator::class, $this->Table->getValidator());
     }
 }

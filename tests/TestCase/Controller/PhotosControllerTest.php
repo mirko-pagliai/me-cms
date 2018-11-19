@@ -13,42 +13,22 @@
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\Photo;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PhotosControllerTest class
  */
-class PhotosControllerTest extends IntegrationTestCase
+class PhotosControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\PhotosTable
-     */
-    protected $Photos;
-
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.photos',
-        'plugin.me_cms.photos_albums',
+        'plugin.me_cms.Photos',
+        'plugin.me_cms.PhotosAlbums',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
-
-        Cache::clear(false, $this->Photos->cache);
-    }
 
     /**
      * Tests for `view()` method
@@ -56,19 +36,16 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $photo = $this->Photos->find('active')->contain('Albums')->first();
+        $photo = $this->Table->find('active')->contain('Albums')->first();
         $url = ['_name' => 'photo', $photo->album->slug, $photo->id];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Photos/view.ctp');
+        $this->assertTemplate('Photos/view.ctp');
+        $this->assertInstanceof(Photo::class, $this->viewVariable('photo'));
 
-        $photoFromView = $this->viewVariable('photo');
-        $this->assertNotEmpty($photoFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Photo', $photoFromView);
-
-        $cache = Cache::read(sprintf('view_%s', md5($photo->id)), $this->Photos->cache);
-        $this->assertEquals($photoFromView, $cache->first());
+        $cache = Cache::read(sprintf('view_%s', md5($photo->id)), $this->Table->cache);
+        $this->assertEquals($this->viewVariable('photo'), $cache->first());
 
         //Backward compatibility for URLs like `/photo/11`
         $this->get('/photo/' . $photo->id);
@@ -81,14 +58,11 @@ class PhotosControllerTest extends IntegrationTestCase
      */
     public function testPreview()
     {
-        $id = $this->Photos->find('pending')->extract('id')->first();
+        $id = $this->Table->find('pending')->extract('id')->first();
 
         $this->get(['_name' => 'photosPreview', $id]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Photos/view.ctp');
-
-        $photoFromView = $this->viewVariable('photo');
-        $this->assertNotEmpty($photoFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Photo', $photoFromView);
+        $this->assertTemplate('Photos/view.ctp');
+        $this->assertInstanceof(Photo::class, $this->viewVariable('photo'));
     }
 }

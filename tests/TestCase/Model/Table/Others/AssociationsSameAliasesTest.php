@@ -12,53 +12,31 @@
  */
 namespace MeCms\Test\TestCase\Model\Table\Others;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Table\PagesTable;
+use MeCms\Model\Table\PostsTable;
+use MeCms\TestSuite\TableTestCase;
 
 /**
  * AssociationsSameAliasesTest class
  */
-class AssociationsSameAliasesTest extends TestCase
+class AssociationsSameAliasesTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PagesTable
+     * If `true`, a mock instance of the table will be created
+     * @var bool
      */
-    protected $Pages;
-
-    /**
-     * @var \MeCms\Model\Table\PostsTable
-     */
-    protected $Posts;
+    protected $autoInitializeClass = false;
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.pages',
-        'plugin.me_cms.pages_categories',
-        'plugin.me_cms.posts',
-        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.Pages',
+        'plugin.me_cms.PagesCategories',
+        'plugin.me_cms.Posts',
+        'plugin.me_cms.PostsCategories',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
-        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
-
-        Cache::clearAll();
-        Cache::clear(false, $this->Pages->cache);
-        Cache::clear(false, $this->Posts->cache);
-    }
 
     /**
      * Test for associations with the same alias
@@ -66,16 +44,17 @@ class AssociationsSameAliasesTest extends TestCase
      */
     public function testAssociationsSameAliases()
     {
-        foreach (['Pages', 'Posts'] as $table) {
-            $categories = $this->$table->Categories;
+        $tables[] = $this->getMockForTable(PagesTable::class, null);
+        $tables[] = $this->getMockForTable(PostsTable::class, null);
 
-            $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $categories);
+        foreach ($tables as $table) {
+            $categories = $table->Categories;
+
+            $this->assertBelongsTo($categories);
             $this->assertEquals('Categories', $categories->getName());
-            $this->assertEquals(ME_CMS . '.' . $table . 'Categories', $categories->className());
+            $this->assertEquals(sprintf('%s.%sCategories', ME_CMS, $table->getAlias()), $categories->className());
 
-            $category = $categories->find()->first();
-            $this->assertNotEmpty($category);
-            $this->assertInstanceof('MeCms\Model\Entity\\' . $table . 'Category', $category);
+            $this->assertInstanceof(sprintf('%s\Model\Entity\%sCategory', ME_CMS, $table->getAlias()), $categories->find()->first());
         }
     }
 }

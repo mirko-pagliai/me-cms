@@ -14,19 +14,22 @@ namespace MeCms\Test\TestCase\Controller\Traits;
 
 use MeCms\Controller\PostsController;
 use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * GetStartAndEndDateTraitTest class
  */
 class GetStartAndEndDateTraitTest extends TestCase
 {
+    use MockTrait;
+
     /**
      * Tests for `getStartAndEndDate()` method
      * @test
      */
     public function testGetStartAndEndDate()
     {
-        $controller = new PostsController;
+        $controller = $this->getMockForController(PostsController::class, null);
 
         $getStartAndEndDateMethod = function ($date) use ($controller) {
             return $this->invokeMethod($controller, 'getStartAndEndDate', [$date]);

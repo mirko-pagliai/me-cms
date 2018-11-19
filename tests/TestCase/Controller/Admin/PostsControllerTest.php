@@ -12,77 +12,37 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\Controller\Admin\PostsController;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\Post;
+use MeCms\Model\Entity\Tag;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PostsControllerTest class
  */
-class PostsControllerTest extends IntegrationTestCase
+class PostsControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Controller\Admin\PostsController
-     */
-    protected $Controller;
-
-    /**
-     * @var \MeCms\Model\Table\PostsTable
-     */
-    protected $Posts;
-
     /**
      * @var array
      */
-    protected $example;
+    protected static $example = [
+        'user_id' => 1,
+        'category_id' => 1,
+        'title' => 'new post title',
+        'slug' => 'new-post-slug',
+        'text' => 'new post text',
+    ];
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts',
-        'plugin.me_cms.posts_categories',
-        'plugin.me_cms.posts_tags',
-        'plugin.me_cms.tags',
-        'plugin.me_cms.users',
+        'plugin.me_cms.Posts',
+        'plugin.me_cms.PostsCategories',
+        'plugin.me_cms.PostsTags',
+        'plugin.me_cms.Tags',
+        'plugin.me_cms.Users',
     ];
-
-    /**
-     * @var array
-     */
-    protected $url;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->example = [
-            'user_id' => 1,
-            'category_id' => 1,
-            'title' => 'new post title',
-            'slug' => 'new-post-slug',
-            'text' => 'new post text',
-        ];
-
-        $this->setUserGroup('admin');
-
-        $this->Controller = new PostsController;
-
-        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
-
-        Cache::clear(false, $this->Posts->cache);
-        Cache::clear(false, $this->Posts->Users->cache);
-
-        $this->url = ['controller' => 'Posts', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
-    }
 
     /**
      * Tests for `beforeFilter()` method
@@ -104,7 +64,7 @@ class PostsControllerTest extends IntegrationTestCase
     public function testBeforeFilterNoCategories()
     {
         //Deletes all categories
-        $this->Posts->Categories->deleteAll(['id IS NOT' => null]);
+        $this->Table->Categories->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [1]);
@@ -120,7 +80,7 @@ class PostsControllerTest extends IntegrationTestCase
     public function testBeforeFilterNoUsers()
     {
         //Deletes all users
-        $this->Posts->Users->deleteAll(['id IS NOT' => null]);
+        $this->Table->Users->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [1]);
@@ -136,11 +96,7 @@ class PostsControllerTest extends IntegrationTestCase
     public function testInitialize()
     {
         foreach (['add', 'edit'] as $action) {
-            $this->Controller = new PostsController;
-            $this->Controller->request = $this->Controller->request->withParam('action', $action);
-            $this->Controller->initialize();
-
-            $this->assertContains('KcFinder', $this->Controller->components()->loaded());
+            $this->assertHasComponent('KcFinder', $action);
         }
     }
 
@@ -156,36 +112,25 @@ class PostsControllerTest extends IntegrationTestCase
             'user' => true,
         ]);
 
-        //`edit` and `delete` actions
+        //With `edit` and `delete` actions
         foreach (['edit', 'delete'] as $action) {
-            $this->Controller = new PostsController;
-            $this->Controller->Posts = $this->Posts;
-            $this->Controller->request = $this->Controller->request->withParam('action', $action);
-
             $this->assertGroupsAreAuthorized([
                 'admin' => true,
                 'manager' => true,
                 'user' => false,
-            ]);
+            ], $action);
         }
 
-        //`edit` action, with an user who owns the record
-        $this->Controller = new PostsController;
-        $this->Controller->Posts = $this->Posts;
-        $this->Controller->request = $this->Controller->request
-            ->withParam('action', 'edit')
-            ->withParam('pass.0', 1);
-
+        //With `edit` action and an user who owns the record
+        $this->Controller->request = $this->Controller->request->withParam('pass.0', 1);
         $this->assertUsersAreAuthorized([
             1 => true,
             2 => false,
             3 => false,
             4 => false,
-        ]);
+        ], 'edit');
 
-        $this->Controller->request = $this->Controller->request
-            ->withParam('pass.0', 2);
-
+        $this->Controller->request = $this->Controller->request->withParam('pass.0', 2);
         $this->assertUsersAreAuthorized([
             1 => false,
             2 => false,
@@ -202,11 +147,8 @@ class PostsControllerTest extends IntegrationTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Posts/index.ctp');
-
-        $postsFromView = $this->viewVariable('posts');
-        $this->assertNotEmpty($postsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
+        $this->assertTemplate('Admin/Posts/index.ctp');
+        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
     }
 
     /**
@@ -219,25 +161,19 @@ class PostsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Posts/add.ctp');
-
-        $postFromView = $this->viewVariable('post');
-        $this->assertNotEmpty($postFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
+        $this->assertTemplate('Admin/Posts/add.ctp');
+        $this->assertInstanceof(Post::class, $this->viewVariable('post'));
 
         //POST request. Data are valid
-        $this->post($url, $this->example);
+        $this->post($url, self::$example);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
-
-        $postFromView = $this->viewVariable('post');
-        $this->assertNotEmpty($postFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(Post::class, $this->viewVariable('post'));
     }
 
     /**
@@ -250,18 +186,12 @@ class PostsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/Posts/edit.ctp');
-
-        $postFromView = $this->viewVariable('post');
-        $this->assertNotEmpty($postFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
+        $this->assertTemplate('Admin/Posts/edit.ctp');
+        $this->assertInstanceof(Post::class, $this->viewVariable('post'));
+        $this->assertContainsInstanceof(Tag::class, $this->viewVariable('post')->tags);
 
         //Checks if the `created` field has been properly formatted
-        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $postFromView->created);
-
-        //Checks for tags
-        $this->assertNotEmpty($postFromView->tags);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Tag', $postFromView->tags);
+        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('post')->created);
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
@@ -271,11 +201,8 @@ class PostsControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
-
-        $postFromView = $this->viewVariable('post');
-        $this->assertNotEmpty($postFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(Post::class, $this->viewVariable('post'));
     }
 
     /**
@@ -287,6 +214,7 @@ class PostsControllerTest extends IntegrationTestCase
         $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
+        $this->assertTrue($this->Table->findById(1)->isEmpty());
     }
 
     /**
@@ -300,22 +228,22 @@ class PostsControllerTest extends IntegrationTestCase
 
             foreach ([1, 2] as $userId) {
                 //Adds record
-                $this->post($this->url + ['action' => 'add'], ['user_id' => $userId] + $this->example);
+                $this->post($this->url + ['action' => 'add'], ['user_id' => $userId] + self::$example);
                 $this->assertRedirect(['action' => 'index']);
                 $this->assertFlashMessage(I18N_OPERATION_OK);
 
-                $post = $this->Posts->find()->last();
+                $post = $this->Table->find()->last();
                 $this->assertEquals($userId, $post->user_id);
 
                 //Edits record, adding +1 to the `user_id`
-                $this->post($this->url + ['action' => 'edit', $post->id], ['user_id' => ++$userId] + $this->example);
+                $this->post($this->url + ['action' => 'edit', $post->id], ['user_id' => ++$userId] + self::$example);
                 $this->assertRedirect(['action' => 'index']);
                 $this->assertFlashMessage(I18N_OPERATION_OK);
 
-                $post = $this->Posts->findById($post->id)->first();
+                $post = $this->Table->findById($post->id)->first();
                 $this->assertEquals($userId, $post->user_id);
 
-                $this->Posts->delete($post);
+                $this->Table->delete($post);
             }
         }
     }
@@ -331,22 +259,22 @@ class PostsControllerTest extends IntegrationTestCase
 
         foreach ([1, 2] as $userId) {
             //Adds record
-            $this->post($this->url + ['action' => 'add'], ['user_id' => $userId] + $this->example);
+            $this->post($this->url + ['action' => 'add'], ['user_id' => $userId] + self::$example);
             $this->assertRedirect(['action' => 'index']);
             $this->assertFlashMessage(I18N_OPERATION_OK);
 
-            $post = $this->Posts->find()->last();
+            $post = $this->Table->find()->last();
             $this->assertEquals(3, $post->user_id);
 
             //Edits record, adding +1 to the `user_id`
-            $this->post($this->url + ['action' => 'edit', $post->id], ['user_id' => ++$userId] + $this->example);
+            $this->post($this->url + ['action' => 'edit', $post->id], ['user_id' => ++$userId] + self::$example);
             $this->assertRedirect(['action' => 'index']);
             $this->assertFlashMessage(I18N_OPERATION_OK);
 
-            $post = $this->Posts->findById($post->id)->first();
+            $post = $this->Table->findById($post->id)->first();
             $this->assertEquals(3, $post->user_id);
 
-            $this->Posts->delete($post);
+            $this->Table->delete($post);
         }
     }
 }

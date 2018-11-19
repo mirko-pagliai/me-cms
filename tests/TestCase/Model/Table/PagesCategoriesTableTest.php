@@ -12,43 +12,29 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use Cake\I18n\Time;
+use MeCms\Model\Entity\PagesCategory;
+use MeCms\Model\Validation\PagesCategoryValidator;
+use MeCms\TestSuite\TableTestCase;
 
 /**
  * PagesCategoriesTableTest class
  */
-class PagesCategoriesTableTest extends TestCase
+class PagesCategoriesTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PagesCategoriesTable
+     * @var bool
      */
-    protected $PagesCategories;
+    public $autoFixtures = false;
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.pages',
-        'plugin.me_cms.pages_categories',
+        'plugin.me_cms.Pages',
+        'plugin.me_cms.PagesCategories',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->PagesCategories = TableRegistry::get(ME_CMS . '.PagesCategories');
-
-        Cache::clear(false, $this->PagesCategories->cache);
-    }
 
     /**
      * Test for `cache` property
@@ -56,7 +42,7 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testCacheProperty()
     {
-        $this->assertEquals('pages', $this->PagesCategories->cache);
+        $this->assertEquals('pages', $this->Table->cache);
     }
 
     /**
@@ -65,25 +51,26 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testBuildRules()
     {
+        $this->loadFixtures();
         $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
-        $entity = $this->PagesCategories->newEntity($example);
-        $this->assertNotEmpty($this->PagesCategories->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertNotEmpty($this->Table->save($entity));
 
         //Saves again the same entity
-        $entity = $this->PagesCategories->newEntity($example);
-        $this->assertFalse($this->PagesCategories->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals([
             'slug' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
             'title' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
         ], $entity->getErrors());
 
-        $entity = $this->PagesCategories->newEntity([
+        $entity = $this->Table->newEntity([
             'parent_id' => 999,
             'title' => 'My title 2',
             'slug' => 'my-slug-2',
         ]);
-        $this->assertFalse($this->PagesCategories->save($entity));
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals(['parent_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
     }
 
@@ -93,44 +80,26 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('Categories', $this->PagesCategories->getAlias());
-        $this->assertEquals('pages_categories', $this->PagesCategories->getTable());
-        $this->assertEquals('title', $this->PagesCategories->getDisplayField());
-        $this->assertEquals('id', $this->PagesCategories->getPrimaryKey());
+        $this->assertEquals('Categories', $this->Table->getAlias());
+        $this->assertEquals('pages_categories', $this->Table->getTable());
+        $this->assertEquals('title', $this->Table->getDisplayField());
+        $this->assertEquals('id', $this->Table->getPrimaryKey());
 
-        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->PagesCategories->Parents);
-        $this->assertEquals('parent_id', $this->PagesCategories->Parents->getForeignKey());
-        $this->assertEquals(ME_CMS . '.PagesCategories', $this->PagesCategories->Parents->className());
+        $this->assertBelongsTo($this->Table->Parents);
+        $this->assertEquals('parent_id', $this->Table->Parents->getForeignKey());
+        $this->assertEquals(ME_CMS . '.PagesCategories', $this->Table->Parents->className());
 
-        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PagesCategories->Childs);
-        $this->assertEquals('parent_id', $this->PagesCategories->Childs->getForeignKey());
-        $this->assertEquals(ME_CMS . '.PagesCategories', $this->PagesCategories->Childs->className());
+        $this->assertHasMany($this->Table->Childs);
+        $this->assertEquals('parent_id', $this->Table->Childs->getForeignKey());
+        $this->assertEquals(ME_CMS . '.PagesCategories', $this->Table->Childs->className());
 
-        $this->assertInstanceOf('Cake\ORM\Association\HasMany', $this->PagesCategories->Pages);
-        $this->assertEquals('category_id', $this->PagesCategories->Pages->getForeignKey());
-        $this->assertEquals(ME_CMS . '.Pages', $this->PagesCategories->Pages->className());
+        $this->assertHasMany($this->Table->Pages);
+        $this->assertEquals('category_id', $this->Table->Pages->getForeignKey());
+        $this->assertEquals(ME_CMS . '.Pages', $this->Table->Pages->className());
 
-        $this->assertTrue($this->PagesCategories->hasBehavior('Timestamp'));
-        $this->assertTrue($this->PagesCategories->hasBehavior('Tree'));
+        $this->assertHasBehavior(['Timestamp', 'Tree']);
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PagesCategoryValidator', $this->PagesCategories->getValidator());
-    }
-
-    /**
-     * Test for the `belongsTo` association with `PagesCategories` parents
-     * @test
-     */
-    public function testBelongsToParents()
-    {
-        $category = $this->PagesCategories->findById(4)->contain('Parents')->first();
-
-        $this->assertNotEmpty($category->parent);
-        $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category->parent);
-        $this->assertEquals(3, $category->parent->id);
-
-        $category = $this->PagesCategories->findById($category->parent->id)->contain('Parents')->first();
-        $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $category->parent);
-        $this->assertEquals(1, $category->parent->id);
+        $this->assertInstanceOf(PagesCategoryValidator::class, $this->Table->getValidator());
     }
 
     /**
@@ -139,38 +108,20 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testHasManyChilds()
     {
-        $category = $this->PagesCategories->findById(1)->contain('Childs')->first();
+        $this->loadFixtures();
 
-        $this->assertNotEmpty($category->childs);
+        $childs = $this->Table->findById(1)->contain('Childs')->extract('childs')->first();
+        $this->assertContainsInstanceOf(PagesCategory::class, $childs);
 
-        foreach ($category->childs as $children) {
-            $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $children);
+        foreach ($childs as $children) {
             $this->assertEquals(1, $children->parent_id);
 
-            $category = $this->PagesCategories->findById($children->id)->contain('Childs')->first();
+            $childs = $this->Table->findById($children->id)->contain('Childs')->extract('childs')->first();
+            $this->assertContainsInstanceOf(PagesCategory::class, $childs);
 
-            $this->assertNotEmpty($category->childs);
-
-            foreach ($category->childs as $children) {
-                $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $children);
+            foreach ($childs as $children) {
                 $this->assertEquals(3, $children->parent_id);
             }
-        }
-    }
-
-    /**
-     * Test for the `hasMany` association with `Pages`
-     * @test
-     */
-    public function testHasManyPages()
-    {
-        $category = $this->PagesCategories->find()->contain('Pages')->first();
-
-        $this->assertNotEmpty($category->pages);
-
-        foreach ($category->pages as $page) {
-            $this->assertInstanceOf('MeCms\Model\Entity\Page', $page);
-            $this->assertEquals($category->id, $page->category_id);
         }
     }
 
@@ -180,13 +131,15 @@ class PagesCategoriesTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $query = $this->PagesCategories->find('active');
+        $this->loadFixtures();
+
+        $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM pages_categories Categories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND Categories.id = (Pages.category_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf('Cake\I18n\Time', $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $entity) {
+        foreach ($query as $entity) {
             $this->assertTrue($entity->_matchingData['Pages']->active &&
                 !$entity->_matchingData['Pages']->created->isFuture());
         }

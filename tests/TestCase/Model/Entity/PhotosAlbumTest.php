@@ -12,51 +12,14 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\Model\Entity\PhotosAlbum;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Entity\Photo;
+use MeCms\TestSuite\EntityTestCase;
 
 /**
  * PhotosAlbumTest class
  */
-class PhotosAlbumTest extends TestCase
+class PhotosAlbumTest extends EntityTestCase
 {
-    /**
-     * @var \MeCms\Model\Entity\PhotosAlbum
-     */
-    protected $PhotosAlbum;
-
-    /**
-     * @var \MeCms\Model\Table\PhotosAlbumsTable
-     */
-    protected $PhotosAlbums;
-
-    /**
-     * Fixtures
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.me_cms.photos',
-        'plugin.me_cms.photos_albums',
-    ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->PhotosAlbum = new PhotosAlbum;
-        $this->PhotosAlbums = TableRegistry::get(ME_CMS . '.PhotosAlbums');
-
-        Cache::clear(false, $this->PhotosAlbums->cache);
-    }
-
     /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
@@ -64,9 +27,7 @@ class PhotosAlbumTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $this->assertFalse($this->PhotosAlbum->isAccessible('id'));
-        $this->assertFalse($this->PhotosAlbum->isAccessible('photo_count'));
-        $this->assertFalse($this->PhotosAlbum->isAccessible('modified'));
+        $this->assertHasNoAccessibleProperty(['id', 'photo_count', 'modified']);
     }
 
     /**
@@ -75,7 +36,7 @@ class PhotosAlbumTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['path', 'preview'], $this->PhotosAlbum->getVirtual());
+        $this->assertHasVirtualField(['path', 'preview']);
     }
 
     /**
@@ -84,8 +45,8 @@ class PhotosAlbumTest extends TestCase
      */
     public function testPathGetMutator()
     {
-        $this->PhotosAlbum->id = 1;
-        $this->assertEquals(PHOTOS . $this->PhotosAlbum->id, $this->PhotosAlbum->path);
+        $this->Entity->id = 1;
+        $this->assertNotEmpty($this->Entity->path);
     }
 
     /**
@@ -94,9 +55,11 @@ class PhotosAlbumTest extends TestCase
      */
     public function testPreviewGetMutator()
     {
-        $album = $this->PhotosAlbums->find()->contain('Photos')->first();
-        $this->assertEquals(PHOTOS . $album->id . DS . 'photo1.jpg', $album->preview);
+        $this->Entity->id = 1;
+        $this->assertNull($this->Entity->preview);
 
-        $this->assertNull($this->PhotosAlbums->find()->extract('preview')->first());
+        $this->Entity->photos = [new Photo(['album_id' => 1, 'filename' => 'photo.jpg'])];
+        $this->assertNotEmpty($this->Entity->photos[0]->path);
+        $this->assertEquals($this->Entity->preview, $this->Entity->photos[0]->path);
     }
 }

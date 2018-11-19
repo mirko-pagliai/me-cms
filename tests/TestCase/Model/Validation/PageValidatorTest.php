@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\ValidationTestCase;
 
 /**
@@ -21,43 +20,22 @@ use MeCms\TestSuite\ValidationTestCase;
 class PageValidatorTest extends ValidationTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PagesTable
-     */
-    protected $Pages;
-
-    /**
-     * Example data
      * @var array
      */
-    protected $example;
+    protected $example = [
+        'category_id' => 1,
+        'title' => 'My title',
+        'slug' => 'my-slug',
+        'text' => 'My text',
+    ];
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.pages',
+        'plugin.me_cms.Pages',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Pages = TableRegistry::get(ME_CMS . '.Pages');
-
-        $this->example = [
-            'category_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-        ];
-    }
 
     /**
      * Test validation.
@@ -66,7 +44,7 @@ class PageValidatorTest extends ValidationTestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertAllDataAreRequired($this->Pages, $this->example);
+        $this->assertAllDataAreRequired($this->example);
     }
 
     /**
@@ -75,8 +53,7 @@ class PageValidatorTest extends ValidationTestCase
      */
     public function testValidationForCategoryId()
     {
-        $this->example['category_id'] = 'string';
-        $errors = $this->Pages->newEntity($this->example)->getErrors();
+        $errors = $this->Table->newEntity(['category_id' => 'str'] + $this->example)->getErrors();
         $this->assertEquals(['category_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION]], $errors);
     }
 }

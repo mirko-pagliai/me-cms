@@ -15,7 +15,6 @@ namespace MeCms\Test\TestCase\View\View;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Network\Request;
 use MeCms\View\View\AppView as View;
 use MeTools\TestSuite\TestCase;
 
@@ -25,32 +24,30 @@ use MeTools\TestSuite\TestCase;
 class AppViewTest extends TestCase
 {
     /**
-     * @var \MeCms\View\View\AppView
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $View;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        //Disable widgets
+        //Disables widgets and any theme
         Configure::write('Widgets.general', []);
-
-        //Disable any theme
         Configure::write(ME_CMS . '.default.theme', false);
 
-        $this->View = new View(new Request);
+        $this->View = $this->getMockBuilder(View::class)
+            ->setMethods(null)
+            ->getMock();
         $this->View->plugin = ME_CMS;
     }
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
@@ -73,15 +70,13 @@ class AppViewTest extends TestCase
         Configure::write(ME_CMS . '.default.facebook_app_id', 'facebook-id');
 
         $result = $this->View->render(false);
-
-        $this->assertRegExp('/' . preg_quote('<meta name="theme-color" content="#ffffff"/>', '/') . '/', $result);
-        $this->assertRegExp('/' . preg_quote('<link href="/posts/rss" type="application/rss+xml" rel="alternate" title="Latest posts"/>', '/') . '/', $result);
-        $this->assertRegExp('/' . preg_quote('<meta content="MeCms" property="og:title"/>', '/') . '/', $result);
-        $this->assertRegExp('/' . preg_quote('<meta content="http://localhost/" property="og:url"/>', '/') . '/', $result);
-        $this->assertRegExp('/' . preg_quote('<meta content="facebook-id" property="fb:app_id"/>', '/') . '/', $result);
-
-        $this->assertRegExp('/' . preg_quote('<script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","analytics-id","auto"),ga("send","pageview");</script>', '/') . '/', $result);
-        $this->assertRegExp('/' . preg_quote('<script src="//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js" async="async" data-cfasync="false" data-shr-siteid="shareaholic-id"></script>', '/') . '/', $result);
+        $this->assertContains('<meta name="theme-color" content="#ffffff"/>', $result);
+        $this->assertContains('<link href="/posts/rss" type="application/rss+xml" rel="alternate" title="Latest posts"/>', $result);
+        $this->assertContains('<meta content="' . ME_CMS . '" property="og:title"/>', $result);
+        $this->assertContains('<meta content="http://localhost/" property="og:url"/>', $result);
+        $this->assertContains('<meta content="facebook-id" property="fb:app_id"/>', $result);
+        $this->assertContains('<script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","analytics-id","auto"),ga("send","pageview");</script>', $result);
+        $this->assertContains('<script src="//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js" async="async" data-cfasync="false" data-shr-siteid="shareaholic-id"></script>', $result);
     }
 
     /**
@@ -134,8 +129,9 @@ class AppViewTest extends TestCase
         Configure::write(ME_CMS . '.default.theme', $theme);
 
         //Reloads the View
-        $this->View = new View(new Request);
-
+        $this->View = $this->getMockBuilder(View::class)
+            ->setMethods(null)
+            ->getMock();
         $this->assertEquals('This is a layout from TestPlugin', $this->View->render(false));
         $this->assertEquals('default', $this->View->getLayout());
         $this->assertEquals($theme, $this->View->getTheme());
@@ -148,9 +144,8 @@ class AppViewTest extends TestCase
     public function testRenderLayoutFromApp()
     {
         //Creates a new layout
-        $layoutFromApp = array_values(App::path('Template/Plugin/' . ME_CMS . '/Layout'))[0] . 'default.ctp';
+        $layoutFromApp = first_value(App::path('Template/Plugin/' . ME_CMS . '/Layout')) . 'default.ctp';
         file_put_contents($layoutFromApp, 'This is a layout from app');
-
         $this->assertEquals('This is a layout from app', $this->View->render(false));
         $this->assertEquals('default', $this->View->getLayout());
         $this->assertEquals(ME_CMS, $this->View->plugin);
@@ -170,7 +165,6 @@ class AppViewTest extends TestCase
         $this->View->userbar('string');
         $this->View->userbar(['first', 'second']);
         $this->View->userbar([['nestled']]);
-
         $this->assertEquals([
             'string',
             'first',
@@ -179,7 +173,6 @@ class AppViewTest extends TestCase
         ], $this->View->userbar());
 
         $this->View->render(false);
-
         $this->assertEquals('<li>string</li>
 <li>first</li>
 <li>second</li>

@@ -12,32 +12,13 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use MeCms\Model\Entity\Tag;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\EntityTestCase;
 
 /**
  * TagTest class
  */
-class TagTest extends TestCase
+class TagTest extends EntityTestCase
 {
-    /**
-     * @var \MeCms\Model\Entity\Tag
-     */
-    protected $Tag;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Tag = new Tag;
-    }
-
     /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
@@ -45,9 +26,7 @@ class TagTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $this->assertFalse($this->Tag->isAccessible('id'));
-        $this->assertFalse($this->Tag->isAccessible('post_count'));
-        $this->assertFalse($this->Tag->isAccessible('modified'));
+        $this->assertHasNoAccessibleProperty(['id', 'post_count', 'modified']);
     }
 
     /**
@@ -56,7 +35,7 @@ class TagTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['slug'], $this->Tag->getVirtual());
+        $this->assertHasVirtualField('slug');
     }
 
     /**
@@ -65,10 +44,10 @@ class TagTest extends TestCase
      */
     public function testSlugGetMutator()
     {
-        $this->Tag->tag = 'This is a tag';
-        $this->assertEquals('this-is-a-tag', $this->Tag->slug);
+        $this->Entity->tag = 'This is a tag';
+        $this->assertEquals('this-is-a-tag', $this->Entity->slug);
 
-        $this->Tag->tag = 'MY_TAG.a!';
-        $this->assertEquals('my-tag-a', $this->Tag->slug);
+        $this->Entity->tag = 'MY_TAG.a!';
+        $this->assertEquals('my-tag-a', $this->Entity->slug);
     }
 }

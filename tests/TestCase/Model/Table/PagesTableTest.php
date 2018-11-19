@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
+use MeCms\Model\Table\PagesCategoriesTable;
+use MeCms\Model\Validation\PageValidator;
 use MeCms\TestSuite\PostsAndPagesTablesTestCase;
 
 /**
@@ -22,45 +22,18 @@ use MeCms\TestSuite\PostsAndPagesTablesTestCase;
 class PagesTableTest extends PostsAndPagesTablesTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PagesTable
+     * @var bool
      */
-    protected $Table;
-
-    /**
-     * @var array
-     */
-    protected $example;
+    public $autoFixtures = false;
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.pages',
-        'plugin.me_cms.pages_categories',
+        'plugin.me_cms.Pages',
+        'plugin.me_cms.PagesCategories',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Table = TableRegistry::get(ME_CMS . '.Pages');
-
-        $this->example = [
-            'category_id' => 1,
-            'title' => 'My title',
-            'slug' => 'my-slug',
-            'text' => 'My text',
-        ];
-
-        Cache::clear(false, $this->Table->cache);
-    }
 
     /**
      * Test for `cache` property
@@ -77,11 +50,13 @@ class PagesTableTest extends PostsAndPagesTablesTestCase
      */
     public function testBuildRules()
     {
-        $entity = $this->Table->newEntity($this->example);
+        $this->loadFixtures();
+
+        $entity = $this->Table->newEntity(self::$example);
         $this->assertNotEmpty($this->Table->save($entity));
 
         //Saves again the same entity
-        $entity = $this->Table->newEntity($this->example);
+        $entity = $this->Table->newEntity(self::$example);
         $this->assertFalse($this->Table->save($entity));
         $this->assertEquals([
             'slug' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
@@ -108,30 +83,16 @@ class PagesTableTest extends PostsAndPagesTablesTestCase
         $this->assertEquals('title', $this->Table->getDisplayField());
         $this->assertEquals('id', $this->Table->getPrimaryKey());
 
-        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Table->Categories);
+        $this->assertBelongsTo($this->Table->Categories);
         $this->assertEquals('category_id', $this->Table->Categories->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Categories->getJoinType());
         $this->assertEquals(ME_CMS . '.PagesCategories', $this->Table->Categories->className());
-        $this->assertInstanceOf('MeCms\Model\Table\PagesCategoriesTable', $this->Table->Categories->getTarget());
+        $this->assertInstanceOf(PagesCategoriesTable::class, $this->Table->Categories->getTarget());
         $this->assertEquals(ME_CMS . '.PagesCategories', $this->Table->Categories->getTarget()->getRegistryAlias());
         $this->assertEquals('Categories', $this->Table->Categories->getAlias());
 
-        $this->assertTrue($this->Table->hasBehavior('Timestamp'));
-        $this->assertTrue($this->Table->hasBehavior('CounterCache'));
+        $this->assertHasBehavior(['Timestamp', 'CounterCache']);
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PageValidator', $this->Table->getValidator());
-    }
-
-    /**
-     * Test for the `belongsTo` association with `PagesCategories`
-     * @test
-     */
-    public function testBelongsToPagesCategories()
-    {
-        $page = $this->Table->findById(1)->contain('Categories')->first();
-
-        $this->assertNotEmpty($page->category);
-        $this->assertInstanceOf('MeCms\Model\Entity\PagesCategory', $page->category);
-        $this->assertEquals(4, $page->category->id);
+        $this->assertInstanceOf(PageValidator::class, $this->Table->getValidator());
     }
 }

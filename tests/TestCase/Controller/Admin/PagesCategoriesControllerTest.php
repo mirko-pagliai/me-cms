@@ -12,59 +12,21 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\Controller\Admin\PagesCategoriesController;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\PagesCategory;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PagesCategoriesControllerTest class
  */
-class PagesCategoriesControllerTest extends IntegrationTestCase
+class PagesCategoriesControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Controller\Admin\PagesCategoriesController
-     */
-    protected $Controller;
-
-    /**
-     * @var \MeCms\Model\Table\PagesCategoriesTable
-     */
-    protected $PagesCategories;
-
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.pages_categories',
+        'plugin.me_cms.PagesCategories',
     ];
-
-    /**
-     * @var array
-     */
-    protected $url;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUserGroup('admin');
-
-        $this->Controller = new PagesCategoriesController;
-
-        $this->PagesCategories = TableRegistry::get(ME_CMS . '.PagesCategories');
-
-        Cache::clear(false, $this->PagesCategories->cache);
-
-        $this->url = ['controller' => 'PagesCategories', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
-    }
 
     /**
      * Tests for `beforeFilter()` method
@@ -84,21 +46,14 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
      */
     public function testIsAuthorized()
     {
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => false,
-        ]);
+        parent::testIsAuthorized();
 
-        //`delete` action
-        $this->Controller = new PagesCategoriesController;
-        $this->Controller->request = $this->Controller->request->withParam('action', 'delete');
-
+        //With `delete` action
         $this->assertGroupsAreAuthorized([
             'admin' => true,
             'manager' => false,
             'user' => false,
-        ]);
+        ], 'delete');
     }
 
     /**
@@ -109,11 +64,8 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/PagesCategories/index.ctp');
-
-        $categoriesFromView = $this->viewVariable('categories');
-        $this->assertNotEmpty($categoriesFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\PagesCategory', $categoriesFromView);
+        $this->assertTemplate('Admin/PagesCategories/index.ctp');
+        $this->assertContainsInstanceof(PagesCategory::class, $this->viewVariable('categories'));
     }
 
     /**
@@ -126,11 +78,8 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/PagesCategories/add.ctp');
-
-        $categoryFromView = $this->viewVariable('category');
-        $this->assertNotEmpty($categoryFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PagesCategory', $categoryFromView);
+        $this->assertTemplate('Admin/PagesCategories/add.ctp');
+        $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'new category', 'slug' => 'new-category-slug']);
@@ -140,11 +89,8 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
-
-        $categoryFromView = $this->viewVariable('category');
-        $this->assertNotEmpty($categoryFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PagesCategory', $categoryFromView);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
     }
 
     /**
@@ -157,11 +103,8 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/PagesCategories/edit.ctp');
-
-        $categoryFromView = $this->viewVariable('category');
-        $this->assertNotEmpty($categoryFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PagesCategory', $categoryFromView);
+        $this->assertTemplate('Admin/PagesCategories/edit.ctp');
+        $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
@@ -171,11 +114,8 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
-
-        $categoryFromView = $this->viewVariable('category');
-        $this->assertNotEmpty($categoryFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PagesCategory', $categoryFromView);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
     }
 
     /**
@@ -184,18 +124,18 @@ class PagesCategoriesControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $id = $this->PagesCategories->find()->where(['page_count <' => 1])->extract('id')->first();
-
         //POST request. This category has no pages
+        $id = $this->Table->findByPageCount(0)->extract('id')->first();
         $this->post($this->url + ['action' => 'delete', $id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-
-        $id = $this->PagesCategories->find()->where(['page_count >=' => 1])->extract('id')->first();
+        $this->assertTrue($this->Table->findById($id)->isEmpty());
 
         //POST request. This category has some pages, so it cannot be deleted
+        $id = $this->Table->find()->where(['page_count >=' => 1])->extract('id')->first();
         $this->post($this->url + ['action' => 'delete', $id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
+        $this->assertFalse($this->Table->findById($id)->isEmpty());
     }
 }

@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\ValidationTestCase;
 
 /**
@@ -21,38 +20,17 @@ use MeCms\TestSuite\ValidationTestCase;
 class UsersGroupValidatorTest extends ValidationTestCase
 {
     /**
-     * @var \MeCms\Model\Table\UsersGroupsTable
-     */
-    protected $UsersGroups;
-
-    /**
-     * Example data
      * @var array
      */
-    protected $example;
+    protected $example = ['name' => 'group', 'label' => 'Group label'];
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.users_groups',
+        'plugin.me_cms.UsersGroups',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->UsersGroups = TableRegistry::get(ME_CMS . '.UsersGroups');
-
-        $this->example = ['name' => 'group', 'label' => 'Group label'];
-    }
 
     /**
      * Test validation.
@@ -61,7 +39,7 @@ class UsersGroupValidatorTest extends ValidationTestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertAllDataAreRequired($this->UsersGroups, $this->example);
+        $this->assertAllDataAreRequired($this->example);
     }
 
     /**
@@ -70,21 +48,19 @@ class UsersGroupValidatorTest extends ValidationTestCase
      */
     public function testValidationForName()
     {
-        foreach (['Abc', 'ab1', 'ab-c', 'ab$'] as $value) {
-            $this->example['name'] = $value;
-            $errors = $this->UsersGroups->newEntity($this->example)->getErrors();
+        foreach (['Abc', 'ab1', 'ab-c', 'ab$'] as $name) {
+            $errors = $this->Table->newEntity(compact('name') + $this->example)->getErrors();
             $this->assertEquals(['name' => ['valid' => 'Allowed chars: lowercase letters']], $errors);
         }
 
-        foreach (['ab', str_repeat('a', 101)] as $value) {
-            $this->example['name'] = $value;
-            $errors = $this->UsersGroups->newEntity($this->example)->getErrors();
+        foreach (['ab', str_repeat('a', 101)] as $name) {
+            $errors = $this->Table->newEntity(compact('name') + $this->example)->getErrors();
             $this->assertEquals(['name' => ['lengthBetween' => 'Must be between 3 and 100 chars']], $errors);
         }
 
-        foreach (['abc', str_repeat('a', 100)] as $value) {
-            $this->example['name'] = $value;
-            $this->assertEmpty($this->UsersGroups->newEntity($this->example)->getErrors());
+        foreach (['abc', str_repeat('a', 100)] as $name) {
+            $errors = $this->Table->newEntity(compact('name') + $this->example)->getErrors();
+            $this->assertEmpty($errors);
         }
     }
 
@@ -94,15 +70,14 @@ class UsersGroupValidatorTest extends ValidationTestCase
      */
     public function testValidationForLabel()
     {
-        foreach (['ab', str_repeat('a', 101)] as $value) {
-            $this->example['label'] = $value;
-            $errors = $this->UsersGroups->newEntity($this->example)->getErrors();
+        foreach (['ab', str_repeat('a', 101)] as $label) {
+            $errors = $this->Table->newEntity(compact('label') + $this->example)->getErrors();
             $this->assertEquals(['label' => ['lengthBetween' => 'Must be between 3 and 100 chars']], $errors);
         }
 
-        foreach (['abc', str_repeat('a', 100)] as $value) {
-            $this->example['label'] = $value;
-            $this->assertEmpty($this->UsersGroups->newEntity($this->example)->getErrors());
+        foreach (['abc', str_repeat('a', 100)] as $label) {
+            $errors = $this->Table->newEntity(compact('label') + $this->example)->getErrors();
+            $this->assertEmpty($errors);
         }
     }
 }

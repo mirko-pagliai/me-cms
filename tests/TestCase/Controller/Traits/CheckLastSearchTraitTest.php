@@ -15,19 +15,22 @@ namespace MeCms\Test\TestCase\Controller\Traits;
 use Cake\Core\Configure;
 use MeCms\Controller\PostsController;
 use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * CheckLastSearchTraitTest class
  */
 class CheckLastSearchTraitTest extends TestCase
 {
+    use MockTrait;
+
     /**
      * Tests for `checkLastSearch()` method
      * @test
      */
     public function testCheckLastSearch()
     {
-        $controller = new PostsController;
+        $controller = $this->getMockForController(PostsController::class, null);
 
         $checkLastSearchMethod = function ($queryId = false) use ($controller) {
             return $this->invokeMethod($controller, 'checkLastSearch', [$queryId]);
@@ -58,7 +61,6 @@ class CheckLastSearchTraitTest extends TestCase
         foreach ([0, false] as $value) {
             $controller->request->session()->delete('last_search');
             Configure::write(ME_CMS . '.security.search_interval', $value);
-
             $this->assertTrue($checkLastSearchMethod());
             $this->assertNull($controller->request->session()->read('last_search'));
         }

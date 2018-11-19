@@ -24,7 +24,7 @@ use MeTools\TestSuite\IntegrationTestCase as BaseIntegrationTestCase;
  *  integration tests over mock objects as you can test more of your code
  *  easily and avoid some of the maintenance pitfalls that mock objects create.
  */
-class IntegrationTestCase extends BaseIntegrationTestCase
+abstract class IntegrationTestCase extends BaseIntegrationTestCase
 {
     /**
      * A controller instance
@@ -70,9 +70,7 @@ class IntegrationTestCase extends BaseIntegrationTestCase
      */
     public function assertGroupsAreAuthorized($values)
     {
-        if (empty($this->Controller)) {
-            $this->fail('The property `$this->Controller` has not been set');
-        }
+        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         foreach ($values as $group => $isAllowed) {
             $this->setUserGroup($group);
@@ -89,9 +87,7 @@ class IntegrationTestCase extends BaseIntegrationTestCase
      */
     public function assertUsersAreAuthorized($values)
     {
-        if (empty($this->Controller)) {
-            $this->fail('The property `$this->Controller` has not been set');
-        }
+        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         foreach ($values as $id => $isAllowed) {
             $this->setUserId($id);

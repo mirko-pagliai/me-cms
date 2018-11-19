@@ -12,59 +12,21 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\Controller\Admin\UsersGroupsController;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\UsersGroup;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * UsersGroupsControllerTest class
  */
-class UsersGroupsControllerTest extends IntegrationTestCase
+class UsersGroupsControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Controller\Admin\UsersGroupsController
-     */
-    protected $Controller;
-
-    /**
-     * @var \MeCms\Model\Table\UsersGroupsTable
-     */
-    protected $UsersGroups;
-
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.users_groups',
+        'plugin.me_cms.UsersGroups',
     ];
-
-    /**
-     * @var array
-     */
-    protected $url;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUserGroup('admin');
-
-        $this->Controller = new UsersGroupsController;
-
-        $this->UsersGroups = TableRegistry::get(ME_CMS . '.UsersGroups');
-
-        Cache::clear(false, $this->UsersGroups->cache);
-
-        $this->url = ['controller' => 'UsersGroups', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
-    }
 
     /**
      * Tests for `isAuthorized()` method
@@ -87,11 +49,8 @@ class UsersGroupsControllerTest extends IntegrationTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/UsersGroups/index.ctp');
-
-        $groupsFromView = $this->viewVariable('groups');
-        $this->assertNotEmpty($groupsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\UsersGroup', $groupsFromView);
+        $this->assertTemplate('Admin/UsersGroups/index.ctp');
+        $this->assertContainsInstanceof(UsersGroup::class, $this->viewVariable('groups'));
     }
 
     /**
@@ -104,11 +63,7 @@ class UsersGroupsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/UsersGroups/add.ctp');
-
-        $groupFromView = $this->viewVariable('group');
-        $this->assertNotEmpty($groupFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupFromView);
+        $this->assertTemplate('Admin/UsersGroups/add.ctp');
 
         //POST request. Data are valid
         $this->post($url, ['name' => 'team', 'label' => 'Team']);
@@ -118,11 +73,8 @@ class UsersGroupsControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['name' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
-
-        $groupFromView = $this->viewVariable('group');
-        $this->assertNotEmpty($groupFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupFromView);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(UsersGroup::class, $this->viewVariable('group'));
     }
 
     /**
@@ -135,11 +87,8 @@ class UsersGroupsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/UsersGroups/edit.ctp');
-
-        $groupFromView = $this->viewVariable('group');
-        $this->assertNotEmpty($groupFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupFromView);
+        $this->assertTemplate('Admin/UsersGroups/edit.ctp');
+        $this->assertInstanceof(UsersGroup::class, $this->viewVariable('group'));
 
         //POST request. Data are valid
         $this->post($url, ['description' => 'This is a description']);
@@ -150,11 +99,8 @@ class UsersGroupsControllerTest extends IntegrationTestCase
         $this->post($url, ['label' => 'aa']);
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
-
-        $groupFromView = $this->viewVariable('group');
-        $this->assertNotEmpty($groupFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\UsersGroup', $groupFromView);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(UsersGroup::class, $this->viewVariable('group'));
     }
 
     /**
@@ -163,34 +109,32 @@ class UsersGroupsControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
+        $getUsersGroupId = function ($conditions = []) {
+            return $this->Table->find()->where($conditions)->extract('id')->first();
+        };
+        $idIsEmpty = function ($id) {
+            return $this->Table->findById($id)->isEmpty();
+        };
+
         $url = $this->url + ['action' => 'delete'];
 
-        $id = $this->UsersGroups->find()
-            ->where(['id <=' => 3, 'user_count' => 0])
-            ->extract('id')
-            ->first();
-
         //Cannot delete a default group
+        $id = $getUsersGroupId(['id <=' => 3, 'user_count' => 0]);
         $this->post($url + [$id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('You cannot delete this users group');
+        $this->assertFalse($idIsEmpty($id));
 
-        $id = $this->UsersGroups->find()
-            ->where(['id >' => 3, 'user_count >' => 0])
-            ->extract('id')
-            ->first();
-
+        $id = $getUsersGroupId(['id >' => 3, 'user_count >' => 0]);
         $this->post($url + [$id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
+        $this->assertFalse($idIsEmpty($id));
 
-        $id = $this->UsersGroups->find()
-            ->where(['id >' => 3, 'user_count' => 0])
-            ->extract('id')
-            ->first();
-
+        $id = $getUsersGroupId(['id >' => 3, 'user_count' => 0]);
         $this->post($url + [$id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
+        $this->assertTrue($idIsEmpty($id));
     }
 }

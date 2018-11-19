@@ -12,59 +12,21 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeCms\Controller\Admin\PostsCategoriesController;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\PostsCategory;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PostsCategoriesControllerTest class
  */
-class PostsCategoriesControllerTest extends IntegrationTestCase
+class PostsCategoriesControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Controller\Admin\PostsCategoriesController
-     */
-    protected $Controller;
-
-    /**
-     * @var \MeCms\Model\Table\PostsCategoriesTable
-     */
-    protected $PostsCategories;
-
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.PostsCategories',
     ];
-
-    /**
-     * @var array
-     */
-    protected $url;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUserGroup('admin');
-
-        $this->Controller = new PostsCategoriesController;
-
-        $this->PostsCategories = TableRegistry::get(ME_CMS . '.PostsCategories');
-
-        Cache::clear(false, $this->PostsCategories->cache);
-
-        $this->url = ['controller' => 'PostsCategories', 'prefix' => ADMIN_PREFIX, 'plugin' => ME_CMS];
-    }
 
     /**
      * Tests for `beforeFilter()` method
@@ -84,21 +46,14 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
      */
     public function testIsAuthorized()
     {
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => false,
-        ]);
+        parent::testIsAuthorized();
 
-        //`delete` action
-        $this->Controller = new PostsCategoriesController;
-        $this->Controller->request = $this->Controller->request->withParam('action', 'delete');
-
+        //With `delete` action
         $this->assertGroupsAreAuthorized([
             'admin' => true,
             'manager' => false,
             'user' => false,
-        ]);
+        ], 'delete');
     }
 
     /**
@@ -109,11 +64,8 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/PostsCategories/index.ctp');
-
-        $categoriesFromView = $this->viewVariable('categories');
-        $this->assertNotEmpty($categoriesFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\PostsCategory', $categoriesFromView);
+        $this->assertTemplate('Admin/PostsCategories/index.ctp');
+        $this->assertContainsInstanceof(PostsCategory::class, $this->viewVariable('categories'));
     }
 
     /**
@@ -126,11 +78,8 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/PostsCategories/add.ctp');
-
-        $categoryFromView = $this->viewVariable('category');
-        $this->assertNotEmpty($categoryFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoryFromView);
+        $this->assertTemplate('Admin/PostsCategories/add.ctp');
+        $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'new category', 'slug' => 'category-slug']);
@@ -140,11 +89,8 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
-
-        $categoryFromView = $this->viewVariable('category');
-        $this->assertNotEmpty($categoryFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoryFromView);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
     }
 
     /**
@@ -157,11 +103,8 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Admin/PostsCategories/edit.ctp');
-
-        $categoryFromView = $this->viewVariable('category');
-        $this->assertNotEmpty($categoryFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoryFromView);
+        $this->assertTemplate('Admin/PostsCategories/edit.ctp');
+        $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
@@ -171,11 +114,8 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
         //POST request. Data are invalid
         $this->post($url, ['title' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('The operation has not been performed correctly');
-
-        $categoryFromView = $this->viewVariable('category');
-        $this->assertNotEmpty($categoryFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\PostsCategory', $categoryFromView);
+        $this->assertResponseContains(I18N_OPERATION_NOT_OK);
+        $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
     }
 
     /**
@@ -184,18 +124,18 @@ class PostsCategoriesControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $id = $this->PostsCategories->find()->where(['post_count <' => 1])->extract('id')->first();
-
         //POST request. This category has no pages
+        $id = $this->Table->findByPostCount(0)->extract('id')->first();
         $this->post($this->url + ['action' => 'delete', $id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-
-        $id = $this->PostsCategories->find()->where(['post_count >=' => 1])->extract('id')->first();
+        $this->assertTrue($this->Table->findById($id)->isEmpty());
 
         //POST request. This category has some pages, so it cannot be deleted
+        $id = $this->Table->find()->where(['post_count >=' => 1])->extract('id')->first();
         $this->post($this->url + ['action' => 'delete', $id]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
+        $this->assertFalse($this->Table->findById($id)->isEmpty());
     }
 }

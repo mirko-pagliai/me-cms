@@ -27,17 +27,26 @@ class RequestDetectorsTest extends TestCase
     public $Request;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Internal method to mock a request
+     * @return object
+     */
+    protected function getMockForRequest()
+    {
+        return $this->getMockBuilder(Request::class)
+            ->setMethods(null)
+            ->getMock();
+    }
+
+    /**
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        //Creates request
-        $this->Request = (new Request)->withParam('action', 'add')
+        $this->Request = $this->getMockForRequest()
+            ->withParam('action', 'add')
             ->withParam('controller', 'myController')
             ->withParam('prefix', 'myPrefix');
     }
@@ -74,10 +83,9 @@ class RequestDetectorsTest extends TestCase
         $this->assertFalse($this->Request->isAdmin());
         $this->assertFalse($this->Request->is('admin'));
 
-        $this->Request = (new Request)->withParam('prefix', ADMIN_PREFIX);
-
-        $this->assertTrue($this->Request->isAdmin());
-        $this->assertTrue($this->Request->is('admin'));
+        $request = $this->getMockForRequest()->withParam('prefix', ADMIN_PREFIX);
+        $this->assertTrue($request->isAdmin());
+        $this->assertTrue($request->is('admin'));
     }
 
     /**
@@ -157,19 +165,17 @@ class RequestDetectorsTest extends TestCase
 
         Configure::write(ME_CMS . '.default.offline', true);
 
-        $this->Request = new Request;
+        $request = $this->getMockForRequest();
+        $this->assertTrue($request->isOffline());
+        $this->assertTrue($request->is('offline'));
 
-        $this->assertTrue($this->Request->isOffline());
-        $this->assertTrue($this->Request->is('offline'));
+        $request = $this->getMockForRequest()->withParam('prefix', ADMIN_PREFIX);
+        $this->assertTrue($request->isAdmin());
+        $this->assertFalse($request->isOffline());
+        $this->assertFalse($request->is('offline'));
 
-        $this->Request = (new Request)->withParam('prefix', ADMIN_PREFIX);
-
-        $this->assertFalse($this->Request->isOffline());
-        $this->assertFalse($this->Request->is('offline'));
-
-        $this->Request = (new Request)->withParam('action', 'offline');
-
-        $this->assertFalse($this->Request->isOffline());
-        $this->assertFalse($this->Request->is('offline'));
+        $request = $this->getMockForRequest()->withParam('action', 'offline');
+        $this->assertFalse($request->isOffline());
+        $this->assertFalse($request->is('offline'));
     }
 }

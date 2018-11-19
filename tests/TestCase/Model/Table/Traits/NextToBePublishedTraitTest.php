@@ -13,14 +13,17 @@
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
+use MeCms\Model\Table\PostsTable;
 use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * NextToBePublishedTraitTest class
  */
 class NextToBePublishedTraitTest extends TestCase
 {
+    use MockTrait;
+
     /**
      * @var \MeCms\Model\Table\PostsTable
      */
@@ -30,22 +33,20 @@ class NextToBePublishedTraitTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts',
-        'plugin.me_cms.posts_categories',
-        'plugin.me_cms.users',
+        'plugin.me_cms.Posts',
+        'plugin.me_cms.PostsCategories',
+        'plugin.me_cms.Users',
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
+        $this->Posts = $this->getMockForTable(PostsTable::class, null);
     }
 
     /**
@@ -56,7 +57,6 @@ class NextToBePublishedTraitTest extends TestCase
     {
         //Creates a record with a future publication time (1 hours)
         $future = new Time('+1 hours');
-
         $entity = $this->Posts->newEntity([
             'user_id' => 1,
             'category_id' => 1,
@@ -65,7 +65,6 @@ class NextToBePublishedTraitTest extends TestCase
             'text' => 'Example text',
             'created' => $future,
         ]);
-
         $this->assertNotEmpty($this->Posts->save($entity));
         $this->assertEquals($future->toUnixString(), $this->Posts->setNextToBePublished());
         $this->assertEquals($future->toUnixString(), $this->Posts->getNextToBePublished());
@@ -73,7 +72,6 @@ class NextToBePublishedTraitTest extends TestCase
         //Creates another record with a future publication time (30 minuts)
         //This record takes precedence over the previous
         $future = new Time('+30 minutes');
-
         $entity = $this->Posts->newEntity([
             'user_id' => 1,
             'category_id' => 1,
@@ -82,7 +80,6 @@ class NextToBePublishedTraitTest extends TestCase
             'text' => 'Example text',
             'created' => $future,
         ]);
-
         $this->assertNotEmpty($this->Posts->save($entity));
         $this->assertEquals($future->toUnixString(), $this->Posts->setNextToBePublished());
         $this->assertEquals($future->toUnixString(), $this->Posts->getNextToBePublished());

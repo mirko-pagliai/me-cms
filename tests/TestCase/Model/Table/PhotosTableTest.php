@@ -12,70 +12,60 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Validation\PhotoValidator;
+use MeCms\TestSuite\TableTestCase;
 
 /**
  * PhotosTableTest class
  */
-class PhotosTableTest extends TestCase
+class PhotosTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PhotosTable
+     * @var bool
      */
-    protected $Photos;
+    public $autoFixtures = false;
 
     /**
      * @var array
      */
-    protected $example;
+    protected static $example = [
+        'album_id' => 1,
+        'filename' => 'pic.jpg',
+    ];
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.photos',
-        'plugin.me_cms.photos_albums',
+        'plugin.me_cms.Photos',
+        'plugin.me_cms.PhotosAlbums',
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
-
-        $this->example = [
-            'album_id' => 1,
-            'filename' => 'pic.jpg',
-        ];
-
-        $file = PHOTOS . $this->example['album_id'] . DS . $this->example['filename'];
+        $file = PHOTOS . self::$example['album_id'] . DS . self::$example['filename'];
 
         //Creates the file for the example
         safe_mkdir(dirname($file));
         safe_copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
-
-        Cache::clear(false, $this->Photos->cache);
     }
 
     /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
     {
-        parent::tearDown();
+        safe_unlink_recursive(PHOTOS, 'empty');
 
-        //Deletes the file for the example
-        safe_unlink(PHOTOS . $this->example['album_id'] . DS . $this->example['filename']);
+        parent::tearDown();
     }
 
     /**
@@ -84,7 +74,7 @@ class PhotosTableTest extends TestCase
      */
     public function testCacheProperty()
     {
-        $this->assertEquals('photos', $this->Photos->cache);
+        $this->assertEquals('photos', $this->Table->cache);
     }
 
     /**
@@ -93,12 +83,13 @@ class PhotosTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $entity = $this->Photos->get(1);
+        $this->loadFixtures();
 
+        $entity = $this->Table->get(1);
         $this->assertFileExists($entity->path);
 
         //Deletes
-        $this->assertTrue($this->Photos->delete($entity));
+        $this->assertTrue($this->Table->delete($entity));
         $this->assertFileNotExists($entity->path);
     }
 
@@ -108,8 +99,10 @@ class PhotosTableTest extends TestCase
      */
     public function testBeforeSave()
     {
-        $entity = $this->Photos->newEntity($this->example);
-        $this->assertNotEmpty($this->Photos->save($entity));
+        $this->loadFixtures();
+
+        $entity = $this->Table->newEntity(self::$example);
+        $this->assertNotEmpty($this->Table->save($entity));
         $this->assertEquals(['width' => 400, 'height' => 400], $entity->size);
     }
 
@@ -119,16 +112,18 @@ class PhotosTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $entity = $this->Photos->newEntity($this->example);
-        $this->assertNotEmpty($this->Photos->save($entity));
+        $this->loadFixtures();
+
+        $entity = $this->Table->newEntity(self::$example);
+        $this->assertNotEmpty($this->Table->save($entity));
 
         //Saves again the same entity
-        $entity = $this->Photos->newEntity($this->example);
-        $this->assertFalse($this->Photos->save($entity));
+        $entity = $this->Table->newEntity(self::$example);
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals(['filename' => ['_isUnique' => I18N_VALUE_ALREADY_USED]], $entity->getErrors());
 
-        $entity = $this->Photos->newEntity(['album_id' => 999, 'filename' => 'pic2.jpg']);
-        $this->assertFalse($this->Photos->save($entity));
+        $entity = $this->Table->newEntity(['album_id' => 999, 'filename' => 'pic2.jpg']);
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals(['album_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
     }
 
@@ -138,32 +133,18 @@ class PhotosTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('photos', $this->Photos->getTable());
-        $this->assertEquals('filename', $this->Photos->getDisplayField());
-        $this->assertEquals('id', $this->Photos->getPrimaryKey());
+        $this->assertEquals('photos', $this->Table->getTable());
+        $this->assertEquals('filename', $this->Table->getDisplayField());
+        $this->assertEquals('id', $this->Table->getPrimaryKey());
 
-        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Photos->Albums);
-        $this->assertEquals('album_id', $this->Photos->Albums->getForeignKey());
-        $this->assertEquals('INNER', $this->Photos->Albums->getJoinType());
-        $this->assertEquals(ME_CMS . '.PhotosAlbums', $this->Photos->Albums->className());
+        $this->assertBelongsTo($this->Table->Albums);
+        $this->assertEquals('album_id', $this->Table->Albums->getForeignKey());
+        $this->assertEquals('INNER', $this->Table->Albums->getJoinType());
+        $this->assertEquals(ME_CMS . '.PhotosAlbums', $this->Table->Albums->className());
 
-        $this->assertTrue($this->Photos->hasBehavior('Timestamp'));
-        $this->assertTrue($this->Photos->hasBehavior('CounterCache'));
+        $this->assertHasBehavior(['Timestamp', 'CounterCache']);
 
-        $this->assertInstanceOf('MeCms\Model\Validation\PhotoValidator', $this->Photos->getValidator());
-    }
-
-    /**
-     * Test for the `belongsTo` association with `PhotosAlbums`
-     * @test
-     */
-    public function testBelongsToPhotosAlbums()
-    {
-        $photo = $this->Photos->findById(2)->contain('Albums')->first();
-
-        $this->assertNotEmpty($photo->album);
-        $this->assertInstanceOf('MeCms\Model\Entity\PhotosAlbum', $photo->album);
-        $this->assertEquals(2, $photo->album->id);
+        $this->assertInstanceOf(PhotoValidator::class, $this->Table->getValidator());
     }
 
     /**
@@ -172,12 +153,14 @@ class PhotosTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $query = $this->Photos->find('active');
+        $this->loadFixtures();
+
+        $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $entity) {
+        foreach ($query as $entity) {
             $this->assertTrue($entity->active);
         }
     }
@@ -188,11 +171,14 @@ class PhotosTableTest extends TestCase
      */
     public function testFindPending()
     {
-        $query = $this->Photos->find('pending');
+        $this->loadFixtures();
+
+        $query = $this->Table->find('pending');
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $entity) {
+        foreach ($query as $entity) {
             $this->assertFalse($entity->active);
         }
     }
@@ -203,9 +189,11 @@ class PhotosTableTest extends TestCase
      */
     public function testQueryFromFilter()
     {
+        $this->loadFixtures();
+
         $data = ['album' => 2];
 
-        $query = $this->Photos->queryFromFilter($this->Photos->find(), $data);
+        $query = $this->Table->queryFromFilter($this->Table->find(), $data);
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.album_id = :c0', $query->sql());
         $this->assertEquals(2, $query->getValueBinder()->bindings()[':c0']['value']);
     }

@@ -13,49 +13,38 @@
 namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
-use MeCms\View\Helper\WidgetHelper;
-use MeCms\View\View\AppView as View;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Table\PhotosTable;
+use MeCms\TestSuite\CellTestCase;
 
 /**
  * PhotosWidgetsCellTest class
  */
-class PhotosWidgetsCellTest extends TestCase
+class PhotosWidgetsCellTest extends CellTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PhotosTable
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
-    protected $Photos;
-
-    /**
-     * @var \MeCms\View\Helper\WidgetHelper
-     */
-    protected $Widget;
+    protected $Table;
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.photos',
-        'plugin.me_cms.photos_albums',
+        'plugin.me_cms.Photos',
+        'plugin.me_cms.PhotosAlbums',
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
-        Cache::clearAll();
+        parent::setUp();
 
-        $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
-
-        $this->Widget = new WidgetHelper(new View);
+        $this->Table = $this->getMockForTable(PhotosTable::class, null);
     }
 
     /**
@@ -66,7 +55,6 @@ class PhotosWidgetsCellTest extends TestCase
     {
         $widget = ME_CMS . '.Photos::albums';
 
-        $result = $this->Widget->widget($widget)->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -90,10 +78,10 @@ class PhotosWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget)->render();
         $this->assertHtml($expected, $result);
 
         //Renders as list
-        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -121,29 +109,22 @@ class PhotosWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
         $this->assertHtml($expected, $result);
 
         //Empty on albums index
-        $widget = $this->Widget->widget($widget);
-        $widget->request = $widget->request->withEnv('REQUEST_URI', Router::url(['_name' => 'albums']));
-        $this->assertEmpty($widget->render());
+        $result = $this->Widget->widget($widget);
+        $result->request = $result->request->withEnv('REQUEST_URI', Router::url(['_name' => 'albums']));
+        $this->assertEmpty($result->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_albums', $this->Photos->cache);
+        $fromCache = Cache::read('widget_albums', $this->Table->cache);
         $this->assertEquals(2, $fromCache->count());
         $this->assertArrayKeysEqual(['another-album-test', 'test-album'], $fromCache->toArray());
-    }
 
-    /**
-     * Test for `albums()` method, with no photos
-     * @test
-     */
-    public function testAlbumsNoPhotos()
-    {
-        $widget = ME_CMS . '.Photos::albums';
-
-        $this->Photos->deleteAll(['id >=' => 1]);
-
+        //With no photos
+        Cache::clearAll();
+        $this->Table->deleteAll(['id >=' => 1]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }
@@ -156,7 +137,6 @@ class PhotosWidgetsCellTest extends TestCase
     {
         $widget = ME_CMS . '.Photos::latest';
 
-        $result = $this->Widget->widget($widget)->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -169,10 +149,10 @@ class PhotosWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget)->render();
         $this->assertHtml($expected, $result);
 
         //Tries another limit
-        $result = $this->Widget->widget($widget, ['limit' => 2])->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -188,32 +168,27 @@ class PhotosWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget, ['limit' => 2])->render();
         $this->assertHtml($expected, $result);
 
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
-            $widgetClass = $this->Widget->widget($widget);
-            $widgetClass->request = $widgetClass->request->withParam('controller', $controller);
-            $this->assertEmpty($widgetClass->render());
+            $result = $this->Widget->widget($widget);
+            $result->request = $result->request->withParam('controller', $controller);
+            $this->assertEmpty($result->render());
         }
 
         //Tests cache
-        $fromCache = Cache::read('widget_latest_1', $this->Photos->cache);
+        $fromCache = Cache::read('widget_latest_1', $this->Table->cache);
         $this->assertEquals(1, $fromCache->count());
 
-        $fromCache = Cache::read('widget_latest_2', $this->Photos->cache);
+        $fromCache = Cache::read('widget_latest_2', $this->Table->cache);
         $this->assertEquals(2, $fromCache->count());
-    }
 
-    /**
-     * Test for `latest()` method, with no photos
-     * @test
-     */
-    public function testLatestNoPhotos()
-    {
-        $this->Photos->deleteAll(['id >=' => 1]);
-
-        $this->assertEmpty($this->Widget->widget(ME_CMS . '.Photos::latest')->render());
+        //With no photos
+        Cache::clearAll();
+        $this->Table->deleteAll(['id >=' => 1]);
+        $this->assertEmpty($this->Widget->widget($widget)->render());
     }
 
     /**
@@ -224,7 +199,6 @@ class PhotosWidgetsCellTest extends TestCase
     {
         $widget = ME_CMS . '.Photos::random';
 
-        $result = $this->Widget->widget($widget)->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -237,10 +211,10 @@ class PhotosWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget)->render();
         $this->assertHtml($expected, $result);
 
         //Tries another limit
-        $result = $this->Widget->widget($widget, ['limit' => 2])->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -256,31 +230,26 @@ class PhotosWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget, ['limit' => 2])->render();
         $this->assertHtml($expected, $result);
 
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
-            $widgetClass = $this->Widget->widget($widget);
-            $widgetClass->request = $widgetClass->request->withParam('controller', $controller);
-            $this->assertEmpty($widgetClass->render());
+            $result = $this->Widget->widget($widget);
+            $result->request = $result->request->withParam('controller', $controller);
+            $this->assertEmpty($result->render());
         }
 
         //Tests cache
-        $fromCache = Cache::read('widget_random_1', $this->Photos->cache);
+        $fromCache = Cache::read('widget_random_1', $this->Table->cache);
         $this->assertEquals(3, $fromCache->count());
 
-        $fromCache = Cache::read('widget_random_2', $this->Photos->cache);
+        $fromCache = Cache::read('widget_random_2', $this->Table->cache);
         $this->assertEquals(3, $fromCache->count());
-    }
 
-    /**
-     * Test for `random()` method, with no photos
-     * @test
-     */
-    public function testRandomNoPhotos()
-    {
-        $this->Photos->deleteAll(['id >=' => 1]);
-
-        $this->assertEmpty($this->Widget->widget(ME_CMS . '.Photos::random')->render());
+        //With no photos
+        Cache::clearAll();
+        $this->Table->deleteAll(['id >=' => 1]);
+        $this->assertEmpty($this->Widget->widget($widget)->render());
     }
 }

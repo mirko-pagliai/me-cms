@@ -12,21 +12,13 @@
  */
 namespace MeCms\Test\TestCase\Controller\Component;
 
-use Cake\Controller\ComponentRegistry;
-use Cake\Controller\Controller;
-use MeCms\Controller\Component\AuthComponent;
-use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\ComponentTestCase;
 
 /**
  * AuthComponentTest class
  */
-class AuthComponentTest extends TestCase
+class AuthComponentTest extends ComponentTestCase
 {
-    /**
-     * @var \MeCms\Controller\Component\AuthComponent
-     */
-    public $Auth;
-
     /**
      * @var bool
      */
@@ -37,22 +29,9 @@ class AuthComponentTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.users',
-        'plugin.me_cms.users_groups',
+        'plugin.me_cms.Users',
+        'plugin.me_cms.UsersGroups',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Auth = new AuthComponent(new ComponentRegistry(new Controller));
-    }
 
     /**
      * Tests for `initialize()` method
@@ -81,16 +60,36 @@ class AuthComponentTest extends TestCase
             'storage' => 'Session',
             'checkAuthIn' => 'Controller.startup',
         ];
-        $this->assertEquals($expected, $this->Auth->getConfig());
+        $this->assertEquals($expected, $this->Component->getConfig());
 
-        $this->Auth->setUser(['id' => 1]);
-        $this->Auth->initialize([]);
+        $this->Component->setUser(['id' => 1]);
+        $this->Component->initialize([]);
         $expected['authError'] = 'You are not authorized for this action';
-        $this->assertEquals($expected, $this->Auth->getConfig());
+        $this->assertEquals($expected, $this->Component->getConfig());
     }
 
-    public function testSetUser()
+    /**
+     * Tests for `hasId()` method
+     * @test
+     */
+    public function testHasId()
     {
+        $this->assertFalse($this->Component->hasId(1));
+
+        $this->Component->setUser(['id' => 1]);
+        $this->assertTrue($this->Component->hasId(1));
+        $this->assertTrue($this->Component->hasId([1, 2]));
+        $this->assertFalse($this->Component->hasId(2));
+        $this->assertFalse($this->Component->hasId([2, 3]));
+    }
+
+    /**
+     * Tests for `identify()` method
+     * @test
+     */
+    public function testIdentify()
+    {
+        $this->loadFixtures();
         $expected = [
             'id' => 6,
             'username' => 'zeta',
@@ -104,29 +103,10 @@ class AuthComponentTest extends TestCase
             'picture' => 'MeCms.no-avatar.jpg',
         ];
 
-        $this->loadFixtures();
-
-        $this->Auth->constructAuthenticate();
-        $this->Auth->request = $this->Auth->request
-            ->withData('username', 'zeta')
-            ->withData('password', 'zeta');
-
-        $this->assertEquals($expected, $this->Auth->identify());
-    }
-
-    /**
-     * Tests for `hasId()` method
-     * @test
-     */
-    public function testHasId()
-    {
-        $this->assertFalse($this->Auth->hasId(1));
-
-        $this->Auth->setUser(['id' => 1]);
-        $this->assertTrue($this->Auth->hasId(1));
-        $this->assertTrue($this->Auth->hasId([1, 2]));
-        $this->assertFalse($this->Auth->hasId(2));
-        $this->assertFalse($this->Auth->hasId([2, 3]));
+        $this->Component->constructAuthenticate();
+        $this->Component->request = $this->Component->request->withData('username', 'zeta');
+        $this->Component->request = $this->Component->request->withData('password', 'zeta');
+        $this->assertEquals($expected, $this->Component->identify());
     }
 
     /**
@@ -135,13 +115,13 @@ class AuthComponentTest extends TestCase
      */
     public function testIsFounder()
     {
-        $this->assertFalse($this->Auth->isFounder());
+        $this->assertFalse($this->Component->isFounder());
 
-        $this->Auth->setUser(['id' => 1]);
-        $this->assertTrue($this->Auth->isFounder());
+        $this->Component->setUser(['id' => 1]);
+        $this->assertTrue($this->Component->isFounder());
 
-        $this->Auth->setUser(['id' => 2]);
-        $this->assertFalse($this->Auth->isFounder());
+        $this->Component->setUser(['id' => 2]);
+        $this->assertFalse($this->Component->isFounder());
     }
 
     /**
@@ -150,10 +130,10 @@ class AuthComponentTest extends TestCase
      */
     public function testIsLogged()
     {
-        $this->assertFalse($this->Auth->isLogged());
+        $this->assertFalse($this->Component->isLogged());
 
-        $this->Auth->setUser(['id' => 1]);
-        $this->assertTrue($this->Auth->isLogged());
+        $this->Component->setUser(['id' => 1]);
+        $this->assertTrue($this->Component->isLogged());
     }
 
     /**
@@ -162,11 +142,11 @@ class AuthComponentTest extends TestCase
      */
     public function testIsGroup()
     {
-        $this->assertFalse($this->Auth->isGroup('admin'));
+        $this->assertFalse($this->Component->isGroup('admin'));
 
-        $this->Auth->setUser(['group' => ['name' => 'admin']]);
-        $this->assertTrue($this->Auth->isGroup('admin'));
-        $this->assertTrue($this->Auth->isGroup(['admin', 'manager']));
-        $this->assertFalse($this->Auth->isGroup(['manager', 'noExistingGroup']));
+        $this->Component->setUser(['group' => ['name' => 'admin']]);
+        $this->assertTrue($this->Component->isGroup('admin'));
+        $this->assertTrue($this->Component->isGroup(['admin', 'manager']));
+        $this->assertFalse($this->Component->isGroup(['manager', 'noExistingGroup']));
     }
 }

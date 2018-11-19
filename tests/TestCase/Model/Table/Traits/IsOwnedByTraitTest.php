@@ -12,17 +12,19 @@
  */
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
+use MeCms\Model\Table\PostsTable;
 use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * IsOwnedByTraitTest class
  */
 class IsOwnedByTraitTest extends TestCase
 {
+    use MockTrait;
+
     /**
-     * @var \MeCms\Model\Table\PostsTable
+     * @var object
      */
     protected $Posts;
 
@@ -31,22 +33,18 @@ class IsOwnedByTraitTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts',
+        'plugin.me_cms.Posts',
     ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
-
-        Cache::clear(false, $this->Posts->cache);
+        $this->Posts = $this->getMockForTable(PostsTable::class, null);
     }
 
     /**

@@ -13,75 +13,51 @@
 namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
-use MeCms\View\Cell\PostsTagsWidgetsCell;
-use MeCms\View\Helper\WidgetHelper;
-use MeCms\View\View\AppView as View;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Table\TagsTable;
+use MeCms\TestSuite\CellTestCase;
 
 /**
  * PostsTagsWidgetsCellTest class
  */
-class PostsTagsWidgetsCellTest extends TestCase
+class PostsTagsWidgetsCellTest extends CellTestCase
 {
     /**
-     * @var \MeCms\View\Cell\PostsTagsWidgetsCell
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
-    protected $PostsTagsWidgetsCell;
+    protected $Table;
 
     /**
-     * @var \MeCms\Model\Table\TagsTable
+     * @var array
      */
-    protected $Tags;
-
-    /**
-     * @var \MeCms\View\Helper\WidgetHelper
-     */
-    protected $Widget;
+    protected $example = [
+        'limit' => 2,
+        'prefix' => '#',
+        'render' => 'cloud',
+        'shuffle' => false,
+        'style' => [
+            'maxFont' => 40,
+            'minFont' => 12,
+        ],
+    ];
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.tags',
+        'plugin.me_cms.Tags',
     ];
 
     /**
-     * Default options
-     * @var array
-     */
-    protected $options;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        Cache::clearAll();
-
-        $this->PostsTagsWidgetsCell = new PostsTagsWidgetsCell;
-
-        $this->Tags = TableRegistry::get(ME_CMS . '.Tags');
-
-        $this->Widget = new WidgetHelper(new View);
-
-        $this->options = [
-            'limit' => 2,
-            'prefix' => '#',
-            'render' => 'cloud',
-            'shuffle' => false,
-            'style' => [
-                'maxFont' => 40,
-                'minFont' => 12,
-            ],
-        ];
+        $this->Table = $this->getMockForTable(TagsTable::class, null);
     }
 
     /**
@@ -91,7 +67,9 @@ class PostsTagsWidgetsCellTest extends TestCase
     public function testGetFontSizes()
     {
         $getFontSizesMethod = function (array $options = []) {
-            return $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [$options]);
+            $widget = $this->Widget->widget(ME_CMS . '.PostsTags::popular');
+
+            return $this->invokeMethod($widget, 'getFontSizes', [$options]);
         };
 
         $this->assertEquals([40, 12], $getFontSizesMethod());
@@ -108,7 +86,8 @@ class PostsTagsWidgetsCellTest extends TestCase
      */
     public function testGetFontSizesWithInvalidValues()
     {
-        $this->invokeMethod($this->PostsTagsWidgetsCell, 'getFontSizes', [['maxFont' => 10, 'minFont' => 20]]);
+        $widget = $this->Widget->widget(ME_CMS . '.PostsTags::popular');
+        $this->invokeMethod($widget, 'getFontSizes', [['maxFont' => 10, 'minFont' => 20]]);
     }
 
     /**
@@ -120,7 +99,6 @@ class PostsTagsWidgetsCellTest extends TestCase
         $widget = ME_CMS . '.PostsTags::popular';
 
         //Tries using the style (`maxFont` and `minFont`)
-        $result = $this->Widget->widget($widget, $this->options)->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -140,13 +118,10 @@ class PostsTagsWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget, $this->example)->render();
         $this->assertHtml($expected, $result);
 
         //Tries with a custom prefix
-        $result = $this->Widget->widget($widget, array_merge($this->options, [
-            'prefix' => '-',
-            'style' => false,
-        ]))->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -166,13 +141,13 @@ class PostsTagsWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget, array_merge($this->example, [
+            'prefix' => '-',
+            'style' => false,
+        ]))->render();
         $this->assertHtml($expected, $result);
 
         //Tries to render as form
-        $result = $this->Widget->widget($widget, array_merge($this->options, [
-            'render' => 'form',
-            'style' => false,
-        ]))->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -196,13 +171,12 @@ class PostsTagsWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $result);
-
-        //Tries to render as list
-        $result = $this->Widget->widget($widget, array_merge($this->options, [
-            'render' => 'list',
+        $result = $this->Widget->widget($widget, array_merge($this->example, [
+            'render' => 'form',
             'style' => false,
         ]))->render();
+        $this->assertHtml($expected, $result);
+
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -232,13 +206,13 @@ class PostsTagsWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $result);
-
-        //Tries with shuffle
-        $result = $this->Widget->widget($widget, array_merge($this->options, [
-            'shuffle' => true,
+        //Tries to render as list
+        $result = $this->Widget->widget($widget, array_merge($this->example, [
+            'render' => 'list',
             'style' => false,
         ]))->render();
+        $this->assertHtml($expected, $result);
+
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -258,15 +232,20 @@ class PostsTagsWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        //Tries with shuffle
+        $result = $this->Widget->widget($widget, array_merge($this->example, [
+            'shuffle' => true,
+            'style' => false,
+        ]))->render();
         $this->assertHtml($expected, $result);
 
         //Empty on tags index
-        $widgetClass = $this->Widget->widget($widget);
-        $widgetClass->request = $widgetClass->request->withEnv('REQUEST_URI', Router::url(['_name' => 'postsTags']));
-        $this->assertEmpty($widgetClass->render());
+        $result = $this->Widget->widget($widget);
+        $result->request = $result->request->withEnv('REQUEST_URI', Router::url(['_name' => 'postsTags']));
+        $this->assertEmpty($result->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_tags_popular_2', $this->Tags->cache);
+        $fromCache = Cache::read('widget_tags_popular_2', $this->Table->cache);
         $this->assertEquals(2, $fromCache->count());
         $this->assertEquals(['cat', 'dog'], array_keys($fromCache->toArray()));
 
@@ -274,7 +253,7 @@ class PostsTagsWidgetsCellTest extends TestCase
             $this->assertNull($entity->size);
         }
 
-        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Tags->cache);
+        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->cache);
         $this->assertEquals(2, $fromCache->count());
         $this->assertEquals(['cat', 'dog'], array_keys($fromCache->toArray()));
 
@@ -282,28 +261,13 @@ class PostsTagsWidgetsCellTest extends TestCase
             $this->assertGreaterThan(0, $entity->size);
         }
 
-        //Deletes all tags
-        $this->Tags->deleteAll(['id >=' => 1]);
-
-        //Empty with no tags
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertEmpty($result);
-    }
-
-    /**
-     * Test for `popular()` method, with no tags
-     * @test
-     */
-    public function testPopularWithNoTags()
-    {
-        $widget = ME_CMS . '.PostsTags::popular';
-
-        $this->Tags->deleteAll(['id >=' => 1]);
-
-        $this->assertEmpty($this->Widget->widget($widget, $this->options)->render());
-        $this->assertEmpty($this->Widget->widget($widget, array_merge($this->options, ['render' => 'form']))->render());
-        $this->assertEmpty($this->Widget->widget($widget, array_merge($this->options, ['render' => 'list']))->render());
-        $this->assertEmpty($this->Widget->widget($widget, array_merge($this->options, ['shuffle' => true]))->render());
+        //With no tags
+        Cache::clearAll();
+        $this->Table->deleteAll(['id >=' => 1]);
+        $this->assertEmpty($this->Widget->widget($widget, $this->example)->render());
+        $this->assertEmpty($this->Widget->widget($widget, array_merge($this->example, ['render' => 'form']))->render());
+        $this->assertEmpty($this->Widget->widget($widget, array_merge($this->example, ['render' => 'list']))->render());
+        $this->assertEmpty($this->Widget->widget($widget, array_merge($this->example, ['shuffle' => true]))->render());
     }
 
     /**
@@ -320,11 +284,10 @@ class PostsTagsWidgetsCellTest extends TestCase
             ['tag' => 'example1', 'post_count' => 999],
             ['tag' => 'example2', 'post_count' => 999],
         ] as $data) {
-            $entity = $this->Tags->newEntity($data, ['accessibleFields' => ['post_count' => true]]);
-            $this->assertNotFalse($this->Tags->save($entity));
+            $entity = $this->Table->newEntity($data, ['accessibleFields' => ['post_count' => true]]);
+            $this->assertNotFalse($this->Table->save($entity));
         }
 
-        $result = $this->Widget->widget($widget, $this->options)->render();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -344,10 +307,11 @@ class PostsTagsWidgetsCellTest extends TestCase
             '/div',
             '/div',
         ];
+        $result = $this->Widget->widget($widget, $this->example)->render();
         $this->assertHtml($expected, $result);
 
         //Tests cache
-        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Tags->cache);
+        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->cache);
         $this->assertEquals(2, $fromCache->count());
         $this->assertEquals(['example1', 'example2'], array_keys($fromCache->toArray()));
 

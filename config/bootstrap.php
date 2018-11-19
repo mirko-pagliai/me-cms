@@ -37,9 +37,7 @@ if (!Plugin::loaded('MeTools')) {
 }
 
 foreach ([BANNERS, LOGIN_RECORDS, PHOTOS, UPLOADED, USER_PICTURES] as $dir) {
-    if (!file_exists($dir)) {
-        safe_mkdir($dir);
-    }
+    safe_mkdir($dir);
 
     if (!is_writeable($dir)) {
         trigger_error(sprintf('Directory %s not writeable', $dir), E_USER_ERROR);

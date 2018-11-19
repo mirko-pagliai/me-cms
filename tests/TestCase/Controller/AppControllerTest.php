@@ -15,27 +15,35 @@ namespace MeCms\Test\TestCase\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use MeCms\Controller\AppController;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * AppControllerTest class
  */
-class AppControllerTest extends IntegrationTestCase
+class AppControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Controller\AppController
-     */
-    protected $Controller;
-
     /**
      * @var \Cake\Event\Event
      */
     protected $Event;
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Mocks a controller
+     * @param string $className Controller class name
+     * @param array|null $methods The list of methods to mock
+     * @param string $alias Controller alias
+     * @return object
+     * @uses getClassAlias()
+     */
+    protected function getMockForController($className = null, $methods = null, $alias = 'App')
+    {
+        $className = $className ?: AppController::class;
+
+        return parent::getMockForController($className, $methods, $alias);
+    }
+
+    /**
+     * Called before every test method
      * @return void
      */
     public function setUp()
@@ -48,13 +56,10 @@ class AppControllerTest extends IntegrationTestCase
         Configure::write(ME_CMS . '.security.recaptcha', true);
         Configure::write(ME_CMS . '.security.search_interval', 15);
 
-        $this->Controller = $this->getMockBuilder(AppController::class)
-            ->setMethods(['isBanned', 'isOffline', 'redirect'])
+        $this->Controller = $this->getMockForController();
+        $this->Event = $this->getMockBuilder(Event::class)
+            ->setConstructorArgs(['exampleEvent'])
             ->getMock();
-
-        $this->Controller->method('redirect')->will($this->returnArgument(0));
-
-        $this->Event = new Event('myEvent');
     }
 
     /**
@@ -63,20 +68,17 @@ class AppControllerTest extends IntegrationTestCase
      */
     public function testInitialize()
     {
-        $componentsClasses = array_map(function ($name) {
-            return get_class($this->Controller->components()->get($name));
-        }, $this->Controller->components()->loaded());
-
-        $this->assertEquals([
-            'Cake\Controller\Component\CookieComponent',
-            ME_CMS . '\Controller\Component\AuthComponent',
-            ME_TOOLS . '\Controller\Component\FlashComponent',
-            'Cake\Controller\Component\RequestHandlerComponent',
-            ME_TOOLS . '\Controller\Component\UploaderComponent',
-            'Recaptcha\Controller\Component\RecaptchaComponent',
-        ], $componentsClasses);
-
-        $this->assertFalse($this->Controller->Cookie->config('encryption'));
+        $expectedComponents = [
+            'Auth',
+            'Cookie',
+            'Flash',
+            'Recaptcha',
+            'RequestHandler',
+            'Uploader',
+        ];
+        foreach ($expectedComponents as $component) {
+            $this->assertHasComponent($component);
+        }
     }
 
     /**
@@ -85,61 +87,44 @@ class AppControllerTest extends IntegrationTestCase
      */
     public function testBeforeFilter()
     {
-        $this->assertEmpty($this->Controller->Auth->allowedActions);
-
-        $this->Controller->request = $this->Controller->request
+        $controller = $this->getMockForController();
+        $controller->request = $controller->request
             ->withParam('action', 'my-action')
             ->withQueryParams(['sort' => 'my-field']);
-
-        $this->Controller->beforeFilter($this->Event);
-
-        $this->assertNotEmpty($this->Controller->Auth->allowedActions);
-        $this->assertEquals(5, $this->Controller->paginate['limit']);
-        $this->assertEquals(5, $this->Controller->paginate['maxLimit']);
-        $this->assertNull($this->Controller->viewBuilder()->getLayout());
-        $this->assertEquals(ME_CMS . '.View/App', $this->Controller->viewBuilder()->getClassName());
+        $controller->beforeFilter($this->Event);
+        $this->assertNotEmpty($controller->Auth->allowedActions);
+        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $controller->paginate);
+        $this->assertNull($controller->viewBuilder()->getLayout());
+        $this->assertEquals(ME_CMS . '.View/App', $controller->viewBuilder()->getClassName());
 
         //Admin request
-        $this->Controller = new AppController;
-        $this->Controller->request = $this->Controller->request
+        $controller = $this->getMockForController();
+        $controller->request = $controller->request
             ->withParam('action', 'my-action')
             ->withQueryParams(['sort' => 'my-field'])
             ->withParam('prefix', ADMIN_PREFIX);
-
-        $this->Controller->beforeFilter($this->Event);
-        $this->assertEmpty($this->Controller->Auth->allowedActions);
-        $this->assertEquals(7, $this->Controller->paginate['limit']);
-        $this->assertEquals(7, $this->Controller->paginate['maxLimit']);
-        $this->assertEquals(ME_CMS . '.View/Admin', $this->Controller->viewBuilder()->getClassName());
+        $controller->beforeFilter($this->Event);
+        $this->assertEmpty($controller->Auth->allowedActions);
+        $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $controller->paginate);
+        $this->assertEquals(ME_CMS . '.View/Admin', $controller->viewBuilder()->getClassName());
 
         //Ajax request
-        $this->Controller->request = $this->Controller->request->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
-        $this->Controller->beforeFilter($this->Event);
-        $this->assertEquals(ME_CMS . '.ajax', $this->Controller->viewBuilder()->getLayout());
-    }
+        $controller = $this->getMockForController();
+        $controller->request = $controller->request->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
+        $controller->beforeFilter($this->Event);
+        $this->assertEquals(ME_CMS . '.ajax', $controller->viewBuilder()->getLayout());
 
-    /**
-     * Tests for `beforeFilter()` method, with a banned user
-     * @test
-     */
-    public function testBeforeFilterWithBannedUser()
-    {
-        $this->Controller->method('isBanned')->willReturn(true);
+        //Request with banned user
+        $controller = $this->getMockForController(null, ['isBanned']);
+        $controller->method('isBanned')->willReturn(true);
+        $this->_response = $controller->beforeFilter($this->Event);
+        $this->assertRedirect(['_name' => 'ipNotAllowed']);
 
-        $beforeFilter = $this->Controller->beforeFilter($this->Event);
-        $this->assertEquals(['_name' => 'ipNotAllowed'], $beforeFilter);
-    }
-
-    /**
-     * Tests for `beforeFilter()` method, on offline site
-     * @test
-     */
-    public function testBeforeFilterWithOfflineSite()
-    {
-        $this->Controller->method('isOffline')->willReturn(true);
-
-        $beforeFilter = $this->Controller->beforeFilter($this->Event);
-        $this->assertEquals(['_name' => 'offline'], $beforeFilter);
+        //Request with offline site
+        $controller = $this->getMockForController(null, ['isOffline']);
+        $controller->method('isOffline')->willReturn(true);
+        $this->_response = $controller->beforeFilter($this->Event);
+        $this->assertRedirect(['_name' => 'offline']);
     }
 
     /**
@@ -148,11 +133,9 @@ class AppControllerTest extends IntegrationTestCase
      */
     public function testBeforeRender()
     {
+        $expectedHelpers = ['Recaptcha.Recaptcha', ME_CMS . '.Auth'];
         $this->Controller->beforeRender($this->Event);
-        $this->assertArrayKeysEqual([
-            'Recaptcha.Recaptcha',
-            'MeCms.Auth',
-        ], $this->Controller->viewBuilder()->getHelpers());
+        $this->assertArrayKeysEqual($expectedHelpers, $this->Controller->viewBuilder()->getHelpers());
     }
 
     /**
@@ -161,29 +144,16 @@ class AppControllerTest extends IntegrationTestCase
      */
     public function testIsAuthorized()
     {
-        //No prefix
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => true,
-        ]);
+        parent::testIsAuthorized();
 
-        //Admin prefix
-        $this->Controller = new AppController;
+        //With `admin` prefix
         $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => false,
-        ]);
+        $this->Controller->request->clearDetectorCache();
+        parent::testIsAuthorized();
 
-        //Other prefix
-        $this->Controller = new AppController;
+        //With other prefix
         $this->Controller->request = $this->Controller->request->withParam('prefix', 'otherPrefix');
-        $this->assertGroupsAreAuthorized([
-            'admin' => false,
-            'manager' => false,
-            'user' => false,
-        ]);
+        $this->Controller->request->clearDetectorCache();
+        parent::testIsAuthorized();
     }
 }

@@ -12,32 +12,13 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use MeCms\Model\Entity\UsersGroup;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\EntityTestCase;
 
 /**
  * UsersGroupTest class
  */
-class UsersGroupTest extends TestCase
+class UsersGroupTest extends EntityTestCase
 {
-    /**
-     * @var \MeCms\Model\Entity\UsersGroup
-     */
-    protected $UsersGroup;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->UsersGroup = new UsersGroup;
-    }
-
     /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
@@ -45,8 +26,6 @@ class UsersGroupTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $this->assertFalse($this->UsersGroup->isAccessible('id'));
-        $this->assertFalse($this->UsersGroup->isAccessible('user_count'));
-        $this->assertFalse($this->UsersGroup->isAccessible('modified'));
+        $this->assertHasNoAccessibleProperty(['id', 'user_count', 'modified']);
     }
 }

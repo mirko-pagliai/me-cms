@@ -28,26 +28,22 @@ class ContactUsMailerTest extends TestCase
     /**
      * @var array
      */
-    protected $example;
+    protected $example = [
+        'first_name' => 'James',
+        'email' => 'test@test.com',
+        'last_name' => 'Blue',
+        'message' => 'Example of message',
+    ];
 
     /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
+     * Called before every test method
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->ContactUsMailer = new ContactUsMailer;
-
-        $this->example = [
-            'email' => 'test@test.com',
-            'first_name' => 'James',
-            'last_name' => 'Blue',
-            'message' => 'Example of message',
-        ];
+        $this->Mailer = new ContactUsMailer;
     }
 
     /**
@@ -56,22 +52,18 @@ class ContactUsMailerTest extends TestCase
      */
     public function testContactUsMail()
     {
-        $this->ContactUsMailer->contactUsMail($this->example);
-
-        //Gets `Email` instance
-        $email = $this->getProperty($this->ContactUsMailer, '_email');
-
-        $this->assertEquals(['test@test.com' => 'James Blue'], $email->getSender());
-        $this->assertEquals(['test@test.com' => 'James Blue'], $email->getReplyTo());
-        $this->assertEquals(['email@example.com' => 'email@example.com'], $email->getTo());
-        $this->assertEquals('Email from MeCms', $email->getSubject());
-        $this->assertEquals(ME_CMS . '.Systems/contact_us', $email->getTemplate());
+        $this->Mailer->contactUsMail($this->example);
+        $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getEmailInstance()->getSender());
+        $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getEmailInstance()->getReplyTo());
+        $this->assertEquals(['email@example.com' => 'email@example.com'], $this->Mailer->getEmailInstance()->getTo());
+        $this->assertEquals('Email from MeCms', $this->Mailer->getEmailInstance()->getSubject());
+        $this->assertEquals(ME_CMS . '.Systems/contact_us', $this->Mailer->getEmailInstance()->getTemplate());
         $this->assertEquals([
             'email' => 'test@test.com',
             'message' => 'Example of message',
             'firstName' => 'James',
             'lastName' => 'Blue',
-        ], $email->getViewVars());
+        ], $this->Mailer->getEmailInstance()->getViewVars());
     }
 
     /**
@@ -82,9 +74,9 @@ class ContactUsMailerTest extends TestCase
      */
     public function testContactUsMailMissingData()
     {
-        unset($this->example['email']);
-
-        $this->ContactUsMailer->contactUsMail($this->example);
+        $copy = $this->example;
+        unset($copy['email']);
+        $this->Mailer->contactUsMail($copy);
     }
 
     /**
@@ -93,7 +85,7 @@ class ContactUsMailerTest extends TestCase
      */
     public function testContactUsMailWithSend()
     {
-        $result = $this->ContactUsMailer->setTransport('debug')
+        $result = $this->Mailer->setTransport('debug')
             ->setLayout(false)
             ->send('contactUsMail', [$this->example]);
 
@@ -108,7 +100,7 @@ class ContactUsMailerTest extends TestCase
         $this->assertContains('Subject: Email from MeCms', $headers);
         $this->assertContains('Content-Type: text/html; charset=UTF-8', $headers);
 
-        //Checks the message
+        //Checks message
         $this->assertContains('Email from James Blue (test@test.com)', $message);
         $this->assertContains('Example of message', $message);
     }

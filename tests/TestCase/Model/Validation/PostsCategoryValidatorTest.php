@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\ValidationTestCase;
 
 /**
@@ -21,38 +20,17 @@ use MeCms\TestSuite\ValidationTestCase;
 class PostsCategoryValidatorTest extends ValidationTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PostsCategoriesTable
-     */
-    protected $PostsCategories;
-
-    /**
-     * Example data
      * @var array
      */
-    protected $example;
+    protected $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.PostsCategories',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->PostsCategories = TableRegistry::get(ME_CMS . '.PostsCategories');
-
-        $this->example = ['title' => 'My title', 'slug' => 'my-slug'];
-    }
 
     /**
      * Test validation.
@@ -61,6 +39,6 @@ class PostsCategoryValidatorTest extends ValidationTestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertAllDataAreRequired($this->PostsCategories, $this->example);
+        $this->assertAllDataAreRequired($this->example);
     }
 }

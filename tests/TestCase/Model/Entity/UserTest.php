@@ -12,43 +12,23 @@
  */
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\Filesystem\Folder;
-use MeCms\Model\Entity\User;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\EntityTestCase;
 
 /**
  * UserTest class
  */
-class UserTest extends TestCase
+class UserTest extends EntityTestCase
 {
     /**
-     * @var \MeCms\Model\Entity\User
-     */
-    protected $User;
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->User = new User;
-    }
-
-    /**
-     * Teardown any static object changes and restore them
+     * Called after every test method
      * @return void
      */
     public function tearDown()
     {
-        parent::tearDown();
-
         safe_unlink_recursive(USER_PICTURES, 'empty');
         safe_unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
+
+        parent::tearDown();
     }
 
     /**
@@ -58,9 +38,7 @@ class UserTest extends TestCase
      */
     public function testNoAccessibleProperties()
     {
-        $this->assertFalse($this->User->isAccessible('id'));
-        $this->assertFalse($this->User->isAccessible('post_count'));
-        $this->assertFalse($this->User->isAccessible('modified'));
+        $this->assertHasNoAccessibleProperty(['id', 'post_count', 'modified']);
     }
 
     /**
@@ -69,7 +47,7 @@ class UserTest extends TestCase
      */
     public function testVirtualFields()
     {
-        $this->assertEquals(['full_name', 'picture'], $this->User->getVirtual());
+        $this->assertHasVirtualField(['full_name', 'picture']);
     }
 
     /**
@@ -78,11 +56,11 @@ class UserTest extends TestCase
      */
     public function testFullNameGetMutator()
     {
-        $this->assertNull($this->User->full_name);
+        $this->assertNull($this->Entity->full_name);
 
-        $this->User->first_name = 'Alfa';
-        $this->User->last_name = 'Beta';
-        $this->assertEquals($this->User->first_name . ' ' . $this->User->last_name, $this->User->full_name);
+        $this->Entity->first_name = 'Alfa';
+        $this->Entity->last_name = 'Beta';
+        $this->assertEquals($this->Entity->first_name . ' ' . $this->Entity->last_name, $this->Entity->full_name);
     }
 
     /**
@@ -91,22 +69,20 @@ class UserTest extends TestCase
      */
     public function testPictureGetMutator()
     {
-        $this->User->id = 1;
-
-        $this->assertEquals(ME_CMS . '.no-avatar.jpg', $this->User->picture);
+        $this->Entity->id = 1;
+        $this->assertEquals(ME_CMS . '.no-avatar.jpg', $this->Entity->picture);
 
         $filename = WWW_ROOT . 'img' . DS . 'no-avatar.jpg';
         file_put_contents($filename, null);
-        $this->assertEquals('no-avatar.jpg', $this->User->picture);
+        $this->assertEquals('no-avatar.jpg', $this->Entity->picture);
 
         $id = 0;
-
         foreach (['jpg', 'jpeg', 'gif', 'png', 'JPEG'] as $extension) {
             $id++;
-            $this->User->id = $id;
+            $this->Entity->id = $id;
             $filename = WWW_ROOT . 'img' . DS . 'users' . DS . $id . '.' . $extension;
             file_put_contents($filename, null);
-            $this->assertEquals('users' . DS . $id . '.' . $extension, $this->User->picture);
+            $this->assertEquals('users' . DS . $id . '.' . $extension, $this->Entity->picture);
         }
     }
 }

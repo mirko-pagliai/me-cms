@@ -14,52 +14,25 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
-use MeCms\Controller\PostsController;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\Model\Entity\Post;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PostsControllerTest class
  */
-class PostsControllerTest extends IntegrationTestCase
+class PostsControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Controller\PostsController
-     */
-    protected $Controller;
-
-    /**
-     * @var \MeCms\Model\Table\PostsTable
-     */
-    protected $Posts;
-
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts',
-        'plugin.me_cms.posts_categories',
-        'plugin.me_cms.posts_tags',
-        'plugin.me_cms.tags',
-        'plugin.me_cms.users',
+        'plugin.me_cms.Posts',
+        'plugin.me_cms.PostsCategories',
+        'plugin.me_cms.PostsTags',
+        'plugin.me_cms.Tags',
+        'plugin.me_cms.Users',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Controller = new PostsController;
-        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
-
-        Cache::clear(false, $this->Posts->cache);
-    }
 
     /**
      * Adds additional event spies to the controller/view event manager
@@ -86,20 +59,15 @@ class PostsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Posts/index.ctp');
+        $this->assertTemplate('Posts/index.ctp');
+        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
 
-        $postsFromView = $this->viewVariable('posts');
-        $this->assertNotEmpty($postsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
-
-        //Sets the cache name
         $cache = sprintf('index_limit_%s_page_%s', getConfigOrFail('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->Posts->cache
+            $this->Table->cache
         ));
-
-        $this->assertEquals($postsFromView->toArray(), $postsFromCache->toArray());
+        $this->assertEquals($this->viewVariable('posts')->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
 
         //GET request again. Now the data is in cache
@@ -119,33 +87,25 @@ class PostsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Posts/index_by_date.ctp');
-
-        $dateFromView = $this->viewVariable('date');
-        $this->assertEquals($date, $dateFromView);
-
-        $postsFromView = $this->viewVariable('posts');
-        $this->assertNotEmpty($postsFromView->toArray());
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
+        $this->assertTemplate('Posts/index_by_date.ctp');
+        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
+        $this->assertEquals($date, $this->viewVariable('date'));
 
         $startFromView = $this->viewVariable('start');
-        $this->assertInstanceof('Cake\I18n\Time', $startFromView);
+        $this->assertInstanceof(Time::class, $startFromView);
         $this->assertEquals('2016-12-29 00:00:00', $startFromView->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
-        //Sets the cache name
-        $end = Time::parse($startFromView)->addDay(1);
         $cache = sprintf(
             'index_date_%s_limit_%s_page_%s',
-            md5(serialize([$startFromView, $end])),
+            md5(serialize([$startFromView, Time::parse($startFromView)->addDay(1)])),
             getConfigOrFail('default.records'),
             1
         );
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->Posts->cache
+            $this->Table->cache
         ));
-
-        $this->assertEquals($postsFromView->toArray(), $postsFromCache->toArray());
+        $this->assertEquals($this->viewVariable('posts')->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
 
         //GET request again. Now the data is in cache
@@ -163,7 +123,7 @@ class PostsControllerTest extends IntegrationTestCase
         ] as $date) {
             $this->get(['_name' => 'postsByDate', $date]);
             $this->assertResponseOkAndNotEmpty();
-            $this->assertTemplate(ROOT . 'src/Template/Posts/index_by_date.ctp');
+            $this->assertTemplate('Posts/index_by_date.ctp');
         }
 
         //GET request with query string
@@ -179,12 +139,9 @@ class PostsControllerTest extends IntegrationTestCase
     {
         $this->get('/posts/rss');
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Posts/rss/rss.ctp');
+        $this->assertTemplate('Posts/rss/rss.ctp');
         $this->assertHeaderContains('Content-Type', 'application/rss+xml');
-
-        $postsFromView = $this->viewVariable('posts');
-        $this->assertNotEmpty($postsFromView->toArray());
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
+        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
     }
 
     /**
@@ -209,30 +166,23 @@ class PostsControllerTest extends IntegrationTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Posts/search.ctp');
-
+        $this->assertTemplate('Posts/search.ctp');
         $this->assertEmpty($this->viewVariable('posts'));
         $this->assertEmpty($this->viewVariable('pattern'));
 
         $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
-
-        $postsFromView = $this->viewVariable('posts');
-        $this->assertNotEmpty($postsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $postsFromView);
-        $this->assertContains($pattern, $postsFromView->first()->text);
-
         $this->assertEquals($this->viewVariable('pattern'), $pattern);
+        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
+        $this->assertContains($pattern, $this->viewVariable('posts')->first()->text);
 
-        //Sets the cache name
         $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), getConfigOrFail('default.records_for_searches'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->Posts->cache
+            $this->Table->cache
         ));
-
-        $this->assertEquals($postsFromView->toArray(), $postsFromCache->toArray());
+        $this->assertEquals($this->viewVariable('posts')->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
 
         //GET request again. Now the data is in cache
@@ -246,7 +196,6 @@ class PostsControllerTest extends IntegrationTestCase
         $this->assertFlashMessage('You have to search at least a word of 4 characters');
 
         $this->session(['last_search' => ['id' => md5(time()), 'time' => time()]]);
-
         $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertRedirect($url);
         $this->assertFlashMessage('You have to wait 10 seconds to perform a new search');
@@ -258,22 +207,16 @@ class PostsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $slug = $this->Posts->find('active')->where(['preview IS' => null])->extract('slug')->first();
+        $slug = $this->Table->find('active')->where(['preview IS' => null])->extract('slug')->first();
 
         $this->get(['_name' => 'post', $slug]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Posts/view.ctp');
+        $this->assertTemplate('Posts/view.ctp');
+        $this->assertInstanceof(Post::class, $this->viewVariable('post'));
+        $this->assertContainsInstanceof(Post::class, $this->viewVariable('related'));
 
-        $postFromView = $this->viewVariable('post');
-        $this->assertNotEmpty($postFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
-
-        $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Posts->cache);
-        $this->assertEquals($postFromView, $cache->first());
-
-        $relatedPostsFromView = $this->viewVariable('related');
-        $this->assertNotEmpty($relatedPostsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $relatedPostsFromView);
+        $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Table->cache);
+        $this->assertEquals($this->viewVariable('post'), $cache->first());
     }
 
     /**
@@ -283,19 +226,12 @@ class PostsControllerTest extends IntegrationTestCase
     public function testPreview()
     {
         $this->setUserGroup('user');
-
-        $slug = $this->Posts->find('pending')->where(['preview IS' => null])->extract('slug')->first();
+        $slug = $this->Table->find('pending')->where(['preview IS' => null])->extract('slug')->first();
 
         $this->get(['_name' => 'postsPreview', $slug]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/Posts/view.ctp');
-
-        $postFromView = $this->viewVariable('post');
-        $this->assertNotEmpty($postFromView);
-        $this->assertInstanceof('MeCms\Model\Entity\Post', $postFromView);
-
-        $relatedPostsFromView = $this->viewVariable('related');
-        $this->assertNotEmpty($relatedPostsFromView);
-        $this->assertContainsInstanceof('MeCms\Model\Entity\Post', $relatedPostsFromView);
+        $this->assertTemplate('Posts/view.ctp');
+        $this->assertInstanceof(Post::class, $this->viewVariable('post'));
+        $this->assertContainsInstanceof(Post::class, $this->viewVariable('related'));
     }
 }

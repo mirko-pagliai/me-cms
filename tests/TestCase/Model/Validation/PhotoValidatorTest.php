@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\ValidationTestCase;
 
 /**
@@ -21,38 +20,17 @@ use MeCms\TestSuite\ValidationTestCase;
 class PhotoValidatorTest extends ValidationTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PhotosTable
-     */
-    protected $Photos;
-
-    /**
-     * Example data
      * @var array
      */
-    protected $example;
+    protected $example = ['album_id' => 1, 'filename' => 'pic.jpg'];
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.photos',
+        'plugin.me_cms.Photos',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
-
-        $this->example = ['album_id' => 1, 'filename' => 'pic.jpg'];
-    }
 
     /**
      * Test validation.
@@ -61,7 +39,7 @@ class PhotoValidatorTest extends ValidationTestCase
      */
     public function testValidationExampleData()
     {
-        $this->assertAllDataAreRequired($this->Photos, $this->example);
+        $this->assertAllDataAreRequired($this->example);
     }
 
     /**
@@ -70,8 +48,7 @@ class PhotoValidatorTest extends ValidationTestCase
      */
     public function testValidationForAlbumId()
     {
-        $this->example['album_id'] = 'string';
-        $errors = $this->Photos->newEntity($this->example)->getErrors();
+        $errors = $this->Table->newEntity(['album_id' => 'str'] + $this->example)->getErrors();
         $this->assertEquals(['album_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION]], $errors);
     }
 
@@ -81,9 +58,8 @@ class PhotoValidatorTest extends ValidationTestCase
      */
     public function testValidationForFilename()
     {
-        foreach (['pic', 'text.txt'] as $value) {
-            $this->example['filename'] = $value;
-            $errors = $this->Photos->newEntity($this->example)->getErrors();
+        foreach (['pic', 'text.txt'] as $filename) {
+            $errors = $this->Table->newEntity(compact('filename') + $this->example)->getErrors();
             $this->assertEquals(['filename' => ['extension' => 'Valid extensions: gif, jpg, jpeg, png']], $errors);
         }
     }

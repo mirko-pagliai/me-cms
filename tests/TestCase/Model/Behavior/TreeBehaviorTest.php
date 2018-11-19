@@ -25,7 +25,7 @@ class TreeBehaviorTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.posts_categories',
+        'plugin.me_cms.PostsCategories',
     ];
 
     /**
@@ -36,20 +36,20 @@ class TreeBehaviorTest extends TestCase
     {
         $table = TableRegistry::get(ME_CMS . '.PostsCategories');
 
-        $categories = $table->find('treeList')->toArray();
-        $this->assertEquals([
+        $expected = [
             1 => 'First post category',
             3 => '—Sub post category',
             4 => '——Sub sub post category',
             2 => 'Another post category',
-        ], $categories);
+        ];
+        $this->assertEquals($expected, $table->find('treeList')->toArray());
 
-        $categories = $table->find('treeList', ['spacer' => '_'])->toArray();
-        $this->assertEquals([
+        $expected = [
             1 => 'First post category',
             3 => '_Sub post category',
             4 => '__Sub sub post category',
             2 => 'Another post category',
-        ], $categories);
+        ];
+        $this->assertEquals($expected, $table->find('treeList', ['spacer' => '_'])->toArray());
     }
 }

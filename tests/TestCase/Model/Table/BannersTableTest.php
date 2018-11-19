@@ -12,43 +12,28 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Entity\BannersPosition;
+use MeCms\Model\Validation\BannerValidator;
+use MeCms\TestSuite\TableTestCase;
 
 /**
  * BannersTableTest class
  */
-class BannersTableTest extends TestCase
+class BannersTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\BannersTable
+     * @var bool
      */
-    protected $Banners;
+    public $autoFixtures = false;
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.banners',
-        'plugin.me_cms.banners_positions',
+        'plugin.me_cms.Banners',
+        'plugin.me_cms.BannersPositions',
     ];
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Banners = TableRegistry::get(ME_CMS . '.Banners');
-
-        Cache::clear(false, $this->Banners->cache);
-    }
 
     /**
      * Test for `cache` property
@@ -56,7 +41,7 @@ class BannersTableTest extends TestCase
      */
     public function testCacheProperty()
     {
-        $this->assertEquals('banners', $this->Banners->cache);
+        $this->assertEquals('banners', $this->Table->cache);
     }
 
     /**
@@ -65,12 +50,13 @@ class BannersTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        $entity = $this->Banners->get(1);
+        $this->loadFixtures();
 
+        $entity = $this->Table->get(1);
         $this->assertFileExists($entity->path);
 
         //Deletes
-        $this->assertTrue($this->Banners->delete($entity));
+        $this->assertTrue($this->Table->delete($entity));
         $this->assertFileNotExists($entity->path);
     }
 
@@ -80,18 +66,19 @@ class BannersTableTest extends TestCase
      */
     public function testBuildRules()
     {
+        $this->loadFixtures();
         $example = ['position_id' => 1, 'filename' => 'pic.jpg'];
 
-        $entity = $this->Banners->newEntity($example);
-        $this->assertNotEmpty($this->Banners->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertNotEmpty($this->Table->save($entity));
 
         //Saves again the same entity
-        $entity = $this->Banners->newEntity($example);
-        $this->assertFalse($this->Banners->save($entity));
+        $entity = $this->Table->newEntity($example);
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals(['filename' => ['_isUnique' => I18N_VALUE_ALREADY_USED]], $entity->getErrors());
 
-        $entity = $this->Banners->newEntity(['position_id' => 999, 'filename' => 'pic2.jpg']);
-        $this->assertFalse($this->Banners->save($entity));
+        $entity = $this->Table->newEntity(['position_id' => 999, 'filename' => 'pic2.jpg']);
+        $this->assertFalse($this->Table->save($entity));
         $this->assertEquals(['position_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
     }
 
@@ -101,19 +88,18 @@ class BannersTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('banners', $this->Banners->getTable());
-        $this->assertEquals('filename', $this->Banners->getDisplayField());
-        $this->assertEquals('id', $this->Banners->getPrimaryKey());
+        $this->assertEquals('banners', $this->Table->getTable());
+        $this->assertEquals('filename', $this->Table->getDisplayField());
+        $this->assertEquals('id', $this->Table->getPrimaryKey());
 
-        $this->assertInstanceOf('Cake\ORM\Association\BelongsTo', $this->Banners->Positions);
-        $this->assertEquals('position_id', $this->Banners->Positions->getForeignKey());
-        $this->assertEquals('INNER', $this->Banners->Positions->getJoinType());
-        $this->assertEquals(ME_CMS . '.BannersPositions', $this->Banners->Positions->className());
+        $this->assertBelongsTo($this->Table->Positions);
+        $this->assertEquals('position_id', $this->Table->Positions->getForeignKey());
+        $this->assertEquals('INNER', $this->Table->Positions->getJoinType());
+        $this->assertEquals(ME_CMS . '.BannersPositions', $this->Table->Positions->className());
 
-        $this->assertTrue($this->Banners->hasBehavior('Timestamp'));
-        $this->assertTrue($this->Banners->hasBehavior('CounterCache'));
+        $this->assertHasBehavior(['Timestamp', 'CounterCache']);
 
-        $this->assertInstanceOf('MeCms\Model\Validation\BannerValidator', $this->Banners->getValidator());
+        $this->assertInstanceOf(BannerValidator::class, $this->Table->getValidator());
     }
 
     /**
@@ -122,11 +108,11 @@ class BannersTableTest extends TestCase
      */
     public function testBelongsToBannersPositions()
     {
-        $banner = $this->Banners->findById(2)->contain('Positions')->first();
+        $this->loadFixtures();
 
-        $this->assertNotEmpty($banner->position);
-        $this->assertInstanceOf('MeCms\Model\Entity\BannersPosition', $banner->position);
-        $this->assertEquals(1, $banner->position->id);
+        $position = $this->Table->findById(2)->contain('Positions')->extract('position')->first();
+        $this->assertInstanceOf(BannersPosition::class, $position);
+        $this->assertEquals(1, $position->id);
     }
 
     /**
@@ -135,12 +121,14 @@ class BannersTableTest extends TestCase
      */
     public function testFindActive()
     {
-        $query = $this->Banners->find('active');
+        $this->loadFixtures();
+
+        $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM banners Banners WHERE Banners.active = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
 
-        foreach ($query->toArray() as $entity) {
+        foreach ($query as $entity) {
             $this->assertTrue($entity->active);
         }
     }
@@ -153,7 +141,7 @@ class BannersTableTest extends TestCase
     {
         $data = ['position' => 2];
 
-        $query = $this->Banners->queryFromFilter($this->Banners->find(), $data);
+        $query = $this->Table->queryFromFilter($this->Table->find(), $data);
         $this->assertStringEndsWith('FROM banners Banners WHERE Banners.position_id = :c0', $query->sql());
         $this->assertEquals(2, $query->getValueBinder()->bindings()[':c0']['value']);
     }

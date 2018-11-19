@@ -82,13 +82,7 @@ class PhotosAlbumsFixture extends TestFixture
     {
         parent::drop($db);
 
-        foreach (glob(PHOTOS . '*/*.*') as $file) {
-            unlink($file);
-        }
-
-        foreach (glob(PHOTOS . '*', GLOB_ONLYDIR) as $dir) {
-            rmdir($dir);
-        }
+        safe_unlink_recursive(PHOTOS, 'empty');
     }
 
     /**
@@ -102,11 +96,7 @@ class PhotosAlbumsFixture extends TestFixture
         parent::insert($db);
 
         foreach ($this->records as $record) {
-            $album = PHOTOS . $record['id'];
-
-            if (!file_exists($album)) {
-                mkdir($album);
-            }
+            safe_mkdir(PHOTOS . $record['id']);
         }
     }
 }

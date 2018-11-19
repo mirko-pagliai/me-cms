@@ -13,13 +13,34 @@
  */
 namespace MeCms\TestSuite;
 
+use Cake\Utility\Inflector;
 use MeTools\TestSuite\TestCase;
+use MeTools\TestSuite\Traits\MockTrait;
 
 /**
- * ValidationTestCase class
+ * Abstract class for test validation classes
  */
-class ValidationTestCase extends TestCase
+abstract class ValidationTestCase extends TestCase
 {
+    use MockTrait;
+
+    /**
+     * Table instance
+     * @var \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $Table;
+
+    /**
+     * Cache keys to clear for each test
+     * @var array
+     */
+    protected $cacheToClear = [];
+
+    /**
+     * @var array
+     */
+    protected $example;
+
     /**
      * Assert that all data are required.
      *
@@ -28,14 +49,18 @@ class ValidationTestCase extends TestCase
      *
      * Then it removes one field at a time, verifying that the "this field is
      *  required" error is generated.
-     * @param object $table Table instance
      * @param array $data Valid data
      * @param array $exclude Key to be excluded
      * @return void
+     * @uses $Table
+     * @uses $example
      */
-    public function assertAllDataAreRequired($table, $data, $exclude = [])
+    public function assertAllDataAreRequired($data, $exclude = [])
     {
-        $this->assertEmpty($table->newEntity($this->example)->getErrors());
+        $this->Table ?: $this->fail('The property `$this->Table` has not been set');
+        $this->example ?: $this->fail('The property `$this->example` has not been set');
+
+        $this->assertEmpty($this->Table->newEntity($this->example)->getErrors());
 
         foreach (array_keys($data) as $key) {
             if (in_array($key, $exclude)) {
@@ -46,9 +71,29 @@ class ValidationTestCase extends TestCase
             $copy = $data;
             unset($copy[$key]);
 
-            $this->assertEquals([
-                $key => ['_required' => 'This field is required'],
-            ], $table->newEntity($copy)->getErrors());
+            $expectedErrors = [$key => ['_required' => 'This field is required']];
+            $this->assertEquals($expectedErrors, $this->Table->newEntity($copy)->getErrors());
+        }
+    }
+
+    /**
+     * Called before every test method
+     * @return void
+     * @uses $Table
+     * @uses $cacheToClear
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        if (!$this->Table) {
+            $parts = explode('\\', get_class($this));
+            $alias = Inflector::pluralize(substr(array_pop($parts), 0, -13));
+            $className = sprintf('%s\\Model\Table\\%sTable', $parts[0], $alias);
+
+            if (class_exists($className)) {
+                $this->Table = $this->getMockForTable($className, null);
+            }
         }
     }
 }
