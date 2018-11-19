@@ -13,23 +13,13 @@
 namespace MeCms\Test\TestCase\Model\Entity;
 
 use MeCms\Model\Entity\Tag;
-use MeCms\TestSuite\EntityTestCase;
+use MeCms\TestSuite\PostAndPageEntityTestCase;
 
 /**
  * PostTest class
  */
-class PostTest extends EntityTestCase
+class PostTest extends PostAndPageEntityTestCase
 {
-    /**
-     * Test for fields that cannot be mass assigned using newEntity() or
-     *  patchEntity()
-     * @test
-     */
-    public function testNoAccessibleProperties()
-    {
-        $this->assertHasNoAccessibleProperty(['id', 'preview', 'modified']);
-    }
-
     /**
      * Test for virtual fields
      * @test
@@ -40,33 +30,16 @@ class PostTest extends EntityTestCase
     }
 
     /**
-     * Test for `_getPlainText()` method
-     * @test
-     */
-    public function testPlainTextGetMutator()
-    {
-        $expected = 'This is a text';
-
-        $this->Entity->text = 'This is a [readmore /]text';
-        $this->assertEquals($expected, $this->Entity->plain_text);
-        $this->assertNotEquals($this->Entity->text, $this->Entity->plain_text);
-
-        $this->Entity->text = $expected;
-        $this->assertEquals($expected, $this->Entity->plain_text);
-        $this->assertEquals($this->Entity->text, $this->Entity->plain_text);
-    }
-
-    /**
      * Test for `_getTagsAsString()` method
      * @test
      */
     public function testTagsAsStringGetMutator()
     {
+        $this->assertNull($this->Entity->tags_as_string);
+
         $tags[] = new Tag(['tag' => 'cat']);
         $tags[] = new Tag(['tag' => 'dog']);
         $tags[] = new Tag(['tag' => 'bird']);
-
-        $this->assertNull($this->Entity->tags_as_string);
 
         $this->Entity->tags = $tags;
         $this->assertEquals('cat, dog, bird', $this->Entity->tags_as_string);

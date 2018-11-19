@@ -14,7 +14,6 @@
 namespace MeCms\TestSuite;
 
 use Cake\Utility\Inflector;
-use Error;
 use MeTools\TestSuite\TestCase;
 use MeTools\TestSuite\Traits\MockTrait;
 
@@ -58,12 +57,8 @@ abstract class ValidationTestCase extends TestCase
      */
     public function assertAllDataAreRequired($data, $exclude = [])
     {
-        if (empty($this->Table)) {
-            $this->fail('The property `$this->Table` has not been set');
-        }
-        if (empty($this->example)) {
-            $this->fail('The property `$this->example` has not been set');
-        }
+        $this->Table ?: $this->fail('The property `$this->Table` has not been set');
+        $this->example ?: $this->fail('The property `$this->example` has not been set');
 
         $this->assertEmpty($this->Table->newEntity($this->example)->getErrors());
 
@@ -96,10 +91,8 @@ abstract class ValidationTestCase extends TestCase
             $alias = Inflector::pluralize(substr(array_pop($parts), 0, -13));
             $className = sprintf('%s\\Model\Table\\%sTable', $parts[0], $alias);
 
-            try {
+            if (class_exists($className)) {
                 $this->Table = $this->getMockForTable($className, null);
-            } catch (Error $e) {
-                return;
             }
         }
     }

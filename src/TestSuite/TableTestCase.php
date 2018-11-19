@@ -18,7 +18,6 @@ use Cake\ORM\Association;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\BelongsToMany;
 use Cake\ORM\Association\HasMany;
-use Error;
 use MeTools\TestSuite\TestCase;
 use MeTools\TestSuite\Traits\MockTrait;
 
@@ -75,9 +74,7 @@ abstract class TableTestCase extends TestCase
      */
     public function assertHasBehavior($behavior)
     {
-        if (empty($this->Table)) {
-            $this->fail('The property `$this->Table` has not been set');
-        }
+        $this->Table ?: $this->fail('The property `$this->Table` has not been set');
 
         foreach ((array)$behavior as $name) {
             $this->assertTrue($this->Table->hasBehavior($name));
@@ -110,26 +107,21 @@ abstract class TableTestCase extends TestCase
             $parts[] = substr(array_pop($parts), 0, -4);
             $className = implode('\\', $parts);
 
-            try {
+            if (class_exists($className)) {
                 $this->Table = $this->getMockForTable($className, null);
-            } catch (Error $e) {
-                return;
-            }
 
-            //Tries to retrieve all cache keys related to the table and associated tables
-            foreach (array_merge([$this->Table], iterator_to_array($this->Table->associations())) as $table) {
-                if (!empty($table->cache)) {
-                    $this->cacheToClear[] = $table->cache;
+                //Tries to retrieve all cache keys related to the table and associated tables
+                foreach (array_merge([$this->Table], iterator_to_array($this->Table->associations())) as $table) {
+                    if (!empty($table->cache)) {
+                        $this->cacheToClear[] = $table->cache;
+                    }
                 }
             }
         }
 
         //Clears all cache keys
         foreach ($this->cacheToClear as $cacheKey) {
-            if (!Cache::getConfig($cacheKey)) {
-                $this->fail('Cache key `' . $cacheKey . '` does not exist');
-            }
-
+            Cache::getConfig($cacheKey) ?: $this->fail('Cache key `' . $cacheKey . '` does not exist');
             Cache::clear(false, $cacheKey);
         }
     }

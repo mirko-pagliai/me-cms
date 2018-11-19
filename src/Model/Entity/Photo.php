@@ -49,10 +49,14 @@ class Photo extends Entity
 
     /**
      * Gets the photo path (virtual field)
-     * @return string
+     * @return string|void
      */
     protected function _getPath()
     {
+        if (empty($this->_properties['album_id']) || empty($this->_properties['filename'])) {
+            return;
+        }
+
         return PHOTOS . $this->_properties['album_id'] . DS . $this->_properties['filename'];
     }
 
@@ -74,12 +78,17 @@ class Photo extends Entity
 
     /**
      * Gets the photo preview (virtual field)
-     * @return Entity Entity with `preview`, `width` and `height` properties
+     * @return Entity|void Entity with `preview`, `width` and `height`
+     *  properties
      * @uses _getPath()
      */
     protected function _getPreview()
     {
         $path = $this->_getPath();
+
+        if (!$path) {
+            return;
+        }
 
         list($width, $height) = getimagesize($path);
 
