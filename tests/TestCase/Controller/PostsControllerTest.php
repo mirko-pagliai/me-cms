@@ -146,7 +146,7 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `rss()` method, using an invalid extension
-     * @expectedException \Cake\Network\Exception\ForbiddenException
+     * @expectedException \Cake\Http\Exception\ForbiddenException
      * @test
      */
     public function testRssInvalidExtension()

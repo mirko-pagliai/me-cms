@@ -37,7 +37,7 @@ trait CheckLastSearchTrait
             $id = md5($id);
         }
 
-        $lastSearch = $this->request->session()->read('last_search');
+        $lastSearch = $this->request->getSession()->read('last_search');
 
         if ($lastSearch) {
             //Checks if it's the same search
@@ -49,7 +49,7 @@ trait CheckLastSearchTrait
             }
         }
 
-        $this->request->session()->write('last_search', compact('id') + ['time' => time()]);
+        $this->request->getSession()->write('last_search', compact('id') + ['time' => time()]);
 
         return true;
     }

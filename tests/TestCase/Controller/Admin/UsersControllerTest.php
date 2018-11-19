@@ -387,7 +387,7 @@ class UsersControllerTest extends ControllerTestCase
                 'version' => '55.0.2883.87',
             ]));
 
-        $LoginRecorder->config('user', 1);
+        $LoginRecorder->setConfig('user', 1);
 
         //Writes a login log
         $this->assertTrue($LoginRecorder->write());

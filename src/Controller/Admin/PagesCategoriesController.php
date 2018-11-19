@@ -64,7 +64,7 @@ class PagesCategoriesController extends AppController
     {
         $categories = $this->PagesCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
-            ->order([sprintf('%s.lft', $this->PagesCategories->alias()) => 'ASC'])
+            ->order([sprintf('%s.lft', $this->PagesCategories->getAlias()) => 'ASC'])
             ->formatResults(function (ResultSet $results) {
                 //Gets categories as tree list
                 $treeList = $this->PagesCategories->getTreeList()->toArray();

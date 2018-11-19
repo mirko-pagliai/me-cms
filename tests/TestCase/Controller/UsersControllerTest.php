@@ -76,7 +76,7 @@ class UsersControllerTest extends ControllerTestCase
         }
 
         //Sets key for cookies
-        $controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
+        $controller->Cookie->setConfig('key', 'somerandomhaskeysomerandomhaskey');
 
         //Mocks the `LoginRecorder` component
         $controller->LoginRecorder = $this->getLoginRecorderMock();
@@ -172,13 +172,13 @@ class UsersControllerTest extends ControllerTestCase
         //Sets cookies and session values
         $this->Controller->Cookie->write('login', 'testLogin');
         $this->Controller->Cookie->write('sidebar-lastmenu', 'value');
-        $this->Controller->request->session()->write('KCFINDER', 'value');
+        $this->Controller->request->getSession()->write('KCFINDER', 'value');
         $this->_response = $this->invokeMethod($this->Controller, 'buildLogout');
         $this->assertRedirect($this->Controller->Auth->logout());
 
         $this->assertFalse($this->Controller->Cookie->check('login'));
         $this->assertFalse($this->Controller->Cookie->check('sidebar-lastmenu'));
-        $this->assertFalse($this->Controller->request->session()->check('KCFINDER'));
+        $this->assertFalse($this->Controller->request->getSession()->check('KCFINDER'));
     }
 
     /**
@@ -347,7 +347,7 @@ class UsersControllerTest extends ControllerTestCase
             'username' => $user->username,
             'password' => $password,
         ], 'login', 'aes', $this->_controller->Cookie->getConfig('key'));
-        $cookieExpire = Time::createFromTimestamp($this->_response->cookie('login')['expire']);
+        $cookieExpire = Time::createFromTimestamp($this->_response->getCookie('login')['expire']);
         $this->assertTrue($cookieExpire->isWithinNext('1 year'));
 
         //POST request. The user is banned

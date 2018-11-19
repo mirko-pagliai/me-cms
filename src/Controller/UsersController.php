@@ -66,7 +66,7 @@ class UsersController extends AppController
         //Deletes some cookies and KCFinder session
         $this->Cookie->delete('login');
         $this->Cookie->delete('sidebar-lastmenu');
-        $this->request->session()->delete('KCFINDER');
+        $this->request->getSession()->delete('KCFINDER');
 
         return $this->redirect($this->Auth->logout());
     }
@@ -344,7 +344,7 @@ class UsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
 
-            if ($user->dirty() && $this->Users->save($user)) {
+            if ($user->isDirty() && $this->Users->save($user)) {
                 $this->Flash->success(__d('me_cms', 'The password has been edited'));
 
                 //Deletes the token

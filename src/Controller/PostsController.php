@@ -13,7 +13,7 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Network\Exception\ForbiddenException;
+use Cake\Http\Exception\ForbiddenException;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
@@ -140,7 +140,7 @@ class PostsController extends AppController
     /**
      * Lists posts as RSS
      * @return void
-     * @throws \Cake\Network\Exception\ForbiddenException
+     * @throws ForbiddenException
      */
     public function rss()
     {

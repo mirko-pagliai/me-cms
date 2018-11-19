@@ -4,7 +4,8 @@
 * removed `SerializedLog` class. Use instead
     `EntityFileLog\Log\Engine\EntityFileLog`;
 * removed `IntegrationTestCase` abstract class. Use instead
-    `MeTools\TestSuite\IntegrationTestCase`.
+    `MeTools\TestSuite\IntegrationTestCase`;
+* fixed all deprecations.
 
 ## 2.25 branch
 ### 2.25.4

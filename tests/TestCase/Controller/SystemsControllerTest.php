@@ -50,7 +50,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->get(['_name' => 'acceptCookies']);
         $this->assertRedirect(['_name' => 'homepage']);
 
-        $expire = Time::createFromTimestamp($this->_response->cookie('cookies-policy')['expire']);
+        $expire = Time::createFromTimestamp($this->_response->getCookie('cookies-policy')['expire']);
         $this->assertCookie(true, 'cookies-policy');
         $this->assertTrue($expire->isWithinNext('999 days'));
     }

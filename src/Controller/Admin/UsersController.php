@@ -111,13 +111,13 @@ class UsersController extends AppController
     {
         $user = $this->Users->find()
             ->contain(['Groups' => ['fields' => ['label']]])
-            ->where([sprintf('%s.id', $this->Users->alias()) => $id])
+            ->where([sprintf('%s.id', $this->Users->getAlias()) => $id])
             ->firstOrFail();
 
         $this->set(compact('user'));
 
         if (getConfig('users.login_log')) {
-            $loginLog = $this->LoginRecorder->config('user', $id)->read();
+            $loginLog = $this->LoginRecorder->setConfig('user', $id)->read();
 
             $this->set(compact('loginLog'));
         }
@@ -298,7 +298,7 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'dashboard']);
         }
 
-        $loginLog = $this->LoginRecorder->config('user', $this->Auth->user('id'))->read();
+        $loginLog = $this->LoginRecorder->setConfig('user', $this->Auth->user('id'))->read();
 
         $this->set(compact('loginLog'));
     }

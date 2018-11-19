@@ -13,7 +13,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
-use Cake\Network\Exception\InternalErrorException;
+use Cake\Http\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
 /**
