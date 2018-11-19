@@ -38,6 +38,8 @@ abstract class CellTestCase extends TestCase
      */
     public function setUp()
     {
+        parent::setUp();
+
         if (!$this->Widget) {
             $this->Widget = $this->getMockBuilder(WidgetHelper::class)
                 ->setMethods(null)
