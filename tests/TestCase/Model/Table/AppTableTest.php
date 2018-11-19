@@ -17,28 +17,36 @@ use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Table\PhotosTable;
+use MeCms\Model\Table\PostsTable;
+use MeCms\Model\Table\PostsCategoriesTable;
+use MeCms\TestSuite\TableTestCase;
 
 /**
  * AppTableTest class
  */
-class AppTableTest extends TestCase
+class AppTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PhotosTable
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $Photos;
 
     /**
-     * @var \MeCms\Model\Table\PostsTable
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $Posts;
 
     /**
-     * @var \MeCms\Model\Table\PostsCategoriesTable
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $PostsCategories;
+
+    /**
+     * If `true`, a mock instance of the table will be created
+     * @var bool
+     */
+    protected $autoInitializeClass = false;
 
     /**
      * Fixtures
@@ -60,12 +68,9 @@ class AppTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
-        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
-        $this->PostsCategories = TableRegistry::get(ME_CMS . '.PostsCategories');
-
-        Cache::clear(false, $this->Photos->cache);
-        Cache::clear(false, $this->Posts->cache);
+        $this->Photos = $this->getMockForTable(PhotosTable::class, null);
+        $this->Posts = $this->getMockForTable(PostsTable::class, null);
+        $this->PostsCategories = $this->getMockForTable(PostsCategoriesTable::class, null);
     }
 
     /**
