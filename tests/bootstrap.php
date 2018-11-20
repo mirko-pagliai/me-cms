@@ -12,7 +12,6 @@
  */
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
@@ -46,7 +45,9 @@ define('SESSIONS', TMP . 'sessions' . DS);
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once CORE_PATH . 'config' . DS . 'bootstrap.php';
 
-error_reporting(E_ALL & ~E_USER_DEPRECATED);
+define('UPLOADED', WWW_ROOT . 'files' . DS);
+define('LOGIN_RECORDS', TMP . 'login' . DS);
+require_once ROOT . 'config' . DS . 'constants.php';
 
 safe_mkdir(LOGS);
 safe_mkdir(SESSIONS);
@@ -102,63 +103,9 @@ Configure::write('Session', ['defaults' => 'php']);
 //This adds `apache_get_modules()` and `apache_get_version()` functions
 require_once VENDOR . 'mirko-pagliai' . DS . 'php-tools' . DS . 'tests' . DS . 'apache_functions.php';
 
-/**
- * Loads plugins
- */
-Plugin::load('Assets', [
-    'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-assets' . DS,
-]);
-
-Configure::write('DatabaseBackup.connection', 'test');
-Configure::write('DatabaseBackup.target', TMP . 'backups');
-
-Plugin::load('DatabaseBackup', [
-    'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-database-backup' . DS,
-]);
-
-Plugin::load('EntityFileLog', [
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-entity-file-log' . DS,
-]);
-
-Plugin::load('Recaptcha', [
-    'path' => VENDOR . 'crabstudio' . DS . 'recaptcha' . DS,
-]);
-
-Plugin::load('RecaptchaMailhide', [
-    'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-recaptcha-mailhide' . DS,
-    'routes' => true,
-]);
-
+Configure::write('DatabaseBackup', ['connection' => 'test', 'target' => TMP . 'backups']);
 Configure::write('Thumber', ['driver' => 'gd']);
-
-Configure::write('Tokens.usersClassOptions', [
-    'foreignKey' => 'user_id',
-    'className' => 'Users',
-]);
-
-Plugin::load('Tokens', [
-    'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-tokens' . DS,
-]);
-
-Plugin::load('Thumber', [
-    'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'cakephp-thumber' . DS,
-    'routes' => true,
-]);
-
-Plugin::load('MeTools', [
-    'bootstrap' => true,
-    'path' => VENDOR . 'mirko-pagliai' . DS . 'me-tools' . DS,
-]);
-
-define('UPLOADED', WWW_ROOT . 'files' . DS);
-define('LOGIN_RECORDS', TMP . 'login' . DS);
-
-Plugin::load('MeCms', ['bootstrap' => true, 'path' => ROOT, 'routes' => true]);
+Configure::write('Tokens.usersClassOptions', ['foreignKey' => 'user_id', 'className' => 'Users']);
 
 //Sets debug and serialized logs
 Log::setConfig('debug', [
@@ -176,8 +123,6 @@ Log::setConfig('error', [
 
 Email::setConfigTransport('debug', ['className' => 'Debug']);
 Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
-
-Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail('email.webmaster'));
 
 //This makes it believe that KCFinder is installed
 safe_mkdir(KCFINDER, 0777, true);

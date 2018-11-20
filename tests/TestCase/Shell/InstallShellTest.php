@@ -17,7 +17,7 @@ use Cake\Utility\Inflector;
 use MeCms\Core\Plugin;
 use MeCms\Model\Table\UsersGroupsTable;
 use MeCms\Shell\InstallShell;
-use MeTools\TestSuite\ConsoleIntegrationTestCase;
+use MeCms\TestSuite\ConsoleIntegrationTestCase;
 use MeTools\TestSuite\Traits\MockTrait;
 use Tools\ReflectionTrait;
 

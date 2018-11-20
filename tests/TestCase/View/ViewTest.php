@@ -15,8 +15,8 @@ namespace MeCms\Test\TestCase\View;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
+use MeCms\TestSuite\TestCase;
 use MeCms\View\View;
-use MeTools\TestSuite\TestCase;
 use MeTools\TestSuite\Traits\MockTrait;
 
 /**

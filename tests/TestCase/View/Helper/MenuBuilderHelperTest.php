@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\View\Helper;
 
 use Cake\Core\Plugin;
-use MeTools\TestSuite\HelperTestCase;
+use MeCms\TestSuite\HelperTestCase;
 use TestPlugin\View\Helper\MenuHelper;
 use Tools\ReflectionTrait;
 

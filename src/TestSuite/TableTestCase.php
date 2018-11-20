@@ -18,7 +18,7 @@ use Cake\ORM\Association;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\BelongsToMany;
 use Cake\ORM\Association\HasMany;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\Traits\MockTrait;
 
 /**

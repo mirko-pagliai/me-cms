@@ -20,21 +20,10 @@ use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 use Cake\Log\Log;
 use Cake\Network\Request;
-use Cake\Routing\DispatcherFactory;
 use EntityFileLog\Log\Engine\EntityFileLog;
-
-$isCli = PHP_SAPI === 'cli';
-$request = new Request;
+use MeCms\Database\Type\JsonEntityType;
 
 require_once __DIR__ . DS . 'constants.php';
-
-//Loads MeTools plugins
-if (!Plugin::loaded('Assets')) {
-    Plugin::load('Assets', ['bootstrap' => true, 'routes' => true]);
-}
-if (!Plugin::loaded('MeTools')) {
-    Plugin::load('MeTools', ['bootstrap' => true]);
-}
 
 foreach ([BANNERS, LOGIN_RECORDS, PHOTOS, UPLOADED, USER_PICTURES] as $dir) {
     safe_mkdir($dir);
@@ -59,6 +48,7 @@ if (is_readable(CONFIG . 'me_cms.php')) {
 }
 
 //Forces debug on localhost, if required
+$request = new Request;
 if ($request->is('localhost') && getConfig('main.debug_on_localhost')) {
     Configure::write('debug', true);
 }
@@ -108,25 +98,6 @@ if (!getConfig('RecaptchaMailhide.encryptKey')) {
     Configure::write('RecaptchaMailhide.encryptKey', getConfigOrFail('Recaptcha.private'));
 }
 
-//Loads other plugins
-$pluginsToLoad = ['DatabaseBackup', 'EntityFileLog', 'Recaptcha', 'RecaptchaMailhide', 'Thumber', 'Tokens'];
-
-foreach ($pluginsToLoad as $plugin) {
-    if (!Plugin::loaded($plugin)) {
-        Plugin::load($plugin, ['bootstrap' => true, 'routes' => true, 'ignoreMissing' => true]);
-    }
-}
-
-if (!$isCli) {
-    //Loads DebugKit, if debugging is enabled
-    if (getConfig('debug') && !Plugin::loaded('DebugKit')) {
-        Plugin::load('DebugKit', ['bootstrap' => true]);
-    }
-
-    Plugin::load('Gourmet/CommonMark');
-    Plugin::load('WyriHaximus/MinifyHtml', ['bootstrap' => true]);
-}
-
 if (!getConfig(DATABASE_BACKUP . '.mailSender')) {
     Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail(ME_CMS . '.email.webmaster'));
 }
@@ -143,9 +114,6 @@ if (!Log::getConfig('users')) {
     ]);
 }
 
-//Sets the locale based on the current user
-DispatcherFactory::add('LocaleSelector');
-
 //Sets the default format used when type converting instances of this type to string
 $format = getConfigOrFail('main.datetime.long');
 Date::setToStringFormat($format);
@@ -155,4 +123,4 @@ Time::setToStringFormat($format);
 
 require_once __DIR__ . DS . 'i18n_constants.php';
 
-Type::map('jsonEntity', 'MeCms\Database\Type\JsonEntityType');
+Type::map('jsonEntity', JsonEntityType::class);

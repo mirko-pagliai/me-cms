@@ -15,8 +15,8 @@ namespace MeCms\Test\TestCase\View\View;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use MeCms\TestSuite\TestCase;
 use MeCms\View\View\AppView as View;
-use MeTools\TestSuite\TestCase;
 
 /**
  * AppViewTest class

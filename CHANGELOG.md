@@ -1,10 +1,11 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.0
+* uses `addPlugin()` to load plugins. Updated for CakePHP 3.6;
 * removed `SerializedLog` class. Use instead
     `EntityFileLog\Log\Engine\EntityFileLog`;
-* removed `IntegrationTestCase` abstract class. Use instead
-    `MeTools\TestSuite\IntegrationTestCase`;
+* added `ConsoleIntegrationTestCase`, `HelperTestCase` and `TestCase` classes.
+    Methods provided by `IntegrationTestCase` moved to `ControllerTestCase;
 * fixed all deprecations.
 
 ## 2.25 branch

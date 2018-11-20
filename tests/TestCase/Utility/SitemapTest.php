@@ -20,8 +20,8 @@ use MeCms\Model\Table\PagesCategoriesTable;
 use MeCms\Model\Table\PhotosAlbumsTable;
 use MeCms\Model\Table\PostsCategoriesTable;
 use MeCms\Model\Table\TagsTable;
+use MeCms\TestSuite\TestCase;
 use MeCms\Utility\Sitemap;
-use MeTools\TestSuite\TestCase;
 use MeTools\TestSuite\Traits\MockTrait;
 
 /**

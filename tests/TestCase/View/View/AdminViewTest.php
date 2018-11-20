@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\View\View;
 
+use MeCms\TestSuite\TestCase;
 use MeCms\View\View\AdminView as View;
-use MeTools\TestSuite\TestCase;
 
 /**
  * AdminViewTest class

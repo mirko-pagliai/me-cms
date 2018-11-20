@@ -14,8 +14,8 @@
 namespace MeCms\TestSuite;
 
 use Cake\Cache\Cache;
+use MeCms\TestSuite\IntegrationTestCase;
 use MeTools\Controller\Component\UploaderComponent;
-use MeTools\TestSuite\IntegrationTestCase;
 use MeTools\TestSuite\Traits\MockTrait;
 
 /**

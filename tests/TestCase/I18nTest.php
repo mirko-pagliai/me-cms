@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase;
 
 use Cake\I18n\I18n;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * I18nTest class
@@ -27,7 +27,7 @@ class I18nTest extends TestCase
      */
     public function testI18nConstant()
     {
-        $translator = I18n::getTranslator('me_cms', 'it_IT');
+        $translator = I18n::getTranslator('me_cms', 'it');
         $this->assertEquals('Aggiungi', $translator->translate(I18N_ADD));
     }
 }

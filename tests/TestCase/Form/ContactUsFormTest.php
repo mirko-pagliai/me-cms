@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Form;
 
 use Cake\Mailer\MailerAwareTrait;
 use MeCms\Form\ContactUsForm;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * ContactUsFormTest class

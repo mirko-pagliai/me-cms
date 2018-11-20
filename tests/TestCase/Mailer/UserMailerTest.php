@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Mailer;
 
 use MeCms\Mailer\UserMailer;
 use MeCms\Model\Entity\User;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * UserMailerTest class

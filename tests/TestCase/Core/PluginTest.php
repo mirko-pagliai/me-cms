@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\Core;
 
 use MeCms\Core\Plugin;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * PluginTest class.

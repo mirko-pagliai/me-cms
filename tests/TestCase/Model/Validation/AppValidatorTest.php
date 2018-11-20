@@ -12,7 +12,10 @@
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Table\BannersTable;
+use MeCms\Model\Table\PostsTable;
+use MeCms\Model\Table\UsersTable;
+use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\Traits\MockTrait;
 
 /**
@@ -83,9 +86,9 @@ class AppValidatorTest extends TestCase
     {
         parent::setUp();
 
-        foreach (['Banners', 'Posts', 'Users'] as $alias) {
-            $this->$alias = $this->getMockForTable(sprintf('%s\Model\Table\%sTable', ME_CMS, $alias), null);
-        }
+        $this->Banners = $this->getMockForTable(BannersTable::class, null);
+        $this->Posts = $this->getMockForTable(PostsTable::class, null);
+        $this->Users = $this->getMockForTable(UsersTable::class, null);
     }
 
     /**

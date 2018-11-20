@@ -15,7 +15,7 @@ namespace MeCms\Test\TestCase\View\Helper;
 use App\View\Cell\ExampleWidgetsCell;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use MeTools\TestSuite\HelperTestCase;
+use MeCms\TestSuite\HelperTestCase;
 use TestPlugin\View\Cell\PluginExampleWidgetsCell;
 
 /**

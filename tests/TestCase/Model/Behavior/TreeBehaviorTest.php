@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\Model\Behavior;
 
 use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * TreeBehaviorTest class

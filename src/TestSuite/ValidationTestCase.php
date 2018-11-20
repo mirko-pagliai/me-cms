@@ -14,7 +14,7 @@
 namespace MeCms\TestSuite;
 
 use Cake\Utility\Inflector;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\Traits\MockTrait;
 
 /**

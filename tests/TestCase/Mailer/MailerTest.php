@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\Mailer;
 
 use MeCms\Mailer\Mailer;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * MailerTest class

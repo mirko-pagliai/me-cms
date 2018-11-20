@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Utility;
 
+use MeCms\TestSuite\TestCase;
 use MeCms\Utility\Checkup;
 use MeCms\Utility\Checkups\Apache;
 use MeCms\Utility\Checkups\Backups;
@@ -20,7 +21,6 @@ use MeCms\Utility\Checkups\PHP;
 use MeCms\Utility\Checkups\Plugin;
 use MeCms\Utility\Checkups\TMP;
 use MeCms\Utility\Checkups\Webroot;
-use MeTools\TestSuite\TestCase;
 
 /**
  * CheckupTest class

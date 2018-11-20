@@ -15,7 +15,7 @@ namespace MeCms\TestSuite;
 
 use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\Traits\MockTrait;
 
 /**

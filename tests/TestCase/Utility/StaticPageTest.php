@@ -17,8 +17,8 @@ use Cake\Core\App;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use MeCms\Core\Plugin;
+use MeCms\TestSuite\TestCase;
 use MeCms\Utility\StaticPage;
-use MeTools\TestSuite\TestCase;
 
 /**
  * StaticPageTest class

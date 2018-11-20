@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
-use MeTools\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\IntegrationTestCase;
 
 /**
  * MenuTest class

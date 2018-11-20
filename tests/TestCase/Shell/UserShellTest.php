@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Shell;
 
 use Cake\Console\ConsoleOptionParser;
 use MeCms\Model\Table\UsersTable;
-use MeTools\TestSuite\ConsoleIntegrationTestCase;
+use MeCms\TestSuite\ConsoleIntegrationTestCase;
 use MeTools\TestSuite\Traits\MockTrait;
 
 /**

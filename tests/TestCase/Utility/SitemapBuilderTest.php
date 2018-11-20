@@ -16,8 +16,8 @@ use Cake\Cache\Cache;
 use Cake\Core\Plugin;
 use Cake\I18n\Time;
 use Cake\Utility\Xml;
+use MeCms\TestSuite\IntegrationTestCase;
 use MeCms\Utility\SitemapBuilder;
-use MeTools\TestSuite\IntegrationTestCase;
 
 /**
  * SitemapTest class
