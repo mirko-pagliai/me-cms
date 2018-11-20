@@ -36,15 +36,6 @@ class BannersTableTest extends TableTestCase
     ];
 
     /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('banners', $this->Table->cache);
-    }
-
-    /**
      * Test for `afterDelete()` method
      * @test
      */

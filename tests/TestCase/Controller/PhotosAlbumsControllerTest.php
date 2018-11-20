@@ -46,12 +46,12 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
             $this->assertContainsInstanceof(Photo::class, $album->photos);
         }
 
-        $cache = Cache::read('albums_index', $this->Table->cache);
+        $cache = Cache::read('albums_index', $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('albums')->toArray(), $cache->toArray());
 
         //Deletes all albums, except the first one and clears the cache
         $this->Table->deleteAll(['id !=' => 1]);
-        Cache::clear(false, $this->Table->cache);
+        Cache::clear(false, $this->Table->getCacheName());
 
         //Now it redirects to the first album
         $this->get(['_name' => 'albums']);
@@ -73,14 +73,14 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         $this->assertInstanceof(PhotosAlbum::class, $this->viewVariable('album'));
         $this->assertContainsInstanceof(Photo::class, $this->viewVariable('photos'));
 
-        $cache = Cache::read(sprintf('album_%s', md5($slug)), $this->Table->cache);
+        $cache = Cache::read(sprintf('album_%s', md5($slug)), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('album'), $cache->first());
 
         //Sets the cache name
         $cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.photos'), 1);
         list($photosFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->Table->cache
+            $this->Table->getCacheName()
         ));
 
         $this->assertEquals($this->viewVariable('photos')->toArray(), $photosFromCache->toArray());

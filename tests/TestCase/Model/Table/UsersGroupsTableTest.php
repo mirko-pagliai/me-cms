@@ -35,15 +35,6 @@ class UsersGroupsTableTest extends TableTestCase
     ];
 
     /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('users', $this->Table->cache);
-    }
-
-    /**
      * Test for `buildRules()` method
      * @test
      */

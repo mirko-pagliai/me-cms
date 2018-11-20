@@ -45,7 +45,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $this->assertTemplate('PostsCategories/index.ctp');
         $this->assertContainsInstanceof(PostsCategory::class, $this->viewVariable('categories'));
 
-        $cache = Cache::read('categories_index', $this->Table->cache);
+        $cache = Cache::read('categories_index', $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('categories')->toArray(), $cache->toArray());
     }
 
@@ -67,7 +67,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->Table->cache
+            $this->Table->getCacheName()
         ));
         $this->assertEquals($this->viewVariable('posts')->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);

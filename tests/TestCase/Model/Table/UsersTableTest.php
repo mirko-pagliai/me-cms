@@ -53,15 +53,6 @@ class UsersTableTest extends TableTestCase
     ];
 
     /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('users', $this->Table->cache);
-    }
-
-    /**
      * Test for `beforeMarshal()` method
      * @test
      */
@@ -245,7 +236,7 @@ class UsersTableTest extends TableTestCase
         $this->assertContains('FROM users Users WHERE Users.active = :c0 ORDER BY username ASC', $query->sql());
         $this->assertNotEmpty($query->toArray());
 
-        $fromCache = Cache::read('active_users_list', $this->Table->cache)->toArray();
+        $fromCache = Cache::read('active_users_list', $this->Table->getCacheName())->toArray();
         $this->assertEquals($fromCache, $query->toArray());
     }
 

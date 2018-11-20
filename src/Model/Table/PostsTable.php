@@ -44,10 +44,10 @@ class PostsTable extends PostsAndPagesTables
     use LocatorAwareTrait;
 
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'posts';
+    protected $cache = 'posts';
 
     /**
      * Called before request data is converted into entities
@@ -166,7 +166,7 @@ class PostsTable extends PostsAndPagesTables
             }
 
             return $related;
-        }, $this->cache);
+        }, $this->getCacheName());
     }
 
     /**

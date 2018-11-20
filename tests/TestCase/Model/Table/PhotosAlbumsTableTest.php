@@ -46,15 +46,6 @@ class PhotosAlbumsTableTest extends TableTestCase
     }
 
     /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('photos', $this->Table->cache);
-    }
-
-    /**
      * Test for `afterDelete()` method
      * @test
      */

@@ -110,10 +110,15 @@ abstract class TableTestCase extends TestCase
             if (class_exists($className)) {
                 $this->Table = $this->getMockForTable($className, null);
 
-                //Tries to retrieve all cache keys related to the table and associated tables
-                foreach (array_merge([$this->Table], iterator_to_array($this->Table->associations())) as $table) {
-                    if (!empty($table->cache)) {
-                        $this->cacheToClear[] = $table->cache;
+                //Tries to retrieve all cache names related to this table and associated tables
+                if ($this->Table->getCacheName()) {
+                    $this->cacheToClear[] = $this->Table->getCacheName();
+                }
+
+                //Tries to retrieve all cache names related to its associated tables
+                foreach (iterator_to_array($this->Table->associations()) as $table) {
+                    if (method_exists($table->getTarget(), 'getCacheName') && $table->getTarget()->getCacheName()) {
+                        $this->cacheToClear[] = $table->getTarget()->getCacheName();
                     }
                 }
             }

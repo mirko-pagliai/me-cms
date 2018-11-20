@@ -105,7 +105,7 @@ abstract class PostsAndPagesTables extends AppTable
      * @param array|ArrayAccess $options An array that will be passed to
      *  Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
-     * @uses $cache
+     * @uses getCacheName()
      * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
      * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
@@ -117,7 +117,7 @@ abstract class PostsAndPagesTables extends AppTable
         //If the cache is invalid, it clears the cache and sets the next record
         //  to be published
         if ($next && time() >= $next) {
-            Cache::clear(false, $this->cache);
+            Cache::clear(false, $this->getCacheName());
 
             //Sets the next record to be published
             $this->setNextToBePublished();

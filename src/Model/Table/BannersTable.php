@@ -27,10 +27,10 @@ use MeCms\Model\Table\AppTable;
 class BannersTable extends AppTable
 {
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'banners';
+    protected $cache = 'banners';
 
     /**
      * Called after an entity has been deleted

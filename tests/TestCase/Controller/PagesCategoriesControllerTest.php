@@ -42,7 +42,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
         $this->assertTemplate('PagesCategories/index.ctp');
         $this->assertContainsInstanceof(PagesCategory::class, $this->viewVariable('categories'));
 
-        $cache = Cache::read('categories_index', $this->Table->cache);
+        $cache = Cache::read('categories_index', $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('categories')->toArray(), $cache->toArray());
     }
 
@@ -61,7 +61,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
         $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
         $this->assertContainsInstanceof(Page::class, $this->viewVariable('category')->pages);
 
-        $categoryFromCache = Cache::read(sprintf('category_%s', md5($slug)), $this->Table->cache);
+        $categoryFromCache = Cache::read(sprintf('category_%s', md5($slug)), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('category'), $categoryFromCache->first());
 
         //GET request with query string

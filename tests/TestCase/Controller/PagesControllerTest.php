@@ -73,7 +73,7 @@ class PagesControllerTest extends ControllerTestCase
         $this->assertTemplate('Pages/view.ctp');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
 
-        $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Table->cache);
+        $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('page'), $cache->first());
     }
 

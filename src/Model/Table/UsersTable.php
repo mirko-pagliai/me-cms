@@ -31,10 +31,10 @@ use MeCms\Model\Validation\UserValidator;
 class UsersTable extends AppTable
 {
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'users';
+    protected $cache = 'users';
 
     /**
      * Called before request data is converted into entities
@@ -128,7 +128,6 @@ class UsersTable extends AppTable
     /**
      * Gets active users as list
      * @return Query $query Query object
-     * @uses $cache
      */
     public function getActiveList()
     {
@@ -142,7 +141,7 @@ class UsersTable extends AppTable
                         return $user->first_name . ' ' . $user->last_name;
                     });
             })
-            ->cache(sprintf('active_%s_list', $this->getTable()), $this->cache);
+            ->cache(sprintf('active_%s_list', $this->getTable()), $this->getCacheName());
     }
 
     /**

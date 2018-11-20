@@ -37,7 +37,7 @@ class Sitemap extends SitemapBuilder
     {
         $table = TableRegistry::get(ME_CMS . '.PagesCategories');
 
-        $url = Cache::read('sitemap', $table->cache);
+        $url = Cache::read('sitemap', $table->getCacheName());
 
         if ($url) {
             return $url;
@@ -75,7 +75,7 @@ class Sitemap extends SitemapBuilder
             }
         }
 
-        Cache::write('sitemap', $url, $table->cache);
+        Cache::write('sitemap', $url, $table->getCacheName());
 
         return $url;
     }
@@ -89,7 +89,7 @@ class Sitemap extends SitemapBuilder
     {
         $table = TableRegistry::get(ME_CMS . '.PhotosAlbums');
 
-        $url = Cache::read('sitemap', $table->cache);
+        $url = Cache::read('sitemap', $table->getCacheName());
 
         if ($url) {
             return $url;
@@ -131,7 +131,7 @@ class Sitemap extends SitemapBuilder
             }
         }
 
-        Cache::write('sitemap', $url, $table->cache);
+        Cache::write('sitemap', $url, $table->getCacheName());
 
         return $url;
     }
@@ -145,7 +145,7 @@ class Sitemap extends SitemapBuilder
     {
         $table = TableRegistry::get(ME_CMS . '.PostsCategories');
 
-        $url = Cache::read('sitemap', $table->cache);
+        $url = Cache::read('sitemap', $table->getCacheName());
 
         if ($url) {
             return $url;
@@ -190,7 +190,7 @@ class Sitemap extends SitemapBuilder
             }
         }
 
-        Cache::write('sitemap', $url, $table->cache);
+        Cache::write('sitemap', $url, $table->getCacheName());
 
         return $url;
     }
@@ -204,7 +204,7 @@ class Sitemap extends SitemapBuilder
     {
         $table = TableRegistry::get(ME_CMS . '.Tags');
 
-        $url = Cache::read('sitemap', $table->cache);
+        $url = Cache::read('sitemap', $table->getCacheName());
 
         if ($url) {
             return $url;
@@ -237,7 +237,7 @@ class Sitemap extends SitemapBuilder
             );
         }
 
-        Cache::write('sitemap', $url, $table->cache);
+        Cache::write('sitemap', $url, $table->getCacheName());
 
         return $url;
     }

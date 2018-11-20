@@ -41,7 +41,7 @@ class PhotosController extends AppController
         $photo = $this->Photos->findActiveById($id)
             ->select(['id', 'album_id', 'filename', 'active', 'modified'])
             ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
-            ->cache(sprintf('view_%s', md5($id)), $this->Photos->cache)
+            ->cache(sprintf('view_%s', md5($id)), $this->Photos->getCacheName())
             ->firstOrFail();
 
         $this->set(compact('photo'));

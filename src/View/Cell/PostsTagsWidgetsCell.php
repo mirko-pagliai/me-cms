@@ -134,7 +134,7 @@ class PostsTagsWidgetsCell extends Cell
                     return $value;
                 });
             })
-            ->cache($cache, $this->Tags->Posts->cache)
+            ->cache($cache, $this->Tags->Posts->getCacheName())
             ->all();
 
         if ($shuffle) {

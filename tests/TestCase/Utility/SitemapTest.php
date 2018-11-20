@@ -111,7 +111,7 @@ class SitemapTest extends TestCase
         $table = $this->getMockForTable(PagesCategoriesTable::class, null);
         $this->assertEquals($expected, Sitemap::pages());
 
-        $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
+        $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
         $this->assertEquals($expected, Sitemap::pages());
 
         //Deletes all records
@@ -163,7 +163,7 @@ class SitemapTest extends TestCase
         $table = $this->getMockForTable(PhotosAlbumsTable::class, null);
         $this->assertEquals($expected, Sitemap::photos());
 
-        $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
+        $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
         $this->assertEquals($expected, Sitemap::photos());
 
         //Deletes all records
@@ -238,7 +238,7 @@ class SitemapTest extends TestCase
         $table = $this->getMockForTable(PostsCategoriesTable::class, null);
         $this->assertEquals($expected, Sitemap::posts());
 
-        $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
+        $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
         $this->assertEquals($expected, Sitemap::posts());
 
         //Deletes all records
@@ -285,7 +285,7 @@ class SitemapTest extends TestCase
         $table = $this->getMockForTable(TagsTable::class, null);
         $this->assertEquals($expected, Sitemap::postsTags());
 
-        $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
+        $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
         $this->assertEquals($expected, Sitemap::postsTags());
 
         //Deletes all records

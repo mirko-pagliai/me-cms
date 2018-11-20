@@ -120,7 +120,7 @@ class PagesWidgetsCellTest extends CellTestCase
         $this->assertEmpty($result->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_categories', $this->Table->cache);
+        $fromCache = Cache::read('widget_categories', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         $this->assertArrayKeysEqual(['first-page-category', 'sub-sub-page-category'], $fromCache->toArray());
 
@@ -175,7 +175,7 @@ class PagesWidgetsCellTest extends CellTestCase
         $this->assertEmpty($result->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_list', $this->Table->cache);
+        $fromCache = Cache::read('widget_list', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
 
         //With no pages

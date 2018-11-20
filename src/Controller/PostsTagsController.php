@@ -42,7 +42,7 @@ class PostsTagsController extends AppController
         //Tries to get data from the cache
         list($tags, $paging) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->PostsTags->cache
+            $this->PostsTags->getCacheName()
         ));
 
         //If the data are not available from the cache
@@ -54,7 +54,7 @@ class PostsTagsController extends AppController
             Cache::writeMany([
                 $cache => $tags,
                 sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
-            ], $this->PostsTags->cache);
+            ], $this->PostsTags->getCacheName());
         //Else, sets the paging parameter
         } else {
             $this->request = $this->request->withParam('paging', $paging);
@@ -78,7 +78,7 @@ class PostsTagsController extends AppController
         $slug = Text::slug($slug, ['replacement' => ' ']);
 
         $tag = $this->PostsTags->Tags->findActiveByTag($slug)
-            ->cache((sprintf('tag_%s', md5($slug))), $this->PostsTags->cache)
+            ->cache((sprintf('tag_%s', md5($slug))), $this->PostsTags->getCacheName())
             ->firstOrFail();
 
         $page = $this->request->getQuery('page', 1);
@@ -89,7 +89,7 @@ class PostsTagsController extends AppController
         //Tries to get data from the cache
         list($posts, $paging) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->PostsTags->cache
+            $this->PostsTags->getCacheName()
         ));
 
         //If the data are not available from the cache
@@ -105,7 +105,7 @@ class PostsTagsController extends AppController
             Cache::writeMany([
                 $cache => $posts,
                 sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
-            ], $this->PostsTags->cache);
+            ], $this->PostsTags->getCacheName());
         //Else, sets the paging parameter
         } else {
             $this->request = $this->request->withParam('paging', $paging);

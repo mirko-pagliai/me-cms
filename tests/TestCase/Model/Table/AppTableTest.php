@@ -18,8 +18,8 @@ use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
 use MeCms\Model\Table\PhotosTable;
-use MeCms\Model\Table\PostsTable;
 use MeCms\Model\Table\PostsCategoriesTable;
+use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\TableTestCase;
 
 /**
@@ -79,12 +79,12 @@ class AppTableTest extends TableTestCase
      */
     public function testAfterDelete()
     {
-        Cache::write('testKey', 'testValue', $this->Posts->cache);
+        Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
 
         $this->Posts->afterDelete(new Event(null), new Entity, new ArrayObject);
 
         //The cache is cleared
-        $this->assertFalse(Cache::read('testKey', $this->Posts->cache));
+        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
     }
 
     /**
@@ -93,12 +93,12 @@ class AppTableTest extends TableTestCase
      */
     public function testAfterSave()
     {
-        Cache::write('testKey', 'testValue', $this->Posts->cache);
+        Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
 
         $this->Posts->afterSave(new Event(null), new Entity, new ArrayObject);
 
         //The cache is cleared
-        $this->assertFalse(Cache::read('testKey', $this->Posts->cache));
+        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
     }
 
     /**
@@ -211,7 +211,7 @@ class AppTableTest extends TableTestCase
         ];
         $this->assertEquals($expected, $query->toArray());
 
-        $fromCache = Cache::read('photos_list', $this->Photos->cache)->toArray();
+        $fromCache = Cache::read('photos_list', $this->Photos->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
     }
 
@@ -232,7 +232,7 @@ class AppTableTest extends TableTestCase
         ];
         $this->assertEquals($expected, $query->toArray());
 
-        $fromCache = Cache::read('posts_categories_tree_list', $this->PostsCategories->cache)->toArray();
+        $fromCache = Cache::read('posts_categories_tree_list', $this->PostsCategories->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
     }
 

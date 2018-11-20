@@ -33,10 +33,10 @@ class PagesTable extends PostsAndPagesTables
     use LocatorAwareTrait;
 
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'pages';
+    protected $cache = 'pages';
 
     /**
      * Returns a rules checker object that will be used for validating

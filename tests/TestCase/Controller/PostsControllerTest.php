@@ -65,7 +65,7 @@ class PostsControllerTest extends ControllerTestCase
         $cache = sprintf('index_limit_%s_page_%s', getConfigOrFail('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->Table->cache
+            $this->Table->getCacheName()
         ));
         $this->assertEquals($this->viewVariable('posts')->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
@@ -103,7 +103,7 @@ class PostsControllerTest extends ControllerTestCase
         );
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->Table->cache
+            $this->Table->getCacheName()
         ));
         $this->assertEquals($this->viewVariable('posts')->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
@@ -183,7 +183,7 @@ class PostsControllerTest extends ControllerTestCase
         $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), getConfigOrFail('default.records_for_searches'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->Table->cache
+            $this->Table->getCacheName()
         ));
         $this->assertEquals($this->viewVariable('posts')->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
@@ -218,7 +218,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
         $this->assertContainsInstanceof(Post::class, $this->viewVariable('related'));
 
-        $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Table->cache);
+        $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('post'), $cache->first());
     }
 

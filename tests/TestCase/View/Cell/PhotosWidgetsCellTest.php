@@ -118,7 +118,7 @@ class PhotosWidgetsCellTest extends CellTestCase
         $this->assertEmpty($result->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_albums', $this->Table->cache);
+        $fromCache = Cache::read('widget_albums', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         $this->assertArrayKeysEqual(['another-album-test', 'test-album'], $fromCache->toArray());
 
@@ -179,10 +179,10 @@ class PhotosWidgetsCellTest extends CellTestCase
         }
 
         //Tests cache
-        $fromCache = Cache::read('widget_latest_1', $this->Table->cache);
+        $fromCache = Cache::read('widget_latest_1', $this->Table->getCacheName());
         $this->assertEquals(1, $fromCache->count());
 
-        $fromCache = Cache::read('widget_latest_2', $this->Table->cache);
+        $fromCache = Cache::read('widget_latest_2', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
 
         //With no photos
@@ -241,10 +241,10 @@ class PhotosWidgetsCellTest extends CellTestCase
         }
 
         //Tests cache
-        $fromCache = Cache::read('widget_random_1', $this->Table->cache);
+        $fromCache = Cache::read('widget_random_1', $this->Table->getCacheName());
         $this->assertEquals(3, $fromCache->count());
 
-        $fromCache = Cache::read('widget_random_2', $this->Table->cache);
+        $fromCache = Cache::read('widget_random_2', $this->Table->getCacheName());
         $this->assertEquals(3, $fromCache->count());
 
         //With no photos

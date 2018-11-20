@@ -23,10 +23,10 @@ use MeCms\Model\Table\AppTable;
 class TagsTable extends AppTable
 {
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'posts';
+    protected $cache = 'posts';
 
     /**
      * Returns a rules checker object that will be used for validating

@@ -119,7 +119,7 @@ class PostsWidgetsCellTest extends CellTestCase
         $this->assertEmpty($result->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_categories', $this->Table->cache);
+        $fromCache = Cache::read('widget_categories', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         $this->assertArrayKeysEqual(['first-post-category', 'sub-sub-post-category'], $fromCache->toArray());
 
@@ -203,10 +203,10 @@ class PostsWidgetsCellTest extends CellTestCase
         $this->assertEmpty($result->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_latest_1', $this->Table->cache);
+        $fromCache = Cache::read('widget_latest_1', $this->Table->getCacheName());
         $this->assertEquals(1, $fromCache->count());
 
-        $fromCache = Cache::read('widget_latest_2', $this->Table->cache);
+        $fromCache = Cache::read('widget_latest_2', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
 
         //With no posts
@@ -286,7 +286,7 @@ class PostsWidgetsCellTest extends CellTestCase
         $this->assertEmpty($result->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_months', $this->Table->cache);
+        $fromCache = Cache::read('widget_months', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         $this->assertArrayKeysEqual(['2016/12', '2016/11'], $fromCache->toArray());
 

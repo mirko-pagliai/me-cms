@@ -245,7 +245,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $this->assertEmpty($result->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_tags_popular_2', $this->Table->cache);
+        $fromCache = Cache::read('widget_tags_popular_2', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         $this->assertEquals(['cat', 'dog'], array_keys($fromCache->toArray()));
 
@@ -253,7 +253,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             $this->assertNull($entity->size);
         }
 
-        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->cache);
+        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         $this->assertEquals(['cat', 'dog'], array_keys($fromCache->toArray()));
 
@@ -311,7 +311,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $this->assertHtml($expected, $result);
 
         //Tests cache
-        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->cache);
+        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         $this->assertEquals(['example1', 'example2'], array_keys($fromCache->toArray()));
 

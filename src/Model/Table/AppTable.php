@@ -27,17 +27,23 @@ use Cake\ORM\Table;
 class AppTable extends Table
 {
     /**
+     * Cache configuration name
+     * @var string
+     */
+    protected $cache;
+
+    /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\ORM\Entity $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses $cache
+     * @uses getCacheName()
      */
     public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
-        if (!empty($this->cache)) {
-            Cache::clear(false, $this->cache);
+        if ($this->getCacheName()) {
+            Cache::clear(false, $this->getCacheName());
         }
     }
 
@@ -47,12 +53,12 @@ class AppTable extends Table
      * @param \Cake\ORM\Entity $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses $cache
+     * @uses getCacheName()
      */
     public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
-        if (!empty($this->cache)) {
-            Cache::clear(false, $this->cache);
+        if ($this->getCacheName()) {
+            Cache::clear(false, $this->getCacheName());
         }
     }
 
@@ -123,26 +129,36 @@ class AppTable extends Table
     }
 
     /**
+     * Gets the cache configuration name used by this table
+     * @return string|null
+     * @uses $cache
+     */
+    public function getCacheName()
+    {
+        return $this->cache ?: null;
+    }
+
+    /**
      * Gets records as list
      * @return Query $query Query object
-     * @uses $cache
+     * @uses getCacheName()
      */
     public function getList()
     {
         return $this->find('list')
             ->order([$this->getDisplayField() => 'ASC'])
-            ->cache(sprintf('%s_list', $this->getTable()), $this->cache);
+            ->cache(sprintf('%s_list', $this->getTable()), $this->getCacheName());
     }
 
     /**
      * Gets records as tree list
      * @return Query $query Query object
-     * @uses $cache
+     * @uses getCacheName()
      */
     public function getTreeList()
     {
         return $this->find('treeList')
-            ->cache(sprintf('%s_tree_list', $this->getTable()), $this->cache);
+            ->cache(sprintf('%s_tree_list', $this->getTable()), $this->getCacheName());
     }
 
     /**
