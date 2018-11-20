@@ -30,6 +30,7 @@ class Plugin extends BasePlugin
     /**
      * Load all the application configuration and bootstrap logic
      * @param PluginApplicationInterface $app
+     * @return void
      */
     public function bootstrap(PluginApplicationInterface $app)
     {
