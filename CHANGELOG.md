@@ -3,7 +3,8 @@
 ### 2.26.0
 * uses `addPlugin()` to load plugins. Updated for CakePHP 3.6;
 * the table `$cache` property is now protected. Added `AppTable::getCacheName()`
-    method to get the cache configuration name used by the table;
+    method to get the cache configuration name used by the table. It can also
+    returns the names of the associated tables;
 * removed `SerializedLog` class. Use instead
     `EntityFileLog\Log\Engine\EntityFileLog`;
 * added `ConsoleIntegrationTestCase`, `HelperTestCase` and `TestCase` classes.

@@ -195,6 +195,16 @@ class AppTableTest extends TableTestCase
     }
 
     /**
+     * Test for `getCacheName()` method
+     * @test
+     */
+    public function testGetCacheName()
+    {
+        $this->assertEquals('posts', $this->Posts->getCacheName());
+        $this->assertEquals(['posts', 'users'], $this->Posts->getCacheName(true));
+    }
+
+    /**
      * Test for `getList()` method
      * @test
      */

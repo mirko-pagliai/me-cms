@@ -130,12 +130,28 @@ class AppTable extends Table
 
     /**
      * Gets the cache configuration name used by this table
-     * @return string|null
+     * @param bool $associations If `true`, it returns an array that contains
+     *  also the names of the associated tables
+     * @return string|array|null
+     * @since 2.26.0
      * @uses $cache
      */
-    public function getCacheName()
+    public function getCacheName($associations = false)
     {
-        return $this->cache ?: null;
+        $values = $this->cache ?: null;
+
+        if ($associations) {
+            $values = [$values];
+            foreach ($this->associations()->getIterator() as $association) {
+                if (method_exists($association->getTarget(), 'getCacheName') && $association->getTarget()->getCacheName()) {
+                    $values[] = $association->getTarget()->getCacheName();
+                }
+            }
+
+            $values = array_values(array_unique(array_filter($values)));
+        }
+
+        return $values;
     }
 
     /**

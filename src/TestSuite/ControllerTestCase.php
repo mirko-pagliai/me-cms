@@ -164,15 +164,8 @@ abstract class ControllerTestCase extends IntegrationTestCase
                 $this->Table = $this->getMockForTable($className, null);
 
                 //Tries to retrieve all cache names related to this table and associated tables
-                if ($this->Table->getCacheName()) {
-                    $this->cacheToClear[] = $this->Table->getCacheName();
-                }
-
-                //Tries to retrieve all cache names related to its associated tables
-                foreach (iterator_to_array($this->Table->associations()) as $table) {
-                    if (method_exists($table->getTarget(), 'getCacheName') && $table->getTarget()->getCacheName()) {
-                        $this->cacheToClear[] = $table->getTarget()->getCacheName();
-                    }
+                if (method_exists($this->Table, 'getCacheName')) {
+                    $this->cacheToClear = array_merge($this->cacheToClear, $this->Table->getCacheName(true));
                 }
             }
         }
