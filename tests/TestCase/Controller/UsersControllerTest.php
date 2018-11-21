@@ -15,6 +15,7 @@ namespace MeCms\Test\TestCase\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\I18n\Time;
+use Cake\TestSuite\EmailAssertTrait;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Controller\UsersController;
 use MeCms\Mailer\UserMailer;
@@ -26,6 +27,8 @@ use MeCms\TestSuite\ControllerTestCase;
  */
 class UsersControllerTest extends ControllerTestCase
 {
+    use EmailAssertTrait;
+
     /**
      * Fixtures
      * @var array
@@ -51,35 +54,25 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Mocks a controller
-     * @param string $className Controller class name
+     * @param string|null $className Controller class name
      * @param array|null $methods The list of methods to mock
      * @param string $alias Controller alias
-     * @return object
-     * @uses getClassAlias()
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockForController($className = null, $methods = null, $alias = 'Users')
     {
-        $className = $className ?: UsersController::class;
-        $controller = parent::getMockForController($className, $methods, $alias);
+        $controller = parent::getMockForController($className ?: UsersController::class, $methods, $alias);
 
-        //Stubs the `getUserMailer()` method
         if (in_array('getUserMailer', (array)$methods)) {
-            $userMailerMock = $this->getMockBuilder(UserMailer::class)->getMock();
-            $userMailerMock->method('set')->will($this->returnSelf());
-            $userMailerMock->method('send')->will($this->returnValue(true));
-
-            $controller->method('getUserMailer')->will($this->returnValue($userMailerMock));
+            $userMailer = $this->getMockForMailer(UserMailer::class);
+            $controller->method('getUserMailer')->will($this->returnValue($userMailer));
         }
 
-        //Stubs the `redirect()` method
         if (in_array('redirect', (array)$methods)) {
             $controller->method('redirect')->will($this->returnArgument(0));
         }
 
-        //Sets key for cookies
         $controller->Cookie->setConfig('key', 'somerandomhaskeysomerandomhaskey');
-
-        //Mocks the `LoginRecorder` component
         $controller->LoginRecorder = $this->getLoginRecorderMock();
 
         return $controller;
@@ -95,7 +88,6 @@ class UsersControllerTest extends ControllerTestCase
     {
         parent::controllerSpy($event, $controller);
 
-        //Mocks the `LoginRecorder` component
         $this->_controller->LoginRecorder = $this->getLoginRecorderMock();
     }
 
