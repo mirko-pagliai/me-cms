@@ -21,6 +21,7 @@ use DebugKit\Plugin as DebugKit;
 use MeTools\Plugin as MeTools;
 use RecaptchaMailhide\Plugin as RecaptchaMailhide;
 use Thumber\Plugin as Thumber;
+use Tokens\Plugin as Tokens;
 
 /**
  * Plugin class
@@ -41,6 +42,7 @@ class Plugin extends BasePlugin
             'Recaptcha' => ['path' => ROOT . DS . 'vendor' . DS . 'crabstudio' . DS . 'recaptcha' . DS],
             RecaptchaMailhide::class,
             Thumber::class,
+            Tokens::class,
         ];
 
         foreach ($pluginsToLoad as $plugin => $config) {
