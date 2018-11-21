@@ -42,7 +42,8 @@ class UsersControllerTest extends ControllerTestCase
      */
     protected function getLoginRecorderMock()
     {
-        $LoginRecorderComponent = $this->getMockForComponent(LoginRecorderComponent::class);
+        $class = LoginRecorderComponent::class;
+        $LoginRecorderComponent = $this->getMockForComponent($class, array_diff(get_class_methods($class), ['__debugInfo']));
         $LoginRecorderComponent->method('config')->will($this->returnSelf());
 
         return $LoginRecorderComponent;
