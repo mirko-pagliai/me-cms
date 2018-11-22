@@ -30,6 +30,12 @@ abstract class EntityTestCase extends TestCase
     protected $Entity;
 
     /**
+     * If `true`, a mock instance of the shell will be created
+     * @var bool
+     */
+    protected $autoInitializeClass = true;
+
+    /**
      * Asserts that the entity has a "no accessible" property
      * @param string|array $property Property name
      * @return void
@@ -63,12 +69,13 @@ abstract class EntityTestCase extends TestCase
      * Called before every test method
      * @return void
      * @uses $Entity
+     * @uses $autoInitializeClass
      */
     public function setUp()
     {
         parent::setUp();
 
-        if (empty($this->Entity)) {
+        if (empty($this->Entity && $this->autoInitializeClass)) {
             $parts = explode('\\', get_class($this));
             array_splice($parts, 1, 2, []);
             $parts[count($parts) - 1] = substr($parts[count($parts) - 1], 0, -4);

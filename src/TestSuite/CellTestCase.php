@@ -32,15 +32,22 @@ abstract class CellTestCase extends TestCase
     protected $Widget;
 
     /**
+     * If `true`, a mock instance of the shell will be created
+     * @var bool
+     */
+    protected $autoInitializeClass = true;
+
+    /**
      * Called before every test method
      * @return void
      * @uses $Widget
+     * @uses $autoInitializeClass
      */
     public function setUp()
     {
         parent::setUp();
 
-        if (!$this->Widget) {
+        if (!$this->Widget && $this->autoInitializeClass) {
             $this->Widget = $this->getMockBuilder(WidgetHelper::class)
                 ->setMethods(null)
                 ->setConstructorArgs([new View])

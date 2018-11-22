@@ -38,6 +38,12 @@ abstract class ControllerTestCase extends IntegrationTestCase
     protected $Table;
 
     /**
+     * If `true`, a mock instance of the shell will be created
+     * @var bool
+     */
+    protected $autoInitializeClass = true;
+
+    /**
      * Cache keys to clear for each test
      * @var array
      */
@@ -130,6 +136,7 @@ abstract class ControllerTestCase extends IntegrationTestCase
      * @return void
      * @uses $Controller
      * @uses $Table
+     * @uses $autoInitializeClass
      * @uses $cacheToClear
      * @uses $url
      * @uses getControllerAlias()
@@ -145,7 +152,7 @@ abstract class ControllerTestCase extends IntegrationTestCase
         $isAdminController = in_array('Admin', array_slice($parts, -2, 1));
 
         //Tries to retrieve controller and table from the class name
-        if (!$this->Controller) {
+        if (!$this->Controller && $this->autoInitializeClass) {
             array_splice($parts, 1, 2, []);
             $parts[count($parts) - 1] = substr($parts[count($parts) - 1], 0, -4);
             $className = implode('\\', $parts);

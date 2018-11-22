@@ -95,6 +95,7 @@ abstract class TableTestCase extends TestCase
      * Called before every test method
      * @return void
      * @uses $Table
+     * @uses $autoInitializeClass
      * @uses $cacheToClear
      */
     public function setUp()

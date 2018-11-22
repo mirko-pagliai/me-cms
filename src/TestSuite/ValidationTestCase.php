@@ -31,10 +31,10 @@ abstract class ValidationTestCase extends TestCase
     protected $Table;
 
     /**
-     * Cache keys to clear for each test
-     * @var array
+     * If `true`, a mock instance of the table will be created
+     * @var bool
      */
-    protected $cacheToClear = [];
+    protected $autoInitializeClass = true;
 
     /**
      * @var array
@@ -80,13 +80,13 @@ abstract class ValidationTestCase extends TestCase
      * Called before every test method
      * @return void
      * @uses $Table
-     * @uses $cacheToClear
+     * @uses $autoInitializeClass
      */
     public function setUp()
     {
         parent::setUp();
 
-        if (!$this->Table) {
+        if (!$this->Table && $this->autoInitializeClass) {
             $parts = explode('\\', get_class($this));
             $alias = Inflector::pluralize(substr(array_pop($parts), 0, -13));
             $className = sprintf('%s\\Model\Table\\%sTable', $parts[0], $alias);
