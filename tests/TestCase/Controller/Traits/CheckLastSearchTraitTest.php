@@ -60,7 +60,7 @@ class CheckLastSearchTraitTest extends TestCase
 
         foreach ([0, false] as $value) {
             $controller->request->getSession()->delete('last_search');
-            Configure::write(ME_CMS . '.security.search_interval', $value);
+            Configure::write('MeCms.security.search_interval', $value);
             $this->assertTrue($checkLastSearchMethod());
             $this->assertNull($controller->request->getSession()->read('last_search'));
         }

@@ -92,7 +92,7 @@ class MenuTest extends IntegrationTestCase
      */
     public function testDisabledOptions()
     {
-        Configure::write(ME_CMS . '.users', ['signup' => false, 'reset_password' => false]);
+        Configure::write('MeCms.users', ['signup' => false, 'reset_password' => false]);
         $this->get(['_name' => 'login']);
         $this->assertResponseNotContains('Sign up</a>');
         $this->assertResponseNotContains('Resend activation email</a>');
@@ -100,7 +100,7 @@ class MenuTest extends IntegrationTestCase
 
         //Signup is enaled, but the account does not need to be activated by
         //  the user
-        Configure::write(ME_CMS . '.users', ['signup' => true, 'activation' => 0]);
+        Configure::write('MeCms.users', ['signup' => true, 'activation' => 0]);
         $this->get(['_name' => 'login']);
         $this->assertResponseContains('Sign up</a>');
         $this->assertResponseNotContains('Resend activation email</a>');

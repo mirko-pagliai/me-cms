@@ -38,7 +38,7 @@ class PhotosWidgetsCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        $this->loadModel(ME_CMS . '.Photos');
+        $this->loadModel('MeCms.Photos');
     }
 
     /**

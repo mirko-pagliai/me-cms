@@ -42,7 +42,7 @@ class PhotosControllerTest extends ControllerTestCase
         //Only for the `testUploadErrorOnSave()` method, it mocks the `Photos`
         //  table, so the `save()` method returns `false`
         if ($this->getName() === 'testUploadErrorOnSave') {
-            $this->_controller->Photos = $this->getMockForModel(sprintf('%s.%s', ME_CMS, $this->Table->getRegistryAlias()), ['save']);
+            $this->_controller->Photos = $this->getMockForModel(sprintf('%s.%s', 'MeCms', $this->Table->getRegistryAlias()), ['save']);
             $this->_controller->Photos->method('save')->will($this->returnValue(false));
         }
     }

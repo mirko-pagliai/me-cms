@@ -62,7 +62,7 @@ class UsersController extends AppController
         parent::initialize();
 
         //Loads components
-        $this->loadComponent(ME_CMS . '.LoginRecorder');
+        $this->loadComponent('MeCms.LoginRecorder');
     }
 
     /**
@@ -237,7 +237,7 @@ class UsersController extends AppController
 
             if ($this->Users->save($user)) {
                 //Sends email
-                $this->getMailer(ME_CMS . '.User')->send('changePassword', [$user]);
+                $this->getMailer('MeCms.User')->send('changePassword', [$user]);
 
                 $this->Flash->success(I18N_OPERATION_OK);
 

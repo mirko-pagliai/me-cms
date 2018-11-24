@@ -130,7 +130,7 @@ class PhotosTable extends AppTable
         $this->setDisplayField('filename');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Albums', ['className' => ME_CMS . '.PhotosAlbums'])
+        $this->belongsTo('Albums', ['className' => 'MeCms.PhotosAlbums'])
             ->setForeignKey('album_id')
             ->setJoinType('INNER');
 

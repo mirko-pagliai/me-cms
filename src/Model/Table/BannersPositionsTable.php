@@ -52,7 +52,7 @@ class BannersPositionsTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Banners', ['className' => ME_CMS . '.Banners'])
+        $this->hasMany('Banners', ['className' => 'MeCms.Banners'])
             ->setForeignKey('position_id');
 
         $this->addBehavior('Timestamp');

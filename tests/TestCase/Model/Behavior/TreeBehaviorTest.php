@@ -34,7 +34,7 @@ class TreeBehaviorTest extends TestCase
      */
     public function testFindTreeList()
     {
-        $table = TableRegistry::get(ME_CMS . '.PostsCategories');
+        $table = TableRegistry::get('MeCms.PostsCategories');
 
         $expected = [
             1 => 'First post category',

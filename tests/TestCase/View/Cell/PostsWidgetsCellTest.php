@@ -54,7 +54,7 @@ class PostsWidgetsCellTest extends CellTestCase
      */
     public function testCategories()
     {
-        $widget = ME_CMS . '.Posts::categories';
+        $widget = 'MeCms.Posts::categories';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -136,7 +136,7 @@ class PostsWidgetsCellTest extends CellTestCase
      */
     public function testLatest()
     {
-        $widget = ME_CMS . '.Posts::latest';
+        $widget = 'MeCms.Posts::latest';
         $post = $this->Table->find('active')->last();
 
         //Tries with a limit of 1
@@ -221,7 +221,7 @@ class PostsWidgetsCellTest extends CellTestCase
      */
     public function testMonths()
     {
-        $widget = ME_CMS . '.Posts::months';
+        $widget = 'MeCms.Posts::months';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -308,7 +308,7 @@ class PostsWidgetsCellTest extends CellTestCase
      */
     public function testSearch()
     {
-        $widget = ME_CMS . '.Posts::search';
+        $widget = 'MeCms.Posts::search';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],

@@ -53,7 +53,7 @@ class PhotosWidgetsCellTest extends CellTestCase
      */
     public function testAlbums()
     {
-        $widget = ME_CMS . '.Photos::albums';
+        $widget = 'MeCms.Photos::albums';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -135,7 +135,7 @@ class PhotosWidgetsCellTest extends CellTestCase
      */
     public function testLatest()
     {
-        $widget = ME_CMS . '.Photos::latest';
+        $widget = 'MeCms.Photos::latest';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -197,7 +197,7 @@ class PhotosWidgetsCellTest extends CellTestCase
      */
     public function testRandom()
     {
-        $widget = ME_CMS . '.Photos::random';
+        $widget = 'MeCms.Photos::random';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],

@@ -65,12 +65,12 @@ class PostsTagsTableTest extends TableTestCase
         $this->assertBelongsTo($this->Table->Posts);
         $this->assertEquals('post_id', $this->Table->Posts->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Posts->getJoinType());
-        $this->assertEquals(ME_CMS . '.Posts', $this->Table->Posts->className());
+        $this->assertEquals('MeCms.Posts', $this->Table->Posts->className());
 
         $this->assertBelongsTo($this->Table->Tags);
         $this->assertEquals('tag_id', $this->Table->Tags->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Tags->getJoinType());
-        $this->assertEquals(ME_CMS . '.Tags', $this->Table->Tags->className());
+        $this->assertEquals('MeCms.Tags', $this->Table->Tags->className());
 
         $this->assertHasBehavior('CounterCache');
 

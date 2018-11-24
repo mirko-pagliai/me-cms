@@ -39,7 +39,7 @@ class SystemsController extends AppController
 
         //Loads KcFinderComponent
         if ($this->request->isAction('browser')) {
-            $this->loadComponent(ME_CMS . '.KcFinder');
+            $this->loadComponent('MeCms.KcFinder');
         }
     }
 

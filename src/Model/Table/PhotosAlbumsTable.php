@@ -109,7 +109,7 @@ class PhotosAlbumsTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Photos', ['className' => ME_CMS . '.Photos'])
+        $this->hasMany('Photos', ['className' => 'MeCms.Photos'])
             ->setForeignKey('album_id');
 
         $this->addBehavior('Timestamp');

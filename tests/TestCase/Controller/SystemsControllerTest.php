@@ -85,14 +85,14 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //With reCAPTCHA
-        Configure::write(ME_CMS . '.security.recaptcha', true);
+        Configure::write('MeCms.security.recaptcha', true);
         $this->post($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
         $this->assertInstanceof(ContactUsForm::class, $this->viewVariable('contact'));
 
         //Disabled
-        Configure::write(ME_CMS . '.default.contact_us', false);
+        Configure::write('MeCms.default.contact_us', false);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('Disabled');
@@ -127,7 +127,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertRedirect(['_name' => 'homepage']);
 
         //Offline
-        Configure::write(ME_CMS . '.default.offline', true);
+        Configure::write('MeCms.default.offline', true);
         $this->get(['_name' => 'offline']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Systems/offline.ctp');

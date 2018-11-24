@@ -148,7 +148,7 @@ class InstallShellTest extends ConsoleIntegrationTestCase
         $InstallShell = $this->getMockForShell(InstallShell::class, ['in', '_stop', 'dispatchShell']);
         $InstallShell->expects($this->once())
             ->method('dispatchShell')
-            ->with(ME_CMS . '.user', 'add', '--group', 1);
+            ->with('MeCms.user', 'add', '--group', 1);
         $InstallShell->createAdmin();
     }
 

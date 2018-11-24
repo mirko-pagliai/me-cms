@@ -124,22 +124,22 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertBelongsTo($this->Table->Categories);
         $this->assertEquals('category_id', $this->Table->Categories->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Categories->getJoinType());
-        $this->assertEquals(ME_CMS . '.PostsCategories', $this->Table->Categories->className());
+        $this->assertEquals('MeCms.PostsCategories', $this->Table->Categories->className());
         $this->assertInstanceOf(PostsCategoriesTable::class, $this->Table->Categories->getTarget());
-        $this->assertEquals(ME_CMS . '.PostsCategories', $this->Table->Categories->getTarget()->getRegistryAlias());
+        $this->assertEquals('MeCms.PostsCategories', $this->Table->Categories->getTarget()->getRegistryAlias());
         $this->assertEquals('Categories', $this->Table->Categories->getAlias());
 
         $this->assertBelongsTo($this->Table->Users);
         $this->assertEquals('user_id', $this->Table->Users->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Users->getJoinType());
-        $this->assertEquals(ME_CMS . '.Users', $this->Table->Users->className());
+        $this->assertEquals('MeCms.Users', $this->Table->Users->className());
 
         $this->assertBelongsToMany($this->Table->Tags);
         $this->assertEquals('post_id', $this->Table->Tags->getForeignKey());
         $this->assertEquals('tag_id', $this->Table->Tags->getTargetForeignKey());
         $this->assertEquals('posts_tags', $this->Table->Tags->junction()->getTable());
-        $this->assertEquals(ME_CMS . '.Tags', $this->Table->Tags->className());
-        $this->assertEquals(ME_CMS . '.PostsTags', $this->Table->Tags->getThrough());
+        $this->assertEquals('MeCms.Tags', $this->Table->Tags->className());
+        $this->assertEquals('MeCms.PostsTags', $this->Table->Tags->getThrough());
 
         $this->assertHasBehavior(['Timestamp', 'CounterCache']);
 

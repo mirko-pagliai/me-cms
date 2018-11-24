@@ -182,20 +182,20 @@ class PostsTable extends PostsAndPagesTables
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', ['className' => ME_CMS . '.PostsCategories'])
+        $this->belongsTo('Categories', ['className' => 'MeCms.PostsCategories'])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
-            ->setTarget($this->getTableLocator()->get(ME_CMS . '.PostsCategories'))
+            ->setTarget($this->getTableLocator()->get('MeCms.PostsCategories'))
             ->setAlias('Categories');
 
-        $this->belongsTo('Users', ['className' => ME_CMS . '.Users'])
+        $this->belongsTo('Users', ['className' => 'MeCms.Users'])
             ->setForeignKey('user_id')
             ->setJoinType('INNER');
 
-        $this->belongsToMany('Tags', ['className' => ME_CMS . '.Tags', 'joinTable' => 'posts_tags'])
+        $this->belongsToMany('Tags', ['className' => 'MeCms.Tags', 'joinTable' => 'posts_tags'])
             ->setForeignKey('post_id')
             ->setTargetForeignKey('tag_id')
-            ->setThrough(ME_CMS . '.PostsTags');
+            ->setThrough('MeCms.PostsTags');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', [

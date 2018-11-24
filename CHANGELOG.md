@@ -9,7 +9,8 @@
     `EntityFileLog\Log\Engine\EntityFileLog`;
 * added `ConsoleIntegrationTestCase`, `HelperTestCase` and `TestCase` classes.
     Methods provided by `IntegrationTestCase` moved to `ControllerTestCase;
-* removed `ASSETS`, `DATABASE_BACKUP`, `ME_TOOLS` and `THUMBER` constants;
+* removed `ME_CMS` constants. It no longer uses also `ASSETS`,
+    `DATABASE_BACKUP`, `ME_TOOLS` and `THUMBER` constants;
 * fixed all deprecations.
 
 ## 2.25 branch
@@ -353,7 +354,7 @@
 * added the `HtmlWidgetCell` class, with `display()` method. This method only
     renders a template file;
 * the `BaseView` class has been renamed as `View`. This creates less confusion;
-* renamed `MECMS` as `ME_CMS` constant.
+* renamed `MECMS` as `'MeCms'` constant.
 
 ## 2.14 branch
 ### 2.14.16

@@ -10,7 +10,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->Asset->css(ME_CMS . '.admin/uploader', ['block' => 'css_bottom']);
+$this->Asset->css('MeCms.admin/uploader', ['block' => 'css_bottom']);
 $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
 ?>
 

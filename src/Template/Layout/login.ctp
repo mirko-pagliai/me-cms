@@ -28,13 +28,13 @@
                 '/vendor/bootstrap/css/bootstrap.min',
                 'MeTools.default',
                 'MeTools.forms',
-                ME_CMS . '.login/layout'
+                'MeCms.login/layout'
             ], ['block' => true]);
             echo $this->fetch('css');
 
             echo $this->Asset->script([
                 '/vendor/jquery/jquery.min',
-                ME_CMS . '.display-password',
+                'MeCms.display-password',
             ], ['block' => true]);
             echo $this->fetch('script');
         ?>

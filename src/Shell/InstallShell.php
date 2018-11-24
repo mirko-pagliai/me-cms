@@ -55,10 +55,10 @@ class InstallShell extends BaseInstallShell
 
         //Configuration files to be copied
         $this->config = [
-            ME_CMS . '.recaptcha',
-            ME_CMS . '.banned_ip',
-            ME_CMS . '.me_cms',
-            ME_CMS . '.widgets',
+            'MeCms.recaptcha',
+            'MeCms.banned_ip',
+            'MeCms.me_cms',
+            'MeCms.widgets',
         ];
 
         //Merges assets for which create symbolic links
@@ -117,7 +117,7 @@ class InstallShell extends BaseInstallShell
      */
     protected function getOtherPlugins()
     {
-        return collection(Plugin::all(['exclude' => ['MeTools', ME_CMS], 'order' => false]))
+        return collection(Plugin::all(['exclude' => ['MeTools', 'MeCms'], 'order' => false]))
             ->filter(function ($plugin) {
                 $class = App::classname($plugin . '.InstallShell', 'Shell');
 
@@ -152,7 +152,7 @@ class InstallShell extends BaseInstallShell
      */
     public function createAdmin()
     {
-        return $this->dispatchShell(ME_CMS . '.user', 'add', '--group', 1);
+        return $this->dispatchShell('MeCms.user', 'add', '--group', 1);
     }
 
     /**
@@ -161,7 +161,7 @@ class InstallShell extends BaseInstallShell
      */
     public function createGroups()
     {
-        $this->loadModel(ME_CMS . '.UsersGroups');
+        $this->loadModel('MeCms.UsersGroups');
 
         if (!$this->UsersGroups->find()->isEmpty()) {
             $this->err(__d('me_cms', 'Some user groups already exist'));

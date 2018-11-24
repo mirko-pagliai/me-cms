@@ -43,7 +43,7 @@ class AuthComponentTest extends ComponentTestCase
             'authenticate' => [
                 'Form' => [
                     'finder' => 'auth',
-                    'userModel' => ME_CMS . '.Users',
+                    'userModel' => 'MeCms.Users',
                 ],
             ],
             'authorize' => 'Controller',

@@ -99,7 +99,7 @@ if (!getConfig('RecaptchaMailhide.encryptKey')) {
 }
 
 if (!getConfig('DatabaseBackup.mailSender')) {
-    Configure::write('DatabaseBackup.mailSender', getConfigOrFail(ME_CMS . '.email.webmaster'));
+    Configure::write('DatabaseBackup.mailSender', getConfigOrFail('MeCms.email.webmaster'));
 }
 
 //Adds log for users actions

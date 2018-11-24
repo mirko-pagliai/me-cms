@@ -55,7 +55,7 @@ class PagesWidgetsCellTest extends CellTestCase
      */
     public function testCategories()
     {
-        $widget = ME_CMS . '.Pages::categories';
+        $widget = 'MeCms.Pages::categories';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -137,7 +137,7 @@ class PagesWidgetsCellTest extends CellTestCase
      */
     public function testPages()
     {
-        $widget = ME_CMS . '.Pages::pages';
+        $widget = 'MeCms.Pages::pages';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],

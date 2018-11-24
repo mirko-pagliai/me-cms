@@ -70,7 +70,7 @@ class UserTest extends EntityTestCase
     public function testPictureGetMutator()
     {
         $this->Entity->id = 1;
-        $this->assertEquals(ME_CMS . '.no-avatar.jpg', $this->Entity->picture);
+        $this->assertEquals('MeCms.no-avatar.jpg', $this->Entity->picture);
 
         $filename = WWW_ROOT . 'img' . DS . 'no-avatar.jpg';
         file_put_contents($filename, null);

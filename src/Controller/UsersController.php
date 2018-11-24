@@ -82,7 +82,7 @@ class UsersController extends AppController
         //Creates the token
         $token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
 
-        return $this->getMailer(ME_CMS . '.User')
+        return $this->getMailer('MeCms.User')
             ->set('url', Router::url(['_name' => 'activation', $user->id, $token], true))
             ->send('activation', [$user]);
     }
@@ -99,7 +99,7 @@ class UsersController extends AppController
         $this->Cookie->configKey('login', ['encryption' => 'aes', 'expires' => '+365 days']);
 
         $this->loadComponent('Tokens.Token');
-        $this->loadComponent(ME_CMS . '.LoginRecorder');
+        $this->loadComponent('MeCms.LoginRecorder');
     }
 
     /**
@@ -298,7 +298,7 @@ class UsersController extends AppController
                     //Creates the token
                     $token = $this->Token->create($user->email, ['type' => 'password_forgot', 'user_id' => $user->id]);
 
-                    $this->getMailer(ME_CMS . '.User')
+                    $this->getMailer('MeCms.User')
                         ->set('url', Router::url(['_name' => 'passwordReset', $user->id, $token], true))
                         ->send('passwordForgot', [$user]);
 

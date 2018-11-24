@@ -123,11 +123,11 @@ class UsersTableTest extends TableTestCase
         $this->assertBelongsTo($this->Table->Groups);
         $this->assertEquals('group_id', $this->Table->Groups->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Groups->getJoinType());
-        $this->assertEquals(ME_CMS . '.UsersGroups', $this->Table->Groups->className());
+        $this->assertEquals('MeCms.UsersGroups', $this->Table->Groups->className());
 
         $this->assertHasMany($this->Table->Posts);
         $this->assertEquals('user_id', $this->Table->Posts->getForeignKey());
-        $this->assertEquals(ME_CMS . '.Posts', $this->Table->Posts->className());
+        $this->assertEquals('MeCms.Posts', $this->Table->Posts->className());
 
         $this->assertHasMany($this->Table->Tokens);
         $this->assertEquals('user_id', $this->Table->Tokens->getForeignKey());

@@ -57,7 +57,7 @@ class ContactUsMailerTest extends TestCase
         $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getEmailInstance()->getReplyTo());
         $this->assertEquals(['email@example.com' => 'email@example.com'], $this->Mailer->getEmailInstance()->getTo());
         $this->assertEquals('Email from MeCms', $this->Mailer->getEmailInstance()->getSubject());
-        $this->assertEquals(ME_CMS . '.Systems/contact_us', $this->Mailer->getEmailInstance()->getTemplate());
+        $this->assertEquals('MeCms.Systems/contact_us', $this->Mailer->getEmailInstance()->getTemplate());
         $this->assertEquals([
             'email' => 'test@test.com',
             'message' => 'Example of message',

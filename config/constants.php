@@ -40,11 +40,6 @@ if (!defined('LOGIN_RECORDS')) {
     define('LOGIN_RECORDS', TMP . 'login' . DS);
 }
 
-//Sets the default MeCms name
-if (!defined('ME_CMS')) {
-    define('ME_CMS', 'MeCms');
-}
-
 //Sets the default photos directory
 if (!defined('PHOTOS')) {
     define('PHOTOS', WWW_ROOT . 'img' . DS . 'photos' . DS);

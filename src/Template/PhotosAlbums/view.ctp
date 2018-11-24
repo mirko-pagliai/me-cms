@@ -68,7 +68,7 @@ if (getConfig('default.fancybox')) {
 
         echo $this->Html->div(
             'col-md-4 col-lg-3 mb-4',
-            $this->element(ME_CMS . '.views/photo-preview', compact('link', 'linkOptions', 'path', 'text'))
+            $this->element('MeCms.views/photo-preview', compact('link', 'linkOptions', 'path', 'text'))
         );
     }
     ?>

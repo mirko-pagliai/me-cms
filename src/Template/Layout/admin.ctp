@@ -28,8 +28,8 @@
                 '/vendor/bootstrap/css/bootstrap.min',
                 'MeTools.default',
                 'MeTools.forms',
-                ME_CMS . '.userbar',
-                ME_CMS . '.admin/layout',
+                'MeCms.userbar',
+                'MeCms.admin/layout',
             ], ['block' => true]);
             echo $this->fetch('css');
 
@@ -38,14 +38,14 @@
                 '/vendor/js-cookie/js.cookie',
                 '/vendor/bootstrap/js/bootstrap.bundle.min',
                 'MeTools.default',
-                ME_CMS . '.admin/layout',
-                ME_CMS . '.display-password',
+                'MeCms.admin/layout',
+                'MeCms.display-password',
             ], ['block' => true]);
             echo $this->fetch('script');
         ?>
     </head>
     <body>
-        <?= $this->element(ME_CMS . '.admin/userbar') ?>
+        <?= $this->element('MeCms.admin/userbar') ?>
         <div class="container-fluid">
             <div class="row">
                 <nav id="sidebar" class="col d-none d-lg-block">
@@ -56,7 +56,7 @@
                         'key' => sprintf('sidebar_user_%s', $this->Auth->user('id')),
                     ];
 
-                    echo $this->element(ME_CMS . '.admin/sidebar', [], ['cache' => $sidebarCache]);
+                    echo $this->element('MeCms.admin/sidebar', [], ['cache' => $sidebarCache]);
                     ?>
                 </nav>
                 <main id="content" class="col-lg-10">

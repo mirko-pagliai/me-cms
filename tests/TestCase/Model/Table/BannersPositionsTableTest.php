@@ -64,7 +64,7 @@ class BannersPositionsTableTest extends TableTestCase
 
         $this->assertHasMany($this->Table->Banners);
         $this->assertEquals('position_id', $this->Table->Banners->getForeignKey());
-        $this->assertEquals(ME_CMS . '.Banners', $this->Table->Banners->className());
+        $this->assertEquals('MeCms.Banners', $this->Table->Banners->className());
 
         $this->assertHasBehavior('Timestamp');
 

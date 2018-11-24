@@ -67,7 +67,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     public function testGetFontSizes()
     {
         $getFontSizesMethod = function (array $options = []) {
-            $widget = $this->Widget->widget(ME_CMS . '.PostsTags::popular');
+            $widget = $this->Widget->widget('MeCms.PostsTags::popular');
 
             return $this->invokeMethod($widget, 'getFontSizes', [$options]);
         };
@@ -86,7 +86,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      */
     public function testGetFontSizesWithInvalidValues()
     {
-        $widget = $this->Widget->widget(ME_CMS . '.PostsTags::popular');
+        $widget = $this->Widget->widget('MeCms.PostsTags::popular');
         $this->invokeMethod($widget, 'getFontSizes', [['maxFont' => 10, 'minFont' => 20]]);
     }
 
@@ -96,7 +96,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      */
     public function testPopular()
     {
-        $widget = ME_CMS . '.PostsTags::popular';
+        $widget = 'MeCms.PostsTags::popular';
 
         //Tries using the style (`maxFont` and `minFont`)
         $expected = [
@@ -277,7 +277,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      */
     public function testPopularWithTagsSamePostCount()
     {
-        $widget = ME_CMS . '.PostsTags::popular';
+        $widget = 'MeCms.PostsTags::popular';
 
         //Adds some tag, with the same `post_count`
         foreach ([

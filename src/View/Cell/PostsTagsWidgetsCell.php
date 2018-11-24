@@ -38,7 +38,7 @@ class PostsTagsWidgetsCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        $this->loadModel(ME_CMS . '.Tags');
+        $this->loadModel('MeCms.Tags');
     }
 
     /**

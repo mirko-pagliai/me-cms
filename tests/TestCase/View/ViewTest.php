@@ -45,7 +45,7 @@ class ViewTest extends TestCase
             ->setMethods(null)
             ->setConstructorArgs([$request])
             ->getMock();
-        $this->View->plugin = ME_CMS;
+        $this->View->plugin = 'MeCms';
     }
 
     /**
@@ -70,7 +70,7 @@ class ViewTest extends TestCase
         //Loads the `TestPlugin` and sets it as a theme
         $theme = 'TestPlugin';
         Plugin::load($theme);
-        Configure::write(ME_CMS . '.default.theme', $theme);
+        Configure::write('MeCms.default.theme', $theme);
 
         $this->assertEquals($theme, (new View)->getTheme());
     }
@@ -87,7 +87,7 @@ class ViewTest extends TestCase
 
         //Writes the main title on configuration
         $mainTitle = 'main title';
-        Configure::write(ME_CMS . '.main.title', $mainTitle);
+        Configure::write('MeCms.main.title', $mainTitle);
         $this->assertEquals($getTitleForLayoutMethod(), $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), $mainTitle);
 
@@ -147,8 +147,8 @@ class ViewTest extends TestCase
     public function testRenderLayout()
     {
         //Loads some other helpers
-        $this->View->loadHelper(ME_CMS . '.Auth');
-        $this->View->loadHelper(ME_CMS . '.Widget');
+        $this->View->loadHelper('MeCms.Auth');
+        $this->View->loadHelper('MeCms.Widget');
 
         //Disable widgets
         Configure::write('Widgets.general', []);
@@ -160,12 +160,12 @@ class ViewTest extends TestCase
         file_put_contents(WWW_ROOT . 'favicon.ico', null);
 
         //Renders
-        $result = $this->View->render(false, ME_CMS . '.default');
+        $result = $this->View->render(false, 'MeCms.default');
 
         safe_unlink(WWW_ROOT . 'favicon.ico');
 
         //Checks for title and favicon
-        $this->assertContains('<title>title from controller - ' . ME_CMS . '</title>', $result);
+        $this->assertContains('<title>title from controller - ' . 'MeCms</title>', $result);
         $this->assertContains('<link href="favicon.ico" type="image/x-icon" rel="icon"/><link href="favicon.ico" type="image/x-icon" rel="shortcut icon"/>', $result);
     }
 }

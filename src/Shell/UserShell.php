@@ -30,7 +30,7 @@ class UserShell extends Shell
         parent::initialize();
 
         //Loads the Users model
-        $this->loadModel(ME_CMS . '.Users');
+        $this->loadModel('MeCms.Users');
     }
 
     /**

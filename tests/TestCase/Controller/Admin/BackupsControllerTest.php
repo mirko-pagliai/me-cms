@@ -198,7 +198,7 @@ class BackupsControllerTest extends ControllerTestCase
      */
     public function testSend()
     {
-        $email = getConfigOrFail(ME_CMS . '.email.webmaster');
+        $email = getConfigOrFail('MeCms.email.webmaster');
         $file = $this->createSingleBackup();
         $this->post($this->url + ['action' => 'send', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);

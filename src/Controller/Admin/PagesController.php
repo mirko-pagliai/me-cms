@@ -67,7 +67,7 @@ class PagesController extends AppController
 
         //Loads KcFinderComponent
         if ($this->request->isAction(['add', 'edit'])) {
-            $this->loadComponent(ME_CMS . '.KcFinder');
+            $this->loadComponent('MeCms.KcFinder');
         }
     }
 

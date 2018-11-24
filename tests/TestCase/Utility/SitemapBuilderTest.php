@@ -84,7 +84,7 @@ class SitemapBuilderTest extends IntegrationTestCase
             return collection($methods)->extract('name')->toArray();
         };
 
-        $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', [ME_CMS]);
+        $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['MeCms']);
         $this->assertEquals([
             'pages',
             'photos',

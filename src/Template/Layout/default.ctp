@@ -28,10 +28,10 @@
                 '/vendor/bootstrap/css/bootstrap.min',
                 'MeTools.default',
                 'MeTools.forms',
-                ME_CMS . '.userbar',
-                ME_CMS . '.cookies',
-                ME_CMS . '.layout',
-                ME_CMS . '.contents',
+                'MeCms.userbar',
+                'MeCms.cookies',
+                'MeCms.layout',
+                'MeCms.contents',
             ], ['block' => true]);
             echo $this->fetch('css');
 
@@ -40,14 +40,14 @@
                 '/vendor/js-cookie/js.cookie',
                 '/vendor/bootstrap/js/bootstrap.bundle.min',
                 'MeTools.default',
-                ME_CMS . '.layout',
+                'MeCms.layout',
             ], ['block' => true]);
             echo $this->fetch('script');
         ?>
     </head>
     <body>
-        <?= $this->element(ME_CMS . '.userbar') ?>
-        <?= $this->element(ME_CMS . '.cookies_policy') ?>
+        <?= $this->element('MeCms.userbar') ?>
+        <?= $this->element('MeCms.cookies_policy') ?>
         <header id="header">
             <div class="container">
                 <?php
@@ -69,7 +69,7 @@
                 $topbarCache = ['key' => 'topbar'];
             }
 
-            echo $this->element(ME_CMS . '.topbar', [], ['cache' => $topbarCache]);
+            echo $this->element('MeCms.topbar', [], ['cache' => $topbarCache]);
             ?>
         </header>
         <div class="container mb-4">
@@ -100,7 +100,7 @@
             $footerCache = ['key' => 'footer'];
         }
 
-        echo $this->element(ME_CMS . '.footer', [], ['cache' => $footerCache]);
+        echo $this->element('MeCms.footer', [], ['cache' => $footerCache]);
         echo $this->fetch('css_bottom');
         echo $this->fetch('script_bottom');
         ?>

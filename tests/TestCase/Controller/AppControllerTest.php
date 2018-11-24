@@ -51,10 +51,10 @@ class AppControllerTest extends ControllerTestCase
         parent::setUp();
 
         //Sets some configuration values
-        Configure::write(ME_CMS . '.admin.records', 7);
-        Configure::write(ME_CMS . '.default.records', 5);
-        Configure::write(ME_CMS . '.security.recaptcha', true);
-        Configure::write(ME_CMS . '.security.search_interval', 15);
+        Configure::write('MeCms.admin.records', 7);
+        Configure::write('MeCms.default.records', 5);
+        Configure::write('MeCms.security.recaptcha', true);
+        Configure::write('MeCms.security.search_interval', 15);
 
         $this->Controller = $this->getMockForController();
         $this->Event = $this->getMockBuilder(Event::class)
@@ -95,7 +95,7 @@ class AppControllerTest extends ControllerTestCase
         $this->assertNotEmpty($controller->Auth->allowedActions);
         $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $controller->paginate);
         $this->assertNull($controller->viewBuilder()->getLayout());
-        $this->assertEquals(ME_CMS . '.View/App', $controller->viewBuilder()->getClassName());
+        $this->assertEquals('MeCms.View/App', $controller->viewBuilder()->getClassName());
 
         //Admin request
         $controller = $this->getMockForController();
@@ -106,13 +106,13 @@ class AppControllerTest extends ControllerTestCase
         $controller->beforeFilter($this->Event);
         $this->assertEmpty($controller->Auth->allowedActions);
         $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $controller->paginate);
-        $this->assertEquals(ME_CMS . '.View/Admin', $controller->viewBuilder()->getClassName());
+        $this->assertEquals('MeCms.View/Admin', $controller->viewBuilder()->getClassName());
 
         //Ajax request
         $controller = $this->getMockForController();
         $controller->request = $controller->request->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
         $controller->beforeFilter($this->Event);
-        $this->assertEquals(ME_CMS . '.ajax', $controller->viewBuilder()->getLayout());
+        $this->assertEquals('MeCms.ajax', $controller->viewBuilder()->getLayout());
 
         //Request with banned user
         $controller = $this->getMockForController(null, ['isBanned']);
@@ -133,7 +133,7 @@ class AppControllerTest extends ControllerTestCase
      */
     public function testBeforeRender()
     {
-        $expectedHelpers = ['Recaptcha.Recaptcha', ME_CMS . '.Auth'];
+        $expectedHelpers = ['Recaptcha.Recaptcha', 'MeCms.Auth'];
         $this->Controller->beforeRender($this->Event);
         $this->assertArrayKeysEqual($expectedHelpers, $this->Controller->viewBuilder()->getHelpers());
     }
