@@ -38,27 +38,16 @@ $routes->redirect(
 
 //"IP not allowed" page
 if (!$routes->nameExists('ipNotAllowed')) {
-    $routes->connect(
-        '/unallowed',
-        ['controller' => 'Systems', 'action' => 'ipNotAllowed'],
-        ['_name' => 'ipNotAllowed']
-    );
+    $routes->connect('/unallowed', ['controller' => 'Systems', 'action' => 'ipNotAllowed'], ['_name' => 'ipNotAllowed']);
 }
 
 //Offline page
 if (!$routes->nameExists('offline')) {
-    $routes->connect(
-        '/offline',
-        ['controller' => 'Systems', 'action' => 'offline'],
-        ['_name' => 'offline']
-    );
+    $routes->connect('/offline', ['controller' => 'Systems', 'action' => 'offline'], ['_name' => 'offline']);
 }
 
 //Sitemap
 if (!$routes->nameExists('sitemap')) {
-    $routes->connect(
-        '/sitemap:ext',
-        ['controller' => 'Systems', 'action' => 'sitemap'],
-        ['_name' => 'sitemap', 'ext' => '\.xml(\.gz)?']
-    );
+    $routes->connect('/sitemap:ext', ['controller' => 'Systems', 'action' => 'sitemap'], ['_name' => 'sitemap', ])
+        ->setPatterns(['ext' => '\.xml(\.gz)?']);
 }
