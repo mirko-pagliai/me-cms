@@ -45,10 +45,10 @@ class SystemsControllerTest extends ControllerTestCase
         Cache::write('valueFromGroup', 'data', 'posts');
 
         $files = [
-            'assets' => getConfigOrFail(ASSETS . '.target') . DS . 'asset_file',
+            'assets' => getConfigOrFail('Assets.target') . DS . 'asset_file',
             'logs' => LOGS . 'log_file',
             'sitemap' => SITEMAP,
-            'thumbs' => getConfigOrFail(THUMBER . '.target') . DS . md5('a') . '_' . md5('a') . '.jpg',
+            'thumbs' => getConfigOrFail('Thumber.target') . DS . md5('a') . '_' . md5('a') . '.jpg',
         ];
 
         foreach ($files as $file) {
@@ -78,8 +78,8 @@ class SystemsControllerTest extends ControllerTestCase
     public function tearDown()
     {
         //Deletes all temporary files
-        safe_unlink_recursive(getConfigOrFail(ASSETS . '.target'));
-        safe_unlink_recursive(getConfigOrFail(THUMBER . '.target'));
+        safe_unlink_recursive(getConfigOrFail('Assets.target'));
+        safe_unlink_recursive(getConfigOrFail('Thumber.target'));
         safe_unlink(SITEMAP);
 
         parent::tearDown();

@@ -33,6 +33,6 @@ abstract class ConsoleIntegrationTestCase extends BaseConsoleIntegrationTestCase
 
         parent::setUp();
 
-        Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail('email.webmaster'));
+        Configure::write('DatabaseBackup.mailSender', getConfigOrFail('email.webmaster'));
     }
 }

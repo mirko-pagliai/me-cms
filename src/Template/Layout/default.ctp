@@ -26,8 +26,8 @@
             ], ['block' => true]);
             echo $this->Asset->css([
                 '/vendor/bootstrap/css/bootstrap.min',
-                ME_TOOLS . '.default',
-                ME_TOOLS . '.forms',
+                'MeTools.default',
+                'MeTools.forms',
                 ME_CMS . '.userbar',
                 ME_CMS . '.cookies',
                 ME_CMS . '.layout',
@@ -39,7 +39,7 @@
                 '/vendor/jquery/jquery.min',
                 '/vendor/js-cookie/js.cookie',
                 '/vendor/bootstrap/js/bootstrap.bundle.min',
-                ME_TOOLS . '.default',
+                'MeTools.default',
                 ME_CMS . '.layout',
             ], ['block' => true]);
             echo $this->fetch('script');

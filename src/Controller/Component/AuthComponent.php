@@ -40,7 +40,7 @@ class AuthComponent extends CakeAuthComponent
             'authError' => __d('me_cms', 'You are not authorized for this action'),
             'authorize' => 'Controller',
             'flash' => [
-                'element' => ME_TOOLS . '.flash',
+                'element' => 'MeTools.flash',
                 'params' => ['class' => 'alert-danger'],
             ],
             'loginAction' => ['_name' => 'login'],

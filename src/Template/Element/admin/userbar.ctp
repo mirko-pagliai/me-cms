@@ -21,7 +21,7 @@ $menus[] = $this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'],
 ]);
 
 //Renders menus for each plugin
-foreach (Plugin::all(['exclude' => [ME_TOOLS, ASSETS, DATABASE_BACKUP, THUMBER]]) as $plugin) {
+foreach (Plugin::all(['exclude' => ['MeTools', 'Assets', 'DatabaseBackup', 'Thumber']]) as $plugin) {
     $menus += $this->MenuBuilder->renderAsDropdown($plugin, ['class' => 'nav-link d-lg-none']);
 }
 

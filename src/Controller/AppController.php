@@ -99,9 +99,9 @@ class AppController extends BaseController
         //The configuration for `AuthComponent`  takes place in the same class
         $this->loadComponent('Cookie', ['encryption' => false]);
         $this->loadComponent(ME_CMS . '.Auth');
-        $this->loadComponent(ME_TOOLS . '.Flash');
+        $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler', ['enableBeforeRedirect' => false]);
-        $this->loadComponent(ME_TOOLS . '.Uploader');
+        $this->loadComponent('MeTools.Uploader');
         $this->loadComponent('Recaptcha.Recaptcha', [
             'sitekey' => getConfigOrFail('Recaptcha.public'),
             'secret' => getConfigOrFail('Recaptcha.private'),

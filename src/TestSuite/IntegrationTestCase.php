@@ -38,6 +38,6 @@ abstract class IntegrationTestCase extends BaseIntegrationTestCase
         $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
         $app->addPlugin('MeCms')->pluginBootstrap();
 
-        Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail('email.webmaster'));
+        Configure::write('DatabaseBackup.mailSender', getConfigOrFail('email.webmaster'));
     }
 }

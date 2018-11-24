@@ -59,12 +59,12 @@ class AdminViewTest extends TestCase
         }, $this->View->helpers()->loaded());
 
         $this->assertEquals([
-            ME_TOOLS . '\View\Helper\HtmlHelper',
-            ME_TOOLS . '\View\Helper\DropdownHelper',
-            ME_TOOLS . '\View\Helper\FormHelper',
-            ME_TOOLS . '\View\Helper\LibraryHelper',
-            ME_TOOLS . '\View\Helper\PaginatorHelper',
-            ASSETS . '\View\Helper\AssetHelper',
+            'MeTools\View\Helper\HtmlHelper',
+            'MeTools\View\Helper\DropdownHelper',
+            'MeTools\View\Helper\FormHelper',
+            'MeTools\View\Helper\LibraryHelper',
+            'MeTools\View\Helper\PaginatorHelper',
+            'Assets\View\Helper\AssetHelper',
             'Thumber\View\Helper\ThumbHelper',
             'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
             ME_CMS . '\View\Helper\MenuBuilderHelper',

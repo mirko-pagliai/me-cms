@@ -65,7 +65,7 @@ class CheckupTest extends TestCase
     {
         $this->assertInstanceof(Backups::class, $this->Checkup->Backups);
         $this->assertEquals(['isWriteable'], get_class_methods($this->Checkup->Backups));
-        $this->assertEquals([getConfig(DATABASE_BACKUP . '.target') => true], $this->Checkup->Backups->isWriteable());
+        $this->assertEquals([getConfig('DatabaseBackup.target') => true], $this->Checkup->Backups->isWriteable());
     }
 
     /**

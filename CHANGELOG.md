@@ -9,6 +9,7 @@
     `EntityFileLog\Log\Engine\EntityFileLog`;
 * added `ConsoleIntegrationTestCase`, `HelperTestCase` and `TestCase` classes.
     Methods provided by `IntegrationTestCase` moved to `ControllerTestCase;
+* removed `ASSETS`, `DATABASE_BACKUP`, `ME_TOOLS` and `THUMBER` constants;
 * fixed all deprecations.
 
 ## 2.25 branch

@@ -82,8 +82,8 @@ class AppView extends View
         parent::initialize();
 
         //Loads helpers
-        $this->loadHelper(ME_TOOLS . '.BBCode');
-        $this->loadHelper(ME_TOOLS . '.Breadcrumbs');
+        $this->loadHelper('MeTools.BBCode');
+        $this->loadHelper('MeTools.Breadcrumbs');
         $this->loadHelper(RECAPTCHA_MAILHIDE . '.Mailhide');
         $this->loadHelper(ME_CMS . '.Widget');
     }

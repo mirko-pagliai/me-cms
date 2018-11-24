@@ -70,9 +70,9 @@ class InstallShell extends BaseInstallShell
 
         //Merges paths to be created and made writable
         $this->paths = array_merge($this->paths, [
-            getConfigOrFail(ASSETS . '.target'),
-            getConfigOrFail(DATABASE_BACKUP . '.target'),
-            getConfigOrFail(THUMBER . '.target'),
+            getConfigOrFail('Assets.target'),
+            getConfigOrFail('DatabaseBackup.target'),
+            getConfigOrFail('Thumber.target'),
             BANNERS,
             LOGIN_RECORDS,
             PHOTOS,
@@ -117,7 +117,7 @@ class InstallShell extends BaseInstallShell
      */
     protected function getOtherPlugins()
     {
-        return collection(Plugin::all(['exclude' => [ME_TOOLS, ME_CMS], 'order' => false]))
+        return collection(Plugin::all(['exclude' => ['MeTools', ME_CMS], 'order' => false]))
             ->filter(function ($plugin) {
                 $class = App::classname($plugin . '.InstallShell', 'Shell');
 

@@ -98,8 +98,8 @@ if (!getConfig('RecaptchaMailhide.encryptKey')) {
     Configure::write('RecaptchaMailhide.encryptKey', getConfigOrFail('Recaptcha.private'));
 }
 
-if (!getConfig(DATABASE_BACKUP . '.mailSender')) {
-    Configure::write(DATABASE_BACKUP . '.mailSender', getConfigOrFail(ME_CMS . '.email.webmaster'));
+if (!getConfig('DatabaseBackup.mailSender')) {
+    Configure::write('DatabaseBackup.mailSender', getConfigOrFail(ME_CMS . '.email.webmaster'));
 }
 
 //Adds log for users actions

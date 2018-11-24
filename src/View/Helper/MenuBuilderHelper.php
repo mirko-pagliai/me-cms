@@ -27,8 +27,8 @@ class MenuBuilderHelper extends Helper
      * @var array
      */
     public $helpers = [
-        ME_TOOLS . '.Dropdown',
-        'Html' => ['className' => ME_TOOLS . '.Html'],
+        'MeTools.Dropdown',
+        'Html' => ['className' => 'MeTools.Html'],
     ];
 
     /**

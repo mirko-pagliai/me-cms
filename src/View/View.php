@@ -97,13 +97,13 @@ class View extends AppView
         parent::initialize();
 
         //Loads helpers
-        $this->loadHelper('Html', ['className' => ME_TOOLS . '.Html']);
-        $this->loadHelper(ME_TOOLS . '.Dropdown');
-        $this->loadHelper(ME_TOOLS . '.Form');
-        $this->loadHelper(ME_TOOLS . '.Library');
-        $this->loadHelper(ME_TOOLS . '.Paginator');
-        $this->loadHelper(ASSETS . '.Asset');
-        $this->loadHelper(THUMBER . '.Thumb');
+        $this->loadHelper('Html', ['className' => 'MeTools.Html']);
+        $this->loadHelper('MeTools.Dropdown');
+        $this->loadHelper('MeTools.Form');
+        $this->loadHelper('MeTools.Library');
+        $this->loadHelper('MeTools.Paginator');
+        $this->loadHelper('Assets.Asset');
+        $this->loadHelper('Thumber.Thumb');
         $this->loadHelper('WyriHaximus/MinifyHtml.MinifyHtml');
     }
 

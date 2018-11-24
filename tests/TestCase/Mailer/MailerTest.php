@@ -28,7 +28,7 @@ class MailerTest extends TestCase
     {
         $mailer = new Mailer;
 
-        $this->assertEquals([ME_TOOLS . '.Html'], $mailer->viewBuilder()->getHelpers());
+        $this->assertEquals(['MeTools.Html'], $mailer->viewBuilder()->getHelpers());
         $this->assertEquals(['email@example.com' => ME_CMS], $mailer->getEmailInstance()->getSender());
         $this->assertEquals(['email@example.com' => ME_CMS], $mailer->getEmailInstance()->getFrom());
         $this->assertEquals('html', $mailer->getEmailInstance()->getEmailFormat());

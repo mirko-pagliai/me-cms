@@ -26,8 +26,8 @@
             ], ['block' => true]);
             echo $this->Asset->css([
                 '/vendor/bootstrap/css/bootstrap.min',
-                ME_TOOLS . '.default',
-                ME_TOOLS . '.forms',
+                'MeTools.default',
+                'MeTools.forms',
                 ME_CMS . '.userbar',
                 ME_CMS . '.admin/layout',
             ], ['block' => true]);
@@ -37,7 +37,7 @@
                 '/vendor/jquery/jquery.min',
                 '/vendor/js-cookie/js.cookie',
                 '/vendor/bootstrap/js/bootstrap.bundle.min',
-                ME_TOOLS . '.default',
+                'MeTools.default',
                 ME_CMS . '.admin/layout',
                 ME_CMS . '.display-password',
             ], ['block' => true]);
