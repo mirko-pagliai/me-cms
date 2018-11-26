@@ -122,11 +122,14 @@ class UserShellTest extends ConsoleIntegrationTestCase
     {
         $expectedRows = $this->Table->Groups->find()->map(function ($row) {
             return [(string)$row->id, $row->name, $row->label, $row->user_count];
-        });
+        })->toList();
+        $expectedRows[] = ['<info>ID</info>', '<info>Name</info>', '<info>Label</info>', '<info>Users</info>'];
+
         $this->exec('me_cms.user groups');
         $this->assertExitWithSuccess();
-        $this->assertTableHeadersEquals(['ID', 'Name', 'Label', 'Users']);
-        $this->assertTableRowsEquals($expectedRows->toList());
+        foreach ($expectedRows as $expectedRow) {
+            $this->assertOutputContainsRow($expectedRow);
+        }
 
         //Deletes all groups
         $this->Table->Groups->deleteAll(['id >=' => '1']);
@@ -160,11 +163,14 @@ class UserShellTest extends ConsoleIntegrationTestCase
                 $user->status,
                 $user->created->i18nFormat('yyyy/MM/dd HH:mm'),
             ];
-        });
+        })->toList();
+        $expectedRows[] = ['<info>ID</info>', '<info>Username</info>', '<info>Group</info>', '<info>Name</info>', '<info>Email</info>', '<info>Posts</info>', '<info>Status</info>', '<info>Date</info>'];
+
         $this->exec('me_cms.user users');
         $this->assertExitWithSuccess();
-        $this->assertTableHeadersEquals(['ID', 'Username', 'Group', 'Name', 'Email', 'Posts', 'Status', 'Date']);
-        $this->assertTableRowsEquals($expectedRows->toList());
+        foreach ($expectedRows as $expectedRow) {
+            $this->assertOutputContainsRow($expectedRow);
+        }
 
         //Deletes all users
         $this->Table->deleteAll(['id >=' => '1']);
