@@ -2,6 +2,8 @@
 ## 2.26 branch
 ### 2.26.0
 * uses `addPlugin()` to load plugins. Updated for CakePHP 3.6;
+* `UserShell` has been replaced with console commands. Every method of the
+    previous class is now a `Command` class;
 * the table `$cache` property is now protected. Added `AppTable::getCacheName()`
     method to get the cache configuration name used by the table. It can also
     returns the names of the associated tables;
