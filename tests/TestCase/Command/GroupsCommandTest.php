@@ -39,17 +39,20 @@ class GroupsCommandTest extends ConsoleIntegrationTestCase
     {
         $this->loadModel('MeCms.UsersGroups');
 
+        $this->exec('me_cms.groups');
+        $this->assertExitWithSuccess();
+
         $expectedRows = $this->UsersGroups->find()->map(function ($row) {
             return [$row->id, $row->name, $row->label, $row->user_count];
-        });
-        $this->exec('me_cms.user groups');
-        $this->assertExitWithSuccess();
-        $this->assertTableHeadersEquals(['ID', 'Name', 'Label', 'Users']);
-        $this->assertTableRowsEquals($expectedRows->toList());
+        })->toList();
+        $expectedRows[] = ['<info>ID</info>', '<info>Name</info>', '<info>Label</info>', '<info>Users</info>'];
+        foreach ($expectedRows as $row) {
+            $this->assertOutputContainsRow($row);
+        }
 
         //Deletes all groups
         $this->UsersGroups->deleteAll(['id >=' => '1']);
-        $this->exec('me_cms.user groups');
+        $this->exec('me_cms.groups');
         $this->assertExitWithError();
         $this->assertErrorContains('There are no user groups');
     }
