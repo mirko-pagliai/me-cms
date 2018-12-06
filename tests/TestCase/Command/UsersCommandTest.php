@@ -10,7 +10,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Test\TestCase\Command;
+namespace MeCms\Test\TestCase\Command;
 
 use Cake\Datasource\ModelAwareTrait;
 use MeCms\TestSuite\ConsoleIntegrationTestCase;
