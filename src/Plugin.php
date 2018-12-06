@@ -20,6 +20,7 @@ use DatabaseBackup\Plugin as DatabaseBackup;
 use DebugKit\Plugin as DebugKit;
 use MeCms\Command\AddUserCommand;
 use MeCms\Command\GroupsCommand;
+use MeCms\Command\UsersCommand;
 use MeTools\Plugin as MeTools;
 use RecaptchaMailhide\Plugin as RecaptchaMailhide;
 use Thumber\Plugin as Thumber;
@@ -83,6 +84,7 @@ class Plugin extends BasePlugin
     {
         $commands->add('me_cms.add_user', AddUserCommand::class);
         $commands->add('me_cms.groups', GroupsCommand::class);
+        $commands->add('me_cms.users', UsersCommand::class);
 
         return $commands;
     }

@@ -39,6 +39,9 @@ class UsersCommandTest extends ConsoleIntegrationTestCase
     {
         $this->loadModel('MeCms.Users');
 
+        $this->exec('me_cms.users');
+        $this->assertExitWithSuccess();
+
         $expectedRows = $this->Users->find()->contain('Groups')->map(function ($user) {
             if ($user->banned) {
                 $user->status = __d('me_cms', 'Banned');
@@ -58,15 +61,15 @@ class UsersCommandTest extends ConsoleIntegrationTestCase
                 $user->status,
                 $user->created->i18nFormat('yyyy/MM/dd HH:mm'),
             ];
-        });
-        $this->exec('me_cms.user users');
-        $this->assertExitWithSuccess();
-        $this->assertTableHeadersEquals(['ID', 'Username', 'Group', 'Name', 'Email', 'Posts', 'Status', 'Date']);
-        $this->assertTableRowsEquals($expectedRows->toList());
+        })->toList();
+        $expectedRows[] = ['<info>ID</info>', '<info>Username</info>', '<info>Group</info>', '<info>Name</info>', '<info>Email</info>', '<info>Posts</info>', '<info>Status</info>', '<info>Date</info>'];
+        foreach ($expectedRows as $row) {
+            $this->assertOutputContainsRow($row);
+        }
 
         //Deletes all users
         $this->Users->deleteAll(['id >=' => '1']);
-        $this->exec('me_cms.user users');
+        $this->exec('me_cms.users');
         $this->assertExitWithError();
         $this->assertErrorContains('There are no users');
     }
