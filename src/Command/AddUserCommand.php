@@ -65,15 +65,16 @@ class AddUserCommand extends Command
             $this->abort();
         }
 
+        $groups = $groups->toList();
         $user = [];
 
         //Asks for some fields
-        $user['username'] = $this->in(I18N_USERNAME);
-        $user['password'] = $this->in(I18N_PASSWORD);
-        $user['password_repeat'] = $this->in(I18N_REPEAT_PASSWORD);
-        $user['email'] = $this->in(I18N_EMAIL);
-        $user['first_name'] = $this->in(I18N_FIRST_NAME);
-        $user['last_name'] = $this->in(I18N_LAST_NAME);
+        $user['username'] = $io->ask(I18N_USERNAME);
+        $user['password'] = $io->ask(I18N_PASSWORD);
+        $user['password_repeat'] = $io->ask(I18N_REPEAT_PASSWORD);
+        $user['email'] = $io->ask(I18N_EMAIL);
+        $user['first_name'] = $io->ask(I18N_FIRST_NAME);
+        $user['last_name'] = $io->ask(I18N_LAST_NAME);
         $user['group_id'] = $args->getOption('group');
 
         //Asks for group, if not passed as option
@@ -86,14 +87,7 @@ class AddUserCommand extends Command
             //Sets header and prints as table
             $header = ['ID', 'Name'];
             $io->helper('table')->output(array_merge([$header], $groups));
-
-            $user['group_id'] = $this->in(__d('me_cms', 'Group ID'));
-        }
-
-        //Checks the group IDs
-        if (!array_key_exists($user['group_id'], $groups)) {
-            $io->err(__d('me_cms', 'Invalid group ID'));
-            $this->abort();
+            $user['group_id'] = $io->ask(__d('me_cms', 'Group ID'));
         }
 
         //Checks fields
@@ -102,6 +96,12 @@ class AddUserCommand extends Command
                 $io->err(__d('me_cms', 'Field `{0}` is empty. Try again', $key));
                 $this->abort();
             }
+        }
+
+        //Checks the group IDs
+        if (!array_key_exists($user['group_id'], $groups)) {
+            $io->err(__d('me_cms', 'Invalid group ID'));
+            $this->abort();
         }
 
         //Saves the user

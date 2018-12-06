@@ -18,6 +18,7 @@ use Cake\Core\BasePlugin;
 use Cake\Core\PluginApplicationInterface;
 use DatabaseBackup\Plugin as DatabaseBackup;
 use DebugKit\Plugin as DebugKit;
+use MeCms\Command\AddUserCommand;
 use MeTools\Plugin as MeTools;
 use RecaptchaMailhide\Plugin as RecaptchaMailhide;
 use Thumber\Plugin as Thumber;
@@ -70,5 +71,17 @@ class Plugin extends BasePlugin
             $app->addPlugin('Gourmet/CommonMark');
             $app->addPlugin('WyriHaximus/MinifyHtml');
         }
+    }
+
+    /**
+     * Add console commands for the plugin
+     * @param Cake\Console\CommandCollection $commands The command collection to update
+     * @return Cake\Console\CommandCollection
+     */
+    public function console($commands)
+    {
+        $commands->add('me_cms.add_user', AddUserCommand::class);
+
+        return $commands;
     }
 }
