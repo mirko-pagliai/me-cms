@@ -27,7 +27,7 @@ class CreateDirectoriesCommandTest extends ConsoleIntegrationTestCase
     public function testExecute()
     {
         $pathsAlreadyExist = [TMP, TMP . 'cache', WWW_ROOT . 'vendor'];
-        array_walk($pathsToBeCreated, 'safe_mkdir');
+        array_walk($pathsAlreadyExist, 'safe_mkdir');
         $pathsToBeCreated = array_diff(Configure::read('WRITABLE_DIRS'), $pathsAlreadyExist);
         array_walk($pathsToBeCreated, 'safe_rmdir');
 
