@@ -76,6 +76,7 @@ Configure::write('App', [
         ],
     ],
 ]);
+Configure::write('Session', ['defaults' => 'php']);
 
 Cache::setConfig([
     '_cake_core_' => [
@@ -97,8 +98,6 @@ Cache::setConfig([
 
 // Ensure default test connection is defined
 ConnectionManager::setConfig('test', ['url' => 'mysql://travis@localhost/test']);
-
-Configure::write('Session', ['defaults' => 'php']);
 
 //This adds `apache_get_modules()` and `apache_get_version()` functions
 require_once VENDOR . 'mirko-pagliai' . DS . 'php-tools' . DS . 'tests' . DS . 'apache_functions.php';
