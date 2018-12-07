@@ -128,6 +128,7 @@ function create_kcfinder_files()
 {
     safe_mkdir(KCFINDER, 0777, true);
     file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
+    file_put_contents(KCFINDER . '.htaccess', null);
 }
 
 $_SERVER['PHP_SELF'] = '/';

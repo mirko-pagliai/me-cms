@@ -22,6 +22,28 @@ use MeTools\TestSuite\ComponentTestCase;
 class KcFinderComponentTest extends ComponentTestCase
 {
     /**
+     * Called before every test method
+     * @return void
+     */
+    public function setUp()
+    {
+        create_kcfinder_files();
+
+        parent::setUp();
+    }
+
+    /**
+     * Called after every test method
+     * @return void
+     */
+    public function tearDown()
+    {
+        safe_unlink_recursive(KCFINDER, 'empty');
+
+        parent::tearDown();
+    }
+
+    /**
      * Test for `getDefaultConfig()` method
      * @test
      */

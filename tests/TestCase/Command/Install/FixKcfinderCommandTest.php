@@ -49,6 +49,7 @@ class FixKcfinderCommandTest extends ConsoleIntegrationTestCase
             'php_value session.gc_maxlifetime 14400' . PHP_EOL .
             'php_value session.name CAKEPHP';
         create_kcfinder_files();
+        safe_unlink(KCFINDER . '.htaccess');
         $this->exec('me_cms.fix_kcfinder -v');
         $this->assertExitWithSuccess();
         $this->assertOutputContains('Creating file ' . KCFINDER . '.htaccess');

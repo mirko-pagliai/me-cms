@@ -127,14 +127,15 @@ class ViewTest extends TestCase
         $helpers = array_map(function ($helper) {
             return get_class($this->View->helpers()->get($helper));
         }, $this->View->helpers()->loaded());
+        sort($helpers);
 
         $this->assertEquals([
-            'MeTools\View\Helper\HtmlHelper',
+            'Assets\View\Helper\AssetHelper',
             'MeTools\View\Helper\DropdownHelper',
             'MeTools\View\Helper\FormHelper',
+            'MeTools\View\Helper\HtmlHelper',
             'MeTools\View\Helper\LibraryHelper',
             'MeTools\View\Helper\PaginatorHelper',
-            'Assets\View\Helper\AssetHelper',
             'Thumber\View\Helper\ThumbHelper',
             'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
         ], $helpers);

@@ -64,8 +64,8 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function setUp()
     {
+        create_kcfinder_files();
         I18n::setLocale('en_US');
-
         Cache::clearAll();
 
         parent::setUp();
@@ -77,6 +77,8 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function tearDown()
     {
+        safe_unlink_recursive(KCFINDER, 'empty');
+
         //Deletes all temporary files
         safe_unlink_recursive(getConfigOrFail('Assets.target'));
         safe_unlink_recursive(getConfigOrFail('Thumber.target'));

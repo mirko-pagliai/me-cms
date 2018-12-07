@@ -44,6 +44,17 @@ class CheckupTest extends TestCase
     }
 
     /**
+     * Called after every test method
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        safe_unlink_recursive(KCFINDER, 'empty');
+    }
+
+    /**
      * Test for `$Apache` property and methods from
      *  `\MeCms\Utility\Checkups\Apache` class
      * @test
@@ -75,11 +86,7 @@ class CheckupTest extends TestCase
      */
     public function testKCFinder()
     {
-        //This makes it believe that KCFinder is installed
-        safe_mkdir(KCFINDER, 0777, true);
-        file_put_contents(KCFINDER . '.htaccess', null);
-        file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
-
+        create_kcfinder_files();
         $this->assertInstanceof(KCFinder::class, $this->Checkup->KCFinder);
         $this->assertEquals(['htaccess', 'isAvailable', 'version'], get_class_methods($this->Checkup->KCFinder));
         $this->assertTrue($this->Checkup->KCFinder->htaccess());

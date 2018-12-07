@@ -89,20 +89,21 @@ class AppViewTest extends TestCase
         $helpers = array_map(function ($helper) {
             return get_class($this->View->helpers()->get($helper));
         }, $this->View->helpers()->loaded());
+        sort($helpers);
 
         $this->assertEquals([
-            'MeTools\View\Helper\HtmlHelper',
-            'MeTools\View\Helper\DropdownHelper',
-            'MeTools\View\Helper\FormHelper',
-            'MeTools\View\Helper\LibraryHelper',
-            'MeTools\View\Helper\PaginatorHelper',
             'Assets\View\Helper\AssetHelper',
-            'Thumber\View\Helper\ThumbHelper',
-            'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
+            'MeCms\View\Helper\WidgetHelper',
             'MeTools\View\Helper\BBCodeHelper',
             'MeTools\View\Helper\BreadcrumbsHelper',
-            RECAPTCHA_MAILHIDE . '\View\Helper\MailhideHelper',
-            'MeCms\View\Helper\WidgetHelper',
+            'MeTools\View\Helper\DropdownHelper',
+            'MeTools\View\Helper\FormHelper',
+            'MeTools\View\Helper\HtmlHelper',
+            'MeTools\View\Helper\LibraryHelper',
+            'MeTools\View\Helper\PaginatorHelper',
+            'RecaptchaMailhide\View\Helper\MailhideHelper',
+            'Thumber\View\Helper\ThumbHelper',
+            'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
         ], $helpers);
     }
 
