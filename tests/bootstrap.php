@@ -123,12 +123,18 @@ Log::setConfig('error', [
 Email::setConfigTransport('debug', ['className' => 'Debug']);
 Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 
-//This makes it believe that KCFinder is installed
-function create_kcfinder_files()
+/**
+ * This makes it believe that KCFinder is installed
+ * @param bool $htaccess If `true`, it also creates the `.htaccess` file
+ * @return void
+ */
+function create_kcfinder_files($htaccess = true)
 {
     safe_mkdir(KCFINDER, 0777, true);
     file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
-    file_put_contents(KCFINDER . '.htaccess', null);
+    if ($htaccess) {
+        file_put_contents(KCFINDER . '.htaccess', null);
+    }
 }
 
 $_SERVER['PHP_SELF'] = '/';
