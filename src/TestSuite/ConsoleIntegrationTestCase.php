@@ -13,7 +13,6 @@
  */
 namespace MeCms\TestSuite;
 
-use Cake\Core\Configure;
 use Cake\Http\BaseApplication;
 use MeTools\TestSuite\ConsoleIntegrationTestCase as BaseConsoleIntegrationTestCase;
 
@@ -32,7 +31,5 @@ abstract class ConsoleIntegrationTestCase extends BaseConsoleIntegrationTestCase
         $app->addPlugin('MeCms')->pluginBootstrap();
 
         parent::setUp();
-
-        Configure::write('DatabaseBackup.mailSender', getConfigOrFail('email.webmaster'));
     }
 }

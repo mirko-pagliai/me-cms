@@ -1,0 +1,51 @@
+<?php
+/**
+ * This file is part of me-cms.
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
+ */
+namespace MeCms\Test\TestCase\Command\Install;
+
+use MeCms\Model\Table\UsersTable;
+use MeCms\TestSuite\ConsoleIntegrationTestCase;
+
+/**
+ * CreateAdminCommandTest class
+ */
+class CreateAdminCommandTest extends ConsoleIntegrationTestCase
+{
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.me_cms.Users',
+        'plugin.me_cms.UsersGroups',
+    ];
+
+    /**
+     * Test for `execute()` method
+     * @test
+     */
+    public function testExecute()
+    {
+        $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
+        $Users = $this->getMockForTable(UsersTable::class, null);
+
+        $expectedUserId = $Users->find()->extract('id')->last() + 1;
+        $this->exec('me_cms.create_admin', $example);
+        $this->assertExitWithSuccess();
+        $this->assertOutputContains('<success>The operation has been performed correctly</success>');
+        $this->assertOutputContains('<success>The user was created with ID ' . $expectedUserId . '</success>');
+        $this->assertErrorEmpty();
+
+        //Checks the user has been created
+        $this->assertEquals(1, $Users->findById($expectedUserId)->extract('group_id')->first());
+    }
+}

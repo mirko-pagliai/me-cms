@@ -125,8 +125,11 @@ Email::setConfigTransport('debug', ['className' => 'Debug']);
 Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 
 //This makes it believe that KCFinder is installed
-safe_mkdir(KCFINDER, 0777, true);
-file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
+function create_kcfinder_files()
+{
+    safe_mkdir(KCFINDER, 0777, true);
+    file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
+}
 
 $_SERVER['PHP_SELF'] = '/';
 

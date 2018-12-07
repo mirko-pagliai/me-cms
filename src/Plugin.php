@@ -15,12 +15,21 @@ namespace MeCms;
 
 use Assets\Plugin as Assets;
 use Cake\Core\BasePlugin;
+use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
 use DatabaseBackup\Plugin as DatabaseBackup;
 use DebugKit\Plugin as DebugKit;
 use MeCms\Command\AddUserCommand;
 use MeCms\Command\GroupsCommand;
 use MeCms\Command\UsersCommand;
+use MeCms\Command\Install\CopyConfigCommand;
+use MeCms\Command\Install\CreateAdminCommand;
+use MeCms\Command\Install\CreateGroupsCommand;
+use MeCms\Command\Install\FixKcfinderCommand;
+use MeCms\Command\Install\RunAllCommand;
+use MeTools\Command\Install\CreateDirectoriesCommand;
+use MeTools\Command\Install\SetPermissionsCommand;
+use MeTools\Command\Install\CreateVendorsLinksCommand;
 use MeTools\Plugin as MeTools;
 use RecaptchaMailhide\Plugin as RecaptchaMailhide;
 use Thumber\Plugin as Thumber;
@@ -85,6 +94,37 @@ class Plugin extends BasePlugin
         $commands->add('me_cms.add_user', AddUserCommand::class);
         $commands->add('me_cms.groups', GroupsCommand::class);
         $commands->add('me_cms.users', UsersCommand::class);
+
+        $commands->add('me_cms.copy_config', CopyConfigCommand::class);
+        $commands->add('me_cms.create_admin', CreateAdminCommand::class);
+        $commands->add('me_cms.create_groups', CreateGroupsCommand::class);
+        $commands->add('me_cms.fix_kcfinder', FixKcfinderCommand::class);
+        $commands->add('me_cms.install', RunAllCommand::class);
+
+        //Sets directories to be created and must be writable
+        Configure::write('WRITABLE_DIRS', array_merge(Configure::read('WRITABLE_DIRS') ?: [], [
+            getConfigOrFail('Assets.target'),
+            getConfigOrFail('DatabaseBackup.target'),
+            getConfigOrFail('Thumber.target'),
+            BANNERS,
+            LOGIN_RECORDS,
+            PHOTOS,
+            UPLOADED,
+            USER_PICTURES,
+            TMP . 'login',
+        ]));
+
+        //Sets symbolic links for vendor assets to be created
+        Configure::write('VENDOR_LINKS', array_merge(Configure::read('VENDOR_LINKS') ?: [], [
+            'npm-asset' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
+            'sunhater' . DS . 'kcfinder' => 'kcfinder',
+            'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
+        ]));
+
+        //Commands from MeTools
+        $commands->add('me_cms.create_directories', CreateDirectoriesCommand::class);
+        $commands->add('me_cms.create_vendors_links', CreateVendorsLinksCommand::class);
+        $commands->add('me_cms.set_permissions', SetPermissionsCommand::class);
 
         return $commands;
     }
