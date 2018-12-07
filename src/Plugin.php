@@ -13,12 +13,9 @@
  */
 namespace MeCms;
 
-use Assets\Plugin as Assets;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
-use DatabaseBackup\Plugin as DatabaseBackup;
-use DebugKit\Plugin as DebugKit;
 use MeCms\Command\AddUserCommand;
 use MeCms\Command\GroupsCommand;
 use MeCms\Command\UsersCommand;
@@ -30,10 +27,6 @@ use MeCms\Command\Install\RunAllCommand;
 use MeTools\Command\Install\CreateDirectoriesCommand;
 use MeTools\Command\Install\SetPermissionsCommand;
 use MeTools\Command\Install\CreateVendorsLinksCommand;
-use MeTools\Plugin as MeTools;
-use RecaptchaMailhide\Plugin as RecaptchaMailhide;
-use Thumber\Plugin as Thumber;
-use Tokens\Plugin as Tokens;
 
 /**
  * Plugin class
@@ -48,13 +41,13 @@ class Plugin extends BasePlugin
     public function bootstrap(PluginApplicationInterface $app)
     {
         $pluginsToLoad = [
-            Assets::class,
-            DatabaseBackup::class,
-            MeTools::class,
+            'Assets',
+            'DatabaseBackup',
+            'MeTools',
             'Recaptcha' => ['path' => ROOT . DS . 'vendor' . DS . 'crabstudio' . DS . 'recaptcha' . DS],
-            RecaptchaMailhide::class,
-            Thumber::class,
-            Tokens::class,
+            'RecaptchaMailhide',
+            'Thumber',
+            'Tokens',
         ];
 
         foreach ($pluginsToLoad as $plugin => $config) {
@@ -63,8 +56,9 @@ class Plugin extends BasePlugin
                 $config = [];
             }
 
-            if (class_exists($plugin)) {
-                $plugin = new $plugin;
+            $className = sprintf('%s\Plugin', $plugin);
+            if (class_exists($className)) {
+                $plugin = new $className;
                 $plugin->bootstrap($app);
             }
 
@@ -76,7 +70,7 @@ class Plugin extends BasePlugin
         if (PHP_SAPI !== 'cli') {
             //Loads DebugKit, if debugging is enabled
             if (getConfig('debug') && !$app->getPlugins()->has('DebugKit')) {
-                $app->addPlugin(DebugKit::class);
+                $app->addPlugin('DebugKit');
             }
 
             $app->addPlugin('Gourmet/CommonMark');
