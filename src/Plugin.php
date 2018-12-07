@@ -18,15 +18,15 @@ use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
 use MeCms\Command\AddUserCommand;
 use MeCms\Command\GroupsCommand;
-use MeCms\Command\UsersCommand;
 use MeCms\Command\Install\CopyConfigCommand;
 use MeCms\Command\Install\CreateAdminCommand;
 use MeCms\Command\Install\CreateGroupsCommand;
 use MeCms\Command\Install\FixKcfinderCommand;
 use MeCms\Command\Install\RunAllCommand;
+use MeCms\Command\UsersCommand;
 use MeTools\Command\Install\CreateDirectoriesCommand;
-use MeTools\Command\Install\SetPermissionsCommand;
 use MeTools\Command\Install\CreateVendorsLinksCommand;
+use MeTools\Command\Install\SetPermissionsCommand;
 
 /**
  * Plugin class
