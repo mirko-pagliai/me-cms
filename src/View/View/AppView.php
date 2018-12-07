@@ -84,7 +84,7 @@ class AppView extends View
         //Loads helpers
         $this->loadHelper('MeTools.BBCode');
         $this->loadHelper('MeTools.Breadcrumbs');
-        $this->loadHelper(RECAPTCHA_MAILHIDE . '.Mailhide');
+        $this->loadHelper('RecaptchaMailhide.Mailhide');
         $this->loadHelper('MeCms.Widget');
     }
 

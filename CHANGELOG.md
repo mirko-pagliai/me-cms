@@ -14,7 +14,7 @@
 * added `ConsoleIntegrationTestCase`, `HelperTestCase` and `TestCase` classes.
     Methods provided by `IntegrationTestCase` moved to `ControllerTestCase;
 * removed `ME_CMS` constants. It no longer uses also `ASSETS`,
-    `DATABASE_BACKUP`, `ME_TOOLS` and `THUMBER` constants;
+    `DATABASE_BACKUP`, `ME_TOOLS`, `RECAPTCHA_MAILHIDE` and `THUMBER` constants;
 * fixed all deprecations.
 
 ## 2.25 branch
