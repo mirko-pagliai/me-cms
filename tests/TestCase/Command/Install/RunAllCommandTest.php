@@ -58,7 +58,7 @@ class RunAllCommandTest extends ConsoleIntegrationTestCase
         $expected = [
             'MeTools\Command\Install\SetPermissionsCommand',
             'MeTools\Command\Install\CreateRobotsCommand',
-            'MeTools\Command\Install\FixComposerJsonCommand',
+//            'MeTools\Command\Install\FixComposerJsonCommand',
             'MeTools\Command\Install\CreatePluginsLinksCommand',
             'MeTools\Command\Install\CreateVendorsLinksCommand',
             'MeCms\Command\Install\CopyConfigCommand',
@@ -67,11 +67,18 @@ class RunAllCommandTest extends ConsoleIntegrationTestCase
         $this->Shell->execute(new Arguments([], ['force' => true], []), $io);
         $this->assertEquals($expected, $this->debug);
 
-        $expected = array_merge(
-            ['MeTools\Command\Install\CreateDirectoriesCommand'],
-            $expected,
-            ['MeCms\Command\Install\CreateGroupsCommand', 'MeCms\Command\Install\CreateAdminCommand']
-        );
+        $expected = [
+            'MeTools\Command\Install\CreateDirectoriesCommand',
+            'MeTools\Command\Install\SetPermissionsCommand',
+            'MeTools\Command\Install\CreateRobotsCommand',
+            'MeTools\Command\Install\FixComposerJsonCommand',
+            'MeTools\Command\Install\CreatePluginsLinksCommand',
+            'MeTools\Command\Install\CreateVendorsLinksCommand',
+            'MeCms\Command\Install\CopyConfigCommand',
+            'MeCms\Command\Install\FixKcfinderCommand',
+            'MeCms\Command\Install\CreateGroupsCommand',
+            'MeCms\Command\Install\CreateAdminCommand',
+        ];
         $this->debug = [];
         $this->Shell->execute(new Arguments([], [], []), $io);
         $this->assertEquals($expected, $this->debug);
