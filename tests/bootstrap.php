@@ -15,6 +15,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
+use Cake\Mailer\TransportFactory;
 use EntityFileLog\Log\Engine\EntityFileLog;
 
 ini_set('intl.default_locale', 'en_US');
@@ -120,7 +121,7 @@ Log::setConfig('error', [
     'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
 ]);
 
-Email::setConfigTransport('debug', ['className' => 'Debug']);
+TransportFactory::setConfig('debug', ['className' => 'Debug']);
 Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 
 /**
