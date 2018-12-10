@@ -13,13 +13,16 @@
 namespace MeCms\Test\TestCase\Command\Install;
 
 use MeCms\Model\Table\UsersGroupsTable;
-use MeCms\TestSuite\ConsoleIntegrationTestCase;
+use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * CreateGroupsCommandTest class
  */
-class CreateGroupsCommandTest extends ConsoleIntegrationTestCase
+class CreateGroupsCommandTest extends TestCase
 {
+    use ConsoleIntegrationTestTrait;
+
     /**
      * Fixtures
      * @var array

@@ -12,13 +12,16 @@
  */
 namespace MeCms\Test\TestCase\Command\Install;
 
-use MeCms\TestSuite\ConsoleIntegrationTestCase;
+use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * FixKcfinderCommandTest class
  */
-class FixKcfinderCommandTest extends ConsoleIntegrationTestCase
+class FixKcfinderCommandTest extends TestCase
 {
+    use ConsoleIntegrationTestTrait;
+
     /**
      * Called after every test method
      * @return void

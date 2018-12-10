@@ -13,13 +13,16 @@
 namespace MeCms\Test\TestCase\Command\Install;
 
 use MeCms\Model\Table\UsersTable;
-use MeCms\TestSuite\ConsoleIntegrationTestCase;
+use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * CreateAdminCommandTest class
  */
-class CreateAdminCommandTest extends ConsoleIntegrationTestCase
+class CreateAdminCommandTest extends TestCase
 {
+    use ConsoleIntegrationTestTrait;
+
     /**
      * Fixtures
      * @var array

@@ -14,14 +14,17 @@ namespace MeCms\Test\TestCase\Command\Install;
 
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
-use MeCms\TestSuite\ConsoleIntegrationTestCase;
+use MeCms\TestSuite\TestCase;
 use MeTools\Console\Command;
+use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * RunAllCommandTest class
  */
-class RunAllCommandTest extends ConsoleIntegrationTestCase
+class RunAllCommandTest extends TestCase
 {
+    use ConsoleIntegrationTestTrait;
+
     /**
      * If `true`, a mock instance of the shell will be created
      * @var bool
@@ -45,15 +48,17 @@ class RunAllCommandTest extends ConsoleIntegrationTestCase
 
         $io->method('askChoice')->will($this->returnValue('y'));
 
-        $this->Shell->questions = array_map(function ($question) {
-            $command = $this->getMockForShell(Command::class, ['execute']);
+        $this->Command->questions = array_map(function ($question) {
+            $command = $this->getMockBuilder(Command::class)
+                ->setMethods(['execute'])
+                ->getMock();
             $command->method('execute')->will($this->returnCallback(function () use ($question) {
                 $this->debug[] = $question['command'];
             }));
             $question['command'] = $command;
 
             return $question;
-        }, $this->Shell->questions);
+        }, $this->Command->questions);
 
         $expected = [
             'MeTools\Command\Install\SetPermissionsCommand',
@@ -64,7 +69,7 @@ class RunAllCommandTest extends ConsoleIntegrationTestCase
             'MeCms\Command\Install\CopyConfigCommand',
             'MeCms\Command\Install\FixKcfinderCommand',
         ];
-        $this->Shell->execute(new Arguments([], ['force' => true], []), $io);
+        $this->Command->execute(new Arguments([], ['force' => true], []), $io);
         $this->assertEquals($expected, $this->debug);
 
         $expected = [
@@ -80,7 +85,7 @@ class RunAllCommandTest extends ConsoleIntegrationTestCase
             'MeCms\Command\Install\CreateAdminCommand',
         ];
         $this->debug = [];
-        $this->Shell->execute(new Arguments([], [], []), $io);
+        $this->Command->execute(new Arguments([], [], []), $io);
         $this->assertEquals($expected, $this->debug);
     }
 }

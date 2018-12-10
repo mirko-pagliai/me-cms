@@ -12,13 +12,16 @@
  */
 namespace MeCms\Test\TestCase\Command\Install;
 
-use MeCms\TestSuite\ConsoleIntegrationTestCase;
+use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * CopyConfigCommandTest class
  */
-class CopyConfigCommandTest extends ConsoleIntegrationTestCase
+class CopyConfigCommandTest extends TestCase
 {
+    use ConsoleIntegrationTestTrait;
+
     /**
      * If `true`, a mock instance of the shell will be created
      * @var bool
@@ -34,7 +37,7 @@ class CopyConfigCommandTest extends ConsoleIntegrationTestCase
         $this->exec('me_cms.copy_config -v');
         $this->assertExitWithSuccess();
 
-        foreach ($this->Shell->config as $file) {
+        foreach ($this->Command->config as $file) {
             $this->assertOutputContains('File or directory `' . rtr(CONFIG . pluginSplit($file)[1] . '.php') . '` already exists');
         }
     }

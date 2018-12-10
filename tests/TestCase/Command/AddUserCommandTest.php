@@ -13,19 +13,16 @@
 namespace MeCms\Test\TestCase\Command;
 
 use Cake\Datasource\ModelAwareTrait;
-use MeCms\TestSuite\ConsoleIntegrationTestCase;
+use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * AddUserCommandTest class
  */
-class AddUserCommandTest extends ConsoleIntegrationTestCase
+class AddUserCommandTest extends TestCase
 {
+    use ConsoleIntegrationTestTrait;
     use ModelAwareTrait;
-
-    /**
-     * @var array
-     */
-    protected $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
 
     /**
      * Fixtures
@@ -43,9 +40,10 @@ class AddUserCommandTest extends ConsoleIntegrationTestCase
     public function testExecute()
     {
         $this->loadModel('MeCms.Users');
+        $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
 
         $expectedUserId = $this->Users->find()->extract('id')->last() + 1;
-        $this->exec('me_cms.add_user', array_merge($this->example, ['3']));
+        $this->exec('me_cms.add_user', array_merge($example, ['3']));
         $this->assertExitWithSuccess();
         $this->assertOutputContains('<question>Group ID</question>');
         $this->assertOutputContains('<success>The operation has been performed correctly</success>');
@@ -57,7 +55,7 @@ class AddUserCommandTest extends ConsoleIntegrationTestCase
         $this->Users->delete($this->Users->get($expectedUserId));
 
         //Tries using the `group` option
-        $this->exec('me_cms.add_user --group 2', $this->example);
+        $this->exec('me_cms.add_user --group 2', $example);
         $this->assertExitWithSuccess();
         $this->assertOutputContains('<success>The operation has been performed correctly</success>');
         $this->assertOutputContains('<success>The user was created with ID ' . ++$expectedUserId . '</success>');
@@ -67,7 +65,7 @@ class AddUserCommandTest extends ConsoleIntegrationTestCase
         $this->assertEquals(2, $this->Users->findById($expectedUserId)->extract('group_id')->first());
 
         //Tries with a no existing group
-        $this->exec('me_cms.add_user --group 123', $this->example);
+        $this->exec('me_cms.add_user --group 123', $example);
         $this->assertExitWithError();
         $this->assertErrorContains('Invalid group ID');
 

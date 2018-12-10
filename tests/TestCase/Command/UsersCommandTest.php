@@ -13,13 +13,15 @@
 namespace MeCms\Test\TestCase\Command;
 
 use Cake\Datasource\ModelAwareTrait;
-use MeCms\TestSuite\ConsoleIntegrationTestCase;
+use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * UsersCommandTest class
  */
-class UsersCommandTest extends ConsoleIntegrationTestCase
+class UsersCommandTest extends TestCase
 {
+    use ConsoleIntegrationTestTrait;
     use ModelAwareTrait;
 
     /**
