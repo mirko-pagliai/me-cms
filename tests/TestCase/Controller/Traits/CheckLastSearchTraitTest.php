@@ -14,16 +14,13 @@ namespace MeCms\Test\TestCase\Controller\Traits;
 
 use Cake\Core\Configure;
 use MeCms\Controller\PostsController;
-use MeTools\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
+use MeCms\TestSuite\TestCase;
 
 /**
  * CheckLastSearchTraitTest class
  */
 class CheckLastSearchTraitTest extends TestCase
 {
-    use MockTrait;
-
     /**
      * Tests for `checkLastSearch()` method
      * @test

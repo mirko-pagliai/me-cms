@@ -16,15 +16,12 @@ namespace MeCms\TestSuite;
 use Cake\Cache\Cache;
 use MeCms\TestSuite\IntegrationTestCase;
 use MeTools\Controller\Component\UploaderComponent;
-use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * Abstract class for test controllers
  */
 abstract class ControllerTestCase extends IntegrationTestCase
 {
-    use MockTrait;
-
     /**
      * Controller instance
      * @var \PHPUnit\Framework\MockObject\MockObject

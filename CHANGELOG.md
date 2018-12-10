@@ -13,6 +13,7 @@
     `EntityFileLog\Log\Engine\EntityFileLog`;
 * added `ConsoleIntegrationTestCase`, `HelperTestCase` and `TestCase` classes.
     Methods provided by `IntegrationTestCase` moved to `ControllerTestCase;
+* updated for `me-tools` 2.18.0;
 * removed `ME_CMS` constants. It no longer uses also `ASSETS`,
     `DATABASE_BACKUP`, `ME_TOOLS`, `RECAPTCHA_MAILHIDE` and `THUMBER` constants;
 * fixed all deprecations.

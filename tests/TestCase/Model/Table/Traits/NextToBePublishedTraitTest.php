@@ -14,16 +14,13 @@ namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\I18n\Time;
 use MeCms\Model\Table\PostsTable;
-use MeTools\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
+use MeCms\TestSuite\TestCase;
 
 /**
  * NextToBePublishedTraitTest class
  */
 class NextToBePublishedTraitTest extends TestCase
 {
-    use MockTrait;
-
     /**
      * @var \MeCms\Model\Table\PostsTable
      */

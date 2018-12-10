@@ -19,15 +19,12 @@ use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\BelongsToMany;
 use Cake\ORM\Association\HasMany;
 use MeCms\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * Abstract class for test tables
  */
 abstract class TableTestCase extends TestCase
 {
-    use MockTrait;
-
     /**
      * Table instance
      * @var \PHPUnit\Framework\MockObject\MockObject

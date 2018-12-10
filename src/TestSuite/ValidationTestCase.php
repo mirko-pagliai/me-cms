@@ -15,15 +15,12 @@ namespace MeCms\TestSuite;
 
 use Cake\Utility\Inflector;
 use MeCms\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * Abstract class for test validation classes
  */
 abstract class ValidationTestCase extends TestCase
 {
-    use MockTrait;
-
     /**
      * Table instance
      * @var \PHPUnit\Framework\MockObject\MockObject

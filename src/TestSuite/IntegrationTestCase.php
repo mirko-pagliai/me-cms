@@ -14,7 +14,8 @@ namespace MeCms\TestSuite;
 
 use Cake\Core\Configure;
 use Cake\Http\BaseApplication;
-use MeTools\TestSuite\IntegrationTestCase as BaseIntegrationTestCase;
+use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\IntegrationTestTrait;
 
 /**
  * A test case class intended to make integration tests of your controllers
@@ -25,8 +26,10 @@ use MeTools\TestSuite\IntegrationTestCase as BaseIntegrationTestCase;
  *  integration tests over mock objects as you can test more of your code
  *  easily and avoid some of the maintenance pitfalls that mock objects create.
  */
-abstract class IntegrationTestCase extends BaseIntegrationTestCase
+abstract class IntegrationTestCase extends TestCase
 {
+    use IntegrationTestTrait;
+
     /**
      * Called before every test method
      * @return void

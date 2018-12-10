@@ -16,15 +16,12 @@ namespace MeCms\TestSuite;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
-use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * Abstract class for test entities
  */
 abstract class CellTestCase extends TestCase
 {
-    use MockTrait;
-
     /**
      * Entity instance
      * @var \PHPUnit\Framework\MockObject\MockObject

@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\Core;
 
 use Cake\Core\Configure;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * GlobalFunctionsTest class

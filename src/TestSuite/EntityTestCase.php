@@ -14,15 +14,12 @@
 namespace MeCms\TestSuite;
 
 use MeCms\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * Abstract class for test entities
  */
 abstract class EntityTestCase extends TestCase
 {
-    use MockTrait;
-
     /**
      * Entity instance
      * @var \PHPUnit\Framework\MockObject\MockObject

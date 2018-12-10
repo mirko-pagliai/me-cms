@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Core;
 
 use Cake\Core\Configure;
 use Cake\Network\Request;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * RequestDetectorsTest class

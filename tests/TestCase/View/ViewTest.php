@@ -17,15 +17,12 @@ use Cake\Core\Plugin;
 use Cake\Network\Request;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\View;
-use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * ViewTest class
  */
 class ViewTest extends TestCase
 {
-    use MockTrait;
-
     /**
      * @var \MeCms\View\View
      */

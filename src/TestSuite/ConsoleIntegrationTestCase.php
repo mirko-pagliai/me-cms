@@ -14,13 +14,16 @@
 namespace MeCms\TestSuite;
 
 use Cake\Http\BaseApplication;
-use MeTools\TestSuite\ConsoleIntegrationTestCase as BaseConsoleIntegrationTestCase;
+use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * Abstract class for console helpers
  */
-abstract class ConsoleIntegrationTestCase extends BaseConsoleIntegrationTestCase
+abstract class ConsoleIntegrationTestCase extends TestCase
 {
+    use ConsoleIntegrationTestTrait;
+
     /**
      * Called before every test method
      * @return void

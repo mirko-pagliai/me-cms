@@ -22,15 +22,12 @@ use MeCms\Model\Table\PostsCategoriesTable;
 use MeCms\Model\Table\TagsTable;
 use MeCms\TestSuite\TestCase;
 use MeCms\Utility\Sitemap;
-use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * SitemapTest class
  */
 class SitemapTest extends TestCase
 {
-    use MockTrait;
-
     /**
      * Does not automatically load fixtures
      * @var bool

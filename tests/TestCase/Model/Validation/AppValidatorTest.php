@@ -16,15 +16,12 @@ use MeCms\Model\Table\BannersTable;
 use MeCms\Model\Table\PostsTable;
 use MeCms\Model\Table\UsersTable;
 use MeCms\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * AppValidatorTest class
  */
 class AppValidatorTest extends TestCase
 {
-    use MockTrait;
-
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject
      */
