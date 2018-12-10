@@ -33,6 +33,8 @@ abstract class ConsoleIntegrationTestCase extends TestCase
         $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
         $app->addPlugin('MeCms')->pluginBootstrap();
 
+        $this->useCommandRunner();
+
         parent::setUp();
     }
 }
