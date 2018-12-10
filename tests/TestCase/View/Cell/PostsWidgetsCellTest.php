@@ -33,8 +33,8 @@ class PostsWidgetsCellTest extends CellTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsCategories',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
     ];
 
     /**

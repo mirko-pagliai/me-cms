@@ -34,7 +34,7 @@ class PageValidatorTest extends ValidationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Pages',
+        'plugin.MeCms.Pages',
     ];
 
     /**

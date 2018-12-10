@@ -26,8 +26,8 @@ class PagesControllerTest extends ControllerTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Pages',
-        'plugin.me_cms.PagesCategories',
+        'plugin.MeCms.Pages',
+        'plugin.MeCms.PagesCategories',
     ];
 
     /**

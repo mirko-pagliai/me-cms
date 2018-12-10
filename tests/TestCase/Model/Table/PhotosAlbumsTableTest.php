@@ -30,8 +30,8 @@ class PhotosAlbumsTableTest extends TableTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Photos',
-        'plugin.me_cms.PhotosAlbums',
+        'plugin.MeCms.Photos',
+        'plugin.MeCms.PhotosAlbums',
     ];
 
     /**

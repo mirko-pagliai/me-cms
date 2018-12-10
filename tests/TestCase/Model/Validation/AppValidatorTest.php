@@ -70,9 +70,9 @@ class AppValidatorTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Banners',
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.Users',
+        'plugin.MeCms.Banners',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.Users',
     ];
 
     /**

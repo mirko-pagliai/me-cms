@@ -25,7 +25,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.PhotosAlbums',
+        'plugin.MeCms.PhotosAlbums',
     ];
 
     /**

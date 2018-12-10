@@ -30,7 +30,7 @@ class IsOwnedByTraitTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Posts',
+        'plugin.MeCms.Posts',
     ];
 
     /**

@@ -32,10 +32,10 @@ class AssociationsSameAliasesTest extends TableTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Pages',
-        'plugin.me_cms.PagesCategories',
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsCategories',
+        'plugin.MeCms.Pages',
+        'plugin.MeCms.PagesCategories',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
     ];
 
     /**

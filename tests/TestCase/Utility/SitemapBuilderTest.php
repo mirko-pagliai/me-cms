@@ -40,13 +40,13 @@ class SitemapBuilderTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Pages',
-        'plugin.me_cms.PagesCategories',
-        'plugin.me_cms.Photos',
-        'plugin.me_cms.PhotosAlbums',
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsCategories',
-        'plugin.me_cms.Tags',
+        'plugin.MeCms.Pages',
+        'plugin.MeCms.PagesCategories',
+        'plugin.MeCms.Photos',
+        'plugin.MeCms.PhotosAlbums',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
+        'plugin.MeCms.Tags',
     ];
 
     /**

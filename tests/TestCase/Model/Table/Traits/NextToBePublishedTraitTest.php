@@ -30,9 +30,9 @@ class NextToBePublishedTraitTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsCategories',
-        'plugin.me_cms.Users',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
+        'plugin.MeCms.Users',
     ];
 
     /**

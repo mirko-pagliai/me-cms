@@ -37,11 +37,11 @@ class PostsControllerTest extends ControllerTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsCategories',
-        'plugin.me_cms.PostsTags',
-        'plugin.me_cms.Tags',
-        'plugin.me_cms.Users',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
+        'plugin.MeCms.PostsTags',
+        'plugin.MeCms.Tags',
+        'plugin.MeCms.Users',
     ];
 
     /**
