@@ -52,7 +52,7 @@ class AssociationsSameAliasesTest extends TableTestCase
 
             $this->assertBelongsTo($categories);
             $this->assertEquals('Categories', $categories->getName());
-            $this->assertEquals(sprintf('%s.%sCategories', 'MeCms', $table->getAlias()), $categories->className());
+            $this->assertEquals(sprintf('%s.%sCategories', 'MeCms', $table->getAlias()), $categories->getClassName());
 
             $this->assertInstanceof(sprintf('%s\Model\Entity\%sCategory', 'MeCms', $table->getAlias()), $categories->find()->first());
         }

@@ -16,7 +16,9 @@
 * updated for `me-tools` 2.18.0;
 * removed `ME_CMS` constants. It no longer uses also `ASSETS`,
     `DATABASE_BACKUP`, `ME_TOOLS`, `RECAPTCHA_MAILHIDE` and `THUMBER` constants;
-* fixed all deprecations.
+* updated for CakePHP 3.7 and fixed all deprecations;
+* `ConsoleIntegrationTestCase` has been removed, use instead
+    `ConsoleIntegrationTestTrait` provided by MeTools.
 
 ## 2.25 branch
 ### 2.25.4

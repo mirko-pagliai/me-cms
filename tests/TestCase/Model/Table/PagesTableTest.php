@@ -77,7 +77,7 @@ class PagesTableTest extends PostsAndPagesTablesTestCase
         $this->assertBelongsTo($this->Table->Categories);
         $this->assertEquals('category_id', $this->Table->Categories->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Categories->getJoinType());
-        $this->assertEquals('MeCms.PagesCategories', $this->Table->Categories->className());
+        $this->assertEquals('MeCms.PagesCategories', $this->Table->Categories->getClassName());
         $this->assertInstanceOf(PagesCategoriesTable::class, $this->Table->Categories->getTarget());
         $this->assertEquals('MeCms.PagesCategories', $this->Table->Categories->getTarget()->getRegistryAlias());
         $this->assertEquals('Categories', $this->Table->Categories->getAlias());

@@ -14,7 +14,6 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\Entity;
-use MeCms\Core\Plugin;
 use MeCms\Model\Entity\Page;
 use MeCms\TestSuite\ControllerTestCase;
 
@@ -44,9 +43,9 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function setUp()
     {
-        Plugin::load('TestPlugin');
-
         parent::setUp();
+
+        $this->loadPlugins(['TestPlugin']);
     }
 
     /**
@@ -55,9 +54,9 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function tearDown()
     {
-        Plugin::unload('TestPlugin');
-
         parent::tearDown();
+
+        $this->removePlugins(['TestPlugin']);
     }
 
     /**

@@ -110,7 +110,7 @@ class PhotosAlbumsTableTest extends TableTestCase
 
         $this->assertHasMany($this->Table->Photos);
         $this->assertEquals('album_id', $this->Table->Photos->getForeignKey());
-        $this->assertEquals('MeCms.Photos', $this->Table->Photos->className());
+        $this->assertEquals('MeCms.Photos', $this->Table->Photos->getClassName());
 
         $this->assertHasBehavior('Timestamp');
 

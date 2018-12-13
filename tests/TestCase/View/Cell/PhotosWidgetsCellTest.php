@@ -113,9 +113,9 @@ class PhotosWidgetsCellTest extends CellTestCase
         $this->assertHtml($expected, $result);
 
         //Empty on albums index
-        $result = $this->Widget->widget($widget);
-        $result->request = $result->request->withEnv('REQUEST_URI', Router::url(['_name' => 'albums']));
-        $this->assertEmpty($result->render());
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'albums']));
+        $this->Widget->getView()->setRequest($request);
+        $this->assertEmpty($this->Widget->widget($widget)->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_albums', $this->Table->getCacheName());
@@ -173,9 +173,9 @@ class PhotosWidgetsCellTest extends CellTestCase
 
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
-            $result = $this->Widget->widget($widget);
-            $result->request = $result->request->withParam('controller', $controller);
-            $this->assertEmpty($result->render());
+            $request = $this->Widget->getView()->getRequest()->withParam('controller', $controller);
+            $this->Widget->getView()->setRequest($request);
+            $this->assertEmpty($this->Widget->widget($widget)->render());
         }
 
         //Tests cache
@@ -235,9 +235,9 @@ class PhotosWidgetsCellTest extends CellTestCase
 
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
-            $result = $this->Widget->widget($widget);
-            $result->request = $result->request->withParam('controller', $controller);
-            $this->assertEmpty($result->render());
+            $request = $this->Widget->getView()->getRequest()->withParam('controller', $controller);
+            $this->Widget->getView()->setRequest($request);
+            $this->assertEmpty($this->Widget->widget($widget)->render());
         }
 
         //Tests cache

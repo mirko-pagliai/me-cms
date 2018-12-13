@@ -32,8 +32,7 @@ class MenuBuilderHelperTest extends HelperTestCase
     {
         parent::setUp();
 
-        Plugin::load('TestPlugin');
-        Plugin::load('TestPluginTwo');
+        $this->loadPlugins(['TestPlugin', 'TestPluginTwo']);
     }
 
     /**
@@ -44,8 +43,7 @@ class MenuBuilderHelperTest extends HelperTestCase
     {
         parent::tearDown();
 
-        Plugin::unload('TestPlugin');
-        Plugin::unload('TestPluginTwo');
+        $this->removePlugins(['TestPlugin', 'TestPluginTwo']);
     }
 
     /**

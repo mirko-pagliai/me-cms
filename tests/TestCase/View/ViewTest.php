@@ -42,7 +42,7 @@ class ViewTest extends TestCase
             ->setMethods(null)
             ->setConstructorArgs([$request])
             ->getMock();
-        $this->View->plugin = 'MeCms';
+        $this->View->setPlugin('MeCms');
     }
 
     /**
@@ -53,7 +53,7 @@ class ViewTest extends TestCase
     {
         parent::tearDown();
 
-        Plugin::unload('TestPlugin');
+        $this->removePlugins(['TestPlugin']);
     }
 
     /**
@@ -66,7 +66,7 @@ class ViewTest extends TestCase
 
         //Loads the `TestPlugin` and sets it as a theme
         $theme = 'TestPlugin';
-        Plugin::load($theme);
+        $this->loadPlugins([$theme]);
         Configure::write('MeCms.default.theme', $theme);
 
         $this->assertEquals($theme, (new View)->getTheme());
@@ -92,7 +92,7 @@ class ViewTest extends TestCase
         $this->setProperty($this->View, 'titleForLayout', null);
 
         //Tests the title as if it had been set by the view
-        $this->View->Blocks->set('title', 'title from view');
+        $this->View->assign('title', 'title from view');
         $this->assertEquals($getTitleForLayoutMethod(), 'title from view - ' . $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), 'title from view - ' . $mainTitle);
 
@@ -105,7 +105,7 @@ class ViewTest extends TestCase
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), 'title from controller - ' . $mainTitle);
 
         //It does NOT reset the property. So the title is not modified
-        $this->View->Blocks->set('title', 'title from view');
+        $this->View->assign('title', 'title from view');
         $this->assertEquals($getTitleForLayoutMethod(), 'title from controller - ' . $mainTitle);
 
         //If this is the homepage, it only returns the main title from the

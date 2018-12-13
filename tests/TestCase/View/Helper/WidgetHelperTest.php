@@ -31,7 +31,7 @@ class WidgetHelperTest extends HelperTestCase
     {
         parent::setUp();
 
-        Plugin::load('TestPlugin');
+        $this->loadPlugins(['TestPlugin']);
     }
 
     /**
@@ -42,7 +42,7 @@ class WidgetHelperTest extends HelperTestCase
     {
         parent::tearDown();
 
-        Plugin::unload('TestPlugin');
+        $this->removePlugins(['TestPlugin']);
     }
 
     /**
@@ -125,21 +125,24 @@ class WidgetHelperTest extends HelperTestCase
     public function testWidget()
     {
         $cell = $this->Helper->widget('Example');
-        $this->assertEquals('display', $cell->action);
-        $this->assertEquals([], $cell->args);
-        $this->assertEquals('display', $cell->template);
+        list($action, $args) = array_values($cell->__debugInfo());
+        $this->assertEquals('display', $action);
+        $this->assertEquals([], $args);
+        $this->assertEquals('display', $cell->viewBuilder()->getTemplate());
         $this->assertInstanceOf(ExampleWidgetsCell::class, $cell);
 
         $cell = $this->Helper->widget('Example', ['example of value']);
-        $this->assertEquals('display', $cell->action);
-        $this->assertEquals([0 => 'example of value'], $cell->args);
-        $this->assertEquals('display', $cell->template);
+        list($action, $args) = array_values($cell->__debugInfo());
+        $this->assertEquals('display', $action);
+        $this->assertEquals([0 => 'example of value'], $args);
+        $this->assertEquals('display', $cell->viewBuilder()->getTemplate());
 
         //From plugin
         $cell = $this->Helper->widget('TestPlugin.PluginExample');
-        $this->assertEquals('display', $cell->action);
-        $this->assertEquals([], $cell->args);
-        $this->assertEquals('display', $cell->template);
+        list($action, $args) = array_values($cell->__debugInfo());
+        $this->assertEquals('display', $action);
+        $this->assertEquals([], $args);
+        $this->assertEquals('display', $cell->viewBuilder()->getTemplate());
         $this->assertInstanceOf(PluginExampleWidgetsCell::class, $cell);
     }
 }

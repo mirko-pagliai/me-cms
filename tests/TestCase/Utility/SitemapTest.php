@@ -57,7 +57,7 @@ class SitemapTest extends TestCase
     {
         parent::setUp();
 
-        Plugin::load('TestPlugin');
+        $this->loadPlugins(['TestPlugin']);
     }
 
     /**
@@ -68,7 +68,7 @@ class SitemapTest extends TestCase
     {
         parent::tearDown();
 
-        Plugin::unload('TestPlugin');
+        $this->removePlugins(['TestPlugin']);
     }
 
     /**

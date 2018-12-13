@@ -69,7 +69,7 @@ class TagsTableTest extends TableTestCase
         $this->assertEquals('tag_id', $this->Table->Posts->getForeignKey());
         $this->assertEquals('post_id', $this->Table->Posts->getTargetForeignKey());
         $this->assertEquals('posts_tags', $this->Table->Posts->junction()->getTable());
-        $this->assertEquals('MeCms.Posts', $this->Table->Posts->className());
+        $this->assertEquals('MeCms.Posts', $this->Table->Posts->getClassName());
         $this->assertEquals('MeCms.PostsTags', $this->Table->Posts->getThrough());
 
         $this->assertHasBehavior('Timestamp');

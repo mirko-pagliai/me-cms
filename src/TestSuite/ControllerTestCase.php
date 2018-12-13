@@ -15,7 +15,6 @@ namespace MeCms\TestSuite;
 
 use Cake\Cache\Cache;
 use MeCms\TestSuite\IntegrationTestCase;
-use MeTools\Controller\Component\UploaderComponent;
 
 /**
  * Abstract class for test controllers
@@ -87,7 +86,7 @@ abstract class ControllerTestCase extends IntegrationTestCase
         $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
-        $controller->request->clearDetectorCache();
+        $this->Controller->request->clearDetectorCache();
 
         if ($action) {
             $this->Controller->request = $this->Controller->request->withParam('action', $action);
@@ -194,35 +193,6 @@ abstract class ControllerTestCase extends IntegrationTestCase
         safe_unlink_recursive(LOGS);
 
         parent::tearDown();
-    }
-
-    /**
-     * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
-     * @param \Cake\Controller\Controller|null $controller Controller instance
-     * @return void
-     * @uses getMockForComponent()
-     */
-    public function controllerSpy($event, $controller = null)
-    {
-        parent::controllerSpy($event, $controller);
-
-        $this->_controller->viewBuilder()->setLayout('with_flash');
-
-        //Sets key for cookies
-        if (!$this->_controller->components()->has('Cookie')) {
-            $this->_controller->loadComponent('Cookie');
-        }
-        $this->_controller->Cookie->setConfig('key', 'somerandomhaskeysomerandomhaskey');
-
-        if ($this->_controller->components()->has('Uploader')) {
-            $this->_controller->Uploader = $this->getMockForComponent(UploaderComponent::class, ['move_uploaded_file']);
-
-            $this->_controller->Uploader->method('move_uploaded_file')
-                ->will($this->returnCallback(function ($filename, $destination) {
-                    return rename($filename, $destination);
-                }));
-        }
     }
 
     /**

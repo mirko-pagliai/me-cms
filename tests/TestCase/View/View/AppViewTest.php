@@ -43,7 +43,7 @@ class AppViewTest extends TestCase
         $this->View = $this->getMockBuilder(View::class)
             ->setMethods(null)
             ->getMock();
-        $this->View->plugin = 'MeCms';
+        $this->View->setPlugin('MeCms');
     }
 
     /**
@@ -54,7 +54,7 @@ class AppViewTest extends TestCase
     {
         parent::tearDown();
 
-        Plugin::unload('TestPlugin');
+        $this->removePlugins(['TestPlugin']);
     }
 
     /**
@@ -126,7 +126,7 @@ class AppViewTest extends TestCase
     {
         //Loads the `TestPlugin` and sets it as a theme
         $theme = 'TestPlugin';
-        Plugin::load($theme);
+        $this->loadPlugins([$theme]);
         Configure::write('MeCms.default.theme', $theme);
 
         //Reloads the View
@@ -149,7 +149,7 @@ class AppViewTest extends TestCase
         file_put_contents($layoutFromApp, 'This is a layout from app');
         $this->assertEquals('This is a layout from app', $this->View->render(false));
         $this->assertEquals('default', $this->View->getLayout());
-        $this->assertEquals('MeCms', $this->View->plugin);
+        $this->assertEquals('MeCms', $this->View->getPlugin());
         $this->assertEquals(null, $this->View->getTheme());
 
         safe_unlink($layoutFromApp);

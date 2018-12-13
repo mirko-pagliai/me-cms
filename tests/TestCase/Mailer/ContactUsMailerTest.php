@@ -23,7 +23,7 @@ class ContactUsMailerTest extends TestCase
     /**
      * @var \MeCms\Mailer\ContactUsMailer
      */
-    public $ContactUsMailer;
+    public $Mailer;
 
     /**
      * @var array
@@ -44,6 +44,7 @@ class ContactUsMailerTest extends TestCase
         parent::setUp();
 
         $this->Mailer = new ContactUsMailer;
+        $this->Mailer->viewBuilder()->setLayout(false);
     }
 
     /**
@@ -53,17 +54,18 @@ class ContactUsMailerTest extends TestCase
     public function testContactUsMail()
     {
         $this->Mailer->contactUsMail($this->example);
-        $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getEmailInstance()->getSender());
-        $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getEmailInstance()->getReplyTo());
-        $this->assertEquals(['email@example.com' => 'email@example.com'], $this->Mailer->getEmailInstance()->getTo());
-        $this->assertEquals('Email from MeCms', $this->Mailer->getEmailInstance()->getSubject());
-        $this->assertEquals('MeCms.Systems/contact_us', $this->Mailer->getEmailInstance()->getTemplate());
+        $result = $this->Mailer->getEmailInstance();
+        $this->assertEquals(['test@test.com' => 'James Blue'], $result->getSender());
+        $this->assertEquals(['test@test.com' => 'James Blue'], $result->getReplyTo());
+        $this->assertEquals(['email@example.com' => 'email@example.com'], $result->getTo());
+        $this->assertEquals('Email from MeCms', $result->getSubject());
+        $this->assertEquals('MeCms.Systems/contact_us', $result->viewBuilder()->getTemplate());
         $this->assertEquals([
             'email' => 'test@test.com',
             'message' => 'Example of message',
             'firstName' => 'James',
             'lastName' => 'Blue',
-        ], $this->Mailer->getEmailInstance()->getViewVars());
+        ], $result->getViewVars());
     }
 
     /**
@@ -86,7 +88,6 @@ class ContactUsMailerTest extends TestCase
     public function testContactUsMailWithSend()
     {
         $result = $this->Mailer->setTransport('debug')
-            ->setLayout(false)
             ->send('contactUsMail', [$this->example]);
 
         $headers = $message = null;

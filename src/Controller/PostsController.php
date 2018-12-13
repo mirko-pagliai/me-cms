@@ -145,7 +145,7 @@ class PostsController extends AppController
     public function rss()
     {
         //This method works only for RSS
-        if (!$this->RequestHandler->isRss()) {
+        if (!$this->RequestHandler->prefers('rss')) {
             throw new ForbiddenException;
         }
 

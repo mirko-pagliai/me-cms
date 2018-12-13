@@ -113,47 +113,46 @@ class UsersControllerTest extends ControllerTestCase
         $controller = $this->getMockForController();
         $this->assertNull($this->invokeMethod($controller, 'loginWithCookie'));
         $this->assertNull($controller->Auth->user());
-        $this->assertNull($controller->Cookie->read('login'));
+        $this->assertEmpty($controller->request->getCookieCollection());
 
         //Writes wrong data on cookies
-        $controller->Cookie->write('login', ['username' => 'a', 'password' => 'b']);
+        $controller->request = $controller->request->withCookieParams(['login' => ['username' => 'a', 'password' => 'b']]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->logout());
         $this->assertNull($controller->Auth->user());
-        $this->assertNull($controller->Cookie->read('login'));
+        $this->assertEmpty($controller->request->getCookieCollection());
 
         //Gets an user and sets a password, then writes right data on cookies
         $user = $this->Table->findByActiveAndBanned(true, false)->first();
         $password = 'mypassword1!';
         $user->password = $user->password_repeat = $password;
         $this->Table->save($user);
-        $data = ['username' => $user->username, 'password' => $password];
         $controller = $this->getMockForController();
-        $controller->Cookie->write('login', $data);
+        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username, 'password' => $password]]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->redirectUrl());
         $this->assertNotEmpty($controller->Auth->user());
-        $this->assertEquals($data, $controller->Cookie->read('login'));
+        $this->assertNotEmpty($controller->request->getCookieCollection());
 
         //Sets the user as "pending" user, then writes again data on cookies
         $user->active = false;
         $this->Table->save($user);
         $controller = $this->getMockForController();
-        $controller->Cookie->write('login', ['username' => $user->username, 'password' => $password]);
+        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username, 'password' => $password]]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->logout());
         $this->assertNull($controller->Auth->user());
-        $this->assertNull($controller->Cookie->read('login'));
+        $this->assertEmpty($controller->request->getCookieCollection());
 
         //Sets the user as "banned" user,then writes again data on cookies
         $user->active = $user->banned = true;
         $this->Table->save($user);
         $controller = $this->getMockForController();
-        $controller->Cookie->write('login', ['username' => $user->username, 'password' => $password]);
+        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username, 'password' => $password]]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->logout());
         $this->assertNull($controller->Auth->user());
-        $this->assertNull($controller->Cookie->read('login'));
+        $this->assertEmpty($controller->request->getCookieCollection());
     }
 
     /**
@@ -163,15 +162,13 @@ class UsersControllerTest extends ControllerTestCase
     public function testBuildLogout()
     {
         //Sets cookies and session values
-        $this->Controller->Cookie->write('login', 'testLogin');
-        $this->Controller->Cookie->write('sidebar-lastmenu', 'value');
-        $this->Controller->request->getSession()->write('KCFINDER', 'value');
-        $this->_response = $this->invokeMethod($this->Controller, 'buildLogout');
-        $this->assertRedirect($this->Controller->Auth->logout());
-
-        $this->assertFalse($this->Controller->Cookie->check('login'));
-        $this->assertFalse($this->Controller->Cookie->check('sidebar-lastmenu'));
-        $this->assertFalse($this->Controller->request->getSession()->check('KCFINDER'));
+        $controller = $this->getMockForController();
+        $controller->request = $controller->request->withCookieParams(['login' => 'testLogin', 'sidebar-lastmenu' => 'testSidebar']);
+        $controller->request->getSession()->write('KCFINDER', 'value');
+        $this->_response = $this->invokeMethod($controller, 'buildLogout');
+        $this->assertRedirect($controller->Auth->logout());
+        $this->assertEmpty($controller->request->getCookieCollection());
+        $this->assertEmpty($controller->request->getSession()->read());
     }
 
     /**

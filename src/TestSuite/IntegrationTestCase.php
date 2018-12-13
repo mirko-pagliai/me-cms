@@ -28,7 +28,10 @@ use MeTools\TestSuite\IntegrationTestTrait;
  */
 abstract class IntegrationTestCase extends TestCase
 {
-    use IntegrationTestTrait;
+    use IntegrationTestTrait {
+        IntegrationTestTrait::setUp as IntegrationTestTraitSetUp;
+        IntegrationTestTrait::tearDown as IntegrationTestTraitTearDown;
+    }
 
     /**
      * Called before every test method
@@ -37,6 +40,7 @@ abstract class IntegrationTestCase extends TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->IntegrationTestTraitSetUp();
 
         $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
         $app->addPlugin('MeCms')->pluginBootstrap();

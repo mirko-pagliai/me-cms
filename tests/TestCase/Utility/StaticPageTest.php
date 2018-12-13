@@ -16,7 +16,6 @@ use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
-use MeCms\Core\Plugin;
 use MeCms\TestSuite\TestCase;
 use MeCms\Utility\StaticPage;
 
@@ -40,7 +39,7 @@ class StaticPageTest extends TestCase
 
         Cache::clearAll();
 
-        Plugin::load('TestPlugin');
+        $this->loadPlugins(['TestPlugin']);
 
         $this->StaticPage = new StaticPage;
     }
@@ -53,7 +52,7 @@ class StaticPageTest extends TestCase
     {
         parent::tearDown();
 
-        Plugin::unload('TestPlugin');
+        $this->removePlugins(['TestPlugin']);
     }
 
     /**

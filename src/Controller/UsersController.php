@@ -35,23 +35,22 @@ class UsersController extends AppController
      */
     protected function loginWithCookie()
     {
+        $username = $this->request->getCookie('login.username');
+        $password = $this->request->getCookie('login.password');
+
         //Checks if the cookies exist
-        if (!$this->Cookie->read('login.username') || !$this->Cookie->read('login.password')) {
+        if (!$username || !$password) {
             return;
         }
 
-        $this->request = $this->request->withData('username', $this->Cookie->read('login.username'));
-        $this->request = $this->request->withData('password', $this->Cookie->read('login.password'));
-
         //Tries to login
+        $this->request = $this->request->withParsedBody(compact('username', 'password'));
         $user = $this->Auth->identify();
-
         if (!$user || !$user['active'] || $user['banned']) {
             return $this->buildLogout();
         }
 
         $this->Auth->setUser($user);
-
         $this->LoginRecorder->config('user', $user['id'])->write();
 
         return $this->redirect($this->Auth->redirectUrl());
@@ -64,8 +63,8 @@ class UsersController extends AppController
     protected function buildLogout()
     {
         //Deletes some cookies and KCFinder session
-        $this->Cookie->delete('login');
-        $this->Cookie->delete('sidebar-lastmenu');
+        $cookies = $this->request->getCookieCollection()->remove('login')->remove('sidebar-lastmenu');
+        $this->request = $this->request->withCookieCollection($cookies);
         $this->request->getSession()->delete('KCFINDER');
 
         return $this->redirect($this->Auth->logout());

@@ -240,9 +240,9 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $this->assertHtml($expected, $result);
 
         //Empty on tags index
-        $result = $this->Widget->widget($widget);
-        $result->request = $result->request->withEnv('REQUEST_URI', Router::url(['_name' => 'postsTags']));
-        $this->assertEmpty($result->render());
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'postsTags']));
+        $this->Widget->getView()->setRequest($request);
+        $this->assertEmpty($this->Widget->widget($widget)->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_tags_popular_2', $this->Table->getCacheName());

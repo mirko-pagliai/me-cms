@@ -13,8 +13,6 @@
  */
 namespace MeCms\TestSuite;
 
-use Cake\Core\Configure;
-use Cake\Http\BaseApplication;
 use MeTools\TestSuite\TestCase as BaseTestCase;
 
 /**
@@ -28,11 +26,8 @@ abstract class TestCase extends BaseTestCase
      */
     public function setUp()
     {
-        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
-        $app->addPlugin('MeCms')->pluginBootstrap();
-
         parent::setUp();
 
-        Configure::write('DatabaseBackup.mailSender', getConfigOrFail('email.webmaster'));
+        $this->loadPlugins(['MeCms']);
     }
 }

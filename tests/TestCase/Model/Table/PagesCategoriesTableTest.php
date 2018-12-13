@@ -78,15 +78,15 @@ class PagesCategoriesTableTest extends TableTestCase
 
         $this->assertBelongsTo($this->Table->Parents);
         $this->assertEquals('parent_id', $this->Table->Parents->getForeignKey());
-        $this->assertEquals('MeCms.PagesCategories', $this->Table->Parents->className());
+        $this->assertEquals('MeCms.PagesCategories', $this->Table->Parents->getClassName());
 
         $this->assertHasMany($this->Table->Childs);
         $this->assertEquals('parent_id', $this->Table->Childs->getForeignKey());
-        $this->assertEquals('MeCms.PagesCategories', $this->Table->Childs->className());
+        $this->assertEquals('MeCms.PagesCategories', $this->Table->Childs->getClassName());
 
         $this->assertHasMany($this->Table->Pages);
         $this->assertEquals('category_id', $this->Table->Pages->getForeignKey());
-        $this->assertEquals('MeCms.Pages', $this->Table->Pages->className());
+        $this->assertEquals('MeCms.Pages', $this->Table->Pages->getClassName());
 
         $this->assertHasBehavior(['Timestamp', 'Tree']);
 
