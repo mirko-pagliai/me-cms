@@ -5,14 +5,13 @@
     previous class is now a `MeCms\Command\Install` class;
 * `UserShell` has been replaced with console commands. Every method of the
     previous class is now a `MeCms\Command` class;
-* uses `addPlugin()` to load plugins. Updated for CakePHP 3.6;
 * the table `$cache` property is now protected. Added `AppTable::getCacheName()`
     method to get the cache configuration name used by the table. It can also
     returns the names of the associated tables;
 * removed `SerializedLog` class. Use instead
     `EntityFileLog\Log\Engine\EntityFileLog`;
-* added `ConsoleIntegrationTestCase`, `HelperTestCase` and `TestCase` classes.
-    Methods provided by `IntegrationTestCase` moved to `ControllerTestCase;
+* added `HelperTestCase` and `TestCase` classes. Methods provided by
+    `IntegrationTestCase` moved to `ControllerTestCase;
 * updated for `me-tools` 2.18.0;
 * removed `ME_CMS` constants. It no longer uses also `ASSETS`,
     `DATABASE_BACKUP`, `ME_TOOLS`, `RECAPTCHA_MAILHIDE` and `THUMBER` constants;
