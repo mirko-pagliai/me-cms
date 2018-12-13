@@ -39,22 +39,23 @@ define('WEBROOT_DIR', 'webroot');
 define('WWW_ROOT', APP . 'webroot' . DS);
 define('TMP', sys_get_temp_dir() . DS . 'me_cms' . DS);
 define('CONFIG', APP . 'config' . DS);
-define('CACHE', TMP);
+define('CACHE', TMP . 'cache' . DS);
 define('LOGS', TMP . 'cakephp_log' . DS);
 define('SESSIONS', TMP . 'sessions' . DS);
-
-require_once dirname(__DIR__) . '/vendor/autoload.php';
-require_once CORE_PATH . 'config' . DS . 'bootstrap.php';
-
 define('UPLOADED', WWW_ROOT . 'files' . DS);
 define('LOGIN_RECORDS', TMP . 'login' . DS);
-require_once ROOT . 'config' . DS . 'constants.php';
 
+safe_mkdir(TMP);
 safe_mkdir(LOGS);
 safe_mkdir(SESSIONS);
 safe_mkdir(CACHE);
-safe_mkdir(CACHE . 'views');
 safe_mkdir(CACHE . 'models');
+safe_mkdir(CACHE . 'persistent');
+safe_mkdir(CACHE . 'views');
+
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once CORE_PATH . 'config' . DS . 'bootstrap.php';
+require_once ROOT . 'config' . DS . 'constants.php';
 
 Configure::write('debug', true);
 Configure::write('App', [
