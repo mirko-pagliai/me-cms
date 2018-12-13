@@ -5,6 +5,7 @@
     previous class is now a `MeCms\Command\Install` class;
 * `UserShell` has been replaced with console commands. Every method of the
     previous class is now a `MeCms\Command` class;
+* fixed bug for `MeCms\Controller\Admin\PostsController::isAuthorized()` method;
 * the table `$cache` property is now protected. Added `AppTable::getCacheName()`
     method to get the cache configuration name used by the table. It can also
     returns the names of the associated tables;
