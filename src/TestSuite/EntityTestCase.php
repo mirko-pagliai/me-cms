@@ -72,7 +72,7 @@ abstract class EntityTestCase extends TestCase
     {
         parent::setUp();
 
-        if (empty($this->Entity) && $this->autoInitializeClass) {
+        if (!$this->Entity && $this->autoInitializeClass) {
             $parts = explode('\\', get_class($this));
             array_splice($parts, 1, 2, []);
             $parts[count($parts) - 1] = substr($parts[count($parts) - 1], 0, -4);

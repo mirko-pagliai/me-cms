@@ -190,17 +190,6 @@ abstract class ControllerTestCase extends TestCase
     }
 
     /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        safe_unlink_recursive(LOGS);
-
-        parent::tearDown();
-    }
-
-    /**
      * Internal method to create an image to upload.
      *
      * It returns an array, similar to the `$_FILE` array that is created after

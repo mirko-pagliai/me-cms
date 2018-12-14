@@ -52,8 +52,7 @@ class Plugin extends BasePlugin
 
         foreach ($pluginsToLoad as $plugin => $config) {
             if (is_int($plugin) && !is_array($config)) {
-                $plugin = $config;
-                $config = [];
+                list($plugin, $config) = [$config, []];
             }
 
             $className = sprintf('%s\Plugin', $plugin);
