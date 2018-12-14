@@ -14,13 +14,18 @@
 namespace MeCms\TestSuite;
 
 use Cake\Cache\Cache;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\IntegrationTestTrait;
 
 /**
  * Abstract class for test controllers
  */
-abstract class ControllerTestCase extends IntegrationTestCase
+abstract class ControllerTestCase extends TestCase
 {
+    use IntegrationTestTrait {
+        IntegrationTestTrait::setUp as metoolsSetUp;
+    }
+
     /**
      * Controller instance
      * @var \PHPUnit\Framework\MockObject\MockObject
@@ -142,7 +147,7 @@ abstract class ControllerTestCase extends IntegrationTestCase
      */
     public function setUp()
     {
-        parent::setUp();
+        $this->metoolsSetUp();
 
         $parts = explode('\\', get_class($this));
         $isAdminController = in_array('Admin', array_slice($parts, -2, 1));

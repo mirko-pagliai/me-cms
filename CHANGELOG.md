@@ -11,14 +11,14 @@
     returns the names of the associated tables;
 * removed `SerializedLog` class. Use instead
     `EntityFileLog\Log\Engine\EntityFileLog`;
-* added `HelperTestCase` and `TestCase` classes. Methods provided by
-    `IntegrationTestCase` moved to `ControllerTestCase;
-* updated for `me-tools` 2.18.0;
-* removed `ME_CMS` constants. It no longer uses also `ASSETS`,
-    `DATABASE_BACKUP`, `ME_TOOLS`, `RECAPTCHA_MAILHIDE` and `THUMBER` constants;
-* updated for CakePHP 3.7 and fixed all deprecations;
+* added `HelperTestCase` and `TestCase` classes. `IntegrationTestCase` has been
+    removed and its methods have been moved to `ControllerTestCase`. You can
+    also use `IntegrationTestTrait` provided by MeTools;
 * `ConsoleIntegrationTestCase` has been removed, use instead
     `ConsoleIntegrationTestTrait` provided by MeTools.
+* removed `ME_CMS` constants. It no longer uses also `ASSETS`,
+    `DATABASE_BACKUP`, `ME_TOOLS`, `RECAPTCHA_MAILHIDE` and `THUMBER` constants;
+* updated for CakePHP 3.7 and fixed all deprecations.
 
 ## 2.25 branch
 ### 2.25.4

@@ -13,13 +13,16 @@
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
-use MeCms\TestSuite\IntegrationTestCase;
+use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\IntegrationTestTrait;
 
 /**
  * MenuTest class
  */
-class MenuTest extends IntegrationTestCase
+class MenuTest extends TestCase
 {
+    use IntegrationTestTrait;
+    
     /**
      * Fixtures
      * @var array

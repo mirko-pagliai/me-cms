@@ -13,17 +13,19 @@
 namespace MeCms\Test\TestCase\Utility;
 
 use Cake\Cache\Cache;
-use Cake\Core\Plugin;
 use Cake\I18n\Time;
 use Cake\Utility\Xml;
-use MeCms\TestSuite\IntegrationTestCase;
 use MeCms\Utility\SitemapBuilder;
+use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\IntegrationTestTrait;
 
 /**
  * SitemapTest class
  */
-class SitemapBuilderTest extends IntegrationTestCase
+class SitemapBuilderTest extends TestCase
 {
+    use IntegrationTestTrait;
+
     /**
      * @var \MeCms\Utility\SitemapBuilder
      */
