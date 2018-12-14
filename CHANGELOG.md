@@ -6,14 +6,13 @@
 * `UserShell` has been replaced with console commands. Every method of the
     previous class is now a `MeCms\Command` class;
 * fixed bug for `MeCms\Controller\Admin\PostsController::isAuthorized()` method;
-* the table `$cache` property is now protected. Added `AppTable::getCacheName()`
+* the `$cache` property for tables is now protected. Added `AppTable::getCacheName()`
     method to get the cache configuration name used by the table. It can also
-    returns the names of the associated tables;
-* removed `SerializedLog` class. Use instead
-    `EntityFileLog\Log\Engine\EntityFileLog`;
-* added `HelperTestCase` and `TestCase` classes. `IntegrationTestCase` has been
-    removed and its methods have been moved to `ControllerTestCase`. You can
-    also use `IntegrationTestTrait` provided by MeTools;
+    returns the names for the associated tables;
+* removed `SerializedLog` class. Use instead `EntityFileLog\Log\Engine\EntityFileLog`;
+* added `HelperTestCase` and `TestCase` classes;
+* `IntegrationTestCase` has been removed and its methods have been moved to
+    `ControllerTestCase`. You can also use `IntegrationTestTrait` provided by MeTools;
 * `ConsoleIntegrationTestCase` has been removed, use instead
     `ConsoleIntegrationTestTrait` provided by MeTools.
 * removed `ME_CMS` constants. It no longer uses also `ASSETS`,
