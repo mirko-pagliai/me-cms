@@ -89,7 +89,7 @@ abstract class ValidationTestCase extends TestCase
             $className = sprintf('%s\\Model\Table\\%sTable', $parts[0], $alias);
 
             if (class_exists($className)) {
-                $this->Table = $this->getMockForTable($className, null);
+                $this->Table = $this->getMockForModel($alias, null, compact('className'));
             }
         }
     }

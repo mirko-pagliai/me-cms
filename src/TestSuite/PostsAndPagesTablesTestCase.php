@@ -60,7 +60,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     {
         $this->loadFixtures();
 
-        $this->Table = $this->getMockForTable(get_parent_class($this->Table), ['setNextToBePublished']);
+        $this->Table = $this->getMockForModel($this->Table->getAlias(), ['setNextToBePublished'], ['className' => get_parent_class($this->Table)]);
         $this->Table->expects($this->once())->method('setNextToBePublished');
         $this->Table->afterDelete(new Event(null), new Entity, new ArrayObject);
     }
@@ -74,7 +74,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     {
         $this->loadFixtures();
 
-        $this->Table = $this->getMockForTable(get_parent_class($this->Table), ['setNextToBePublished']);
+        $this->Table = $this->getMockForModel($this->Table->getAlias(), ['setNextToBePublished'], ['className' => get_parent_class($this->Table)]);
         $this->Table->expects($this->once())->method('setNextToBePublished');
         $this->Table->afterSave(new Event(null), new Entity, new ArrayObject);
     }
@@ -88,7 +88,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     {
         $this->loadFixtures();
 
-        $this->Table = $this->getMockForTable(get_parent_class($this->Table), ['getPreviewSize']);
+        $this->Table = $this->getMockForModel($this->Table->getAlias(), ['getPreviewSize'], ['className' => get_parent_class($this->Table)]);
         $this->Table->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos

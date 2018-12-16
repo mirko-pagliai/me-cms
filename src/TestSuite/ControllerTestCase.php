@@ -142,7 +142,7 @@ abstract class ControllerTestCase extends TestCase
      * @uses $url
      * @uses getControllerAlias()
      * @uses getMockForController()
-     * @uses getMockForTable()
+     * @uses getMockForModel()
      * @uses setUserGroup()
      */
     public function setUp()
@@ -169,7 +169,7 @@ abstract class ControllerTestCase extends TestCase
             //Tries to retrieve the table
             $className = sprintf('%s\\Model\\Table\\%sTable', $parts[0], $alias);
             if (class_exists($className)) {
-                $this->Table = $this->getMockForTable($className, null);
+                $this->Table = $this->getMockForModel($alias, null, compact('className'));
 
                 //Tries to retrieve all cache names related to this table and associated tables
                 if (method_exists($this->Table, 'getCacheName')) {

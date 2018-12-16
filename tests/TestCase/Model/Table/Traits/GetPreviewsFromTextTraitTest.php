@@ -34,7 +34,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = $this->getMockForTable(PostsTable::class, null);
+        $this->Posts = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
     }
 
     /**
@@ -155,7 +155,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
             return $this->invokeMethod($this->Posts, 'getPreviews', func_get_args());
         };
 
-        $this->Posts = $this->getMockForTable(PostsTable::class, ['getPreviewSize']);
+        $this->Posts = $this->getMockForModel(PostsTable::class, ['getPreviewSize']);
         $this->Posts->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         foreach ([

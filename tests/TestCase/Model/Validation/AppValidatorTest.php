@@ -83,9 +83,9 @@ class AppValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->Banners = $this->getMockForTable(BannersTable::class, null);
-        $this->Posts = $this->getMockForTable(PostsTable::class, null);
-        $this->Users = $this->getMockForTable(UsersTable::class, null);
+        $this->Banners = $this->getMockForModel('Banners', null, ['className' => BannersTable::class]);
+        $this->Posts = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
+        $this->Users = $this->getMockForModel('Users', null, ['className' => UsersTable::class]);
     }
 
     /**

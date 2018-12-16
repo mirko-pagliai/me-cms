@@ -38,7 +38,7 @@ class CreateGroupsCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $UsersGroups = $this->getMockForTable(UsersGroupsTable::class, null);
+        $UsersGroups = $this->getMockForModel('UsersGroups', null, ['className' => UsersGroupsTable::class]);
 
         //A group already exists
         $this->exec('me_cms.create_groups -v');

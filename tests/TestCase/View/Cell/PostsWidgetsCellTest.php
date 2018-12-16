@@ -17,8 +17,6 @@ use Cake\I18n\FrozenDate;
 use Cake\Routing\Router;
 use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\CellTestCase;
-use MeCms\View\Helper\WidgetHelper;
-use MeCms\View\View;
 
 /**
  * PostsWidgetsCellTest class
@@ -47,7 +45,7 @@ class PostsWidgetsCellTest extends CellTestCase
     {
         parent::setUp();
 
-        $this->Table = $this->getMockForTable(PostsTable::class, null);
+        $this->Table = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
     }
 
     /**

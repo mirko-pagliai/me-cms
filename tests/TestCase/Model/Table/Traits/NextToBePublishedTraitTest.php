@@ -43,7 +43,7 @@ class NextToBePublishedTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = $this->getMockForTable(PostsTable::class, null);
+        $this->Posts = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
     }
 
     /**

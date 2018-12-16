@@ -105,7 +105,7 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $table = $this->getMockForTable(PagesCategoriesTable::class, null);
+        $table = $this->getMockForModel(PagesCategoriesTable::class, null);
         $this->assertEquals($expected, Sitemap::pages());
 
         $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
@@ -157,7 +157,7 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $table = $this->getMockForTable(PhotosAlbumsTable::class, null);
+        $table = $this->getMockForModel(PhotosAlbumsTable::class, null);
         $this->assertEquals($expected, Sitemap::photos());
 
         $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
@@ -232,7 +232,7 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $table = $this->getMockForTable(PostsCategoriesTable::class, null);
+        $table = $this->getMockForModel(PostsCategoriesTable::class, null);
         $this->assertEquals($expected, Sitemap::posts());
 
         $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
@@ -279,7 +279,7 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $table = $this->getMockForTable(TagsTable::class, null);
+        $table = $this->getMockForModel(TagsTable::class, null);
         $this->assertEquals($expected, Sitemap::postsTags());
 
         $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));

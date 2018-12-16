@@ -39,7 +39,7 @@ class CreateAdminCommandTest extends TestCase
     public function testExecute()
     {
         $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
-        $Users = $this->getMockForTable(UsersTable::class, null);
+        $Users = $this->getMockForModel('Users', null, ['className' => UsersTable::class]);
 
         $expectedUserId = $Users->find()->extract('id')->last() + 1;
         $this->exec('me_cms.create_admin', $example);

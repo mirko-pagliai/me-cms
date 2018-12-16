@@ -106,7 +106,8 @@ abstract class TableTestCase extends TestCase
             $className = implode('\\', $parts);
 
             if (class_exists($className)) {
-                $this->Table = $this->getMockForTable($className, null);
+                $alias = substr(array_pop($parts), 0, -5);
+                $this->Table = $this->getMockForModel($alias, null, compact('className'));
 
                 //Tries to retrieve all cache names related to this table and associated tables
                 if (method_exists($this->Table, 'getCacheName')) {

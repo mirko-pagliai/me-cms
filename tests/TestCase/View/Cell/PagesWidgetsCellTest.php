@@ -46,7 +46,7 @@ class PagesWidgetsCellTest extends CellTestCase
 
         Cache::clearAll();
 
-        $this->Table = $this->getMockForTable(PagesTable::class, null);
+        $this->Table = $this->getMockForModel('Pages', null, ['className' => PagesTable::class]);
     }
 
     /**
