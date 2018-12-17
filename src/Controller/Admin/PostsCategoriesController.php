@@ -65,7 +65,7 @@ class PostsCategoriesController extends AppController
     {
         $categories = $this->PostsCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
-            ->order([sprintf('%s.lft', $this->PostsCategories->alias()) => 'ASC'])
+            ->order([sprintf('%s.lft', $this->PostsCategories->getAlias()) => 'ASC'])
             ->formatResults(function (ResultSet $results) {
                 //Gets categories as tree list
                 $treeList = $this->PostsCategories->getTreeList()->toArray();

@@ -29,7 +29,7 @@ class PostsCategoryValidatorTest extends ValidationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.PostsCategories',
+        'plugin.MeCms.PostsCategories',
     ];
 
     /**

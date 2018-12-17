@@ -35,8 +35,8 @@ class PostValidatorTest extends ValidationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.Tags',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.Tags',
     ];
 
     /**

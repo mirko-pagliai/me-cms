@@ -38,7 +38,7 @@ class PostsTagsWidgetsCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        $this->loadModel(ME_CMS . '.Tags');
+        $this->loadModel('MeCms.Tags');
     }
 
     /**
@@ -134,7 +134,7 @@ class PostsTagsWidgetsCell extends Cell
                     return $value;
                 });
             })
-            ->cache($cache, $this->Tags->Posts->cache)
+            ->cache($cache, $this->Tags->Posts->getCacheName())
             ->all();
 
         if ($shuffle) {

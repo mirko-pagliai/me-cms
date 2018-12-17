@@ -24,10 +24,10 @@ use MeCms\Model\Table\AppTable;
 class PagesCategoriesTable extends AppTable
 {
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'pages';
+    protected $cache = 'pages';
 
     /**
      * Returns a rules checker object that will be used for validating
@@ -73,17 +73,17 @@ class PagesCategoriesTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Parents', ['className' => ME_CMS . '.PagesCategories'])
+        $this->belongsTo('Parents', ['className' => 'MeCms.PagesCategories'])
             ->setForeignKey('parent_id');
 
-        $this->hasMany('Childs', ['className' => ME_CMS . '.PagesCategories'])
+        $this->hasMany('Childs', ['className' => 'MeCms.PagesCategories'])
             ->setForeignKey('parent_id');
 
-        $this->hasMany('Pages', ['className' => ME_CMS . '.Pages'])
+        $this->hasMany('Pages', ['className' => 'MeCms.Pages'])
             ->setForeignKey('category_id');
 
         $this->addBehavior('Timestamp');
-        $this->addBehavior(ME_CMS . '.Tree');
+        $this->addBehavior('MeCms.Tree');
 
         $this->_validatorClass = '\MeCms\Model\Validation\PagesCategoryValidator';
     }

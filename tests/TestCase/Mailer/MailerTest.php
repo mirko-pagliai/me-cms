@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\Mailer;
 
 use MeCms\Mailer\Mailer;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * MailerTest class
@@ -28,9 +28,9 @@ class MailerTest extends TestCase
     {
         $mailer = new Mailer;
 
-        $this->assertEquals([ME_TOOLS . '.Html'], $mailer->viewBuilder()->getHelpers());
-        $this->assertEquals(['email@example.com' => ME_CMS], $mailer->getEmailInstance()->getSender());
-        $this->assertEquals(['email@example.com' => ME_CMS], $mailer->getEmailInstance()->getFrom());
+        $this->assertEquals(['MeTools.Html'], $mailer->viewBuilder()->getHelpers());
+        $this->assertEquals(['email@example.com' => 'MeCms'], $mailer->getEmailInstance()->getSender());
+        $this->assertEquals(['email@example.com' => 'MeCms'], $mailer->getEmailInstance()->getFrom());
         $this->assertEquals('html', $mailer->getEmailInstance()->getEmailFormat());
         $this->assertEquals([], $mailer->getEmailInstance()->getViewVars());
     }

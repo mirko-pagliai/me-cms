@@ -39,7 +39,7 @@ class PagesWidgetsCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        $this->loadModel(ME_CMS . '.Pages');
+        $this->loadModel('MeCms.Pages');
     }
 
     /**
@@ -62,7 +62,7 @@ class PagesWidgetsCell extends Cell
             ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_categories', $this->Pages->cache)
+            ->cache('widget_categories', $this->Pages->getCacheName())
             ->all();
 
         $this->set(compact('categories'));
@@ -82,7 +82,7 @@ class PagesWidgetsCell extends Cell
         $pages = $this->Pages->find('active')
             ->select(['title', 'slug'])
             ->order([sprintf('%s.title', $this->Pages->getAlias()) => 'ASC'])
-            ->cache(sprintf('widget_list'), $this->Pages->cache)
+            ->cache(sprintf('widget_list'), $this->Pages->getCacheName())
             ->all();
 
         $this->set(compact('pages'));

@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Form;
 
 use Cake\Mailer\MailerAwareTrait;
 use MeCms\Form\ContactUsForm;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * ContactUsFormTest class
@@ -59,7 +59,7 @@ class ContactUsFormTest extends TestCase
     public function testValidationExampleData()
     {
         $this->assertTrue($this->Form->validate($this->example));
-        $this->assertEmpty($this->Form->errors());
+        $this->assertEmpty($this->Form->getErrors());
 
         foreach (array_keys($this->example) as $key) {
             //Create a copy of the example data and removes the current value
@@ -68,7 +68,7 @@ class ContactUsFormTest extends TestCase
 
             $expected = [$key => ['_required' => 'This field is required']];
             $this->assertFalse($this->Form->validate($copy));
-            $this->assertEquals($expected, $this->Form->errors());
+            $this->assertEquals($expected, $this->Form->getErrors());
         }
     }
 
@@ -83,14 +83,14 @@ class ContactUsFormTest extends TestCase
             $this->example['message'] = $value;
 
             $this->assertFalse($this->Form->validate($this->example));
-            $this->assertEquals($expected, $this->Form->errors());
+            $this->assertEquals($expected, $this->Form->getErrors());
         }
 
         foreach ([str_repeat('a', 10), str_repeat('a', 1000)] as $value) {
             $this->example['message'] = $value;
 
             $this->assertTrue($this->Form->validate($this->example));
-            $this->assertEmpty($this->Form->errors());
+            $this->assertEmpty($this->Form->getErrors());
         }
     }
 

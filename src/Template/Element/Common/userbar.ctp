@@ -38,19 +38,19 @@
                 if (getConfig('users.login_log')) {
                     echo $this->Html->link(
                         I18N_LAST_LOGIN,
-                        ['controller' => 'Users', 'action' => 'lastLogin', 'plugin' => ME_CMS],
+                        ['controller' => 'Users', 'action' => 'lastLogin', 'plugin' => 'MeCms'],
                         ['class' => 'dropdown-item']
                     );
                 }
 
                 echo $this->Html->link(
                     __d('me_cms', 'Change picture'),
-                    ['controller' => 'Users', 'action' => 'changePicture', 'plugin' => ME_CMS],
+                    ['controller' => 'Users', 'action' => 'changePicture', 'plugin' => 'MeCms'],
                     ['class' => 'dropdown-item']
                 );
                 echo $this->Html->link(
                     __d('me_cms', 'Change password'),
-                    ['controller' => 'Users', 'action' => 'changePassword', 'plugin' => ME_CMS],
+                    ['controller' => 'Users', 'action' => 'changePassword', 'plugin' => 'MeCms'],
                     ['class' => 'dropdown-item']
                 );
                 echo $this->Html->link(__d('me_cms', 'Logout'), ['_name' => 'logout'], ['class' => 'dropdown-item']);

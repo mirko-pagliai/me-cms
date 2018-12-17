@@ -5,6 +5,10 @@
 
     <rule ref="./vendor/cakephp/cakephp-codesniffer/CakePHP/ruleset.xml"/>
 
+    <rule ref="Generic.Commenting.Todo">
+        <severity>0</severity>
+    </rule>
+
     <rule ref="Internal.NoCodeFound">
         <severity>0</severity>
     </rule>

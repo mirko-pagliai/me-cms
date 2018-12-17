@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use MeCms\Model\Entity\Banner;
 use MeCms\Model\Validation\BannersPositionValidator;
 use MeCms\TestSuite\TableTestCase;
 
@@ -31,18 +30,9 @@ class BannersPositionsTableTest extends TableTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Banners',
-        'plugin.me_cms.BannersPositions',
+        'plugin.MeCms.Banners',
+        'plugin.MeCms.BannersPositions',
     ];
-
-    /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('banners', $this->Table->cache);
-    }
 
     /**
      * Test for `buildRules()` method
@@ -74,7 +64,7 @@ class BannersPositionsTableTest extends TableTestCase
 
         $this->assertHasMany($this->Table->Banners);
         $this->assertEquals('position_id', $this->Table->Banners->getForeignKey());
-        $this->assertEquals(ME_CMS . '.Banners', $this->Table->Banners->className());
+        $this->assertEquals('MeCms.Banners', $this->Table->Banners->getClassName());
 
         $this->assertHasBehavior('Timestamp');
 

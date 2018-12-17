@@ -35,9 +35,9 @@ class Sitemap extends SitemapBuilder
      */
     public static function pages()
     {
-        $table = TableRegistry::get(ME_CMS . '.PagesCategories');
+        $table = TableRegistry::get('MeCms.PagesCategories');
 
-        $url = Cache::read('sitemap', $table->cache);
+        $url = Cache::read('sitemap', $table->getCacheName());
 
         if ($url) {
             return $url;
@@ -75,7 +75,7 @@ class Sitemap extends SitemapBuilder
             }
         }
 
-        Cache::write('sitemap', $url, $table->cache);
+        Cache::write('sitemap', $url, $table->getCacheName());
 
         return $url;
     }
@@ -87,9 +87,9 @@ class Sitemap extends SitemapBuilder
      */
     public static function photos()
     {
-        $table = TableRegistry::get(ME_CMS . '.PhotosAlbums');
+        $table = TableRegistry::get('MeCms.PhotosAlbums');
 
-        $url = Cache::read('sitemap', $table->cache);
+        $url = Cache::read('sitemap', $table->getCacheName());
 
         if ($url) {
             return $url;
@@ -131,7 +131,7 @@ class Sitemap extends SitemapBuilder
             }
         }
 
-        Cache::write('sitemap', $url, $table->cache);
+        Cache::write('sitemap', $url, $table->getCacheName());
 
         return $url;
     }
@@ -143,9 +143,9 @@ class Sitemap extends SitemapBuilder
      */
     public static function posts()
     {
-        $table = TableRegistry::get(ME_CMS . '.PostsCategories');
+        $table = TableRegistry::get('MeCms.PostsCategories');
 
-        $url = Cache::read('sitemap', $table->cache);
+        $url = Cache::read('sitemap', $table->getCacheName());
 
         if ($url) {
             return $url;
@@ -190,7 +190,7 @@ class Sitemap extends SitemapBuilder
             }
         }
 
-        Cache::write('sitemap', $url, $table->cache);
+        Cache::write('sitemap', $url, $table->getCacheName());
 
         return $url;
     }
@@ -202,9 +202,9 @@ class Sitemap extends SitemapBuilder
      */
     public static function postsTags()
     {
-        $table = TableRegistry::get(ME_CMS . '.Tags');
+        $table = TableRegistry::get('MeCms.Tags');
 
-        $url = Cache::read('sitemap', $table->cache);
+        $url = Cache::read('sitemap', $table->getCacheName());
 
         if ($url) {
             return $url;
@@ -237,7 +237,7 @@ class Sitemap extends SitemapBuilder
             );
         }
 
-        Cache::write('sitemap', $url, $table->cache);
+        Cache::write('sitemap', $url, $table->getCacheName());
 
         return $url;
     }

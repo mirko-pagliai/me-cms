@@ -42,8 +42,8 @@ class UsersControllerTest extends ControllerTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Users',
-        'plugin.me_cms.UsersGroups',
+        'plugin.MeCms.Users',
+        'plugin.MeCms.UsersGroups',
     ];
 
     /**
@@ -139,14 +139,14 @@ class UsersControllerTest extends ControllerTestCase
     {
         $url = $this->url + ['action' => 'view', 1];
 
-        Configure::write(ME_CMS . '.users.login_log', 0);
+        Configure::write('MeCms.users.login_log', 0);
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin/Users/view.ctp');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
         $this->assertEmpty($this->viewVariable('loginLog'));
 
-        Configure::write(ME_CMS . '.users.login_log', 1);
+        Configure::write('MeCms.users.login_log', 1);
         $this->get($url);
         $this->assertContainsInstanceof(Entity::class, $this->viewVariable('loginLog'));
     }
@@ -387,7 +387,7 @@ class UsersControllerTest extends ControllerTestCase
                 'version' => '55.0.2883.87',
             ]));
 
-        $LoginRecorder->config('user', 1);
+        $LoginRecorder->setConfig('user', 1);
 
         //Writes a login log
         $this->assertTrue($LoginRecorder->write());
@@ -402,7 +402,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertIsArray($this->viewVariable('loginLog'));
 
         //Disabled
-        Configure::write(ME_CMS . '.users.login_log', false);
+        Configure::write('MeCms.users.login_log', false);
 
         $this->get($url);
         $this->assertRedirect(['_name' => 'dashboard']);

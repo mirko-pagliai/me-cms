@@ -25,7 +25,7 @@ if (!function_exists('getConfig')) {
      */
     function getConfig($var = null, $default = null)
     {
-        $value = Configure::read(sprintf('%s.%s', ME_CMS, $var));
+        $value = Configure::read(sprintf('%s.%s', 'MeCms', $var));
 
         return $value ?: Configure::read($var, $default);
     }
@@ -45,7 +45,7 @@ if (!function_exists('getConfigOrFail')) {
      */
     function getConfigOrFail($var)
     {
-        $value = Configure::read(sprintf('%s.%s', ME_CMS, $var));
+        $value = Configure::read(sprintf('%s.%s', 'MeCms', $var));
 
         return $value ?: Configure::readOrFail($var);
     }

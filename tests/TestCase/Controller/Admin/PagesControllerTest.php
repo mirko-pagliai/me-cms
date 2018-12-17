@@ -26,9 +26,31 @@ class PagesControllerTest extends ControllerTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Pages',
-        'plugin.me_cms.PagesCategories',
+        'plugin.MeCms.Pages',
+        'plugin.MeCms.PagesCategories',
     ];
+
+    /**
+     * Called before every test method
+     * @return void
+     */
+    public function setUp()
+    {
+        create_kcfinder_files();
+
+        parent::setUp();
+    }
+
+    /**
+     * Called after every test method
+     * @return void
+     */
+    public function tearDown()
+    {
+        safe_unlink_recursive(KCFINDER, 'empty');
+
+        parent::tearDown();
+    }
 
     /**
      * Tests for `beforeFilter()` method

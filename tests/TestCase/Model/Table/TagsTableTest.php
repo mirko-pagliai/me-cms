@@ -31,19 +31,10 @@ class TagsTableTest extends TableTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsTags',
-        'plugin.me_cms.Tags',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsTags',
+        'plugin.MeCms.Tags',
     ];
-
-    /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('posts', $this->Table->cache);
-    }
 
     /**
      * Test for `buildRules()` method
@@ -78,8 +69,8 @@ class TagsTableTest extends TableTestCase
         $this->assertEquals('tag_id', $this->Table->Posts->getForeignKey());
         $this->assertEquals('post_id', $this->Table->Posts->getTargetForeignKey());
         $this->assertEquals('posts_tags', $this->Table->Posts->junction()->getTable());
-        $this->assertEquals(ME_CMS . '.Posts', $this->Table->Posts->className());
-        $this->assertEquals(ME_CMS . '.PostsTags', $this->Table->Posts->getThrough());
+        $this->assertEquals('MeCms.Posts', $this->Table->Posts->getClassName());
+        $this->assertEquals('MeCms.PostsTags', $this->Table->Posts->getThrough());
 
         $this->assertHasBehavior('Timestamp');
 

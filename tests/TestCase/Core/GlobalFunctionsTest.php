@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\Core;
 
 use Cake\Core\Configure;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * GlobalFunctionsTest class
@@ -33,14 +33,14 @@ class GlobalFunctionsTest extends TestCase
         $this->assertNull(getConfig('noExisting'));
         $this->assertEquals('defaultValue', getConfig('noExisting', 'defaultValue'));
 
-        $this->assertNull(getConfig(ME_CMS . '.noExisting'));
-        $this->assertEquals('defaultValue', getConfig(ME_CMS . '.noExisting', 'defaultValue'));
+        $this->assertNull(getConfig('MeCms.noExisting'));
+        $this->assertEquals('defaultValue', getConfig('MeCms.noExisting', 'defaultValue'));
 
         Configure::write('exampleKey', 'exampleValue');
         $this->assertEquals('exampleValue', getConfig('exampleKey'));
         $this->assertEquals('exampleValue', getConfig('exampleKey', 'defaultValue'));
 
-        Configure::write(ME_CMS . '.exampleKey', 'MeCmsExampleValue');
+        Configure::write('MeCms.exampleKey', 'MeCmsExampleValue');
         $this->assertEquals('MeCmsExampleValue', getConfig('exampleKey'));
         $this->assertEquals('MeCmsExampleValue', getConfig('exampleKey', 'defaultValue'));
 
@@ -58,7 +58,7 @@ class GlobalFunctionsTest extends TestCase
         Configure::write('exampleKey', 'exampleValue');
         $this->assertEquals('exampleValue', getConfigOrFail('exampleKey'));
 
-        Configure::write(ME_CMS . '.exampleKey', 'MeCmsExampleValue');
+        Configure::write('MeCms.exampleKey', 'MeCmsExampleValue');
         $this->assertEquals('MeCmsExampleValue', getConfigOrFail('exampleKey'));
     }
 

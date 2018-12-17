@@ -32,18 +32,9 @@ class PagesCategoriesTableTest extends TableTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Pages',
-        'plugin.me_cms.PagesCategories',
+        'plugin.MeCms.Pages',
+        'plugin.MeCms.PagesCategories',
     ];
-
-    /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('pages', $this->Table->cache);
-    }
 
     /**
      * Test for `buildRules()` method
@@ -87,15 +78,15 @@ class PagesCategoriesTableTest extends TableTestCase
 
         $this->assertBelongsTo($this->Table->Parents);
         $this->assertEquals('parent_id', $this->Table->Parents->getForeignKey());
-        $this->assertEquals(ME_CMS . '.PagesCategories', $this->Table->Parents->className());
+        $this->assertEquals('MeCms.PagesCategories', $this->Table->Parents->getClassName());
 
         $this->assertHasMany($this->Table->Childs);
         $this->assertEquals('parent_id', $this->Table->Childs->getForeignKey());
-        $this->assertEquals(ME_CMS . '.PagesCategories', $this->Table->Childs->className());
+        $this->assertEquals('MeCms.PagesCategories', $this->Table->Childs->getClassName());
 
         $this->assertHasMany($this->Table->Pages);
         $this->assertEquals('category_id', $this->Table->Pages->getForeignKey());
-        $this->assertEquals(ME_CMS . '.Pages', $this->Table->Pages->className());
+        $this->assertEquals('MeCms.Pages', $this->Table->Pages->getClassName());
 
         $this->assertHasBehavior(['Timestamp', 'Tree']);
 

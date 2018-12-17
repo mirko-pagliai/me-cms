@@ -26,7 +26,7 @@
         echo $this->Html->ul($links);
     ?>
 
-    <p><?= __d('me_cms', 'Powered by {0}. Copyright {1}', ME_CMS, date('Y')) ?></p>
+    <p><?= __d('me_cms', 'Powered by {0}. Copyright {1}', 'MeCms', date('Y')) ?></p>
     <p>
         <?= __d('me_cms', 'Developed by {0}', $this->Html->link('Mirko Pagliai', '//github.com/mirko-pagliai', ['target' => '_blank'])) ?>
     </p>

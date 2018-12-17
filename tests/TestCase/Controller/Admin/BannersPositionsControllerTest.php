@@ -25,7 +25,7 @@ class BannersPositionsControllerTest extends ControllerTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.BannersPositions',
+        'plugin.MeCms.BannersPositions',
     ];
 
     /**

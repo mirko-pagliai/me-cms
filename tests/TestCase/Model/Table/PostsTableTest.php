@@ -37,11 +37,11 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsCategories',
-        'plugin.me_cms.PostsTags',
-        'plugin.me_cms.Tags',
-        'plugin.me_cms.Users',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
+        'plugin.MeCms.PostsTags',
+        'plugin.MeCms.Tags',
+        'plugin.MeCms.Users',
     ];
 
     /**
@@ -53,15 +53,6 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
             'user_id' => 1,
             'tags_as_string' => 'first tag, second tag',
         ];
-    }
-
-    /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('posts', $this->Table->cache);
     }
 
     /**
@@ -133,22 +124,22 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertBelongsTo($this->Table->Categories);
         $this->assertEquals('category_id', $this->Table->Categories->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Categories->getJoinType());
-        $this->assertEquals(ME_CMS . '.PostsCategories', $this->Table->Categories->className());
+        $this->assertEquals('MeCms.PostsCategories', $this->Table->Categories->getClassName());
         $this->assertInstanceOf(PostsCategoriesTable::class, $this->Table->Categories->getTarget());
-        $this->assertEquals(ME_CMS . '.PostsCategories', $this->Table->Categories->getTarget()->getRegistryAlias());
+        $this->assertEquals('MeCms.PostsCategories', $this->Table->Categories->getTarget()->getRegistryAlias());
         $this->assertEquals('Categories', $this->Table->Categories->getAlias());
 
         $this->assertBelongsTo($this->Table->Users);
         $this->assertEquals('user_id', $this->Table->Users->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Users->getJoinType());
-        $this->assertEquals(ME_CMS . '.Users', $this->Table->Users->className());
+        $this->assertEquals('MeCms.Users', $this->Table->Users->getClassName());
 
         $this->assertBelongsToMany($this->Table->Tags);
         $this->assertEquals('post_id', $this->Table->Tags->getForeignKey());
         $this->assertEquals('tag_id', $this->Table->Tags->getTargetForeignKey());
         $this->assertEquals('posts_tags', $this->Table->Tags->junction()->getTable());
-        $this->assertEquals(ME_CMS . '.Tags', $this->Table->Tags->className());
-        $this->assertEquals(ME_CMS . '.PostsTags', $this->Table->Tags->getThrough());
+        $this->assertEquals('MeCms.Tags', $this->Table->Tags->getClassName());
+        $this->assertEquals('MeCms.PostsTags', $this->Table->Tags->getThrough());
 
         $this->assertHasBehavior(['Timestamp', 'CounterCache']);
 
@@ -209,7 +200,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $relatedPosts = $this->Table->getRelated($post, 2, false);
 
         $this->assertCount(2, $relatedPosts);
-        $this->assertEquals($relatedPosts, Cache::read('related_2_posts_for_1', $this->Table->cache));
+        $this->assertEquals($relatedPosts, Cache::read('related_2_posts_for_1', $this->Table->getCacheName()));
 
         foreach ($relatedPosts as $related) {
             $this->assertTrue($related->has(['id', 'title', 'slug', 'text']));
@@ -220,7 +211,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $related = $this->Table->getRelated($post, 2, true);
 
         $this->assertCount(1, $related);
-        $this->assertEquals($related, Cache::read('related_2_posts_for_1_with_images', $this->Table->cache));
+        $this->assertEquals($related, Cache::read('related_2_posts_for_1_with_images', $this->Table->getCacheName()));
 
         $this->assertInstanceOf(Post::class, $related[0]);
         $this->assertEquals(2, $related[0]->id);
@@ -236,13 +227,13 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $post = $this->Table->findById(4)->contain('Tags')->first();
         $this->assertEquals([], $post->tags);
         $this->assertEquals([], $this->Table->getRelated($post));
-        $this->assertEquals([], Cache::read('related_5_posts_for_4_with_images', $this->Table->cache));
+        $this->assertEquals([], Cache::read('related_5_posts_for_4_with_images', $this->Table->getCacheName()));
 
         //This post has one tag, but this is not related to any other post
         $post = $this->Table->findById(5)->contain('Tags')->first();
         $this->assertCount(1, $post->tags);
         $this->assertEquals([], $this->Table->getRelated($post));
-        $this->assertEquals([], Cache::read('related_5_posts_for_5_with_images', $this->Table->cache));
+        $this->assertEquals([], Cache::read('related_5_posts_for_5_with_images', $this->Table->getCacheName()));
     }
 
     /**

@@ -40,11 +40,11 @@ class ContactUsMailer extends Mailer
             }
         }
 
+        $this->viewBuilder()->setTemplate('MeCms.Systems/contact_us');
         $this->setSender($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
             ->setReplyTo($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))
             ->setTo(getConfigOrFail('email.webmaster'))
             ->setSubject(__d('me_cms', 'Email from {0}', getConfigOrFail('main.title')))
-            ->setTemplate(ME_CMS . '.Systems/contact_us')
             ->setViewVars([
                 'email' => $data['email'],
                 'firstName' => $data['first_name'],

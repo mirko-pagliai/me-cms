@@ -25,7 +25,7 @@ class HtmlWidgetsCellTest extends CellTestCase
      */
     public function testDisplay()
     {
-        $widget = ME_CMS . '.Html';
+        $widget = 'MeCms.Html';
 
         $result = $this->Widget->widget($widget, ['template' => 'custom_html'])->render();
         $this->assertEquals('A custom widget', $result);

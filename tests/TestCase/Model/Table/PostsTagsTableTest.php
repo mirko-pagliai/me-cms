@@ -30,19 +30,10 @@ class PostsTagsTableTest extends TableTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsTags',
-        'plugin.me_cms.Tags',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsTags',
+        'plugin.MeCms.Tags',
     ];
-
-    /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('posts', $this->Table->cache);
-    }
 
     /**
      * Test for `buildRules()` method
@@ -74,12 +65,12 @@ class PostsTagsTableTest extends TableTestCase
         $this->assertBelongsTo($this->Table->Posts);
         $this->assertEquals('post_id', $this->Table->Posts->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Posts->getJoinType());
-        $this->assertEquals(ME_CMS . '.Posts', $this->Table->Posts->className());
+        $this->assertEquals('MeCms.Posts', $this->Table->Posts->getClassName());
 
         $this->assertBelongsTo($this->Table->Tags);
         $this->assertEquals('tag_id', $this->Table->Tags->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Tags->getJoinType());
-        $this->assertEquals(ME_CMS . '.Tags', $this->Table->Tags->className());
+        $this->assertEquals('MeCms.Tags', $this->Table->Tags->getClassName());
 
         $this->assertHasBehavior('CounterCache');
 

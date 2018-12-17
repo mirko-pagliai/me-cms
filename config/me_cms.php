@@ -1,5 +1,5 @@
 <?php
-return [ME_CMS => [
+return ['MeCms' => [
     //Admin layout
     'admin' => [
         //Number of photos to show per page. This must be a multiple of 4

@@ -13,16 +13,13 @@
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use MeCms\Model\Table\PostsTable;
-use MeTools\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
+use MeCms\TestSuite\TestCase;
 
 /**
  * IsOwnedByTraitTest class
  */
 class IsOwnedByTraitTest extends TestCase
 {
-    use MockTrait;
-
     /**
      * @var object
      */
@@ -33,7 +30,7 @@ class IsOwnedByTraitTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Posts',
+        'plugin.MeCms.Posts',
     ];
 
     /**
@@ -44,7 +41,7 @@ class IsOwnedByTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = $this->getMockForTable(PostsTable::class, null);
+        $this->Posts = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
     }
 
     /**

@@ -27,11 +27,11 @@ class PostsTagsControllerTest extends ControllerTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsCategories',
-        'plugin.me_cms.PostsTags',
-        'plugin.me_cms.Tags',
-        'plugin.me_cms.Users',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
+        'plugin.MeCms.PostsTags',
+        'plugin.MeCms.Tags',
+        'plugin.MeCms.Users',
     ];
 
     /**
@@ -50,7 +50,7 @@ class PostsTagsControllerTest extends ControllerTestCase
         $cache = sprintf('tags_limit_%s_page_%s', getConfigOrFail('default.records') * 4, 1);
         list($tagsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->Table->cache
+            $this->Table->getCacheName()
         ));
         $this->assertEquals($this->viewVariable('tags')->toArray(), $tagsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Tags']);
@@ -76,13 +76,13 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
         $this->assertInstanceof(Tag::class, $this->viewVariable('tag'));
 
-        $tagFromCache = Cache::read((sprintf('tag_%s', md5($slug))), $this->Table->cache);
+        $tagFromCache = Cache::read((sprintf('tag_%s', md5($slug))), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('tag'), $tagFromCache->first());
 
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->Table->cache
+            $this->Table->getCacheName()
         ));
         $this->assertEquals($this->viewVariable('posts')->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);

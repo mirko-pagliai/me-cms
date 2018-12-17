@@ -32,8 +32,8 @@ class PhotosWidgetsCellTest extends CellTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Photos',
-        'plugin.me_cms.PhotosAlbums',
+        'plugin.MeCms.Photos',
+        'plugin.MeCms.PhotosAlbums',
     ];
 
     /**
@@ -44,7 +44,7 @@ class PhotosWidgetsCellTest extends CellTestCase
     {
         parent::setUp();
 
-        $this->Table = $this->getMockForTable(PhotosTable::class, null);
+        $this->Table = $this->getMockForModel('Photos', null, ['className' => PhotosTable::class]);
     }
 
     /**
@@ -53,7 +53,7 @@ class PhotosWidgetsCellTest extends CellTestCase
      */
     public function testAlbums()
     {
-        $widget = ME_CMS . '.Photos::albums';
+        $widget = 'MeCms.Photos::albums';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -113,12 +113,12 @@ class PhotosWidgetsCellTest extends CellTestCase
         $this->assertHtml($expected, $result);
 
         //Empty on albums index
-        $result = $this->Widget->widget($widget);
-        $result->request = $result->request->withEnv('REQUEST_URI', Router::url(['_name' => 'albums']));
-        $this->assertEmpty($result->render());
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'albums']));
+        $this->Widget->getView()->setRequest($request);
+        $this->assertEmpty($this->Widget->widget($widget)->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_albums', $this->Table->cache);
+        $fromCache = Cache::read('widget_albums', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         $this->assertArrayKeysEqual(['another-album-test', 'test-album'], $fromCache->toArray());
 
@@ -135,7 +135,7 @@ class PhotosWidgetsCellTest extends CellTestCase
      */
     public function testLatest()
     {
-        $widget = ME_CMS . '.Photos::latest';
+        $widget = 'MeCms.Photos::latest';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -173,16 +173,16 @@ class PhotosWidgetsCellTest extends CellTestCase
 
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
-            $result = $this->Widget->widget($widget);
-            $result->request = $result->request->withParam('controller', $controller);
-            $this->assertEmpty($result->render());
+            $request = $this->Widget->getView()->getRequest()->withParam('controller', $controller);
+            $this->Widget->getView()->setRequest($request);
+            $this->assertEmpty($this->Widget->widget($widget)->render());
         }
 
         //Tests cache
-        $fromCache = Cache::read('widget_latest_1', $this->Table->cache);
+        $fromCache = Cache::read('widget_latest_1', $this->Table->getCacheName());
         $this->assertEquals(1, $fromCache->count());
 
-        $fromCache = Cache::read('widget_latest_2', $this->Table->cache);
+        $fromCache = Cache::read('widget_latest_2', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
 
         //With no photos
@@ -197,7 +197,7 @@ class PhotosWidgetsCellTest extends CellTestCase
      */
     public function testRandom()
     {
-        $widget = ME_CMS . '.Photos::random';
+        $widget = 'MeCms.Photos::random';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -235,16 +235,16 @@ class PhotosWidgetsCellTest extends CellTestCase
 
         //Empty on same controllers
         foreach (['Photos', 'PhotosAlbums'] as $controller) {
-            $result = $this->Widget->widget($widget);
-            $result->request = $result->request->withParam('controller', $controller);
-            $this->assertEmpty($result->render());
+            $request = $this->Widget->getView()->getRequest()->withParam('controller', $controller);
+            $this->Widget->getView()->setRequest($request);
+            $this->assertEmpty($this->Widget->widget($widget)->render());
         }
 
         //Tests cache
-        $fromCache = Cache::read('widget_random_1', $this->Table->cache);
+        $fromCache = Cache::read('widget_random_1', $this->Table->getCacheName());
         $this->assertEquals(3, $fromCache->count());
 
-        $fromCache = Cache::read('widget_random_2', $this->Table->cache);
+        $fromCache = Cache::read('widget_random_2', $this->Table->getCacheName());
         $this->assertEquals(3, $fromCache->count());
 
         //With no photos

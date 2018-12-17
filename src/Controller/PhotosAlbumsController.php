@@ -36,7 +36,7 @@ class PhotosAlbumsController extends AppController
                     ->order('rand()');
             })
             ->order([sprintf('%s.created', $this->PhotosAlbums->getAlias()) => 'DESC'])
-            ->cache('albums_index', $this->PhotosAlbums->cache);
+            ->cache('albums_index', $this->PhotosAlbums->getCacheName());
 
         //If there is only one record, redirects
         if ($albums->count() === 1) {
@@ -61,7 +61,7 @@ class PhotosAlbumsController extends AppController
         //Gets album ID and title
         $album = $this->PhotosAlbums->findActiveBySlug($slug)
             ->select(['id', 'title'])
-            ->cache(sprintf('album_%s', md5($slug)), $this->PhotosAlbums->cache)
+            ->cache(sprintf('album_%s', md5($slug)), $this->PhotosAlbums->getCacheName())
             ->firstOrFail();
 
         $page = $this->request->getQuery('page', 1);
@@ -73,7 +73,7 @@ class PhotosAlbumsController extends AppController
         //Tries to get data from the cache
         list($photos, $paging) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->PhotosAlbums->cache
+            $this->PhotosAlbums->getCacheName()
         ));
 
         //If the data are not available from the cache
@@ -91,7 +91,7 @@ class PhotosAlbumsController extends AppController
             Cache::writeMany([
                 $cache => $photos,
                 sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
-            ], $this->PhotosAlbums->cache);
+            ], $this->PhotosAlbums->getCacheName());
         //Else, sets the paging parameter
         } else {
             $this->request = $this->request->withParam('paging', $paging);

@@ -15,7 +15,7 @@ use Cake\Routing\Router;
 
 Router::defaultRouteClass('DashedRoute');
 
-Router::scope('/', ['plugin' => ME_CMS], function (RouteBuilder $routes) {
+Router::scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
     $routes->setExtensions(['rss']);
 
     //Requires other routes
@@ -43,7 +43,7 @@ Router::scope('/', ['plugin' => ME_CMS], function (RouteBuilder $routes) {
     });
 });
 
-Router::plugin(ME_CMS, ['path' => '/me-cms'], function (RouteBuilder $routes) {
+Router::plugin('MeCms', ['path' => '/me-cms'], function (RouteBuilder $routes) {
     $routes->setExtensions(['json']);
 
     //Admin routes

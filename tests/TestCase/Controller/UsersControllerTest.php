@@ -15,6 +15,7 @@ namespace MeCms\Test\TestCase\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\I18n\Time;
+use Cake\TestSuite\EmailAssertTrait;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Controller\UsersController;
 use MeCms\Mailer\UserMailer;
@@ -26,14 +27,16 @@ use MeCms\TestSuite\ControllerTestCase;
  */
 class UsersControllerTest extends ControllerTestCase
 {
+    use EmailAssertTrait;
+
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Tokens',
-        'plugin.me_cms.Users',
-        'plugin.me_cms.UsersGroups',
+        'plugin.MeCms.Tokens',
+        'plugin.MeCms.Users',
+        'plugin.MeCms.UsersGroups',
     ];
 
     /**
@@ -42,7 +45,8 @@ class UsersControllerTest extends ControllerTestCase
      */
     protected function getLoginRecorderMock()
     {
-        $LoginRecorderComponent = $this->getMockForComponent(LoginRecorderComponent::class);
+        $class = LoginRecorderComponent::class;
+        $LoginRecorderComponent = $this->getMockForComponent($class, array_diff(get_class_methods($class), ['__debugInfo']));
         $LoginRecorderComponent->method('config')->will($this->returnSelf());
 
         return $LoginRecorderComponent;
@@ -50,35 +54,25 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Mocks a controller
-     * @param string $className Controller class name
+     * @param string|null $className Controller class name
      * @param array|null $methods The list of methods to mock
      * @param string $alias Controller alias
-     * @return object
-     * @uses getClassAlias()
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockForController($className = null, $methods = null, $alias = 'Users')
     {
-        $className = $className ?: UsersController::class;
-        $controller = parent::getMockForController($className, $methods, $alias);
+        $controller = parent::getMockForController($className ?: UsersController::class, $methods, $alias);
 
-        //Stubs the `getUserMailer()` method
         if (in_array('getUserMailer', (array)$methods)) {
-            $userMailerMock = $this->getMockBuilder(UserMailer::class)->getMock();
-            $userMailerMock->method('set')->will($this->returnSelf());
-            $userMailerMock->method('send')->will($this->returnValue(true));
-
-            $controller->method('getUserMailer')->will($this->returnValue($userMailerMock));
+            $userMailer = $this->getMockForMailer(UserMailer::class);
+            $controller->method('getUserMailer')->will($this->returnValue($userMailer));
         }
 
-        //Stubs the `redirect()` method
         if (in_array('redirect', (array)$methods)) {
             $controller->method('redirect')->will($this->returnArgument(0));
         }
 
-        //Sets key for cookies
-        $controller->Cookie->config('key', 'somerandomhaskeysomerandomhaskey');
-
-        //Mocks the `LoginRecorder` component
+        $controller->Cookie->setConfig('key', 'somerandomhaskeysomerandomhaskey');
         $controller->LoginRecorder = $this->getLoginRecorderMock();
 
         return $controller;
@@ -94,7 +88,6 @@ class UsersControllerTest extends ControllerTestCase
     {
         parent::controllerSpy($event, $controller);
 
-        //Mocks the `LoginRecorder` component
         $this->_controller->LoginRecorder = $this->getLoginRecorderMock();
     }
 
@@ -120,47 +113,46 @@ class UsersControllerTest extends ControllerTestCase
         $controller = $this->getMockForController();
         $this->assertNull($this->invokeMethod($controller, 'loginWithCookie'));
         $this->assertNull($controller->Auth->user());
-        $this->assertNull($controller->Cookie->read('login'));
+        $this->assertEmpty($controller->request->getCookieCollection());
 
         //Writes wrong data on cookies
-        $controller->Cookie->write('login', ['username' => 'a', 'password' => 'b']);
+        $controller->request = $controller->request->withCookieParams(['login' => ['username' => 'a', 'password' => 'b']]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->logout());
         $this->assertNull($controller->Auth->user());
-        $this->assertNull($controller->Cookie->read('login'));
+        $this->assertEmpty($controller->request->getCookieCollection());
 
         //Gets an user and sets a password, then writes right data on cookies
         $user = $this->Table->findByActiveAndBanned(true, false)->first();
         $password = 'mypassword1!';
         $user->password = $user->password_repeat = $password;
         $this->Table->save($user);
-        $data = ['username' => $user->username, 'password' => $password];
         $controller = $this->getMockForController();
-        $controller->Cookie->write('login', $data);
+        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username, 'password' => $password]]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->redirectUrl());
         $this->assertNotEmpty($controller->Auth->user());
-        $this->assertEquals($data, $controller->Cookie->read('login'));
+        $this->assertNotEmpty($controller->request->getCookieCollection());
 
         //Sets the user as "pending" user, then writes again data on cookies
         $user->active = false;
         $this->Table->save($user);
         $controller = $this->getMockForController();
-        $controller->Cookie->write('login', ['username' => $user->username, 'password' => $password]);
+        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username, 'password' => $password]]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->logout());
         $this->assertNull($controller->Auth->user());
-        $this->assertNull($controller->Cookie->read('login'));
+        $this->assertEmpty($controller->request->getCookieCollection());
 
         //Sets the user as "banned" user,then writes again data on cookies
         $user->active = $user->banned = true;
         $this->Table->save($user);
         $controller = $this->getMockForController();
-        $controller->Cookie->write('login', ['username' => $user->username, 'password' => $password]);
+        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username, 'password' => $password]]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->logout());
         $this->assertNull($controller->Auth->user());
-        $this->assertNull($controller->Cookie->read('login'));
+        $this->assertEmpty($controller->request->getCookieCollection());
     }
 
     /**
@@ -170,15 +162,13 @@ class UsersControllerTest extends ControllerTestCase
     public function testBuildLogout()
     {
         //Sets cookies and session values
-        $this->Controller->Cookie->write('login', 'testLogin');
-        $this->Controller->Cookie->write('sidebar-lastmenu', 'value');
-        $this->Controller->request->session()->write('KCFINDER', 'value');
-        $this->_response = $this->invokeMethod($this->Controller, 'buildLogout');
-        $this->assertRedirect($this->Controller->Auth->logout());
-
-        $this->assertFalse($this->Controller->Cookie->check('login'));
-        $this->assertFalse($this->Controller->Cookie->check('sidebar-lastmenu'));
-        $this->assertFalse($this->Controller->request->session()->check('KCFINDER'));
+        $controller = $this->getMockForController();
+        $controller->request = $controller->request->withCookieParams(['login' => 'testLogin', 'sidebar-lastmenu' => 'testSidebar']);
+        $controller->request->getSession()->write('KCFINDER', 'value');
+        $this->_response = $this->invokeMethod($controller, 'buildLogout');
+        $this->assertRedirect($controller->Auth->logout());
+        $this->assertEmpty($controller->request->getCookieCollection());
+        $this->assertEmpty($controller->request->getSession()->read());
     }
 
     /**
@@ -303,13 +293,13 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertFlashMessage('We send you an email to activate your account');
 
         //With reCAPTCHA
-        Configure::write(ME_CMS . '.security.recaptcha', true);
+        Configure::write('MeCms.security.recaptcha', true);
         $this->post($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
-        Configure::write(ME_CMS . '.users', ['signup' => false, 'activation' => 1]);
+        Configure::write('MeCms.users', ['signup' => false, 'activation' => 1]);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('Disabled');
@@ -347,7 +337,7 @@ class UsersControllerTest extends ControllerTestCase
             'username' => $user->username,
             'password' => $password,
         ], 'login', 'aes', $this->_controller->Cookie->getConfig('key'));
-        $cookieExpire = Time::createFromTimestamp($this->_response->cookie('login')['expire']);
+        $cookieExpire = Time::createFromTimestamp($this->_response->getCookie('login')['expire']);
         $this->assertTrue($cookieExpire->isWithinNext('1 year'));
 
         //POST request. The user is banned
@@ -416,13 +406,13 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertFlashMessage('We have sent you an email to reset your password');
 
         //With reCAPTCHA
-        Configure::write(ME_CMS . '.security.recaptcha', true);
+        Configure::write('MeCms.security.recaptcha', true);
         $this->post($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
-        Configure::write(ME_CMS . '.users.reset_password', false);
+        Configure::write('MeCms.users.reset_password', false);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('Disabled');
@@ -510,7 +500,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseContains('The account has not been created');
 
         //POST request. Data are valid, the account needs to be activated by an admin
-        Configure::write(ME_CMS . '.users.activation', 2);
+        Configure::write('MeCms.users.activation', 2);
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('Account created, but it needs to be activated by an admin');
@@ -522,7 +512,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->Table->deleteAll(['username' => $data['username']]);
 
         //POST request. Data are valid, an email is sent to the user
-        Configure::write(ME_CMS . '.users.activation', 1);
+        Configure::write('MeCms.users.activation', 1);
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('We send you an email to activate your account');
@@ -535,7 +525,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->Table->deleteAll(['username' => $data['username']]);
 
         //POST request. Data are valid
-        Configure::write(ME_CMS . '.users.activation', 0);
+        Configure::write('MeCms.users.activation', 0);
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('Account created. Now you can login');
@@ -544,13 +534,13 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertTrue($user->active);
 
         //With reCAPTCHA
-        Configure::write(ME_CMS . '.security.recaptcha', true);
+        Configure::write('MeCms.security.recaptcha', true);
         $this->post($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
 
         //Disabled
-        Configure::write(ME_CMS . '.users.signup', false);
+        Configure::write('MeCms.users.signup', false);
         $this->get($url);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('Disabled');

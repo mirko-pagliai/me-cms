@@ -39,7 +39,7 @@ class SystemsController extends AppController
 
         //Loads KcFinderComponent
         if ($this->request->isAction('browser')) {
-            $this->loadComponent(ME_CMS . '.KcFinder');
+            $this->loadComponent('MeCms.KcFinder');
         }
     }
 
@@ -187,7 +187,7 @@ class SystemsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        $assetsTarget = getConfigOrFail(ASSETS . '.target');
+        $assetsTarget = getConfigOrFail('Assets.target');
         $success = true;
 
         switch ($type) {
@@ -230,11 +230,11 @@ class SystemsController extends AppController
      */
     public function tmpViewer()
     {
-        $assetsSize = (new Folder(getConfigOrFail(ASSETS . '.target')))->dirsize();
+        $assetsSize = (new Folder(getConfigOrFail('Assets.target')))->dirsize();
         $cacheSize = (new Folder(CACHE))->dirsize();
         $logsSize = (new Folder(LOGS))->dirsize();
         $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
-        $thumbsSize = (new Folder(getConfigOrFail(THUMBER . '.target')))->dirsize();
+        $thumbsSize = (new Folder(getConfigOrFail('Thumber.target')))->dirsize();
 
         $this->set('cacheStatus', Cache::enabled());
         $this->set('totalSize', $assetsSize + $cacheSize + $logsSize + $sitemapSize + $thumbsSize);

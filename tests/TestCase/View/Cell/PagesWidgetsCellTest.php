@@ -32,8 +32,8 @@ class PagesWidgetsCellTest extends CellTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Pages',
-        'plugin.me_cms.PagesCategories',
+        'plugin.MeCms.Pages',
+        'plugin.MeCms.PagesCategories',
     ];
 
     /**
@@ -46,7 +46,7 @@ class PagesWidgetsCellTest extends CellTestCase
 
         Cache::clearAll();
 
-        $this->Table = $this->getMockForTable(PagesTable::class, null);
+        $this->Table = $this->getMockForModel('Pages', null, ['className' => PagesTable::class]);
     }
 
     /**
@@ -55,7 +55,7 @@ class PagesWidgetsCellTest extends CellTestCase
      */
     public function testCategories()
     {
-        $widget = ME_CMS . '.Pages::categories';
+        $widget = 'MeCms.Pages::categories';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -115,12 +115,12 @@ class PagesWidgetsCellTest extends CellTestCase
         $this->assertHtml($expected, $result);
 
         //Empty on categories index
-        $result = $this->Widget->widget($widget);
-        $result->request = $result->request->withEnv('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
-        $this->assertEmpty($result->render());
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
+        $this->Widget->getView()->setRequest($request);
+        $this->assertEmpty($this->Widget->widget($widget)->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_categories', $this->Table->cache);
+        $fromCache = Cache::read('widget_categories', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         $this->assertArrayKeysEqual(['first-page-category', 'sub-sub-page-category'], $fromCache->toArray());
 
@@ -137,7 +137,7 @@ class PagesWidgetsCellTest extends CellTestCase
      */
     public function testPages()
     {
-        $widget = ME_CMS . '.Pages::pages';
+        $widget = 'MeCms.Pages::pages';
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -170,12 +170,12 @@ class PagesWidgetsCellTest extends CellTestCase
         $this->assertHtml($expected, $result);
 
         //Empty on categories index
-        $result = $this->Widget->widget($widget);
-        $result->request = $result->request->withEnv('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
-        $this->assertEmpty($result->render());
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
+        $this->Widget->getView()->setRequest($request);
+        $this->assertEmpty($this->Widget->widget($widget)->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_list', $this->Table->cache);
+        $fromCache = Cache::read('widget_list', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
 
         //With no pages

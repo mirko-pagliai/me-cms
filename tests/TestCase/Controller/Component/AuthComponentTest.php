@@ -29,8 +29,8 @@ class AuthComponentTest extends ComponentTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Users',
-        'plugin.me_cms.UsersGroups',
+        'plugin.MeCms.Users',
+        'plugin.MeCms.UsersGroups',
     ];
 
     /**
@@ -43,13 +43,13 @@ class AuthComponentTest extends ComponentTestCase
             'authenticate' => [
                 'Form' => [
                     'finder' => 'auth',
-                    'userModel' => ME_CMS . '.Users',
+                    'userModel' => 'MeCms.Users',
                 ],
             ],
             'authorize' => 'Controller',
             'ajaxLogin' => null,
             'flash' => [
-                'element' => ME_TOOLS . '.flash',
+                'element' => 'MeTools.flash',
                 'params' => ['class' => 'alert-danger'],
             ],
             'loginAction' => ['_name' => 'login'],

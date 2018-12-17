@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\Core;
 
 use MeCms\Core\Plugin;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * PluginTest class.
@@ -27,21 +27,21 @@ class PluginTest extends TestCase
     public function testAll()
     {
         $result = Plugin::all();
-        $this->assertEquals(ME_CMS, $result[0]);
-        $this->assertEquals(ME_TOOLS, $result[1]);
+        $this->assertEquals('MeCms', $result[0]);
+        $this->assertEquals('MeTools', $result[1]);
         $this->assertNotContains('TestPlugin', $result);
 
-        Plugin::load('TestPlugin');
+        $this->loadPlugins(['TestPlugin']);
         $result = Plugin::all();
-        $this->assertEquals(ME_CMS, $result[0]);
-        $this->assertEquals(ME_TOOLS, $result[1]);
+        $this->assertEquals('MeCms', $result[0]);
+        $this->assertEquals('MeTools', $result[1]);
         $this->assertContains('TestPlugin', $result);
 
         $result = Plugin::all(['order' => false]);
-        $this->assertNotEquals(ME_CMS, $result[0]);
-        $this->assertNotEquals(ME_TOOLS, $result[1]);
-        $this->assertContains(ME_CMS, $result);
-        $this->assertContains(ME_TOOLS, $result);
+        $this->assertNotEquals('MeCms', $result[0]);
+        $this->assertNotEquals('MeTools', $result[1]);
+        $this->assertContains('MeCms', $result);
+        $this->assertContains('MeTools', $result);
         $this->assertContains('TestPlugin', $result);
     }
 }

@@ -35,10 +35,10 @@ class TMP extends AbstractCheckup
         $this->pathsToCheck = [
             LOGS,
             TMP,
-            getConfigOrFail(ASSETS . '.target'),
+            getConfigOrFail('Assets.target'),
             CACHE,
             LOGIN_RECORDS,
-            getConfigOrFail(THUMBER . '.target'),
+            getConfigOrFail('Thumber.target'),
         ];
     }
 

@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Mailer;
 
 use MeCms\Mailer\UserMailer;
 use MeCms\Model\Entity\User;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * UserMailerTest class
@@ -24,7 +24,7 @@ class UserMailerTest extends TestCase
     /**
      * @var \MeCms\Mailer\UserMailer
      */
-    public $UserMailer;
+    public $Mailer;
 
     /**
      * @var object
@@ -46,6 +46,7 @@ class UserMailerTest extends TestCase
         ]);
 
         $this->Mailer = new UserMailer;
+        $this->Mailer->viewBuilder()->setLayout(false);
     }
 
     /**
@@ -55,10 +56,11 @@ class UserMailerTest extends TestCase
     public function testActivation()
     {
         $this->Mailer->activation($this->example);
-        $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getEmailInstance()->getTo());
-        $this->assertEquals('Activate your account', $this->Mailer->getEmailInstance()->getSubject());
-        $this->assertEquals(ME_CMS . '.Users/activation', $this->Mailer->getEmailInstance()->getTemplate());
-        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->getEmailInstance()->getViewVars());
+        $result = $this->Mailer->getEmailInstance();
+        $this->assertEquals(['test@test.com' => 'James Blue'], $result->getTo());
+        $this->assertEquals('Activate your account', $result->getSubject());
+        $this->assertEquals('MeCms.Users/activation', $result->viewBuilder()->getTemplate());
+        $this->assertEquals(['fullName' => 'James Blue'], $result->getViewVars());
     }
 
     /**
@@ -80,7 +82,6 @@ class UserMailerTest extends TestCase
     public function testActivationWithSend()
     {
         $result = $this->Mailer->setTransport('debug')
-            ->setLayout(false)
             ->setViewVars(['url' => 'http://example/link'])
             ->send('activation', [$this->example]);
 
@@ -107,10 +108,11 @@ class UserMailerTest extends TestCase
     public function testChangePassword()
     {
         $this->Mailer->changePassword($this->example);
-        $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getEmailInstance()->getTo());
-        $this->assertEquals('Your password has been changed', $this->Mailer->getEmailInstance()->getSubject());
-        $this->assertEquals(ME_CMS . '.Users/change_password', $this->Mailer->getEmailInstance()->getTemplate());
-        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->getEmailInstance()->getViewVars());
+        $result = $this->Mailer->getEmailInstance();
+        $this->assertEquals(['test@test.com' => 'James Blue'], $result->getTo());
+        $this->assertEquals('Your password has been changed', $result->getSubject());
+        $this->assertEquals('MeCms.Users/change_password', $result->viewBuilder()->getTemplate());
+        $this->assertEquals(['fullName' => 'James Blue'], $result->getViewVars());
     }
 
     /**
@@ -132,7 +134,6 @@ class UserMailerTest extends TestCase
     public function testChangePasswordWithSend()
     {
         $result = $this->Mailer->setTransport('debug')
-            ->setLayout(false)
             ->setViewVars(['url' => 'http://example/link'])
             ->send('changePassword', [$this->example]);
 
@@ -158,10 +159,11 @@ class UserMailerTest extends TestCase
     public function testPasswordForgot()
     {
         $this->Mailer->passwordForgot($this->example);
-        $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getEmailInstance()->getTo());
-        $this->assertEquals('Reset your password', $this->Mailer->getEmailInstance()->getSubject());
-        $this->assertEquals(ME_CMS . '.Users/password_forgot', $this->Mailer->getEmailInstance()->getTemplate());
-        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->getEmailInstance()->getViewVars());
+        $result = $this->Mailer->getEmailInstance();
+        $this->assertEquals(['test@test.com' => 'James Blue'], $result->getTo());
+        $this->assertEquals('Reset your password', $result->getSubject());
+        $this->assertEquals('MeCms.Users/password_forgot', $result->viewBuilder()->getTemplate());
+        $this->assertEquals(['fullName' => 'James Blue'], $result->getViewVars());
     }
 
     /**
@@ -183,7 +185,6 @@ class UserMailerTest extends TestCase
     public function testPasswordForgotWithSend()
     {
         $result = $this->Mailer->setTransport('debug')
-            ->setLayout(false)
             ->setViewVars(['url' => 'http://example/link'])
             ->send('passwordForgot', [$this->example]);
 

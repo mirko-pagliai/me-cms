@@ -17,39 +17,47 @@ use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
-use Cake\ORM\TableRegistry;
-use MeTools\TestSuite\TestCase;
+use MeCms\Model\Table\PhotosTable;
+use MeCms\Model\Table\PostsCategoriesTable;
+use MeCms\Model\Table\PostsTable;
+use MeCms\TestSuite\TableTestCase;
 
 /**
  * AppTableTest class
  */
-class AppTableTest extends TestCase
+class AppTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PhotosTable
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $Photos;
 
     /**
-     * @var \MeCms\Model\Table\PostsTable
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $Posts;
 
     /**
-     * @var \MeCms\Model\Table\PostsCategoriesTable
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $PostsCategories;
+
+    /**
+     * If `true`, a mock instance of the table will be created
+     * @var bool
+     */
+    protected $autoInitializeClass = false;
 
     /**
      * Fixtures
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Photos',
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsCategories',
-        'plugin.me_cms.PostsTags',
-        'plugin.me_cms.Users',
+        'plugin.MeCms.Photos',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
+        'plugin.MeCms.PostsTags',
+        'plugin.MeCms.Users',
     ];
 
     /**
@@ -60,12 +68,9 @@ class AppTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->Photos = TableRegistry::get(ME_CMS . '.Photos');
-        $this->Posts = TableRegistry::get(ME_CMS . '.Posts');
-        $this->PostsCategories = TableRegistry::get(ME_CMS . '.PostsCategories');
-
-        Cache::clear(false, $this->Photos->cache);
-        Cache::clear(false, $this->Posts->cache);
+        $this->Photos = $this->getMockForModel('Photos', null, ['className' => PhotosTable::class]);
+        $this->Posts = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
+        $this->PostsCategories = $this->getMockForModel('PostsCategories', null, ['className' => PostsCategoriesTable::class]);
     }
 
     /**
@@ -74,12 +79,12 @@ class AppTableTest extends TestCase
      */
     public function testAfterDelete()
     {
-        Cache::write('testKey', 'testValue', $this->Posts->cache);
+        Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
 
         $this->Posts->afterDelete(new Event(null), new Entity, new ArrayObject);
 
         //The cache is cleared
-        $this->assertFalse(Cache::read('testKey', $this->Posts->cache));
+        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
     }
 
     /**
@@ -88,12 +93,12 @@ class AppTableTest extends TestCase
      */
     public function testAfterSave()
     {
-        Cache::write('testKey', 'testValue', $this->Posts->cache);
+        Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
 
         $this->Posts->afterSave(new Event(null), new Entity, new ArrayObject);
 
         //The cache is cleared
-        $this->assertFalse(Cache::read('testKey', $this->Posts->cache));
+        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
     }
 
     /**
@@ -190,6 +195,16 @@ class AppTableTest extends TestCase
     }
 
     /**
+     * Test for `getCacheName()` method
+     * @test
+     */
+    public function testGetCacheName()
+    {
+        $this->assertEquals('posts', $this->Posts->getCacheName());
+        $this->assertEquals(['posts', 'users'], $this->Posts->getCacheName(true));
+    }
+
+    /**
      * Test for `getList()` method
      * @test
      */
@@ -206,7 +221,7 @@ class AppTableTest extends TestCase
         ];
         $this->assertEquals($expected, $query->toArray());
 
-        $fromCache = Cache::read('photos_list', $this->Photos->cache)->toArray();
+        $fromCache = Cache::read('photos_list', $this->Photos->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
     }
 
@@ -227,7 +242,7 @@ class AppTableTest extends TestCase
         ];
         $this->assertEquals($expected, $query->toArray());
 
-        $fromCache = Cache::read('posts_categories_tree_list', $this->PostsCategories->cache)->toArray();
+        $fromCache = Cache::read('posts_categories_tree_list', $this->PostsCategories->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
     }
 

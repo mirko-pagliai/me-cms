@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Utility;
 
+use MeCms\TestSuite\TestCase;
 use MeCms\Utility\Checkup;
 use MeCms\Utility\Checkups\Apache;
 use MeCms\Utility\Checkups\Backups;
@@ -20,7 +21,6 @@ use MeCms\Utility\Checkups\PHP;
 use MeCms\Utility\Checkups\Plugin;
 use MeCms\Utility\Checkups\TMP;
 use MeCms\Utility\Checkups\Webroot;
-use MeTools\TestSuite\TestCase;
 
 /**
  * CheckupTest class
@@ -41,6 +41,17 @@ class CheckupTest extends TestCase
         parent::setUp();
 
         $this->Checkup = new Checkup;
+    }
+
+    /**
+     * Called after every test method
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        safe_unlink_recursive(KCFINDER, 'empty');
     }
 
     /**
@@ -65,7 +76,7 @@ class CheckupTest extends TestCase
     {
         $this->assertInstanceof(Backups::class, $this->Checkup->Backups);
         $this->assertEquals(['isWriteable'], get_class_methods($this->Checkup->Backups));
-        $this->assertEquals([getConfig(DATABASE_BACKUP . '.target') => true], $this->Checkup->Backups->isWriteable());
+        $this->assertEquals([getConfig('DatabaseBackup.target') => true], $this->Checkup->Backups->isWriteable());
     }
 
     /**
@@ -75,11 +86,7 @@ class CheckupTest extends TestCase
      */
     public function testKCFinder()
     {
-        //This makes it believe that KCFinder is installed
-        safe_mkdir(KCFINDER, 0777, true);
-        file_put_contents(KCFINDER . '.htaccess', null);
-        file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
-
+        create_kcfinder_files();
         $this->assertInstanceof(KCFinder::class, $this->Checkup->KCFinder);
         $this->assertEquals(['htaccess', 'isAvailable', 'version'], get_class_methods($this->Checkup->KCFinder));
         $this->assertTrue($this->Checkup->KCFinder->htaccess());

@@ -25,8 +25,7 @@ $this->set([
 ]);
 
 foreach ($posts as $post) {
-    //Sets link
-    $link = ['_name' => 'post', $post->slug];
+    $link = $this->Url->build(['_name' => 'post', $post->slug], true);
 
     //Executes BBCode on the text
     $text = $this->BBCode->parser($post->text);
@@ -40,19 +39,16 @@ foreach ($posts as $post) {
         $text = $this->Text->truncate($text, getConfig('default.truncate_to'), ['exact' => false, 'html' => true]);
     }
 
-    //Strips tags
+    //Strips tags and adds the preview image
     $text = strip_tags($text);
-
-    //Adds the preview image
     if (!empty($post->preview[0])) {
         $text = $this->Thumb->resize($post->preview[0]->url, ['width' => 200]) . '<br />' . $text;
     }
 
-    echo $this->Rss->item([], [
-        'description' => $text,
-        'guid' => ['url' => $link, 'isPermaLink' => 'true'],
-        'link' => $link,
-        'pubDate' => $post->created,
-        'title' => $post->title,
-    ]);
+    $html = $this->Html->tag('description', htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE));
+    $html .= $this->Html->tag('guid', $link, ['isPermaLink' => 'true']);
+    $html .= $this->Html->tag('link', $link);
+    $html .= $this->Html->tag('pubDate', $this->Time->toRss($post->created));
+    $html .= $this->Html->tag('title', strip_tags($post->title));
+    echo $this->Html->tag('item', $html);
 }

@@ -35,13 +35,6 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     ];
 
     /**
-     * Test for `cache` property
-     * @return void
-     * @test
-     */
-    abstract public function testCacheProperty();
-
-    /**
      * Test for `buildRules()` method
      * @return void
      * @test
@@ -67,7 +60,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     {
         $this->loadFixtures();
 
-        $this->Table = $this->getMockForTable(get_parent_class($this->Table), ['setNextToBePublished']);
+        $this->Table = $this->getMockForModel($this->Table->getAlias(), ['setNextToBePublished'], ['className' => get_parent_class($this->Table)]);
         $this->Table->expects($this->once())->method('setNextToBePublished');
         $this->Table->afterDelete(new Event(null), new Entity, new ArrayObject);
     }
@@ -81,7 +74,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     {
         $this->loadFixtures();
 
-        $this->Table = $this->getMockForTable(get_parent_class($this->Table), ['setNextToBePublished']);
+        $this->Table = $this->getMockForModel($this->Table->getAlias(), ['setNextToBePublished'], ['className' => get_parent_class($this->Table)]);
         $this->Table->expects($this->once())->method('setNextToBePublished');
         $this->Table->afterSave(new Event(null), new Entity, new ArrayObject);
     }
@@ -95,7 +88,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     {
         $this->loadFixtures();
 
-        $this->Table = $this->getMockForTable(get_parent_class($this->Table), ['getPreviewSize']);
+        $this->Table = $this->getMockForModel($this->Table->getAlias(), ['getPreviewSize'], ['className' => get_parent_class($this->Table)]);
         $this->Table->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos
@@ -133,12 +126,12 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     {
         //Writes `next_to_be_published` and some data on cache
         $anHourAgo = time() - HOUR;
-        Cache::write('next_to_be_published', $anHourAgo, $this->Table->cache);
-        Cache::write('someData', 'someValue', $this->Table->cache);
+        Cache::write('next_to_be_published', $anHourAgo, $this->Table->getCacheName());
+        Cache::write('someData', 'someValue', $this->Table->getCacheName());
 
         //The cache will now be cleared
         $this->Table->find();
-        $this->assertNotEquals($anHourAgo, Cache::read('next_to_be_published', $this->Table->cache));
-        $this->assertEmpty(Cache::read('someData', $this->Table->cache));
+        $this->assertNotEquals($anHourAgo, Cache::read('next_to_be_published', $this->Table->getCacheName()));
+        $this->assertEmpty(Cache::read('someData', $this->Table->getCacheName()));
     }
 }

@@ -12,16 +12,16 @@
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
-use MeTools\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
+use MeCms\Model\Table\BannersTable;
+use MeCms\Model\Table\PostsTable;
+use MeCms\Model\Table\UsersTable;
+use MeCms\TestSuite\TestCase;
 
 /**
  * AppValidatorTest class
  */
 class AppValidatorTest extends TestCase
 {
-    use MockTrait;
-
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject
      */
@@ -70,9 +70,9 @@ class AppValidatorTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Banners',
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.Users',
+        'plugin.MeCms.Banners',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.Users',
     ];
 
     /**
@@ -83,9 +83,9 @@ class AppValidatorTest extends TestCase
     {
         parent::setUp();
 
-        foreach (['Banners', 'Posts', 'Users'] as $alias) {
-            $this->$alias = $this->getMockForTable(sprintf('%s\Model\Table\%sTable', ME_CMS, $alias), null);
-        }
+        $this->Banners = $this->getMockForModel('Banners', null, ['className' => BannersTable::class]);
+        $this->Posts = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
+        $this->Users = $this->getMockForModel('Users', null, ['className' => UsersTable::class]);
     }
 
     /**

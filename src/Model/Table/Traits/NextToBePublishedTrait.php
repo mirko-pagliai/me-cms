@@ -27,7 +27,7 @@ trait NextToBePublishedTrait
      */
     public function getNextToBePublished()
     {
-        return Cache::read('next_to_be_published', $this->cache);
+        return Cache::read('next_to_be_published', $this->getCacheName());
     }
 
     /**
@@ -49,7 +49,7 @@ trait NextToBePublishedTrait
 
         $next = empty($next) ? false : $next->toUnixString();
 
-        Cache::write('next_to_be_published', $next, $this->cache);
+        Cache::write('next_to_be_published', $next, $this->getCacheName());
 
         return $next;
     }

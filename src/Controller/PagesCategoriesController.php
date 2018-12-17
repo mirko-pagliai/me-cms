@@ -30,7 +30,7 @@ class PagesCategoriesController extends AppController
         $categories = $this->PagesCategories->find('active')
             ->select(['title', 'slug'])
             ->order([sprintf('%s.title', $this->PagesCategories->getAlias()) => 'ASC'])
-            ->cache('categories_index', $this->PagesCategories->cache);
+            ->cache('categories_index', $this->PagesCategories->getCacheName());
 
         $this->set(compact('categories'));
     }
@@ -52,7 +52,7 @@ class PagesCategoriesController extends AppController
             ->contain($this->PagesCategories->Pages->getAlias(), function (Query $q) {
                 return $q->find('active')->select(['category_id', 'slug', 'title']);
             })
-            ->cache(sprintf('category_%s', md5($slug)), $this->PagesCategories->cache)
+            ->cache(sprintf('category_%s', md5($slug)), $this->PagesCategories->getCacheName())
             ->firstOrFail();
 
         $this->set(compact('category'));

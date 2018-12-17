@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\View\Helper;
 
 use Cake\Core\Plugin;
-use MeTools\TestSuite\HelperTestCase;
+use MeCms\TestSuite\HelperTestCase;
 use TestPlugin\View\Helper\MenuHelper;
 use Tools\ReflectionTrait;
 
@@ -32,8 +32,7 @@ class MenuBuilderHelperTest extends HelperTestCase
     {
         parent::setUp();
 
-        Plugin::load('TestPlugin');
-        Plugin::load('TestPluginTwo');
+        $this->loadPlugins(['TestPlugin', 'TestPluginTwo']);
     }
 
     /**
@@ -44,8 +43,7 @@ class MenuBuilderHelperTest extends HelperTestCase
     {
         parent::tearDown();
 
-        Plugin::unload('TestPlugin');
-        Plugin::unload('TestPluginTwo');
+        $this->removePlugins(['TestPlugin', 'TestPluginTwo']);
     }
 
     /**
@@ -67,7 +65,7 @@ class MenuBuilderHelperTest extends HelperTestCase
             'backups',
             'systems',
         ];
-        $this->assertEquals($expected, $getMenuMethodsMethod(ME_CMS));
+        $this->assertEquals($expected, $getMenuMethodsMethod('MeCms'));
 
         //Checks that methods exist
         foreach (['_invalidMethod', '__otherInvalidMethod', 'articles', 'other_items'] as $method) {
@@ -88,8 +86,8 @@ class MenuBuilderHelperTest extends HelperTestCase
     public function testGenerate()
     {
         //Checks array keys (menu names)
-        $result = $this->Helper->generate(ME_CMS);
-        $this->assertArrayKeysEqual([ME_CMS . '.posts', ME_CMS . '.pages', ME_CMS . '.photos'], $result);
+        $result = $this->Helper->generate('MeCms');
+        $this->assertArrayKeysEqual(['MeCms.posts', 'MeCms.pages', 'MeCms.photos'], $result);
 
         foreach ($result as $menu) {
             //Checks array keys (menu values)

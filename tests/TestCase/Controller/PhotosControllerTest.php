@@ -26,8 +26,8 @@ class PhotosControllerTest extends ControllerTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Photos',
-        'plugin.me_cms.PhotosAlbums',
+        'plugin.MeCms.Photos',
+        'plugin.MeCms.PhotosAlbums',
     ];
 
     /**
@@ -44,7 +44,7 @@ class PhotosControllerTest extends ControllerTestCase
         $this->assertTemplate('Photos/view.ctp');
         $this->assertInstanceof(Photo::class, $this->viewVariable('photo'));
 
-        $cache = Cache::read(sprintf('view_%s', md5($photo->id)), $this->Table->cache);
+        $cache = Cache::read(sprintf('view_%s', md5($photo->id)), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('photo'), $cache->first());
 
         //Backward compatibility for URLs like `/photo/11`

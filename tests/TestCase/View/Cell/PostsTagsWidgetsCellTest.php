@@ -46,7 +46,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Tags',
+        'plugin.MeCms.Tags',
     ];
 
     /**
@@ -57,7 +57,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     {
         parent::setUp();
 
-        $this->Table = $this->getMockForTable(TagsTable::class, null);
+        $this->Table = $this->getMockForModel('Tags', null, ['className' => TagsTable::class]);
     }
 
     /**
@@ -67,7 +67,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     public function testGetFontSizes()
     {
         $getFontSizesMethod = function (array $options = []) {
-            $widget = $this->Widget->widget(ME_CMS . '.PostsTags::popular');
+            $widget = $this->Widget->widget('MeCms.PostsTags::popular');
 
             return $this->invokeMethod($widget, 'getFontSizes', [$options]);
         };
@@ -86,7 +86,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      */
     public function testGetFontSizesWithInvalidValues()
     {
-        $widget = $this->Widget->widget(ME_CMS . '.PostsTags::popular');
+        $widget = $this->Widget->widget('MeCms.PostsTags::popular');
         $this->invokeMethod($widget, 'getFontSizes', [['maxFont' => 10, 'minFont' => 20]]);
     }
 
@@ -96,7 +96,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      */
     public function testPopular()
     {
-        $widget = ME_CMS . '.PostsTags::popular';
+        $widget = 'MeCms.PostsTags::popular';
 
         //Tries using the style (`maxFont` and `minFont`)
         $expected = [
@@ -240,12 +240,12 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $this->assertHtml($expected, $result);
 
         //Empty on tags index
-        $result = $this->Widget->widget($widget);
-        $result->request = $result->request->withEnv('REQUEST_URI', Router::url(['_name' => 'postsTags']));
-        $this->assertEmpty($result->render());
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'postsTags']));
+        $this->Widget->getView()->setRequest($request);
+        $this->assertEmpty($this->Widget->widget($widget)->render());
 
         //Tests cache
-        $fromCache = Cache::read('widget_tags_popular_2', $this->Table->cache);
+        $fromCache = Cache::read('widget_tags_popular_2', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         $this->assertEquals(['cat', 'dog'], array_keys($fromCache->toArray()));
 
@@ -253,7 +253,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             $this->assertNull($entity->size);
         }
 
-        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->cache);
+        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         $this->assertEquals(['cat', 'dog'], array_keys($fromCache->toArray()));
 
@@ -277,7 +277,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      */
     public function testPopularWithTagsSamePostCount()
     {
-        $widget = ME_CMS . '.PostsTags::popular';
+        $widget = 'MeCms.PostsTags::popular';
 
         //Adds some tag, with the same `post_count`
         foreach ([
@@ -311,7 +311,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $this->assertHtml($expected, $result);
 
         //Tests cache
-        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->cache);
+        $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         $this->assertEquals(['example1', 'example2'], array_keys($fromCache->toArray()));
 

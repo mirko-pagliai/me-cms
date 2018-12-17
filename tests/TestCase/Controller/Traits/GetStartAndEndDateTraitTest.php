@@ -13,16 +13,13 @@
 namespace MeCms\Test\TestCase\Controller\Traits;
 
 use MeCms\Controller\PostsController;
-use MeTools\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
+use MeCms\TestSuite\TestCase;
 
 /**
  * GetStartAndEndDateTraitTest class
  */
 class GetStartAndEndDateTraitTest extends TestCase
 {
-    use MockTrait;
-
     /**
      * Tests for `getStartAndEndDate()` method
      * @test

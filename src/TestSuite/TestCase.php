@@ -9,19 +9,25 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ * @since       2.26.0
  */
-namespace MeCms\Log\Engine;
+namespace MeCms\TestSuite;
 
-use EntityFileLog\Log\Engine\EntityFileLog;
+use MeTools\TestSuite\TestCase as BaseTestCase;
 
 /**
- * File Storage stream for Logging. Writes logs to different files based on
- *  the level of log it is.
- *
- * This adapter writes writes the normal log (using the `FileLog::log`
- *  method) and a serialized copy of the log.
- * The log information are splitted from the message, using regex.
+ * TestCase class
  */
-class SerializedLog extends EntityFileLog
+abstract class TestCase extends BaseTestCase
 {
+    /**
+     * Called before every test method
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->loadPlugins(['MeCms']);
+    }
 }

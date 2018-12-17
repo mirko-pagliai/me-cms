@@ -14,7 +14,6 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\Entity;
-use MeCms\Core\Plugin;
 use MeCms\Model\Entity\Page;
 use MeCms\TestSuite\ControllerTestCase;
 
@@ -34,8 +33,8 @@ class PagesControllerTest extends ControllerTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Pages',
-        'plugin.me_cms.PagesCategories',
+        'plugin.MeCms.Pages',
+        'plugin.MeCms.PagesCategories',
     ];
 
     /**
@@ -44,9 +43,9 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function setUp()
     {
-        Plugin::load('TestPlugin');
-
         parent::setUp();
+
+        $this->loadPlugins(['TestPlugin']);
     }
 
     /**
@@ -55,9 +54,9 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function tearDown()
     {
-        Plugin::unload('TestPlugin');
-
         parent::tearDown();
+
+        $this->removePlugins(['TestPlugin']);
     }
 
     /**
@@ -73,7 +72,7 @@ class PagesControllerTest extends ControllerTestCase
         $this->assertTemplate('Pages/view.ctp');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
 
-        $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Table->cache);
+        $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('page'), $cache->first());
     }
 

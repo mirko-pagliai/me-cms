@@ -13,7 +13,7 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Network\Exception\ForbiddenException;
+use Cake\Http\Exception\ForbiddenException;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
@@ -57,7 +57,7 @@ class PostsController extends AppController
         //Tries to get data from the cache
         list($posts, $paging) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->Posts->cache
+            $this->Posts->getCacheName()
         ));
 
         //If the data are not available from the cache
@@ -68,7 +68,7 @@ class PostsController extends AppController
             Cache::writeMany([
                 $cache => $posts,
                 sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
-            ], $this->Posts->cache);
+            ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
             $this->request = $this->request->withParam('paging', $paging);
@@ -111,7 +111,7 @@ class PostsController extends AppController
         //Tries to get data from the cache
         list($posts, $paging) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
-            $this->Posts->cache
+            $this->Posts->getCacheName()
         ));
 
         //If the data are not available from the cache
@@ -128,7 +128,7 @@ class PostsController extends AppController
             Cache::writeMany([
                 $cache => $posts,
                 sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
-            ], $this->Posts->cache);
+            ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
             $this->request = $this->request->withParam('paging', $paging);
@@ -140,12 +140,12 @@ class PostsController extends AppController
     /**
      * Lists posts as RSS
      * @return void
-     * @throws \Cake\Network\Exception\ForbiddenException
+     * @throws ForbiddenException
      */
     public function rss()
     {
         //This method works only for RSS
-        if (!$this->RequestHandler->isRss()) {
+        if (!$this->RequestHandler->prefers('rss')) {
             throw new ForbiddenException;
         }
 
@@ -153,7 +153,7 @@ class PostsController extends AppController
             ->select(['title', 'preview', 'slug', 'text', 'created'])
             ->limit(getConfigOrFail('default.records_for_rss'))
             ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
-            ->cache('rss', $this->Posts->cache);
+            ->cache('rss', $this->Posts->getCacheName());
 
         $this->set(compact('posts'));
     }
@@ -196,7 +196,7 @@ class PostsController extends AppController
             //Tries to get data from the cache
             list($posts, $paging) = array_values(Cache::readMany(
                 [$cache, sprintf('%s_paging', $cache)],
-                $this->Posts->cache
+                $this->Posts->getCacheName()
             ));
 
             //If the data are not available from the cache
@@ -216,7 +216,7 @@ class PostsController extends AppController
                 Cache::writeMany([
                     $cache => $posts,
                     sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
-                ], $this->Posts->cache);
+                ], $this->Posts->getCacheName());
             //Else, sets the paging parameter
             } else {
                 $this->request = $this->request->withParam('paging', $paging);
@@ -238,7 +238,7 @@ class PostsController extends AppController
     {
         $post = $this->Posts->findActiveBySlug($slug)
             ->find('forIndex')
-            ->cache(sprintf('view_%s', md5($slug)), $this->Posts->cache)
+            ->cache(sprintf('view_%s', md5($slug)), $this->Posts->getCacheName())
             ->firstOrFail();
 
         $this->set(compact('post'));

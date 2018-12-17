@@ -36,7 +36,7 @@ class KcFinderComponent extends Component
      * Components
      * @var array
      */
-    public $components = [ME_CMS . '.Auth'];
+    public $components = ['MeCms.Auth'];
 
     /**
      * Construct

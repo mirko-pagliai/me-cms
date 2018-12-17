@@ -14,16 +14,13 @@ namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\I18n\Time;
 use MeCms\Model\Table\PostsTable;
-use MeTools\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
+use MeCms\TestSuite\TestCase;
 
 /**
  * NextToBePublishedTraitTest class
  */
 class NextToBePublishedTraitTest extends TestCase
 {
-    use MockTrait;
-
     /**
      * @var \MeCms\Model\Table\PostsTable
      */
@@ -33,9 +30,9 @@ class NextToBePublishedTraitTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsCategories',
-        'plugin.me_cms.Users',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
+        'plugin.MeCms.Users',
     ];
 
     /**
@@ -46,7 +43,7 @@ class NextToBePublishedTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = $this->getMockForTable(PostsTable::class, null);
+        $this->Posts = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
     }
 
     /**

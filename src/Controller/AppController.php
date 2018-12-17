@@ -44,14 +44,14 @@ class AppController extends BaseController
             return $this->redirect(['_name' => 'ipNotAllowed']);
         }
 
-        $this->viewBuilder()->setClassName(ME_CMS . '.View/App');
+        $this->viewBuilder()->setClassName('MeCms.View/App');
 
         //Sets the paginate limit and the maximum paginate limit
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = getConfigOrFail('default.records');
 
         if ($this->request->isAdmin()) {
-            $this->viewBuilder()->setClassName(ME_CMS . '.View/Admin');
+            $this->viewBuilder()->setClassName('MeCms.View/Admin');
 
             $this->paginate['limit'] = getConfigOrFail('admin.records');
         } else {
@@ -63,7 +63,7 @@ class AppController extends BaseController
 
         //Layout for ajax and json requests
         if ($this->request->is(['ajax', 'json'])) {
-            $this->viewBuilder()->setLayout(ME_CMS . '.ajax');
+            $this->viewBuilder()->setLayout('MeCms.ajax');
         }
 
         parent::beforeFilter($event);
@@ -83,7 +83,7 @@ class AppController extends BaseController
     {
         //Loads the `Auth` helper.
         //The `helper is loaded here (instead of the view) to pass user data
-        $this->viewBuilder()->setHelpers([ME_CMS . '.Auth' => $this->Auth->user()]);
+        $this->viewBuilder()->setHelpers(['MeCms.Auth' => $this->Auth->user()]);
 
         parent::beforeRender($event);
     }
@@ -98,10 +98,10 @@ class AppController extends BaseController
         //Loads components
         //The configuration for `AuthComponent`  takes place in the same class
         $this->loadComponent('Cookie', ['encryption' => false]);
-        $this->loadComponent(ME_CMS . '.Auth');
-        $this->loadComponent(ME_TOOLS . '.Flash');
-        $this->loadComponent('RequestHandler');
-        $this->loadComponent(ME_TOOLS . '.Uploader');
+        $this->loadComponent('MeCms.Auth');
+        $this->loadComponent('MeTools.Flash');
+        $this->loadComponent('RequestHandler', ['enableBeforeRedirect' => false]);
+        $this->loadComponent('MeTools.Uploader');
         $this->loadComponent('Recaptcha.Recaptcha', [
             'sitekey' => getConfigOrFail('Recaptcha.public'),
             'secret' => getConfigOrFail('Recaptcha.private'),
