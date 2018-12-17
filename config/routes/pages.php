@@ -32,7 +32,7 @@ if (!$routes->nameExists('pagesCategory')) {
 //Page
 if (!$routes->nameExists('page')) {
     $routes->connect('/page/:slug', ['controller' => 'Pages', 'action' => 'view'], ['_name' => 'page'])
-        ->setPatterns(['slug' => '[\d\w\-]+'])
+        ->setPatterns(['slug' => '[\d\w\-\/]+'])
         ->setPass(['slug']);
 }
 
