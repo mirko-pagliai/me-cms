@@ -48,7 +48,7 @@ class CreateVendorsLinksCommandTest extends TestCase
             file_put_contents($link . DS . 'empty', null);
         }
 
-        $this->exec('me_tools.create_vendors_links -v');
+        $this->exec('me_cms.create_vendors_links -v');
         $this->assertExitWithSuccess();
 
         foreach ($links as $link) {
