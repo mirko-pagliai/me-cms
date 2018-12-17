@@ -25,14 +25,15 @@
         "npm-asset/js-cookie": "^v2.2",
         "wyrihaximus/minify-html": "^1.1"
     },
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "^3.0",
+        "mirko-pagliai/cakephp-assets": "^1.3",
+        "phpunit/phpunit": "^5.7|^6.0"
+    },
     "suggest": {
         "mirko-pagliai/me-cms-instagram": "Instagram plugin for MeCms",
         "mirko-pagliai/me-cms-youtube": "Youtube plugin for MeCms",
         "sunhater/kcfinder:dev-master": "To use KCFinder to browse and upload files"
-    },
-    "require-dev": {
-        "cakephp/cakephp-codesniffer": "^3.0",
-        "phpunit/phpunit": "^5.7|^6.0"
     },
     "repositories": [
         {
