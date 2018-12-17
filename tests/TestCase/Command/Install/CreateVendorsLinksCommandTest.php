@@ -24,17 +24,6 @@ class CreateVendorsLinksCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        safe_unlink_recursive(WWW_ROOT . 'vendor', 'empty');
-    }
-
-    /**
      * Tests for `execute()` method
      * @test
      */

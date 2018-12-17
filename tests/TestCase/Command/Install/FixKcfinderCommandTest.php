@@ -23,18 +23,6 @@ class FixKcfinderCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        safe_unlink_recursive(KCFINDER, 'empty');
-        safe_unlink_recursive(WWW_ROOT . 'vendor', 'empty');
-    }
-
-    /**
      * Test for `execute()` method
      * @test
      */

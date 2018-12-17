@@ -30,4 +30,16 @@ abstract class TestCase extends BaseTestCase
 
         $this->loadPlugins(['MeCms']);
     }
+
+    /**
+     * Called after every test method
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        safe_rmdir_recursive(KCFINDER);
+        safe_unlink_recursive(WWW_ROOT . 'vendor', 'empty');
+    }
 }
