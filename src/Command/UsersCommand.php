@@ -17,6 +17,7 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\ORM\Query;
+use MeCms\Model\Entity\User;
 use MeTools\Console\Command;
 
 /**
@@ -58,7 +59,7 @@ class UsersCommand extends Command
         //Gets users
         $users = $this->Users->find()->contain('Groups', function (Query $q) {
             return $q->select(['label']);
-        })->map(function ($user) {
+        })->map(function (User $user) {
             if ($user->banned) {
                 $user->status = __d('me_cms', 'Banned');
             } elseif (!$user->active) {

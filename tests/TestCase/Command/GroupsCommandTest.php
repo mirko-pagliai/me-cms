@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Command;
 
 use Cake\Datasource\ModelAwareTrait;
+use MeCms\Model\Entity\UsersGroup;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
@@ -44,8 +45,8 @@ class GroupsCommandTest extends TestCase
         $this->exec('me_cms.groups');
         $this->assertExitWithSuccess();
 
-        $expectedRows = $this->UsersGroups->find()->map(function ($row) {
-            return [$row->id, $row->name, $row->label, $row->user_count];
+        $expectedRows = $this->UsersGroups->find()->map(function (UsersGroup $group) {
+            return [$group->id, $group->name, $group->label, $group->user_count];
         })->toList();
         $expectedRows[] = ['<info>ID</info>', '<info>Name</info>', '<info>Label</info>', '<info>Users</info>'];
         foreach ($expectedRows as $row) {

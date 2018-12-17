@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Command;
 
 use Cake\Datasource\ModelAwareTrait;
+use MeCms\Model\Entity\User;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
@@ -44,7 +45,7 @@ class UsersCommandTest extends TestCase
         $this->exec('me_cms.users');
         $this->assertExitWithSuccess();
 
-        $expectedRows = $this->Users->find()->contain('Groups')->map(function ($user) {
+        $expectedRows = $this->Users->find()->contain('Groups')->map(function (User $user) {
             if ($user->banned) {
                 $user->status = __d('me_cms', 'Banned');
             } elseif (!$user->active) {
