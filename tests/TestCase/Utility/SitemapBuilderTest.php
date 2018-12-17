@@ -15,8 +15,8 @@ namespace MeCms\Test\TestCase\Utility;
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\Utility\Xml;
-use MeCms\Utility\SitemapBuilder;
 use MeCms\TestSuite\TestCase;
+use MeCms\Utility\SitemapBuilder;
 use MeTools\TestSuite\IntegrationTestTrait;
 
 /**

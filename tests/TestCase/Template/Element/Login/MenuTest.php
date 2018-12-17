@@ -22,7 +22,7 @@ use MeTools\TestSuite\IntegrationTestTrait;
 class MenuTest extends TestCase
 {
     use IntegrationTestTrait;
-    
+
     /**
      * Fixtures
      * @var array
