@@ -128,9 +128,7 @@ class PostsTable extends PostsAndPagesTables
      */
     public function getRelated(Post $post, $limit = 5, $images = true)
     {
-        if (!$post->has('id') || !$post->has('tags')) {
-            throw new InvalidArgumentException(__d('me_cms', 'ID or tags of the post are missing'));
-        }
+        is_true_or_fail($post->has('id') && $post->has('tags'), __d('me_cms', 'ID or tags of the post are missing'), InvalidArgumentException::class);
 
         $cache = sprintf('related_%s_posts_for_%s', $limit, $post->id);
 

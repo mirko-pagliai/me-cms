@@ -150,8 +150,8 @@ class KcFinderComponentTest extends ComponentTestCase
 
     /**
      * Test for `initialize()` method, with `uploaded` dir not writable
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage File or directory tests/test_app/TestApp/webroot/files/ not writeable
+     * @expectedException Tools\Exception\NotWritableException
+     * @expectedExceptionMessage File or directory is not writable
      * @test
      */
     public function testInitializeDirNotWritable()
@@ -162,7 +162,7 @@ class KcFinderComponentTest extends ComponentTestCase
 
     /**
      * Test for `initialize()` method, with KCFinder not available
-     * @expectedException RuntimeException
+     * @expectedException ErrorException
      * @expectedExceptionMessage KCFinder is not available
      * @test
      */

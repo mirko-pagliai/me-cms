@@ -59,11 +59,7 @@ class LoginRecorderComponent extends Component
     {
         if (!$this->FileArray) {
             $user = $this->getConfig('user');
-
-            if (!is_positive($user)) {
-                throw new InvalidArgumentException(__d('me_cms', 'You have to set a valid user id'));
-            }
-
+            is_true_or_fail(is_positive($user), __d('me_cms', 'You have to set a valid user id'), InvalidArgumentException::class);
             $this->FileArray = new FileArray(LOGIN_RECORDS . 'user_' . $user . '.log');
         }
 

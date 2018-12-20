@@ -66,9 +66,7 @@ class PostsCategoriesController extends AppController
                 ->find('forIndex')
                 ->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]);
 
-            if ($query->isEmpty()) {
-                throw new RecordNotFoundException(I18N_NOT_FOUND);
-            }
+            is_true_or_fail(!$query->isEmpty(), I18N_NOT_FOUND, RecordNotFoundException::class);
 
             $posts = $this->paginate($query);
 

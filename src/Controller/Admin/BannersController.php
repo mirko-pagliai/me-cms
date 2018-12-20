@@ -118,9 +118,7 @@ class BannersController extends AppController
         }
 
         if ($this->request->getData('file')) {
-            if (!$position) {
-                throw new InternalErrorException(__d('me_cms', 'Missing ID'));
-            }
+            is_true_or_fail($position, __d('me_cms', 'Missing ID'), InternalErrorException::class);
 
             $uploaded = $this->Uploader->set($this->request->getData('file'))
                 ->mimetype('image')

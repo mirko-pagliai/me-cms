@@ -116,9 +116,7 @@ class PhotosController extends AppController
         }
 
         if ($this->request->getData('file')) {
-            if (!$album) {
-                throw new InternalErrorException(__d('me_cms', 'Missing ID'));
-            }
+            is_true_or_fail($album, __d('me_cms', 'Missing ID'), InternalErrorException::class);
 
             $uploaded = $this->Uploader->set($this->request->getData('file'))
                 ->mimetype('image')

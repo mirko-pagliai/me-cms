@@ -53,10 +53,7 @@ class PostsTagsWidgetsCell extends Cell
         //Maximum and minimun font sizes we want to use
         $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
         $minFont = empty($style['minFont']) ? 12 : $style['minFont'];
-
-        if ($maxFont <= $minFont) {
-            throw new InvalidArgumentException(__d('me_cms', 'Invalid values'));
-        }
+        is_true_or_fail($maxFont > $minFont, __d('me_cms', 'Invalid values'), InvalidArgumentException::class);
 
         return [$maxFont, $minFont];
     }

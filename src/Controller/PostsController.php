@@ -145,9 +145,7 @@ class PostsController extends AppController
     public function rss()
     {
         //This method works only for RSS
-        if (!$this->RequestHandler->prefers('rss')) {
-            throw new ForbiddenException;
-        }
+        is_true_or_fail($this->RequestHandler->prefers('rss'), ForbiddenException::class);
 
         $posts = $this->Posts->find('active')
             ->select(['title', 'preview', 'slug', 'text', 'created'])
