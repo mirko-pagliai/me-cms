@@ -47,8 +47,7 @@ class CreateDirectoriesCommandTest extends TestCase
 
         //Re-creates some files after execution
         foreach ([BANNERS, PHOTOS, USER_PICTURES] as $path) {
-            safe_mkdir($path, 0777, true);
-            file_put_contents($path . 'empty', '');
+            safe_create_file($path . 'empty');
             chmod($path . 'empty', 0755);
         }
 

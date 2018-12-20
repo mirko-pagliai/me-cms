@@ -155,7 +155,7 @@ class ViewTest extends TestCase
         $this->View->set('title', 'title from controller');
 
         //Creates a favicon
-        file_put_contents(WWW_ROOT . 'favicon.ico', null);
+        safe_create_file(WWW_ROOT . 'favicon.ico');
 
         //Renders
         $result = $this->View->render(false, 'MeCms.default');

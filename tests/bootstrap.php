@@ -132,10 +132,9 @@ Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
  */
 function create_kcfinder_files($htaccess = true)
 {
-    safe_mkdir(KCFINDER, 0777, true);
-    file_put_contents(KCFINDER . 'browse.php', '@version 3.12');
+    safe_create_file(KCFINDER . 'browse.php', '@version 3.12');
     if ($htaccess) {
-        file_put_contents(KCFINDER . '.htaccess', null);
+        safe_create_file(KCFINDER . '.htaccess');
     }
 }
 

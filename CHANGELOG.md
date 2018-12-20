@@ -17,7 +17,8 @@
     `ConsoleIntegrationTestTrait` provided by MeTools.
 * removed `ME_CMS` constants. It no longer uses also `ASSETS`,
     `DATABASE_BACKUP`, `ME_TOOLS`, `RECAPTCHA_MAILHIDE` and `THUMBER` constants;
-* updated for CakePHP 3.7.1 and fixed all deprecations.
+* updated for CakePHP 3.7.1 and fixed all deprecations;
+* updated for `php-tools` 1.1.7.
 
 ## 2.25 branch
 ### 2.25.4

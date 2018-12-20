@@ -180,7 +180,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $this->assertIsArray($result);
 
         //Creates an empty file. Now is always empty
-        file_put_contents(LOGIN_RECORDS . 'user_1.log', null);
+        safe_create_file(LOGIN_RECORDS . 'user_1.log');
         $result = $this->getLoginRecorderInstance()->read();
         $this->assertEmpty($result);
         $this->assertIsArray($result);

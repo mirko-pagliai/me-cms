@@ -107,11 +107,7 @@ class BannersFixture extends TestFixture
         parent::insert($db);
 
         foreach ($this->records as $record) {
-            $file = BANNERS . $record['filename'];
-
-            if (!file_exists($file)) {
-                file_put_contents($file, null);
-            }
+            safe_create_file(BANNERS . $record['filename']);
         }
     }
 }

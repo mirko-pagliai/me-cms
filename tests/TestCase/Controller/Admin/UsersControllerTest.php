@@ -339,9 +339,7 @@ class UsersControllerTest extends ControllerTestCase
 
         //Creates some files that simulate previous user pictures. These files
         //  will be deleted before upload
-        file_put_contents($expectedPicture, null);
-        file_put_contents(USER_PICTURES . '1.jpeg', null);
-        file_put_contents(USER_PICTURES . '1.png', null);
+        array_map('safe_create_file', [$expectedPicture, USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
 
         $this->assertSession(null, 'Auth.User.picture');
 

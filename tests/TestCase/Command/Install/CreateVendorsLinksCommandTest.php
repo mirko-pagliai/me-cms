@@ -29,18 +29,14 @@ class CreateVendorsLinksCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $links = Configure::read('VENDOR_LINKS');
-
-        foreach (array_keys($links) as $link) {
-            $link = ROOT . 'vendor' . DS . $link;
-            safe_mkdir($link, 0777, true);
-            file_put_contents($link . DS . 'empty', null);
+        foreach (array_keys(Configure::read('VENDOR_LINKS')) as $link) {
+            safe_create_file(ROOT . 'vendor' . DS . $link . DS . 'empty');
         }
 
         $this->exec('me_cms.create_vendors_links -v');
         $this->assertExitWithSuccess();
 
-        foreach ($links as $link) {
+        foreach (Configure::read('VENDOR_LINKS') as $link) {
             $this->assertOutputContains('Link `' . rtr(WWW_ROOT) . 'vendor' . DS . $link . '` has been created');
         }
 

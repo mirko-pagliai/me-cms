@@ -52,7 +52,7 @@ class SystemsControllerTest extends ControllerTestCase
         ];
 
         foreach ($files as $file) {
-            file_put_contents($file, str_repeat('a', 255));
+            safe_create_file($file, str_repeat('a', 255));
         }
 
         return $files;

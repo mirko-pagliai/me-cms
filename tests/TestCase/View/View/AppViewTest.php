@@ -146,7 +146,7 @@ class AppViewTest extends TestCase
     {
         //Creates a new layout
         $layoutFromApp = first_value(App::path('Template/Plugin/' . 'MeCms/Layout')) . 'default.ctp';
-        file_put_contents($layoutFromApp, 'This is a layout from app');
+        safe_create_file($layoutFromApp, 'This is a layout from app');
         $this->assertEquals('This is a layout from app', $this->View->render(false));
         $this->assertEquals('default', $this->View->getLayout());
         $this->assertEquals('MeCms', $this->View->getPlugin());
