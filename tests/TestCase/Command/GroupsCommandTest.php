@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Command;
 
-use Cake\Datasource\ModelAwareTrait;
 use MeCms\Model\Entity\UsersGroup;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
@@ -23,7 +22,6 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 class GroupsCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
-    use ModelAwareTrait;
 
     /**
      * Fixtures
@@ -40,21 +38,19 @@ class GroupsCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $this->loadModel('MeCms.UsersGroups');
+        $UsersGroups = $this->getMockForModel('MeCms.UsersGroups', null);
 
-        $this->exec('me_cms.groups');
-        $this->assertExitWithSuccess();
-
-        $expectedRows = $this->UsersGroups->find()->map(function (UsersGroup $group) {
+        $expectedRows = $UsersGroups->find()->map(function (UsersGroup $group) {
             return [$group->id, $group->name, $group->label, $group->user_count];
         })->toList();
         $expectedRows[] = ['<info>ID</info>', '<info>Name</info>', '<info>Label</info>', '<info>Users</info>'];
-        foreach ($expectedRows as $row) {
-            $this->assertOutputContainsRow($row);
-        }
+
+        $this->exec('me_cms.groups');
+        $this->assertExitWithSuccess();
+        array_walk($expectedRows, [$this, 'assertOutputContainsRow']);
 
         //Deletes all groups
-        $this->UsersGroups->deleteAll(['id >=' => '1']);
+        $UsersGroups->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.groups');
         $this->assertExitWithError();
         $this->assertErrorContains('There are no user groups');

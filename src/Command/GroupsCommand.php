@@ -16,6 +16,7 @@ namespace MeCms\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use MeCms\Model\Entity\UsersGroup;
 use MeTools\Console\Command;
 
 /**
@@ -36,17 +37,6 @@ class GroupsCommand extends Command
     }
 
     /**
-     * Hook method invoked by CakePHP when a command is about to be executed
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
-
-        $this->loadModel('MeCms.UsersGroups');
-    }
-
-    /**
      * Lists user groups
      * @param Arguments $args The command arguments
      * @param ConsoleIo $io The console io
@@ -54,14 +44,10 @@ class GroupsCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
-        //Gets user groups
-        $groups = $this->UsersGroups->find()->map(function ($group) {
-            return [
-                $group->id,
-                $group->name,
-                $group->label,
-                $group->user_count,
-            ];
+        $this->loadModel('MeCms.UsersGroups');
+
+        $groups = $this->UsersGroups->find()->map(function (UsersGroup $group) {
+            return $group->extract(['id', 'name', 'label', 'user_count']);
         });
 
         //Checks for user groups

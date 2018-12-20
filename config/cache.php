@@ -24,16 +24,8 @@ $options = [
     'mask' => 0777,
 ];
 
-return ['Cache' => [
-    //Default and admin configurations
-    'default' => array_merge($options, ['path' => ME_CMS_CACHE . 'default']),
-    'admin' => array_merge($options, ['path' => ME_CMS_CACHE . 'admin']),
+foreach (['default', 'admin', 'banners', 'pages', 'photos', 'posts', 'static_pages', 'users'] as $name) {
+    $Cache[$name] = ['path' => ME_CMS_CACHE . $name] + $options;
+}
 
-    //Groups
-    'banners' => array_merge($options, ['path' => ME_CMS_CACHE . 'banners']),
-    'pages' => array_merge($options, ['path' => ME_CMS_CACHE . 'pages']),
-    'photos' => array_merge($options, ['path' => ME_CMS_CACHE . 'photos']),
-    'posts' => array_merge($options, ['path' => ME_CMS_CACHE . 'posts']),
-    'static_pages' => array_merge($options, ['path' => ME_CMS_CACHE . 'static_pages']),
-    'users' => array_merge($options, ['path' => ME_CMS_CACHE . 'users']),
-]];
+return compact('Cache');

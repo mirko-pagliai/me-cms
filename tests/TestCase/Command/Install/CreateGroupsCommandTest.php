@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Command\Install;
 
-use MeCms\Model\Table\UsersGroupsTable;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
@@ -38,7 +37,7 @@ class CreateGroupsCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $UsersGroups = $this->getMockForModel('UsersGroups', null, ['className' => UsersGroupsTable::class]);
+        $UsersGroups = $this->getMockForModel('MeCms.UsersGroups', null);
 
         //A group already exists
         $this->exec('me_cms.create_groups -v');

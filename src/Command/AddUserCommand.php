@@ -40,17 +40,6 @@ class AddUserCommand extends Command
     }
 
     /**
-     * Hook method invoked by CakePHP when a command is about to be executed
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
-
-        $this->loadModel('MeCms.Users');
-    }
-
-    /**
      * Adds an user
      * @param Arguments $args The command arguments
      * @param ConsoleIo $io The console io
@@ -58,6 +47,8 @@ class AddUserCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
+        $this->loadModel('MeCms.Users');
+
         $groups = $this->Users->Groups->find('list');
 
         if ($groups->isEmpty()) {

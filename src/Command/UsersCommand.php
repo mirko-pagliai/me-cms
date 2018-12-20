@@ -16,8 +16,10 @@ namespace MeCms\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\I18n\Time;
 use Cake\ORM\Query;
 use MeCms\Model\Entity\User;
+use MeCms\Model\Entity\UsersGroup;
 use MeTools\Console\Command;
 
 /**
@@ -38,17 +40,6 @@ class UsersCommand extends Command
     }
 
     /**
-     * Hook method invoked by CakePHP when a command is about to be executed
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
-
-        $this->loadModel('MeCms.Users');
-    }
-
-    /**
      * Lists users
      * @param Arguments $args The command arguments
      * @param ConsoleIo $io The console io
@@ -56,7 +47,8 @@ class UsersCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
-        //Gets users
+        $this->loadModel('MeCms.Users');
+
         $users = $this->Users->find()->contain('Groups', function (Query $q) {
             return $q->select(['label']);
         })->map(function (User $user) {
@@ -68,16 +60,10 @@ class UsersCommand extends Command
                 $user->status = __d('me_cms', 'Active');
             }
 
-            return [
-                $user->id,
-                $user->username,
-                $user->group->label,
-                $user->full_name,
-                $user->email,
-                $user->post_count,
-                $user->status,
-                $user->created->i18nFormat('yyyy/MM/dd HH:mm'),
-            ];
+            $user->created = $user->created instanceof Time ? $user->created->i18nFormat('yyyy/MM/dd HH:mm') : $user->created;
+            $user->group = $user->group instanceof UsersGroup ? $user->group->label : $user->group;
+
+            return $user->extract(['id', 'username', 'group', 'full_name', 'email', 'post_count', 'status', 'created']);
         });
 
         if ($users->isEmpty()) {

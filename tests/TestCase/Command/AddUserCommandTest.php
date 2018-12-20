@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Command;
 
-use Cake\Datasource\ModelAwareTrait;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
@@ -22,7 +21,6 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 class AddUserCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
-    use ModelAwareTrait;
 
     /**
      * Fixtures
@@ -39,10 +37,10 @@ class AddUserCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $this->loadModel('MeCms.Users');
+        $Users = $this->getMockForModel('MeCms.Users', null);
         $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
 
-        $expectedUserId = $this->Users->find()->extract('id')->last() + 1;
+        $expectedUserId = $Users->find()->extract('id')->last() + 1;
         $this->exec('me_cms.add_user', array_merge($example, ['3']));
         $this->assertExitWithSuccess();
         $this->assertOutputContains('<question>Group ID</question>');
@@ -51,8 +49,8 @@ class AddUserCommandTest extends TestCase
         $this->assertErrorEmpty();
 
         //Checks the user has been created
-        $this->assertEquals(3, $this->Users->findById($expectedUserId)->extract('group_id')->first());
-        $this->Users->delete($this->Users->get($expectedUserId));
+        $this->assertEquals(3, $Users->findById($expectedUserId)->extract('group_id')->first());
+        $Users->delete($Users->get($expectedUserId));
 
         //Tries using the `group` option
         $this->exec('me_cms.add_user --group 2', $example);
@@ -62,7 +60,7 @@ class AddUserCommandTest extends TestCase
         $this->assertErrorEmpty();
 
         //Checks the user has been created
-        $this->assertEquals(2, $this->Users->findById($expectedUserId)->extract('group_id')->first());
+        $this->assertEquals(2, $Users->findById($expectedUserId)->extract('group_id')->first());
 
         //Tries with a no existing group
         $this->exec('me_cms.add_user --group 123', $example);
@@ -90,7 +88,7 @@ class AddUserCommandTest extends TestCase
         $this->assertErrorContains('Field `password_repeat`: passwords don\'t match');
 
         //Tries with no groups
-        $this->Users->Groups->deleteAll(['id >=' => '1']);
+        $Users->Groups->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.add_user -v');
         $this->assertExitWithError();
         $this->assertErrorContains('Before you can manage users, you have to create at least a user group');

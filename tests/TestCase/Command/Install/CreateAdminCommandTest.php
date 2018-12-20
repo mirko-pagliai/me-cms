@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Command\Install;
 
-use MeCms\Model\Table\UsersTable;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
@@ -39,7 +38,7 @@ class CreateAdminCommandTest extends TestCase
     public function testExecute()
     {
         $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
-        $Users = $this->getMockForModel('Users', null, ['className' => UsersTable::class]);
+        $Users = $this->getMockForModel('MeCms.Users', null);
 
         $expectedUserId = $Users->find()->extract('id')->last() + 1;
         $this->exec('me_cms.create_admin', $example);
