@@ -16,7 +16,7 @@ use Cake\Http\ServerRequest;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
 use MeCms\Controller\Component\LoginRecorderComponent;
-use MeTools\TestSuite\ComponentTestCase;
+use MeCms\TestSuite\ComponentTestCase;
 use Tools\FileArray;
 
 /**

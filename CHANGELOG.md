@@ -10,7 +10,7 @@
     method to get the cache configuration name used by the table. It can also
     returns the names for the associated tables;
 * removed `SerializedLog` class. Use instead `EntityFileLog\Log\Engine\EntityFileLog`;
-* added `HelperTestCase` and `TestCase` classes;
+* added `ComponentTestCase`, `HelperTestCase` and `TestCase` classes;
 * `IntegrationTestCase` has been removed and its methods have been moved to
     `ControllerTestCase`. You can also use `IntegrationTestTrait` provided by MeTools;
 * `ConsoleIntegrationTestCase` has been removed, use instead

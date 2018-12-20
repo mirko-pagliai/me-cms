@@ -12,9 +12,9 @@
  */
 namespace MeCms\Test\TestCase\Controller\Component;
 
+use MeCms\TestSuite\ComponentTestCase;
 use MeCms\Utility\Checkups\KCFinder;
 use MeCms\Utility\Checkups\Webroot;
-use MeTools\TestSuite\ComponentTestCase;
 
 /**
  * KcFinderComponentTest class
