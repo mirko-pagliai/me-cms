@@ -42,7 +42,7 @@ class CopyConfigCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
-        $parser->setDescription(__d('me_cms', __d('me_cms', 'Copies the configuration files')));
+        $parser->setDescription(__d('me_cms', 'Copies the configuration files'));
 
         return $parser;
     }

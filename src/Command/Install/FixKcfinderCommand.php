@@ -31,7 +31,7 @@ class FixKcfinderCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
-        $parser->setDescription(__d('me_cms', __d('me_cms', 'Fixes {0}', 'KCFinder')));
+        $parser->setDescription(__d('me_cms', 'Fixes {0}', 'KCFinder'));
 
         return $parser;
     }
