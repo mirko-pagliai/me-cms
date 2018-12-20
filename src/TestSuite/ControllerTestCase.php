@@ -22,9 +22,7 @@ use MeTools\TestSuite\IntegrationTestTrait;
  */
 abstract class ControllerTestCase extends TestCase
 {
-    use IntegrationTestTrait {
-        IntegrationTestTrait::setUp as metoolsSetUp;
-    }
+    use IntegrationTestTrait;
 
     /**
      * Controller instance
@@ -147,7 +145,7 @@ abstract class ControllerTestCase extends TestCase
      */
     public function setUp()
     {
-        $this->metoolsSetUp();
+        parent::setUp();
 
         $parts = explode('\\', get_class($this));
         $isAdminController = in_array('Admin', array_slice($parts, -2, 1));
