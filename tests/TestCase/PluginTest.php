@@ -59,6 +59,7 @@ class PluginTest extends TestCase
         $plugin->bootstrap($app);
 
         $expectedDiff = [
+            'DebugKit',
             'CommonMark',
             'WyriHaximus/MinifyHtml',
         ];
