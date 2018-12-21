@@ -14,7 +14,7 @@ namespace MeCms\Test\TestCase\Core;
 
 use Cake\Core\Configure;
 use Cake\Network\Request;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * RequestDetectorsTest class
@@ -163,7 +163,7 @@ class RequestDetectorsTest extends TestCase
         $this->assertFalse($this->Request->isOffline());
         $this->assertFalse($this->Request->is('offline'));
 
-        Configure::write(ME_CMS . '.default.offline', true);
+        Configure::write('MeCms.default.offline', true);
 
         $request = $this->getMockForRequest();
         $this->assertTrue($request->isOffline());

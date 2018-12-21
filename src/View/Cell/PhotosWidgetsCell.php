@@ -38,7 +38,7 @@ class PhotosWidgetsCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        $this->loadModel(ME_CMS . '.Photos');
+        $this->loadModel('MeCms.Photos');
     }
 
     /**
@@ -60,7 +60,7 @@ class PhotosWidgetsCell extends Cell
             ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_albums', $this->Photos->cache)
+            ->cache('widget_albums', $this->Photos->getCacheName())
             ->all();
 
         $this->set(compact('albums'));
@@ -85,7 +85,7 @@ class PhotosWidgetsCell extends Cell
                 sprintf('%s.created', $this->Photos->getAlias()) => 'DESC',
                 sprintf('%s.id', $this->Photos->getAlias()) => 'DESC',
             ])
-            ->cache(sprintf('widget_latest_%d', $limit), $this->Photos->cache)
+            ->cache(sprintf('widget_latest_%d', $limit), $this->Photos->getCacheName())
             ->all();
 
         $this->set(compact('photos'));
@@ -105,7 +105,7 @@ class PhotosWidgetsCell extends Cell
 
         $photos = $this->Photos->find('active')
             ->select(['album_id', 'filename'])
-            ->cache(sprintf('widget_random_%d', $limit), $this->Photos->cache)
+            ->cache(sprintf('widget_random_%d', $limit), $this->Photos->getCacheName())
             ->sample($limit)
             ->toArray();
 

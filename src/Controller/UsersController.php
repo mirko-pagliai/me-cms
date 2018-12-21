@@ -35,23 +35,22 @@ class UsersController extends AppController
      */
     protected function loginWithCookie()
     {
+        $username = $this->request->getCookie('login.username');
+        $password = $this->request->getCookie('login.password');
+
         //Checks if the cookies exist
-        if (!$this->Cookie->read('login.username') || !$this->Cookie->read('login.password')) {
+        if (!$username || !$password) {
             return;
         }
 
-        $this->request = $this->request->withData('username', $this->Cookie->read('login.username'));
-        $this->request = $this->request->withData('password', $this->Cookie->read('login.password'));
-
         //Tries to login
+        $this->request = $this->request->withParsedBody(compact('username', 'password'));
         $user = $this->Auth->identify();
-
         if (!$user || !$user['active'] || $user['banned']) {
             return $this->buildLogout();
         }
 
         $this->Auth->setUser($user);
-
         $this->LoginRecorder->config('user', $user['id'])->write();
 
         return $this->redirect($this->Auth->redirectUrl());
@@ -64,9 +63,9 @@ class UsersController extends AppController
     protected function buildLogout()
     {
         //Deletes some cookies and KCFinder session
-        $this->Cookie->delete('login');
-        $this->Cookie->delete('sidebar-lastmenu');
-        $this->request->session()->delete('KCFINDER');
+        $cookies = $this->request->getCookieCollection()->remove('login')->remove('sidebar-lastmenu');
+        $this->request = $this->request->withCookieCollection($cookies);
+        $this->request->getSession()->delete('KCFINDER');
 
         return $this->redirect($this->Auth->logout());
     }
@@ -82,7 +81,7 @@ class UsersController extends AppController
         //Creates the token
         $token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
 
-        return $this->getMailer(ME_CMS . '.User')
+        return $this->getMailer('MeCms.User')
             ->set('url', Router::url(['_name' => 'activation', $user->id, $token], true))
             ->send('activation', [$user]);
     }
@@ -99,7 +98,7 @@ class UsersController extends AppController
         $this->Cookie->configKey('login', ['encryption' => 'aes', 'expires' => '+365 days']);
 
         $this->loadComponent('Tokens.Token');
-        $this->loadComponent(ME_CMS . '.LoginRecorder');
+        $this->loadComponent('MeCms.LoginRecorder');
     }
 
     /**
@@ -129,10 +128,7 @@ class UsersController extends AppController
      */
     public function activation($id, $token)
     {
-        //Checks for token
-        if (!$this->Token->check($token, ['type' => 'signup', 'user_id' => $id])) {
-            throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
-        }
+        is_true_or_fail($this->Token->check($token, ['type' => 'signup', 'user_id' => $id]), __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
 
         $update = $this->Users->findPendingById($id)
             ->update()
@@ -298,7 +294,7 @@ class UsersController extends AppController
                     //Creates the token
                     $token = $this->Token->create($user->email, ['type' => 'password_forgot', 'user_id' => $user->id]);
 
-                    $this->getMailer(ME_CMS . '.User')
+                    $this->getMailer('MeCms.User')
                         ->set('url', Router::url(['_name' => 'passwordReset', $user->id, $token], true))
                         ->send('passwordForgot', [$user]);
 
@@ -334,17 +330,14 @@ class UsersController extends AppController
      */
     public function passwordReset($id, $token)
     {
-        //Checks for token
-        if (!$this->Token->check($token, ['type' => 'password_forgot', 'user_id' => $id])) {
-            throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
-        }
+        is_true_or_fail($this->Token->check($token, ['type' => 'password_forgot', 'user_id' => $id]), __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
 
         $user = $this->Users->findActiveById($id)->select(['id'])->firstOrFail();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
 
-            if ($user->dirty() && $this->Users->save($user)) {
+            if ($user->isDirty() && $this->Users->save($user)) {
                 $this->Flash->success(__d('me_cms', 'The password has been edited'));
 
                 //Deletes the token

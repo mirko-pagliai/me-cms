@@ -12,9 +12,8 @@
  */
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
-use MeCms\Model\Table\PostsTable;
-use MeTools\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
+use Cake\ORM\Entity;
+use MeCms\TestSuite\TestCase;
 use MeTools\Utility\Youtube;
 
 /**
@@ -22,8 +21,6 @@ use MeTools\Utility\Youtube;
  */
 class GetPreviewsFromTextTraitTest extends TestCase
 {
-    use MockTrait;
-
     /**
      * @var object
      */
@@ -37,7 +34,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = $this->getMockForTable(PostsTable::class, null);
+        $this->Posts = $this->getMockForModel('MeCms.Posts', null);
     }
 
     /**
@@ -158,7 +155,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
             return $this->invokeMethod($this->Posts, 'getPreviews', func_get_args());
         };
 
-        $this->Posts = $this->getMockForTable(PostsTable::class, ['getPreviewSize']);
+        $this->Posts = $this->getMockForModel(get_parent_class($this->Posts), ['getPreviewSize']);
         $this->Posts->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         foreach ([
@@ -180,7 +177,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
 
         $result = $getPreviewsMethod('<img src=\'http://example.com/image.jpg\' />');
         $this->assertCount(1, $result);
-        $this->assertInstanceof('Cake\ORM\Entity', $result[0]);
+        $this->assertInstanceof(Entity::class, $result[0]);
         $this->assertEquals('http://example.com/image.jpg', $result[0]->url);
         $this->assertEquals(400, $result[0]->width);
         $this->assertEquals(300, $result[0]->height);
@@ -191,7 +188,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
         ] as $image) {
             $result = $getPreviewsMethod('<img src=\'' . $image . '\' />');
             $this->assertCount(1, $result);
-            $this->assertInstanceof('Cake\ORM\Entity', $result[0]);
+            $this->assertInstanceof(Entity::class, $result[0]);
             $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+$/', $result[0]->url);
             $this->assertEquals(400, $result[0]->width);
             $this->assertEquals(300, $result[0]->height);
@@ -200,7 +197,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
         $youtubeId = '6z4KK7RWjmk';
         $result = $getPreviewsMethod('[youtube]' . $youtubeId . '[/youtube]');
         $this->assertCount(1, $result);
-        $this->assertInstanceof('Cake\ORM\Entity', $result[0]);
+        $this->assertInstanceof(Entity::class, $result[0]);
         $this->assertEquals(Youtube::getPreview($youtubeId), $result[0]->url);
         $this->assertEquals(400, $result[0]->width);
         $this->assertEquals(300, $result[0]->height);

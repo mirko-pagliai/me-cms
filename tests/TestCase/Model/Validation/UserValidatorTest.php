@@ -37,8 +37,8 @@ class UserValidatorTest extends ValidationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Users',
-        'plugin.me_cms.UsersGroups',
+        'plugin.MeCms.Users',
+        'plugin.MeCms.UsersGroups',
     ];
 
     /**

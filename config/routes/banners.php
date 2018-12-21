@@ -13,9 +13,7 @@
 
 //Banner
 if (!$routes->nameExists('banner')) {
-    $routes->connect(
-        '/banner/:id',
-        ['controller' => 'Banners', 'action' => 'open'],
-        ['_name' => 'banner', 'id' => '\d+', 'pass' => ['id']]
-    );
+    $routes->connect('/banner/:id', ['controller' => 'Banners', 'action' => 'open'], ['_name' => 'banner'])
+        ->setPatterns(['id' => '\d+'])
+        ->setPass(['id']);
 }

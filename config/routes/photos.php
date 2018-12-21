@@ -13,47 +13,28 @@
 
 //Albums
 if (!$routes->nameExists('albums')) {
-    $routes->connect(
-        '/albums',
-        ['controller' => 'PhotosAlbums', 'action' => 'index'],
-        ['_name' => 'albums']
-    );
+    $routes->connect('/albums', ['controller' => 'PhotosAlbums', 'action' => 'index'], ['_name' => 'albums']);
 }
 
 //Album
 if (!$routes->nameExists('album')) {
-    $routes->connect(
-        '/album/:slug',
-        ['controller' => 'PhotosAlbums', 'action' => 'view'],
-        ['_name' => 'album', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-    );
+    $routes->connect('/album/:slug', ['controller' => 'PhotosAlbums', 'action' => 'view'], ['_name' => 'album'])
+        ->setPatterns(['slug' => '[\d\w\-]+'])
+        ->setPass(['slug']);
 }
 
 //Photo
 if (!$routes->nameExists('photo')) {
-    $routes->connect(
-        '/photo/:slug/:id',
-        ['controller' => 'Photos', 'action' => 'view'],
-        [
-            '_name' => 'photo',
-            'slug' => '[a-z0-9\-]+',
-            'id' => '\d+',
-            'pass' => ['slug', 'id'],
-        ]
-    );
+    $routes->connect('/photo/:slug/:id', ['controller' => 'Photos', 'action' => 'view'], ['_name' => 'photo'])
+        ->setPatterns(['id' => '\d+', 'slug' => '[\d\w\-]+'])
+        ->setPass(['slug', 'id']);
 }
 
 //Photo preview
 if (!$routes->nameExists('photosPreview')) {
-    $routes->connect(
-        '/photo/preview/:id',
-        ['controller' => 'Photos', 'action' => 'preview'],
-        [
-            '_name' => 'photosPreview',
-            'slug' => '[a-z0-9\-]+',
-            'pass' => ['id'],
-        ]
-    );
+    $routes->connect('/photo/preview/:id', ['controller' => 'Photos', 'action' => 'preview'], ['_name' => 'photosPreview'])
+        ->setPatterns(['slug' => '[\d\w\-]+'])
+        ->setPass(['id']);
 }
 
 /**
@@ -62,8 +43,6 @@ if (!$routes->nameExists('photosPreview')) {
  * These URLs will become:
  * <pre>/photo/album-name/1</pre>
  */
-$routes->connect(
-    '/photo/:id',
-    ['controller' => 'Photos', 'action' => 'view', 'slug' => false],
-    ['id' => '\d+', 'pass' => ['slug', 'id']]
-);
+$routes->connect('/photo/:id', ['controller' => 'Photos', 'action' => 'view', 'slug' => false])
+        ->setPatterns(['id' => '\d+'])
+        ->setPass(['slug', 'id']);

@@ -85,7 +85,7 @@ class User extends Entity
             return 'no-avatar.jpg';
         }
 
-        return ME_CMS . '.no-avatar.jpg';
+        return 'MeCms.no-avatar.jpg';
     }
 
     /**

@@ -29,7 +29,7 @@ class BannersPositionValidatorTest extends ValidationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.BannersPositions',
+        'plugin.MeCms.BannersPositions',
     ];
 
     /**

@@ -29,7 +29,7 @@ $this->Breadcrumbs->add($title, ['_name' => 'albums']);
 
         echo $this->Html->div(
             'col-sm-6 col-md-4 mb-4',
-            $this->element(ME_CMS . '.views/photo-preview', compact('link', 'path', 'text', 'title'))
+            $this->element('MeCms.views/photo-preview', compact('link', 'path', 'text', 'title'))
         );
     }
     ?>

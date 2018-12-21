@@ -14,16 +14,15 @@
 namespace MeCms\TestSuite;
 
 use Cake\Cache\Cache;
-use MeTools\Controller\Component\UploaderComponent;
-use MeTools\TestSuite\IntegrationTestCase;
-use MeTools\TestSuite\Traits\MockTrait;
+use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\IntegrationTestTrait;
 
 /**
  * Abstract class for test controllers
  */
-abstract class ControllerTestCase extends IntegrationTestCase
+abstract class ControllerTestCase extends TestCase
 {
-    use MockTrait;
+    use IntegrationTestTrait;
 
     /**
      * Controller instance
@@ -36,6 +35,12 @@ abstract class ControllerTestCase extends IntegrationTestCase
      * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $Table;
+
+    /**
+     * If `true`, a mock instance of the shell will be created
+     * @var bool
+     */
+    protected $autoInitializeClass = true;
 
     /**
      * Cache keys to clear for each test
@@ -84,7 +89,7 @@ abstract class ControllerTestCase extends IntegrationTestCase
         $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
-        $controller->request->clearDetectorCache();
+        $this->Controller->request->clearDetectorCache();
 
         if ($action) {
             $this->Controller->request = $this->Controller->request->withParam('action', $action);
@@ -130,11 +135,12 @@ abstract class ControllerTestCase extends IntegrationTestCase
      * @return void
      * @uses $Controller
      * @uses $Table
+     * @uses $autoInitializeClass
      * @uses $cacheToClear
      * @uses $url
      * @uses getControllerAlias()
      * @uses getMockForController()
-     * @uses getMockForTable()
+     * @uses getMockForModel()
      * @uses setUserGroup()
      */
     public function setUp()
@@ -145,7 +151,7 @@ abstract class ControllerTestCase extends IntegrationTestCase
         $isAdminController = in_array('Admin', array_slice($parts, -2, 1));
 
         //Tries to retrieve controller and table from the class name
-        if (!$this->Controller) {
+        if (!$this->Controller && $this->autoInitializeClass) {
             array_splice($parts, 1, 2, []);
             $parts[count($parts) - 1] = substr($parts[count($parts) - 1], 0, -4);
             $className = implode('\\', $parts);
@@ -161,13 +167,11 @@ abstract class ControllerTestCase extends IntegrationTestCase
             //Tries to retrieve the table
             $className = sprintf('%s\\Model\\Table\\%sTable', $parts[0], $alias);
             if (class_exists($className)) {
-                $this->Table = $this->getMockForTable($className, null);
+                $this->Table = $this->getMockForModel($alias, null, compact('className'));
 
-                //Tries to retrieve all cache keys related to the table and associated tables
-                foreach (array_merge([$this->Table], iterator_to_array($this->Table->associations())) as $table) {
-                    if (!empty($table->cache)) {
-                        $this->cacheToClear[] = $table->cache;
-                    }
+                //Tries to retrieve all cache names related to this table and associated tables
+                if (method_exists($this->Table, 'getCacheName')) {
+                    $this->cacheToClear = array_merge($this->cacheToClear, $this->Table->getCacheName(true));
                 }
             }
         }
@@ -180,46 +184,6 @@ abstract class ControllerTestCase extends IntegrationTestCase
 
         if ($isAdminController) {
             $this->setUserGroup('admin');
-        }
-    }
-
-    /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        safe_unlink_recursive(LOGS);
-
-        parent::tearDown();
-    }
-
-    /**
-     * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
-     * @param \Cake\Controller\Controller|null $controller Controller instance
-     * @return void
-     * @uses getMockForComponent()
-     */
-    public function controllerSpy($event, $controller = null)
-    {
-        parent::controllerSpy($event, $controller);
-
-        $this->_controller->viewBuilder()->setLayout('with_flash');
-
-        //Sets key for cookies
-        if (!$this->_controller->components()->has('Cookie')) {
-            $this->_controller->loadComponent('Cookie');
-        }
-        $this->_controller->Cookie->setConfig('key', 'somerandomhaskeysomerandomhaskey');
-
-        if ($this->_controller->components()->has('Uploader')) {
-            $this->_controller->Uploader = $this->getMockForComponent(UploaderComponent::class, ['move_uploaded_file']);
-
-            $this->_controller->Uploader->method('move_uploaded_file')
-                ->will($this->returnCallback(function ($filename, $destination) {
-                    return rename($filename, $destination);
-                }));
         }
     }
 

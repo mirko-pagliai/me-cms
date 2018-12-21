@@ -18,16 +18,13 @@ use Cake\ORM\Association;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\BelongsToMany;
 use Cake\ORM\Association\HasMany;
-use MeTools\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
+use MeCms\TestSuite\TestCase;
 
 /**
  * Abstract class for test tables
  */
 abstract class TableTestCase extends TestCase
 {
-    use MockTrait;
-
     /**
      * Table instance
      * @var \PHPUnit\Framework\MockObject\MockObject
@@ -95,6 +92,7 @@ abstract class TableTestCase extends TestCase
      * Called before every test method
      * @return void
      * @uses $Table
+     * @uses $autoInitializeClass
      * @uses $cacheToClear
      */
     public function setUp()
@@ -108,13 +106,12 @@ abstract class TableTestCase extends TestCase
             $className = implode('\\', $parts);
 
             if (class_exists($className)) {
-                $this->Table = $this->getMockForTable($className, null);
+                $alias = substr(array_pop($parts), 0, -5);
+                $this->Table = $this->getMockForModel($alias, null, compact('className'));
 
-                //Tries to retrieve all cache keys related to the table and associated tables
-                foreach (array_merge([$this->Table], iterator_to_array($this->Table->associations())) as $table) {
-                    if (!empty($table->cache)) {
-                        $this->cacheToClear[] = $table->cache;
-                    }
+                //Tries to retrieve all cache names related to this table and associated tables
+                if (method_exists($this->Table, 'getCacheName')) {
+                    $this->cacheToClear = array_merge($this->cacheToClear, $this->Table->getCacheName(true));
                 }
             }
         }

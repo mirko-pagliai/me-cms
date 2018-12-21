@@ -16,13 +16,8 @@ if (!$routes->nameExists('activation')) {
     $routes->connect(
         '/activation/:id/:token',
         ['controller' => 'Users', 'action' => 'activation'],
-        [
-            '_name' => 'activation',
-            'id' => '\d+',
-            'token' => '[\d\w]+',
-            'pass' => ['id', 'token'],
-        ]
-    );
+        ['_name' => 'activation']
+    )->setPatterns(['id' => '\d+', 'token' => '[\d\w]+'])->setPass(['id', 'token']);
 }
 
 //Activation resend
@@ -36,20 +31,12 @@ if (!$routes->nameExists('activationResend')) {
 
 //Login
 if (!$routes->nameExists('login')) {
-    $routes->connect(
-        '/login',
-        ['controller' => 'Users', 'action' => 'login'],
-        ['_name' => 'login']
-    );
+    $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
 }
 
 //Logout
 if (!$routes->nameExists('logout')) {
-    $routes->connect(
-        '/logout',
-        ['controller' => 'Users', 'action' => 'logout'],
-        ['_name' => 'logout']
-    );
+    $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
 }
 
 //Password forgot
@@ -66,20 +53,11 @@ if (!$routes->nameExists('passwordReset')) {
     $routes->connect(
         '/password/reset/:id/:token',
         ['controller' => 'Users', 'action' => 'passwordReset'],
-        [
-            '_name' => 'passwordReset',
-            'id' => '\d+',
-            'token' => '[\d\w]+',
-            'pass' => ['id', 'token'],
-        ]
-    );
+        ['_name' => 'passwordReset']
+    )->setPatterns(['id' => '\d+', 'token' => '[\d\w]+'])->setPass(['id', 'token']);
 }
 
 //Signup
 if (!$routes->nameExists('signup')) {
-    $routes->connect(
-        '/signup',
-        ['controller' => 'Users', 'action' => 'signup'],
-        ['_name' => 'signup']
-    );
+    $routes->connect('/signup', ['controller' => 'Users', 'action' => 'signup'], ['_name' => 'signup']);
 }

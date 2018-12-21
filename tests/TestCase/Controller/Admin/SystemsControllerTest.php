@@ -45,14 +45,14 @@ class SystemsControllerTest extends ControllerTestCase
         Cache::write('valueFromGroup', 'data', 'posts');
 
         $files = [
-            'assets' => getConfigOrFail(ASSETS . '.target') . DS . 'asset_file',
+            'assets' => getConfigOrFail('Assets.target') . DS . 'asset_file',
             'logs' => LOGS . 'log_file',
             'sitemap' => SITEMAP,
-            'thumbs' => getConfigOrFail(THUMBER . '.target') . DS . md5('a') . '_' . md5('a') . '.jpg',
+            'thumbs' => getConfigOrFail('Thumber.target') . DS . md5('a') . '_' . md5('a') . '.jpg',
         ];
 
         foreach ($files as $file) {
-            file_put_contents($file, str_repeat('a', 255));
+            safe_create_file($file, str_repeat('a', 255));
         }
 
         return $files;
@@ -64,8 +64,8 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function setUp()
     {
+        create_kcfinder_files();
         I18n::setLocale('en_US');
-
         Cache::clearAll();
 
         parent::setUp();
@@ -77,9 +77,11 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function tearDown()
     {
+        safe_unlink_recursive(KCFINDER, 'empty');
+
         //Deletes all temporary files
-        safe_unlink_recursive(getConfigOrFail(ASSETS . '.target'));
-        safe_unlink_recursive(getConfigOrFail(THUMBER . '.target'));
+        safe_unlink_recursive(getConfigOrFail('Assets.target'));
+        safe_unlink_recursive(getConfigOrFail('Thumber.target'));
         safe_unlink(SITEMAP);
 
         parent::tearDown();
@@ -175,7 +177,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertEmpty($this->viewVariable('changelog'));
 
         //GET request. Asks for a changelog file
-        $this->get($url + ['?' => ['file' => ME_CMS]]);
+        $this->get($url + ['?' => ['file' => 'MeCms']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin/Systems/changelogs.ctp');
         $this->assertIsString($this->viewVariable('changelog'));

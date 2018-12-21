@@ -36,10 +36,10 @@ use MeCms\Model\Table\AppTable;
 class PhotosTable extends AppTable
 {
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'photos';
+    protected $cache = 'photos';
 
     /**
      * Called after an entity has been deleted
@@ -130,7 +130,7 @@ class PhotosTable extends AppTable
         $this->setDisplayField('filename');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Albums', ['className' => ME_CMS . '.PhotosAlbums'])
+        $this->belongsTo('Albums', ['className' => 'MeCms.PhotosAlbums'])
             ->setForeignKey('album_id')
             ->setJoinType('INNER');
 

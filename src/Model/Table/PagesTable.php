@@ -33,10 +33,10 @@ class PagesTable extends PostsAndPagesTables
     use LocatorAwareTrait;
 
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'pages';
+    protected $cache = 'pages';
 
     /**
      * Returns a rules checker object that will be used for validating
@@ -66,10 +66,10 @@ class PagesTable extends PostsAndPagesTables
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', ['className' => ME_CMS . '.PagesCategories'])
+        $this->belongsTo('Categories', ['className' => 'MeCms.PagesCategories'])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
-            ->setTarget($this->getTableLocator()->get(ME_CMS . '.PagesCategories'))
+            ->setTarget($this->getTableLocator()->get('MeCms.PagesCategories'))
             ->setAlias('Categories');
 
         $this->addBehavior('Timestamp');

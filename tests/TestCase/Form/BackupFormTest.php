@@ -15,7 +15,7 @@ namespace MeCms\Test\TestCase\Form;
 use Cake\Http\Exception\InternalErrorException;
 use DatabaseBackup\Utility\BackupExport;
 use MeCms\Form\BackupForm;
-use MeTools\TestSuite\TestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * BackupFormTest class
@@ -59,11 +59,11 @@ class BackupFormTest extends TestCase
     public function testValidationExampleData()
     {
         $this->assertTrue($this->Form->validate(['filename' => 'file.sql']));
-        $this->assertEmpty($this->Form->errors());
+        $this->assertEmpty($this->Form->getErrors());
 
         $expected = ['filename' => ['_required' => 'This field is required']];
         $this->assertFalse($this->Form->validate([]));
-        $this->assertEquals($expected, $this->Form->errors());
+        $this->assertEquals($expected, $this->Form->getErrors());
     }
 
     /**
@@ -82,20 +82,20 @@ class BackupFormTest extends TestCase
             'file.gif',
         ] as $value) {
             $this->assertFalse($this->Form->validate(['filename' => $value]));
-            $this->assertEquals($expected, $this->Form->errors());
+            $this->assertEquals($expected, $this->Form->getErrors());
         }
 
         foreach (['file.sql', 'file.sql.bz2', 'file.sql.gz'] as $value) {
             $this->assertTrue($this->Form->validate(['filename' => $value]));
-            $this->assertEmpty($this->Form->errors());
+            $this->assertEmpty($this->Form->getErrors());
         }
 
         $expected = ['filename' => ['maxLength' => 'Must be at most 255 chars']];
         $this->assertFalse($this->Form->validate(['filename' => str_repeat('a', 252) . '.sql']));
-        $this->assertEquals($expected, $this->Form->errors());
+        $this->assertEquals($expected, $this->Form->getErrors());
 
         $this->assertTrue($this->Form->validate(['filename' => str_repeat('a', 251) . '.sql']));
-        $this->assertEmpty($this->Form->errors());
+        $this->assertEmpty($this->Form->getErrors());
     }
 
     /**

@@ -21,10 +21,10 @@ use MeCms\Model\Table\AppTable;
 class BannersPositionsTable extends AppTable
 {
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'banners';
+    protected $cache = 'banners';
 
     /**
      * Returns a rules checker object that will be used for validating
@@ -52,7 +52,7 @@ class BannersPositionsTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Banners', ['className' => ME_CMS . '.Banners'])
+        $this->hasMany('Banners', ['className' => 'MeCms.Banners'])
             ->setForeignKey('position_id');
 
         $this->addBehavior('Timestamp');

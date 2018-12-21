@@ -64,7 +64,7 @@ class Post extends Entity
         }
 
         //Loads the `BBCode` helper
-        $BBCode = (new HelperRegistry(new View))->load(ME_TOOLS . '.BBCode');
+        $BBCode = (new HelperRegistry(new View))->load('MeTools.BBCode');
 
         return trim(strip_tags($BBCode->remove($this->_properties['text'])));
     }

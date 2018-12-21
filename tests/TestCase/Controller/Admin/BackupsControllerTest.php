@@ -30,10 +30,9 @@ class BackupsControllerTest extends ControllerTestCase
      */
     protected function createSingleBackup($extension = 'sql')
     {
-        $file = getConfigOrFail(DATABASE_BACKUP . '.target') . DS . sprintf('backup.%s', $extension);
-        file_put_contents($file, null);
+        $file = getConfigOrFail('DatabaseBackup.target') . DS . sprintf('backup.%s', $extension);
 
-        return $file;
+        return safe_create_file($file) ? $file : false;
     }
 
     /**
@@ -52,7 +51,7 @@ class BackupsControllerTest extends ControllerTestCase
     public function tearDown()
     {
         //Deletes all backups
-        safe_unlink_recursive(getConfigOrFail(DATABASE_BACKUP . '.target'));
+        safe_unlink_recursive(getConfigOrFail('DatabaseBackup.target'));
 
         parent::tearDown();
     }
@@ -130,13 +129,13 @@ class BackupsControllerTest extends ControllerTestCase
         $this->post($url, ['filename' => 'backup.txt']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertFileNotExists(getConfigOrFail(DATABASE_BACKUP . '.target') . DS . 'backup.txt');
+        $this->assertFileNotExists(getConfigOrFail('DatabaseBackup.target') . DS . 'backup.txt');
 
         //POST request. Now data are valid
         $this->post($url, ['filename' => 'backup.sql']);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertFileExists(getConfigOrFail(DATABASE_BACKUP . '.target') . DS . 'backup.sql');
+        $this->assertFileExists(getConfigOrFail('DatabaseBackup.target') . DS . 'backup.sql');
     }
 
     /**
@@ -198,7 +197,7 @@ class BackupsControllerTest extends ControllerTestCase
      */
     public function testSend()
     {
-        $email = getConfigOrFail(ME_CMS . '.email.webmaster');
+        $email = getConfigOrFail('MeCms.email.webmaster');
         $file = $this->createSingleBackup();
         $this->post($this->url + ['action' => 'send', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);

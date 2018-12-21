@@ -15,17 +15,14 @@ namespace MeCms\Test\TestCase\View;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
+use MeCms\TestSuite\TestCase;
 use MeCms\View\View;
-use MeTools\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * ViewTest class
  */
 class ViewTest extends TestCase
 {
-    use MockTrait;
-
     /**
      * @var \MeCms\View\View
      */
@@ -45,7 +42,7 @@ class ViewTest extends TestCase
             ->setMethods(null)
             ->setConstructorArgs([$request])
             ->getMock();
-        $this->View->plugin = ME_CMS;
+        $this->View->setPlugin('MeCms');
     }
 
     /**
@@ -56,7 +53,7 @@ class ViewTest extends TestCase
     {
         parent::tearDown();
 
-        Plugin::unload('TestPlugin');
+        $this->removePlugins(['TestPlugin']);
     }
 
     /**
@@ -69,8 +66,8 @@ class ViewTest extends TestCase
 
         //Loads the `TestPlugin` and sets it as a theme
         $theme = 'TestPlugin';
-        Plugin::load($theme);
-        Configure::write(ME_CMS . '.default.theme', $theme);
+        $this->loadPlugins([$theme]);
+        Configure::write('MeCms.default.theme', $theme);
 
         $this->assertEquals($theme, (new View)->getTheme());
     }
@@ -87,7 +84,7 @@ class ViewTest extends TestCase
 
         //Writes the main title on configuration
         $mainTitle = 'main title';
-        Configure::write(ME_CMS . '.main.title', $mainTitle);
+        Configure::write('MeCms.main.title', $mainTitle);
         $this->assertEquals($getTitleForLayoutMethod(), $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), $mainTitle);
 
@@ -95,7 +92,7 @@ class ViewTest extends TestCase
         $this->setProperty($this->View, 'titleForLayout', null);
 
         //Tests the title as if it had been set by the view
-        $this->View->Blocks->set('title', 'title from view');
+        $this->View->assign('title', 'title from view');
         $this->assertEquals($getTitleForLayoutMethod(), 'title from view - ' . $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), 'title from view - ' . $mainTitle);
 
@@ -108,7 +105,7 @@ class ViewTest extends TestCase
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), 'title from controller - ' . $mainTitle);
 
         //It does NOT reset the property. So the title is not modified
-        $this->View->Blocks->set('title', 'title from view');
+        $this->View->assign('title', 'title from view');
         $this->assertEquals($getTitleForLayoutMethod(), 'title from controller - ' . $mainTitle);
 
         //If this is the homepage, it only returns the main title from the
@@ -127,14 +124,15 @@ class ViewTest extends TestCase
         $helpers = array_map(function ($helper) {
             return get_class($this->View->helpers()->get($helper));
         }, $this->View->helpers()->loaded());
+        sort($helpers);
 
         $this->assertEquals([
-            ME_TOOLS . '\View\Helper\HtmlHelper',
-            ME_TOOLS . '\View\Helper\DropdownHelper',
-            ME_TOOLS . '\View\Helper\FormHelper',
-            ME_TOOLS . '\View\Helper\LibraryHelper',
-            ME_TOOLS . '\View\Helper\PaginatorHelper',
-            ASSETS . '\View\Helper\AssetHelper',
+            'Assets\View\Helper\AssetHelper',
+            'MeTools\View\Helper\DropdownHelper',
+            'MeTools\View\Helper\FormHelper',
+            'MeTools\View\Helper\HtmlHelper',
+            'MeTools\View\Helper\LibraryHelper',
+            'MeTools\View\Helper\PaginatorHelper',
             'Thumber\View\Helper\ThumbHelper',
             'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
         ], $helpers);
@@ -147,8 +145,8 @@ class ViewTest extends TestCase
     public function testRenderLayout()
     {
         //Loads some other helpers
-        $this->View->loadHelper(ME_CMS . '.Auth');
-        $this->View->loadHelper(ME_CMS . '.Widget');
+        $this->View->loadHelper('MeCms.Auth');
+        $this->View->loadHelper('MeCms.Widget');
 
         //Disable widgets
         Configure::write('Widgets.general', []);
@@ -157,15 +155,15 @@ class ViewTest extends TestCase
         $this->View->set('title', 'title from controller');
 
         //Creates a favicon
-        file_put_contents(WWW_ROOT . 'favicon.ico', null);
+        safe_create_file(WWW_ROOT . 'favicon.ico');
 
         //Renders
-        $result = $this->View->render(false, ME_CMS . '.default');
+        $result = $this->View->render(false, 'MeCms.default');
 
         safe_unlink(WWW_ROOT . 'favicon.ico');
 
         //Checks for title and favicon
-        $this->assertContains('<title>title from controller - ' . ME_CMS . '</title>', $result);
+        $this->assertContains('<title>title from controller - ' . 'MeCms</title>', $result);
         $this->assertContains('<link href="favicon.ico" type="image/x-icon" rel="icon"/><link href="favicon.ico" type="image/x-icon" rel="shortcut icon"/>', $result);
     }
 }

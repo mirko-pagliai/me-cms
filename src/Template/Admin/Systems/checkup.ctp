@@ -25,7 +25,7 @@ $warningOptions = ['icon' => 'warning'];
 
 <div class="row">
 <?php
-$text = __d('me_cms', '{0} version: {1}', $this->Html->strong(ME_CMS), $plugins['me_cms']);
+$text = __d('me_cms', '{0} version: {1}', $this->Html->strong('MeCms'), $plugins['me_cms']);
 echo $this->Html->div('col-6', $this->Html->para($infoClasses, $text));
 
 $text = __d('me_cms', '{0} version: {1}', $this->Html->strong('CakePHP'), $cakephp);

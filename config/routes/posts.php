@@ -25,62 +25,37 @@ if (!$routes->nameExists('postsCategory')) {
     $routes->connect(
         '/posts/category/:slug',
         ['controller' => 'PostsCategories', 'action' => 'view'],
-        [
-            '_name' => 'postsCategory',
-            'slug' => '[a-z0-9\-]+',
-            'pass' => ['slug'],
-        ]
-    );
+        ['_name' => 'postsCategory']
+    )->setPatterns(['slug' => '[\d\w\-]+'])->setPass(['slug']);
 }
 
 //Posts
 if (!$routes->nameExists('posts')) {
-    $routes->connect(
-        '/posts',
-        ['controller' => 'Posts', 'action' => 'index'],
-        ['_name' => 'posts']
-    );
+    $routes->connect('/posts', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'posts']);
 }
 
 //Posts by date
 if (!$routes->nameExists('postsByDate')) {
-    //Posts by date
-    $routes->connect(
-        '/posts/:date',
-        ['controller' => 'Posts', 'action' => 'indexByDate'],
-        [
-            '_name' => 'postsByDate',
-            'date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)',
-            'pass' => ['date'],
-        ]
-    );
+    $routes->connect('/posts/:date', ['controller' => 'Posts', 'action' => 'indexByDate'], ['_name' => 'postsByDate'])
+        ->setPatterns(['date' => '(today|yesterday|\d{4}(\/\d{2}(\/\d{2})?)?)'])
+        ->setPass(['date']);
 }
 
 //Posts as RSS
 if (!$routes->nameExists('postsRss')) {
-    $routes->connect(
-        '/posts/rss',
-        ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'],
-        ['_name' => 'postsRss']
-    );
+    $routes->connect('/posts/rss', ['controller' => 'Posts', 'action' => 'rss', '_ext' => 'rss'], ['_name' => 'postsRss']);
 }
 
 //Posts search
 if (!$routes->nameExists('postsSearch')) {
-    $routes->connect(
-        '/posts/search',
-        ['controller' => 'Posts', 'action' => 'search'],
-        ['_name' => 'postsSearch']
-    );
+    $routes->connect('/posts/search', ['controller' => 'Posts', 'action' => 'search'], ['_name' => 'postsSearch']);
 }
 
 //Post
 if (!$routes->nameExists('post')) {
-    $routes->connect(
-        '/post/:slug',
-        ['controller' => 'Posts', 'action' => 'view'],
-        ['_name' => 'post', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-    );
+    $routes->connect('/post/:slug', ['controller' => 'Posts', 'action' => 'view'], ['_name' => 'post'])
+        ->setPatterns(['slug' => '[\d\w\-]+'])
+        ->setPass(['slug']);
 }
 
 //Post preview
@@ -88,26 +63,20 @@ if (!$routes->nameExists('postsPreview')) {
     $routes->connect(
         '/post/preview/:slug',
         ['controller' => 'Posts', 'action' => 'preview'],
-        ['_name' => 'postsPreview', 'slug' => '[a-z0-9\-]+', 'pass' => ['slug']]
-    );
+        ['_name' => 'postsPreview']
+    )->setPatterns(['slug' => '[\d\w\-]+'])->setPass(['slug']);
 }
 
 //Tags
 if (!$routes->nameExists('postsTags')) {
-    $routes->connect(
-        '/posts/tags',
-        ['controller' => 'PostsTags', 'action' => 'index'],
-        ['_name' => 'postsTags']
-    );
+    $routes->connect('/posts/tags', ['controller' => 'PostsTags', 'action' => 'index'], ['_name' => 'postsTags']);
 }
 
 //Tag
 if (!$routes->nameExists('postsTag')) {
-    $routes->connect(
-        '/posts/tag/:tag',
-        ['controller' => 'PostsTags', 'action' => 'view'],
-        ['_name' => 'postsTag', 'tag' => '[a-z0-9\-]+', 'pass' => ['tag']]
-    );
+    $routes->connect('/posts/tag/:tag', ['controller' => 'PostsTags', 'action' => 'view'], ['_name' => 'postsTag'])
+        ->setPatterns(['tag' => '[\d\w\-]+'])
+        ->setPass(['tag']);
 }
 
 /**

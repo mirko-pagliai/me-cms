@@ -46,20 +46,11 @@ class UsersTableTest extends TableTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.Tokens',
-        'plugin.me_cms.Users',
-        'plugin.me_cms.UsersGroups',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.Tokens',
+        'plugin.MeCms.Users',
+        'plugin.MeCms.UsersGroups',
     ];
-
-    /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('users', $this->Table->cache);
-    }
 
     /**
      * Test for `beforeMarshal()` method
@@ -132,15 +123,15 @@ class UsersTableTest extends TableTestCase
         $this->assertBelongsTo($this->Table->Groups);
         $this->assertEquals('group_id', $this->Table->Groups->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Groups->getJoinType());
-        $this->assertEquals(ME_CMS . '.UsersGroups', $this->Table->Groups->className());
+        $this->assertEquals('MeCms.UsersGroups', $this->Table->Groups->getClassName());
 
         $this->assertHasMany($this->Table->Posts);
         $this->assertEquals('user_id', $this->Table->Posts->getForeignKey());
-        $this->assertEquals(ME_CMS . '.Posts', $this->Table->Posts->className());
+        $this->assertEquals('MeCms.Posts', $this->Table->Posts->getClassName());
 
         $this->assertHasMany($this->Table->Tokens);
         $this->assertEquals('user_id', $this->Table->Tokens->getForeignKey());
-        $this->assertEquals('Tokens.Tokens', $this->Table->Tokens->className());
+        $this->assertEquals('Tokens.Tokens', $this->Table->Tokens->getClassName());
 
         $this->assertHasBehavior(['Timestamp', 'CounterCache']);
 
@@ -245,7 +236,7 @@ class UsersTableTest extends TableTestCase
         $this->assertContains('FROM users Users WHERE Users.active = :c0 ORDER BY username ASC', $query->sql());
         $this->assertNotEmpty($query->toArray());
 
-        $fromCache = Cache::read('active_users_list', $this->Table->cache)->toArray();
+        $fromCache = Cache::read('active_users_list', $this->Table->getCacheName())->toArray();
         $this->assertEquals($fromCache, $query->toArray());
     }
 

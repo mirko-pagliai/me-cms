@@ -26,12 +26,12 @@
             ], ['block' => true]);
             echo $this->Asset->css([
                 '/vendor/bootstrap/css/bootstrap.min',
-                ME_TOOLS . '.default',
-                ME_TOOLS . '.forms',
-                ME_CMS . '.userbar',
-                ME_CMS . '.cookies',
-                ME_CMS . '.layout',
-                ME_CMS . '.contents',
+                'MeTools.default',
+                'MeTools.forms',
+                'MeCms.userbar',
+                'MeCms.cookies',
+                'MeCms.layout',
+                'MeCms.contents',
             ], ['block' => true]);
             echo $this->fetch('css');
 
@@ -39,15 +39,15 @@
                 '/vendor/jquery/jquery.min',
                 '/vendor/js-cookie/js.cookie',
                 '/vendor/bootstrap/js/bootstrap.bundle.min',
-                ME_TOOLS . '.default',
-                ME_CMS . '.layout',
+                'MeTools.default',
+                'MeCms.layout',
             ], ['block' => true]);
             echo $this->fetch('script');
         ?>
     </head>
     <body>
-        <?= $this->element(ME_CMS . '.userbar') ?>
-        <?= $this->element(ME_CMS . '.cookies_policy') ?>
+        <?= $this->element('MeCms.userbar') ?>
+        <?= $this->element('MeCms.cookies_policy') ?>
         <header id="header">
             <div class="container">
                 <?php
@@ -69,7 +69,7 @@
                 $topbarCache = ['key' => 'topbar'];
             }
 
-            echo $this->element(ME_CMS . '.topbar', [], ['cache' => $topbarCache]);
+            echo $this->element('MeCms.topbar', [], ['cache' => $topbarCache]);
             ?>
         </header>
         <div class="container mb-4">
@@ -100,7 +100,7 @@
             $footerCache = ['key' => 'footer'];
         }
 
-        echo $this->element(ME_CMS . '.footer', [], ['cache' => $footerCache]);
+        echo $this->element('MeCms.footer', [], ['cache' => $footerCache]);
         echo $this->fetch('css_bottom');
         echo $this->fetch('script_bottom');
         ?>

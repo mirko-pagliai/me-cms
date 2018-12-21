@@ -62,7 +62,7 @@ class UsersController extends AppController
         parent::initialize();
 
         //Loads components
-        $this->loadComponent(ME_CMS . '.LoginRecorder');
+        $this->loadComponent('MeCms.LoginRecorder');
     }
 
     /**
@@ -111,13 +111,13 @@ class UsersController extends AppController
     {
         $user = $this->Users->find()
             ->contain(['Groups' => ['fields' => ['label']]])
-            ->where([sprintf('%s.id', $this->Users->alias()) => $id])
+            ->where([sprintf('%s.id', $this->Users->getAlias()) => $id])
             ->firstOrFail();
 
         $this->set(compact('user'));
 
         if (getConfig('users.login_log')) {
-            $loginLog = $this->LoginRecorder->config('user', $id)->read();
+            $loginLog = $this->LoginRecorder->setConfig('user', $id)->read();
 
             $this->set(compact('loginLog'));
         }
@@ -237,7 +237,7 @@ class UsersController extends AppController
 
             if ($this->Users->save($user)) {
                 //Sends email
-                $this->getMailer(ME_CMS . '.User')->send('changePassword', [$user]);
+                $this->getMailer('MeCms.User')->send('changePassword', [$user]);
 
                 $this->Flash->success(I18N_OPERATION_OK);
 
@@ -298,7 +298,7 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'dashboard']);
         }
 
-        $loginLog = $this->LoginRecorder->config('user', $this->Auth->user('id'))->read();
+        $loginLog = $this->LoginRecorder->setConfig('user', $this->Auth->user('id'))->read();
 
         $this->set(compact('loginLog'));
     }

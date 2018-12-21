@@ -13,21 +13,24 @@
  */
 namespace MeCms\TestSuite;
 
-use MeTools\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
+use MeCms\TestSuite\TestCase;
 
 /**
  * Abstract class for test entities
  */
 abstract class EntityTestCase extends TestCase
 {
-    use MockTrait;
-
     /**
      * Entity instance
      * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $Entity;
+
+    /**
+     * If `true`, a mock instance of the shell will be created
+     * @var bool
+     */
+    protected $autoInitializeClass = true;
 
     /**
      * Asserts that the entity has a "no accessible" property
@@ -63,12 +66,13 @@ abstract class EntityTestCase extends TestCase
      * Called before every test method
      * @return void
      * @uses $Entity
+     * @uses $autoInitializeClass
      */
     public function setUp()
     {
         parent::setUp();
 
-        if (empty($this->Entity)) {
+        if (!$this->Entity && $this->autoInitializeClass) {
             $parts = explode('\\', get_class($this));
             array_splice($parts, 1, 2, []);
             $parts[count($parts) - 1] = substr($parts[count($parts) - 1], 0, -4);

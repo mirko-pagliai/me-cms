@@ -12,7 +12,7 @@
  */
 use MeCms\Core\Plugin;
 
-$this->extend(ME_CMS . '.Common/userbar');
+$this->extend('MeCms.Common/userbar');
 
 $menus[] = $this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], [
     'class' => 'nav-link',
@@ -21,7 +21,7 @@ $menus[] = $this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'],
 ]);
 
 //Renders menus for each plugin
-foreach (Plugin::all(['exclude' => [ME_TOOLS, ASSETS, DATABASE_BACKUP, THUMBER]]) as $plugin) {
+foreach (Plugin::all(['exclude' => ['MeTools', 'Assets', 'DatabaseBackup', 'Thumber']]) as $plugin) {
     $menus += $this->MenuBuilder->renderAsDropdown($plugin, ['class' => 'nav-link d-lg-none']);
 }
 

@@ -24,10 +24,10 @@ use MeCms\Model\Table\AppTable;
 class PostsCategoriesTable extends AppTable
 {
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'posts';
+    protected $cache = 'posts';
 
     /**
      * Returns a rules checker object that will be used for validating
@@ -72,17 +72,17 @@ class PostsCategoriesTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Parents', ['className' => ME_CMS . '.PostsCategories'])
+        $this->belongsTo('Parents', ['className' => 'MeCms.PostsCategories'])
             ->setForeignKey('parent_id');
 
-        $this->hasMany('Childs', ['className' => ME_CMS . '.PostsCategories'])
+        $this->hasMany('Childs', ['className' => 'MeCms.PostsCategories'])
             ->setForeignKey('parent_id');
 
-        $this->hasMany('Posts', ['className' => ME_CMS . '.Posts'])
+        $this->hasMany('Posts', ['className' => 'MeCms.Posts'])
             ->setForeignKey('category_id');
 
         $this->addBehavior('Timestamp');
-        $this->addBehavior(ME_CMS . '.Tree');
+        $this->addBehavior('MeCms.Tree');
 
         $this->_validatorClass = '\MeCms\Model\Validation\PostsCategoryValidator';
     }

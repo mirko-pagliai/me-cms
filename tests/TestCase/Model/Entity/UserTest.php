@@ -70,18 +70,16 @@ class UserTest extends EntityTestCase
     public function testPictureGetMutator()
     {
         $this->Entity->id = 1;
-        $this->assertEquals(ME_CMS . '.no-avatar.jpg', $this->Entity->picture);
+        $this->assertEquals('MeCms.no-avatar.jpg', $this->Entity->picture);
 
-        $filename = WWW_ROOT . 'img' . DS . 'no-avatar.jpg';
-        file_put_contents($filename, null);
+        safe_create_file(WWW_ROOT . 'img' . DS . 'no-avatar.jpg', null);
         $this->assertEquals('no-avatar.jpg', $this->Entity->picture);
 
         $id = 0;
         foreach (['jpg', 'jpeg', 'gif', 'png', 'JPEG'] as $extension) {
             $id++;
             $this->Entity->id = $id;
-            $filename = WWW_ROOT . 'img' . DS . 'users' . DS . $id . '.' . $extension;
-            file_put_contents($filename, null);
+            safe_create_file(WWW_ROOT . 'img' . DS . 'users' . DS . $id . '.' . $extension);
             $this->assertEquals('users' . DS . $id . '.' . $extension, $this->Entity->picture);
         }
     }

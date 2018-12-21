@@ -18,7 +18,7 @@ use Cake\Controller\ComponentRegistry;
 use Cake\Filesystem\Folder;
 use Cake\Routing\Router;
 use MeCms\Utility\Checkup;
-use RuntimeException;
+use Tools\Exception\NotWritableException;
 
 /**
  * A component to handle KCFinder
@@ -36,7 +36,7 @@ class KcFinderComponent extends Component
      * Components
      * @var array
      */
-    public $components = [ME_CMS . '.Auth'];
+    public $components = ['MeCms.Auth'];
 
     /**
      * Construct
@@ -142,22 +142,17 @@ class KcFinderComponent extends Component
      * @param array $config The configuration settings provided to this
      *  component
      * @return void
-     * @throws RuntimeException
+     * @throws ErrorException
+     * @throws NotWritableException
      * @uses getDefaultConfig()
      * @uses kcFinderIsAvailable()
      * @uses uploadedDirIsWriteable()
      */
     public function initialize(array $config)
     {
-        //Checks for KCFinder
-        if (!$this->kcFinderIsAvailable()) {
-            throw new RuntimeException(__d('me_tools', '{0} is not available', 'KCFinder'));
-        }
-
-        //Checks for the files directory (`APP/webroot/files`)
-        if (!$this->uploadedDirIsWriteable()) {
-            throw new RuntimeException(__d('me_tools', 'File or directory {0} not writeable', rtr(UPLOADED)));
-        }
+        //Checks for KCFinder and for the files directory (`APP/webroot/files`)
+        is_true_or_fail($this->kcFinderIsAvailable(), __d('me_tools', '{0} is not available', 'KCFinder'));
+        is_true_or_fail($this->uploadedDirIsWriteable(), NotWritableException::class);
 
         //Merges:
         //  1) default config;

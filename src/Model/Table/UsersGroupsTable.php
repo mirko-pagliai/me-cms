@@ -21,10 +21,10 @@ use MeCms\Model\Table\AppTable;
 class UsersGroupsTable extends AppTable
 {
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'users';
+    protected $cache = 'users';
 
     /**
      * Returns a rules checker object that will be used for validating
@@ -53,7 +53,7 @@ class UsersGroupsTable extends AppTable
         $this->setDisplayField('label');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Users', ['className' => ME_CMS . '.Users'])
+        $this->hasMany('Users', ['className' => 'MeCms.Users'])
             ->setForeignKey('group_id');
 
         $this->addBehavior('Timestamp');

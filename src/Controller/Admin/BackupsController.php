@@ -62,7 +62,7 @@ class BackupsController extends AppController
      */
     protected function getFilename($filename)
     {
-        return getConfigOrFail(DATABASE_BACKUP . '.target') . DS . urldecode($filename);
+        return getConfigOrFail('DatabaseBackup.target') . DS . urldecode($filename);
     }
 
     /**

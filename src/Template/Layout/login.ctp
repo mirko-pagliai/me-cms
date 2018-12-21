@@ -26,15 +26,15 @@
             ], ['block' => true]);
             echo $this->Asset->css([
                 '/vendor/bootstrap/css/bootstrap.min',
-                ME_TOOLS . '.default',
-                ME_TOOLS . '.forms',
-                ME_CMS . '.login/layout'
+                'MeTools.default',
+                'MeTools.forms',
+                'MeCms.login/layout'
             ], ['block' => true]);
             echo $this->fetch('css');
 
             echo $this->Asset->script([
                 '/vendor/jquery/jquery.min',
-                ME_CMS . '.display-password',
+                'MeCms.display-password',
             ], ['block' => true]);
             echo $this->fetch('script');
         ?>

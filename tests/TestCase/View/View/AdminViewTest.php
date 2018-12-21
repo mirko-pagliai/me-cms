@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\View\View;
 
+use MeCms\TestSuite\TestCase;
 use MeCms\View\View\AdminView as View;
-use MeTools\TestSuite\TestCase;
 
 /**
  * AdminViewTest class
@@ -44,7 +44,7 @@ class AdminViewTest extends TestCase
      */
     public function testConstruct()
     {
-        $this->assertEquals(ME_CMS . '.admin', $this->View->getLayout());
+        $this->assertEquals('MeCms.admin', $this->View->getLayout());
     }
 
     /**
@@ -57,18 +57,19 @@ class AdminViewTest extends TestCase
         $helpers = array_map(function ($helper) {
             return get_class($this->View->helpers()->get($helper));
         }, $this->View->helpers()->loaded());
+        sort($helpers);
 
         $this->assertEquals([
-            ME_TOOLS . '\View\Helper\HtmlHelper',
-            ME_TOOLS . '\View\Helper\DropdownHelper',
-            ME_TOOLS . '\View\Helper\FormHelper',
-            ME_TOOLS . '\View\Helper\LibraryHelper',
-            ME_TOOLS . '\View\Helper\PaginatorHelper',
-            ASSETS . '\View\Helper\AssetHelper',
+            'Assets\View\Helper\AssetHelper',
+            'Gourmet\CommonMark\View\Helper\CommonMarkHelper',
+            'MeCms\View\Helper\MenuBuilderHelper',
+            'MeTools\View\Helper\DropdownHelper',
+            'MeTools\View\Helper\FormHelper',
+            'MeTools\View\Helper\HtmlHelper',
+            'MeTools\View\Helper\LibraryHelper',
+            'MeTools\View\Helper\PaginatorHelper',
             'Thumber\View\Helper\ThumbHelper',
             'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
-            ME_CMS . '\View\Helper\MenuBuilderHelper',
-            'Gourmet\CommonMark\View\Helper\CommonMarkHelper',
         ], $helpers);
     }
 

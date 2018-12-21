@@ -16,9 +16,8 @@ use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
-use MeCms\Core\Plugin;
+use MeCms\TestSuite\TestCase;
 use MeCms\Utility\StaticPage;
-use MeTools\TestSuite\TestCase;
 
 /**
  * StaticPageTest class
@@ -40,7 +39,7 @@ class StaticPageTest extends TestCase
 
         Cache::clearAll();
 
-        Plugin::load('TestPlugin');
+        $this->loadPlugins(['TestPlugin']);
 
         $this->StaticPage = new StaticPage;
     }
@@ -53,7 +52,7 @@ class StaticPageTest extends TestCase
     {
         parent::tearDown();
 
-        Plugin::unload('TestPlugin');
+        $this->removePlugins(['TestPlugin']);
     }
 
     /**
@@ -149,8 +148,8 @@ class StaticPageTest extends TestCase
 
         $this->assertEquals([
             '/StaticPages/page-from-app',
-            ME_CMS . './StaticPages/cookies-policy-it',
-            ME_CMS . './StaticPages/cookies-policy',
+            'MeCms./StaticPages/cookies-policy-it',
+            'MeCms./StaticPages/cookies-policy',
             'TestPlugin./StaticPages/test-from-plugin',
             'TestPlugin./StaticPages/first-folder/page-on-first-from-plugin',
             'TestPlugin./StaticPages/first-folder/second_folder/page_on_second_from_plugin',
@@ -166,11 +165,11 @@ class StaticPageTest extends TestCase
      */
     public function testGetDifferentLocale()
     {
-        $this->assertEquals(ME_CMS . './StaticPages/cookies-policy', $this->StaticPage->get('cookies-policy'));
+        $this->assertEquals('MeCms./StaticPages/cookies-policy', $this->StaticPage->get('cookies-policy'));
 
         $originalDefaultlLocale = ini_get('intl.default_locale');
         ini_set('intl.default_locale', 'it');
-        $this->assertEquals(ME_CMS . './StaticPages/cookies-policy-it', $this->StaticPage->get('cookies-policy'));
+        $this->assertEquals('MeCms./StaticPages/cookies-policy-it', $this->StaticPage->get('cookies-policy'));
 
         ini_set('intl.default_locale', $originalDefaultlLocale);
     }

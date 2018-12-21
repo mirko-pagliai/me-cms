@@ -13,18 +13,15 @@
  */
 namespace MeCms\TestSuite;
 
+use MeCms\TestSuite\TestCase;
 use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
-use MeTools\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * Abstract class for test entities
  */
 abstract class CellTestCase extends TestCase
 {
-    use MockTrait;
-
     /**
      * Entity instance
      * @var \PHPUnit\Framework\MockObject\MockObject
@@ -32,13 +29,22 @@ abstract class CellTestCase extends TestCase
     protected $Widget;
 
     /**
+     * If `true`, a mock instance of the shell will be created
+     * @var bool
+     */
+    protected $autoInitializeClass = true;
+
+    /**
      * Called before every test method
      * @return void
      * @uses $Widget
+     * @uses $autoInitializeClass
      */
     public function setUp()
     {
-        if (!$this->Widget) {
+        parent::setUp();
+
+        if (!$this->Widget && $this->autoInitializeClass) {
             $this->Widget = $this->getMockBuilder(WidgetHelper::class)
                 ->setMethods(null)
                 ->setConstructorArgs([new View])

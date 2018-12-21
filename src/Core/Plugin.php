@@ -38,11 +38,11 @@ class Plugin extends CakePlugin
         $plugins = parent::all($options);
 
         if ($options['order']) {
-            $key = array_search(ME_CMS, $plugins);
+            $key = array_search('MeCms', $plugins);
 
             if ($key) {
                 unset($plugins[$key]);
-                array_unshift($plugins, ME_CMS);
+                array_unshift($plugins, 'MeCms');
             }
         }
 

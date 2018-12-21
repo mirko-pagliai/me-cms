@@ -26,10 +26,10 @@ use MeCms\Model\Table\AppTable;
 class PhotosAlbumsTable extends AppTable
 {
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'photos';
+    protected $cache = 'photos';
 
     /**
      * Called after an entity has been deleted
@@ -109,7 +109,7 @@ class PhotosAlbumsTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Photos', ['className' => ME_CMS . '.Photos'])
+        $this->hasMany('Photos', ['className' => 'MeCms.Photos'])
             ->setForeignKey('album_id');
 
         $this->addBehavior('Timestamp');

@@ -20,17 +20,14 @@ use MeCms\Model\Table\PagesCategoriesTable;
 use MeCms\Model\Table\PhotosAlbumsTable;
 use MeCms\Model\Table\PostsCategoriesTable;
 use MeCms\Model\Table\TagsTable;
+use MeCms\TestSuite\TestCase;
 use MeCms\Utility\Sitemap;
-use MeTools\TestSuite\TestCase;
-use MeTools\TestSuite\Traits\MockTrait;
 
 /**
  * SitemapTest class
  */
 class SitemapTest extends TestCase
 {
-    use MockTrait;
-
     /**
      * Does not automatically load fixtures
      * @var bool
@@ -42,14 +39,14 @@ class SitemapTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Pages',
-        'plugin.me_cms.PagesCategories',
-        'plugin.me_cms.Photos',
-        'plugin.me_cms.PhotosAlbums',
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsCategories',
-        'plugin.me_cms.PostsTags',
-        'plugin.me_cms.Tags',
+        'plugin.MeCms.Pages',
+        'plugin.MeCms.PagesCategories',
+        'plugin.MeCms.Photos',
+        'plugin.MeCms.PhotosAlbums',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
+        'plugin.MeCms.PostsTags',
+        'plugin.MeCms.Tags',
     ];
 
     /**
@@ -60,7 +57,7 @@ class SitemapTest extends TestCase
     {
         parent::setUp();
 
-        Plugin::load('TestPlugin');
+        $this->loadPlugins(['TestPlugin']);
     }
 
     /**
@@ -71,7 +68,7 @@ class SitemapTest extends TestCase
     {
         parent::tearDown();
 
-        Plugin::unload('TestPlugin');
+        $this->removePlugins(['TestPlugin']);
     }
 
     /**
@@ -108,10 +105,10 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $table = $this->getMockForTable(PagesCategoriesTable::class, null);
+        $table = $this->getMockForModel(PagesCategoriesTable::class, null);
         $this->assertEquals($expected, Sitemap::pages());
 
-        $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
+        $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
         $this->assertEquals($expected, Sitemap::pages());
 
         //Deletes all records
@@ -160,10 +157,10 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $table = $this->getMockForTable(PhotosAlbumsTable::class, null);
+        $table = $this->getMockForModel(PhotosAlbumsTable::class, null);
         $this->assertEquals($expected, Sitemap::photos());
 
-        $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
+        $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
         $this->assertEquals($expected, Sitemap::photos());
 
         //Deletes all records
@@ -235,10 +232,10 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $table = $this->getMockForTable(PostsCategoriesTable::class, null);
+        $table = $this->getMockForModel(PostsCategoriesTable::class, null);
         $this->assertEquals($expected, Sitemap::posts());
 
-        $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
+        $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
         $this->assertEquals($expected, Sitemap::posts());
 
         //Deletes all records
@@ -282,10 +279,10 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $table = $this->getMockForTable(TagsTable::class, null);
+        $table = $this->getMockForModel(TagsTable::class, null);
         $this->assertEquals($expected, Sitemap::postsTags());
 
-        $this->assertNotEmpty(Cache::read('sitemap', $table->cache));
+        $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
         $this->assertEquals($expected, Sitemap::postsTags());
 
         //Deletes all records
@@ -349,7 +346,7 @@ class SitemapTest extends TestCase
         ]], Sitemap::systems());
 
         //Disabled contact form
-        Configure::write(ME_CMS . '.default.contact_us', false);
+        Configure::write('MeCms.default.contact_us', false);
 
         $this->assertEmpty(Sitemap::systems());
     }

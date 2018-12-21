@@ -30,18 +30,9 @@ class UsersGroupsTableTest extends TableTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Users',
-        'plugin.me_cms.UsersGroups',
+        'plugin.MeCms.Users',
+        'plugin.MeCms.UsersGroups',
     ];
-
-    /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('users', $this->Table->cache);
-    }
 
     /**
      * Test for `buildRules()` method
@@ -77,7 +68,7 @@ class UsersGroupsTableTest extends TableTestCase
 
         $this->assertHasMany($this->Table->Users);
         $this->assertEquals('group_id', $this->Table->Users->getForeignKey());
-        $this->assertEquals(ME_CMS . '.Users', $this->Table->Users->className());
+        $this->assertEquals('MeCms.Users', $this->Table->Users->getClassName());
 
         $this->assertHasBehavior('Timestamp');
 

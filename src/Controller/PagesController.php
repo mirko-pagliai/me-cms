@@ -71,7 +71,7 @@ class PagesController extends AppController
 
         $page = $this->Pages->findActiveBySlug($slug)
             ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
-            ->cache(sprintf('view_%s', md5($slug)), $this->Pages->cache)
+            ->cache(sprintf('view_%s', md5($slug)), $this->Pages->getCacheName())
             ->firstOrFail();
 
         $this->set(compact('page'));

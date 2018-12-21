@@ -35,14 +35,12 @@ class UserMailer extends Mailer
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
-            if (!$user->has($property)) {
-                throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` property from data', $property));
-            }
+            is_true_or_fail($user->has($property), __d('me_cms', 'Missing `{0}` property from data', $property), InvalidArgumentException::class);
         }
 
+        $this->viewBuilder()->setTemplate('MeCms.Users/activation');
         $this->setTo([$user->email => $user->full_name])
             ->setSubject(__d('me_cms', 'Activate your account'))
-            ->setTemplate(ME_CMS . '.Users/activation')
             ->setViewVars(['fullName' => $user->full_name]);
     }
 
@@ -59,14 +57,12 @@ class UserMailer extends Mailer
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
-            if (!$user->has($property)) {
-                throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` property from data', $property));
-            }
+            is_true_or_fail($user->has($property), __d('me_cms', 'Missing `{0}` property from data', $property), InvalidArgumentException::class);
         }
 
+        $this->viewBuilder()->setTemplate('MeCms.Users/change_password');
         $this->setTo([$user->email => $user->full_name])
             ->setSubject(__d('me_cms', 'Your password has been changed'))
-            ->setTemplate(ME_CMS . '.Users/change_password')
             ->setViewVars(['fullName' => $user->full_name]);
     }
 
@@ -83,14 +79,12 @@ class UserMailer extends Mailer
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
-            if (!$user->has($property)) {
-                throw new InvalidArgumentException(__d('me_cms', 'Missing `{0}` property from data', $property));
-            }
+            is_true_or_fail($user->has($property), __d('me_cms', 'Missing `{0}` property from data', $property), InvalidArgumentException::class);
         }
 
+        $this->viewBuilder()->setTemplate('MeCms.Users/password_forgot');
         $this->setTo([$user->email => $user->full_name])
             ->setSubject(__d('me_cms', 'Reset your password'))
-            ->setTemplate(ME_CMS . '.Users/password_forgot')
             ->setViewVars(['fullName' => $user->full_name]);
     }
 }

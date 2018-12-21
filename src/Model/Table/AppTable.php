@@ -27,17 +27,23 @@ use Cake\ORM\Table;
 class AppTable extends Table
 {
     /**
+     * Cache configuration name
+     * @var string
+     */
+    protected $cache;
+
+    /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\ORM\Entity $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses $cache
+     * @uses getCacheName()
      */
     public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
-        if (!empty($this->cache)) {
-            Cache::clear(false, $this->cache);
+        if ($this->getCacheName()) {
+            Cache::clear(false, $this->getCacheName());
         }
     }
 
@@ -47,12 +53,12 @@ class AppTable extends Table
      * @param \Cake\ORM\Entity $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses $cache
+     * @uses getCacheName()
      */
     public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
-        if (!empty($this->cache)) {
-            Cache::clear(false, $this->cache);
+        if ($this->getCacheName()) {
+            Cache::clear(false, $this->getCacheName());
         }
     }
 
@@ -123,26 +129,52 @@ class AppTable extends Table
     }
 
     /**
+     * Gets the cache configuration name used by this table
+     * @param bool $associations If `true`, it returns an array that contains
+     *  also the names of the associated tables
+     * @return string|array|null
+     * @since 2.26.0
+     * @uses $cache
+     */
+    public function getCacheName($associations = false)
+    {
+        $values = $this->cache ?: null;
+
+        if ($associations) {
+            $values = [$values];
+            foreach ($this->associations()->getIterator() as $association) {
+                if (method_exists($association->getTarget(), 'getCacheName') && $association->getTarget()->getCacheName()) {
+                    $values[] = $association->getTarget()->getCacheName();
+                }
+            }
+
+            $values = array_values(array_unique(array_filter($values)));
+        }
+
+        return $values;
+    }
+
+    /**
      * Gets records as list
      * @return Query $query Query object
-     * @uses $cache
+     * @uses getCacheName()
      */
     public function getList()
     {
         return $this->find('list')
             ->order([$this->getDisplayField() => 'ASC'])
-            ->cache(sprintf('%s_list', $this->getTable()), $this->cache);
+            ->cache(sprintf('%s_list', $this->getTable()), $this->getCacheName());
     }
 
     /**
      * Gets records as tree list
      * @return Query $query Query object
-     * @uses $cache
+     * @uses getCacheName()
      */
     public function getTreeList()
     {
         return $this->find('treeList')
-            ->cache(sprintf('%s_tree_list', $this->getTable()), $this->cache);
+            ->cache(sprintf('%s_tree_list', $this->getTable()), $this->getCacheName());
     }
 
     /**

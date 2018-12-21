@@ -23,10 +23,10 @@ use MeCms\Model\Table\AppTable;
 class TagsTable extends AppTable
 {
     /**
-     * Name of the configuration to use for this table
+     * Cache configuration name
      * @var string
      */
-    public $cache = 'posts';
+    protected $cache = 'posts';
 
     /**
      * Returns a rules checker object that will be used for validating
@@ -69,10 +69,10 @@ class TagsTable extends AppTable
         $this->setDisplayField('tag');
         $this->setPrimaryKey('id');
 
-        $this->belongsToMany('Posts', ['className' => ME_CMS . '.Posts', 'joinTable' => 'posts_tags'])
+        $this->belongsToMany('Posts', ['className' => 'MeCms.Posts', 'joinTable' => 'posts_tags'])
             ->setForeignKey('tag_id')
             ->setTargetForeignKey('post_id')
-            ->setThrough(ME_CMS . '.PostsTags');
+            ->setThrough('MeCms.PostsTags');
 
         $this->addBehavior('Timestamp');
 

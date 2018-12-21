@@ -73,7 +73,7 @@ class PostsController extends AppController
 
         //Loads KcFinderComponent
         if ($this->request->isAction(['add', 'edit'])) {
-            $this->loadComponent(ME_CMS . '.KcFinder');
+            $this->loadComponent('MeCms.KcFinder');
         }
     }
 
@@ -87,15 +87,23 @@ class PostsController extends AppController
      */
     public function isAuthorized($user = null)
     {
-        //Only admins and managers can edit all posts.
-        //Users can edit only their own posts
+        if ($this->Auth->isGroup(['admin', 'manager'])) {
+            return true;
+        }
+
+        //Users can edit only their own post
         if ($this->request->isEdit()) {
-            return $this->Auth->isGroup(['admin', 'manager']) ||
-                $this->Posts->isOwnedBy($this->request->getParam('pass.0'), $this->Auth->user('id'));
+            list($postId, $userId) = [$this->request->getParam('pass.0'), $this->Auth->user('id')];
+
+            return $postId && $userId ? $this->Posts->isOwnedBy($postId, $userId) : false;
         }
 
         //Only admins and managers can delete posts
-        return $this->request->isDelete() ? $this->Auth->isGroup(['admin', 'manager']) : true;
+        if ($this->request->isDelete()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

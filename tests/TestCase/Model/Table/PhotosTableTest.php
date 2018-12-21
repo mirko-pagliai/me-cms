@@ -38,8 +38,8 @@ class PhotosTableTest extends TableTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Photos',
-        'plugin.me_cms.PhotosAlbums',
+        'plugin.MeCms.Photos',
+        'plugin.MeCms.PhotosAlbums',
     ];
 
     /**
@@ -66,15 +66,6 @@ class PhotosTableTest extends TableTestCase
         safe_unlink_recursive(PHOTOS, 'empty');
 
         parent::tearDown();
-    }
-
-    /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('photos', $this->Table->cache);
     }
 
     /**
@@ -140,7 +131,7 @@ class PhotosTableTest extends TableTestCase
         $this->assertBelongsTo($this->Table->Albums);
         $this->assertEquals('album_id', $this->Table->Albums->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Albums->getJoinType());
-        $this->assertEquals(ME_CMS . '.PhotosAlbums', $this->Table->Albums->className());
+        $this->assertEquals('MeCms.PhotosAlbums', $this->Table->Albums->getClassName());
 
         $this->assertHasBehavior(['Timestamp', 'CounterCache']);
 

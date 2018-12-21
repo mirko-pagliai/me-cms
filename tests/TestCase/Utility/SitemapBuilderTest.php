@@ -13,17 +13,19 @@
 namespace MeCms\Test\TestCase\Utility;
 
 use Cake\Cache\Cache;
-use Cake\Core\Plugin;
 use Cake\I18n\Time;
 use Cake\Utility\Xml;
+use MeCms\TestSuite\TestCase;
 use MeCms\Utility\SitemapBuilder;
-use MeTools\TestSuite\IntegrationTestCase;
+use MeTools\TestSuite\IntegrationTestTrait;
 
 /**
  * SitemapTest class
  */
-class SitemapBuilderTest extends IntegrationTestCase
+class SitemapBuilderTest extends TestCase
 {
+    use IntegrationTestTrait;
+
     /**
      * @var \MeCms\Utility\SitemapBuilder
      */
@@ -40,13 +42,13 @@ class SitemapBuilderTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Pages',
-        'plugin.me_cms.PagesCategories',
-        'plugin.me_cms.Photos',
-        'plugin.me_cms.PhotosAlbums',
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsCategories',
-        'plugin.me_cms.Tags',
+        'plugin.MeCms.Pages',
+        'plugin.MeCms.PagesCategories',
+        'plugin.MeCms.Photos',
+        'plugin.MeCms.PhotosAlbums',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
+        'plugin.MeCms.Tags',
     ];
 
     /**
@@ -70,8 +72,7 @@ class SitemapBuilderTest extends IntegrationTestCase
     {
         parent::tearDown();
 
-        Plugin::unload('TestPlugin');
-        Plugin::unload('TestPluginTwo');
+        $this->loadPlugins(['TestPlugin', 'TestPluginTwo']);
     }
 
     /**
@@ -84,7 +85,7 @@ class SitemapBuilderTest extends IntegrationTestCase
             return collection($methods)->extract('name')->toArray();
         };
 
-        $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', [ME_CMS]);
+        $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['MeCms']);
         $this->assertEquals([
             'pages',
             'photos',
@@ -94,12 +95,12 @@ class SitemapBuilderTest extends IntegrationTestCase
             'systems',
         ], $extractNamesFromMethods($methods));
 
-        Plugin::load('TestPlugin');
+        $this->loadPlugins(['TestPlugin']);
         $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['TestPlugin']);
         $this->assertEquals(['urlMethod1', 'urlMethod2'], $extractNamesFromMethods($methods));
 
         //This plugin does not have the `Sitemap` class
-        Plugin::load('TestPluginTwo');
+        $this->loadPlugins(['TestPluginTwo']);
         $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['TestPluginTwo']);
         $this->assertEquals([], $methods);
     }
@@ -123,7 +124,6 @@ class SitemapBuilderTest extends IntegrationTestCase
             'lastmod' => '2014-01-10T11:11:00+00:00',
             'priority' => '0.5',
         ];
-
         $result = $parseMethod('/', ['lastmod' => new Time('2014-01-10 11:11')]);
         $this->assertEquals($expected, $result);
 
@@ -170,8 +170,7 @@ class SitemapBuilderTest extends IntegrationTestCase
     public function testGenerateWithPlugin()
     {
         $this->loadFixtures();
-
-        Plugin::load('TestPlugin');
+        $this->loadPlugins(['TestPlugin']);
 
         $map = $this->SitemapBuilder->generate();
         $this->assertContains('first-folder/page-on-first-from-plugin', $map);

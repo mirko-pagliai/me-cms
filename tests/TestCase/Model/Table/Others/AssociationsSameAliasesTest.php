@@ -12,8 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Table\Others;
 
-use MeCms\Model\Table\PagesTable;
-use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\TableTestCase;
 
 /**
@@ -32,10 +30,10 @@ class AssociationsSameAliasesTest extends TableTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Pages',
-        'plugin.me_cms.PagesCategories',
-        'plugin.me_cms.Posts',
-        'plugin.me_cms.PostsCategories',
+        'plugin.MeCms.Pages',
+        'plugin.MeCms.PagesCategories',
+        'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
     ];
 
     /**
@@ -44,17 +42,17 @@ class AssociationsSameAliasesTest extends TableTestCase
      */
     public function testAssociationsSameAliases()
     {
-        $tables[] = $this->getMockForTable(PagesTable::class, null);
-        $tables[] = $this->getMockForTable(PostsTable::class, null);
+        $tables[] = $this->getMockForModel('MeCms.Pages', null);
+        $tables[] = $this->getMockForModel('MeCms.Posts', null);
 
         foreach ($tables as $table) {
             $categories = $table->Categories;
 
             $this->assertBelongsTo($categories);
             $this->assertEquals('Categories', $categories->getName());
-            $this->assertEquals(sprintf('%s.%sCategories', ME_CMS, $table->getAlias()), $categories->className());
+            $this->assertEquals(sprintf('%s.%sCategories', 'MeCms', $table->getAlias()), $categories->getClassName());
 
-            $this->assertInstanceof(sprintf('%s\Model\Entity\%sCategory', ME_CMS, $table->getAlias()), $categories->find()->first());
+            $this->assertInstanceof(sprintf('%s\Model\Entity\%sCategory', 'MeCms', $table->getAlias()), $categories->find()->first());
         }
     }
 }

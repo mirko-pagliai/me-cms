@@ -15,16 +15,13 @@ use Cake\Routing\Router;
 
 Router::defaultRouteClass('DashedRoute');
 
-Router::scope('/', ['plugin' => ME_CMS], function (RouteBuilder $routes) {
+Router::scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
     $routes->setExtensions(['rss']);
 
     //Requires other routes
-    require 'routes' . DS . 'banners.php';
-    require 'routes' . DS . 'pages.php';
-    require 'routes' . DS . 'photos.php';
-    require 'routes' . DS . 'posts.php';
-    require 'routes' . DS . 'systems.php';
-    require 'routes' . DS . 'users.php';
+    foreach (['banners', 'pages', 'photos', 'posts', 'systems', 'users'] as $name) {
+        require 'routes' . DS . $name . '.php';
+    }
 
     //Default home page
     //To avoid conflicts with `/posts`, this route has to be at the bottom
@@ -43,7 +40,7 @@ Router::scope('/', ['plugin' => ME_CMS], function (RouteBuilder $routes) {
     });
 });
 
-Router::plugin(ME_CMS, ['path' => '/me-cms'], function (RouteBuilder $routes) {
+Router::plugin('MeCms', ['path' => '/me-cms'], function (RouteBuilder $routes) {
     $routes->setExtensions(['json']);
 
     //Admin routes

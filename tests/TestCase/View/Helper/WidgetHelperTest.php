@@ -15,7 +15,7 @@ namespace MeCms\Test\TestCase\View\Helper;
 use App\View\Cell\ExampleWidgetsCell;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use MeTools\TestSuite\HelperTestCase;
+use MeCms\TestSuite\HelperTestCase;
 use TestPlugin\View\Cell\PluginExampleWidgetsCell;
 
 /**
@@ -31,7 +31,7 @@ class WidgetHelperTest extends HelperTestCase
     {
         parent::setUp();
 
-        Plugin::load('TestPlugin');
+        $this->loadPlugins(['TestPlugin']);
     }
 
     /**
@@ -42,7 +42,7 @@ class WidgetHelperTest extends HelperTestCase
     {
         parent::tearDown();
 
-        Plugin::unload('TestPlugin');
+        $this->removePlugins(['TestPlugin']);
     }
 
     /**
@@ -57,16 +57,16 @@ class WidgetHelperTest extends HelperTestCase
 
         $widgets = array_map('first_value', array_map('array_keys', $getAllMethod()));
         $this->assertEquals([
-            ME_CMS . '.Pages::categories',
-            ME_CMS . '.Pages::pages',
-            ME_CMS . '.Photos::albums',
-            ME_CMS . '.Photos::latest',
-            ME_CMS . '.Photos::random',
-            ME_CMS . '.Posts::categories',
-            ME_CMS . '.Posts::latest',
-            ME_CMS . '.Posts::months',
-            ME_CMS . '.Posts::search',
-            ME_CMS . '.PostsTags::popular',
+            'MeCms.Pages::categories',
+            'MeCms.Pages::pages',
+            'MeCms.Photos::albums',
+            'MeCms.Photos::latest',
+            'MeCms.Photos::random',
+            'MeCms.Posts::categories',
+            'MeCms.Posts::latest',
+            'MeCms.Posts::months',
+            'MeCms.Posts::search',
+            'MeCms.PostsTags::popular',
         ], $widgets);
 
         //Sets some widgets
@@ -125,21 +125,24 @@ class WidgetHelperTest extends HelperTestCase
     public function testWidget()
     {
         $cell = $this->Helper->widget('Example');
-        $this->assertEquals('display', $cell->action);
-        $this->assertEquals([], $cell->args);
-        $this->assertEquals('display', $cell->template);
+        list($action, $args) = array_values($cell->__debugInfo());
+        $this->assertEquals('display', $action);
+        $this->assertEquals([], $args);
+        $this->assertEquals('display', $cell->viewBuilder()->getTemplate());
         $this->assertInstanceOf(ExampleWidgetsCell::class, $cell);
 
         $cell = $this->Helper->widget('Example', ['example of value']);
-        $this->assertEquals('display', $cell->action);
-        $this->assertEquals([0 => 'example of value'], $cell->args);
-        $this->assertEquals('display', $cell->template);
+        list($action, $args) = array_values($cell->__debugInfo());
+        $this->assertEquals('display', $action);
+        $this->assertEquals([0 => 'example of value'], $args);
+        $this->assertEquals('display', $cell->viewBuilder()->getTemplate());
 
         //From plugin
         $cell = $this->Helper->widget('TestPlugin.PluginExample');
-        $this->assertEquals('display', $cell->action);
-        $this->assertEquals([], $cell->args);
-        $this->assertEquals('display', $cell->template);
+        list($action, $args) = array_values($cell->__debugInfo());
+        $this->assertEquals('display', $action);
+        $this->assertEquals([], $args);
+        $this->assertEquals('display', $cell->viewBuilder()->getTemplate());
         $this->assertInstanceOf(PluginExampleWidgetsCell::class, $cell);
     }
 }

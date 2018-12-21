@@ -31,18 +31,9 @@ class BannersTableTest extends TableTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Banners',
-        'plugin.me_cms.BannersPositions',
+        'plugin.MeCms.Banners',
+        'plugin.MeCms.BannersPositions',
     ];
-
-    /**
-     * Test for `cache` property
-     * @test
-     */
-    public function testCacheProperty()
-    {
-        $this->assertEquals('banners', $this->Table->cache);
-    }
 
     /**
      * Test for `afterDelete()` method
@@ -95,7 +86,7 @@ class BannersTableTest extends TableTestCase
         $this->assertBelongsTo($this->Table->Positions);
         $this->assertEquals('position_id', $this->Table->Positions->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Positions->getJoinType());
-        $this->assertEquals(ME_CMS . '.BannersPositions', $this->Table->Positions->className());
+        $this->assertEquals('MeCms.BannersPositions', $this->Table->Positions->getClassName());
 
         $this->assertHasBehavior(['Timestamp', 'CounterCache']);
 

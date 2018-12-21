@@ -25,8 +25,8 @@ class BannersControllerTest extends ControllerTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.me_cms.Banners',
-        'plugin.me_cms.BannersPositions',
+        'plugin.MeCms.Banners',
+        'plugin.MeCms.BannersPositions',
     ];
 
     /**
@@ -42,7 +42,7 @@ class BannersControllerTest extends ControllerTestCase
         //Only for the `testUploadErrorOnSave()` method, it mocks the `Banners`
         //  table, so the `save()` method returns `false`
         if ($this->getName() === 'testUploadErrorOnSave') {
-            $this->_controller->Banners = $this->getMockForModel(sprintf('%s.%s', ME_CMS, $this->Table->getRegistryAlias()), ['save']);
+            $this->_controller->Banners = $this->getMockForModel(sprintf('%s.%s', 'MeCms', $this->Table->getRegistryAlias()), ['save']);
             $this->_controller->Banners->method('save')->will($this->returnValue(false));
         }
     }
