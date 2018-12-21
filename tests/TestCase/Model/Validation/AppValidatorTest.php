@@ -12,9 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
-use MeCms\Model\Table\BannersTable;
-use MeCms\Model\Table\PostsTable;
-use MeCms\Model\Table\UsersTable;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -83,9 +80,9 @@ class AppValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->Banners = $this->getMockForModel('Banners', null, ['className' => BannersTable::class]);
-        $this->Posts = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
-        $this->Users = $this->getMockForModel('Users', null, ['className' => UsersTable::class]);
+        $this->Banners = $this->getMockForModel('MeCms.Banners', null);
+        $this->Posts = $this->getMockForModel('MeCms.Posts', null);
+        $this->Users = $this->getMockForModel('MeCms.Users', null);
     }
 
     /**

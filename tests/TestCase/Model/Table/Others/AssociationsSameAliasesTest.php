@@ -12,8 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Table\Others;
 
-use MeCms\Model\Table\PagesTable;
-use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\TableTestCase;
 
 /**
@@ -44,8 +42,8 @@ class AssociationsSameAliasesTest extends TableTestCase
      */
     public function testAssociationsSameAliases()
     {
-        $tables[] = $this->getMockForModel('Pages', null, ['className' => PagesTable::class]);
-        $tables[] = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
+        $tables[] = $this->getMockForModel('MeCms.Pages', null);
+        $tables[] = $this->getMockForModel('MeCms.Posts', null);
 
         foreach ($tables as $table) {
             $categories = $table->Categories;

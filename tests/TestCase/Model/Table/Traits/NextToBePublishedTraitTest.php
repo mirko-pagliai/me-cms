@@ -13,7 +13,6 @@
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\I18n\Time;
-use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -43,7 +42,7 @@ class NextToBePublishedTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
+        $this->Posts = $this->getMockForModel('MeCms.Posts', null);
     }
 
     /**

@@ -13,9 +13,9 @@
 namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
+use Cake\Http\ServerRequest;
 use Cake\I18n\FrozenDate;
 use Cake\Routing\Router;
-use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\CellTestCase;
 
 /**
@@ -45,7 +45,7 @@ class PostsWidgetsCellTest extends CellTestCase
     {
         parent::setUp();
 
-        $this->Table = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
+        $this->Table = $this->getMockForModel('MeCms.Posts', null);
     }
 
     /**
@@ -110,17 +110,16 @@ class PostsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
-        $this->assertHtml($expected, $result);
+        $this->assertHtml($expected, $this->Widget->widget($widget, ['render' => 'list'])->render());
 
         //Empty on categories index
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'postsCategories']));
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->Widget->getView()->setRequest(new ServerRequest);
 
         //Tests cache
         $fromCache = Cache::read('widget_categories', $this->Table->getCacheName());
-        $this->assertEquals(2, $fromCache->count());
         $this->assertArrayKeysEqual(['first-post-category', 'sub-sub-post-category'], $fromCache->toArray());
 
         //With no posts
@@ -160,8 +159,7 @@ class PostsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, ['limit' => 1])->render();
-        $this->assertHtml($expected, $result);
+        $this->assertHtml($expected, $this->Widget->widget($widget, ['limit' => 1])->render());
 
         //Tries with a limit of 2
         list($post, $otherPost) = $this->Table->find('active')->order(['created' => 'DESC'])->limit(2)->toArray();
@@ -194,20 +192,17 @@ class PostsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, ['limit' => 2])->render();
-        $this->assertHtml($expected, $result);
+        $this->assertHtml($expected, $this->Widget->widget($widget, ['limit' => 2])->render());
 
         //Empty on posts index
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'posts']));
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->Widget->getView()->setRequest(new ServerRequest);
 
         //Tests cache
-        $fromCache = Cache::read('widget_latest_1', $this->Table->getCacheName());
-        $this->assertEquals(1, $fromCache->count());
-
-        $fromCache = Cache::read('widget_latest_2', $this->Table->getCacheName());
-        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals(1, Cache::read('widget_latest_1', $this->Table->getCacheName())->count());
+        $this->assertEquals(2, Cache::read('widget_latest_2', $this->Table->getCacheName())->count());
 
         //With no posts
         Cache::clearAll();
@@ -246,8 +241,7 @@ class PostsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertHtml($expected, $result);
+        $this->assertHtml($expected, $this->Widget->widget($widget)->render());
 
         //Renders as list
         $expected = [
@@ -277,17 +271,16 @@ class PostsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
-        $this->assertHtml($expected, $result);
+        $this->assertHtml($expected, $this->Widget->widget($widget, ['render' => 'list'])->render());
 
         //Empty on posts index
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'posts']));
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->Widget->getView()->setRequest(new ServerRequest);
 
         //Tests cache
         $fromCache = Cache::read('widget_months', $this->Table->getCacheName());
-        $this->assertEquals(2, $fromCache->count());
         $this->assertArrayKeysEqual(['2016/12', '2016/11'], $fromCache->toArray());
 
         foreach ($fromCache as $key => $entity) {
@@ -343,8 +336,7 @@ class PostsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget)->render();
-        $this->assertHtml($expected, $result);
+        $this->assertHtml($expected, $this->Widget->widget($widget)->render());
 
         //Empty on search
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'postsSearch']));

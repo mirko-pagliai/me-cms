@@ -27,8 +27,8 @@ class HtmlWidgetsCellTest extends CellTestCase
     {
         $widget = 'MeCms.Html';
 
-        $result = $this->Widget->widget($widget, ['template' => 'custom_html'])->render();
-        $this->assertEquals('A custom widget', $result);
+        $expected = 'A custom widget';
+        $this->assertEquals($expected, $this->Widget->widget($widget, ['template' => 'custom_html'])->render());
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -37,8 +37,7 @@ class HtmlWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, ['template' => 'custom_html2'])->render();
-        $this->assertHtml($expected, $result);
+        $this->assertHtml($expected, $this->Widget->widget($widget, ['template' => 'custom_html2'])->render());
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -50,7 +49,6 @@ class HtmlWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, ['template' => 'custom_html3'])->render();
-        $this->assertHtml($expected, $result);
+        $this->assertHtml($expected, $this->Widget->widget($widget, ['template' => 'custom_html3'])->render());
     }
 }

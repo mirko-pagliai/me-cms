@@ -17,9 +17,6 @@ use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
-use MeCms\Model\Table\PhotosTable;
-use MeCms\Model\Table\PostsCategoriesTable;
-use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\TableTestCase;
 
 /**
@@ -68,9 +65,9 @@ class AppTableTest extends TableTestCase
     {
         parent::setUp();
 
-        $this->Photos = $this->getMockForModel('Photos', null, ['className' => PhotosTable::class]);
-        $this->Posts = $this->getMockForModel('Posts', null, ['className' => PostsTable::class]);
-        $this->PostsCategories = $this->getMockForModel('PostsCategories', null, ['className' => PostsCategoriesTable::class]);
+        $this->Photos = $this->getMockForModel('MeCms.Photos', null);
+        $this->Posts = $this->getMockForModel('MeCms.Posts', null);
+        $this->PostsCategories = $this->getMockForModel('MeCms.PostsCategories', null);
     }
 
     /**

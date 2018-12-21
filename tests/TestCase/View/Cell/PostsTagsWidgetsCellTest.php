@@ -13,8 +13,9 @@
 namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
+use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
-use MeCms\Model\Table\TagsTable;
+use InvalidArgumentException;
 use MeCms\TestSuite\CellTestCase;
 
 /**
@@ -57,7 +58,18 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     {
         parent::setUp();
 
-        $this->Table = $this->getMockForModel('Tags', null, ['className' => TagsTable::class]);
+        $this->Table = $this->getMockForModel('MeCms.Tags', null);
+    }
+
+    /**
+     * Called after every test method
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        Cache::clearAll();
     }
 
     /**
@@ -66,28 +78,19 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      */
     public function testGetFontSizes()
     {
-        $getFontSizesMethod = function (array $options = []) {
-            $widget = $this->Widget->widget('MeCms.PostsTags::popular');
-
-            return $this->invokeMethod($widget, 'getFontSizes', [$options]);
+        $widget = $this->Widget->widget('MeCms.PostsTags::popular');
+        $getFontSizesMethod = function () use ($widget) {
+            return $this->invokeMethod($widget, 'getFontSizes', func_get_args());
         };
 
         $this->assertEquals([40, 12], $getFontSizesMethod());
         $this->assertEquals([20, 12], $getFontSizesMethod(['maxFont' => 20]));
         $this->assertEquals([40, 20], $getFontSizesMethod(['minFont' => 20]));
         $this->assertEquals([30, 20], $getFontSizesMethod(['maxFont' => 30, 'minFont' => 20]));
-    }
 
-    /**
-     * Test for `getFontSizes()` method, with invalid values
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Invalid values
-     * @test
-     */
-    public function testGetFontSizesWithInvalidValues()
-    {
-        $widget = $this->Widget->widget('MeCms.PostsTags::popular');
-        $this->invokeMethod($widget, 'getFontSizes', [['maxFont' => 10, 'minFont' => 20]]);
+        //With invalid values
+        $this->expectException(InvalidArgumentException::class);
+        $this->invokeMethod($getFontSizesMethod(['maxFont' => 10, 'minFont' => 20]));
     }
 
     /**
@@ -118,8 +121,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, $this->example)->render();
-        $this->assertHtml($expected, $result);
+        $this->assertHtml($expected, $this->Widget->widget($widget, $this->example)->render());
 
         //Tries with a custom prefix
         $expected = [
@@ -243,10 +245,10 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'postsTags']));
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
+        $this->Widget->getView()->setRequest(new ServerRequest);
 
         //Tests cache
         $fromCache = Cache::read('widget_tags_popular_2', $this->Table->getCacheName());
-        $this->assertEquals(2, $fromCache->count());
         $this->assertEquals(['cat', 'dog'], array_keys($fromCache->toArray()));
 
         foreach ($fromCache as $entity) {
@@ -254,7 +256,6 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         }
 
         $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->getCacheName());
-        $this->assertEquals(2, $fromCache->count());
         $this->assertEquals(['cat', 'dog'], array_keys($fromCache->toArray()));
 
         foreach ($fromCache as $entity) {
@@ -307,12 +308,10 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, $this->example)->render();
-        $this->assertHtml($expected, $result);
+        $this->assertHtml($expected, $this->Widget->widget($widget, $this->example)->render());
 
         //Tests cache
         $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->getCacheName());
-        $this->assertEquals(2, $fromCache->count());
         $this->assertEquals(['example1', 'example2'], array_keys($fromCache->toArray()));
 
         foreach ($fromCache as $entity) {

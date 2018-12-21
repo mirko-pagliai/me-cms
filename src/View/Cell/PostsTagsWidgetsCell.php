@@ -15,8 +15,10 @@ namespace MeCms\View\Cell;
 use Cake\Event\EventManager;
 use Cake\Network\Request;
 use Cake\Network\Response;
+use Cake\ORM\ResultSet;
 use Cake\View\Cell;
 use InvalidArgumentException;
+use MeCms\Model\Entity\Tag;
 
 /**
  * PostsTagsWidgets cell
@@ -48,7 +50,7 @@ class PostsTagsWidgetsCell extends Cell
      * @return array
      * @throws InvalidArgumentException
      */
-    protected function getFontSizes(array $style)
+    protected function getFontSizes(array $style = [])
     {
         //Maximum and minimun font sizes we want to use
         $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
@@ -104,34 +106,25 @@ class PostsTagsWidgetsCell extends Cell
                 sprintf('%s.post_count', $this->Tags->getAlias()) => 'DESC',
                 sprintf('%s.tag', $this->Tags->getAlias()) => 'ASC',
             ])
-            ->formatResults(function ($results) use ($style, $maxFont, $minFont) {
-                if (!$results->count()) {
-                    return $results;
-                }
-
+            ->formatResults(function (ResultSet $results) use ($style, $maxFont, $minFont) {
                 $results = $results->indexBy('slug');
 
-                if (!$style || !$maxFont || !$minFont) {
+                if (!$results->count() || !$style || !$maxFont || !$minFont) {
                     return $results;
                 }
 
                 //Highest and lowest numbers of occurrences and their difference
-                $maxCount = $results->first()->post_count;
                 $minCount = $results->last()->post_count;
-                $diffCount = $maxCount - $minCount;
+                $diffCount = $results->first()->post_count - $minCount;
                 $diffFont = $maxFont - $minFont;
 
-                return $results->map(function ($value) use ($minCount, $diffCount, $maxFont, $minFont, $diffFont) {
-                    if ($diffCount) {
-                        $value->size = round((($value->post_count - $minCount) / $diffCount * $diffFont) + $minFont);
-                    } else {
-                        $value->size = $maxFont;
-                    }
+                return $results->map(function (Tag $tag) use ($minCount, $diffCount, $maxFont, $minFont, $diffFont) {
+                    $tag->size = $diffCount ? round((($tag->post_count - $minCount) / $diffCount * $diffFont) + $minFont) : $maxFont;
 
-                    return $value;
+                    return $tag;
                 });
             })
-            ->cache($cache, $this->Tags->Posts->getCacheName())
+            ->cache($cache, $this->Tags->getCacheName())
             ->all();
 
         if ($shuffle) {
