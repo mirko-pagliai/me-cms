@@ -16,6 +16,7 @@ namespace MeCms;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
+use DebugKit\Plugin as DebugKit;
 use MeCms\Command\AddUserCommand;
 use MeCms\Command\GroupsCommand;
 use MeCms\Command\Install\CopyConfigCommand;
@@ -34,9 +35,19 @@ use MeTools\Command\Install\SetPermissionsCommand;
 class Plugin extends BasePlugin
 {
     /**
+     * Returns `true` if is cli.
+     * @return bool
+     */
+    protected function isCli()
+    {
+        return PHP_SAPI === 'cli';
+    }
+
+    /**
      * Load all the application configuration and bootstrap logic
      * @param PluginApplicationInterface $app The host application
      * @return void
+     * @uses isCli()
      * @uses setVendorLinks()
      * @uses setWritableDirs()
      */
@@ -68,14 +79,14 @@ class Plugin extends BasePlugin
 
         parent::bootstrap($app);
 
-        if (PHP_SAPI !== 'cli') {
+        if (!$this->isCli()) {
             //Loads DebugKit, if debugging is enabled
-            if (getConfig('debug') && !$app->getPlugins()->has('DebugKit')) {
-                $app->addPlugin('DebugKit');
+            if (getConfig('debug') && !$app->getPlugins()->has('DebugKit') && class_exists(DebugKit::class)) {
+                $app->addPlugin(DebugKit::class);
             }
 
-            $app->addPlugin('Gourmet/CommonMark');
-            $app->addPlugin('WyriHaximus/MinifyHtml');
+            $app->addPlugin('CommonMark', ['path' => ROOT . DS . 'vendor' . DS . 'gourmet' . DS . 'common-mark' . DS]);
+            $app->addPlugin('WyriHaximus/MinifyHtml', ['path' => ROOT . DS . 'vendor' . DS . 'wyrihaximus' . DS . 'minify-html' . DS]);
         }
 
         $this->setVendorLinks();
