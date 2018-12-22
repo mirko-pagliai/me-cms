@@ -52,6 +52,7 @@ class CopyConfigCommand extends Command
      * @param Arguments $args The command arguments
      * @param ConsoleIo $io The console io
      * @return null|int The exit code or null for success
+     * @uses $config
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
