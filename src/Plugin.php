@@ -54,9 +54,8 @@ class Plugin extends BasePlugin
     public function bootstrap(PluginApplicationInterface $app)
     {
         $pluginsToLoad = [
-            'Assets',
-            'DatabaseBackup',
             'MeTools',
+            'DatabaseBackup',
             'Recaptcha' => ['path' => ROOT . DS . 'vendor' . DS . 'crabstudio' . DS . 'recaptcha' . DS],
             'RecaptchaMailhide',
             'Thumber',
