@@ -42,20 +42,17 @@ Configure::write('Tokens.usersClassOptions', [
 //Loads the MeCms configuration and merges with the configuration from
 //  application, if exists
 Configure::load('MeCms.me_cms');
-
 if (is_readable(CONFIG . 'me_cms.php')) {
     Configure::load('me_cms');
 }
 
 //Forces debug on localhost, if required
-$request = new Request;
-if ($request->is('localhost') && getConfig('main.debug_on_localhost')) {
+if ((new Request)->is('localhost') && getConfig('main.debug_on_localhost')) {
     Configure::write('debug', true);
 }
 
 //Loads theme plugin
 $theme = getConfig('default.theme');
-
 if ($theme && !Plugin::loaded($theme)) {
     Plugin::load($theme);
 }
@@ -63,7 +60,6 @@ if ($theme && !Plugin::loaded($theme)) {
 //Loads the cache configuration and merges with the configuration from
 //  application, if exists
 Configure::load('MeCms.cache');
-
 if (is_readable(CONFIG . 'cache.php')) {
     Configure::load('cache');
 }
