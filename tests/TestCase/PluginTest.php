@@ -41,8 +41,8 @@ class PluginTest extends TestCase
 
         $expected = [
             'Assets',
-            'DatabaseBackup',
             'MeTools',
+            'DatabaseBackup',
             'Recaptcha',
             'RecaptchaMailhide',
             'Thumber',
