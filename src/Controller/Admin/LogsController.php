@@ -47,7 +47,6 @@ class LogsController extends AppController
     protected function read($filename, $serialized)
     {
         $log = $this->getPath($filename, $serialized);
-
         is_readable_or_fail($log);
 
         $log = file_get_contents($log);
