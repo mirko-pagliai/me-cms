@@ -35,7 +35,8 @@ class UserMailer extends Mailer
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
-            is_true_or_fail($user->has($property), __d('me_cms', 'Missing `{0}` property from data', $property), InvalidArgumentException::class);
+            $hasProperty = $user->has($property);
+            is_true_or_fail($hasProperty, __d('me_cms', 'Missing `{0}` property from data', $property), InvalidArgumentException::class);
         }
 
         $this->viewBuilder()->setTemplate('MeCms.Users/activation');
@@ -57,7 +58,8 @@ class UserMailer extends Mailer
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
-            is_true_or_fail($user->has($property), __d('me_cms', 'Missing `{0}` property from data', $property), InvalidArgumentException::class);
+            $hasProperty = $user->has($property);
+            is_true_or_fail($hasProperty, __d('me_cms', 'Missing `{0}` property from data', $property), InvalidArgumentException::class);
         }
 
         $this->viewBuilder()->setTemplate('MeCms.Users/change_password');
@@ -79,7 +81,8 @@ class UserMailer extends Mailer
     {
         //Checks that all required data is present
         foreach (['email', 'full_name'] as $property) {
-            is_true_or_fail($user->has($property), __d('me_cms', 'Missing `{0}` property from data', $property), InvalidArgumentException::class);
+            $hasProperty = $user->has($property);
+            is_true_or_fail($hasProperty, __d('me_cms', 'Missing `{0}` property from data', $property), InvalidArgumentException::class);
         }
 
         $this->viewBuilder()->setTemplate('MeCms.Users/password_forgot');

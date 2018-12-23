@@ -21,17 +21,6 @@ use MeTools\TestSuite\TestCase as BaseTestCase;
 abstract class TestCase extends BaseTestCase
 {
     /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->loadPlugins(['MeCms']);
-    }
-
-    /**
      * Called after every test method
      * @return void
      */

@@ -63,7 +63,6 @@ class RunAllCommandTest extends TestCase
         $expected = [
             'MeTools\Command\Install\SetPermissionsCommand',
             'MeTools\Command\Install\CreateRobotsCommand',
-//            'MeTools\Command\Install\FixComposerJsonCommand',
             'MeTools\Command\Install\CreatePluginsLinksCommand',
             'MeTools\Command\Install\CreateVendorsLinksCommand',
             'MeCms\Command\Install\CopyConfigCommand',

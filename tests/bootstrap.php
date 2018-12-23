@@ -138,6 +138,9 @@ function create_kcfinder_files($htaccess = true)
     }
 }
 
+Configure::write('Assets.target', TMP . 'assets');
+Configure::write('pluginsToLoad', ['MeTools', 'MeCms']);
+
 $_SERVER['PHP_SELF'] = '/';
 
 if (!class_exists('PHPUnit\Runner\Version')) {

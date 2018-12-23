@@ -128,7 +128,8 @@ class UsersController extends AppController
      */
     public function activation($id, $token)
     {
-        is_true_or_fail($this->Token->check($token, ['type' => 'signup', 'user_id' => $id]), __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
+        $tokenExists = $this->Token->check($token, ['type' => 'signup', 'user_id' => $id]);
+        is_true_or_fail($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
 
         $update = $this->Users->findPendingById($id)
             ->update()
@@ -330,7 +331,8 @@ class UsersController extends AppController
      */
     public function passwordReset($id, $token)
     {
-        is_true_or_fail($this->Token->check($token, ['type' => 'password_forgot', 'user_id' => $id]), __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
+        $tokenExists = $this->Token->check($token, ['type' => 'password_forgot', 'user_id' => $id]);
+        is_true_or_fail($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
 
         $user = $this->Users->findActiveById($id)->select(['id'])->firstOrFail();
 

@@ -12,18 +12,14 @@
  */
 namespace MeCms\Test\TestCase\View\Helper;
 
-use Cake\Core\Plugin;
-use MeCms\TestSuite\HelperTestCase;
+use MeTools\TestSuite\HelperTestCase;
 use TestPlugin\View\Helper\MenuHelper;
-use Tools\ReflectionTrait;
 
 /**
  * MenuBuilderHelperTest class
  */
 class MenuBuilderHelperTest extends HelperTestCase
 {
-    use ReflectionTrait;
-
     /**
      * Called before every test method
      * @return void

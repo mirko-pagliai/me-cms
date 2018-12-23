@@ -12,7 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Controller\Component;
 
-use MeCms\TestSuite\ComponentTestCase;
+use MeTools\TestSuite\ComponentTestCase;
 
 /**
  * AuthComponentTest class

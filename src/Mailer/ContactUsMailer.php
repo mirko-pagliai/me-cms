@@ -35,7 +35,8 @@ class ContactUsMailer extends Mailer
     {
         //Checks that all required data is present
         foreach (['email', 'first_name', 'last_name', 'message'] as $key) {
-            is_true_or_fail(array_key_exists($key, $data), __d('me_cms', 'Missing `{0}` key from data', $key), InvalidArgumentException::class);
+            $keyExists = array_key_exists($key, $data);
+            is_true_or_fail($keyExists, __d('me_cms', 'Missing `{0}` key from data', $key), InvalidArgumentException::class);
         }
 
         $this->viewBuilder()->setTemplate('MeCms.Systems/contact_us');

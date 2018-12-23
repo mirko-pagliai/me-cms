@@ -12,7 +12,7 @@
  */
 namespace MeCms\Test\TestCase\View\Helper;
 
-use MeCms\TestSuite\HelperTestCase;
+use MeTools\TestSuite\HelperTestCase;
 use MeTools\View\Helper\HtmlHelper;
 
 /**

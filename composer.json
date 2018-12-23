@@ -20,8 +20,8 @@
         "mirko-pagliai/cakephp-recaptcha-mailhide": "^1.2",
         "mirko-pagliai/cakephp-thumber": "^1.5.2",
         "mirko-pagliai/cakephp-tokens": "^1.2",
-        "mirko-pagliai/me-tools": "^2.18",
-        "mirko-pagliai/php-tools": "^1.1.7",
+        "mirko-pagliai/me-tools": "^2.18.1",
+        "mirko-pagliai/php-tools": "^1.1.9",
         "npm-asset/js-cookie": "^v2.2",
         "wyrihaximus/minify-html": "^1.1"
     },
