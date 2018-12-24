@@ -46,6 +46,7 @@ class PhotosAlbum extends Entity
     /**
      * Gets the album full path (virtual field)
      * @return string
+     * @todo Should raise an exception if the key is not existing
      */
     protected function _getPath()
     {
@@ -56,6 +57,7 @@ class PhotosAlbum extends Entity
      * Gets the album preview (virtual field)
      * @return string|void
      * @since 2.21.1
+     * @todo Should raise an exception if the key is not existing
      */
     protected function _getPreview()
     {

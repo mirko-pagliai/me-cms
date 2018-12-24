@@ -49,6 +49,7 @@ class Banner extends Entity
     /**
      * Gets the banner full path (virtual field)
      * @return string
+     * @todo Should raise an exception if the key is not existing
      */
     protected function _getPath()
     {
@@ -58,6 +59,7 @@ class Banner extends Entity
     /**
      * Gets the banner web address (virtual field)
      * @return string
+     * @todo Should raise an exception if the key is not existing
      */
     protected function _getWww()
     {

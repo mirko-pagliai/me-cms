@@ -50,6 +50,7 @@ class Photo extends Entity
     /**
      * Gets the photo path (virtual field)
      * @return string|void
+     * @todo Should raise an exception if the key is not existing
      */
     protected function _getPath()
     {
@@ -63,6 +64,7 @@ class Photo extends Entity
     /**
      * Gets description as plain text (virtual field)
      * @return string|void
+     * @todo Should raise an exception if the key is not existing
      */
     protected function _getPlainDescription()
     {
@@ -80,6 +82,7 @@ class Photo extends Entity
      * Gets the photo preview (virtual field)
      * @return Entity|void Entity with `preview`, `width` and `height`
      *  properties
+     * @todo Should raise an exception if the key is not existing
      * @uses _getPath()
      */
     protected function _getPreview()
