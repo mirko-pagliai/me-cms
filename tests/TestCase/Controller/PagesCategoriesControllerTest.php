@@ -39,7 +39,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'pagesCategories']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PagesCategories/index.ctp');
+        $this->assertTemplate('PagesCategories' . DS . 'index.ctp');
         $this->assertContainsInstanceof(PagesCategory::class, $this->viewVariable('categories'));
 
         $cache = Cache::read('categories_index', $this->Table->getCacheName());
@@ -57,7 +57,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PagesCategories/view.ctp');
+        $this->assertTemplate('PagesCategories' . DS . 'view.ctp');
         $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
         $this->assertContainsInstanceof(Page::class, $this->viewVariable('category')->pages);
 

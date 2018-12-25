@@ -56,7 +56,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/PhotosAlbums/index.ctp');
+        $this->assertTemplate('Admin' . DS . 'PhotosAlbums' . DS . 'index.ctp');
         $this->assertContainsInstanceof(PhotosAlbum::class, $this->viewVariable('albums'));
     }
 
@@ -70,7 +70,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/PhotosAlbums/add.ctp');
+        $this->assertTemplate('Admin' . DS . 'PhotosAlbums' . DS . 'add.ctp');
         $this->assertInstanceof(PhotosAlbum::class, $this->viewVariable('album'));
 
         //POST request. Data are valid
@@ -95,7 +95,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/PhotosAlbums/edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'PhotosAlbums' . DS . 'edit.ctp');
         $this->assertInstanceof(PhotosAlbum::class, $this->viewVariable('album'));
 
         //POST request. Data are valid

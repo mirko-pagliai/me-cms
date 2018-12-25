@@ -39,7 +39,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'albums']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate(ROOT . 'src/Template/PhotosAlbums/index.ctp');
+        $this->assertTemplate('PhotosAlbums' . DS . 'index.ctp');
         $this->assertContainsInstanceof(PhotosAlbum::class, $this->viewVariable('albums'));
         foreach ($this->viewVariable('albums') as $album) {
             $this->assertContainsInstanceof(Photo::class, $album->photos);
@@ -68,7 +68,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PhotosAlbums/view.ctp');
+        $this->assertTemplate('PhotosAlbums' . DS . 'view.ctp');
         $this->assertInstanceof(PhotosAlbum::class, $this->viewVariable('album'));
         $this->assertContainsInstanceof(Photo::class, $this->viewVariable('photos'));
 

@@ -41,7 +41,7 @@ class PhotosControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Photos/view.ctp');
+        $this->assertTemplate('Photos' . DS . 'view.ctp');
         $this->assertInstanceof(Photo::class, $this->viewVariable('photo'));
 
         $cache = Cache::read(sprintf('view_%s', md5($photo->id)), $this->Table->getCacheName());
@@ -62,7 +62,7 @@ class PhotosControllerTest extends ControllerTestCase
 
         $this->get(['_name' => 'photosPreview', $id]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Photos/view.ctp');
+        $this->assertTemplate('Photos' . DS . 'view.ctp');
         $this->assertInstanceof(Photo::class, $this->viewVariable('photo'));
     }
 }

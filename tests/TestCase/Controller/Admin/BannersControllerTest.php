@@ -95,7 +95,7 @@ class BannersControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Banners/index.ctp');
+        $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'index.ctp');
         $this->assertContainsInstanceof(Banner::class, $this->viewVariable('banners'));
         $this->assertCookieIsEmpty('renderBanners');
     }
@@ -108,7 +108,7 @@ class BannersControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index', '?' => ['render' => 'grid']]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Banners/index_as_grid.ctp');
+        $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'index_as_grid.ctp');
         $this->assertContainsInstanceof(Banner::class, $this->viewVariable('banners'));
         $this->assertCookie('grid', 'renderBanners');
     }
@@ -122,7 +122,7 @@ class BannersControllerTest extends ControllerTestCase
         $this->cookie('renderBanners', 'grid');
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Banners/index_as_grid.ctp');
+        $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'index_as_grid.ctp');
         $this->assertCookie('grid', 'renderBanners');
     }
 
@@ -137,7 +137,7 @@ class BannersControllerTest extends ControllerTestCase
         //GET request
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Banners/upload.ctp');
+        $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'upload.ctp');
 
         //POST request. This works
         $file = $this->createImageToUpload();
@@ -161,7 +161,7 @@ class BannersControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'upload', '_ext' => 'json', '?' => ['position' => 1]], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"No file was uploaded"}');
-        $this->assertTemplate('Admin/Banners/json/upload.ctp');
+        $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'json' . DS . 'upload.ctp');
     }
 
     /**
@@ -185,7 +185,7 @@ class BannersControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'upload', '_ext' => 'json', '?' => ['position' => 1]], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"Valid extensions: gif, jpg, jpeg, png"}');
-        $this->assertTemplate('Admin/Banners/json/upload.ctp');
+        $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'json' . DS . 'upload.ctp');
     }
 
     /**
@@ -200,7 +200,7 @@ class BannersControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'upload', '_ext' => 'json', '?' => ['position' => 1]], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"' . I18N_OPERATION_NOT_OK . '"}');
-        $this->assertTemplate('Admin/Banners/json/upload.ctp');
+        $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'json' . DS . 'upload.ctp');
     }
 
     /**
@@ -235,7 +235,7 @@ class BannersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Banners/edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'edit.ctp');
         $this->assertInstanceof(Banner::class, $this->viewVariable('banner'));
 
         //POST request. Data are valid

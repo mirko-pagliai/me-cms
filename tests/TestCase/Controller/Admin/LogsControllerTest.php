@@ -57,7 +57,7 @@ class LogsControllerTest extends ControllerTestCase
         $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Logs/index.ctp');
+        $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'index.ctp');
 
         foreach ($this->viewVariable('logs') as $log) {
             $this->assertInstanceOf(Entity::class, $log);
@@ -76,7 +76,7 @@ class LogsControllerTest extends ControllerTestCase
         $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'view', 'error.log']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Logs/view.ctp');
+        $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'view.ctp');
         $this->assertContains('This is an error message', $this->viewVariable('content'));
         $this->assertContains('This is a critical message', $this->viewVariable('content'));
         $this->assertEquals('error.log', $this->viewVariable('filename'));
@@ -91,7 +91,7 @@ class LogsControllerTest extends ControllerTestCase
         $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'view', 'error.log', '?' => ['as' => 'serialized']]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Logs/view_as_serialized.ctp');
+        $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'view_as_serialized.ctp');
         $this->assertEquals([
             'This is a critical message',
             'This is an error message',

@@ -107,7 +107,7 @@ class BackupsControllerTest extends ControllerTestCase
         $this->createSomeBackups();
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Backups/index.ctp');
+        $this->assertTemplate('Admin' . DS . 'Backups' . DS . 'index.ctp');
         $this->assertContainsInstanceof(Entity::class, $this->viewVariable('backups'));
     }
 
@@ -121,7 +121,7 @@ class BackupsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Backups/add.ctp');
+        $this->assertTemplate('Admin' . DS . 'Backups' . DS . 'add.ctp');
         $this->assertInstanceof(BackupForm::class, $this->viewVariable('backup'));
 
         //POST request. Data are invalid

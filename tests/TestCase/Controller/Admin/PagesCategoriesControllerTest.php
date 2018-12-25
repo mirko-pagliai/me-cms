@@ -64,7 +64,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/PagesCategories/index.ctp');
+        $this->assertTemplate('Admin' . DS . 'PagesCategories' . DS . 'index.ctp');
         $this->assertContainsInstanceof(PagesCategory::class, $this->viewVariable('categories'));
     }
 
@@ -78,7 +78,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/PagesCategories/add.ctp');
+        $this->assertTemplate('Admin' . DS . 'PagesCategories' . DS . 'add.ctp');
         $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid
@@ -103,7 +103,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/PagesCategories/edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'PagesCategories' . DS . 'edit.ctp');
         $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid
