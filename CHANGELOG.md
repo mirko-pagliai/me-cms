@@ -18,7 +18,7 @@
     `DATABASE_BACKUP`, `ME_CMS_CACHE`, `ME_TOOLS`, `RECAPTCHA_MAILHIDE` and
     `THUMBER` constants;
 * updated for CakePHP 3.7.1 and fixed all deprecations;
-* updated for `php-tools` 1.1.7 and `me-tools` 2.18.1.
+* updated for `php-tools` 1.1.9 and `me-tools` 2.18.1.
 
 ## 2.25 branch
 ### 2.25.4

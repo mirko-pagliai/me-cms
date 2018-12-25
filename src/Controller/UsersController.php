@@ -51,7 +51,7 @@ class UsersController extends AppController
         }
 
         $this->Auth->setUser($user);
-        $this->LoginRecorder->config('user', $user['id'])->write();
+        $this->LoginRecorder->setConfig('user', $user['id'])->write();
 
         return $this->redirect($this->Auth->redirectUrl());
     }
@@ -96,7 +96,6 @@ class UsersController extends AppController
         parent::initialize();
 
         $this->Cookie->configKey('login', ['encryption' => 'aes', 'expires' => '+365 days']);
-
         $this->loadComponent('Tokens.Token');
         $this->loadComponent('MeCms.LoginRecorder');
     }
@@ -172,9 +171,7 @@ class UsersController extends AppController
                     $user = $this->Users->findPendingByEmail($this->request->getData('email'))->first();
 
                     if ($user) {
-                        //Sends the activation mail
                         $this->sendActivationMail($user);
-
                         $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
 
                         return $this->redirect(['_name' => 'login']);
@@ -230,7 +227,7 @@ class UsersController extends AppController
 
                 $this->Auth->setUser($user);
 
-                $this->LoginRecorder->config('user', $user['id'])->write();
+                $this->LoginRecorder->setConfig('user', $user['id'])->write();
 
                 //Saves the login data as cookies, if requested
                 if ($this->request->getData('remember_me')) {
@@ -292,13 +289,10 @@ class UsersController extends AppController
                 $user = $this->Users->findActiveByEmail($this->request->getData('email'))->first();
 
                 if ($user) {
-                    //Creates the token
                     $token = $this->Token->create($user->email, ['type' => 'password_forgot', 'user_id' => $user->id]);
-
                     $this->getMailer('MeCms.User')
                         ->set('url', Router::url(['_name' => 'passwordReset', $user->id, $token], true))
                         ->send('passwordForgot', [$user]);
-
                     $this->Flash->success(__d('me_cms', 'We have sent you an email to reset your password'));
 
                     return $this->redirect(['_name' => 'login']);
@@ -340,10 +334,8 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->getData());
 
             if ($user->isDirty() && $this->Users->save($user)) {
-                $this->Flash->success(__d('me_cms', 'The password has been edited'));
-
-                //Deletes the token
                 $this->Token->delete($token);
+                $this->Flash->success(__d('me_cms', 'The password has been edited'));
 
                 return $this->redirect(['_name' => 'login']);
             }
@@ -400,9 +392,9 @@ class UsersController extends AppController
                     }
 
                     return $this->redirect(['_name' => 'homepage']);
-                } else {
-                    $this->Flash->error(__d('me_cms', 'The account has not been created'));
                 }
+
+                $this->Flash->error(__d('me_cms', 'The account has not been created'));
             } else {
                 $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
             }

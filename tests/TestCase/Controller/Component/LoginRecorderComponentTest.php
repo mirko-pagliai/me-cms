@@ -15,6 +15,7 @@ namespace MeCms\Test\TestCase\Controller\Component;
 use Cake\Http\ServerRequest;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
+use InvalidArgumentException;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeTools\TestSuite\ComponentTestCase;
 use Tools\FileArray;
@@ -26,32 +27,24 @@ class LoginRecorderComponentTest extends ComponentTestCase
 {
     /**
      * Internal method to get a `LoginRecorder` instance
-     * @return \MeCms\Controller\Component\LoginRecorderComponent
+     * @param array|null $methods Methods you want to mock
+     * @param array $userAgent Data returned by the `getUserAgent()` method
+     * @return \MeCms\Controller\Component\LoginRecorderComponent|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getLoginRecorderInstance()
+    protected function getMockForLoginRecorder($methods = ['getUserAgent'], array $userAgent = [])
     {
-        $component = $this->getMockForComponent(LoginRecorderComponent::class, null);
+        $component = $this->getMockForComponent(LoginRecorderComponent::class, $methods);
+
+        if (in_array('getUserAgent', $methods)) {
+            $component->method('getUserAgent')
+                ->will($this->returnValue($userAgent ?: [
+                    'platform' => 'Linux',
+                    'browser' => 'Chrome',
+                    'version' => '55.0.2883.87',
+                ]));
+        }
+
         $component->setConfig('user', 1);
-
-        return $component;
-    }
-
-    /**
-     * Internal method to get a `LoginRecorder` mock
-     * @param array|null $userAgent Data returned by the `getUserAgent()` method
-     * @return \MeCms\Controller\Component\LoginRecorderComponent
-     */
-    protected function getLoginRecorderMock($userAgent = [])
-    {
-        $component = $this->getMockForComponent(LoginRecorderComponent::class, ['getUserAgent']);
-        $component->setConfig('user', 1);
-
-        $component->method('getUserAgent')
-            ->will($this->returnValue($userAgent ?: [
-                'platform' => 'Linux',
-                'browser' => 'Chrome',
-                'version' => '55.0.2883.87',
-            ]));
 
         return $component;
     }
@@ -62,7 +55,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      */
     public function setUp()
     {
-        $this->Component = $this->getLoginRecorderMock();
+        $this->Component = $this->getMockForLoginRecorder();
 
         parent::setUp();
     }
@@ -73,10 +66,10 @@ class LoginRecorderComponentTest extends ComponentTestCase
      */
     public function tearDown()
     {
+        parent::tearDown();
+
         //Deletes the file
         safe_unlink(LOGIN_RECORDS . 'user_1.log');
-
-        parent::tearDown();
     }
 
     /**
@@ -85,18 +78,15 @@ class LoginRecorderComponentTest extends ComponentTestCase
      */
     public function testGetClientIp()
     {
-        $LoginRecorderComponent = $this->getLoginRecorderInstance();
-        $this->assertEmpty($this->invokeMethod($LoginRecorderComponent, 'getClientIp'));
+        $this->assertEmpty($this->invokeMethod($this->Component, 'getClientIp'));
 
         //On localhost
         $this->Component->request = $this->getMockBuilder(ServerRequest::class)
             ->setMethods(['clientIp'])
             ->getMock();
-
         $this->Component->request->expects($this->once())
             ->method('clientIp')
             ->will($this->returnValue('::1'));
-
         $this->assertEquals('127.0.0.1', $this->invokeMethod($this->Component, 'getClientIp'));
     }
 
@@ -109,30 +99,15 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $result = $this->Component->getFileArray();
         $this->assertInstanceOf(FileArray::class, $result);
         $this->assertEquals(LOGIN_RECORDS . 'user_1.log', $this->getProperty($result, 'filename'));
-    }
 
-    /**
-     * Test for `getFileArray()` method, without the user ID
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage You have to set a valid user id
-     * @test
-     */
-    public function testGetFileArrayMissingUserId()
-    {
-        $this->Component->setConfig('user', null);
-        $this->Component->getFileArray();
-    }
-
-    /**
-     * Test for `getFileArray()` method, with an invalid user ID
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage You have to set a valid user id
-     * @test
-     */
-    public function testGetFileArrayInvalidUserId()
-    {
-        $this->Component->setConfig('user', 'string');
-        $this->Component->getFileArray();
+        //With invalid user ID
+        foreach ([null, 'string'] as $value) {
+            $this->assertException(InvalidArgumentException::class, function () use ($value) {
+                $Component = $this->getMockForLoginRecorder();
+                $Component->setConfig('user', $value);
+                $Component->getFileArray();
+            }, 'You have to set a valid user id');
+        }
     }
 
     /**
@@ -149,12 +124,12 @@ class LoginRecorderComponentTest extends ComponentTestCase
         ];
         $this->assertEquals($expected, $result);
 
-        $component = $this->getLoginRecorderInstance();
         $expected = [
             'platform' => 'Windows',
             'browser' => 'Firefox',
             'version' => '16.0',
         ];
+        $component = $this->getMockForLoginRecorder(['getUserAgent'], $expected);
         $result = $this->invokeMethod($component, 'getUserAgent', [
             'Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0',
         ]);
@@ -181,7 +156,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
         //Creates an empty file. Now is always empty
         safe_create_file(LOGIN_RECORDS . 'user_1.log');
-        $result = $this->getLoginRecorderInstance()->read();
+        $result = $this->getMockForLoginRecorder()->read();
         $this->assertEmpty($result);
         $this->assertIsArray($result);
     }
@@ -231,7 +206,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         //Calls again, with different user agent data, as if the user had logged
         //  in again, but from a different client. In this case, the previous
         //  record is not deleted
-        $component = $this->getLoginRecorderMock([
+        $component = $this->getMockForLoginRecorder(['getUserAgent'], [
             'platform' => 'Windows',
             'browser' => 'Firefox',
             'version' => '1.2.3',
@@ -242,16 +217,10 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $this->assertEquals(2, count($third));
         $this->assertEquals($second[0], $third[1]);
         $this->assertGreaterThan($third[1]->time, $third[0]->time);
-    }
 
-    /**
-     * Test for `write()` method, without the user ID
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage You have to set a valid user id
-     * @test
-     */
-    public function testWriteMissingUserId()
-    {
-        $this->Component->setConfig('user', null)->write();
+        //Without the user ID
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('You have to set a valid user id');
+        $this->getMockForLoginRecorder()->setConfig('user', null)->write();
     }
 }

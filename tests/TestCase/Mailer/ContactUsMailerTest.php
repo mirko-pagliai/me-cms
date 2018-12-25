@@ -14,6 +14,7 @@ namespace MeCms\Test\TestCase\Mailer;
 
 use MeCms\Mailer\ContactUsMailer;
 use MeCms\TestSuite\TestCase;
+use Tools\Exception\KeyNotExistsException;
 
 /**
  * ContactUsMailerTest class
@@ -66,16 +67,10 @@ class ContactUsMailerTest extends TestCase
             'firstName' => 'James',
             'lastName' => 'Blue',
         ], $result->getViewVars());
-    }
 
-    /**
-     * Tests for `contactUsMail()` method, with some missing data
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Missing `email` key from data
-     * @test
-     */
-    public function testContactUsMailMissingData()
-    {
+        //With some missing data
+        $this->expectException(KeyNotExistsException::class);
+        $this->expectExceptionMessage('Key `email` does not exist');
         $copy = $this->example;
         unset($copy['email']);
         $this->Mailer->contactUsMail($copy);

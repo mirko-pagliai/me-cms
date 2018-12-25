@@ -41,7 +41,6 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate(ROOT . 'src/Template/PhotosAlbums/index.ctp');
         $this->assertContainsInstanceof(PhotosAlbum::class, $this->viewVariable('albums'));
-
         foreach ($this->viewVariable('albums') as $album) {
             $this->assertContainsInstanceof(Photo::class, $album->photos);
         }

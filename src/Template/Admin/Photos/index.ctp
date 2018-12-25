@@ -36,10 +36,7 @@ $this->extend('/Admin/Common/Photos/index');
                     <?php
                     //If the photo is not active (not published)
                     if (!$photo->active) {
-                        echo $this->Html->span(
-                            I18N_NOT_PUBLISHED,
-                            ['class' => 'record-badge badge badge-warning']
-                        );
+                        echo $this->Html->span(I18N_NOT_PUBLISHED, ['class' => 'record-badge badge badge-warning']);
                     }
 
                     $actions = [

@@ -23,7 +23,7 @@ abstract class ValidationTestCase extends TestCase
 {
     /**
      * Table instance
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Cake\ORM\Table|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $Table;
 

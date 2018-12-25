@@ -16,6 +16,7 @@ use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
+use MeCms\Model\Entity\Post;
 
 /**
  * Posts controller
@@ -99,11 +100,7 @@ class PostsController extends AppController
         }
 
         //Only admins and managers can delete posts
-        if ($this->request->isDelete()) {
-            return false;
-        }
-
-        return true;
+        return !$this->request->isDelete();
     }
 
     /**
@@ -170,10 +167,8 @@ class PostsController extends AppController
                 return $q->order(['tag' => 'ASC']);
             })
             ->formatResults(function (ResultSet $results) {
-                return $results->map(function ($row) {
-                    $row->created = $row->created->i18nFormat(FORMAT_FOR_MYSQL);
-
-                    return $row;
+                return $results->map(function (Post $post) {
+                    return $post->set('created', $post->created->i18nFormat(FORMAT_FOR_MYSQL));
                 });
             })
             ->firstOrFail();
@@ -207,7 +202,6 @@ class PostsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
 
         $this->Posts->deleteOrFail($this->Posts->get($id));
-
         $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);

@@ -34,17 +34,6 @@ class WidgetHelperTest extends HelperTestCase
     }
 
     /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        $this->removePlugins(['TestPlugin']);
-    }
-
-    /**
      * Tests for `getAll()` method
      * @test
      */

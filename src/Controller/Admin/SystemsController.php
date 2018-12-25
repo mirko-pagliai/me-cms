@@ -53,9 +53,7 @@ class SystemsController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can clear all temporary files or logs
-        if ($this->request->isAction('tmpCleaner') &&
-            in_array($this->request->getParam('pass.0'), ['all', 'logs'])
-        ) {
+        if ($this->request->isAction('tmpCleaner') && in_array($this->request->getParam('pass.0'), ['all', 'logs'])) {
             return $this->Auth->isGroup('admin');
         }
 
@@ -78,7 +76,7 @@ class SystemsController extends AppController
 
         //If there's only one type, it automatically sets the query value
         if (!$type && count($types) < 2) {
-            $type = first_value(array_keys($types));
+            $type = first_key($types);
             $this->request = $this->request->withQueryParams(compact('type'));
         }
 
@@ -153,9 +151,7 @@ class SystemsController extends AppController
             'webroot' => $Checkup->Webroot->isWriteable(),
         ];
 
-        foreach ($results as $key => $value) {
-            $this->set($key, $value);
-        };
+        array_map([$this, 'set'], array_keys($results), $results);
     }
 
     /**
@@ -192,8 +188,7 @@ class SystemsController extends AppController
 
         switch ($type) {
             case 'all':
-                safe_unlink_recursive($assetsTarget);
-                safe_unlink_recursive(LOGS);
+                array_map('safe_unlink_recursive', [$assetsTarget, LOGS]);
                 $success = self::clearCache() && self::clearSitemap() && (new ThumbManager)->clearAll();
                 break;
             case 'cache':

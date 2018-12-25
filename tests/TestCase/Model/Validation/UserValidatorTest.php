@@ -69,7 +69,7 @@ class UserValidatorTest extends ValidationTestCase
     {
         foreach (['Abcd', 'ab_cd', 'abcd$'] as $username) {
             $errors = $this->Table->newEntity(compact('username') + $this->example)->getErrors();
-            $this->assertEquals(['username' => ['slug' => 'Allowed chars: lowercase letters, numbers, dash']], $errors);
+            $this->assertEquals(['username' => ['slug' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_DASH)]], $errors);
         }
 
         $expected = ['username' => ['usernameNotReserved' => 'This value contains a reserved word']];

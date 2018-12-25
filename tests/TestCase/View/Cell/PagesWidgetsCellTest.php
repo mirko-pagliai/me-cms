@@ -23,7 +23,7 @@ use MeCms\TestSuite\CellTestCase;
 class PagesWidgetsCellTest extends CellTestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Model\Table\PagesTable|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Table;
 
@@ -126,10 +126,7 @@ class PagesWidgetsCellTest extends CellTestCase
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->Widget->getView()->setRequest(new ServerRequest);
-
-        //Tests cache
-        $fromCache = Cache::read('widget_categories', $this->Table->getCacheName());
-        $this->assertArrayKeysEqual(['first-page-category', 'sub-sub-page-category'], $fromCache->toArray());
+        $this->assertEquals(2, Cache::read('widget_categories', $this->Table->getCacheName())->count());
 
         //With no pages
         Cache::clearAll();
@@ -180,8 +177,6 @@ class PagesWidgetsCellTest extends CellTestCase
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->Widget->getView()->setRequest(new ServerRequest);
-
-        //Tests cache
         $this->assertEquals(2, Cache::read('widget_list', $this->Table->getCacheName())->count());
 
         //With no pages

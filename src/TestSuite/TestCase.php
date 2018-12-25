@@ -28,7 +28,7 @@ abstract class TestCase extends BaseTestCase
     {
         parent::tearDown();
 
-        safe_rmdir_recursive(KCFINDER);
+        safe_unlink_recursive(KCFINDER, 'empty');
         safe_unlink_recursive(WWW_ROOT . 'vendor', 'empty');
     }
 }

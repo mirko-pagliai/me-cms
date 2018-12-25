@@ -22,13 +22,13 @@ use MeCms\TestSuite\TestCase;
 class RequestDetectorsTest extends TestCase
 {
     /**
-     * @var \Cake\Network\Request
+     * @var \Cake\Network\Request|\PHPUnit_Framework_MockObject_MockObject
      */
     public $Request;
 
     /**
      * Internal method to mock a request
-     * @return object
+     * @return \Cake\Network\Request|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function getMockForRequest()
     {

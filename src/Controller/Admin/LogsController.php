@@ -48,7 +48,6 @@ class LogsController extends AppController
     {
         $log = $this->getPath($filename, $serialized);
         is_readable_or_fail($log);
-
         $log = file_get_contents($log);
 
         return $serialized ? safe_unserialize($log) : trim($log);
@@ -115,9 +114,7 @@ class LogsController extends AppController
      */
     public function download($filename)
     {
-        $file = $this->getPath($filename, false);
-
-        return $this->response->withFile($file, ['download' => true]);
+        return $this->response->withFile($this->getPath($filename, false), ['download' => true]);
     }
 
     /**

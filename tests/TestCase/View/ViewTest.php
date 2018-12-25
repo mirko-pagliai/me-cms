@@ -13,7 +13,6 @@
 namespace MeCms\Test\TestCase\View;
 
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Network\Request;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\View;
@@ -24,7 +23,7 @@ use MeCms\View\View;
 class ViewTest extends TestCase
 {
     /**
-     * @var \MeCms\View\View
+     * @var \MeCms\View\View|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $View;
 
@@ -36,24 +35,11 @@ class ViewTest extends TestCase
     {
         parent::setUp();
 
-        $request = new Request;
-        $request = $request->withEnv('REQUEST_URI', '/some-page');
         $this->View = $this->getMockBuilder(View::class)
             ->setMethods(null)
-            ->setConstructorArgs([$request])
+            ->setConstructorArgs([(new Request)->withEnv('REQUEST_URI', '/some-page')])
             ->getMock();
         $this->View->setPlugin('MeCms');
-    }
-
-    /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        $this->removePlugins(['TestPlugin']);
     }
 
     /**
@@ -68,7 +54,6 @@ class ViewTest extends TestCase
         $theme = 'TestPlugin';
         $this->loadPlugins([$theme]);
         Configure::write('MeCms.default.theme', $theme);
-
         $this->assertEquals($theme, (new View)->getTheme());
     }
 
@@ -88,18 +73,14 @@ class ViewTest extends TestCase
         $this->assertEquals($getTitleForLayoutMethod(), $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), $mainTitle);
 
-        //Resets the property
-        $this->setProperty($this->View, 'titleForLayout', null);
-
         //Tests the title as if it had been set by the view
+        $this->setProperty($this->View, 'titleForLayout', null);
         $this->View->assign('title', 'title from view');
         $this->assertEquals($getTitleForLayoutMethod(), 'title from view - ' . $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), 'title from view - ' . $mainTitle);
 
-        //Resets the property
-        $this->setProperty($this->View, 'titleForLayout', null);
-
         //Tests the title as if it had been set by the controller
+        $this->setProperty($this->View, 'titleForLayout', null);
         $this->View->set('title', 'title from controller');
         $this->assertEquals($getTitleForLayoutMethod(), 'title from controller - ' . $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), 'title from controller - ' . $mainTitle);
@@ -160,10 +141,9 @@ class ViewTest extends TestCase
         //Renders
         $result = $this->View->render(false, 'MeCms.default');
 
-        safe_unlink(WWW_ROOT . 'favicon.ico');
-
         //Checks for title and favicon
         $this->assertContains('<title>title from controller - ' . 'MeCms</title>', $result);
         $this->assertContains('<link href="favicon.ico" type="image/x-icon" rel="icon"/><link href="favicon.ico" type="image/x-icon" rel="shortcut icon"/>', $result);
+        safe_unlink(WWW_ROOT . 'favicon.ico');
     }
 }

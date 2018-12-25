@@ -40,9 +40,9 @@ class PhotosAlbumsTableTest extends TableTestCase
      */
     public function tearDown()
     {
-        safe_unlink_recursive(PHOTOS, 'empty');
-
         parent::tearDown();
+
+        safe_unlink_recursive(PHOTOS, 'empty');
     }
 
     /**
@@ -52,12 +52,9 @@ class PhotosAlbumsTableTest extends TableTestCase
     public function testAfterDelete()
     {
         $this->loadFixtures();
-
         $entity = $this->Table->newEntity(['title' => 'new album', 'slug' => 'new-album']);
         $this->assertNotEmpty($this->Table->save($entity));
         $this->assertFileExists($entity->path);
-
-        //Deletes the album
         $this->assertTrue($this->Table->delete($entity));
         $this->assertFileNotExists($entity->path);
     }
@@ -69,7 +66,6 @@ class PhotosAlbumsTableTest extends TableTestCase
     public function testAfterSave()
     {
         $this->loadFixtures();
-
         $entity = $this->Table->newEntity(['title' => 'new album', 'slug' => 'new-album']);
         $this->assertNotEmpty($this->Table->save($entity));
         $this->assertFileExists($entity->path);
@@ -83,7 +79,6 @@ class PhotosAlbumsTableTest extends TableTestCase
     public function testBuildRules()
     {
         $this->loadFixtures();
-
         $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
         $entity = $this->Table->newEntity($example);
@@ -124,14 +119,10 @@ class PhotosAlbumsTableTest extends TableTestCase
     public function testFindActive()
     {
         $this->loadFixtures();
-
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM photos_albums PhotosAlbums INNER JOIN photos Photos ON (Photos.active = :c0 AND PhotosAlbums.id = (Photos.album_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
-
-        foreach ($query as $entity) {
-            $this->assertTrue($entity->_matchingData['Photos']->active);
-        }
+        array_map([$this, 'assertTrue'], $query->all()->extract('_matchingData.Photos.active')->toArray());
     }
 }

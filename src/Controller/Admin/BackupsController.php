@@ -13,6 +13,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Cache\Cache;
+use Cake\ORM\Entity;
 use DatabaseBackup\Utility\BackupImport;
 use DatabaseBackup\Utility\BackupManager;
 use MeCms\Controller\AppController;
@@ -73,10 +74,8 @@ class BackupsController extends AppController
     public function index()
     {
         $backups = collection($this->BackupManager->index())
-            ->map(function ($backup) {
-                $backup->slug = urlencode($backup->filename);
-
-                return $backup;
+            ->map(function (Entity $backup) {
+                return $backup->set('slug', urlencode($backup->filename));
             });
 
         $this->set(compact('backups'));
@@ -98,9 +97,9 @@ class BackupsController extends AppController
                 $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(I18N_OPERATION_NOT_OK);
             }
+
+            $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
 
         $this->set(compact('backup'));
@@ -116,9 +115,7 @@ class BackupsController extends AppController
     public function delete($filename)
     {
         $this->request->allowMethod(['post', 'delete']);
-
         $this->BackupManager->delete($this->getFilename($filename));
-
         $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
@@ -132,9 +129,7 @@ class BackupsController extends AppController
     public function deleteAll()
     {
         $this->request->allowMethod(['post', 'delete']);
-
         $this->BackupManager->deleteAll();
-
         $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
@@ -161,9 +156,8 @@ class BackupsController extends AppController
      */
     public function restore($filename)
     {
+        //Imports and clears the cache
         (new BackupImport)->filename($this->getFilename($filename))->import();
-
-        //Clears the cache
         Cache::clearAll();
 
         $this->Flash->success(I18N_OPERATION_OK);
@@ -182,7 +176,6 @@ class BackupsController extends AppController
     public function send($filename)
     {
         $this->BackupManager->send($this->getFilename($filename), getConfigOrFail('email.webmaster'));
-
         $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);

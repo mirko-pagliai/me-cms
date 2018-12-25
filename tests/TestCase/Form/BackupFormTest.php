@@ -23,12 +23,12 @@ use MeCms\TestSuite\TestCase;
 class BackupFormTest extends TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \DatabaseBackup\Utility\BackupExport|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $BackupExport;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Form\BackupForm|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Form;
 

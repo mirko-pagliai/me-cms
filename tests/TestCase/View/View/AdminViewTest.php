@@ -21,7 +21,7 @@ use MeCms\View\View\AdminView as View;
 class AdminViewTest extends TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\View\View\AdminView|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $View;
 

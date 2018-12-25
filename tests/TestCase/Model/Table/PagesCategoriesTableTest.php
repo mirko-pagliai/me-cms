@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\I18n\Time;
+use Cake\Utility\Hash;
 use MeCms\Model\Entity\PagesCategory;
 use MeCms\Model\Validation\PagesCategoryValidator;
 use MeCms\TestSuite\TableTestCase;
@@ -103,16 +104,11 @@ class PagesCategoriesTableTest extends TableTestCase
 
         $childs = $this->Table->findById(1)->contain('Childs')->extract('childs')->first();
         $this->assertContainsInstanceOf(PagesCategory::class, $childs);
-
         foreach ($childs as $children) {
             $this->assertEquals(1, $children->parent_id);
-
             $childs = $this->Table->findById($children->id)->contain('Childs')->extract('childs')->first();
             $this->assertContainsInstanceOf(PagesCategory::class, $childs);
-
-            foreach ($childs as $children) {
-                $this->assertEquals(3, $children->parent_id);
-            }
+            $this->assertEquals([3], Hash::extract($childs, '0.parent_id'));
         }
     }
 
@@ -123,16 +119,13 @@ class PagesCategoriesTableTest extends TableTestCase
     public function testFindActive()
     {
         $this->loadFixtures();
-
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM pages_categories Categories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND Categories.id = (Pages.category_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
-
-        foreach ($query as $entity) {
-            $this->assertTrue($entity->_matchingData['Pages']->active &&
-                !$entity->_matchingData['Pages']->created->isFuture());
+        foreach ($query->all()->extract('_matchingData.Pages') as $page) {
+            $this->assertTrue($page->active && !$page->created->isFuture());
         }
     }
 }

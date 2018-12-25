@@ -32,17 +32,6 @@ class MenuBuilderHelperTest extends HelperTestCase
     }
 
     /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        $this->removePlugins(['TestPlugin', 'TestPluginTwo']);
-    }
-
-    /**
      * Tests for `getMenuMethods()` method
      * @test
      */

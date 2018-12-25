@@ -42,7 +42,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
             echo $this->Form->control('active', [
                 'default' => $this->request->getQuery('active'),
                 'empty' => I18N_ALL_STATUS,
-                'options' => ['yes' => I18N_ONLY_PUBLISHED, 'no' => I18N_ONLY_NOT_PUBLISHED],
+                'options' => [I18N_YES => I18N_ONLY_PUBLISHED, I18N_NO => I18N_ONLY_NOT_PUBLISHED],
             ]);
             echo $this->Form->control('user', [
                 'default' => $this->request->getQuery('user'),

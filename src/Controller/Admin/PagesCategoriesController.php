@@ -15,6 +15,7 @@ namespace MeCms\Controller\Admin;
 use Cake\Event\Event;
 use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
+use MeCms\Model\Entity\PagesCategory;
 
 /**
  * PagesCategories controller
@@ -50,9 +51,7 @@ class PagesCategoriesController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can delete pages categories. Admins and managers can access other actions
-        $allowedGroups = $this->request->isDelete() ? ['admin'] : ['admin', 'manager'];
-
-        return $this->Auth->isGroup($allowedGroups);
+        return $this->Auth->isGroup($this->request->isDelete() ? ['admin'] : ['admin', 'manager']);
     }
 
     /**
@@ -69,10 +68,8 @@ class PagesCategoriesController extends AppController
                 //Gets categories as tree list
                 $treeList = $this->PagesCategories->getTreeList()->toArray();
 
-                return $results->map(function ($result) use ($treeList) {
-                    $result->title = $treeList[$result->id];
-
-                    return $result;
+                return $results->map(function (PagesCategory $category) use ($treeList) {
+                    return $category->set('title', $treeList[$category->id]);
                 });
             });
 
@@ -139,7 +136,6 @@ class PagesCategoriesController extends AppController
         //Before deleting, it checks if the category has some pages
         if (!$category->page_count) {
             $this->PagesCategories->deleteOrFail($category);
-
             $this->Flash->success(I18N_OPERATION_OK);
         } else {
             $this->Flash->alert(I18N_BEFORE_DELETE);

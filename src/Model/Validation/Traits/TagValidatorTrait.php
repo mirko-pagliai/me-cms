@@ -37,6 +37,6 @@ trait TagValidatorTrait
      */
     public function validTagChars($value)
     {
-        return (bool)preg_match('/^[a-z0-9\ ]+$/', $value);
+        return (bool)preg_match('/^[a-z\d\s]+$/', $value);
     }
 }

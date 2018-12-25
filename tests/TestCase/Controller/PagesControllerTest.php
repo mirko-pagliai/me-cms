@@ -38,28 +38,6 @@ class PagesControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->loadPlugins(['TestPlugin']);
-    }
-
-    /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        $this->removePlugins(['TestPlugin']);
-    }
-
-    /**
      * Tests for `view()` method
      * @test
      */
@@ -104,6 +82,7 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function testViewWithStaticPageFromPlugin()
     {
+        $this->loadPlugins(['TestPlugin']);
         $this->get(['_name' => 'page', 'test-from-plugin']);
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page from a plugin');

@@ -42,10 +42,8 @@ class PostsTagsTableTest extends TableTestCase
     public function testBuildRules()
     {
         $this->loadFixtures();
-
         $entity = $this->Table->newEntity(['tag_id' => 999, 'post_id' => 999]);
         $this->assertFalse($this->Table->save($entity));
-
         $this->assertEquals([
             'tag_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
             'post_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],

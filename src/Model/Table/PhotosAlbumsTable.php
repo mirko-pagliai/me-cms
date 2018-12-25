@@ -19,6 +19,7 @@ use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Validation\PhotosAlbumValidator;
 
 /**
  * PhotosAlbums model
@@ -42,9 +43,7 @@ class PhotosAlbumsTable extends AppTable
     public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         //Deletes the directory
-        if (file_exists($entity->path)) {
-            safe_rmdir($entity->path);
-        }
+        safe_rmdir($entity->path);
 
         parent::afterDelete($event, $entity, $options);
     }
@@ -60,9 +59,7 @@ class PhotosAlbumsTable extends AppTable
     public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
         //Creates the folder
-        if (!file_exists($entity->path)) {
-            (new Folder())->create($entity->path, 0777);
-        }
+        (new Folder($entity->path, true, 0777));
 
         parent::afterSave($event, $entity, $options);
     }
@@ -75,10 +72,8 @@ class PhotosAlbumsTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED));
-        $rules->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
-
-        return $rules;
+        return $rules->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED))
+            ->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
     }
 
     /**
@@ -89,11 +84,9 @@ class PhotosAlbumsTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->matching($this->Photos->getAlias(), function (Query $q) {
+        return $query->matching($this->Photos->getAlias(), function (Query $q) {
             return $q->find('active');
         })->distinct();
-
-        return $query;
     }
 
     /**
@@ -114,6 +107,6 @@ class PhotosAlbumsTable extends AppTable
 
         $this->addBehavior('Timestamp');
 
-        $this->_validatorClass = '\MeCms\Model\Validation\PhotosAlbumValidator';
+        $this->_validatorClass = PhotosAlbumValidator::class;
     }
 }

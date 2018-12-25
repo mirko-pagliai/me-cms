@@ -101,8 +101,7 @@ class MenuTest extends TestCase
         $this->assertResponseNotContains('Resend activation email</a>');
         $this->assertResponseNotContains('Forgot your password?</a>');
 
-        //Signup is enaled, but the account does not need to be activated by
-        //  the user
+        //Account does not need to be activated by the user
         Configure::write('MeCms.users', ['signup' => true, 'activation' => 0]);
         $this->get(['_name' => 'login']);
         $this->assertResponseContains('Sign up</a>');

@@ -15,12 +15,15 @@ namespace MeCms\Test\TestCase\Model\Table;
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
+use Cake\Utility\Hash;
 use MeCms\Model\Entity\Post;
+use MeCms\Model\Entity\PostsTag;
 use MeCms\Model\Entity\Tag;
 use MeCms\Model\Table\PostsCategoriesTable;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\TestSuite\PostsAndPagesTablesTestCase;
 use ReflectionFunction;
+use Tools\Exception\KeyNotExistsException;
 
 /**
  * PostsTableTest class
@@ -49,10 +52,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      */
     public static function setupBeforeClass()
     {
-        self::$example += [
-            'user_id' => 1,
-            'tags_as_string' => 'first tag, second tag',
-        ];
+        self::$example += ['user_id' => 1, 'tags_as_string' => 'first tag, second tag'];
     }
 
     /**
@@ -62,20 +62,16 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     public function testBeforeMarshal()
     {
         $this->loadFixtures();
-
         $tags = $this->Table->newEntity(self::$example)->tags;
         $this->assertContainsInstanceOf(Tag::class, $tags);
-        $this->assertEquals('first tag', $tags[0]->tag);
-        $this->assertEquals('second tag', $tags[1]->tag);
+        $this->assertEquals(['first tag', 'second tag'], Hash::extract($tags, '{n}.tag'));
 
         //In this case, the `dog` tag already exists
         self::$example['tags_as_string'] = 'first tag, dog';
         $tags = $this->Table->newEntity(self::$example)->tags;
         $this->assertContainsInstanceOf(Tag::class, $tags);
-        $this->assertEmpty($tags[0]->id);
-        $this->assertEquals('first tag', $tags[0]->tag);
-        $this->assertEquals(2, $tags[1]->id);
-        $this->assertEquals('dog', $tags[1]->tag);
+        $this->assertEquals([2], Hash::extract($tags, '{n}.id'));
+        $this->assertEquals(['first tag', 'dog'], Hash::extract($tags, '{n}.tag'));
     }
 
     /**
@@ -85,7 +81,6 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     public function testBuildRules()
     {
         $this->loadFixtures();
-
         $entity = $this->Table->newEntity(self::$example);
         $this->assertNotEmpty($this->Table->save($entity));
 
@@ -153,12 +148,10 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     public function testBelongsToManyTags()
     {
         $this->loadFixtures();
-
         $tags = $this->Table->findById(2)->contain('Tags')->extract('tags')->first();
         $this->assertContainsInstanceOf(Tag::class, $tags);
-
         foreach ($tags as $tag) {
-            $this->assertInstanceOf('MeCms\Model\Entity\PostsTag', $tag->_joinData);
+            $this->assertInstanceOf(PostsTag::class, $tag->_joinData);
             $this->assertEquals(2, $tag->_joinData->post_id);
         }
     }
@@ -170,14 +163,11 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     public function testFindForIndex()
     {
         $this->loadFixtures();
-
         $query = $this->Table->find('forIndex');
         $sql = $query->sql();
-
         $this->assertEquals(['title', 'slug'], $query->getContain()['Categories']['fields']);
         $this->assertTrue((new ReflectionFunction($query->getContain()['Tags']['queryBuilder']))->isClosure());
         $this->assertEquals(['id', 'first_name', 'last_name'], $query->getContain()['Users']['fields']);
-
         $this->assertStringStartsWith('SELECT Posts.id AS `Posts__id`, Posts.title AS `Posts__title`, Posts.preview AS `Posts__preview`, Posts.subtitle AS `Posts__subtitle`, Posts.slug AS `Posts__slug`, Posts.text AS `Posts__text`, Posts.created AS `Posts__created`', $sql);
         $this->assertStringEndsWith('ORDER BY Posts.created DESC', $sql);
     }
@@ -202,26 +192,25 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertCount(2, $relatedPosts);
         $this->assertEquals($relatedPosts, Cache::read('related_2_posts_for_1', $this->Table->getCacheName()));
 
+        $this->assertContainsInstanceOf(Post::class, $relatedPosts);
         foreach ($relatedPosts as $related) {
             $this->assertTrue($related->has(['id', 'title', 'slug', 'text']));
-            $this->assertInstanceOf(Post::class, $related);
         }
 
         //Gets related posts with image
         $related = $this->Table->getRelated($post, 2, true);
-
         $this->assertCount(1, $related);
         $this->assertEquals($related, Cache::read('related_2_posts_for_1_with_images', $this->Table->getCacheName()));
-
-        $this->assertInstanceOf(Post::class, $related[0]);
-        $this->assertEquals(2, $related[0]->id);
-        $this->assertNotEmpty($related[0]->title);
-        $this->assertNotEmpty($related[0]->slug);
-        $this->assertContains('<img src="image.jpg" />Text of the second post', $related[0]->text);
-        $this->assertCount(1, $related[0]->preview);
-        $this->assertEquals('image.jpg', $related[0]->preview[0]->url);
-        $this->assertEquals(400, $related[0]->preview[0]->width);
-        $this->assertEquals(400, $related[0]->preview[0]->height);
+        $firstRelated = first_value($related);
+        $this->assertInstanceOf(Post::class, $firstRelated);
+        $this->assertEquals(2, $firstRelated->id);
+        $this->assertNotEmpty($firstRelated->title);
+        $this->assertNotEmpty($firstRelated->slug);
+        $this->assertContains('<img src="image.jpg" />Text of the second post', $firstRelated->text);
+        $this->assertCount(1, $firstRelated->preview);
+        $this->assertEquals('image.jpg', first_value($firstRelated->preview)->url);
+        $this->assertEquals(400, first_value($firstRelated->preview)->width);
+        $this->assertEquals(400, first_value($firstRelated->preview)->height);
 
         //This post has no tags
         $post = $this->Table->findById(4)->contain('Tags')->first();
@@ -234,17 +223,10 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertCount(1, $post->tags);
         $this->assertEquals([], $this->Table->getRelated($post));
         $this->assertEquals([], Cache::read('related_5_posts_for_5_with_images', $this->Table->getCacheName()));
-    }
 
-    /**
-     * Test for `getRelated()` method, with an entity with no `tags` property
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage ID or tags of the post are missing
-     */
-    public function testGetRelatedNoTagsProperty()
-    {
-        $this->loadFixtures();
-
+        //With an entity with no `tags` property
+        $this->expectException(KeyNotExistsException::class);
+        $this->expectExceptionMessage('ID or tags of the post are missing');
         $this->Table->getRelated($this->Table->get(1));
     }
 
@@ -255,7 +237,6 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     public function testQueryFromFilter()
     {
         $this->loadFixtures();
-
         $query = $this->Table->queryFromFilter($this->Table->find(), ['tag' => 'test']);
         $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
         $this->assertEquals('test', $query->getValueBinder()->bindings()[':c0']['value']);
@@ -271,7 +252,6 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
 
         $query = $this->Table->queryForRelated(4, true);
         $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = (PostsTags.tag_id)) WHERE (Posts.active = :c1 AND Posts.created <= :c2 AND Posts.preview not in (:c3,:c4))', $query->sql());
-
         $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertInstanceof(Time::class, $query->getValueBinder()->bindings()[':c2']['value']);

@@ -40,7 +40,10 @@ define('I18N_ID', __d('me_cms', 'ID'));
 define('I18N_LABEL', __d('me_cms', 'Label'));
 define('I18N_LAST_LOGIN', __d('me_cms', 'Last login'));
 define('I18N_LAST_NAME', __d('me_cms', 'Last name'));
+define('I18N_LOWERCASE_NUMBERS_DASH', __d('me_cms', 'lowercase letters, numbers, dash'));
+define('I18N_LOWERCASE_NUMBERS_SPACE', __d('me_cms', 'lowercase letters, numbers, space'));
 define('I18N_NAME', __d('me_cms', 'Name'));
+define('I18N_NO', __d('me_cms', 'no'));
 define('I18N_NOT_FOUND', __d('me_cms', 'Record not found'));
 define('I18N_NOT_PUBLISHED', __d('me_cms', 'Not published'));
 define('I18N_ONLY_ADMIN_FOUNDER', __d('me_cms', 'Only the admin founder can do this'));
@@ -77,3 +80,4 @@ define('I18N_USE_CURRENT_DATETIME', __d('me_cms', 'If blank, the current date an
 define('I18N_USERNAME', __d('me_cms', 'Username'));
 define('I18N_USERS', __d('me_cms', 'Users'));
 define('I18N_VALUE_ALREADY_USED', __d('me_cms', 'This value is already used'));
+define('I18N_YES', __d('me_cms', 'yes'));

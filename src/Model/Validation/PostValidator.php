@@ -60,11 +60,7 @@ class PostValidator extends AppValidator
                 'rule' => [$this, 'validTagsLength'],
             ],
             'validTagsChars' => [
-                'message' => sprintf(
-                    '%s: %s',
-                    I18N_ALLOWED_CHARS,
-                    __d('me_cms', 'lowercase letters, numbers, space')
-                ),
+                'message' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_SPACE),
                 'rule' => [$this, 'validTagsChars'],
             ],
         ])->allowEmpty('tags');

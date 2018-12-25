@@ -20,7 +20,7 @@ use MeCms\TestSuite\TestCase;
 class IsOwnedByTraitTest extends TestCase
 {
     /**
-     * @var object
+     * @var \MeCms\Model\Table\PostsTable|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $Posts;
 

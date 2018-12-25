@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\TestSuite\EmailAssertTrait;
@@ -45,9 +46,8 @@ class UsersControllerTest extends ControllerTestCase
      */
     protected function getLoginRecorderMock()
     {
-        $class = LoginRecorderComponent::class;
-        $LoginRecorderComponent = $this->getMockForComponent($class, array_diff(get_class_methods($class), ['__debugInfo']));
-        $LoginRecorderComponent->method('config')->will($this->returnSelf());
+        $LoginRecorderComponent = $this->getMockForComponent(LoginRecorderComponent::class);
+        $LoginRecorderComponent->method('setConfig')->will($this->returnSelf());
 
         return $LoginRecorderComponent;
     }
@@ -97,10 +97,10 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function tearDown()
     {
+        parent::tearDown();
+
         //Deletes all tokens
         $this->Table->Tokens->deleteAll(['id IS NOT' => null]);
-
-        parent::tearDown();
     }
 
     /**
@@ -198,10 +198,7 @@ class UsersControllerTest extends ControllerTestCase
             'Token',
             'LoginRecorder',
         ];
-        foreach ($expectedComponents as $component) {
-            $this->assertHasComponent($component);
-        }
-
+        array_map([$this, 'assertHasComponent'], $expectedComponents);
         $this->assertEquals('aes', $this->Controller->Cookie->configKey('login')['encryption']);
         $this->assertEquals('+365 days', $this->Controller->Cookie->configKey('login')['expires']);
     }
@@ -252,16 +249,10 @@ class UsersControllerTest extends ControllerTestCase
         //Now the user is active and the token no longer exists
         $this->assertTrue($this->Table->findById($user->id)->extract('active')->first());
         $this->assertFalse($this->Controller->Token->check($token, $tokenOptions));
-    }
 
-    /**
-     * Test for `activation()` method, with an invalid token
-     * @expectedException Cake\Datasource\Exception\RecordNotFoundException
-     * @expectedExceptionMessage Invalid token
-     * @test
-     */
-    public function testActivationInvalidToken()
-    {
+        //With an invalid token
+        $this->expectException(RecordNotFoundException::class);
+        $this->expectExceptionMessage('Invalid token');
         $this->Controller->activation(1, 'invalidToken');
     }
 
@@ -458,16 +449,10 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertNotEmpty($newPassword);
         $this->assertNotEquals($newPassword, $user->password);
         $this->assertFalse($this->Controller->Token->check($token, $tokenOptions));
-    }
 
-    /**
-     * Test for `passwordReset()` method, with an invalid token
-     * @expectedException Cake\Datasource\Exception\RecordNotFoundException
-     * @expectedExceptionMessage Invalid token
-     * @test
-     */
-    public function testPasswordResetInvalidToken()
-    {
+        //With an invalid token
+        $this->expectException(RecordNotFoundException::class);
+        $this->expectExceptionMessage('Invalid token');
         $this->Controller->passwordReset(1, 'invalidToken');
     }
 

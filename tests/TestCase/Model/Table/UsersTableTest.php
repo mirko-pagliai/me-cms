@@ -59,21 +59,17 @@ class UsersTableTest extends TableTestCase
     public function testBeforeMarshal()
     {
         $this->loadFixtures();
-
         $entity = $this->Table->patchEntity($this->Table->get(1), self::$example, ['validate' => 'EmptyPassword']);
         $this->assertNotEmpty($entity->password);
         $this->assertNotEmpty($entity->password_repeat);
 
-        $example = self::$example;
-        $example['password'] = $example['password_repeat'] = '';
-
+        $example = ['password' => '', 'password_repeat' => ''] + self::$example;
         $entity = $this->Table->patchEntity($this->Table->get(1), $example, ['validate' => 'EmptyPassword']);
         $this->assertEmpty($entity->getErrors());
         $this->assertObjectNotHasAttribute('password', $entity);
         $this->assertObjectNotHasAttribute('password_repeat', $entity);
 
         unset($example['password'], $example['password_repeat']);
-
         $entity = $this->Table->patchEntity($this->Table->get(1), $example, ['validate' => 'EmptyPassword']);
         $this->assertEmpty($entity->getErrors());
         $this->assertObjectNotHasAttribute('password', $entity);
@@ -87,7 +83,6 @@ class UsersTableTest extends TableTestCase
     public function testBuildRules()
     {
         $this->loadFixtures();
-
         $expected = [
             'email' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
             'username' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
@@ -101,10 +96,7 @@ class UsersTableTest extends TableTestCase
         $this->assertFalse($this->Table->save($entity));
         $this->assertEquals($expected, $entity->getErrors());
 
-        $example = self::$example;
-        $example['group_id'] = 999;
-
-        $entity = $this->Table->newEntity($example);
+        $entity = $this->Table->newEntity(['group_id' => 999] + self::$example);
         $expected = $expected + ['group_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]];
         $this->assertFalse($this->Table->save($entity));
         $this->assertEquals($expected, $entity->getErrors());
@@ -145,15 +137,12 @@ class UsersTableTest extends TableTestCase
     public function testHasManyTokens()
     {
         $this->loadFixtures();
-
-        //Creates a token
         $token = (new TokenCreator)->create('testToken', ['user_id' => 4]);
         $tokens = $this->Table->findById(4)->contain('Tokens')->extract('tokens')->first();
-
         $this->assertEquals(1, count($tokens));
-        $this->assertInstanceOf(Token::class, $tokens[0]);
-        $this->assertEquals(4, $tokens[0]->user_id);
-        $this->assertEquals($token, $tokens[0]->token);
+        $this->assertInstanceOf(Token::class, first_value($tokens));
+        $this->assertEquals(4, first_value($tokens)->user_id);
+        $this->assertEquals($token, first_value($tokens)->token);
     }
 
     /**
@@ -163,13 +152,11 @@ class UsersTableTest extends TableTestCase
     public function testFindActive()
     {
         $this->loadFixtures();
-
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
-
         foreach ($query as $entity) {
             $this->assertTrue($entity->active && !$entity->banned);
         }
@@ -182,7 +169,6 @@ class UsersTableTest extends TableTestCase
     public function testFindAuth()
     {
         $this->loadFixtures();
-
         $query = $this->Table->find('auth');
         $this->assertStringEndsWith('FROM users Users INNER JOIN users_groups Groups ON Groups.id = (Users.group_id)', $query->sql());
     }
@@ -194,15 +180,11 @@ class UsersTableTest extends TableTestCase
     public function testFindBanned()
     {
         $this->loadFixtures();
-
         $query = $this->Table->find('banned');
         $this->assertStringEndsWith('FROM users Users WHERE Users.banned = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
-
-        foreach ($query as $entity) {
-            $this->assertTrue($entity->banned);
-        }
+        array_map([$this, 'assertTrue'], $query->all()->extract('banned')->toArray());
     }
 
     /**
@@ -212,13 +194,11 @@ class UsersTableTest extends TableTestCase
     public function testFindPending()
     {
         $this->loadFixtures();
-
         $query = $this->Table->find('pending');
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
-
         foreach ($query as $entity) {
             $this->assertTrue(!$entity->active && !$entity->banned);
         }
@@ -231,11 +211,9 @@ class UsersTableTest extends TableTestCase
     public function testGetActiveList()
     {
         $this->loadFixtures();
-
         $query = $this->Table->getActiveList();
         $this->assertContains('FROM users Users WHERE Users.active = :c0 ORDER BY username ASC', $query->sql());
         $this->assertNotEmpty($query->toArray());
-
         $fromCache = Cache::read('active_users_list', $this->Table->getCacheName())->toArray();
         $this->assertEquals($fromCache, $query->toArray());
     }
@@ -247,7 +225,6 @@ class UsersTableTest extends TableTestCase
     public function testQueryFromFilter()
     {
         $this->loadFixtures();
-
         $data = [
             'username' => 'test',
             'group' => 1,
@@ -261,17 +238,13 @@ class UsersTableTest extends TableTestCase
         $this->assertTrue($query->getValueBinder()->bindings()[':c2']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c3']['value']);
 
-        $data['status'] = 'pending';
-
-        $query = $this->Table->queryFromFilter($this->Table->find(), $data);
+        $query = $this->Table->queryFromFilter($this->Table->find(), ['status' => 'pending'] + $data);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2)', $query->sql());
         $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(1, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c2']['value']);
 
-        $data['status'] = 'banned';
-
-        $query = $this->Table->queryFromFilter($this->Table->find(), $data);
+        $query = $this->Table->queryFromFilter($this->Table->find(), ['status' => 'banned'] + $data);
         $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.banned = :c2)', $query->sql());
         $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(1, $query->getValueBinder()->bindings()[':c1']['value']);
@@ -285,7 +258,6 @@ class UsersTableTest extends TableTestCase
     public function testQueryFromFilterWithInvalidData()
     {
         $this->loadFixtures();
-
         $query = $this->Table->queryFromFilter($this->Table->find(), ['status' => 'invalid', 'username' => 'ab']);
         $this->assertEmpty($query->getValueBinder()->bindings());
     }
@@ -299,7 +271,6 @@ class UsersTableTest extends TableTestCase
         $this->loadFixtures();
 
         $example = ['email' => 'example@test.com'];
-
         $entity = $this->Table->newEntity($example);
         $this->assertNotEmpty($entity->getErrors());
 
@@ -307,12 +278,10 @@ class UsersTableTest extends TableTestCase
         $this->assertEmpty($entity->getErrors());
 
         $example['email_repeat'] = $example['email'];
-
         $entity = $this->Table->newEntity($example, ['validate' => 'DoNotRequirePresence']);
         $this->assertEmpty($entity->getErrors());
 
         $example['email_repeat'] = $example['email'] . 'aaa';
-
         $entity = $this->Table->newEntity($example, ['validate' => 'DoNotRequirePresence']);
         $this->assertEquals([
             'email_repeat' => ['compareWith' => 'Email addresses don\'t match'],
@@ -326,10 +295,7 @@ class UsersTableTest extends TableTestCase
     public function testValidationEmptyPassword()
     {
         $this->loadFixtures();
-
-        $example = self::$example;
-        $example['password'] = $example['password_repeat'] = '';
-
+        $example = ['password' => '', 'password_repeat' => ''] + self::$example;
         $expected = [
             'password' => ['_empty' => 'This field cannot be left empty'],
             'password_repeat' => ['_empty' => 'This field cannot be left empty'],

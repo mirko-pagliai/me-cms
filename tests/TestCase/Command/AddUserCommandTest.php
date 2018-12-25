@@ -83,7 +83,7 @@ class AddUserCommandTest extends TestCase
         $this->assertErrorContains('Field `last_name`: must be between 3 and 40 chars');
         $this->assertErrorContains('Field `last_name`: allowed chars: letters, apostrophe, space. Has to begin with a capital letter');
         $this->assertErrorContains('Field `username`: must be between 4 and 40 chars');
-        $this->assertErrorContains('Field `username`: allowed chars: lowercase letters, numbers, dash');
+        $this->assertErrorContains('Field `username`: allowed chars: ' . I18N_LOWERCASE_NUMBERS_DASH);
         $this->assertErrorContains('Field `password`: the password should contain letters, numbers and symbols');
         $this->assertErrorContains('Field `password_repeat`: passwords don\'t match');
 

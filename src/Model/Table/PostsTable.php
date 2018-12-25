@@ -22,6 +22,7 @@ use InvalidArgumentException;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Table\PostsAndPagesTables;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
+use MeCms\Model\Validation\PostValidator;
 
 /**
  * Posts model
@@ -88,12 +89,10 @@ class PostsTable extends PostsAndPagesTables
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['category_id'], 'Categories', I18N_SELECT_VALID_OPTION));
-        $rules->add($rules->existsIn(['user_id'], 'Users', I18N_SELECT_VALID_OPTION));
-        $rules->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED));
-        $rules->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
-
-        return $rules;
+        return $rules->add($rules->existsIn(['category_id'], 'Categories', I18N_SELECT_VALID_OPTION))
+            ->add($rules->existsIn(['user_id'], 'Users', I18N_SELECT_VALID_OPTION))
+            ->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED))
+            ->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
     }
 
     /**
@@ -122,16 +121,14 @@ class PostsTable extends PostsAndPagesTables
      * @param int $limit Limit of related posts
      * @param bool $images If `true`, gets only posts with images
      * @return array Array of entities
-     * @throws InvalidArgumentException
      * @uses queryForRelated()
      * @uses $cache
      */
     public function getRelated(Post $post, $limit = 5, $images = true)
     {
-        is_true_or_fail($post->has('id') && $post->has('tags'), __d('me_cms', 'ID or tags of the post are missing'), InvalidArgumentException::class);
+        key_exists_or_fail(['id', 'tags'], $post->toArray(), __d('me_cms', 'ID or tags of the post are missing'));
 
         $cache = sprintf('related_%s_posts_for_%s', $limit, $post->id);
-
         if ($images) {
             $cache .= '_with_images';
         }
@@ -201,7 +198,7 @@ class PostsTable extends PostsAndPagesTables
             'Users' => ['post_count'],
         ]);
 
-        $this->_validatorClass = '\MeCms\Model\Validation\PostValidator';
+        $this->_validatorClass = PostValidator::class;
     }
 
     /**

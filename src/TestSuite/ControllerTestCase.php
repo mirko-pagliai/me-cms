@@ -26,13 +26,13 @@ abstract class ControllerTestCase extends TestCase
 
     /**
      * Controller instance
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Cake\Controller\Controller|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $Controller;
 
     /**
      * Table instance
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Cake\ORM\Table|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $Table;
 
@@ -216,7 +216,7 @@ abstract class ControllerTestCase extends TestCase
      */
     protected function setUserId($id)
     {
-        if (!empty($this->Controller)) {
+        if ($this->Controller) {
             $this->Controller->Auth->setUser(compact('id'));
         }
 
@@ -231,7 +231,7 @@ abstract class ControllerTestCase extends TestCase
      */
     protected function setUserGroup($name)
     {
-        if (!empty($this->Controller)) {
+        if ($this->Controller) {
             $this->Controller->Auth->setUser(['group' => compact('name')]);
         }
 

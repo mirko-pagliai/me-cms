@@ -20,7 +20,6 @@ use MeCms\TestSuite\TableTestCase;
 class AssociationsSameAliasesTest extends TableTestCase
 {
     /**
-     * If `true`, a mock instance of the table will be created
      * @var bool
      */
     protected $autoInitializeClass = false;
@@ -42,8 +41,10 @@ class AssociationsSameAliasesTest extends TableTestCase
      */
     public function testAssociationsSameAliases()
     {
-        $tables[] = $this->getMockForModel('MeCms.Pages', null);
-        $tables[] = $this->getMockForModel('MeCms.Posts', null);
+        $tables = [
+            'Pages' => $this->getMockForModel('MeCms.Pages', null),
+            'Posts' => $this->getMockForModel('MeCms.Posts', null),
+        ];
 
         foreach ($tables as $table) {
             $categories = $table->Categories;

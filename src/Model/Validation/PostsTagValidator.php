@@ -19,5 +19,4 @@ use MeCms\Validation\AppValidator;
  */
 class PostsTagValidator extends AppValidator
 {
-
 }

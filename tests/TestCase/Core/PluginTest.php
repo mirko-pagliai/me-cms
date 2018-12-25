@@ -26,6 +26,8 @@ class PluginTest extends TestCase
      */
     public function testAll()
     {
+        $this->removePlugins(['TestPlugin']);
+
         $result = Plugin::all();
         $this->assertEquals('MeCms', $result[0]);
         $this->assertEquals('MeTools', $result[1]);

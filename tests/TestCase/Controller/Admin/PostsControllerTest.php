@@ -56,17 +56,6 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        safe_unlink_recursive(KCFINDER, 'empty');
-
-        parent::tearDown();
-    }
-
-    /**
      * Tests for `beforeFilter()` method
      * @test
      */

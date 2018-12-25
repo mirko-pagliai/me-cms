@@ -16,6 +16,7 @@ use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
+use Cake\Utility\Hash;
 use MeCms\TestSuite\TestCase;
 use MeCms\Utility\StaticPage;
 
@@ -37,11 +38,8 @@ class StaticPageTest extends TestCase
     {
         parent::setUp();
 
-        Cache::clearAll();
-
-        $this->loadPlugins(['TestPlugin']);
-
         $this->StaticPage = new StaticPage;
+        $this->loadPlugins(['TestPlugin']);
     }
 
     /**
@@ -52,7 +50,7 @@ class StaticPageTest extends TestCase
     {
         parent::tearDown();
 
-        $this->removePlugins(['TestPlugin']);
+        Cache::clearAll();
     }
 
     /**
@@ -89,7 +87,7 @@ class StaticPageTest extends TestCase
         }
 
         //Checks filenames
-        $filenames = collection($pages)->extract('filename')->toList();
+        $filenames = Hash::extract($pages, '{n}.filename');
         $this->assertEquals([
             'page-from-app',
             'cookies-policy-it',
@@ -100,7 +98,7 @@ class StaticPageTest extends TestCase
         ], $filenames);
 
         //Checks paths
-        $paths = collection($pages)->extract('path')->toList();
+        $paths = Hash::extract($pages, '{n}.path');
         $TestPluginPath = rtr(first_value(App::path('Template', 'TestPlugin')));
         $this->assertEquals([
             'tests/test_app/TestApp/Template/StaticPages/page-from-app.ctp',
@@ -112,7 +110,7 @@ class StaticPageTest extends TestCase
         ], $paths);
 
         //Checks slugs
-        $slugs = collection($pages)->extract('slug')->toList();
+        $slugs = Hash::extract($pages, '{n}.slug');
         $this->assertEquals([
             'page-from-app',
             'cookies-policy-it',
@@ -123,7 +121,7 @@ class StaticPageTest extends TestCase
         ], $slugs);
 
         //Checks titles
-        $titles = collection($pages)->extract('title')->toList();
+        $titles = Hash::extract($pages, '{n}.title');
         $this->assertEquals([
             'Page From App',
             'Cookies Policy It',
@@ -140,12 +138,8 @@ class StaticPageTest extends TestCase
      */
     public function testGet()
     {
-        //Gets all slugs from pages
-        $slugs = collection($this->StaticPage->all())->extract('slug')->toList();
-
-        //Now, on the contrary, gets all pages from slugs
-        $pages = array_map([$this->StaticPage, 'get'], $slugs);
-
+        //Gets all pages from slugs
+        $pages = array_map([$this->StaticPage, 'get'], Hash::extract($this->StaticPage->all(), '{n}.slug'));
         $this->assertEquals([
             '/StaticPages/page-from-app',
             'MeCms./StaticPages/cookies-policy-it',
@@ -167,10 +161,8 @@ class StaticPageTest extends TestCase
     {
         $this->assertEquals('MeCms./StaticPages/cookies-policy', $this->StaticPage->get('cookies-policy'));
 
-        $originalDefaultlLocale = ini_get('intl.default_locale');
-        ini_set('intl.default_locale', 'it');
+        $originalDefaultlLocale = ini_set('intl.default_locale', 'it');
         $this->assertEquals('MeCms./StaticPages/cookies-policy-it', $this->StaticPage->get('cookies-policy'));
-
         ini_set('intl.default_locale', $originalDefaultlLocale);
     }
 
@@ -233,8 +225,8 @@ class StaticPageTest extends TestCase
         ];
 
         //Gets all slugs and all paths from pages
-        $slugs = collection($this->StaticPage->all())->extract('slug')->toList();
-        $paths = collection($this->StaticPage->all())->extract('path')->toList();
+        $slugs = Hash::extract($this->StaticPage->all(), '{n}.slug');
+        $paths = Hash::extract($this->StaticPage->all(), '{n}.path');
 
         $count = count($slugs);
         for ($id = 0; $id < $count; $id++) {

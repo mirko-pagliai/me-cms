@@ -13,7 +13,6 @@
 if (is_array($link)) {
     $link = $this->Url->build($link);
 }
-
 $linkOptions = optionsParser(empty($linkOptions) ? [] : $linkOptions)->append('class', 'd-block');
 
 if (!$linkOptions->exists('title')) {

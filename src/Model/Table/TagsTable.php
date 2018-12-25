@@ -15,6 +15,7 @@ namespace MeCms\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Validation\TagValidator;
 
 /**
  * Tags model
@@ -36,9 +37,7 @@ class TagsTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['tag'], I18N_VALUE_ALREADY_USED));
-
-        return $rules;
+        return $rules->add($rules->isUnique(['tag'], I18N_VALUE_ALREADY_USED));
     }
 
     /**
@@ -49,11 +48,9 @@ class TagsTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->innerJoinWith('Posts', function (Query $q) {
+        return $query->innerJoinWith('Posts', function (Query $q) {
             return $q->find('active');
         })->distinct();
-
-        return $query;
     }
 
     /**
@@ -76,7 +73,7 @@ class TagsTable extends AppTable
 
         $this->addBehavior('Timestamp');
 
-        $this->_validatorClass = '\MeCms\Model\Validation\TagValidator';
+        $this->_validatorClass = TagValidator::class;
     }
 
     /**

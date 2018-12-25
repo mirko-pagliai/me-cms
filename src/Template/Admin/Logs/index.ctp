@@ -36,11 +36,7 @@ $this->append('actions', $this->Form->postButton(
                 </strong>
                 <?php
                 $actions = [
-                    $this->Html->link(
-                        __d('me_cms', 'Basic view'),
-                        ['action' => 'view', $log->filename],
-                        ['icon' => 'eye']
-                    ),
+                    $this->Html->link(__d('me_cms', 'Basic view'), ['action' => 'view', $log->filename], ['icon' => 'eye']),
                 ];
 
                 if ($log->hasSerialized) {
@@ -51,11 +47,7 @@ $this->append('actions', $this->Form->postButton(
                     );
                 }
 
-                $actions[] = $this->Html->link(
-                    I18N_DOWNLOAD,
-                    ['action' => 'download', $log->filename],
-                    ['icon' => 'download']
-                );
+                $actions[] = $this->Html->link(I18N_DOWNLOAD, ['action' => 'download', $log->filename], ['icon' => 'download']);
                 $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $log->filename], [
                     'class' => 'text-danger',
                     'icon' => 'trash-alt',

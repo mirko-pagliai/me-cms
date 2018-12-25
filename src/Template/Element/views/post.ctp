@@ -43,11 +43,7 @@
             <div class="info">
                 <?php
                 if (getConfig('post.author') && $post->user->has('full_name')) {
-                    echo $this->Html->div(
-                        'author',
-                        __d('me_cms', 'Posted by {0}', $post->user->full_name),
-                        ['icon' => 'user']
-                    );
+                    echo $this->Html->div('author', __d('me_cms', 'Posted by {0}', $post->user->full_name), ['icon' => 'user']);
                 }
 
                 if (getConfig('post.created') && $post->has('created')) {
@@ -99,11 +95,7 @@
         //If it was requested to truncate the text and that has been
         //truncated, it shows the "Read more" link
         if (!empty($truncatedText) && $truncatedText !== $post->text) {
-            echo $this->Html->button(
-                __d('me_cms', 'Read more'),
-                ['_name' => 'post', $post->slug],
-                ['class' => ' readmore']
-            );
+            echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $post->slug], ['class' => ' readmore']);
         }
         ?>
     </div>

@@ -152,19 +152,13 @@ class KcFinderComponent extends Component
     {
         //Checks for KCFinder and for the files directory (`APP/webroot/files`)
         is_true_or_fail($this->kcFinderIsAvailable(), __d('me_tools', '{0} is not available', 'KCFinder'));
-        is_true_or_fail($this->uploadedDirIsWriteable(), NotWritableException::class);
+        is_true_or_fail($this->uploadedDirIsWriteable(), __d('me_tools', 'File or directory `{0}` is not writable', rtr(UPLOADED)), NotWritableException::class);
 
-        //Merges:
+        //Merges and writes on session:
         //  1) default config;
         //  2) options from configuration;
         //  3) passed options.
-        $config = array_merge(
-            $this->getDefaultConfig(),
-            getConfig('kcfinder', []),
-            $config
-        );
-
-        //Writes on session
+        $config = array_merge($this->getDefaultConfig(), getConfig('kcfinder', []), $config);
         $this->getController()->request->getSession()->write('KCFINDER', $config);
 
         parent::initialize($config);

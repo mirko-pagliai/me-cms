@@ -14,6 +14,7 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Validation\PostsTagValidator;
 
 /**
  * PostsTags model
@@ -36,10 +37,8 @@ class PostsTagsTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['tag_id'], 'Tags', I18N_SELECT_VALID_OPTION));
-        $rules->add($rules->existsIn(['post_id'], 'Posts', I18N_SELECT_VALID_OPTION));
-
-        return $rules;
+        return $rules->add($rules->existsIn(['tag_id'], 'Tags', I18N_SELECT_VALID_OPTION))
+            ->add($rules->existsIn(['post_id'], 'Posts', I18N_SELECT_VALID_OPTION));
     }
 
     /**
@@ -65,6 +64,6 @@ class PostsTagsTable extends AppTable
 
         $this->addBehavior('CounterCache', ['Tags' => ['post_count']]);
 
-        $this->_validatorClass = '\MeCms\Model\Validation\PostsTagValidator';
+        $this->_validatorClass = PostsTagValidator::class;
     }
 }

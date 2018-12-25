@@ -24,7 +24,7 @@ class ContactUsFormTest extends TestCase
     use MailerAwareTrait;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Form\ContactUsForm|\PHPUnit\Framework\MockObject\MockObject
      */
     public $Form;
 

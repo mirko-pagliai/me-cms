@@ -375,16 +375,13 @@ class UsersControllerTest extends ControllerTestCase
     public function testLastLogin()
     {
         $LoginRecorder = $this->getMockForComponent(LoginRecorderComponent::class, ['getController', 'getUserAgent']);
-
         $LoginRecorder->method('getController')->will($this->returnValue($this->Controller));
-
         $LoginRecorder->method('getUserAgent')
             ->will($this->returnValue([
                 'platform' => 'Linux',
                 'browser' => 'Chrome',
                 'version' => '55.0.2883.87',
             ]));
-
         $LoginRecorder->setConfig('user', 1);
 
         //Writes a login log

@@ -15,6 +15,7 @@ namespace MeCms\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Validation\PostsCategoryValidator;
 
 /**
  * PostsCategories model
@@ -37,11 +38,9 @@ class PostsCategoriesTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['parent_id'], 'Parents', I18N_SELECT_VALID_OPTION));
-        $rules->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED));
-        $rules->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
-
-        return $rules;
+        return $rules->add($rules->existsIn(['parent_id'], 'Parents', I18N_SELECT_VALID_OPTION))
+            ->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED))
+            ->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
     }
 
     /**
@@ -52,11 +51,9 @@ class PostsCategoriesTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->matching($this->Posts->getAlias(), function (Query $q) {
+        return $query->matching($this->Posts->getAlias(), function (Query $q) {
             return $q->find('active');
         })->distinct();
-
-        return $query;
     }
 
     /**
@@ -84,6 +81,6 @@ class PostsCategoriesTable extends AppTable
         $this->addBehavior('Timestamp');
         $this->addBehavior('MeCms.Tree');
 
-        $this->_validatorClass = '\MeCms\Model\Validation\PostsCategoryValidator';
+        $this->_validatorClass = PostsCategoryValidator::class;
     }
 }

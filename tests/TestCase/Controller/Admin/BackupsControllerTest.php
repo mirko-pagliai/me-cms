@@ -66,13 +66,12 @@ class BackupsControllerTest extends ControllerTestCase
     {
         parent::controllerSpy($event, $controller);
 
-        if ($this->getName() !== 'testSend') {
-            return;
-        }
-
         //Only for the `testSend` test, mocks the `send()` method of
         //  `BackupManager` class, so that it writes on the debug log
         //  instead of sending a real mail
+        if ($this->getName() !== 'testSend') {
+            return;
+        }
         $this->_controller->BackupManager = $this->getMockBuilder(BackupManager::class)
             ->setMethods(['send'])
             ->getMock();

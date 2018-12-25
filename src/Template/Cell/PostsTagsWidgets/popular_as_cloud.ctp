@@ -19,10 +19,8 @@ $this->assign('title', __d('me_cms', 'Popular tags'));
 
 foreach ($tags as $tag) {
     $text = empty($prefix) ? $tag->tag : $prefix . $tag->tag;
-
     $options = ['title' => $tag->tag];
-
-    if (!empty($tag->size)) {
+    if ($tag->has('size')) {
         $options['style'] = sprintf('font-size:%spx;', $tag->size);
     }
 

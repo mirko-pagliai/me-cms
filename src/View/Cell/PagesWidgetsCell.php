@@ -12,9 +12,6 @@
  */
 namespace MeCms\View\Cell;
 
-use Cake\Event\EventManager;
-use Cake\Network\Request;
-use Cake\Network\Response;
 use Cake\ORM\ResultSet;
 use Cake\View\Cell;
 
@@ -24,21 +21,11 @@ use Cake\View\Cell;
 class PagesWidgetsCell extends Cell
 {
     /**
-     * Constructor
-     * @param \Cake\Network\Request $request The request to use in the cell
-     * @param \Cake\Network\Response $response The request to use in the cell
-     * @param \Cake\Event\EventManager $eventManager The eventManager to bind events to
-     * @param array $cellOptions Cell options to apply
+     * Initialization hook method
      * @return void
      */
-    public function __construct(
-        Request $request = null,
-        Response $response = null,
-        EventManager $eventManager = null,
-        array $cellOptions = []
-    ) {
-        parent::__construct($request, $response, $eventManager, $cellOptions);
-
+    public function initialize()
+    {
         $this->loadModel('MeCms.Pages');
     }
 

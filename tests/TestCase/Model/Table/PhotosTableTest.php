@@ -63,9 +63,9 @@ class PhotosTableTest extends TableTestCase
      */
     public function tearDown()
     {
-        safe_unlink_recursive(PHOTOS, 'empty');
-
         parent::tearDown();
+
+        safe_unlink_recursive(PHOTOS, 'empty');
     }
 
     /**
@@ -75,11 +75,8 @@ class PhotosTableTest extends TableTestCase
     public function testAfterDelete()
     {
         $this->loadFixtures();
-
         $entity = $this->Table->get(1);
         $this->assertFileExists($entity->path);
-
-        //Deletes
         $this->assertTrue($this->Table->delete($entity));
         $this->assertFileNotExists($entity->path);
     }
@@ -91,7 +88,6 @@ class PhotosTableTest extends TableTestCase
     public function testBeforeSave()
     {
         $this->loadFixtures();
-
         $entity = $this->Table->newEntity(self::$example);
         $this->assertNotEmpty($this->Table->save($entity));
         $this->assertEquals(['width' => 400, 'height' => 400], $entity->size);
@@ -104,7 +100,6 @@ class PhotosTableTest extends TableTestCase
     public function testBuildRules()
     {
         $this->loadFixtures();
-
         $entity = $this->Table->newEntity(self::$example);
         $this->assertNotEmpty($this->Table->save($entity));
 
@@ -145,15 +140,11 @@ class PhotosTableTest extends TableTestCase
     public function testFindActive()
     {
         $this->loadFixtures();
-
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
-
-        foreach ($query as $entity) {
-            $this->assertTrue($entity->active);
-        }
+        array_map([$this, 'assertTrue'], $query->all()->extract('active')->toArray());
     }
 
     /**
@@ -163,15 +154,11 @@ class PhotosTableTest extends TableTestCase
     public function testFindPending()
     {
         $this->loadFixtures();
-
         $query = $this->Table->find('pending');
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
-
-        foreach ($query as $entity) {
-            $this->assertFalse($entity->active);
-        }
+        array_map([$this, 'assertFalse'], $query->all()->extract('active')->toArray());
     }
 
     /**
@@ -181,10 +168,7 @@ class PhotosTableTest extends TableTestCase
     public function testQueryFromFilter()
     {
         $this->loadFixtures();
-
-        $data = ['album' => 2];
-
-        $query = $this->Table->queryFromFilter($this->Table->find(), $data);
+        $query = $this->Table->queryFromFilter($this->Table->find(), ['album' => 2]);
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.album_id = :c0', $query->sql());
         $this->assertEquals(2, $query->getValueBinder()->bindings()[':c0']['value']);
     }

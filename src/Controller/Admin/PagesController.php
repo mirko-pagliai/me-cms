@@ -15,6 +15,7 @@ namespace MeCms\Controller\Admin;
 use Cake\Event\Event;
 use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
+use MeCms\Model\Entity\Page;
 use MeCms\Utility\StaticPage;
 
 /**
@@ -86,9 +87,7 @@ class PagesController extends AppController
         }
 
         //Only admins can delete pages. Admins and managers can access other actions
-        $allowedGroups = $this->request->isDelete() ? ['admin'] : ['admin', 'manager'];
-
-        return $this->Auth->isGroup($allowedGroups);
+        return $this->Auth->isGroup($this->request->isDelete() ? ['admin'] : ['admin', 'manager']);
     }
 
     /**
@@ -151,10 +150,8 @@ class PagesController extends AppController
     {
         $page = $this->Pages->findById($id)
             ->formatResults(function (ResultSet $results) {
-                return $results->map(function ($row) {
-                    $row->created = $row->created->i18nFormat(FORMAT_FOR_MYSQL);
-
-                    return $row;
+                return $results->map(function (Page $page) {
+                    return $page->set('created', $page->created->i18nFormat(FORMAT_FOR_MYSQL));
                 });
             })
             ->firstOrFail();
@@ -181,9 +178,7 @@ class PagesController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-
         $this->Pages->deleteOrFail($this->Pages->get($id));
-
         $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);

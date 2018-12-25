@@ -55,8 +55,7 @@ class CheckupTest extends TestCase
     }
 
     /**
-     * Test for `$Apache` property and methods from
-     *  `\MeCms\Utility\Checkups\Apache` class
+     * Test for `$Apache` property and methods from `Apache` class
      * @test
      */
     public function testApache()
@@ -68,8 +67,7 @@ class CheckupTest extends TestCase
     }
 
     /**
-     * Test for `$Backups` property and methods from
-     *  `\MeCms\Utility\Checkups\Backups` class
+     * Test for `$Backups` property and methods from `Backups` class
      * @test
      */
     public function testBackups()
@@ -80,8 +78,7 @@ class CheckupTest extends TestCase
     }
 
     /**
-     * Test for `$KCFinder` property and methods from
-     *  `\MeCms\Utility\Checkups\KCFinder` class
+     * Test for `$KCFinder` property and methods from `KCFinder` class
      * @test
      */
     public function testKCFinder()
@@ -103,8 +100,7 @@ class CheckupTest extends TestCase
     }
 
     /**
-     * Test for `$PHP` property and methods from
-     *  `\MeCms\Utility\Checkups\PHP` class
+     * Test for `$PHP` property and methods from `PHP` class
      * @test
      */
     public function testPHP()
@@ -114,8 +110,7 @@ class CheckupTest extends TestCase
     }
 
     /**
-     * Test for `$Plugin` property and methods from
-     *  `\MeCms\Utility\Checkups\Plugin` class
+     * Test for `$Plugin` property and methods from `Plugin` class
      * @test
      */
     public function testPlugin()
@@ -128,18 +123,16 @@ class CheckupTest extends TestCase
     }
 
     /**
-     * Test for `$TMP` property and methods from
-     *  `\MeCms\Utility\Checkups\TMP` class
+     * Test for `$TMP` property and methods from `TMP` class
      * @test
      */
     public function testTMP()
     {
-        $this->assertInstanceof('MeCms\Utility\Checkups\TMP', $this->Checkup->TMP);
-        $this->assertEquals(['__construct', 'isWriteable'], get_class_methods($this->Checkup->TMP));
+        $this->assertInstanceof(TMP::class, $this->Checkup->TMP);
+        $this->assertEquals(['isWriteable'], get_class_methods($this->Checkup->TMP));
 
         $result = $this->Checkup->TMP->isWriteable();
         $this->assertNotEmpty($result);
-
         foreach ($result as $path => $isWriteable) {
             $this->assertStringStartsWith(TMP, $path);
             $this->assertTrue($isWriteable);
@@ -147,18 +140,16 @@ class CheckupTest extends TestCase
     }
 
     /**
-     * Test for `$Webroot` property and methods from
-     *  `\MeCms\Utility\Checkups\Webroot` class
+     * Test for `$Webroot` property and methods from `Webroot` class
      * @test
      */
     public function testWebroot()
     {
         $this->assertInstanceof(Webroot::class, $this->Checkup->Webroot);
-        $this->assertEquals(['__construct', 'isWriteable'], get_class_methods($this->Checkup->Webroot));
+        $this->assertEquals(['isWriteable'], get_class_methods($this->Checkup->Webroot));
 
         $result = $this->Checkup->Webroot->isWriteable();
         $this->assertNotEmpty($result);
-
         foreach ($result as $path => $isWriteable) {
             $this->assertStringStartsWith(WWW_ROOT, $path);
             $this->assertTrue($isWriteable);

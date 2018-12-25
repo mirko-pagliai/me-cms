@@ -36,7 +36,6 @@ class Sitemap extends SitemapBuilder
     public static function pages()
     {
         $table = TableRegistry::get('MeCms.PagesCategories');
-
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if ($url) {
@@ -61,17 +60,11 @@ class Sitemap extends SitemapBuilder
 
         foreach ($categories as $category) {
             //Adds the category
-            $url[] = self::parse(
-                ['_name' => 'pagesCategory', $category->slug],
-                ['lastmod' => $category->pages[0]->modified]
-            );
+            $url[] = self::parse(['_name' => 'pagesCategory', $category->slug], ['lastmod' => $category->pages[0]->modified]);
 
             //Adds each page
             foreach ($category->pages as $page) {
-                $url[] = self::parse(
-                    ['_name' => 'page', $page->slug],
-                    ['lastmod' => $page->modified]
-                );
+                $url[] = self::parse(['_name' => 'page', $page->slug], ['lastmod' => $page->modified]);
             }
         }
 
@@ -88,7 +81,6 @@ class Sitemap extends SitemapBuilder
     public static function photos()
     {
         $table = TableRegistry::get('MeCms.PhotosAlbums');
-
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if ($url) {
@@ -117,10 +109,7 @@ class Sitemap extends SitemapBuilder
 
         foreach ($albums->toArray() as $album) {
             //Adds the album
-            $url[] = self::parse(
-                ['_name' => 'album', $album->slug],
-                ['lastmod' => $album->photos[0]->modified]
-            );
+            $url[] = self::parse(['_name' => 'album', $album->slug], ['lastmod' => $album->photos[0]->modified]);
 
             //Adds each photo
             foreach ($album->photos as $photo) {
@@ -144,7 +133,6 @@ class Sitemap extends SitemapBuilder
     public static function posts()
     {
         $table = TableRegistry::get('MeCms.PostsCategories');
-
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if ($url) {
@@ -176,17 +164,11 @@ class Sitemap extends SitemapBuilder
 
         foreach ($categories as $category) {
             //Adds the category
-            $url[] = self::parse(
-                ['_name' => 'postsCategory', $category->slug],
-                ['lastmod' => $category->posts[0]->modified]
-            );
+            $url[] = self::parse(['_name' => 'postsCategory', $category->slug], ['lastmod' => $category->posts[0]->modified]);
 
             //Adds each post
             foreach ($category->posts as $post) {
-                $url[] = self::parse(
-                    ['_name' => 'post', $post->slug],
-                    ['lastmod' => $post->modified]
-                );
+                $url[] = self::parse(['_name' => 'post', $post->slug], ['lastmod' => $post->modified]);
             }
         }
 
@@ -203,7 +185,6 @@ class Sitemap extends SitemapBuilder
     public static function postsTags()
     {
         $table = TableRegistry::get('MeCms.Tags');
-
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if ($url) {
@@ -224,17 +205,11 @@ class Sitemap extends SitemapBuilder
             ->firstOrFail();
 
         //Adds the tags index
-        $url[] = self::parse(
-            ['_name' => 'postsTags'],
-            ['lastmod' => $latest->modified]
-        );
+        $url[] = self::parse(['_name' => 'postsTags'], ['lastmod' => $latest->modified]);
 
         //Adds each tag
         foreach ($tags as $tag) {
-            $url[] = self::parse(
-                ['_name' => 'postsTag', $tag->slug],
-                ['lastmod' => $tag->modified]
-            );
+            $url[] = self::parse(['_name' => 'postsTag', $tag->slug], ['lastmod' => $tag->modified]);
         }
 
         Cache::write('sitemap', $url, $table->getCacheName());
@@ -254,10 +229,7 @@ class Sitemap extends SitemapBuilder
 
         //Adds each static page
         foreach ($pages as $page) {
-            $url[] = self::parse(
-                ['_name' => 'page', $page->slug],
-                ['lastmod' => $page->modified]
-            );
+            $url[] = self::parse(['_name' => 'page', $page->slug], ['lastmod' => $page->modified]);
         }
 
         return $url;

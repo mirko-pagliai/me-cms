@@ -12,9 +12,11 @@
  */
 namespace MeCms\Test\TestCase\Controller\Component;
 
+use ErrorException;
 use MeCms\Utility\Checkups\KCFinder;
 use MeCms\Utility\Checkups\Webroot;
 use MeTools\TestSuite\ComponentTestCase;
+use Tools\Exception\NotWritableException;
 
 /**
  * KcFinderComponentTest class
@@ -30,17 +32,6 @@ class KcFinderComponentTest extends ComponentTestCase
         create_kcfinder_files();
 
         parent::setUp();
-    }
-
-    /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        safe_unlink_recursive(KCFINDER, 'empty');
-
-        parent::tearDown();
     }
 
     /**
@@ -124,7 +115,6 @@ class KcFinderComponentTest extends ComponentTestCase
 
         safe_mkdir(UPLOADED . 'docs');
         $this->assertEquals(['docs' => '', 'images' => '*img'], $this->Component->getTypes());
-
         safe_rmdir(UPLOADED . 'docs');
     }
 
@@ -146,29 +136,17 @@ class KcFinderComponentTest extends ComponentTestCase
             'types',
             'access',
         ], $this->Component->request->getSession()->read('KCFINDER'));
-    }
 
-    /**
-     * Test for `initialize()` method, with `uploaded` dir not writable
-     * @expectedException Tools\Exception\NotWritableException
-     * @expectedExceptionMessage File or directory is not writable
-     * @test
-     */
-    public function testInitializeDirNotWritable()
-    {
-        $this->Component->Checkup->Webroot = $this->getMockBuilder(Webroot::class)->getMock();
-        $this->Component->initialize([]);
-    }
+        //With `uploaded` dir not writable
+        $this->assertException(NotWritableException::class, function () {
+            $this->Component->Checkup->Webroot = $this->getMockBuilder(Webroot::class)->getMock();
+            $this->Component->initialize([]);
+        }, 'File or directory `' . rtr(UPLOADED) . '` is not writable');
 
-    /**
-     * Test for `initialize()` method, with KCFinder not available
-     * @expectedException ErrorException
-     * @expectedExceptionMessage KCFinder is not available
-     * @test
-     */
-    public function testInitializeKCFinderNotAvailable()
-    {
-        $this->Component->Checkup->KCFinder = $this->getMockBuilder(KCFinder::class)->getMock();
-        $this->Component->initialize([]);
+        //With KCFinder not available
+        $this->assertException(ErrorException::class, function () {
+            $this->Component->Checkup->KCFinder = $this->getMockBuilder(KCFinder::class)->getMock();
+            $this->Component->initialize([]);
+        }, 'KCFinder is not available');
     }
 }

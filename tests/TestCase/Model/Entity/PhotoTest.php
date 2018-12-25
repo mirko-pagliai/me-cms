@@ -26,9 +26,9 @@ class PhotoTest extends EntityTestCase
      */
     public function tearDown()
     {
-        safe_unlink_recursive(PHOTOS, 'empty');
-
         parent::tearDown();
+
+        safe_unlink_recursive(PHOTOS, 'empty');
     }
 
     /**
@@ -84,7 +84,6 @@ class PhotoTest extends EntityTestCase
         $this->Entity->album_id = 1;
         $this->Entity->filename = 'photo1.jpg';
         safe_copy(APP . WEBROOT_DIR . DS . 'img' . DS . 'image.jpg', PHOTOS . $this->Entity->album_id . DS . $this->Entity->filename, $this->Entity->path);
-
         $this->assertInstanceof(Entity::class, $this->Entity->preview);
         $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $this->Entity->preview->url);
         $this->assertEquals(400, $this->Entity->preview->width);

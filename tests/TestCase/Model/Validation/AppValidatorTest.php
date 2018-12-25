@@ -206,7 +206,7 @@ class AppValidatorTest extends TestCase
 
         foreach (['Abc', 'ab_c', 'ab$'] as $slug) {
             $errors = $this->Posts->newEntity(compact('slug') + $this->example['Posts'])->getErrors();
-            $this->assertEquals(['slug' => ['slug' => 'Allowed chars: lowercase letters, numbers, dash']], $errors);
+            $this->assertEquals(['slug' => ['slug' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_DASH)]], $errors);
         }
 
         $errors = $this->Posts->newEntity(['slug' => str_repeat('a', 101)] + $this->example['Posts'])->getErrors();

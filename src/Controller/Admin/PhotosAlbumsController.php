@@ -106,7 +106,6 @@ class PhotosAlbumsController extends AppController
         //Before deleting, it checks if the album has some photos
         if (!$album->photo_count) {
             $this->PhotosAlbums->deleteOrFail($album);
-
             $this->Flash->success(I18N_OPERATION_OK);
         } else {
             $this->Flash->alert(I18N_BEFORE_DELETE);

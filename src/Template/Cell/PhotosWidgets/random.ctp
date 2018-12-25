@@ -10,12 +10,12 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-if (empty($photos)) {
+if (empty($photos) || $photos->isEmpty()) {
     return;
 }
 
 $this->extend('/Common/widget');
-$this->assign('title', __dn('me_cms', 'Random photo', 'Random {0} photos', count($photos), count($photos)));
+$this->assign('title', __dn('me_cms', 'Random photo', 'Random {0} photos', $photos->count(), $photos->count()));
 
 foreach ($photos as $photo) {
     echo $this->Html->link(

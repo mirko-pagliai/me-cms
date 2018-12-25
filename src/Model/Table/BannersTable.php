@@ -19,6 +19,7 @@ use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Validation\BannerValidator;
 
 /**
  * Banners model
@@ -56,10 +57,8 @@ class BannersTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['position_id'], 'Positions', I18N_SELECT_VALID_OPTION));
-        $rules->add($rules->isUnique(['filename'], I18N_VALUE_ALREADY_USED));
-
-        return $rules;
+        return $rules->add($rules->existsIn(['position_id'], 'Positions', I18N_SELECT_VALID_OPTION))
+            ->add($rules->isUnique(['filename'], I18N_VALUE_ALREADY_USED));
     }
 
     /**
@@ -70,9 +69,7 @@ class BannersTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => true]);
-
-        return $query;
+        return $query->where([sprintf('%s.active', $this->getAlias()) => true]);
     }
 
     /**
@@ -95,7 +92,7 @@ class BannersTable extends AppTable
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Positions' => ['banner_count']]);
 
-        $this->_validatorClass = '\MeCms\Model\Validation\BannerValidator';
+        $this->_validatorClass = BannerValidator::class;
     }
 
     /**

@@ -64,9 +64,7 @@ class StaticPage
      */
     protected static function getAppPath()
     {
-        $path = collection(App::path('Template'))->first();
-
-        return Folder::slashTerm($path) . 'StaticPages' . DS;
+        return Folder::slashTerm(first_value(App::path('Template'))) . 'StaticPages' . DS;
     }
 
     /**
@@ -77,9 +75,7 @@ class StaticPage
      */
     protected static function getPluginPath($plugin)
     {
-        $path = collection(App::path('Template', $plugin))->first();
-
-        return Folder::slashTerm($path) . 'StaticPages' . DS;
+        return Folder::slashTerm(first_value(App::path('Template', $plugin))) . 'StaticPages' . DS;
     }
 
     /**
@@ -137,10 +133,7 @@ class StaticPage
     {
         $locale = I18n::getLocale();
         $slug = array_filter(explode('/', $slug));
-
-        //Sets the cache name
         $cache = sprintf('page_%s_locale_%s', md5(serialize($slug)), $locale);
-
         $page = Cache::read($cache, 'static_pages');
 
         if (empty($page)) {

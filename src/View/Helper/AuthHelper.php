@@ -53,11 +53,7 @@ class AuthHelper extends Helper
      */
     public function hasId($id)
     {
-        if (!$this->user('id')) {
-            return false;
-        }
-
-        return in_array($this->user('id'), (array)$id);
+        return $this->user('id') ? in_array($this->user('id'), (array)$id) : false;
     }
 
     /**
@@ -67,10 +63,6 @@ class AuthHelper extends Helper
      */
     public function isFounder()
     {
-        if (!$this->user('id')) {
-            return false;
-        }
-
         return $this->user('id') === 1;
     }
 
@@ -86,11 +78,7 @@ class AuthHelper extends Helper
      */
     public function isGroup($group)
     {
-        if (!$this->user('group.name')) {
-            return false;
-        }
-
-        return in_array($this->user('group.name'), (array)$group);
+        return $this->user('group.name') ? in_array($this->user('group.name'), (array)$group) : false;
     }
 
     /**
@@ -117,10 +105,6 @@ class AuthHelper extends Helper
             return null;
         }
 
-        if ($key === null) {
-            return $this->user;
-        }
-
-        return Hash::get($this->user, $key);
+        return $key ? Hash::get($this->user, $key) : $this->user;
     }
 }

@@ -14,6 +14,7 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Validation\BannersPositionValidator;
 
 /**
  * BannersPositions model
@@ -34,9 +35,7 @@ class BannersPositionsTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
-
-        return $rules;
+        return $rules->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
     }
 
     /**
@@ -57,6 +56,6 @@ class BannersPositionsTable extends AppTable
 
         $this->addBehavior('Timestamp');
 
-        $this->_validatorClass = '\MeCms\Model\Validation\BannersPositionValidator';
+        $this->_validatorClass = BannersPositionValidator::class;
     }
 }

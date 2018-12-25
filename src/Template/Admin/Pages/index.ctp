@@ -42,7 +42,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
         echo $this->Form->control('active', [
             'default' => $this->request->getQuery('active'),
             'empty' => I18N_ALL_STATUS,
-            'options' => ['yes' => I18N_ONLY_PUBLISHED, 'no' => I18N_ONLY_NOT_PUBLISHED],
+            'options' => [I18N_YES => I18N_ONLY_PUBLISHED, I18N_NO => I18N_ONLY_NOT_PUBLISHED],
         ]);
         echo $this->Form->control('category', [
             'default' => $this->request->getQuery('category'),
@@ -100,11 +100,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 
                     //Only admins and managers can edit pages
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
-                        $actions[] = $this->Html->link(
-                            I18N_EDIT,
-                            ['action' => 'edit', $page->id],
-                            ['icon' => 'pencil-alt']
-                        );
+                        $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $page->id], ['icon' => 'pencil-alt']);
                     }
 
                     //Only admins can delete pages

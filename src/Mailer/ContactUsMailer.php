@@ -14,7 +14,6 @@
  */
 namespace MeCms\Mailer;
 
-use InvalidArgumentException;
 use MeCms\Mailer\Mailer;
 
 /**
@@ -29,15 +28,11 @@ class ContactUsMailer extends Mailer
      *  and `message` keys.
      * @param array $data Form data
      * @return void
-     * @throws InvalidArgumentException
      */
     public function contactUsMail($data)
     {
         //Checks that all required data is present
-        foreach (['email', 'first_name', 'last_name', 'message'] as $key) {
-            $keyExists = array_key_exists($key, $data);
-            is_true_or_fail($keyExists, __d('me_cms', 'Missing `{0}` key from data', $key), InvalidArgumentException::class);
-        }
+        key_exists_or_fail(['email', 'first_name', 'last_name', 'message'], $data);
 
         $this->viewBuilder()->setTemplate('MeCms.Systems/contact_us');
         $this->setSender($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))

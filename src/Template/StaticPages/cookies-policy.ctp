@@ -10,7 +10,6 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
 $this->assign('title', $page->title = 'Cookies policy');
 ob_start();
 ?>

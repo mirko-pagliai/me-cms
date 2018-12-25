@@ -22,7 +22,7 @@ use MeCms\Core\Plugin;
     foreach (Plugin::all(['exclude' => ['MeCms', 'MeTools', 'Assets', 'DatabaseBackup', 'Thumber']]) as $plugin) {
         $menus = $this->MenuBuilder->renderAsCollapse($plugin);
 
-        if (!empty($menus)) {
+        if ($menus) {
             echo $this->Html->h6($plugin);
             echo $menus;
         }
