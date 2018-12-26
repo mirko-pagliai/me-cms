@@ -185,6 +185,7 @@ class StaticPageTest extends TestCase
 
     /**
      * Test for `getSlug()` method
+     * @group onlyUnix
      * @test
      */
     public function testGetSlug()
