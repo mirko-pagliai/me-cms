@@ -56,8 +56,9 @@ class CreateGroupsCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io)
     {
         if (!$this->UsersGroups->find()->isEmpty()) {
-            $io->err(__d('me_cms', 'Some user groups already exist'));
-            $this->abort();
+            $io->error(__d('me_cms', 'Some user groups already exist'));
+
+            return null;
         }
 
         //Truncates the table. This resets IDs
