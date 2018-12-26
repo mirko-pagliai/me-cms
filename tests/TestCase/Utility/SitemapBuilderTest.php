@@ -144,12 +144,7 @@ class SitemapBuilderTest extends TestCase
     {
         $this->loadFixtures();
         $map = $this->SitemapBuilder->generate();
-        $this->assertStringStartsWith(
-            '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL .
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL .
-            '  <url>',
-            $map
-        );
+        $this->assertStringStartsWith('<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL . '  <url>', $map);
         $this->assertStringEndsWith('  </url>' . PHP_EOL . '</urlset>', $map);
 
         $mapAsArray = Xml::toArray(Xml::build($map))['urlset']['url'];
