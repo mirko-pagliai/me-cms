@@ -41,7 +41,8 @@ class CreateGroupsCommandTest extends TestCase
 
         //A group already exists
         $this->exec('me_cms.create_groups -v');
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
+        $this->assertOutputEmpty();
         $this->assertErrorContains('Some user groups already exist');
 
         //With no user groups
