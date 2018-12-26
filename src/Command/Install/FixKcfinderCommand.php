@@ -48,7 +48,6 @@ class FixKcfinderCommand extends Command
         $file = Folder::slashTerm(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
 
         if ($this->verboseIfFileExists($io, $file)) {
-
         } elseif ((new KCFinder)->isAvailable()) {
             $io->createFile(
                 Folder::slashTerm(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess',
