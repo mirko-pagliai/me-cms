@@ -181,7 +181,7 @@ class BannersControllerTest extends ControllerTestCase
      */
     public function testUploadErrorOnEntity()
     {
-        $file = ['name' => 'a.jpg?name=value'] + $this->createImageToUpload();
+        $file = ['name' => 'a.pdf'] + $this->createImageToUpload();
         $this->post($this->url + ['action' => 'upload', '_ext' => 'json', '?' => ['position' => 1]], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"Valid extensions: gif, jpg, jpeg, png"}');
