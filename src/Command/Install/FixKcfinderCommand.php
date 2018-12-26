@@ -45,7 +45,11 @@ class FixKcfinderCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
-        if ((new KCFinder)->isAvailable()) {
+        $file = Folder::slashTerm(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
+
+        if ($this->verboseIfFileExists($io, $file)) {
+
+        } elseif ((new KCFinder)->isAvailable()) {
             $io->createFile(
                 Folder::slashTerm(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess',
                 'php_value session.cache_limiter must-revalidate' . PHP_EOL .
