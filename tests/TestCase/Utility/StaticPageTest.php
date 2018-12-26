@@ -198,7 +198,6 @@ class StaticPageTest extends TestCase
             'my-file',
             'my-file.ctp',
             '/first/second/my-file.ctp',
-            '/first/second/my-file.php',
         ] as $file) {
             $this->assertEquals('my-file', $getSlugMethod($file, '/first/second'));
             $this->assertEquals('my-file', $getSlugMethod($file, '/first/second/'));
