@@ -30,13 +30,11 @@ class AddUserCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
-        $parser->setDescription(__d('me_cms', 'Adds an user'));
-        $parser->addOption('group', [
-            'short' => 'g',
-            'help' => __d('me_cms', 'Group ID'),
-        ]);
-
-        return $parser;
+        return $parser->setDescription(__d('me_cms', 'Adds an user'))
+            ->addOption('group', [
+                'short' => 'g',
+                'help' => __d('me_cms', 'Group ID'),
+            ]);
     }
 
     /**
@@ -52,8 +50,9 @@ class AddUserCommand extends Command
         $groups = $this->Users->Groups->find('list');
 
         if ($groups->isEmpty()) {
-            $io->err(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
-            $this->abort();
+            $io->error(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
+
+            return null;
         }
 
         $groups = $groups->toList();
@@ -84,15 +83,17 @@ class AddUserCommand extends Command
         //Checks fields
         foreach ($user as $key => $value) {
             if (empty($value)) {
-                $io->err(__d('me_cms', 'Field `{0}` is empty. Try again', $key));
-                $this->abort();
+                $io->error(__d('me_cms', 'Field `{0}` is empty. Try again', $key));
+
+                return null;
             }
         }
 
         //Checks the group IDs
         if (!array_key_exists($user['group_id'], $groups)) {
-            $io->err(__d('me_cms', 'Invalid group ID'));
-            $this->abort();
+            $io->error(__d('me_cms', 'Invalid group ID'));
+
+            return null;
         }
 
         //Saves the user
@@ -105,12 +106,12 @@ class AddUserCommand extends Command
             if ($args->getOption('verbose')) {
                 foreach ($user->getErrors() as $field => $errors) {
                     foreach ($errors as $error) {
-                        $io->err(__d('me_cms', 'Field `{0}`: {1}', $field, lcfirst($error)));
+                        $io->error(__d('me_cms', 'Field `{0}`: {1}', $field, lcfirst($error)));
                     }
                 }
             }
 
-            $this->abort();
+            return null;
         }
 
         $io->success(I18N_OPERATION_OK);

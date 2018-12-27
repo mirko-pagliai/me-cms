@@ -52,7 +52,7 @@ class GroupsCommandTest extends TestCase
         //Deletes all groups
         $UsersGroups->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.groups');
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
         $this->assertErrorContains('There are no user groups');
     }
 }

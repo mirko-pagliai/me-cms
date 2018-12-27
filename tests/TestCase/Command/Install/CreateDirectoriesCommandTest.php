@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Command\Install;
 
-use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use MeCms\TestSuite\TestCase;
@@ -47,7 +46,6 @@ class CreateDirectoriesCommandTest extends TestCase
         $Command->expects($this->exactly(count(Configure::read('WRITABLE_DIRS'))))
             ->method('createDir');
 
-        $result = $Command->execute(new Arguments([], [], []), $io);
-        $this->assertNull($result);
+        $this->assertNull($Command->run([], $io));
     }
 }

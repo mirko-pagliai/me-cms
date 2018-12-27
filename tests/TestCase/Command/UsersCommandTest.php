@@ -65,7 +65,7 @@ class UsersCommandTest extends TestCase
         //Deletes all users
         $Users->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.users');
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
         $this->assertErrorContains('There are no users');
     }
 }

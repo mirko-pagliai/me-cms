@@ -31,20 +31,7 @@ class CreateGroupsCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
-        $parser->setDescription(__d('me_cms', 'Creates the user groups'));
-
-        return $parser;
-    }
-
-    /**
-     * Hook method invoked by CakePHP when a command is about to be executed
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
-
-        $this->loadModel('MeCms.UsersGroups');
+        return $parser->setDescription(__d('me_cms', 'Creates the user groups'));
     }
 
     /**
@@ -55,22 +42,21 @@ class CreateGroupsCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
+        $this->loadModel('MeCms.UsersGroups');
+
         if (!$this->UsersGroups->find()->isEmpty()) {
             $io->error(__d('me_cms', 'Some user groups already exist'));
 
             return null;
         }
 
-        //Truncates the table. This resets IDs
+        //Truncates the table (this resets IDs), then saves groups
         ConnectionManager::get('default')->execute(sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->getTable()));
-
-        $entities = $this->UsersGroups->newEntities([
+        $this->UsersGroups->saveMany($this->UsersGroups->newEntities([
             ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
             ['id' => 2, 'name' => 'manager', 'label' => 'Manager'],
             ['id' => 3, 'name' => 'user', 'label' => 'User'],
-        ]);
-
-        $this->UsersGroups->saveMany($entities);
+        ]));
         $io->verbose(__d('me_cms', 'The user groups have been created'));
 
         return null;
