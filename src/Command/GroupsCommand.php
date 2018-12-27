@@ -31,9 +31,7 @@ class GroupsCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
-        $parser->setDescription(__d('me_cms', 'Lists user groups'));
-
-        return $parser;
+        return $parser->setDescription(__d('me_cms', 'Lists user groups'));
     }
 
     /**
@@ -53,11 +51,14 @@ class GroupsCommand extends Command
         //Checks for user groups
         if ($groups->isEmpty()) {
             $io->error(__d('me_cms', 'There are no user groups'));
-            $this->abort();
+
+            return null;
         }
 
         //Sets header and prints as table
         $header = [I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS];
         $io->helper('table')->output(array_merge([$header], $groups->toList()));
+
+        return null;
     }
 }

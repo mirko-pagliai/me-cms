@@ -47,7 +47,6 @@ class SetPermissionsCommandTest extends TestCase
         $Command->expects($this->exactly(count(Configure::read('WRITABLE_DIRS'))))
             ->method('folderChmod');
 
-        $result = $Command->execute(new Arguments([], [], []), $io);
-        $this->assertNull($result);
+        $this->assertNull($Command->run([], $io));
     }
 }

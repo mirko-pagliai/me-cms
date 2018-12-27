@@ -64,17 +64,17 @@ class AddUserCommandTest extends TestCase
 
         //Tries with a no existing group
         $this->exec('me_cms.add_user --group 123', $example);
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
         $this->assertErrorContains('Invalid group ID');
 
         //Tries with empty data
         $this->exec('me_cms.add_user -v', []);
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
         $this->assertErrorContains('Field `username` is empty. Try again');
 
         //Tries with wrong data
         $this->exec('me_cms.add_user -v', ['ab', 'password', 'password2', 'mail', 'aa', 'bb', '3']);
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
         $this->assertErrorContains('The operation has not been performed correctly');
         $this->assertErrorContains('The user could not be saved');
         $this->assertErrorContains('Field `email`: you have to enter a valid value');
@@ -90,7 +90,7 @@ class AddUserCommandTest extends TestCase
         //Tries with no groups
         $Users->Groups->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.add_user -v');
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
         $this->assertErrorContains('Before you can manage users, you have to create at least a user group');
     }
 }
