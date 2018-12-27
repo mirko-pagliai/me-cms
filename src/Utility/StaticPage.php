@@ -91,7 +91,6 @@ class StaticPage
         if (starts_with($path, $relativePath)) {
             $path = substr($path, strlen(Folder::slashTerm($relativePath)));
         }
-//        $path = preg_replace(sprintf('#^%s#', preg_quote(Folder::slashTerm($relativePath))), null, $path);
         $path = preg_replace(sprintf('/\.[^\.]+$/'), null, $path);
 
         return DS == '/' ? $path : str_replace(DS, '/', $path);
