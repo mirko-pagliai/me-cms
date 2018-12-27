@@ -88,7 +88,7 @@ class StaticPage
      */
     protected static function getSlug($path, $relativePath)
     {
-        $path = preg_replace(sprintf('/^%s/', preg_quote(Folder::slashTerm($relativePath), '/')), null, $path);
+        $path = preg_replace(sprintf('#^%s#', preg_quote(Folder::slashTerm($relativePath))), null, $path);
         $path = preg_replace(sprintf('/\.[^\.]+$/'), null, $path);
 
         return DS == '/' ? $path : str_replace(DS, '/', $path);
