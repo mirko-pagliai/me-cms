@@ -65,7 +65,7 @@ class SystemsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Systems/contact_us.ctp');
+        $this->assertTemplate('Systems' . DS . 'contact_us.ctp');
         $this->assertInstanceof(ContactUsForm::class, $this->viewVariable('contact'));
 
         //POST request. Data are invalid
@@ -113,7 +113,7 @@ class SystemsControllerTest extends ControllerTestCase
 
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Systems/ip_not_allowed.ctp');
+        $this->assertTemplate('Systems' . DS . 'ip_not_allowed.ctp');
         $this->assertLayout('login.ctp');
     }
 
@@ -130,7 +130,7 @@ class SystemsControllerTest extends ControllerTestCase
         Configure::write('MeCms.default.offline', true);
         $this->get(['_name' => 'offline']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Systems/offline.ctp');
+        $this->assertTemplate('Systems' . DS . 'offline.ctp');
         $this->assertLayout('login.ctp');
     }
 

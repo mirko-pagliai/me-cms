@@ -127,7 +127,7 @@ class UsersControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Users/index.ctp');
+        $this->assertTemplate('Admin' . DS . 'Users' . DS . 'index.ctp');
         $this->assertContainsInstanceof(User::class, $this->viewVariable('users'));
     }
 
@@ -142,7 +142,7 @@ class UsersControllerTest extends ControllerTestCase
         Configure::write('MeCms.users.login_log', 0);
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Users/view.ctp');
+        $this->assertTemplate('Admin' . DS . 'Users' . DS . 'view.ctp');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
         $this->assertEmpty($this->viewVariable('loginLog'));
 
@@ -161,7 +161,7 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Users/add.ctp');
+        $this->assertTemplate('Admin' . DS . 'Users' . DS . 'add.ctp');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //POST request. Data are valid
@@ -186,7 +186,7 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Users/edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'Users' . DS . 'edit.ctp');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //POST request. Data are valid
@@ -287,7 +287,7 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Users/change_password.ctp');
+        $this->assertTemplate('Admin' . DS . 'Users' . DS . 'change_password.ctp');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //POST request. Data are valid
@@ -335,7 +335,7 @@ class UsersControllerTest extends ControllerTestCase
         //GET request
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Users/change_picture.ctp');
+        $this->assertTemplate('Admin' . DS . 'Users' . DS . 'change_picture.ctp');
 
         //Creates some files that simulate previous user pictures. These files
         //  will be deleted before upload
@@ -365,7 +365,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'changePicture', '_ext' => 'json'], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"No file was uploaded"}');
-        $this->assertTemplate('Admin/Users/json/change_picture.ctp');
+        $this->assertTemplate('Admin' . DS . 'Users' . DS . 'json' . DS . 'change_picture.ctp');
     }
 
     /**
@@ -392,7 +392,7 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Users/last_login.ctp');
+        $this->assertTemplate('Admin' . DS . 'Users' . DS . 'last_login.ctp');
         $this->assertNotEmpty($this->viewVariable('loginLog'));
         $this->assertIsArray($this->viewVariable('loginLog'));
 

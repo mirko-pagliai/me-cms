@@ -99,7 +99,10 @@ Cache::setConfig([
 ]);
 
 // Ensure default test connection is defined
-ConnectionManager::setConfig('test', ['url' => 'mysql://travis@localhost/test']);
+if (!getenv('db_dsn')) {
+    putenv('db_dsn=mysql://travis@localhost/test');
+}
+ConnectionManager::setConfig('test', ['url' => getenv('db_dsn')]);
 
 //This adds `apache_get_modules()` and `apache_get_version()` functions
 require_once VENDOR . 'mirko-pagliai' . DS . 'php-tools' . DS . 'tests' . DS . 'apache_functions.php';

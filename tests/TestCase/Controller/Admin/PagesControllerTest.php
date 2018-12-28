@@ -124,7 +124,7 @@ class PagesControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Pages/index.ctp');
+        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'index.ctp');
         $this->assertContainsInstanceof(Page::class, $this->viewVariable('pages'));
     }
 
@@ -136,7 +136,7 @@ class PagesControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'indexStatics']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Pages/index_statics.ctp');
+        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'index_statics.ctp');
         $this->assertContainsInstanceof(Entity::class, $this->viewVariable('pages'));
     }
 
@@ -150,7 +150,7 @@ class PagesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Pages/add.ctp');
+        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'add.ctp');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
 
         //POST request. Data are valid
@@ -180,7 +180,7 @@ class PagesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Pages/edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'edit.ctp');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
 
         //Checks if the `created` field has been properly formatted

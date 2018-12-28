@@ -99,7 +99,7 @@ class PhotosControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Photos/index.ctp');
+        $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'index.ctp');
         $this->assertContainsInstanceof(Photo::class, $this->viewVariable('photos'));
         $this->assertCookieIsEmpty('renderPhotos');
     }
@@ -112,7 +112,7 @@ class PhotosControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index', '?' => ['render' => 'grid']]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Photos/index_as_grid.ctp');
+        $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'index_as_grid.ctp');
         $this->assertContainsInstanceof(Photo::class, $this->viewVariable('photos'));
         $this->assertCookie('grid', 'renderPhotos');
     }
@@ -126,7 +126,7 @@ class PhotosControllerTest extends ControllerTestCase
         $this->cookie('renderPhotos', 'grid');
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Photos/index_as_grid.ctp');
+        $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'index_as_grid.ctp');
         $this->assertCookie('grid', 'renderPhotos');
     }
 
@@ -141,7 +141,7 @@ class PhotosControllerTest extends ControllerTestCase
         //GET request
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Photos/upload.ctp');
+        $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'upload.ctp');
 
         //POST request. This works
         $file = $this->createImageToUpload();
@@ -165,7 +165,7 @@ class PhotosControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"No file was uploaded"}');
-        $this->assertTemplate('Admin/Photos/json/upload.ctp');
+        $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'json' . DS . 'upload.ctp');
     }
 
     /**
@@ -191,7 +191,7 @@ class PhotosControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"' . I18N_OPERATION_NOT_OK . '"}');
-        $this->assertTemplate('Admin/Photos/json/upload.ctp');
+        $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'json' . DS . 'upload.ctp');
     }
 
     /**
@@ -200,11 +200,11 @@ class PhotosControllerTest extends ControllerTestCase
      */
     public function testUploadErrorOnEntity()
     {
-        $file = ['name' => 'a.jpg?name=value'] + $this->createImageToUpload();
+        $file = ['name' => 'a.pdf'] + $this->createImageToUpload();
         $this->post($this->url + ['action' => 'upload', '_ext' => 'json', '?' => ['album' => 1]], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"Valid extensions: gif, jpg, jpeg, png"}');
-        $this->assertTemplate('Admin/Photos/json/upload.ctp');
+        $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'json' . DS . 'upload.ctp');
     }
 
     /**
@@ -239,7 +239,7 @@ class PhotosControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Photos/edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'edit.ctp');
         $this->assertInstanceof(Photo::class, $this->viewVariable('photo'));
 
         //POST request. Data are valid

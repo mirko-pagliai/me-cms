@@ -88,10 +88,12 @@ class StaticPage
      */
     protected static function getSlug($path, $relativePath)
     {
-        return preg_replace([
-            sprintf('/^%s/', preg_quote(Folder::slashTerm($relativePath), DS)),
-            sprintf('/\.%s$/', pathinfo($path, PATHINFO_EXTENSION)),
-        ], null, $path);
+        if (starts_with($path, $relativePath)) {
+            $path = substr($path, strlen(Folder::slashTerm($relativePath)));
+        }
+        $path = preg_replace(sprintf('/\.[^\.]+$/'), null, $path);
+
+        return DS == '/' ? $path : str_replace(DS, '/', $path);
     }
 
     /**

@@ -41,13 +41,10 @@ class KcFinderComponentTest extends ComponentTestCase
     public function testGetDefaultConfig()
     {
         $getDefaultConfigMethod = function () {
-            $defaultConfig = $this->invokeMethod($this->Component, 'getDefaultConfig');
-            $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
-
-            return $defaultConfig;
+            return $this->invokeMethod($this->Component, 'getDefaultConfig');
         };
 
-        $this->assertEquals([
+        $expected = [
             'denyExtensionRename' => true,
             'denyUpdateCheck' => true,
             'dirnameChangeChars' => [
@@ -60,7 +57,7 @@ class KcFinderComponentTest extends ComponentTestCase
                 ':' => '_',
             ],
             'jpegQuality' => 100,
-            'uploadDir' => 'tests/test_app/TestApp/webroot/files/',
+            'uploadDir' => UPLOADED,
             'uploadURL' => 'http://localhost/files',
             'types' => [
                 'images' => '*img',
@@ -79,30 +76,13 @@ class KcFinderComponentTest extends ComponentTestCase
                     'rename' => false,
                 ],
             ],
-        ], $getDefaultConfigMethod());
+        ];
+        $this->assertEquals($expected, $getDefaultConfigMethod());
 
-        //Tries with admin user
+        //With an admin user
         $this->Component->Auth->setUser(['group' => ['name' => 'admin']]);
-
-        $this->assertEquals([
-            'denyExtensionRename' => true,
-            'denyUpdateCheck' => true,
-            'dirnameChangeChars' => [
-                ' ' => '_',
-                ':' => '_',
-            ],
-            'disabled' => false,
-            'filenameChangeChars' => [
-                ' ' => '_',
-                ':' => '_',
-            ],
-            'jpegQuality' => (int)100,
-            'uploadDir' => 'tests/test_app/TestApp/webroot/files/',
-            'uploadURL' => 'http://localhost/files',
-            'types' => [
-                'images' => '*img',
-            ],
-        ], $getDefaultConfigMethod());
+        unset($expected['access']);
+        $this->assertEquals($expected, $getDefaultConfigMethod());
     }
 
     /**

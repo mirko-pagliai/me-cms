@@ -47,7 +47,7 @@ class PagesControllerTest extends ControllerTestCase
 
         $this->get(['_name' => 'page', $slug]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Pages/view.ctp');
+        $this->assertTemplate('Pages' . DS . 'view.ctp');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
 
         $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Table->getCacheName());
@@ -63,7 +63,7 @@ class PagesControllerTest extends ControllerTestCase
         $this->get(['_name' => 'page', 'page-from-app']);
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page');
-        $this->assertTemplate('StaticPages/page-from-app.ctp');
+        $this->assertTemplate('StaticPages' . DS . 'page-from-app.ctp');
 
         $pageFromView = $this->viewVariable('page');
         $this->assertInstanceof(Entity::class, $pageFromView);
@@ -86,7 +86,7 @@ class PagesControllerTest extends ControllerTestCase
         $this->get(['_name' => 'page', 'test-from-plugin']);
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page from a plugin');
-        $this->assertTemplate('Plugin/TestPlugin/src/Template/StaticPages/test-from-plugin.ctp');
+        $this->assertTemplate('Plugin' . DS . 'TestPlugin' . DS . 'src' . DS . 'Template' . DS . 'StaticPages' . DS . 'test-from-plugin.ctp');
     }
 
     /**
@@ -100,7 +100,7 @@ class PagesControllerTest extends ControllerTestCase
 
         $this->get(['_name' => 'pagesPreview', $slug]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Pages/view.ctp');
+        $this->assertTemplate('Pages' . DS . 'view.ctp');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
     }
 }

@@ -143,19 +143,10 @@ class SitemapBuilderTest extends TestCase
     public function testGenerate()
     {
         $this->loadFixtures();
-        $map = $this->SitemapBuilder->generate();
-        $this->assertStringStartsWith(
-            '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL .
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL .
-            '  <url>',
-            $map
-        );
-        $this->assertStringEndsWith('  </url>' . PHP_EOL . '</urlset>', $map);
-
-        $mapAsArray = Xml::toArray(Xml::build($map))['urlset']['url'];
-        $this->assertNotEmpty($mapAsArray);
-        $this->assertNotEmpty(Hash::extract($mapAsArray, '{n}.loc'));
-        $this->assertNotEmpty(Hash::extract($mapAsArray, '{n}.priority'));
+        $map = Xml::toArray(Xml::build($this->SitemapBuilder->generate()))['urlset']['url'];
+        $this->assertNotEmpty($map);
+        $this->assertNotEmpty(Hash::extract($map, '{n}.loc'));
+        $this->assertNotEmpty(Hash::extract($map, '{n}.priority'));
     }
 
     /**

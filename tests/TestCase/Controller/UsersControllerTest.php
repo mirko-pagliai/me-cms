@@ -266,7 +266,7 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Users/activation_resend.ctp');
+        $this->assertTemplate('Users' . DS . 'activation_resend.ctp');
         $this->assertLayout('login.ctp');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
@@ -371,7 +371,7 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Users/password_forgot.ctp');
+        $this->assertTemplate('Users' . DS . 'password_forgot.ctp');
         $this->assertLayout('login.ctp');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
@@ -424,7 +424,7 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Users/password_reset.ctp');
+        $this->assertTemplate('Users' . DS . 'password_reset.ctp');
         $this->assertLayout('login.ctp');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
@@ -475,7 +475,7 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Users/signup.ctp');
+        $this->assertTemplate('Users' . DS . 'signup.ctp');
         $this->assertLayout('login.ctp');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
