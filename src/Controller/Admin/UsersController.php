@@ -80,9 +80,7 @@ class UsersController extends AppController
         }
 
         //Only admins can activate account and delete users. Admins and managers can access other actions
-        $allowedGroups = $this->request->isAction(['activate', 'delete']) ? ['admin'] : ['admin', 'manager'];
-
-        return $this->Auth->isGroup($allowedGroups);
+        return $this->Auth->isGroup($this->request->isAction(['activate', 'delete']) ? ['admin'] : ['admin', 'manager']);
     }
 
     /**
@@ -109,17 +107,14 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->find()
+        $user = $this->Users->findById($id)
             ->contain(['Groups' => ['fields' => ['label']]])
-            ->where([sprintf('%s.id', $this->Users->getAlias()) => $id])
             ->firstOrFail();
 
         $this->set(compact('user'));
 
         if (getConfig('users.login_log')) {
-            $loginLog = $this->LoginRecorder->setConfig('user', $id)->read();
-
-            $this->set(compact('loginLog'));
+            $this->set('loginLog', $this->LoginRecorder->setConfig('user', $id)->read());
         }
     }
 
@@ -215,9 +210,7 @@ class UsersController extends AppController
     {
         $user = $this->Users->get($id);
         $user->active = true;
-
         $this->Users->save($user);
-
         $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
@@ -238,7 +231,6 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 //Sends email
                 $this->getMailer('MeCms.User')->send('changePassword', [$user]);
-
                 $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['_name' => 'dashboard']);
@@ -273,9 +265,7 @@ class UsersController extends AppController
                 ->save(USER_PICTURES, $filename);
 
             if (!$uploaded) {
-                $this->setUploadError($this->Uploader->getError());
-
-                return;
+                return $this->setUploadError($this->Uploader->getError());
             }
 
             //Updates the authentication data and clears similar thumbnails
@@ -298,8 +288,6 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'dashboard']);
         }
 
-        $loginLog = $this->LoginRecorder->setConfig('user', $this->Auth->user('id'))->read();
-
-        $this->set(compact('loginLog'));
+        $this->set('loginLog', $this->LoginRecorder->setConfig('user', $this->Auth->user('id'))->read());
     }
 }

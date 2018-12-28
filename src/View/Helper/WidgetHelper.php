@@ -33,26 +33,17 @@ class WidgetHelper extends Helper
             $widgets = getConfig('Widgets.homepage');
         }
 
-        if (empty($widgets)) {
-            return [];
-        }
-
-        return collection($widgets)->map(function ($args, $name) {
+        return $widgets ? collection($widgets)->map(function ($args, $name) {
             if (is_string($name) && is_array($args)) {
                 return [$name => $args];
             } elseif (is_string($args)) {
                 return [$args => []];
             }
 
-            $name = collection(array_keys($args))->first();
-            $args = collection($args)->first();
+            list($name, $args) = [first_key($args), first_value($args)];
 
-            if (is_int($name) && is_string($args)) {
-                return [$args => []];
-            }
-
-            return [$name => $args];
-        })->toList();
+            return is_int($name) && is_string($args) ? [$args => []] : [$name => $args];
+        })->toList() : [];
     }
 
     /**
@@ -69,11 +60,7 @@ class WidgetHelper extends Helper
             }
         }
 
-        if (empty($widgets)) {
-            return;
-        }
-
-        return trim(implode(PHP_EOL, $widgets));
+        return empty($widgets) ? null : trim(implode(PHP_EOL, $widgets));
     }
 
     /**
@@ -86,12 +73,8 @@ class WidgetHelper extends Helper
     public function widget($name, array $data = [], array $options = [])
     {
         $parts = explode('::', $name);
-
         $name = $parts[0] . 'Widgets';
-
-        if (!empty($parts[1])) {
-            $name = sprintf('%s::%s', $name, $parts[1]);
-        }
+        $name = empty($parts[1]) ? $name : sprintf('%s::%s', $name, $parts[1]);
 
         return $this->getView()->cell($name, $data, $options);
     }

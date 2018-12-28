@@ -42,11 +42,8 @@ class BannersTableTest extends TableTestCase
     public function testAfterDelete()
     {
         $this->loadFixtures();
-
         $entity = $this->Table->get(1);
         $this->assertFileExists($entity->path);
-
-        //Deletes
         $this->assertTrue($this->Table->delete($entity));
         $this->assertFileNotExists($entity->path);
     }
@@ -100,7 +97,6 @@ class BannersTableTest extends TableTestCase
     public function testBelongsToBannersPositions()
     {
         $this->loadFixtures();
-
         $position = $this->Table->findById(2)->contain('Positions')->extract('position')->first();
         $this->assertInstanceOf(BannersPosition::class, $position);
         $this->assertEquals(1, $position->id);
@@ -113,15 +109,11 @@ class BannersTableTest extends TableTestCase
     public function testFindActive()
     {
         $this->loadFixtures();
-
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM banners Banners WHERE Banners.active = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
-
-        foreach ($query as $entity) {
-            $this->assertTrue($entity->active);
-        }
+        array_map([$this, 'assertTrue'], $query->all()->extract('active')->toArray());
     }
 
     /**
@@ -130,9 +122,7 @@ class BannersTableTest extends TableTestCase
      */
     public function testQueryFromFilter()
     {
-        $data = ['position' => 2];
-
-        $query = $this->Table->queryFromFilter($this->Table->find(), $data);
+        $query = $this->Table->queryFromFilter($this->Table->find(), ['position' => 2]);
         $this->assertStringEndsWith('FROM banners Banners WHERE Banners.position_id = :c0', $query->sql());
         $this->assertEquals(2, $query->getValueBinder()->bindings()[':c0']['value']);
     }

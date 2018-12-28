@@ -54,12 +54,8 @@ class MenuBuilderHelper extends Helper
         //Gets all methods from `$PLUGIN\View\Helper\MenuHelper`
         $methods = get_child_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
 
-        if (empty($methods)) {
-            return [];
-        }
-
         //Filters invalid name methods and returns
-        return array_values(preg_grep('/^(?!_).+$/', $methods));
+        return $methods ? array_values(preg_grep('/^(?!_).+$/', $methods)) : [];
     }
 
     /**

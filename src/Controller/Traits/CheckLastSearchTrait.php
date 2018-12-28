@@ -33,10 +33,7 @@ trait CheckLastSearchTrait
             return true;
         }
 
-        if ($id) {
-            $id = md5($id);
-        }
-
+        $id = $id ? md5($id) : false;
         $lastSearch = $this->request->getSession()->read('last_search');
 
         if ($lastSearch) {

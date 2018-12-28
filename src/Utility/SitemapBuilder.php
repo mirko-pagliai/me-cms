@@ -56,10 +56,7 @@ class SitemapBuilder
         if (!empty($options['lastmod']) && !is_string($options['lastmod'])) {
             $options['lastmod'] = $options['lastmod']->format('c');
         }
-
-        if (empty($options['priority'])) {
-            $options['priority'] = '0.5';
-        }
+        $options += ['priority' => '0.5'];
 
         return array_merge(['loc' => Router::url($url, true)], $options);
     }

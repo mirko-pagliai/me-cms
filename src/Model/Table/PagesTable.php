@@ -15,6 +15,7 @@ namespace MeCms\Model\Table;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\PostsAndPagesTables;
+use MeCms\Model\Validation\PageValidator;
 
 /**
  * Pages model
@@ -46,11 +47,9 @@ class PagesTable extends PostsAndPagesTables
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['category_id'], 'Categories', I18N_SELECT_VALID_OPTION));
-        $rules->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED));
-        $rules->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
-
-        return $rules;
+        return $rules->add($rules->existsIn(['category_id'], 'Categories', I18N_SELECT_VALID_OPTION))
+            ->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED))
+            ->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
     }
 
     /**
@@ -75,6 +74,6 @@ class PagesTable extends PostsAndPagesTables
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Categories' => ['page_count']]);
 
-        $this->_validatorClass = '\MeCms\Model\Validation\PageValidator';
+        $this->_validatorClass = PageValidator::class;
     }
 }

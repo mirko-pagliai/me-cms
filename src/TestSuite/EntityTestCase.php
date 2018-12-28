@@ -22,7 +22,7 @@ abstract class EntityTestCase extends TestCase
 {
     /**
      * Entity instance
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Cake\ORM\Entity|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Entity;
 

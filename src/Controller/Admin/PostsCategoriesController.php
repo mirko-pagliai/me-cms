@@ -51,9 +51,7 @@ class PostsCategoriesController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can delete posts categories. Admins and managers can access other actions
-        $allowedGroups = $this->request->isDelete() ? ['admin'] : ['admin', 'manager'];
-
-        return $this->Auth->isGroup($allowedGroups);
+        return $this->Auth->isGroup($this->request->isDelete() ? ['admin'] : ['admin', 'manager']);
     }
 
     /**
@@ -71,9 +69,7 @@ class PostsCategoriesController extends AppController
                 $treeList = $this->PostsCategories->getTreeList()->toArray();
 
                 return $results->map(function (PostsCategory $category) use ($treeList) {
-                    $category->title = $treeList[$category->id];
-
-                    return $category;
+                    return $category->set('title', $treeList[$category->id]);
                 });
             });
 
@@ -140,7 +136,6 @@ class PostsCategoriesController extends AppController
         //Before deleting, it checks if the category has some posts
         if (!$category->post_count) {
             $this->PostsCategories->deleteOrFail($category);
-
             $this->Flash->success(I18N_OPERATION_OK);
         } else {
             $this->Flash->alert(I18N_BEFORE_DELETE);

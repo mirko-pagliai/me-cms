@@ -34,7 +34,6 @@ class Plugin extends CakePlugin
     public static function all(array $options = [])
     {
         $options = array_merge(['order' => true], $options);
-
         $plugins = parent::all($options);
 
         if ($options['order']) {

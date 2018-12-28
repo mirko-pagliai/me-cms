@@ -45,8 +45,7 @@ class CreateAdminCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io)
     {
         $command = new AddUserCommand;
-        $command->initialize();
 
-        return $command->execute(new Arguments([], ['group' => 1, 'verbose' => $args->getOption('verbose')], []), $io);
+        return $command->run(['--group', 1] + $args->getOptions(), $io);
     }
 }

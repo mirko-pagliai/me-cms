@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Command\Install;
 
-use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use MeCms\TestSuite\TestCase;
 use MeTools\Console\Command;
@@ -61,18 +60,6 @@ class RunAllCommandTest extends TestCase
         }, $this->Command->questions);
 
         $expected = [
-            'MeTools\Command\Install\SetPermissionsCommand',
-            'MeTools\Command\Install\CreateRobotsCommand',
-//            'MeTools\Command\Install\FixComposerJsonCommand',
-            'MeTools\Command\Install\CreatePluginsLinksCommand',
-            'MeTools\Command\Install\CreateVendorsLinksCommand',
-            'MeCms\Command\Install\CopyConfigCommand',
-            'MeCms\Command\Install\FixKcfinderCommand',
-        ];
-        $this->Command->execute(new Arguments([], ['force' => true], []), $io);
-        $this->assertEquals($expected, $this->debug);
-
-        $expected = [
             'MeTools\Command\Install\CreateDirectoriesCommand',
             'MeTools\Command\Install\SetPermissionsCommand',
             'MeTools\Command\Install\CreateRobotsCommand',
@@ -84,8 +71,7 @@ class RunAllCommandTest extends TestCase
             'MeCms\Command\Install\CreateGroupsCommand',
             'MeCms\Command\Install\CreateAdminCommand',
         ];
-        $this->debug = [];
-        $this->Command->execute(new Arguments([], [], []), $io);
+        $this->assertNull($this->Command->run([], $io));
         $this->assertEquals($expected, $this->debug);
     }
 }

@@ -14,7 +14,6 @@ namespace MeCms\Test\TestCase\View\View;
 
 use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\View\AppView as View;
 
@@ -24,7 +23,7 @@ use MeCms\View\View\AppView as View;
 class AppViewTest extends TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\View\View\AppView|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $View;
 
@@ -44,17 +43,6 @@ class AppViewTest extends TestCase
             ->setMethods(null)
             ->getMock();
         $this->View->setPlugin('MeCms');
-    }
-
-    /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        $this->removePlugins(['TestPlugin']);
     }
 
     /**
@@ -130,12 +118,12 @@ class AppViewTest extends TestCase
         Configure::write('MeCms.default.theme', $theme);
 
         //Reloads the View
-        $this->View = $this->getMockBuilder(View::class)
+        $View = $this->getMockBuilder(View::class)
             ->setMethods(null)
             ->getMock();
-        $this->assertEquals('This is a layout from TestPlugin', $this->View->render(false));
-        $this->assertEquals('default', $this->View->getLayout());
-        $this->assertEquals($theme, $this->View->getTheme());
+        $this->assertEquals('This is a layout from TestPlugin', $View->render(false));
+        $this->assertEquals('default', $View->getLayout());
+        $this->assertEquals($theme, $View->getTheme());
     }
 
     /**
@@ -151,7 +139,6 @@ class AppViewTest extends TestCase
         $this->assertEquals('default', $this->View->getLayout());
         $this->assertEquals('MeCms', $this->View->getPlugin());
         $this->assertEquals(null, $this->View->getTheme());
-
         safe_unlink($layoutFromApp);
     }
 
@@ -172,11 +159,7 @@ class AppViewTest extends TestCase
             'second',
             ['nestled'],
         ], $this->View->userbar());
-
         $this->View->render(false);
-        $this->assertEquals('<li>string</li>
-<li>first</li>
-<li>second</li>
-<li>nestled</li>', $this->View->fetch('userbar'));
+        $this->assertEquals('<li>string</li>' . PHP_EOL . '<li>first</li>' . PHP_EOL . '<li>second</li>' . PHP_EOL . '<li>nestled</li>', $this->View->fetch('userbar'));
     }
 }

@@ -46,6 +46,7 @@ class Tag extends Entity
     /**
      * Gets the tag slug (virtual field)
      * @return string
+     * @todo Should raise an exception if the key is not existing
      */
     protected function _getSlug()
     {

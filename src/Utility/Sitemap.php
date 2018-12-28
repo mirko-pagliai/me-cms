@@ -36,46 +36,37 @@ class Sitemap extends SitemapBuilder
     public static function pages()
     {
         $table = TableRegistry::get('MeCms.PagesCategories');
-
         $url = Cache::read('sitemap', $table->getCacheName());
 
-        if ($url) {
-            return $url;
-        }
+        if (!$url) {
+            $categories = $table->find('active')
+                ->select(['id', 'lft', 'slug'])
+                ->contain($table->Pages->getAlias(), function (Query $q) use ($table) {
+                    return $q->find('active')
+                        ->select(['category_id', 'slug', 'modified'])
+                        ->order([sprintf('%s.modified', $table->Pages->getAlias()) => 'DESC']);
+                })
+                ->order(['lft' => 'ASC']);
 
-        $categories = $table->find('active')
-            ->select(['id', 'lft', 'slug'])
-            ->contain($table->Pages->getAlias(), function (Query $q) use ($table) {
-                return $q->find('active')
-                    ->select(['category_id', 'slug', 'modified'])
-                    ->order([sprintf('%s.modified', $table->Pages->getAlias()) => 'DESC']);
-            })
-            ->order(['lft' => 'ASC']);
-
-        if ($categories->isEmpty()) {
-            return [];
-        }
-
-        //Adds categories index
-        $url[] = self::parse(['_name' => 'pagesCategories']);
-
-        foreach ($categories as $category) {
-            //Adds the category
-            $url[] = self::parse(
-                ['_name' => 'pagesCategory', $category->slug],
-                ['lastmod' => $category->pages[0]->modified]
-            );
-
-            //Adds each page
-            foreach ($category->pages as $page) {
-                $url[] = self::parse(
-                    ['_name' => 'page', $page->slug],
-                    ['lastmod' => $page->modified]
-                );
+            if ($categories->isEmpty()) {
+                return [];
             }
-        }
 
-        Cache::write('sitemap', $url, $table->getCacheName());
+            //Adds categories index
+            $url[] = self::parse(['_name' => 'pagesCategories']);
+
+            foreach ($categories as $category) {
+                //Adds the category
+                $url[] = self::parse(['_name' => 'pagesCategory', $category->slug], ['lastmod' => $category->pages[0]->modified]);
+
+                //Adds each page
+                foreach ($category->pages as $page) {
+                    $url[] = self::parse(['_name' => 'page', $page->slug], ['lastmod' => $page->modified]);
+                }
+            }
+
+            Cache::write('sitemap', $url, $table->getCacheName());
+        }
 
         return $url;
     }
@@ -88,50 +79,44 @@ class Sitemap extends SitemapBuilder
     public static function photos()
     {
         $table = TableRegistry::get('MeCms.PhotosAlbums');
-
         $url = Cache::read('sitemap', $table->getCacheName());
 
-        if ($url) {
-            return $url;
-        }
+        if (!$url) {
+            $albums = $table->find('active')
+                ->select(['id', 'slug'])
+                ->contain($table->Photos->getAlias(), function (Query $q) use ($table) {
+                    return $q->find('active')
+                        ->select(['id', 'album_id', 'modified'])
+                        ->order([sprintf('%s.modified', $table->Photos->getAlias()) => 'DESC']);
+                });
 
-        $albums = $table->find('active')
-            ->select(['id', 'slug'])
-            ->contain($table->Photos->getAlias(), function (Query $q) use ($table) {
-                return $q->find('active')
-                    ->select(['id', 'album_id', 'modified'])
-                    ->order([sprintf('%s.modified', $table->Photos->getAlias()) => 'DESC']);
-            });
-
-        if ($albums->isEmpty()) {
-            return [];
-        }
-
-        $latest = $table->Photos->find('active')
-            ->select(['modified'])
-            ->order([sprintf('%s.modified', $table->Photos->getAlias()) => 'DESC'])
-            ->firstOrFail();
-
-        //Adds albums index
-        $url[] = self::parse(['_name' => 'albums'], ['lastmod' => $latest->modified]);
-
-        foreach ($albums->toArray() as $album) {
-            //Adds the album
-            $url[] = self::parse(
-                ['_name' => 'album', $album->slug],
-                ['lastmod' => $album->photos[0]->modified]
-            );
-
-            //Adds each photo
-            foreach ($album->photos as $photo) {
-                $url[] = self::parse(
-                    ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id],
-                    ['lastmod' => $photo->modified]
-                );
+            if ($albums->isEmpty()) {
+                return [];
             }
-        }
 
-        Cache::write('sitemap', $url, $table->getCacheName());
+            $latest = $table->Photos->find('active')
+                ->select(['modified'])
+                ->order([sprintf('%s.modified', $table->Photos->getAlias()) => 'DESC'])
+                ->firstOrFail();
+
+            //Adds albums index
+            $url[] = self::parse(['_name' => 'albums'], ['lastmod' => $latest->modified]);
+
+            foreach ($albums->toArray() as $album) {
+                //Adds the album
+                $url[] = self::parse(['_name' => 'album', $album->slug], ['lastmod' => $album->photos[0]->modified]);
+
+                //Adds each photo
+                foreach ($album->photos as $photo) {
+                    $url[] = self::parse(
+                        ['_name' => 'photo', 'slug' => $album->slug, 'id' => $photo->id],
+                        ['lastmod' => $photo->modified]
+                    );
+                }
+            }
+
+            Cache::write('sitemap', $url, $table->getCacheName());
+        }
 
         return $url;
     }
@@ -144,53 +129,44 @@ class Sitemap extends SitemapBuilder
     public static function posts()
     {
         $table = TableRegistry::get('MeCms.PostsCategories');
-
         $url = Cache::read('sitemap', $table->getCacheName());
 
-        if ($url) {
-            return $url;
-        }
+        if (!$url) {
+            $categories = $table->find('active')
+                ->select(['id', 'lft', 'slug'])
+                ->contain($table->Posts->getAlias(), function (Query $q) use ($table) {
+                    return $q->find('active')
+                        ->select(['category_id', 'slug', 'modified'])
+                        ->order([sprintf('%s.modified', $table->Posts->getAlias()) => 'DESC']);
+                })
+                ->order(['lft' => 'ASC']);
 
-        $categories = $table->find('active')
-            ->select(['id', 'lft', 'slug'])
-            ->contain($table->Posts->getAlias(), function (Query $q) use ($table) {
-                return $q->find('active')
-                    ->select(['category_id', 'slug', 'modified'])
-                    ->order([sprintf('%s.modified', $table->Posts->getAlias()) => 'DESC']);
-            })
-            ->order(['lft' => 'ASC']);
-
-        if ($categories->isEmpty()) {
-            return [];
-        }
-
-        $latest = $table->Posts->find('active')
-            ->select(['modified'])
-            ->order([sprintf('%s.modified', $table->Posts->getAlias()) => 'DESC'])
-            ->firstOrFail();
-
-        //Adds posts index, categories index and posts search
-        $url[] = self::parse(['_name' => 'posts'], ['lastmod' => $latest->modified]);
-        $url[] = self::parse(['_name' => 'postsCategories']);
-        $url[] = self::parse(['_name' => 'postsSearch'], ['priority' => '0.2']);
-
-        foreach ($categories as $category) {
-            //Adds the category
-            $url[] = self::parse(
-                ['_name' => 'postsCategory', $category->slug],
-                ['lastmod' => $category->posts[0]->modified]
-            );
-
-            //Adds each post
-            foreach ($category->posts as $post) {
-                $url[] = self::parse(
-                    ['_name' => 'post', $post->slug],
-                    ['lastmod' => $post->modified]
-                );
+            if ($categories->isEmpty()) {
+                return [];
             }
-        }
 
-        Cache::write('sitemap', $url, $table->getCacheName());
+            $latest = $table->Posts->find('active')
+                ->select(['modified'])
+                ->order([sprintf('%s.modified', $table->Posts->getAlias()) => 'DESC'])
+                ->firstOrFail();
+
+            //Adds posts index, categories index and posts search
+            $url[] = self::parse(['_name' => 'posts'], ['lastmod' => $latest->modified]);
+            $url[] = self::parse(['_name' => 'postsCategories']);
+            $url[] = self::parse(['_name' => 'postsSearch'], ['priority' => '0.2']);
+
+            foreach ($categories as $category) {
+                //Adds the category
+                $url[] = self::parse(['_name' => 'postsCategory', $category->slug], ['lastmod' => $category->posts[0]->modified]);
+
+                //Adds each post
+                foreach ($category->posts as $post) {
+                    $url[] = self::parse(['_name' => 'post', $post->slug], ['lastmod' => $post->modified]);
+                }
+            }
+
+            Cache::write('sitemap', $url, $table->getCacheName());
+        }
 
         return $url;
     }
@@ -203,41 +179,32 @@ class Sitemap extends SitemapBuilder
     public static function postsTags()
     {
         $table = TableRegistry::get('MeCms.Tags');
-
         $url = Cache::read('sitemap', $table->getCacheName());
 
-        if ($url) {
-            return $url;
+        if (!$url) {
+            $tags = $table->find('active')
+                ->select(['tag', 'modified'])
+                ->order(['tag' => 'ASC']);
+
+            if ($tags->isEmpty()) {
+                return [];
+            }
+
+            $latest = $table->find()
+                ->select(['modified'])
+                ->order(['modified' => 'DESC'])
+                ->firstOrFail();
+
+            //Adds the tags index
+            $url[] = self::parse(['_name' => 'postsTags'], ['lastmod' => $latest->modified]);
+
+            //Adds each tag
+            foreach ($tags as $tag) {
+                $url[] = self::parse(['_name' => 'postsTag', $tag->slug], ['lastmod' => $tag->modified]);
+            }
+
+            Cache::write('sitemap', $url, $table->getCacheName());
         }
-
-        $tags = $table->find('active')
-            ->select(['tag', 'modified'])
-            ->order(['tag' => 'ASC']);
-
-        if ($tags->isEmpty()) {
-            return [];
-        }
-
-        $latest = $table->find()
-            ->select(['modified'])
-            ->order(['modified' => 'DESC'])
-            ->firstOrFail();
-
-        //Adds the tags index
-        $url[] = self::parse(
-            ['_name' => 'postsTags'],
-            ['lastmod' => $latest->modified]
-        );
-
-        //Adds each tag
-        foreach ($tags as $tag) {
-            $url[] = self::parse(
-                ['_name' => 'postsTag', $tag->slug],
-                ['lastmod' => $tag->modified]
-            );
-        }
-
-        Cache::write('sitemap', $url, $table->getCacheName());
 
         return $url;
     }
@@ -254,10 +221,7 @@ class Sitemap extends SitemapBuilder
 
         //Adds each static page
         foreach ($pages as $page) {
-            $url[] = self::parse(
-                ['_name' => 'page', $page->slug],
-                ['lastmod' => $page->modified]
-            );
+            $url[] = self::parse(['_name' => 'page', $page->slug], ['lastmod' => $page->modified]);
         }
 
         return $url;

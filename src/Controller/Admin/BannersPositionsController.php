@@ -106,7 +106,6 @@ class BannersPositionsController extends AppController
         //Before deleting, it checks if the position has some banners
         if (!$position->banner_count) {
             $this->BannersPositions->deleteOrFail($position);
-
             $this->Flash->success(I18N_OPERATION_OK);
         } else {
             $this->Flash->alert(I18N_BEFORE_DELETE);

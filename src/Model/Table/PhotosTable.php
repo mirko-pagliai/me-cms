@@ -19,6 +19,7 @@ use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Validation\PhotoValidator;
 
 /**
  * Photos model
@@ -52,9 +53,7 @@ class PhotosTable extends AppTable
     public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         //Deletes the file
-        if (file_exists($entity->path) && is_writable($entity->path)) {
-            safe_unlink($entity->path);
-        }
+        safe_unlink($entity->path);
 
         parent::afterDelete($event, $entity, $options);
     }
@@ -73,7 +72,6 @@ class PhotosTable extends AppTable
         parent::beforeSave($event, $entity, $options);
 
         list($width, $height) = getimagesize($entity->path);
-
         $entity->size = compact('width', 'height');
     }
 
@@ -85,10 +83,8 @@ class PhotosTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['album_id'], 'Albums', I18N_SELECT_VALID_OPTION));
-        $rules->add($rules->isUnique(['filename'], I18N_VALUE_ALREADY_USED));
-
-        return $rules;
+        return $rules->add($rules->existsIn(['album_id'], 'Albums', I18N_SELECT_VALID_OPTION))
+            ->add($rules->isUnique(['filename'], I18N_VALUE_ALREADY_USED));
     }
 
     /**
@@ -99,9 +95,7 @@ class PhotosTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => true]);
-
-        return $query;
+        return $query->where([sprintf('%s.active', $this->getAlias()) => true]);
     }
 
     /**
@@ -112,9 +106,7 @@ class PhotosTable extends AppTable
      */
     public function findPending(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => false]);
-
-        return $query;
+        return $query->where([sprintf('%s.active', $this->getAlias()) => false]);
     }
 
     /**
@@ -137,7 +129,7 @@ class PhotosTable extends AppTable
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Albums' => ['photo_count']]);
 
-        $this->_validatorClass = '\MeCms\Model\Validation\PhotoValidator';
+        $this->_validatorClass = PhotoValidator::class;
     }
 
     /**

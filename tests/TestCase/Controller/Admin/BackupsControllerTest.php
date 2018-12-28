@@ -66,13 +66,12 @@ class BackupsControllerTest extends ControllerTestCase
     {
         parent::controllerSpy($event, $controller);
 
-        if ($this->getName() !== 'testSend') {
-            return;
-        }
-
         //Only for the `testSend` test, mocks the `send()` method of
         //  `BackupManager` class, so that it writes on the debug log
         //  instead of sending a real mail
+        if ($this->getName() !== 'testSend') {
+            return;
+        }
         $this->_controller->BackupManager = $this->getMockBuilder(BackupManager::class)
             ->setMethods(['send'])
             ->getMock();
@@ -108,7 +107,7 @@ class BackupsControllerTest extends ControllerTestCase
         $this->createSomeBackups();
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Backups/index.ctp');
+        $this->assertTemplate('Admin' . DS . 'Backups' . DS . 'index.ctp');
         $this->assertContainsInstanceof(Entity::class, $this->viewVariable('backups'));
     }
 
@@ -122,7 +121,7 @@ class BackupsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Backups/add.ctp');
+        $this->assertTemplate('Admin' . DS . 'Backups' . DS . 'add.ctp');
         $this->assertInstanceof(BackupForm::class, $this->viewVariable('backup'));
 
         //POST request. Data are invalid

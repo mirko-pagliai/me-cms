@@ -45,12 +45,10 @@ class KCFinder extends AbstractCheckup
      */
     public function version()
     {
-        $matches = null;
-
-        if (!$this->isAvailable() || !preg_match('/@version\s+([\d\.]+)/', file_get_contents(KCFINDER . 'browse.php'), $matches)) {
-            return false;
+        if ($this->isAvailable() && preg_match('/@version\s+([\d\.]+)/', file_get_contents(KCFINDER . 'browse.php'), $matches)) {
+            return $matches[1];
         }
 
-        return $matches[1];
+        return false;
     }
 }

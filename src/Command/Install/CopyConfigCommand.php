@@ -16,6 +16,7 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Filesystem\Folder;
 use MeCms\Core\Plugin;
 use MeTools\Console\Command;
 
@@ -42,9 +43,7 @@ class CopyConfigCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
-        $parser->setDescription(__d('me_cms', 'Copies the configuration files'));
-
-        return $parser;
+        return $parser->setDescription(__d('me_cms', 'Copies the configuration files'));
     }
 
     /**
@@ -52,12 +51,17 @@ class CopyConfigCommand extends Command
      * @param Arguments $args The command arguments
      * @param ConsoleIo $io The console io
      * @return null|int The exit code or null for success
+     * @uses $config
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
         foreach ($this->config as $file) {
             list($plugin, $file) = pluginSplit($file);
-            $this->copyFile($io, Plugin::path($plugin, 'config' . DS . $file . '.php'), CONFIG . $file . '.php');
+            $this->copyFile(
+                $io,
+                Plugin::path($plugin, 'config' . DS . $file . '.php'),
+                Folder::slashTerm(CONFIG) . $file . '.php'
+            );
         }
 
         return null;

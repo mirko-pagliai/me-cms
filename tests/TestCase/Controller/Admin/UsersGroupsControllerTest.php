@@ -49,7 +49,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/UsersGroups/index.ctp');
+        $this->assertTemplate('Admin' . DS . 'UsersGroups' . DS . 'index.ctp');
         $this->assertContainsInstanceof(UsersGroup::class, $this->viewVariable('groups'));
     }
 
@@ -63,7 +63,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/UsersGroups/add.ctp');
+        $this->assertTemplate('Admin' . DS . 'UsersGroups' . DS . 'add.ctp');
 
         //POST request. Data are valid
         $this->post($url, ['name' => 'team', 'label' => 'Team']);
@@ -87,7 +87,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/UsersGroups/edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'UsersGroups' . DS . 'edit.ctp');
         $this->assertInstanceof(UsersGroup::class, $this->viewVariable('group'));
 
         //POST request. Data are valid

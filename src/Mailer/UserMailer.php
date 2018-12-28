@@ -12,7 +12,6 @@
  */
 namespace MeCms\Mailer;
 
-use InvalidArgumentException;
 use MeCms\Mailer\Mailer;
 use MeCms\Model\Entity\User;
 
@@ -29,14 +28,11 @@ class UserMailer extends Mailer
      * @return void
      * @see MeCms\Controller\Admin\UsersController::activationResend()
      * @see MeCms\Controller\Admin\UsersController::signup()
-     * @throws InvalidArgumentException
      */
     public function activation(User $user)
     {
         //Checks that all required data is present
-        foreach (['email', 'full_name'] as $property) {
-            is_true_or_fail($user->has($property), __d('me_cms', 'Missing `{0}` property from data', $property), InvalidArgumentException::class);
-        }
+        key_exists_or_fail(['email', 'full_name'], $user->toArray());
 
         $this->viewBuilder()->setTemplate('MeCms.Users/activation');
         $this->setTo([$user->email => $user->full_name])
@@ -51,14 +47,11 @@ class UserMailer extends Mailer
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
      * @see MeCms\Controller\Admin\UsersController::changePassword()
-     * @throws InvalidArgumentException
      */
     public function changePassword(User $user)
     {
         //Checks that all required data is present
-        foreach (['email', 'full_name'] as $property) {
-            is_true_or_fail($user->has($property), __d('me_cms', 'Missing `{0}` property from data', $property), InvalidArgumentException::class);
-        }
+        key_exists_or_fail(['email', 'full_name'], $user->toArray());
 
         $this->viewBuilder()->setTemplate('MeCms.Users/change_password');
         $this->setTo([$user->email => $user->full_name])
@@ -73,14 +66,11 @@ class UserMailer extends Mailer
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
      * @see MeCms\Controller\UsersController::passwordForgot()
-     * @throws InvalidArgumentException
      */
     public function passwordForgot(User $user)
     {
         //Checks that all required data is present
-        foreach (['email', 'full_name'] as $property) {
-            is_true_or_fail($user->has($property), __d('me_cms', 'Missing `{0}` property from data', $property), InvalidArgumentException::class);
-        }
+        key_exists_or_fail(['email', 'full_name'], $user->toArray());
 
         $this->viewBuilder()->setTemplate('MeCms.Users/password_forgot');
         $this->setTo([$user->email => $user->full_name])

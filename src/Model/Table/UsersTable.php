@@ -60,11 +60,9 @@ class UsersTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['group_id'], 'Groups', I18N_SELECT_VALID_OPTION));
-        $rules->add($rules->isUnique(['email'], I18N_VALUE_ALREADY_USED));
-        $rules->add($rules->isUnique(['username'], I18N_VALUE_ALREADY_USED));
-
-        return $rules;
+        return $rules->add($rules->existsIn(['group_id'], 'Groups', I18N_SELECT_VALID_OPTION))
+            ->add($rules->isUnique(['email'], I18N_VALUE_ALREADY_USED))
+            ->add($rules->isUnique(['username'], I18N_VALUE_ALREADY_USED));
     }
 
     /**
@@ -75,10 +73,10 @@ class UsersTable extends AppTable
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => true])
-            ->where([sprintf('%s.banned', $this->getAlias()) => false]);
-
-        return $query;
+        return $query->where([
+            sprintf('%s.active', $this->getAlias()) => true,
+            sprintf('%s.banned', $this->getAlias()) => false,
+        ]);
     }
 
     /**
@@ -90,12 +88,9 @@ class UsersTable extends AppTable
      */
     public function findAuth(Query $query, array $options)
     {
-        $query->select(['id', 'username', 'password', 'email', 'active', 'banned', 'first_name', 'last_name'])
-            ->contain('Groups', function (Query $q) {
-                return $q->select(['name']);
-            });
-
-        return $query;
+        return $query->contain('Groups', function (Query $q) {
+            return $q->select(['name']);
+        });
     }
 
     /**
@@ -106,9 +101,7 @@ class UsersTable extends AppTable
      */
     public function findBanned(Query $query, array $options)
     {
-        $query->where([sprintf('%s.banned', $this->getAlias()) => true]);
-
-        return $query;
+        return $query->where([sprintf('%s.banned', $this->getAlias()) => true]);
     }
 
     /**
@@ -119,10 +112,10 @@ class UsersTable extends AppTable
      */
     public function findPending(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => false])
-            ->where([sprintf('%s.banned', $this->getAlias()) => false]);
-
-        return $query;
+        return $query->where([
+            sprintf('%s.active', $this->getAlias()) => false,
+            sprintf('%s.banned', $this->getAlias()) => false,
+        ]);
     }
 
     /**
@@ -136,10 +129,9 @@ class UsersTable extends AppTable
             ->where([sprintf('%s.active', $this->getAlias()) => true])
             ->order(['username' => 'ASC'])
             ->formatResults(function (ResultSet $results) {
-                return $results->indexBy('id')
-                    ->map(function (User $user) {
-                        return $user->first_name . ' ' . $user->last_name;
-                    });
+                return $results->indexBy('id')->map(function (User $user) {
+                    return $user->first_name . ' ' . $user->last_name;
+                });
             })
             ->cache(sprintf('active_%s_list', $this->getTable()), $this->getCacheName());
     }
@@ -170,7 +162,7 @@ class UsersTable extends AppTable
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
 
-        $this->_validatorClass = '\MeCms\Model\Validation\UserValidator';
+        $this->_validatorClass = UserValidator::class;
     }
 
     /**
@@ -244,10 +236,6 @@ class UsersTable extends AppTable
      */
     public function validationEmptyPassword(UserValidator $validator)
     {
-        //Allows empty passwords
-        $validator->allowEmpty('password');
-        $validator->allowEmpty('password_repeat');
-
-        return $validator;
+        return $validator->allowEmpty('password')->allowEmpty('password_repeat');
     }
 }

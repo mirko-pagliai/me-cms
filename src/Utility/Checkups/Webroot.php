@@ -21,33 +21,17 @@ use MeCms\Utility\Checkups\AbstractCheckup;
 class Webroot extends AbstractCheckup
 {
     /**
-     * Paths to check
-     * @var array
-     */
-    protected $pathsToCheck = [];
-
-    /**
-     * Construct
-     * @uses $pathsToCheck
-     */
-    public function __construct()
-    {
-        $this->pathsToCheck = [
-            BANNERS,
-            PHOTOS,
-            USER_PICTURES,
-            WWW_ROOT . 'files' . DS,
-        ];
-    }
-
-    /**
      * Checks if each path is writeable
      * @return array Array with paths as keys and boolean as value
-     * @uses $pathsToCheck
      * @uses _isWriteable()
      */
     public function isWriteable()
     {
-        return $this->_isWriteable($this->pathsToCheck);
+        return $this->_isWriteable([
+            BANNERS,
+            PHOTOS,
+            USER_PICTURES,
+            WWW_ROOT . 'files' . DS,
+        ]);
     }
 }

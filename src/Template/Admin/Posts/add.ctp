@@ -98,10 +98,7 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
             }
         ?>
     </div>
-    <?= $this->Form->ckeditor('text', [
-        'label' => I18N_TEXT,
-        'rows' => 10,
-    ]) ?>
+    <?= $this->Form->ckeditor('text', ['label' => I18N_TEXT, 'rows' => 10]) ?>
     <?= $this->element('admin/bbcode') ?>
     </fieldset>
 </div>

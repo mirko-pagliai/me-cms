@@ -12,8 +12,10 @@
  */
 namespace MeCms\Test\TestCase\Command\Install;
 
+use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use MeCms\TestSuite\TestCase;
+use MeTools\Command\Install\CreateDirectoriesCommand;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
@@ -29,37 +31,21 @@ class CreateDirectoriesCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $pathsAlreadyExist = [
-            getConfigOrFail('Assets.target'),
-            getConfigOrFail('DatabaseBackup.target'),
-            getConfigOrFail('Thumber.target'),
-            TMP,
-            WWW_ROOT . 'vendor',
-        ];
-        array_walk($pathsAlreadyExist, 'safe_mkdir');
-        $pathsToBeCreated = array_diff(Configure::read('WRITABLE_DIRS'), $pathsAlreadyExist);
-        foreach ($pathsToBeCreated as $path) {
-            safe_rmdir_recursive($path);
-            !file_exists($path) ?: $this->fail('Unable to delete ' . $path);
+        $io = new ConsoleIo;
+        $Command = $this->getMockBuilder(CreateDirectoriesCommand::class)
+            ->setMethods(['createDir'])
+            ->getMock();
+
+        $count = 0;
+        foreach (Configure::read('WRITABLE_DIRS') as $path) {
+            $Command->expects($this->at($count++))
+                ->method('createDir')
+                ->with($io, $path);
         }
 
-        $this->exec('me_cms.create_directories -v');
+        $Command->expects($this->exactly(count(Configure::read('WRITABLE_DIRS'))))
+            ->method('createDir');
 
-        //Re-creates some files after execution
-        foreach ([BANNERS, PHOTOS, USER_PICTURES] as $path) {
-            safe_create_file($path . 'empty');
-            chmod($path . 'empty', 0755);
-        }
-
-        $this->assertExitWithSuccess();
-        foreach ($pathsAlreadyExist as $path) {
-            $this->assertOutputContains('File or directory `' . rtr($path) . '` already exists');
-        }
-        foreach ($pathsToBeCreated as $path) {
-            $this->assertOutputContains('Created `' . rtr($path) . '` directory');
-            $this->assertOutputContains('Setted permissions on `' . rtr($path) . '`');
-        }
-
-        $this->assertErrorEmpty();
+        $this->assertNull($Command->run([], $io));
     }
 }

@@ -57,9 +57,7 @@ class BannersController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can delete banners. Admins and managers can access other actions
-        $allowedGroups = $this->request->isDelete() ? ['admin'] : ['admin', 'manager'];
-
-        return $this->Auth->isGroup($allowedGroups);
+        return $this->Auth->isGroup($this->request->isDelete() ? ['admin'] : ['admin', 'manager']);
     }
 
     /**
@@ -92,16 +90,13 @@ class BannersController extends AppController
 
         if ($render) {
             $this->Cookie->write('renderBanners', $render);
-
-            if ($render === 'grid') {
-                $this->render('index_as_grid');
-            }
+            $this->render(sprintf('index_as_%s', $render));
         }
     }
 
     /**
      * Uploads banners
-     * @return void
+     * @return null
      * @throws InternalErrorException
      * @uses MeCms\Controller\AppController::setUploadError()
      * @uses MeTools\Controller\Component\UploaderComponent
@@ -113,7 +108,7 @@ class BannersController extends AppController
 
         //If there's only one available position
         if (!$position && count($positions) < 2) {
-            $position = first_value(array_keys($positions));
+            $position = first_key($positions);
             $this->request = $this->request->withQueryParams(compact('position'));
         }
 
@@ -125,9 +120,7 @@ class BannersController extends AppController
                 ->save(BANNERS);
 
             if (!$uploaded) {
-                $this->setUploadError($this->Uploader->getError());
-
-                return;
+                return $this->setUploadError($this->Uploader->getError());
             }
 
             $entity = $this->Banners->newEntity([
@@ -136,9 +129,7 @@ class BannersController extends AppController
             ]);
 
             if ($entity->getErrors()) {
-                $this->setUploadError(first_value(first_value($entity->getErrors())));
-
-                return;
+                return $this->setUploadError(first_value_recursive($entity->getErrors()));
             }
 
             if (!$this->Banners->save($entity)) {
@@ -178,9 +169,7 @@ class BannersController extends AppController
      */
     public function download($id = null)
     {
-        $file = $this->Banners->get($id)->path;
-
-        return $this->response->withFile($file, ['download' => true]);
+        return $this->response->withFile($this->Banners->get($id)->path, ['download' => true]);
     }
 
     /**
@@ -191,9 +180,7 @@ class BannersController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-
         $this->Banners->deleteOrFail($this->Banners->get($id));
-
         $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);

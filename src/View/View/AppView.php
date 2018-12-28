@@ -123,7 +123,7 @@ class AppView extends View
      */
     public function userbar($content = null)
     {
-        if ($content === null) {
+        if (!$content) {
             return $this->userbar;
         }
 

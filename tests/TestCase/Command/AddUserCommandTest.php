@@ -64,17 +64,17 @@ class AddUserCommandTest extends TestCase
 
         //Tries with a no existing group
         $this->exec('me_cms.add_user --group 123', $example);
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
         $this->assertErrorContains('Invalid group ID');
 
         //Tries with empty data
         $this->exec('me_cms.add_user -v', []);
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
         $this->assertErrorContains('Field `username` is empty. Try again');
 
         //Tries with wrong data
         $this->exec('me_cms.add_user -v', ['ab', 'password', 'password2', 'mail', 'aa', 'bb', '3']);
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
         $this->assertErrorContains('The operation has not been performed correctly');
         $this->assertErrorContains('The user could not be saved');
         $this->assertErrorContains('Field `email`: you have to enter a valid value');
@@ -83,14 +83,14 @@ class AddUserCommandTest extends TestCase
         $this->assertErrorContains('Field `last_name`: must be between 3 and 40 chars');
         $this->assertErrorContains('Field `last_name`: allowed chars: letters, apostrophe, space. Has to begin with a capital letter');
         $this->assertErrorContains('Field `username`: must be between 4 and 40 chars');
-        $this->assertErrorContains('Field `username`: allowed chars: lowercase letters, numbers, dash');
+        $this->assertErrorContains('Field `username`: allowed chars: ' . I18N_LOWERCASE_NUMBERS_DASH);
         $this->assertErrorContains('Field `password`: the password should contain letters, numbers and symbols');
         $this->assertErrorContains('Field `password_repeat`: passwords don\'t match');
 
         //Tries with no groups
         $Users->Groups->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.add_user -v');
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
         $this->assertErrorContains('Before you can manage users, you have to create at least a user group');
     }
 }

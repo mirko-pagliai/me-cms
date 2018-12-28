@@ -13,14 +13,6 @@
  */
 namespace MeCms\Utility;
 
-use MeCms\Utility\Checkups\Apache;
-use MeCms\Utility\Checkups\Backups;
-use MeCms\Utility\Checkups\KCFinder;
-use MeCms\Utility\Checkups\PHP;
-use MeCms\Utility\Checkups\Plugin;
-use MeCms\Utility\Checkups\TMP;
-use MeCms\Utility\Checkups\Webroot;
-
 /**
  * Checkup utility.
  *
@@ -65,22 +57,13 @@ class Checkup
 
     /**
      * Construct
-     * @uses $Apache
-     * @uses $Backups
-     * @uses $KCFinder
-     * @uses $PHP
-     * @uses $Plugin
-     * @uses $TMP
-     * @uses $Webroot
      */
     public function __construct()
     {
-        $this->Apache = new Apache;
-        $this->Backups = new Backups;
-        $this->KCFinder = new KCFinder;
-        $this->PHP = new PHP;
-        $this->Plugin = new Plugin;
-        $this->TMP = new TMP;
-        $this->Webroot = new Webroot;
+        foreach (array_keys(get_object_vars($this)) as $class) {
+            $className = sprintf('\MeCms\Utility\Checkups\%s', $class);
+            class_exists($className) ?: trigger_error(sprintf('Class `%s` does not exist', $className), E_USER_ERROR);
+            $this->$class = new $className();
+        }
     }
 }

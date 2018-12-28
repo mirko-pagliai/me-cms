@@ -16,6 +16,7 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Filesystem\Folder;
 use MeCms\Utility\Checkups\KCFinder;
 use MeTools\Console\Command;
 
@@ -31,9 +32,7 @@ class FixKcfinderCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
-        $parser->setDescription(__d('me_cms', 'Fixes {0}', 'KCFinder'));
-
-        return $parser;
+        return $parser->setDescription(__d('me_cms', 'Fixes {0}', 'KCFinder'));
     }
 
     /**
@@ -44,20 +43,21 @@ class FixKcfinderCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
-        //Checks for KCFinder
-        if (!(new KCFinder)->isAvailable()) {
-            $io->err(__d('me_tools', '{0} is not available', 'KCFinder'));
-            $this->abort();
-        }
+        $file = Folder::slashTerm(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
 
-        $io->createFile(
-            WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS . '.htaccess',
-            'php_value session.cache_limiter must-revalidate' . PHP_EOL .
-            'php_value session.cookie_httponly On' . PHP_EOL .
-            'php_value session.cookie_lifetime 14400' . PHP_EOL .
-            'php_value session.gc_maxlifetime 14400' . PHP_EOL .
-            'php_value session.name CAKEPHP'
-        );
+        if ($this->verboseIfFileExists($io, $file)) {
+        } elseif ((new KCFinder)->isAvailable()) {
+            $io->createFile(
+                Folder::slashTerm(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess',
+                'php_value session.cache_limiter must-revalidate' . PHP_EOL .
+                'php_value session.cookie_httponly On' . PHP_EOL .
+                'php_value session.cookie_lifetime 14400' . PHP_EOL .
+                'php_value session.gc_maxlifetime 14400' . PHP_EOL .
+                'php_value session.name CAKEPHP'
+            );
+        } else {
+            $io->error(__d('me_tools', '{0} is not available', 'KCFinder'));
+        }
 
         return null;
     }

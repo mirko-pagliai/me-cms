@@ -33,28 +33,6 @@ class View extends AppView
     protected $titleForLayout;
 
     /**
-     * Constructor
-     * @param \Cake\Network\Request|null $request Request instance
-     * @param \Cake\Network\Response|null $response Response instance
-     * @param \Cake\Event\EventManager|null $eventManager Event manager instance
-     * @param array $viewOptions View options. See View::$_passedVars for list of
-     *   options which get set as class properties
-     */
-    public function __construct(
-        Request $request = null,
-        Response $response = null,
-        EventManager $eventManager = null,
-        array $viewOptions = []
-    ) {
-        parent::__construct($request, $response, $eventManager, $viewOptions);
-
-        //Sets the theme from configuration
-        if (getConfig('default.theme')) {
-            $this->setTheme(getConfig('default.theme'));
-        }
-    }
-
-    /**
      * Gets the title for layout
      * @return string Title
      * @uses $titleForLayout
@@ -95,6 +73,11 @@ class View extends AppView
     public function initialize()
     {
         parent::initialize();
+
+        //Sets the theme from configuration
+        if (getConfig('default.theme')) {
+            $this->setTheme(getConfig('default.theme'));
+        }
 
         //Loads helpers
         $this->loadHelper('Html', ['className' => 'MeTools.Html']);

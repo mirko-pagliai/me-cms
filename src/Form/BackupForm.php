@@ -57,7 +57,7 @@ class BackupForm extends Form
      */
     protected function getBackupExportInstance()
     {
-        if (empty($this->BackupExport)) {
+        if (!$this->BackupExport) {
             $this->BackupExport = new BackupExport;
         }
 

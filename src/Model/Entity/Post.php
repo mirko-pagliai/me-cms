@@ -56,6 +56,7 @@ class Post extends Entity
     /**
      * Gets text as plain text (virtual field)
      * @return string|void
+     * @todo Should raise an exception if the key is not existing
      */
     protected function _getPlainText()
     {
@@ -72,6 +73,7 @@ class Post extends Entity
     /**
      * Gets tags as string, separated by a comma and a space (virtual field)
      * @return string|void
+     * @todo Should raise an exception if the key is not existing
      */
     protected function _getTagsAsString()
     {

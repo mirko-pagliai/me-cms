@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Behavior;
 
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -34,7 +33,7 @@ class TreeBehaviorTest extends TestCase
      */
     public function testFindTreeList()
     {
-        $table = TableRegistry::get('MeCms.PostsCategories');
+        $PostsCategories = $this->getMockForModel('MeCms.PostsCategories', null);
 
         $expected = [
             1 => 'First post category',
@@ -42,7 +41,7 @@ class TreeBehaviorTest extends TestCase
             4 => '——Sub sub post category',
             2 => 'Another post category',
         ];
-        $this->assertEquals($expected, $table->find('treeList')->toArray());
+        $this->assertEquals($expected, $PostsCategories->find('treeList')->toArray());
 
         $expected = [
             1 => 'First post category',
@@ -50,6 +49,6 @@ class TreeBehaviorTest extends TestCase
             4 => '__Sub sub post category',
             2 => 'Another post category',
         ];
-        $this->assertEquals($expected, $table->find('treeList', ['spacer' => '_'])->toArray());
+        $this->assertEquals($expected, $PostsCategories->find('treeList', ['spacer' => '_'])->toArray());
     }
 }

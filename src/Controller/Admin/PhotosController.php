@@ -90,16 +90,13 @@ class PhotosController extends AppController
 
         if ($render) {
             $this->Cookie->write('renderPhotos', $render);
-
-            if ($render === 'grid') {
-                $this->render('index_as_grid');
-            }
+            $this->render(sprintf('index_as_%s', $render));
         }
     }
 
     /**
      * Uploads photos
-     * @return void
+     * @return null
      * @throws InternalErrorException
      * @uses MeCms\Controller\AppController::setUploadError()
      * @uses MeTools\Controller\Component\UploaderComponent
@@ -111,7 +108,7 @@ class PhotosController extends AppController
 
         //If there's only one available album
         if (!$album && count($albums) < 2) {
-            $album = first_value(array_keys($albums));
+            $album = first_key($albums);
             $this->request = $this->request->withQueryParams(compact('album'));
         }
 
@@ -123,9 +120,7 @@ class PhotosController extends AppController
                 ->save(PHOTOS . $album);
 
             if (!$uploaded) {
-                $this->setUploadError($this->Uploader->getError());
-
-                return;
+                return $this->setUploadError($this->Uploader->getError());
             }
 
             $entity = $this->Photos->newEntity([
@@ -134,9 +129,7 @@ class PhotosController extends AppController
             ]);
 
             if ($entity->getErrors()) {
-                $this->setUploadError(first_value(first_value($entity->getErrors())));
-
-                return;
+                return $this->setUploadError(first_value_recursive($entity->getErrors()));
             }
 
             if (!$this->Photos->save($entity)) {
@@ -176,9 +169,7 @@ class PhotosController extends AppController
      */
     public function download($id = null)
     {
-        $file = $this->Photos->get($id)->path;
-
-        return $this->response->withFile($file, ['download' => true]);
+        return $this->response->withFile($this->Photos->get($id)->path, ['download' => true]);
     }
 
     /**
@@ -191,9 +182,7 @@ class PhotosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
 
         $photo = $this->Photos->get($id);
-
         $this->Photos->deleteOrFail($photo);
-
         $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index', $photo->album_id]);

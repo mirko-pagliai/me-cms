@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Model\Table;
 
 use ArrayObject;
+use BadMethodCallException;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\I18n\Time;
@@ -25,17 +26,17 @@ use MeCms\TestSuite\TableTestCase;
 class AppTableTest extends TableTestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Model\Table\PhotosTable|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $Photos;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Model\Table\PostsTable|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $Posts;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Model\Table\PostsCategoriesTable|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $PostsCategories;
 
@@ -71,31 +72,16 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `afterDelete()` method
+     * Test for `afterDelete()` and `afterSave()` methods
      * @test
      */
-    public function testAfterDelete()
+    public function testAfterDeleteAndAfterSave()
     {
-        Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
-
-        $this->Posts->afterDelete(new Event(null), new Entity, new ArrayObject);
-
-        //The cache is cleared
-        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
-    }
-
-    /**
-     * Test for `afterSave()` method
-     * @test
-     */
-    public function testAfterSave()
-    {
-        Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
-
-        $this->Posts->afterSave(new Event(null), new Entity, new ArrayObject);
-
-        //The cache is cleared
-        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
+        foreach (['afterDelete', 'afterSave'] as $method) {
+            Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
+            $this->Posts->$method(new Event(null), new Entity, new ArrayObject);
+            $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
+        }
     }
 
     /**
@@ -117,30 +103,26 @@ class AppTableTest extends TableTestCase
         $this->Posts->delete($entity);
 
         foreach ([null, ''] as $value) {
-            $example['created'] = $value;
-            $entity = $this->Posts->save($this->Posts->newEntity($example));
+            $entity = $this->Posts->save($this->Posts->newEntity(['created' => $value] + $example));
             $this->assertNotEmpty($entity->created);
             $this->Posts->delete($entity);
         }
 
-        $example['created'] = $now = new Time;
+        $example['created'] = new Time;
         $entity = $this->Posts->save($this->Posts->newEntity($example));
-        $this->assertEquals($now, $entity->created);
+        $this->assertEquals($example['created'], $entity->created);
         $this->Posts->delete($entity);
 
         foreach (['2017-03-14 20:19', '2017-03-14 20:19:00'] as $value) {
-            $example['created'] = $value;
-            $entity = $this->Posts->save($this->Posts->newEntity($example));
+            $entity = $this->Posts->save($this->Posts->newEntity(['created' => $value] + $example));
             $this->assertEquals('2017-03-14 20:19:00', $entity->created->i18nFormat('yyyy-MM-dd HH:mm:ss'));
             $this->Posts->delete($entity);
         }
 
         //Now tries with a record that already exists
         $entity = $this->Posts->get(1);
-
         foreach ([null, ''] as $value) {
-            $entity->created = $value;
-            $entity = $this->Posts->save($entity);
+            $entity = $this->Posts->save($entity->set('created', $value));
             $this->assertNotEmpty($entity->created);
         }
     }
@@ -156,7 +138,6 @@ class AppTableTest extends TableTestCase
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
-
         foreach ($query as $entity) {
             $this->assertTrue($entity->active && !$entity->created->isFuture());
         }
@@ -172,7 +153,6 @@ class AppTableTest extends TableTestCase
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 OR Posts.created > :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
-
         foreach ($query as $entity) {
             $this->assertTrue(!$entity->active || $entity->created->isFuture());
         }
@@ -207,17 +187,15 @@ class AppTableTest extends TableTestCase
      */
     public function testGetList()
     {
-        $query = $this->Photos->getList();
-        $this->assertStringEndsWith('ORDER BY ' . $this->Photos->getDisplayField() . ' ASC', $query->sql());
-
         $expected = [
             1 => 'photo1.jpg',
             3 => 'photo3.jpg',
             4 => 'photo4.jpg',
             2 => 'photoa.jpg',
         ];
+        $query = $this->Photos->getList();
+        $this->assertStringEndsWith('ORDER BY ' . $this->Photos->getDisplayField() . ' ASC', $query->sql());
         $this->assertEquals($expected, $query->toArray());
-
         $fromCache = Cache::read('photos_list', $this->Photos->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
     }
@@ -228,28 +206,21 @@ class AppTableTest extends TableTestCase
      */
     public function testGetTreeList()
     {
-        $query = $this->PostsCategories->getTreeList();
-        $this->assertStringEndsNotWith('ORDER BY ' . $this->PostsCategories->getDisplayField() . ' ASC', $query->sql());
-
         $expected = [
             1 => 'First post category',
             3 => '—Sub post category',
             4 => '——Sub sub post category',
             2 => 'Another post category',
         ];
+        $query = $this->PostsCategories->getTreeList();
+        $this->assertStringEndsNotWith('ORDER BY ' . $this->PostsCategories->getDisplayField() . ' ASC', $query->sql());
         $this->assertEquals($expected, $query->toArray());
-
         $fromCache = Cache::read('posts_categories_tree_list', $this->PostsCategories->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
-    }
 
-    /**
-     * Test for `getTreeList()` method, with a model that does not have a tree
-     * @expectedException BadMethodCallException
-     * @expectedExceptionMessage  Unknown finder method "treeList"
-     */
-    public function testGetTreeListModelDoesNotHaveTree()
-    {
+        //With a model that does not have a tree
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('Unknown finder method "treeList"');
         $this->Posts->getTreeList();
     }
 
@@ -259,30 +230,17 @@ class AppTableTest extends TableTestCase
      */
     public function testQueryFromFilter()
     {
-        $expectedSql = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
-
         $data = [
             'id' => 2,
             'title' => 'Title',
             'user' => 3,
             'category' => 4,
-            'active' => 'yes',
+            'active' => I18N_YES,
             'priority' => 3,
             'created' => '2016-12',
         ];
-
-        $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
-        $this->assertStringEndsWith($expectedSql, $query->sql());
-
-        $params = collection($query->getValueBinder()->bindings())->extract('value')->map(function ($value) {
-            if ($value instanceof Time) {
-                return $value->i18nFormat('yyyy-MM-dd HH:mm:ss');
-            }
-
-            return $value;
-        })->toList();
-
-        $this->assertEquals([
+        $expectedSql = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
+        $expectedParams = [
             2,
             '%Title%',
             3,
@@ -291,39 +249,28 @@ class AppTableTest extends TableTestCase
             3,
             '2016-12-01 00:00:00',
             '2017-01-01 00:00:00',
-        ], $params);
-
-        $data['active'] = 'no';
-
+        ];
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
+        $this->assertStringEndsWith($expectedSql, $query->sql());
+
+        $params = collection($query->getValueBinder()->bindings())->extract('value')->map(function ($value) {
+            return $value instanceof Time ? $value->i18nFormat('yyyy-MM-dd HH:mm:ss') : $value;
+        })->toList();
+        $this->assertEquals($expectedParams, $params);
+
+        $query = $this->Posts->queryFromFilter($this->Posts->find(), ['active' => I18N_NO] + $data);
         $this->assertStringEndsWith($expectedSql, $query->sql());
         $this->assertEquals(false, $query->getValueBinder()->bindings()[':c4']['value']);
 
-        $data = ['filename' => 'image.jpg'];
-
-        $query = $this->Photos->queryFromFilter($this->Photos->find(), $data);
+        $query = $this->Photos->queryFromFilter($this->Photos->find(), $data = ['filename' => 'image.jpg']);
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.filename like :c0', $query->sql());
         $this->assertEquals('%image.jpg%', $query->getValueBinder()->bindings()[':c0']['value']);
-    }
 
-    /**
-     * Test for `queryFromFilter()` method, with invalid data
-     * @test
-     */
-    public function testQueryFromFilterWithInvalidData()
-    {
-        $data = [
-            'title' => 'ab',
-            'priority' => 6,
-            'created' => '2016-12-30',
-        ];
-
-        $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
+        //With some invalid datas
+        $query = $this->Posts->queryFromFilter($this->Posts->find(), ['title' => 'ab', 'priority' => 6, 'created' => '2016-12-30']);
         $this->assertEmpty($query->getValueBinder()->bindings());
 
-        $data = ['filename' => 'ab'];
-
-        $query = $this->Photos->queryFromFilter($this->Photos->find(), $data);
+        $query = $this->Photos->queryFromFilter($this->Photos->find(), ['filename' => 'ab']);
         $this->assertEmpty($query->getValueBinder()->bindings());
     }
 }

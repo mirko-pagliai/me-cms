@@ -34,9 +34,7 @@ class UsersCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
-        $parser->setDescription(__d('me_cms', 'Lists users'));
-
-        return $parser;
+        return $parser->setDescription(__d('me_cms', 'Lists users'));
     }
 
     /**
@@ -68,7 +66,8 @@ class UsersCommand extends Command
 
         if ($users->isEmpty()) {
             $io->error(__d('me_cms', 'There are no users'));
-            $this->abort();
+
+            return null;
         }
 
         //Sets headers and prints as table

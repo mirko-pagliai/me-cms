@@ -56,6 +56,7 @@ class User extends Entity
     /**
      * Gets the full name (virtual field)
      * @return string|void
+     * @todo Should raise an exception if the key is not existing
      */
     protected function _getFullName()
     {
@@ -69,6 +70,7 @@ class User extends Entity
     /**
      * Gets the picture (virtual field)
      * @return string
+     * @todo Should raise an exception if the key is not existing?
      */
     protected function _getPicture()
     {

@@ -43,9 +43,7 @@ class TagsTableTest extends TableTestCase
     public function testBuildRules()
     {
         $this->loadFixtures();
-
         $example = ['tag' => 'my tag'];
-
         $entity = $this->Table->newEntity($example);
         $this->assertNotEmpty($this->Table->save($entity));
 
@@ -84,7 +82,6 @@ class TagsTableTest extends TableTestCase
     public function testFindActive()
     {
         $this->loadFixtures();
-
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM tags Tags INNER JOIN posts_tags PostsTags ON Tags.id = (PostsTags.tag_id) INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Posts.id = (PostsTags.post_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
@@ -98,9 +95,7 @@ class TagsTableTest extends TableTestCase
      */
     public function testQueryFromFilter()
     {
-        $data = ['name' => 'test'];
-
-        $query = $this->Table->queryFromFilter($this->Table->find(), $data);
+        $query = $this->Table->queryFromFilter($this->Table->find(), ['name' => 'test']);
         $this->assertStringEndsWith('FROM tags Tags WHERE Tags.tag like :c0', $query->sql());
         $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
     }

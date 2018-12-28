@@ -10,22 +10,17 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
-if (!defined('ME_CMS_CACHE')) {
-    define('ME_CMS_CACHE', CACHE . 'me_cms' . DS);
-}
-
 //Default options (with File engine)
 $options = [
     'className' => 'File',
     'duration' => '+999 days',
-    'path' => ME_CMS_CACHE,
+    'path' => CACHE . 'me_cms' . DS,
     'prefix' => '',
     'mask' => 0777,
 ];
 
 foreach (['default', 'admin', 'banners', 'pages', 'photos', 'posts', 'static_pages', 'users'] as $name) {
-    $Cache[$name] = ['path' => ME_CMS_CACHE . $name] + $options;
+    $Cache[$name] = ['path' => CACHE . 'me_cms' . DS . $name] + $options;
 }
 
 return compact('Cache');

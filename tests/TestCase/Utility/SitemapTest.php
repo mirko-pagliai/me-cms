@@ -14,12 +14,7 @@ namespace MeCms\Test\TestCase\Utility;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\I18n\FrozenTime;
-use MeCms\Model\Table\PagesCategoriesTable;
-use MeCms\Model\Table\PhotosAlbumsTable;
-use MeCms\Model\Table\PostsCategoriesTable;
-use MeCms\Model\Table\TagsTable;
 use MeCms\TestSuite\TestCase;
 use MeCms\Utility\Sitemap;
 
@@ -61,23 +56,13 @@ class SitemapTest extends TestCase
     }
 
     /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        $this->removePlugins(['TestPlugin']);
-    }
-
-    /**
      * Test for `pages()` method
      * @test
      */
     public function testPages()
     {
         $this->loadFixtures('Pages', 'PagesCategories');
+        $table = $this->getMockForModel('MeCms.PagesCategories', null);
 
         $expected = [
             [
@@ -105,11 +90,8 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $table = $this->getMockForModel(PagesCategoriesTable::class, null);
         $this->assertEquals($expected, Sitemap::pages());
-
-        $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
-        $this->assertEquals($expected, Sitemap::pages());
+        $this->assertEquals($expected, Cache::read('sitemap', $table->getCacheName()));
 
         //Deletes all records
         $table->deleteAll(['id IS NOT' => null]);
@@ -124,6 +106,7 @@ class SitemapTest extends TestCase
     public function testPhotos()
     {
         $this->loadFixtures('Photos', 'PhotosAlbums');
+        $table = $this->getMockForModel('MeCms.PhotosAlbums', null);
 
         $expected = [
             [
@@ -157,11 +140,8 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $table = $this->getMockForModel(PhotosAlbumsTable::class, null);
         $this->assertEquals($expected, Sitemap::photos());
-
-        $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
-        $this->assertEquals($expected, Sitemap::photos());
+        $this->assertEquals($expected, Cache::read('sitemap', $table->getCacheName()));
 
         //Deletes all records
         $table->deleteAll(['id IS NOT' => null]);
@@ -176,6 +156,7 @@ class SitemapTest extends TestCase
     public function testPosts()
     {
         $this->loadFixtures('Posts', 'PostsCategories');
+        $table = $this->getMockForModel('MeCms.PostsCategories', null);
 
         $expected = [
             [
@@ -232,11 +213,8 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $table = $this->getMockForModel(PostsCategoriesTable::class, null);
         $this->assertEquals($expected, Sitemap::posts());
-
-        $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
-        $this->assertEquals($expected, Sitemap::posts());
+        $this->assertEquals($expected, Cache::read('sitemap', $table->getCacheName()));
 
         //Deletes all records
         $table->deleteAll(['id IS NOT' => null]);
@@ -251,6 +229,7 @@ class SitemapTest extends TestCase
     public function testPostsTags()
     {
         $this->loadFixtures('Posts', 'PostsTags', 'Tags');
+        $table = $this->getMockForModel('MeCms.Tags', null);
 
         $expected = [
             [
@@ -279,11 +258,8 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $table = $this->getMockForModel(TagsTable::class, null);
         $this->assertEquals($expected, Sitemap::postsTags());
-
-        $this->assertNotEmpty(Cache::read('sitemap', $table->getCacheName()));
-        $this->assertEquals($expected, Sitemap::postsTags());
+        $this->assertEquals($expected, Cache::read('sitemap', $table->getCacheName()));
 
         //Deletes all records
         $table->deleteAll(['id IS NOT' => null]);
@@ -302,7 +278,6 @@ class SitemapTest extends TestCase
         //It checks here the `lastmod` value and removes it from the array
         foreach ($map as $k => $url) {
             $this->assertEquals($url['lastmod'], (new FrozenTime($url['lastmod']))->format('c'));
-
             unset($map[$k]['lastmod']);
         }
 

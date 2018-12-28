@@ -12,18 +12,14 @@
  */
 namespace MeCms\Test\TestCase\View\Helper;
 
-use Cake\Core\Plugin;
-use MeCms\TestSuite\HelperTestCase;
+use MeTools\TestSuite\HelperTestCase;
 use TestPlugin\View\Helper\MenuHelper;
-use Tools\ReflectionTrait;
 
 /**
  * MenuBuilderHelperTest class
  */
 class MenuBuilderHelperTest extends HelperTestCase
 {
-    use ReflectionTrait;
-
     /**
      * Called before every test method
      * @return void
@@ -33,17 +29,6 @@ class MenuBuilderHelperTest extends HelperTestCase
         parent::setUp();
 
         $this->loadPlugins(['TestPlugin', 'TestPluginTwo']);
-    }
-
-    /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        $this->removePlugins(['TestPlugin', 'TestPluginTwo']);
     }
 
     /**

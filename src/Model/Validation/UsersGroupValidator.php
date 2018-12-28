@@ -36,11 +36,7 @@ class UsersGroupValidator extends AppValidator
                 'rule' => ['lengthBetween', 3, 100],
             ],
             'valid' => [
-                'message' => sprintf(
-                    '%s: %s',
-                    I18N_ALLOWED_CHARS,
-                    __d('me_cms', 'lowercase letters')
-                ),
+                'message' => sprintf('%s: %s', I18N_ALLOWED_CHARS, __d('me_cms', 'lowercase letters')),
                 'rule' => [$this, 'lowercaseLetters'],
             ],
         ])->requirePresence('name', 'create');

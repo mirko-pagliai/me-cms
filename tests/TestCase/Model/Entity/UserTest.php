@@ -25,10 +25,10 @@ class UserTest extends EntityTestCase
      */
     public function tearDown()
     {
+        parent::tearDown();
+
         safe_unlink_recursive(USER_PICTURES, 'empty');
         safe_unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
-
-        parent::tearDown();
     }
 
     /**

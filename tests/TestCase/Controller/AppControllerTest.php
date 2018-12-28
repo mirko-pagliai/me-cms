@@ -23,7 +23,7 @@ use MeCms\TestSuite\ControllerTestCase;
 class AppControllerTest extends ControllerTestCase
 {
     /**
-     * @var \Cake\Event\Event
+     * @var \Cake\Event\Event|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $Event;
 
@@ -32,14 +32,11 @@ class AppControllerTest extends ControllerTestCase
      * @param string $className Controller class name
      * @param array|null $methods The list of methods to mock
      * @param string $alias Controller alias
-     * @return object
-     * @uses getClassAlias()
+     * @return \Cake\Controller\Controller|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function getMockForController($className = null, $methods = null, $alias = 'App')
     {
-        $className = $className ?: AppController::class;
-
-        return parent::getMockForController($className, $methods, $alias);
+        return parent::getMockForController($className ?: AppController::class, $methods, $alias);
     }
 
     /**
@@ -76,9 +73,7 @@ class AppControllerTest extends ControllerTestCase
             'RequestHandler',
             'Uploader',
         ];
-        foreach ($expectedComponents as $component) {
-            $this->assertHasComponent($component);
-        }
+        array_map([$this, 'assertHasComponent'], $expectedComponents);
     }
 
     /**
@@ -87,20 +82,17 @@ class AppControllerTest extends ControllerTestCase
      */
     public function testBeforeFilter()
     {
-        $controller = $this->getMockForController();
-        $controller->request = $controller->request
-            ->withParam('action', 'my-action')
+        $this->Controller->request = $this->Controller->request->withParam('action', 'my-action')
             ->withQueryParams(['sort' => 'my-field']);
-        $controller->beforeFilter($this->Event);
-        $this->assertNotEmpty($controller->Auth->allowedActions);
-        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $controller->paginate);
-        $this->assertNull($controller->viewBuilder()->getLayout());
-        $this->assertEquals('MeCms.View/App', $controller->viewBuilder()->getClassName());
+        $this->Controller->beforeFilter($this->Event);
+        $this->assertNotEmpty($this->Controller->Auth->allowedActions);
+        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $this->Controller->paginate);
+        $this->assertNull($this->Controller->viewBuilder()->getLayout());
+        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
 
         //Admin request
         $controller = $this->getMockForController();
-        $controller->request = $controller->request
-            ->withParam('action', 'my-action')
+        $controller->request = $controller->request->withParam('action', 'my-action')
             ->withQueryParams(['sort' => 'my-field'])
             ->withParam('prefix', ADMIN_PREFIX);
         $controller->beforeFilter($this->Event);

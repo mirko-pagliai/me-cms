@@ -118,11 +118,7 @@ class AppValidator extends Validator
                 'rule' => ['lengthBetween', 3, 100],
             ],
             'slug' => [
-                'message' => sprintf(
-                    '%s: %s',
-                    I18N_ALLOWED_CHARS,
-                    __d('me_cms', 'lowercase letters, numbers, dash')
-                ),
+                'message' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_DASH),
                 'rule' => [$this, 'slug'],
             ],
         ]);
@@ -196,7 +192,6 @@ class AppValidator extends Validator
     {
         //Lowercase letters, numbers, dash. At least three chars.
         //It must contain at least one letter and must begin and end with a letter or a number.
-        return (bool)preg_match('/[a-z]/', $value) &&
-            (bool)preg_match('/^[a-z0-9][a-z0-9\-]+[a-z0-9]$/', $value);
+        return preg_match('/[a-z]/', $value) && preg_match('/^[a-z\d][a-z\d\-]+[a-z\d]$/', $value);
     }
 }

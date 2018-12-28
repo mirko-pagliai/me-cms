@@ -22,7 +22,7 @@ use MeTools\Utility\Youtube;
 class GetPreviewsFromTextTraitTest extends TestCase
 {
     /**
-     * @var object
+     * @var \MeCms\Model\Table\PostsTable|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $Posts;
 
@@ -120,17 +120,15 @@ class GetPreviewsFromTextTraitTest extends TestCase
         $this->assertEquals([Youtube::getPreview($youtubeId)], $extractImagesMethod('[youtube]' . $youtubeId . '[/youtube]'));
 
         //Image and Youtube video
-        $this->assertEquals(
-            ['http://example.com/image.jpg', Youtube::getPreview($youtubeId)],
-            $extractImagesMethod('[youtube]' . $youtubeId . '[/youtube]<img src=\'http://example.com/image.jpg\'>')
-        );
+        $expected = ['http://example.com/image.jpg', Youtube::getPreview($youtubeId)];
+        $result = $extractImagesMethod('[youtube]' . $youtubeId . '[/youtube]<img src=\'http://example.com/image.jpg\'>');
+        $this->assertEquals($expected, $result);
 
         //Two Youtube videos
         $youtubeId = ['6z4KK7RWjmk', '6z4KK7RWjmj'];
-        $this->assertEquals(
-            [Youtube::getPreview($youtubeId[0]), Youtube::getPreview($youtubeId[1])],
-            $extractImagesMethod('[youtube]' . $youtubeId[0] . '[/youtube][youtube]' . $youtubeId[1] . '[/youtube]')
-        );
+        $expected = [Youtube::getPreview($youtubeId[0]), Youtube::getPreview($youtubeId[1])];
+        $result = $extractImagesMethod('[youtube]' . $youtubeId[0] . '[/youtube][youtube]' . $youtubeId[1] . '[/youtube]');
+        $this->assertEquals($expected, $result);
     }
 
     /**
@@ -139,10 +137,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
      */
     public function testGetPreviewSize()
     {
-        $this->assertEquals(
-            [400, 400],
-            $this->invokeMethod($this->Posts, 'getPreviewSize', [WWW_ROOT . 'img' . DS . 'image.jpg'])
-        );
+        $this->assertEquals([400, 400], $this->invokeMethod($this->Posts, 'getPreviewSize', [WWW_ROOT . 'img' . DS . 'image.jpg']));
     }
 
     /**
@@ -182,10 +177,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
         $this->assertEquals(400, $result[0]->width);
         $this->assertEquals(300, $result[0]->height);
 
-        foreach ([
-            'image.jpg',
-            WWW_ROOT . 'img' . DS . 'image.jpg',
-        ] as $image) {
+        foreach (['image.jpg', WWW_ROOT . 'img' . DS . 'image.jpg'] as $image) {
             $result = $getPreviewsMethod('<img src=\'' . $image . '\' />');
             $this->assertCount(1, $result);
             $this->assertInstanceof(Entity::class, $result[0]);

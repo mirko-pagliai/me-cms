@@ -61,16 +61,7 @@
                 echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);
                 ?>
             </div>
-            <?php
-            //Topbar is cached only if debugging is disabled
-            $topbarCache = null;
-
-            if (!getConfig('debug')) {
-                $topbarCache = ['key' => 'topbar'];
-            }
-
-            echo $this->element('MeCms.topbar', [], ['cache' => $topbarCache]);
-            ?>
+            <?= $this->element('MeCms.topbar', [], ['cache' => getConfig('debug') ? null : ['key' => 'topbar']]) ?>
         </header>
         <div class="container mb-4">
             <div class="row">
@@ -93,14 +84,7 @@
             </div>
         </div>
         <?php
-        //Footer is cached only if debugging is disabled
-        $footerCache = null;
-
-        if (!getConfig('debug')) {
-            $footerCache = ['key' => 'footer'];
-        }
-
-        echo $this->element('MeCms.footer', [], ['cache' => $footerCache]);
+        echo $this->element('MeCms.footer', [], ['cache' => getConfig('debug') ? null : ['key' => 'footer']]);
         echo $this->fetch('css_bottom');
         echo $this->fetch('script_bottom');
         ?>

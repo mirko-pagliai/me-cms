@@ -249,18 +249,12 @@ class PostsTagsWidgetsCellTest extends CellTestCase
 
         //Tests cache
         $fromCache = Cache::read('widget_tags_popular_2', $this->Table->getCacheName());
-        $this->assertEquals(['cat', 'dog'], array_keys($fromCache->toArray()));
-
-        foreach ($fromCache as $entity) {
-            $this->assertNull($entity->size);
-        }
+        $this->assertEquals(2, $fromCache->count());
+        array_map([$this, 'assertNull'], $fromCache->extract('size')->toArray());
 
         $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->getCacheName());
-        $this->assertEquals(['cat', 'dog'], array_keys($fromCache->toArray()));
-
-        foreach ($fromCache as $entity) {
-            $this->assertGreaterThan(0, $entity->size);
-        }
+        $this->assertEquals(2, $fromCache->count());
+        array_map([$this, 'assertNotEmpty'], $fromCache->extract('size')->toArray());
 
         //With no tags
         Cache::clearAll();
@@ -312,10 +306,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
 
         //Tests cache
         $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->getCacheName());
-        $this->assertEquals(['example1', 'example2'], array_keys($fromCache->toArray()));
-
-        foreach ($fromCache as $entity) {
-            $this->assertEquals(40, $entity->size);
-        }
+        $this->assertEquals(2, $fromCache->count());
+        $this->assertEquals(['example1' => 40, 'example2' => 40], $fromCache->extract('size')->toArray());
     }
 }

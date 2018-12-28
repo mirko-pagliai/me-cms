@@ -30,7 +30,8 @@ class FixKcfinderCommandTest extends TestCase
     {
         //For now KCFinder is not available
         $this->exec('me_cms.fix_kcfinder -v');
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
+        $this->assertOutputEmpty();
         $this->assertErrorContains('KCFinder is not available');
 
         //Now KCFinder is installed

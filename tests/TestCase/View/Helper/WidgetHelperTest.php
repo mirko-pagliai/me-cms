@@ -14,8 +14,7 @@ namespace MeCms\Test\TestCase\View\Helper;
 
 use App\View\Cell\ExampleWidgetsCell;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
-use MeCms\TestSuite\HelperTestCase;
+use MeTools\TestSuite\HelperTestCase;
 use TestPlugin\View\Cell\PluginExampleWidgetsCell;
 
 /**
@@ -32,17 +31,6 @@ class WidgetHelperTest extends HelperTestCase
         parent::setUp();
 
         $this->loadPlugins(['TestPlugin']);
-    }
-
-    /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        $this->removePlugins(['TestPlugin']);
     }
 
     /**

@@ -89,10 +89,8 @@ class AppTable extends Table
      */
     public function findActive(Query $query, array $options)
     {
-        $query->where([sprintf('%s.active', $this->getAlias()) => true])
+        return $query->where([sprintf('%s.active', $this->getAlias()) => true])
             ->where([sprintf('%s.created <=', $this->getAlias()) => new Time]);
-
-        return $query;
     }
 
     /**
@@ -103,12 +101,10 @@ class AppTable extends Table
      */
     public function findPending(Query $query, array $options)
     {
-        $query->where(['OR' => [
+        return $query->where(['OR' => [
             sprintf('%s.active', $this->getAlias()) => false,
             sprintf('%s.created >', $this->getAlias()) => new Time,
         ]]);
-
-        return $query;
     }
 
     /**
@@ -212,7 +208,7 @@ class AppTable extends Table
 
         //"Active" field
         if (!empty($data['active'])) {
-            $query->where([sprintf('%s.active', $this->getAlias()) => $data['active'] === 'yes']);
+            $query->where([sprintf('%s.active', $this->getAlias()) => $data['active'] === I18N_YES]);
         }
 
         //"Priority" field

@@ -108,10 +108,8 @@ class UsersGroupsController extends AppController
             $this->UsersGroups->deleteOrFail($group);
 
             $this->Flash->success(I18N_OPERATION_OK);
-        } elseif ($id <= 3) {
-            $this->Flash->alert(__d('me_cms', 'You cannot delete this users group'));
         } else {
-            $this->Flash->alert(I18N_BEFORE_DELETE);
+            $this->Flash->alert($id <= 3 ? __d('me_cms', 'You cannot delete this users group') : I18N_BEFORE_DELETE);
         }
 
         return $this->redirect(['action' => 'index']);

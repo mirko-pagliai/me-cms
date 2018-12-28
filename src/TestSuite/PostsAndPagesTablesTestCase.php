@@ -74,9 +74,9 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     {
         $this->loadFixtures();
 
-        $this->Table = $this->getMockForModel($this->Table->getAlias(), ['setNextToBePublished'], ['className' => get_parent_class($this->Table)]);
-        $this->Table->expects($this->once())->method('setNextToBePublished');
-        $this->Table->afterSave(new Event(null), new Entity, new ArrayObject);
+        $Table = $this->getMockForModel($this->Table->getAlias(), ['setNextToBePublished'], ['className' => get_parent_class($this->Table)]);
+        $Table->expects($this->once())->method('setNextToBePublished');
+        $Table->afterSave(new Event(null), new Entity, new ArrayObject);
     }
 
     /**
@@ -88,24 +88,24 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     {
         $this->loadFixtures();
 
-        $this->Table = $this->getMockForModel($this->Table->getAlias(), ['getPreviewSize'], ['className' => get_parent_class($this->Table)]);
-        $this->Table->method('getPreviewSize')->will($this->returnValue([400, 300]));
+        $Table = $this->getMockForModel($this->Table->getAlias(), ['getPreviewSize'], ['className' => get_parent_class($this->Table)]);
+        $Table->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos
-        $entity = $this->Table->newEntity(self::$example);
-        $this->assertNotEmpty($this->Table->save($entity));
+        $entity = $Table->newEntity(self::$example);
+        $this->assertNotEmpty($Table->save($entity));
         $this->assertEmpty($entity->preview);
 
-        $this->Table->delete($entity);
+        $Table->delete($entity);
 
         //Tries with a text with an image
         $example = self::$example;
         $example['text'] = '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg' . '\' />';
-        $entity = $this->Table->newEntity($example);
-        $this->assertNotEmpty($this->Table->save($entity));
+        $entity = $Table->newEntity($example);
+        $this->assertNotEmpty($Table->save($entity));
         $this->assertCount(1, $entity->preview);
         $this->assertInstanceOf(Entity::class, $entity->preview[0]);
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $entity->preview[0]->url);
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $entity->preview[0]->url);
         $this->assertEquals(400, $entity->preview[0]->width);
         $this->assertEquals(300, $entity->preview[0]->height);
     }

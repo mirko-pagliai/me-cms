@@ -14,6 +14,7 @@ namespace MeCms\Test\TestCase\Utility;
 
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
+use Cake\Utility\Hash;
 use Cake\Utility\Xml;
 use MeCms\TestSuite\TestCase;
 use MeCms\Utility\SitemapBuilder;
@@ -60,8 +61,6 @@ class SitemapBuilderTest extends TestCase
         parent::setUp();
 
         $this->SitemapBuilder = new SitemapBuilder;
-
-        Cache::clearAll();
     }
 
     /**
@@ -72,7 +71,7 @@ class SitemapBuilderTest extends TestCase
     {
         parent::tearDown();
 
-        $this->loadPlugins(['TestPlugin', 'TestPluginTwo']);
+        Cache::clearAll();
     }
 
     /**
@@ -144,23 +143,10 @@ class SitemapBuilderTest extends TestCase
     public function testGenerate()
     {
         $this->loadFixtures();
-
-        $map = $this->SitemapBuilder->generate();
-        $this->assertStringStartsWith(
-            '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL .
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL .
-            '  <url>',
-            $map
-        );
-        $this->assertStringEndsWith('  </url>' . PHP_EOL . '</urlset>', $map);
-
-        $mapAsArray = Xml::toArray(Xml::build($map))['urlset']['url'];
-        $this->assertGreaterThan(0, count($mapAsArray));
-
-        foreach ($mapAsArray as $url) {
-            $this->assertNotEmpty($url['loc']);
-            $this->assertNotEmpty($url['priority']);
-        }
+        $map = Xml::toArray(Xml::build($this->SitemapBuilder->generate()))['urlset']['url'];
+        $this->assertNotEmpty($map);
+        $this->assertNotEmpty(Hash::extract($map, '{n}.loc'));
+        $this->assertNotEmpty(Hash::extract($map, '{n}.priority'));
     }
 
     /**
@@ -171,13 +157,10 @@ class SitemapBuilderTest extends TestCase
     {
         $this->loadFixtures();
         $this->loadPlugins(['TestPlugin']);
-
         $map = $this->SitemapBuilder->generate();
         $this->assertContains('first-folder/page-on-first-from-plugin', $map);
         $this->assertContains('first-folder/second_folder/page_on_second_from_plugin', $map);
         $this->assertContains('test-from-plugin', $map);
-
-        $mapAsArray = Xml::toArray(Xml::build($map))['urlset']['url'];
-        $this->assertGreaterThan(0, count($mapAsArray));
+        $this->assertNotEmpty(Xml::toArray(Xml::build($map))['urlset']['url']);
     }
 }

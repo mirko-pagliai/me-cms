@@ -56,17 +56,6 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        safe_unlink_recursive(KCFINDER, 'empty');
-
-        parent::tearDown();
-    }
-
-    /**
      * Tests for `beforeFilter()` method
      * @test
      */
@@ -169,7 +158,7 @@ class PostsControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Posts/index.ctp');
+        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'index.ctp');
         $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
     }
 
@@ -183,7 +172,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Posts/add.ctp');
+        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'add.ctp');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
 
         //POST request. Data are valid
@@ -208,7 +197,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin/Posts/edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'edit.ctp');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
         $this->assertContainsInstanceof(Tag::class, $this->viewVariable('post')->tags);
 

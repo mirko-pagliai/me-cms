@@ -46,11 +46,7 @@ $this->append('actions', $this->Html->button(
 
                     <?php
                         $actions = [
-                            $this->Html->link(
-                                I18N_EDIT,
-                                ['action' => 'edit', $category->id],
-                                ['icon' => 'pencil-alt']
-                            ),
+                            $this->Html->link(I18N_EDIT, ['action' => 'edit', $category->id], ['icon' => 'pencil-alt']),
                         ];
 
                         //Only admins can delete posts categories

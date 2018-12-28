@@ -117,10 +117,7 @@ class PostsWidgetsCellTest extends CellTestCase
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->Widget->getView()->setRequest(new ServerRequest);
-
-        //Tests cache
-        $fromCache = Cache::read('widget_categories', $this->Table->getCacheName());
-        $this->assertArrayKeysEqual(['first-post-category', 'sub-sub-post-category'], $fromCache->toArray());
+        $this->assertEquals(2, Cache::read('widget_categories', $this->Table->getCacheName())->count());
 
         //With no posts
         Cache::clearAll();
@@ -281,8 +278,7 @@ class PostsWidgetsCellTest extends CellTestCase
 
         //Tests cache
         $fromCache = Cache::read('widget_months', $this->Table->getCacheName());
-        $this->assertArrayKeysEqual(['2016/12', '2016/11'], $fromCache->toArray());
-
+        $this->assertEquals(2, $fromCache->count());
         foreach ($fromCache as $key => $entity) {
             $this->assertInstanceOf(FrozenDate::class, $entity->month);
             $this->assertEquals($key, $entity->month->i18nFormat('yyyy/MM'));

@@ -12,9 +12,11 @@
  */
 namespace MeCms\Test\TestCase\Controller\Component;
 
-use MeCms\TestSuite\ComponentTestCase;
+use ErrorException;
 use MeCms\Utility\Checkups\KCFinder;
 use MeCms\Utility\Checkups\Webroot;
+use MeTools\TestSuite\ComponentTestCase;
+use Tools\Exception\NotWritableException;
 
 /**
  * KcFinderComponentTest class
@@ -33,30 +35,16 @@ class KcFinderComponentTest extends ComponentTestCase
     }
 
     /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        safe_unlink_recursive(KCFINDER, 'empty');
-
-        parent::tearDown();
-    }
-
-    /**
      * Test for `getDefaultConfig()` method
      * @test
      */
     public function testGetDefaultConfig()
     {
         $getDefaultConfigMethod = function () {
-            $defaultConfig = $this->invokeMethod($this->Component, 'getDefaultConfig');
-            $defaultConfig['uploadDir'] = rtr($defaultConfig['uploadDir']);
-
-            return $defaultConfig;
+            return $this->invokeMethod($this->Component, 'getDefaultConfig');
         };
 
-        $this->assertEquals([
+        $expected = [
             'denyExtensionRename' => true,
             'denyUpdateCheck' => true,
             'dirnameChangeChars' => [
@@ -69,7 +57,7 @@ class KcFinderComponentTest extends ComponentTestCase
                 ':' => '_',
             ],
             'jpegQuality' => 100,
-            'uploadDir' => 'tests/test_app/TestApp/webroot/files/',
+            'uploadDir' => UPLOADED,
             'uploadURL' => 'http://localhost/files',
             'types' => [
                 'images' => '*img',
@@ -88,30 +76,13 @@ class KcFinderComponentTest extends ComponentTestCase
                     'rename' => false,
                 ],
             ],
-        ], $getDefaultConfigMethod());
+        ];
+        $this->assertEquals($expected, $getDefaultConfigMethod());
 
-        //Tries with admin user
+        //With an admin user
         $this->Component->Auth->setUser(['group' => ['name' => 'admin']]);
-
-        $this->assertEquals([
-            'denyExtensionRename' => true,
-            'denyUpdateCheck' => true,
-            'dirnameChangeChars' => [
-                ' ' => '_',
-                ':' => '_',
-            ],
-            'disabled' => false,
-            'filenameChangeChars' => [
-                ' ' => '_',
-                ':' => '_',
-            ],
-            'jpegQuality' => (int)100,
-            'uploadDir' => 'tests/test_app/TestApp/webroot/files/',
-            'uploadURL' => 'http://localhost/files',
-            'types' => [
-                'images' => '*img',
-            ],
-        ], $getDefaultConfigMethod());
+        unset($expected['access']);
+        $this->assertEquals($expected, $getDefaultConfigMethod());
     }
 
     /**
@@ -124,7 +95,6 @@ class KcFinderComponentTest extends ComponentTestCase
 
         safe_mkdir(UPLOADED . 'docs');
         $this->assertEquals(['docs' => '', 'images' => '*img'], $this->Component->getTypes());
-
         safe_rmdir(UPLOADED . 'docs');
     }
 
@@ -146,29 +116,17 @@ class KcFinderComponentTest extends ComponentTestCase
             'types',
             'access',
         ], $this->Component->request->getSession()->read('KCFINDER'));
-    }
 
-    /**
-     * Test for `initialize()` method, with `uploaded` dir not writable
-     * @expectedException Tools\Exception\NotWritableException
-     * @expectedExceptionMessage File or directory is not writable
-     * @test
-     */
-    public function testInitializeDirNotWritable()
-    {
-        $this->Component->Checkup->Webroot = $this->getMockBuilder(Webroot::class)->getMock();
-        $this->Component->initialize([]);
-    }
+        //With `uploaded` dir not writable
+        $this->assertException(NotWritableException::class, function () {
+            $this->Component->Checkup->Webroot = $this->getMockBuilder(Webroot::class)->getMock();
+            $this->Component->initialize([]);
+        }, 'File or directory `' . rtr(UPLOADED) . '` is not writable');
 
-    /**
-     * Test for `initialize()` method, with KCFinder not available
-     * @expectedException ErrorException
-     * @expectedExceptionMessage KCFinder is not available
-     * @test
-     */
-    public function testInitializeKCFinderNotAvailable()
-    {
-        $this->Component->Checkup->KCFinder = $this->getMockBuilder(KCFinder::class)->getMock();
-        $this->Component->initialize([]);
+        //With KCFinder not available
+        $this->assertException(ErrorException::class, function () {
+            $this->Component->Checkup->KCFinder = $this->getMockBuilder(KCFinder::class)->getMock();
+            $this->Component->initialize([]);
+        }, 'KCFinder is not available');
     }
 }

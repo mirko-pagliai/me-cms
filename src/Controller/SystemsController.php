@@ -66,9 +66,9 @@ class SystemsController extends AppController
                     $this->Flash->success(I18N_OPERATION_OK);
 
                     return $this->redirect(['_name' => 'homepage']);
-                } else {
-                    $this->Flash->error(I18N_OPERATION_NOT_OK);
                 }
+
+                $this->Flash->error(I18N_OPERATION_NOT_OK);
             } else {
                 $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
             }

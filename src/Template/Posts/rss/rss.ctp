@@ -13,9 +13,7 @@
 use Cake\I18n\I18n;
 
 $this->set([
-    'documentData' => [
-        'xmlns:dc' => 'http://purl.org/dc/elements/1.1/',
-    ],
+    'documentData' => ['xmlns:dc' => 'http://purl.org/dc/elements/1.1/'],
     'channelData' => [
         'title' => __d('me_cms', 'Latest posts'),
         'link' => $this->Url->build('/', true),

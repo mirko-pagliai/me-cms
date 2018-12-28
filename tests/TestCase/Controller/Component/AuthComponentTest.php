@@ -12,7 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Controller\Component;
 
-use MeCms\TestSuite\ComponentTestCase;
+use MeTools\TestSuite\ComponentTestCase;
 
 /**
  * AuthComponentTest class
@@ -90,7 +90,7 @@ class AuthComponentTest extends ComponentTestCase
     public function testIdentify()
     {
         $this->loadFixtures();
-        $expected = [
+        $expectedValues = [
             'id' => 6,
             'username' => 'zeta',
             'email' => 'zeta@example.com',
@@ -102,11 +102,13 @@ class AuthComponentTest extends ComponentTestCase
             'full_name' => 'Zeta Zeta',
             'picture' => 'MeCms.no-avatar.jpg',
         ];
-
         $this->Component->constructAuthenticate();
         $this->Component->request = $this->Component->request->withData('username', 'zeta');
         $this->Component->request = $this->Component->request->withData('password', 'zeta');
-        $this->assertEquals($expected, $this->Component->identify());
+        $user = $this->Component->identify();
+        foreach ($expectedValues as $key => $value) {
+            $this->assertEquals($user[$key], $value);
+        }
     }
 
     /**

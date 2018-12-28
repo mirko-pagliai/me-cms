@@ -14,6 +14,7 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Validation\UsersGroupValidator;
 
 /**
  * UsersGroups model
@@ -34,10 +35,8 @@ class UsersGroupsTable extends AppTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['label'], I18N_VALUE_ALREADY_USED));
-        $rules->add($rules->isUnique(['name'], I18N_VALUE_ALREADY_USED));
-
-        return $rules;
+        return $rules->add($rules->isUnique(['label'], I18N_VALUE_ALREADY_USED))
+            ->add($rules->isUnique(['name'], I18N_VALUE_ALREADY_USED));
     }
 
     /**
@@ -58,6 +57,6 @@ class UsersGroupsTable extends AppTable
 
         $this->addBehavior('Timestamp');
 
-        $this->_validatorClass = '\MeCms\Model\Validation\UsersGroupValidator';
+        $this->_validatorClass = UsersGroupValidator::class;
     }
 }

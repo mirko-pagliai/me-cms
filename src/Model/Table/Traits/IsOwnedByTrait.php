@@ -32,10 +32,7 @@ trait IsOwnedByTrait
     public function isOwnedBy($recordId, $userId = null)
     {
         return (bool)$this->find()
-            ->where([
-                'id' => $recordId,
-                'user_id' => $userId,
-             ])
+            ->where(['id' => $recordId, 'user_id' => $userId])
             ->first();
     }
 }

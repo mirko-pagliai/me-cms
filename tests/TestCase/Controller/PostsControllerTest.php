@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Http\Exception\ForbiddenException;
 use Cake\I18n\Time;
 use MeCms\Model\Entity\Post;
 use MeCms\TestSuite\ControllerTestCase;
@@ -59,7 +60,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts/index.ctp');
+        $this->assertTemplate('Posts' . DS . 'index.ctp');
         $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
 
         $cache = sprintf('index_limit_%s_page_%s', getConfigOrFail('default.records'), 1);
@@ -87,7 +88,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts/index_by_date.ctp');
+        $this->assertTemplate('Posts' . DS . 'index_by_date.ctp');
         $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
         $this->assertEquals($date, $this->viewVariable('date'));
 
@@ -114,16 +115,10 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
 
         //Tries with various possible dates
-        foreach ([
-            'today',
-            'yesterday',
-            '2016',
-            '2016/12',
-            '2016/12/29',
-        ] as $date) {
+        foreach (['today', 'yesterday', '2016', '2016/12', '2016/12/29'] as $date) {
             $this->get(['_name' => 'postsByDate', $date]);
             $this->assertResponseOkAndNotEmpty();
-            $this->assertTemplate('Posts/index_by_date.ctp');
+            $this->assertTemplate('Posts' . DS . 'index_by_date.ctp');
         }
 
         //GET request with query string
@@ -142,18 +137,12 @@ class PostsControllerTest extends ControllerTestCase
         $this->get('/posts/rss');
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseRegExp($expected);
-        $this->assertTemplate('Posts/rss/rss.ctp');
+        $this->assertTemplate('Posts' . DS . 'rss' . DS . 'rss.ctp');
         $this->assertHeaderContains('Content-Type', 'application/rss+xml');
         $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
-    }
 
-    /**
-     * Tests for `rss()` method, using an invalid extension
-     * @expectedException \Cake\Http\Exception\ForbiddenException
-     * @test
-     */
-    public function testRssInvalidExtension()
-    {
+        //With an invalid extension
+        $this->expectException(ForbiddenException::class);
         $this->Controller->request = $this->Controller->request->withParam('_ext', 'html');
         $this->Controller->rss();
     }
@@ -169,7 +158,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts/search.ctp');
+        $this->assertTemplate('Posts' . DS . 'search.ctp');
         $this->assertEmpty($this->viewVariable('posts'));
         $this->assertEmpty($this->viewVariable('pattern'));
 
@@ -214,7 +203,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get(['_name' => 'post', $slug]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts/view.ctp');
+        $this->assertTemplate('Posts' . DS . 'view.ctp');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
         $this->assertContainsInstanceof(Post::class, $this->viewVariable('related'));
 
@@ -233,7 +222,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get(['_name' => 'postsPreview', $slug]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts/view.ctp');
+        $this->assertTemplate('Posts' . DS . 'view.ctp');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
         $this->assertContainsInstanceof(Post::class, $this->viewVariable('related'));
     }

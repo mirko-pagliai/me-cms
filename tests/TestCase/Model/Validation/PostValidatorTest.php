@@ -72,7 +72,9 @@ class PostValidatorTest extends ValidationTestCase
 
         foreach (['Abc', 'ab$', 'ab-c', 'ab_c'] as $tags_as_string) {
             $errors = $this->Table->newEntity(compact('tags_as_string') + $this->example)->getErrors();
-            $this->assertEquals(['tags' => ['validTagsChars' => 'Allowed chars: lowercase letters, numbers, space']], $errors);
+            $this->assertEquals(['tags' => [
+                'validTagsChars' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_SPACE),
+            ]], $errors);
         }
 
         foreach (['abc', str_repeat('a', 30)] as $tags_as_string) {

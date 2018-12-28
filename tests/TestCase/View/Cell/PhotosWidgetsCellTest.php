@@ -115,10 +115,7 @@ class PhotosWidgetsCellTest extends CellTestCase
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->Widget->getView()->setRequest(new ServerRequest);
-
-        //Tests cache
-        $fromCache = Cache::read('widget_albums', $this->Table->getCacheName());
-        $this->assertArrayKeysEqual(['another-album-test', 'test-album'], $fromCache->toArray());
+        $this->assertEquals(2, Cache::read('widget_albums', $this->Table->getCacheName())->count());
 
         //With no photos
         Cache::clearAll();

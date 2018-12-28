@@ -15,6 +15,7 @@ namespace MeCms\Test\TestCase\Mailer;
 use MeCms\Mailer\UserMailer;
 use MeCms\Model\Entity\User;
 use MeCms\TestSuite\TestCase;
+use Tools\Exception\KeyNotExistsException;
 
 /**
  * UserMailerTest class
@@ -27,7 +28,7 @@ class UserMailerTest extends TestCase
     public $Mailer;
 
     /**
-     * @var object
+     * @var \MeCms\Model\Entity\User
      */
     protected $example;
 
@@ -61,16 +62,10 @@ class UserMailerTest extends TestCase
         $this->assertEquals('Activate your account', $result->getSubject());
         $this->assertEquals('MeCms.Users/activation', $result->viewBuilder()->getTemplate());
         $this->assertEquals(['fullName' => 'James Blue'], $result->getViewVars());
-    }
 
-    /**
-     * Tests for `activation()` method, with some missing data
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Missing `email` property from data
-     * @test
-     */
-    public function testActivationMissingData()
-    {
+        //With some missing data
+        $this->expectException(KeyNotExistsException::class);
+        $this->expectExceptionMessage('Key `email` does not exist');
         unset($this->example->email);
         $this->Mailer->activation($this->example);
     }
@@ -113,16 +108,10 @@ class UserMailerTest extends TestCase
         $this->assertEquals('Your password has been changed', $result->getSubject());
         $this->assertEquals('MeCms.Users/change_password', $result->viewBuilder()->getTemplate());
         $this->assertEquals(['fullName' => 'James Blue'], $result->getViewVars());
-    }
 
-    /**
-     * Tests for `changePassword()` method, with some missing data
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Missing `email` property from data
-     * @test
-     */
-    public function testChangePasswordMissingData()
-    {
+        //With some missing data
+        $this->expectException(KeyNotExistsException::class);
+        $this->expectExceptionMessage('Key `email` does not exist');
         unset($this->example->email);
         $this->Mailer->changePassword($this->example);
     }
@@ -164,16 +153,10 @@ class UserMailerTest extends TestCase
         $this->assertEquals('Reset your password', $result->getSubject());
         $this->assertEquals('MeCms.Users/password_forgot', $result->viewBuilder()->getTemplate());
         $this->assertEquals(['fullName' => 'James Blue'], $result->getViewVars());
-    }
 
-    /**
-     * Tests for `passwordForgot()` method, with some missing data
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Missing `email` property from data
-     * @test
-     */
-    public function testPasswordForgotMissingData()
-    {
+        //With some missing data
+        $this->expectException(KeyNotExistsException::class);
+        $this->expectExceptionMessage('Key `email` does not exist');
         unset($this->example->email);
         $this->Mailer->passwordForgot($this->example);
     }

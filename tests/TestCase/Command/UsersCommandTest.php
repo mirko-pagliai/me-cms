@@ -51,8 +51,8 @@ class UsersCommandTest extends TestCase
                 $user->status = __d('me_cms', 'Active');
             }
 
-            $user->created = $user->created instanceof Time ? $user->created->i18nFormat('yyyy/MM/dd HH:mm') : $user->created;
-            $user->group = $user->group instanceof UsersGroup ? $user->group->label : $user->group;
+            $user->set('created', $user->created instanceof Time ? $user->created->i18nFormat('yyyy/MM/dd HH:mm') : $user->created);
+            $user->set('group', $user->group instanceof UsersGroup ? $user->group->label : $user->group);
 
             return $user->extract(['id', 'username', 'group', 'full_name', 'email', 'post_count', 'status', 'created']);
         })->toList();
@@ -65,7 +65,7 @@ class UsersCommandTest extends TestCase
         //Deletes all users
         $Users->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.users');
-        $this->assertExitWithError();
+        $this->assertExitWithSuccess();
         $this->assertErrorContains('There are no users');
     }
 }

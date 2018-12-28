@@ -10,15 +10,15 @@
     method to get the cache configuration name used by the table. It can also
     returns the names for the associated tables;
 * removed `SerializedLog` class. Use instead `EntityFileLog\Log\Engine\EntityFileLog`;
-* added `ComponentTestCase`, `HelperTestCase` and `TestCase` classes;
 * `IntegrationTestCase` has been removed and its methods have been moved to
     `ControllerTestCase`. You can also use `IntegrationTestTrait` provided by MeTools;
-* `ConsoleIntegrationTestCase` has been removed, use instead
-    `ConsoleIntegrationTestTrait` provided by MeTools.
+* `ComponentTestCase`, `ConsoleIntegrationTestCase` and `HelperTestCase` have
+    been removed, use instead classes provided by MeTools.
 * removed `ME_CMS` constants. It no longer uses also `ASSETS`,
-    `DATABASE_BACKUP`, `ME_TOOLS`, `RECAPTCHA_MAILHIDE` and `THUMBER` constants;
+    `DATABASE_BACKUP`, `ME_CMS_CACHE`, `ME_TOOLS`, `RECAPTCHA_MAILHIDE` and
+    `THUMBER` constants;
 * updated for CakePHP 3.7.1 and fixed all deprecations;
-* updated for `php-tools` 1.1.7.
+* updated for `php-tools` 1.1.10 and `me-tools` 2.18.1.
 
 ## 2.25 branch
 ### 2.25.4
