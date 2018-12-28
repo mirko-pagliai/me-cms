@@ -71,7 +71,7 @@ class StaticPageTest extends TestCase
     public function testGetPluginPath()
     {
         $result = $this->invokeMethod($this->StaticPage, 'getPluginPath', ['TestPlugin']);
-        $this->assertEquals(Plugin::path('TestPlugin') . 'src' . DS . 'Template' . DS . 'StaticPages' . DS , $result);
+        $this->assertEquals(Plugin::path('TestPlugin') . 'src' . DS . 'Template' . DS . 'StaticPages' . DS, $result);
     }
 
     /**

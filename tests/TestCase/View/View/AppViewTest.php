@@ -160,6 +160,6 @@ class AppViewTest extends TestCase
             ['nestled'],
         ], $this->View->userbar());
         $this->View->render(false);
-        $this->assertEquals('<li>string</li>' . PHP_EOL .'<li>first</li>' . PHP_EOL . '<li>second</li>' . PHP_EOL . '<li>nestled</li>', $this->View->fetch('userbar'));
+        $this->assertEquals('<li>string</li>' . PHP_EOL . '<li>first</li>' . PHP_EOL . '<li>second</li>' . PHP_EOL . '<li>nestled</li>', $this->View->fetch('userbar'));
     }
 }
