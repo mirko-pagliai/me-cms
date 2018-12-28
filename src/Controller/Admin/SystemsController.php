@@ -188,17 +188,18 @@ class SystemsController extends AppController
 
         switch ($type) {
             case 'all':
-                array_map('safe_unlink_recursive', [$assetsTarget, LOGS]);
+                safe_unlink_recursive($assetsTarget, 'empty');
+                safe_unlink_recursive(LOGS, 'empty');
                 $success = self::clearCache() && self::clearSitemap() && (new ThumbManager)->clearAll();
                 break;
             case 'cache':
                 $success = self::clearCache();
                 break;
             case 'assets':
-                safe_unlink_recursive($assetsTarget);
+                safe_unlink_recursive($assetsTarget, 'empty');
                 break;
             case 'logs':
-                safe_unlink_recursive(LOGS);
+                safe_unlink_recursive(LOGS, 'empty');
                 break;
             case 'sitemap':
                 $success = self::clearSitemap();
