@@ -205,7 +205,7 @@ class Sitemap extends SitemapBuilder
 
             Cache::write('sitemap', $url, $table->getCacheName());
         }
-        
+
         return $url;
     }
 
