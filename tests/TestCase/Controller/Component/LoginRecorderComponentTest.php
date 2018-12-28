@@ -35,7 +35,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
     {
         $component = $this->getMockForComponent(LoginRecorderComponent::class, $methods);
 
-        if (in_array('getUserAgent', $methods)) {
+        if (is_array($methods) && in_array('getUserAgent', $methods)) {
             $component->method('getUserAgent')
                 ->will($this->returnValue($userAgent ?: [
                     'platform' => 'Linux',
@@ -116,23 +116,18 @@ class LoginRecorderComponentTest extends ComponentTestCase
      */
     public function testGetUserAgent()
     {
-        $result = $this->invokeMethod($this->Component, 'getUserAgent');
-        $expected = [
-            'platform' => 'Linux',
-            'browser' => 'Chrome',
-            'version' => '55.0.2883.87',
-        ];
-        $this->assertEquals($expected, $result);
-
         $expected = [
             'platform' => 'Windows',
             'browser' => 'Firefox',
             'version' => '16.0',
         ];
-        $component = $this->getMockForLoginRecorder(['getUserAgent'], $expected);
-        $result = $this->invokeMethod($component, 'getUserAgent', [
-            'Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0',
-        ]);
+
+        $Component = $this->getMockForLoginRecorder(null);
+        $result = $this->invokeMethod($Component, 'getUserAgent', $expected);
+        $this->assertArrayKeysEqual(['platform', 'browser', 'version'], $result);
+
+        $Component = $this->getMockForLoginRecorder(['getUserAgent'], $expected);
+        $result = $this->invokeMethod($Component, 'getUserAgent', ['Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0']);
         $this->assertEquals($expected, $result);
     }
 
