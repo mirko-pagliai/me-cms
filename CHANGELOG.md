@@ -13,7 +13,8 @@
 * `IntegrationTestCase` has been removed and its methods have been moved to
     `ControllerTestCase`. You can also use `IntegrationTestTrait` provided by MeTools;
 * `ComponentTestCase`, `ConsoleIntegrationTestCase` and `HelperTestCase` have
-    been removed, use instead classes provided by MeTools.
+    been removed, use instead classes provided by MeTools;
+* added tests for Windows. Fixed bug in solving slug static pages on Windows;
 * removed `ME_CMS` constants. It no longer uses also `ASSETS`,
     `DATABASE_BACKUP`, `ME_CMS_CACHE`, `ME_TOOLS`, `RECAPTCHA_MAILHIDE` and
     `THUMBER` constants;
