@@ -15,10 +15,6 @@ namespace MeCms\Test\TestCase\Utility;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
-use MeCms\Model\Table\PagesCategoriesTable;
-use MeCms\Model\Table\PhotosAlbumsTable;
-use MeCms\Model\Table\PostsCategoriesTable;
-use MeCms\Model\Table\TagsTable;
 use MeCms\TestSuite\TestCase;
 use MeCms\Utility\Sitemap;
 
@@ -66,7 +62,7 @@ class SitemapTest extends TestCase
     public function testPages()
     {
         $this->loadFixtures('Pages', 'PagesCategories');
-        $table = $this->getMockForModel(PagesCategoriesTable::class, null);
+        $table = $this->getMockForModel('MeCms.PagesCategories', null);
 
         $expected = [
             [
@@ -110,7 +106,7 @@ class SitemapTest extends TestCase
     public function testPhotos()
     {
         $this->loadFixtures('Photos', 'PhotosAlbums');
-        $table = $this->getMockForModel(PhotosAlbumsTable::class, null);
+        $table = $this->getMockForModel('MeCms.PhotosAlbums', null);
 
         $expected = [
             [
@@ -160,7 +156,7 @@ class SitemapTest extends TestCase
     public function testPosts()
     {
         $this->loadFixtures('Posts', 'PostsCategories');
-        $table = $this->getMockForModel(PostsCategoriesTable::class, null);
+        $table = $this->getMockForModel('MeCms.PostsCategories', null);
 
         $expected = [
             [
@@ -233,7 +229,7 @@ class SitemapTest extends TestCase
     public function testPostsTags()
     {
         $this->loadFixtures('Posts', 'PostsTags', 'Tags');
-        $table = $this->getMockForModel(TagsTable::class, null);
+        $table = $this->getMockForModel('MeCms.Tags', null);
 
         $expected = [
             [
