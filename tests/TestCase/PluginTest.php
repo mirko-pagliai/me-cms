@@ -13,7 +13,7 @@
 namespace MeCms\TestCase;
 
 use Cake\Http\BaseApplication;
-use MeCms\Plugin;
+use MeCms\Plugin as MeCms;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -33,12 +33,6 @@ class PluginTest extends TestCase
             return array_keys(iterator_to_array($app->getPlugins()));
         };
 
-        $plugin = $this->getMockBuilder(Plugin::class)
-            ->setMethods(['setVendorLinks', 'setWritableDirs'])
-            ->getMock();
-        $this->assertEmpty($getLoadedPlugins());
-        $plugin->bootstrap($app);
-
         $expected = [
             'Assets',
             'MeTools',
@@ -48,21 +42,22 @@ class PluginTest extends TestCase
             'Thumber',
             'Tokens',
         ];
-        $this->assertEquals($expected, $getLoadedPlugins());
-
-        $app->getPlugins()->clear();
-        $this->assertEmpty($getLoadedPlugins());
-        $plugin = $this->getMockBuilder(Plugin::class)
-            ->setMethods(['isCli', 'setVendorLinks', 'setWritableDirs'])
+        $plugin = $this->getMockBuilder(MeCms::class)
+            ->setMethods(['setVendorLinks', 'setWritableDirs'])
             ->getMock();
-        $plugin->method('isCli')->will($this->returnValue(false));
         $plugin->bootstrap($app);
+        $this->assertEquals($expected, $getLoadedPlugins());
 
         $expectedDiff = [
             'DebugKit',
             'CommonMark',
             'WyriHaximus/MinifyHtml',
         ];
+        $plugin = $this->getMockBuilder(MeCms::class)
+            ->setMethods(['isCli', 'setVendorLinks', 'setWritableDirs'])
+            ->getMock();
+        $plugin->method('isCli')->will($this->returnValue(false));
+        $plugin->bootstrap($app);
         $this->assertEquals($expectedDiff, array_values(array_diff($getLoadedPlugins(), $expected)));
     }
 }
