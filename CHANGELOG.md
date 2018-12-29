@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.26 branch
+### 2.26.1
+* fixed a bug when loading plugins, when the `Asset` plugin does not exist.
+
 ### 2.26.0
 * `InstallShell` has been replaced with console commands. Every method of the
     previous class is now a `MeCms\Command\Install` class;

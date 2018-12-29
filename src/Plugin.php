@@ -143,15 +143,15 @@ class Plugin extends BasePlugin
      */
     protected function setWritableDirs()
     {
-        $dirs = array_unique(array_merge(Configure::read('WRITABLE_DIRS', []), [
-            getConfigOrFail('Assets.target'),
+        $dirs = array_unique(array_filter(array_merge(Configure::read('WRITABLE_DIRS', []), [
+            getConfig('Assets.target'),
             getConfigOrFail('DatabaseBackup.target'),
             getConfigOrFail('Thumber.target'),
             BANNERS,
             LOGIN_RECORDS,
             PHOTOS,
             USER_PICTURES,
-        ]));
+        ])));
 
         return Configure::write('WRITABLE_DIRS', $dirs) ? $dirs : false;
     }
