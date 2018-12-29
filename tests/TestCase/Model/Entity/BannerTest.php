@@ -44,8 +44,7 @@ class BannerTest extends EntityTestCase
      */
     public function testPathGetMutator()
     {
-        $this->Entity->filename = 'example.gif';
-        $this->assertEquals(BANNERS . 'example.gif', $this->Entity->path);
+        $this->assertEquals(BANNERS . 'example.gif', $this->Entity->set('filename', 'example.gif')->get('path'));
     }
 
     /**
@@ -54,7 +53,6 @@ class BannerTest extends EntityTestCase
      */
     public function testWwwGetMutator()
     {
-        $this->Entity->filename = 'example.gif';
-        $this->assertEquals(BANNERS_WWW . 'example.gif', $this->Entity->www);
+        $this->assertEquals(BANNERS_WWW . 'example.gif', $this->Entity->set('filename', 'example.gif')->get('www'));
     }
 }

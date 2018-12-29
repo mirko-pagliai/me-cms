@@ -45,8 +45,7 @@ class PhotosAlbumTest extends EntityTestCase
      */
     public function testPathGetMutator()
     {
-        $this->Entity->id = 1;
-        $this->assertNotEmpty($this->Entity->path);
+        $this->assertNotEmpty($this->Entity->set('id', 1)->get('path'));
     }
 
     /**
@@ -55,8 +54,7 @@ class PhotosAlbumTest extends EntityTestCase
      */
     public function testPreviewGetMutator()
     {
-        $this->Entity->id = 1;
-        $this->assertNull($this->Entity->preview);
+        $this->assertNull($this->Entity->set('id', 1)->get('preview'));
 
         $this->Entity->photos = [new Photo(['album_id' => 1, 'filename' => 'photo.jpg'])];
         $this->assertNotEmpty($this->Entity->photos[0]->path);

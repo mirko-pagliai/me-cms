@@ -49,8 +49,7 @@ class PhotoTest extends EntityTestCase
     {
         $this->assertNull($this->Entity->path);
 
-        $this->Entity->album_id = 1;
-        $this->Entity->filename = 'photo.jpg';
+        $this->Entity->set(['album_id' => 1, 'filename' => 'photo.jpg']);
         $this->assertEquals(PHOTOS . $this->Entity->album_id . DS . $this->Entity->filename, $this->Entity->path);
     }
 
@@ -62,15 +61,7 @@ class PhotoTest extends EntityTestCase
     {
         $this->assertNull($this->Entity->plain_description);
 
-        $expected = 'This is a text';
-
-        $this->Entity->description = 'This is a [readmore /]text';
-        $this->assertEquals($expected, $this->Entity->plain_description);
-        $this->assertNotEquals($this->Entity->description, $this->Entity->plain_description);
-
-        $this->Entity->description = $expected;
-        $this->assertEquals($expected, $this->Entity->plain_description);
-        $this->assertEquals($this->Entity->description, $this->Entity->plain_description);
+        $this->assertEquals('This is a text', $this->Entity->set('description', 'This is a [readmore /]text')->get('plain_description'));
     }
 
     /**
@@ -81,8 +72,7 @@ class PhotoTest extends EntityTestCase
     {
         $this->assertNull($this->Entity->preview);
 
-        $this->Entity->album_id = 1;
-        $this->Entity->filename = 'photo1.jpg';
+        $this->Entity->set(['album_id' => 1, 'filename' => 'photo1.jpg']);
         safe_copy(APP . WEBROOT_DIR . DS . 'img' . DS . 'image.jpg', PHOTOS . $this->Entity->album_id . DS . $this->Entity->filename, $this->Entity->path);
         $this->assertInstanceof(Entity::class, $this->Entity->preview);
         $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $this->Entity->preview->url);
