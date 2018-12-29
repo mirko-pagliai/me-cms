@@ -45,11 +45,10 @@ class Tag extends Entity
 
     /**
      * Gets the tag slug (virtual field)
-     * @return string
-     * @todo Should raise an exception if the key is not existing
+     * @return string|null
      */
     protected function _getSlug()
     {
-        return strtolower(Text::slug($this->_properties['tag']));
+        return empty($this->_properties['tag']) ? null : strtolower(Text::slug($this->_properties['tag']));
     }
 }

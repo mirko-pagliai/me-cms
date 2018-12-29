@@ -51,13 +51,12 @@ class Page extends Entity
 
     /**
      * Gets text as plain text (virtual field)
-     * @return string|void
-     * @todo Should raise an exception if the key is not existing
+     * @return string|null
      */
     protected function _getPlainText()
     {
         if (empty($this->_properties['text'])) {
-            return;
+            return null;
         }
 
         //Loads the `BBCode` helper

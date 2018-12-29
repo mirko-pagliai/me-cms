@@ -55,13 +55,12 @@ class User extends Entity
 
     /**
      * Gets the full name (virtual field)
-     * @return string|void
-     * @todo Should raise an exception if the key is not existing
+     * @return string|null
      */
     protected function _getFullName()
     {
         if (empty($this->_properties['first_name']) || empty($this->_properties['last_name'])) {
-            return;
+            return null;
         }
 
         return sprintf('%s %s', $this->_properties['first_name'], $this->_properties['last_name']);
@@ -70,7 +69,6 @@ class User extends Entity
     /**
      * Gets the picture (virtual field)
      * @return string
-     * @todo Should raise an exception if the key is not existing?
      */
     protected function _getPicture()
     {

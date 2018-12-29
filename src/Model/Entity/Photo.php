@@ -49,13 +49,12 @@ class Photo extends Entity
 
     /**
      * Gets the photo path (virtual field)
-     * @return string|void
-     * @todo Should raise an exception if the key is not existing
+     * @return string|null
      */
     protected function _getPath()
     {
         if (empty($this->_properties['album_id']) || empty($this->_properties['filename'])) {
-            return;
+            return null;
         }
 
         return PHOTOS . $this->_properties['album_id'] . DS . $this->_properties['filename'];
@@ -63,13 +62,12 @@ class Photo extends Entity
 
     /**
      * Gets description as plain text (virtual field)
-     * @return string|void
-     * @todo Should raise an exception if the key is not existing
+     * @return string|null
      */
     protected function _getPlainDescription()
     {
         if (empty($this->_properties['description'])) {
-            return;
+            return null;
         }
 
         //Loads the `BBCode` helper
@@ -80,9 +78,8 @@ class Photo extends Entity
 
     /**
      * Gets the photo preview (virtual field)
-     * @return Entity|void Entity with `preview`, `width` and `height`
+     * @return Entity|null Entity with `preview`, `width` and `height`
      *  properties
-     * @todo Should raise an exception if the key is not existing
      * @uses _getPath()
      */
     protected function _getPreview()
@@ -90,7 +87,7 @@ class Photo extends Entity
         $path = $this->_getPath();
 
         if (!$path) {
-            return;
+            return null;
         }
 
         list($width, $height) = getimagesize($path);
