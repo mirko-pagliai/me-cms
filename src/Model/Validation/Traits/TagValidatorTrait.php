@@ -27,7 +27,7 @@ trait TagValidatorTrait
      */
     public function validTagLength($value)
     {
-        return strlen($value) >= 3 && strlen($value) <= 30;
+        return strlen($value) >= 3 && strlen($value) <= 40;
     }
 
     /**

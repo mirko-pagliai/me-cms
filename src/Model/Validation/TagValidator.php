@@ -36,7 +36,7 @@ class TagValidator extends AppValidator
         $this->add('tag', [
             'validTagLength' => [
                 'last' => true,
-                'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 30),
+                'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 40),
                 'rule' => [$this, 'validTagLength'],
             ],
             'validTagChars' => [

@@ -65,9 +65,9 @@ class PostValidatorTest extends ValidationTestCase
      */
     public function testValidationForTags()
     {
-        foreach (['ab', str_repeat('a', 31)] as $tags_as_string) {
+        foreach (['ab', str_repeat('a', 41)] as $tags_as_string) {
             $errors = $this->Table->newEntity(compact('tags_as_string') + $this->example)->getErrors();
-            $this->assertEquals(['tags' => ['validTagsLength' => 'Each tag must be between 3 and 30 chars']], $errors);
+            $this->assertEquals(['tags' => ['validTagsLength' => 'Each tag must be between 3 and 40 chars']], $errors);
         }
 
         foreach (['Abc', 'ab$', 'ab-c', 'ab_c'] as $tags_as_string) {
@@ -77,7 +77,7 @@ class PostValidatorTest extends ValidationTestCase
             ]], $errors);
         }
 
-        foreach (['abc', str_repeat('a', 30)] as $tags_as_string) {
+        foreach (['abc', str_repeat('a', 40)] as $tags_as_string) {
             $errors = $this->Table->newEntity(compact('tags_as_string') + $this->example)->getErrors();
             $this->assertEmpty($errors);
         }
