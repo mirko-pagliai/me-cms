@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
+use MeCms\Command\VersionUpdatesCommand;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
@@ -53,9 +54,22 @@ class VersionUpdatesCommandTest extends TestCase
         $Tags->getConnection()->execute('ALTER TABLE tags MODIFY tag varchar(254) NOT NULL');
         $this->assertEquals(254, $this->getMockForModel('MeCms.Tags', null)->getSchema()->getColumn('tag')['length']);
 
-        $result = $this->invokeMethod($this->Command, 'alterTagColumnSize');
+        $result = $this->Command->alterTagColumnSize();
         $this->assertNull($result);
         $this->assertEquals(255, $this->getMockForModel('MeCms.Tags', null)->getSchema()->getColumn('tag')['length']);
+    }
+
+    /**
+     * Test for `deleteOldDirectories()` method
+     * @test
+     */
+    public function testdeleteOldDirectories()
+    {
+        $dir = WWW_ROOT . 'fonts';
+        safe_mkdir($dir);
+        $this->assertFileExists($dir);
+        $this->Command->deleteOldDirectories();
+        $this->assertFileNotExists($dir);
     }
 
     /**
@@ -64,12 +78,16 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $Command = $this->getMockBuilder(get_parent_class($this->Command))
-            ->setMethods(['alterTagColumnSize'])
+        $methods = get_child_methods(VersionUpdatesCommand::class);
+
+        $Command = $this->getMockBuilder(VersionUpdatesCommand::class)
+            ->setMethods($methods)
             ->getMock();
 
-        $Command->expects($this->once())
-            ->method('alterTagColumnSize');
+        foreach ($methods as $method) {
+            $Command->expects($this->once())
+            ->method($method);
+        }
 
         $this->assertNull($Command->run([], new ConsoleIo));
     }

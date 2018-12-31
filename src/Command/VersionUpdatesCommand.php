@@ -37,7 +37,7 @@ class VersionUpdatesCommand extends Command
      * Alter the length of the `tag` column of the `tags` table
      * @return type
      */
-    protected function alterTagColumnSize()
+    public function alterTagColumnSize()
     {
         $Tags = $this->loadModel('MeCms.Tags');
 
@@ -49,15 +49,27 @@ class VersionUpdatesCommand extends Command
     }
 
     /**
+     * Deletes old directories
+     * @return void
+     * @since 2.26.2
+     */
+    public function deleteOldDirectories()
+    {
+        safe_rmdir_recursive(WWW_ROOT . 'fonts');
+    }
+
+    /**
      * Performs some updates to the database or files needed for versioning
      * @param Arguments $args The command arguments
      * @param ConsoleIo $io The console io
      * @return null|int The exit code or null for success
      * @uses alterTagColumnSize()
+     * @uses deleteOldDirectories()
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
         $this->alterTagColumnSize();
+        $this->deleteOldDirectories();
 
         return null;
     }

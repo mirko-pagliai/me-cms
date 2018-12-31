@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.26 branch
+### 2.26.2
+* added `VersionUpdatesCommand::deleteOldDirectories()` method.
+
 ### 2.26.1
 * the length of the tags has been increased to 40 characters;
 * added `VersionUpdatesCommand`, that performs some updates to the database or
