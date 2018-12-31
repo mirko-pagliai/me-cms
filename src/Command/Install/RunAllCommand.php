@@ -45,7 +45,7 @@ class RunAllCommand extends BaseRunAllCommand
                 'command' => FixKcfinderCommand::class,
             ],
             [
-                'question' => __d('me_tools', 'Updates to the database or files needed for versioning?'),
+                'question' => __d('me_cms', 'Updates to the database or files needed for versioning?'),
                 'default' => 'Y',
                 'command' => VersionUpdatesCommand::class,
             ],
