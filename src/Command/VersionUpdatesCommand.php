@@ -35,7 +35,7 @@ class VersionUpdatesCommand extends Command
 
     /**
      * Alter the length of the `tag` column of the `tags` table
-     * @return type
+     * @return void
      */
     public function alterTagColumnSize()
     {
@@ -44,8 +44,6 @@ class VersionUpdatesCommand extends Command
         if ($Tags->getSchema()->getColumn('tag')['length'] < 255) {
             $Tags->getConnection()->execute('ALTER TABLE tags MODIFY tag varchar(255) NOT NULL');
         }
-
-        return null;
     }
 
     /**

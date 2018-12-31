@@ -54,8 +54,7 @@ class VersionUpdatesCommandTest extends TestCase
         $Tags->getConnection()->execute('ALTER TABLE tags MODIFY tag varchar(254) NOT NULL');
         $this->assertEquals(254, $this->getMockForModel('MeCms.Tags', null)->getSchema()->getColumn('tag')['length']);
 
-        $result = $this->Command->alterTagColumnSize();
-        $this->assertNull($result);
+        $this->Command->alterTagColumnSize();
         $this->assertEquals(255, $this->getMockForModel('MeCms.Tags', null)->getSchema()->getColumn('tag')['length']);
     }
 
