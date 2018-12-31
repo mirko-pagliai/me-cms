@@ -65,24 +65,32 @@ class PostValidatorTest extends ValidationTestCase
      */
     public function testValidationForTags()
     {
-        foreach (['ab', str_repeat('a', 41)] as $tags_as_string) {
-            $errors = $this->Table->newEntity(compact('tags_as_string') + $this->example)->getErrors();
-            $this->assertEquals(['tags' => ['validTagsLength' => 'Each tag must be between 3 and 40 chars']], $errors);
-        }
-
-        foreach (['Abc', 'ab$', 'ab-c', 'ab_c'] as $tags_as_string) {
-            $errors = $this->Table->newEntity(compact('tags_as_string') + $this->example)->getErrors();
+        foreach (['ab', str_repeat('a', 41)] as $tag) {
+            $errors = $this->Table->newEntity(['tags_as_string' => $tag] + $this->example)->getErrors();
             $this->assertEquals(['tags' => [
-                'validTagsChars' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_SPACE),
+                'validTags' => sprintf('Tag "%s": must be between 3 and 40 chars', $tag),
             ]], $errors);
         }
 
-        foreach (['abc', str_repeat('a', 40)] as $tags_as_string) {
-            $errors = $this->Table->newEntity(compact('tags_as_string') + $this->example)->getErrors();
-            $this->assertEmpty($errors);
+        foreach (['Abc', 'ab$', 'ab-c', 'ab_c'] as $tag) {
+            $errors = $this->Table->newEntity(['tags_as_string' => $tag] + $this->example)->getErrors();
+            $this->assertEquals(['tags' => [
+                'validTags' => sprintf('Tag "%s": %s: %s', $tag, lcfirst(I18N_ALLOWED_CHARS), I18N_LOWERCASE_NUMBERS_SPACE),
+            ]], $errors);
         }
 
+        //Multiple errors
+        $tags = ['ab$', str_repeat('a', 41)];
+        $errors = $this->Table->newEntity(['tags_as_string' => implode(', ', $tags)] + $this->example)->getErrors();
+        $errorsAsArray = explode(PHP_EOL, $errors['tags']['validTags']);
+        $this->assertEquals([
+            sprintf('Tag "%s": %s: %s', $tags[0], lcfirst(I18N_ALLOWED_CHARS), I18N_LOWERCASE_NUMBERS_SPACE),
+            sprintf('Tag "%s": must be between 3 and 40 chars', $tags[1]),
+        ], $errorsAsArray);
+
         foreach ([
+            'abc',
+            str_repeat('a', 40),
             'first, second',
             'first,  second',
             'first , second',
@@ -94,7 +102,7 @@ class PostValidatorTest extends ValidationTestCase
             ' first, second ',
             ' first , second ',
         ] as $tags_as_string) {
-            $this->Table->newEntity(compact('tags_as_string') + $this->example)->getErrors();
+            $errors = $this->Table->newEntity(compact('tags_as_string') + $this->example)->getErrors();
             $this->assertEmpty($errors);
         }
     }

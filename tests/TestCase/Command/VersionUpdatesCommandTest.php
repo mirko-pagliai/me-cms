@@ -47,14 +47,15 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAlterTagColumnSize()
     {
+        $this->loadFixtures();
+
         $Tags = $this->getMockForModel('MeCms.Tags', null);
-        $initialColumn = $Tags->getSchema()->getColumn('tag');
         $Tags->getConnection()->execute('ALTER TABLE tags MODIFY tag varchar(254) NOT NULL');
         $this->assertEquals(254, $this->getMockForModel('MeCms.Tags', null)->getSchema()->getColumn('tag')['length']);
 
         $result = $this->invokeMethod($this->Command, 'alterTagColumnSize');
         $this->assertNull($result);
-        $this->assertEquals($initialColumn, $this->getMockForModel('MeCms.Tags', null)->getSchema()->getColumn('tag'));
+        $this->assertEquals(255, $this->getMockForModel('MeCms.Tags', null)->getSchema()->getColumn('tag')['length']);
     }
 
     /**

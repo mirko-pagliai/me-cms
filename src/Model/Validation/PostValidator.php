@@ -12,7 +12,7 @@
  */
 namespace MeCms\Model\Validation;
 
-use MeCms\Model\Validation\Traits\TagValidatorTrait;
+use MeCms\Model\Validation\TagValidator;
 use MeCms\Validation\AppValidator;
 
 /**
@@ -20,8 +20,6 @@ use MeCms\Validation\AppValidator;
  */
 class PostValidator extends AppValidator
 {
-    use TagValidatorTrait;
-
     /**
      * Construct.
      *
@@ -54,55 +52,39 @@ class PostValidator extends AppValidator
 
         //Tags
         $this->add('tags', [
-            'validTagsLength' => [
+            'validTags' => [
                 'last' => true,
-                'message' => __d('me_cms', 'Each tag must be between {0} and {1} chars', 3, 40),
-                'rule' => [$this, 'validTagsLength'],
-            ],
-            'validTagsChars' => [
-                'message' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_SPACE),
-                'rule' => [$this, 'validTagsChars'],
+                'rule' => [$this, 'validTags'],
             ],
         ])->allowEmpty('tags');
     }
 
     /**
-     * Tags validation method (length).
-     * For each tag, it checks if the tag has a valid length
+     * Tags validation method.
+     *
+     * It uses the `TagValidator` and checks its rules on each tag and returns
+     *  `true` on success or a string with all a string with all errors found
+     *  (separated by `PHP_EOL`) on failure.
      * @param string $value Field value
-     * @param array $context Field context
-     * @return bool
-     * @use \MeCms\Model\Validation\Traits\TagValidatorTrait::validTagLength()
+     * @return bool|string `true` on success or an error message on failure
+     * @since 2.26.1
+     * @uses \MeCms\Model\Validation\TagValidator
      */
-    public function validTagsLength($value, $context)
+    public function validTags($value)
     {
+        $validator = new TagValidator;
+        $messages = [];
+
         foreach ($value as $tag) {
-            //Checks if each tag has has a valid length
-            if (empty($tag['tag']) || !$this->validTagLength($tag['tag'], $context)) {
-                return false;
+            $errors = $validator->errors($tag);
+
+            if (!empty($errors['tag'])) {
+                foreach ($errors['tag'] as $error) {
+                    $messages[] = __d('me_cms', 'Tag "{0}": {1}', $tag['tag'], lcfirst($error));
+                }
             }
         }
 
-        return true;
-    }
-
-    /**
-     * Tags validation method (syntax).
-     * For each tag, it checks if the tag has a valid syntax
-     * @param string $value Field value
-     * @param array $context Field context
-     * @return bool
-     * @use \MeCms\Model\Validation\Traits\TagValidatorTrait::validTagChars()
-     */
-    public function validTagsChars($value, $context)
-    {
-        foreach ($value as $tag) {
-            //Checks if the tag has a valid syntax
-            if (empty($tag['tag']) || !$this->validTagChars($tag['tag'], $context)) {
-                return false;
-            }
-        }
-
-        return true;
+        return empty($messages) ?: implode(PHP_EOL, $messages);
     }
 }

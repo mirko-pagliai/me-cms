@@ -92,7 +92,7 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
 
             //Tags error
             if ($this->Form->isFieldError('tags')) {
-                echo $this->Form->error('tags');
+                echo str_replace(PHP_EOL, '<br />', $this->Form->error('tags'));
             }
         ?>
     </div>

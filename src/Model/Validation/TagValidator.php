@@ -12,7 +12,6 @@
  */
 namespace MeCms\Model\Validation;
 
-use MeCms\Model\Validation\Traits\TagValidatorTrait;
 use MeCms\Validation\AppValidator;
 
 /**
@@ -20,8 +19,6 @@ use MeCms\Validation\AppValidator;
  */
 class TagValidator extends AppValidator
 {
-    use TagValidatorTrait;
-
     /**
      * Construct.
      *
@@ -36,13 +33,35 @@ class TagValidator extends AppValidator
         $this->add('tag', [
             'validTagLength' => [
                 'last' => true,
-                'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 40),
                 'rule' => [$this, 'validTagLength'],
             ],
             'validTagChars' => [
-                'message' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_SPACE),
                 'rule' => [$this, 'validTagChars'],
             ],
         ]);
+    }
+
+    /**
+     * Checks if the tag has a valid length
+     * @param string $value Field value
+     * @return bool|string `true` on success or an error message on failure
+     */
+    public function validTagLength($value)
+    {
+        $success = strlen($value) >= 3 && strlen($value) <= 40;
+
+        return $success ?: __d('me_cms', 'Must be between {0} and {1} chars', 3, 40);
+    }
+
+    /**
+     * Checks if the tag has a valid syntax (lowercase letters, numbers, space)
+     * @param string $value Field value
+     * @return bool|string `true` on success or an error message on failure
+     */
+    public function validTagChars($value)
+    {
+        $success = (bool)preg_match('/^[a-z\d\s]+$/', $value);
+
+        return $success ?: sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_SPACE);
     }
 }
