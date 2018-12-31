@@ -58,8 +58,7 @@ class UserTest extends EntityTestCase
     {
         $this->assertNull($this->Entity->full_name);
 
-        $this->Entity->first_name = 'Alfa';
-        $this->Entity->last_name = 'Beta';
+        $this->Entity->set(['first_name' => 'Alfa', 'last_name' => 'Beta']);
         $this->assertEquals($this->Entity->first_name . ' ' . $this->Entity->last_name, $this->Entity->full_name);
     }
 
@@ -69,18 +68,15 @@ class UserTest extends EntityTestCase
      */
     public function testPictureGetMutator()
     {
-        $this->Entity->id = 1;
-        $this->assertEquals('MeCms.no-avatar.jpg', $this->Entity->picture);
+        $this->assertEquals('MeCms.no-avatar.jpg', $this->Entity->set('id', 1)->get('picture'));
 
         safe_create_file(WWW_ROOT . 'img' . DS . 'no-avatar.jpg', null);
         $this->assertEquals('no-avatar.jpg', $this->Entity->picture);
 
         $id = 0;
         foreach (['jpg', 'jpeg', 'gif', 'png', 'JPEG'] as $extension) {
-            $id++;
-            $this->Entity->id = $id;
-            safe_create_file(WWW_ROOT . 'img' . DS . 'users' . DS . $id . '.' . $extension);
-            $this->assertEquals('users' . DS . $id . '.' . $extension, $this->Entity->picture);
+            safe_create_file(WWW_ROOT . 'img' . DS . 'users' . DS . ++$id . '.' . $extension);
+            $this->assertEquals('users' . DS . $id . '.' . $extension, $this->Entity->set('id', $id)->get('picture'));
         }
     }
 }

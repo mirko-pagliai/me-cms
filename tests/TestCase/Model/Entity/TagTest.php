@@ -44,10 +44,11 @@ class TagTest extends EntityTestCase
      */
     public function testSlugGetMutator()
     {
-        $this->Entity->tag = 'This is a tag';
-        $this->assertEquals('this-is-a-tag', $this->Entity->slug);
-
-        $this->Entity->tag = 'MY_TAG.a!';
-        $this->assertEquals('my-tag-a', $this->Entity->slug);
+        foreach ([
+            'This is a tag' => 'this-is-a-tag',
+            'MY_TAG.a!' => 'my-tag-a',
+        ] as $tag => $expectedSlug) {
+            $this->assertEquals($expectedSlug, $this->Entity->set('tag', $tag)->slug);
+        }
     }
 }

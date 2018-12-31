@@ -260,11 +260,6 @@ class Initial extends AbstractMigration
                 'limit' => 255,
                 'null' => true,
             ])
-            ->addColumn('active', 'boolean', [
-                'default' => true,
-                'limit' => null,
-                'null' => false,
-            ])
             ->addColumn('photo_count', 'integer', [
                 'default' => '0',
                 'limit' => 11,
@@ -442,7 +437,7 @@ class Initial extends AbstractMigration
         $this->table('tags')
             ->addColumn('tag', 'string', [
                 'default' => null,
-                'limit' => 30,
+                'limit' => 255,
                 'null' => false,
             ])
             ->addColumn('post_count', 'integer', [
@@ -603,18 +598,18 @@ class Initial extends AbstractMigration
 
     public function down()
     {
-        $this->dropTable('banners');
-        $this->dropTable('banners_positions');
-        $this->dropTable('pages');
-        $this->dropTable('pages_categories');
-        $this->dropTable('photos');
-        $this->dropTable('photos_albums');
-        $this->dropTable('posts');
-        $this->dropTable('posts_categories');
-        $this->dropTable('posts_tags');
-        $this->dropTable('tags');
-        $this->dropTable('tokens');
-        $this->dropTable('users');
-        $this->dropTable('users_groups');
+        $this->table('banners')->drop()->save();
+        $this->table('banners_positions')->drop()->save();
+        $this->table('pages')->drop()->save();
+        $this->table('pages_categories')->drop()->save();
+        $this->table('photos')->drop()->save();
+        $this->table('photos_albums')->drop()->save();
+        $this->table('posts')->drop()->save();
+        $this->table('posts_categories')->drop()->save();
+        $this->table('posts_tags')->drop()->save();
+        $this->table('tags')->drop()->save();
+        $this->table('tokens')->drop()->save();
+        $this->table('users')->drop()->save();
+        $this->table('users_groups')->drop()->save();
     }
 }

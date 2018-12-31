@@ -12,8 +12,9 @@
  */
 namespace MeCms\TestCase;
 
+use Cake\Core\Configure;
 use Cake\Http\BaseApplication;
-use MeCms\Plugin;
+use MeCms\Plugin as MeCms;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -22,23 +23,51 @@ use MeCms\TestSuite\TestCase;
 class PluginTest extends TestCase
 {
     /**
+     * @var \MeCms\Plugin|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $Plugin;
+
+    /**
+     * @var \Cake\Http\BaseApplication|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $app;
+
+    /**
+     * Called before every test method
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
+
+        $this->Plugin = $this->getMockBuilder(MeCms::class)
+            ->setMethods(['isCli'])
+            ->getMock();
+    }
+
+    /**
      * Tests for `bootstrap()` method
      * @test
      */
     public function testBootstrap()
     {
-        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
-        $app->getPlugins()->clear();
-        $getLoadedPlugins = function () use ($app) {
-            return array_keys(iterator_to_array($app->getPlugins()));
+        /**
+         * Internal functions. Returns an array of loaded plugins
+         */
+        $getLoadedPlugins = function () {
+            return array_keys(iterator_to_array($this->app->getPlugins()));
         };
 
-        $plugin = $this->getMockBuilder(Plugin::class)
-            ->setMethods(['setVendorLinks', 'setWritableDirs'])
-            ->getMock();
-        $this->assertEmpty($getLoadedPlugins());
-        $plugin->bootstrap($app);
+        $this->Plugin->expects($this->at(0))
+            ->method('isCli')
+            ->will($this->returnValue(true));
+        $this->Plugin->expects($this->at(1))
+            ->method('isCli')
+            ->will($this->returnValue(false));
 
+        //Now is cli
         $expected = [
             'Assets',
             'MeTools',
@@ -48,21 +77,30 @@ class PluginTest extends TestCase
             'Thumber',
             'Tokens',
         ];
+        $this->app->getPlugins()->clear();
+        $this->Plugin->bootstrap($this->app);
         $this->assertEquals($expected, $getLoadedPlugins());
+        $this->assertContains(getConfig('Assets.target'), Configure::read('WRITABLE_DIRS'));
 
-        $app->getPlugins()->clear();
-        $this->assertEmpty($getLoadedPlugins());
-        $plugin = $this->getMockBuilder(Plugin::class)
-            ->setMethods(['isCli', 'setVendorLinks', 'setWritableDirs'])
-            ->getMock();
-        $plugin->method('isCli')->will($this->returnValue(false));
-        $plugin->bootstrap($app);
-
+        //Now is not cli
         $expectedDiff = [
             'DebugKit',
             'CommonMark',
             'WyriHaximus/MinifyHtml',
         ];
+        $this->app->getPlugins()->clear();
+        $this->Plugin->bootstrap($this->app);
         $this->assertEquals($expectedDiff, array_values(array_diff($getLoadedPlugins(), $expected)));
+    }
+
+    /**
+     * Tests for `setWritableDirs()` method
+     * @test
+     */
+    public function testSetWritableDirs()
+    {
+        Configure::delete('Assets.target');
+        $this->invokeMethod($this->Plugin, 'setWritableDirs');
+        $this->assertNotContains(getConfig('Assets.target'), Configure::read('WRITABLE_DIRS'));
     }
 }

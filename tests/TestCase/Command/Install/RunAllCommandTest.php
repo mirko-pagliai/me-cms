@@ -68,6 +68,7 @@ class RunAllCommandTest extends TestCase
             'MeTools\Command\Install\CreateVendorsLinksCommand',
             'MeCms\Command\Install\CopyConfigCommand',
             'MeCms\Command\Install\FixKcfinderCommand',
+            'MeCms\Command\VersionUpdatesCommand',
             'MeCms\Command\Install\CreateGroupsCommand',
             'MeCms\Command\Install\CreateAdminCommand',
         ];

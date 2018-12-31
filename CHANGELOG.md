@@ -1,5 +1,16 @@
 # 2.x branch
 ## 2.26 branch
+### 2.26.1
+* the length of the tags has been increased to 40 characters;
+* added `VersionUpdatesCommand`, that performs some updates to the database or
+    files needed for versioning. `RunAllCommand` executes this command;
+* improved tag validation for posts. Now errors on multiple tags are shown at the
+    same time and the tag name that generated the error is shown;
+* `PostValidator::validTagsLength()` and `PostValidator::validTagsChars()` have
+    been replaced with the `PostValidator::validTags()` method. `TagValidatorTrait`
+    has been removed and its methods has been moved into `TagValidor` class;
+* fixed a bug when loading plugins, when the `Asset` plugin does not exist.
+
 ### 2.26.0
 * `InstallShell` has been replaced with console commands. Every method of the
     previous class is now a `MeCms\Command\Install` class;

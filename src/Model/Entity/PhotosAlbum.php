@@ -45,26 +45,20 @@ class PhotosAlbum extends Entity
 
     /**
      * Gets the album full path (virtual field)
-     * @return string
-     * @todo Should raise an exception if the key is not existing
+     * @return string|null
      */
     protected function _getPath()
     {
-        return PHOTOS . $this->_properties['id'];
+        return empty($this->_properties['id']) ? null : PHOTOS . $this->_properties['id'];
     }
 
     /**
      * Gets the album preview (virtual field)
-     * @return string|void
+     * @return string|null
      * @since 2.21.1
-     * @todo Should raise an exception if the key is not existing
      */
     protected function _getPreview()
     {
-        if (empty($this->_properties['photos'])) {
-            return;
-        }
-
-        return collection($this->_properties['photos'])->extract('path')->first();
+        return empty($this->_properties['photos']) ? null : collection($this->_properties['photos'])->extract('path')->first();
     }
 }

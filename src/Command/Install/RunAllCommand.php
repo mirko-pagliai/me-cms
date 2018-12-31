@@ -17,6 +17,7 @@ use MeCms\Command\Install\CopyConfigCommand;
 use MeCms\Command\Install\CreateAdminCommand;
 use MeCms\Command\Install\CreateGroupsCommand;
 use MeCms\Command\Install\FixKcfinderCommand;
+use MeCms\Command\VersionUpdatesCommand;
 use MeTools\Command\Install\RunAllCommand as BaseRunAllCommand;
 
 /**
@@ -42,6 +43,11 @@ class RunAllCommand extends BaseRunAllCommand
                 'question' => __d('me_tools', 'Fix {0}?', 'KCFinder'),
                 'default' => 'Y',
                 'command' => FixKcfinderCommand::class,
+            ],
+            [
+                'question' => __d('me_cms', 'Updates to the database or files needed for versioning?'),
+                'default' => 'Y',
+                'command' => VersionUpdatesCommand::class,
             ],
             [
                 'question' => __d('me_cms', 'Create the user groups?'),

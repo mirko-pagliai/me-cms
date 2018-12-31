@@ -25,6 +25,7 @@ use MeCms\Command\Install\CreateGroupsCommand;
 use MeCms\Command\Install\FixKcfinderCommand;
 use MeCms\Command\Install\RunAllCommand;
 use MeCms\Command\UsersCommand;
+use MeCms\Command\VersionUpdatesCommand;
 use MeTools\Command\Install\CreateDirectoriesCommand;
 use MeTools\Command\Install\CreateVendorsLinksCommand;
 use MeTools\Command\Install\SetPermissionsCommand;
@@ -107,6 +108,7 @@ class Plugin extends BasePlugin
         $commands->add('me_cms.add_user', AddUserCommand::class);
         $commands->add('me_cms.groups', GroupsCommand::class);
         $commands->add('me_cms.users', UsersCommand::class);
+        $commands->add('me_cms.version_updates', VersionUpdatesCommand::class);
 
         $commands->add('me_cms.copy_config', CopyConfigCommand::class);
         $commands->add('me_cms.create_admin', CreateAdminCommand::class);
@@ -143,15 +145,15 @@ class Plugin extends BasePlugin
      */
     protected function setWritableDirs()
     {
-        $dirs = array_unique(array_merge(Configure::read('WRITABLE_DIRS', []), [
-            getConfigOrFail('Assets.target'),
+        $dirs = array_unique(array_filter(array_merge(Configure::read('WRITABLE_DIRS', []), [
+            getConfig('Assets.target'),
             getConfigOrFail('DatabaseBackup.target'),
             getConfigOrFail('Thumber.target'),
             BANNERS,
             LOGIN_RECORDS,
             PHOTOS,
             USER_PICTURES,
-        ]));
+        ])));
 
         return Configure::write('WRITABLE_DIRS', $dirs) ? $dirs : false;
     }

@@ -55,13 +55,12 @@ class Post extends Entity
 
     /**
      * Gets text as plain text (virtual field)
-     * @return string|void
-     * @todo Should raise an exception if the key is not existing
+     * @return string|null
      */
     protected function _getPlainText()
     {
         if (empty($this->_properties['text'])) {
-            return;
+            return null;
         }
 
         //Loads the `BBCode` helper
@@ -72,13 +71,12 @@ class Post extends Entity
 
     /**
      * Gets tags as string, separated by a comma and a space (virtual field)
-     * @return string|void
-     * @todo Should raise an exception if the key is not existing
+     * @return string|null
      */
     protected function _getTagsAsString()
     {
         if (empty($this->_properties['tags'])) {
-            return;
+            return null;
         }
 
         return implode(', ', collection($this->_properties['tags'])->extract('tag')->toList());

@@ -41,15 +41,12 @@ class PostTest extends PostAndPageEntityTestCase
         $tags[] = new Tag(['tag' => 'dog']);
         $tags[] = new Tag(['tag' => 'bird']);
 
-        $this->Entity->tags = $tags;
-        $this->assertEquals('cat, dog, bird', $this->Entity->tags_as_string);
+        $this->assertEquals('cat, dog, bird', $this->Entity->set(compact('tags'))->get('tags_as_string'));
 
         array_pop($tags);
-        $this->Entity->tags = $tags;
-        $this->assertEquals('cat, dog', $this->Entity->tags_as_string);
+        $this->assertEquals('cat, dog', $this->Entity->set(compact('tags'))->get('tags_as_string'));
 
         array_pop($tags);
-        $this->Entity->tags = $tags;
-        $this->assertEquals('cat', $this->Entity->tags_as_string);
+        $this->assertEquals('cat', $this->Entity->set(compact('tags'))->get('tags_as_string'));
     }
 }
