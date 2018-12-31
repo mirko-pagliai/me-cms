@@ -3,7 +3,7 @@
 ### 2.26.1
 * the length of the tags has been increased to 40 characters;
 * added `VersionUpdatesCommand`, that performs some updates to the database or
-    files needed for versioning;
+    files needed for versioning. `RunAllCommand` executes this command;
 * improved tag validation for posts. Now errors on multiple tags are shown at the
     same time and the tag name that generated the error is shown;
 * `PostValidator::validTagsLength()` and `PostValidator::validTagsChars()` have
