@@ -40,7 +40,7 @@ define('WWW_ROOT', APP . 'webroot' . DS);
 define('TMP', sys_get_temp_dir() . DS . 'me_cms' . DS);
 define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP . 'cache' . DS);
-define('LOGS', TMP . 'cakephp_log' . DS);
+define('LOGS', TMP . 'log' . DS);
 define('SESSIONS', TMP . 'sessions' . DS);
 define('UPLOADED', WWW_ROOT . 'files' . DS);
 define('LOGIN_RECORDS', TMP . 'login' . DS);
