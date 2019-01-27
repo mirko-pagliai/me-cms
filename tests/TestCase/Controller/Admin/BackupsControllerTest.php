@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
-use Cake\Log\LogTrait;
+use Cake\Log\Log;
 use Cake\ORM\Entity;
 use MeCms\Form\BackupForm;
 use MeCms\TestSuite\ControllerTestCase;
@@ -23,8 +23,6 @@ use MeCms\TestSuite\ControllerTestCase;
  */
 class BackupsControllerTest extends ControllerTestCase
 {
-    use LogTrait;
-
     /**
      * Internal method to create a backup file
      * @param string $extension Extension
@@ -83,7 +81,7 @@ class BackupsControllerTest extends ControllerTestCase
                 return '`' . $arg . '`';
             }, func_get_args()));
 
-            return $this->log('Called `send()` with args: ' . $args, 'debug');
+            return Log::write('debug', 'Called `send()` with args: ' . $args);
         }));
     }
 

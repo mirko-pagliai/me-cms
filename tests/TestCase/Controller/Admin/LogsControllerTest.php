@@ -12,7 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Controller\Admin;
 
-use Cake\Log\LogTrait;
+use Cake\Log\Log;
 use Cake\ORM\Entity;
 use MeCms\TestSuite\ControllerTestCase;
 
@@ -21,8 +21,6 @@ use MeCms\TestSuite\ControllerTestCase;
  */
 class LogsControllerTest extends ControllerTestCase
 {
-    use LogTrait;
-
     /**
      * @var bool
      */
@@ -33,8 +31,8 @@ class LogsControllerTest extends ControllerTestCase
      */
     protected function writeSomeLogs()
     {
-        $this->log('This is an error message', 'error');
-        $this->log('This is a critical message', 'critical');
+        Log::write('error', 'This is an error message');
+        Log::write('critical', 'This is a critical message');
     }
 
     /**
