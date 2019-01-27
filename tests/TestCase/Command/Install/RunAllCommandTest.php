@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Command\Install;
 
 use Cake\Console\ConsoleIo;
+use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\TestSuite\TestCase;
 use MeTools\Console\Command;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
@@ -43,6 +44,7 @@ class RunAllCommandTest extends TestCase
     {
         $io = $this->getMockBuilder(ConsoleIo::class)
             ->setMethods(['askChoice'])
+            ->setConstructorArgs([new ConsoleOutput, new ConsoleOutput])
             ->getMock();
 
         $io->method('askChoice')->will($this->returnValue('y'));

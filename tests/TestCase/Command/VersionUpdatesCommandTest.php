@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
+use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\Command\VersionUpdatesCommand;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
@@ -88,6 +89,6 @@ class VersionUpdatesCommandTest extends TestCase
             ->method($method);
         }
 
-        $this->assertNull($Command->run([], new ConsoleIo));
+        $this->assertNull($Command->run([], new ConsoleIo(new ConsoleOutput, new ConsoleOutput)));
     }
 }

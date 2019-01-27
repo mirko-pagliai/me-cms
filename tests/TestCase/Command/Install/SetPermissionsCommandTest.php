@@ -12,9 +12,9 @@
  */
 namespace MeCms\Test\TestCase\Command\Install;
 
-use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
+use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\TestSuite\TestCase;
 use MeTools\Command\Install\SetPermissionsCommand;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
@@ -32,7 +32,7 @@ class SetPermissionsCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $io = new ConsoleIo;
+        $io = new ConsoleIo(new ConsoleOutput, new ConsoleOutput);
         $Command = $this->getMockBuilder(SetPermissionsCommand::class)
             ->setMethods(['folderChmod'])
             ->getMock();
