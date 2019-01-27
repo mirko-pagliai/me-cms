@@ -95,7 +95,7 @@ class PhotosFixture extends TestFixture
     {
         parent::drop($db);
 
-        safe_unlink_recursive(PHOTOS, 'empty');
+        @unlink_recursive(PHOTOS, 'empty');
     }
 
     /**
@@ -110,11 +110,8 @@ class PhotosFixture extends TestFixture
 
         foreach ($this->records as $record) {
             $file = PHOTOS . $record['album_id'] . DS . $record['filename'];
-
-            if (!file_exists($file)) {
-                safe_mkdir(dirname($file));
-                safe_copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
-            }
+            @mkdir(dirname($file));
+            @copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
         }
     }
 }

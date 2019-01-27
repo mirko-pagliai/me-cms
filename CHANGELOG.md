@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.2
-* added `VersionUpdatesCommand::deleteOldDirectories()` method.
+* added `VersionUpdatesCommand::deleteOldDirectories()` method;
+* updated for `php-tools` 1.1.12.
 
 ### 2.26.1
 * the length of the tags has been increased to 40 characters;

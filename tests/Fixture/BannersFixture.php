@@ -93,7 +93,7 @@ class BannersFixture extends TestFixture
     {
         parent::drop($db);
 
-        safe_unlink_recursive(BANNERS, 'empty');
+        @unlink_recursive(BANNERS, 'empty');
     }
 
     /**
@@ -107,7 +107,7 @@ class BannersFixture extends TestFixture
         parent::insert($db);
 
         foreach ($this->records as $record) {
-            safe_create_file(BANNERS . $record['filename']);
+            @create_file(BANNERS . $record['filename']);
         }
     }
 }

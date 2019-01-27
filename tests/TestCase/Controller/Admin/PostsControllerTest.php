@@ -159,7 +159,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
+        $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
     }
 
     /**
@@ -199,7 +199,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'edit.ctp');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
-        $this->assertContainsInstanceof(Tag::class, $this->viewVariable('post')->tags);
+        $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('post')->tags);
 
         //Checks if the `created` field has been properly formatted
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('post')->created);

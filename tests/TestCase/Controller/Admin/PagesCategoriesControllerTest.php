@@ -65,7 +65,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'PagesCategories' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(PagesCategory::class, $this->viewVariable('categories'));
+        $this->assertContainsOnlyInstancesOf(PagesCategory::class, $this->viewVariable('categories'));
     }
 
     /**

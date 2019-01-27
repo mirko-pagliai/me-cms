@@ -45,13 +45,13 @@ define('SESSIONS', TMP . 'sessions' . DS);
 define('UPLOADED', WWW_ROOT . 'files' . DS);
 define('LOGIN_RECORDS', TMP . 'login' . DS);
 
-safe_mkdir(TMP);
-safe_mkdir(LOGS);
-safe_mkdir(SESSIONS);
-safe_mkdir(CACHE);
-safe_mkdir(CACHE . 'models');
-safe_mkdir(CACHE . 'persistent');
-safe_mkdir(CACHE . 'views');
+@mkdir(TMP);
+@mkdir(LOGS);
+@mkdir(SESSIONS);
+@mkdir(CACHE);
+@mkdir(CACHE . 'models');
+@mkdir(CACHE . 'persistent');
+@mkdir(CACHE . 'views');
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once CORE_PATH . 'config' . DS . 'bootstrap.php';
@@ -135,10 +135,8 @@ Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
  */
 function create_kcfinder_files($htaccess = true)
 {
-    safe_create_file(KCFINDER . 'browse.php', '@version 3.12');
-    if ($htaccess) {
-        safe_create_file(KCFINDER . '.htaccess');
-    }
+    @create_file(KCFINDER . 'browse.php', '@version 3.12');
+    $htaccess ? @create_file(KCFINDER . '.htaccess') : null;
 }
 
 Configure::write('Assets.target', TMP . 'assets');

@@ -14,7 +14,6 @@
 namespace MeCms\Utility\Checkups;
 
 use MeCms\Utility\Checkups\AbstractCheckup;
-use Tools\Apache as BaseApache;
 
 /**
  * Checkup for Apache
@@ -31,14 +30,13 @@ class Apache extends AbstractCheckup
      * Checks if some modules are loaded
      * @return array
      * @uses $modulesToCheck
-     * @uses Tools\Utility\Apache::isEnabled()
      */
     public function modules()
     {
-        $Apache = new BaseApache;
+        $modules = [];
 
         foreach ($this->modulesToCheck as $module) {
-            $modules[$module] = $Apache->isEnabled('mod_' . $module);
+            $modules[$module] = in_array('mod_' . $module, apache_get_modules());
         }
 
         return $modules;
@@ -47,10 +45,11 @@ class Apache extends AbstractCheckup
     /**
      * Returns the version of Apache
      * @return string
-     * @uses Tools\Utility\Apache::version()
      */
     public function version()
     {
-        return (new BaseApache)->version();
+        $version = apache_get_version();
+
+        return preg_match('/Apache\/(\d+\.\d+\.\d+)/i', $version, $matches) ? $matches[1] : $version;
     }
 }

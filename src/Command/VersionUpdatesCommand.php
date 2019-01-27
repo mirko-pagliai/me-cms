@@ -53,7 +53,7 @@ class VersionUpdatesCommand extends Command
      */
     public function deleteOldDirectories()
     {
-        safe_rmdir_recursive(WWW_ROOT . 'fonts');
+        rmdir_recursive(WWW_ROOT . 'fonts');
     }
 
     /**

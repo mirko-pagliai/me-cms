@@ -32,7 +32,7 @@ class BackupsControllerTest extends ControllerTestCase
     {
         $file = getConfigOrFail('DatabaseBackup.target') . DS . sprintf('backup.%s', $extension);
 
-        return safe_create_file($file) ? $file : false;
+        return create_file($file) ? $file : false;
     }
 
     /**
@@ -50,10 +50,10 @@ class BackupsControllerTest extends ControllerTestCase
      */
     public function tearDown()
     {
-        //Deletes all backups
-        safe_unlink_recursive(getConfigOrFail('DatabaseBackup.target'));
-
         parent::tearDown();
+
+        //Deletes all backups
+        @unlink_recursive(getConfigOrFail('DatabaseBackup.target'));
     }
 
     /**
@@ -108,7 +108,7 @@ class BackupsControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Backups' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(Entity::class, $this->viewVariable('backups'));
+        $this->assertContainsOnlyInstancesOf(Entity::class, $this->viewVariable('backups'));
     }
 
     /**
@@ -160,7 +160,7 @@ class BackupsControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'deleteAll']);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertFileNotExists($files);
+        array_map([$this, 'assertFileNotExists'], $files);
     }
 
     /**

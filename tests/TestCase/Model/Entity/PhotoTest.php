@@ -28,7 +28,7 @@ class PhotoTest extends EntityTestCase
     {
         parent::tearDown();
 
-        safe_unlink_recursive(PHOTOS, 'empty');
+        @unlink_recursive(PHOTOS, 'empty');
     }
 
     /**
@@ -73,11 +73,10 @@ class PhotoTest extends EntityTestCase
         $this->assertNull($this->Entity->preview);
 
         $this->Entity->set(['album_id' => 1, 'filename' => 'photo1.jpg']);
-        safe_copy(APP . WEBROOT_DIR . DS . 'img' . DS . 'image.jpg', PHOTOS . $this->Entity->album_id . DS . $this->Entity->filename, $this->Entity->path);
+        @copy(WWW_ROOT . 'img' . DS . 'image.jpg', $this->Entity->path);
         $this->assertInstanceof(Entity::class, $this->Entity->preview);
         $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $this->Entity->preview->url);
-        $this->assertEquals(400, $this->Entity->preview->width);
-        $this->assertEquals(400, $this->Entity->preview->height);
+        $this->assertEquals([400, 400], [$this->Entity->preview->width, $this->Entity->preview->height]);
     }
 
     /**

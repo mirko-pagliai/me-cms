@@ -45,7 +45,7 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('PostsTags' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(Tag::class, $this->viewVariable('tags'));
+        $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('tags'));
 
         $cache = sprintf('tags_limit_%s_page_%s', getConfigOrFail('default.records') * 4, 1);
         list($tagsFromCache, $pagingFromCache) = array_values(Cache::readMany(
@@ -73,7 +73,7 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('PostsTags' . DS . 'view.ctp');
-        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
+        $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
         $this->assertInstanceof(Tag::class, $this->viewVariable('tag'));
 
         $tagFromCache = Cache::read((sprintf('tag_%s', md5($slug))), $this->Table->getCacheName());

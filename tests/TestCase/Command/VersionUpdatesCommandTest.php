@@ -65,7 +65,7 @@ class VersionUpdatesCommandTest extends TestCase
     public function testdeleteOldDirectories()
     {
         $dir = WWW_ROOT . 'fonts';
-        safe_mkdir($dir);
+        mkdir($dir);
         $this->assertFileExists($dir);
         $this->Command->deleteOldDirectories();
         $this->assertFileNotExists($dir);

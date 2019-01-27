@@ -81,7 +81,7 @@ class StaticPageTest extends TestCase
     public function testAll()
     {
         $pages = $this->StaticPage->all();
-        $this->assertContainsInstanceOf(Entity::class, $pages);
+        $this->assertContainsOnlyInstancesOf(Entity::class, $pages);
 
         foreach ($pages as $page) {
             $this->assertInstanceOf(FrozenTime::class, $page->modified);
@@ -100,7 +100,7 @@ class StaticPageTest extends TestCase
 
         //Checks paths
         $paths = Hash::extract($pages, '{n}.path');
-        $TestPluginPath = rtr(first_value(App::path('Template', 'TestPlugin')));
+        $TestPluginPath = rtr(array_value_first(App::path('Template', 'TestPlugin')));
         $this->assertEquals([
             'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'Template' . DS . 'StaticPages' . DS . 'page-from-app.ctp',
             'src' . DS . 'Template' . DS . 'StaticPages' . DS . 'cookies-policy-it.ctp',

@@ -61,7 +61,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Posts' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
+        $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
 
         $cache = sprintf('index_limit_%s_page_%s', getConfigOrFail('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
@@ -89,7 +89,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Posts' . DS . 'index_by_date.ctp');
-        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
+        $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
         $this->assertEquals($date, $this->viewVariable('date'));
 
         $startFromView = $this->viewVariable('start');
@@ -139,7 +139,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertResponseRegExp($expected);
         $this->assertTemplate('Posts' . DS . 'rss' . DS . 'rss.ctp');
         $this->assertHeaderContains('Content-Type', 'application/rss+xml');
-        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
+        $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
 
         //With an invalid extension
         $this->expectException(ForbiddenException::class);
@@ -166,7 +166,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
         $this->assertEquals($this->viewVariable('pattern'), $pattern);
-        $this->assertContainsInstanceof(Post::class, $this->viewVariable('posts'));
+        $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
         $this->assertContains($pattern, $this->viewVariable('posts')->first()->text);
 
         $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), getConfigOrFail('default.records_for_searches'), 1);
@@ -205,7 +205,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Posts' . DS . 'view.ctp');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
-        $this->assertContainsInstanceof(Post::class, $this->viewVariable('related'));
+        $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('related'));
 
         $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('post'), $cache->first());
@@ -224,6 +224,6 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Posts' . DS . 'view.ctp');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
-        $this->assertContainsInstanceof(Post::class, $this->viewVariable('related'));
+        $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('related'));
     }
 }

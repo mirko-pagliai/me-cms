@@ -141,9 +141,9 @@ class SystemsControllerTest extends ControllerTestCase
     public function testSitemap()
     {
         $this->loadFixtures();
-        safe_unlink(SITEMAP);
 
         //GET request. The sitemap will be created
+        @unlink(SITEMAP);
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertContentType('application/x-gzip');

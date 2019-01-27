@@ -136,7 +136,7 @@ class ViewTest extends TestCase
         $this->View->set('title', 'title from controller');
 
         //Creates a favicon
-        safe_create_file(WWW_ROOT . 'favicon.ico');
+        @create_file(WWW_ROOT . 'favicon.ico');
 
         //Renders
         $result = $this->View->render(false, 'MeCms.default');
@@ -144,6 +144,6 @@ class ViewTest extends TestCase
         //Checks for title and favicon
         $this->assertContains('<title>title from controller - ' . 'MeCms</title>', $result);
         $this->assertContains('<link href="favicon.ico" type="image/x-icon" rel="icon"/><link href="favicon.ico" type="image/x-icon" rel="shortcut icon"/>', $result);
-        safe_unlink(WWW_ROOT . 'favicon.ico');
+        @unlink(WWW_ROOT . 'favicon.ico');
     }
 }

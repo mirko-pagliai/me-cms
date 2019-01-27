@@ -125,7 +125,7 @@ class PagesControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(Page::class, $this->viewVariable('pages'));
+        $this->assertContainsOnlyInstancesOf(Page::class, $this->viewVariable('pages'));
     }
 
     /**
@@ -137,7 +137,7 @@ class PagesControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'indexStatics']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'index_statics.ctp');
-        $this->assertContainsInstanceof(Entity::class, $this->viewVariable('pages'));
+        $this->assertContainsOnlyInstancesOf(Entity::class, $this->viewVariable('pages'));
     }
 
     /**

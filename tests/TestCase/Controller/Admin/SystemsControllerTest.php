@@ -52,7 +52,7 @@ class SystemsControllerTest extends ControllerTestCase
         ];
 
         foreach ($files as $file) {
-            safe_create_file($file, str_repeat('a', 255));
+            @create_file($file, str_repeat('a', 255));
         }
 
         return $files;
@@ -77,9 +77,9 @@ class SystemsControllerTest extends ControllerTestCase
     public function tearDown()
     {
         //Deletes all temporary files
-        safe_unlink_recursive(getConfigOrFail('Assets.target'));
-        safe_unlink_recursive(getConfigOrFail('Thumber.target'));
-        safe_unlink(SITEMAP);
+        @unlink_recursive(getConfigOrFail('Assets.target'));
+        @unlink_recursive(getConfigOrFail('Thumber.target'));
+        @unlink(SITEMAP);
 
         Cache::clearAll();
 
@@ -126,7 +126,7 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function testBrowser()
     {
-        safe_mkdir(UPLOADED . 'docs');
+        @mkdir(UPLOADED . 'docs');
 
         $url = $this->url + ['action' => 'browser'];
 
@@ -152,7 +152,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertContains('kcfinder/browse.php?lang=it&type=docs', $this->viewVariable('kcfinder'));
 
         //GET request. Now only the `images` type exists
-        safe_rmdir(UPLOADED . 'docs');
+        @rmdir(UPLOADED . 'docs');
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.ctp');
@@ -214,7 +214,7 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function testClearSitemap()
     {
-        safe_unlink(SITEMAP);
+        @unlink(SITEMAP);
         $this->assertTrue($this->invokeMethod($this->Controller, 'clearSitemap'));
 
         $this->createSomeTemporaryData();
@@ -236,7 +236,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertCacheIsEmpty();
-        $this->assertFileNotExists($files);
+        array_map([$this, 'assertFileNotExists'], $files);
 
         //POST request. Cleans the cache
         $files = $this->createSomeTemporaryData();

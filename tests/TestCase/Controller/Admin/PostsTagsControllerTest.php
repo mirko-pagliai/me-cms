@@ -59,7 +59,7 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'PostsTags' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(Tag::class, $this->viewVariable('tags'));
+        $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('tags'));
     }
 
     /**

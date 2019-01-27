@@ -197,7 +197,7 @@ abstract class ControllerTestCase extends TestCase
     protected function createImageToUpload()
     {
         $file = TMP . 'file_to_upload.jpg';
-        safe_copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
+        @copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
 
         return [
             'tmp_name' => $file,
