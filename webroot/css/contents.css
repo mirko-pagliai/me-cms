@@ -106,6 +106,12 @@ article main p:last-child,
     margin-bottom: 0;
 }
 
+/* Main content, tables */
+article main table,
+.article table {
+    max-width: 100%;
+}
+
 /* -------------------------------- */
 /*              Tags                */
 /* -------------------------------- */

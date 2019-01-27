@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.2
+* fixed bug for tables width on posts and pages;
 * added `VersionUpdatesCommand::deleteOldDirectories()` method;
 * updated for `php-tools` 1.1.12.
 
