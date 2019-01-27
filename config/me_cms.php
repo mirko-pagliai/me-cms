@@ -152,6 +152,21 @@ return ['MeCms' => [
         //You can found it on the "Site Tools Dashboard"
         'site_id' => '',
     ],
+    //Sitemap
+    'sitemap' => [
+        //Includes pages (pages and categories) in the sitemap
+        'pages' => true,
+        //Includes photos (photos and albums) in the sitemap
+        'photos' => true,
+        //Includes posts (posts and categories) in the sitemap
+        'posts' => true,
+        //Includes tags in the sitemap
+        'posts_tags' => true,
+        //Includes system pages (eg, the contact form) in the sitemap
+        'systems' => true,
+        //Includes static pages in the sitemap
+        'static_pages' => true,
+    ],
     //Users
     'users' => [
         //How to activating accounts:

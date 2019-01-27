@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.2
+* it is now possible to disable the sitemap for some content, using the MeCms
+    configuration file;
 * fixed bug for tables width on posts and pages;
 * added `VersionUpdatesCommand::deleteOldDirectories()` method;
 * updated for `php-tools` 1.1.12.
