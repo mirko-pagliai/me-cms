@@ -14,7 +14,6 @@ namespace MeCms\Controller;
 
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
-use Cake\Log\Log;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
@@ -178,11 +177,11 @@ class UsersController extends AppController
                     }
 
                     if ($this->request->getData('email')) {
-                        Log::error(sprintf(
+                        $this->log(sprintf(
                             '%s - Resend activation request with invalid email `%s`',
                             $this->request->clientIp(),
                             $this->request->getData('email')
-                        ), 'users');
+                        ), 'error', 'users');
                     }
 
                     $this->Flash->error(__d('me_cms', 'No valid account was found'));
@@ -241,12 +240,12 @@ class UsersController extends AppController
             }
 
             if ($this->request->getData('username') && $this->request->getData('password')) {
-                Log::error(sprintf(
+                $this->log(sprintf(
                     '%s - Failed login with username `%s` and password `%s`',
                     $this->request->clientIp(),
                     $this->request->getData('username'),
                     $this->request->getData('password')
-                ), 'users');
+                ), 'error', 'users');
             }
 
             $this->Flash->error(__d('me_cms', 'Invalid username or password'));
@@ -299,11 +298,11 @@ class UsersController extends AppController
                 }
 
                 if ($this->request->getData('email')) {
-                    Log::error(sprintf(
+                    $this->log(sprintf(
                         '%s - Forgot password request with invalid email `%s`',
                         $this->request->clientIp(),
                         $this->request->getData('email')
-                    ), 'users');
+                    ), 'error', 'users');
                 }
 
                 $this->Flash->error(__d('me_cms', 'No account found'));
