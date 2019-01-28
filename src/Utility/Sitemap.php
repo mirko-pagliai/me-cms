@@ -43,12 +43,14 @@ class Sitemap extends SitemapBuilder
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if (!$url) {
+            $alias = $table->Pages->getAlias();
+
             $categories = $table->find('active')
                 ->select(['id', 'lft', 'slug'])
-                ->contain($table->Pages->getAlias(), function (Query $q) use ($table) {
+                ->contain($alias, function (Query $q) use ($alias) {
                     return $q->find('active')
                         ->select(['category_id', 'slug', 'modified'])
-                        ->order([sprintf('%s.modified', $table->Pages->getAlias()) => 'DESC']);
+                        ->order([sprintf('%s.modified', $alias) => 'DESC']);
                 })
                 ->order(['lft' => 'ASC']);
 
@@ -61,7 +63,10 @@ class Sitemap extends SitemapBuilder
 
             foreach ($categories as $category) {
                 //Adds the category
-                $url[] = self::parse(['_name' => 'pagesCategory', $category->slug], ['lastmod' => $category->pages[0]->modified]);
+                $url[] = self::parse(
+                    ['_name' => 'pagesCategory', $category->slug],
+                    ['lastmod' => array_value_first($category->pages)->modified]
+                );
 
                 //Adds each page
                 foreach ($category->pages as $page) {
@@ -90,12 +95,14 @@ class Sitemap extends SitemapBuilder
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if (!$url) {
+            $alias = $table->Photos->getAlias();
+
             $albums = $table->find('active')
                 ->select(['id', 'slug'])
-                ->contain($table->Photos->getAlias(), function (Query $q) use ($table) {
+                ->contain($alias, function (Query $q) use ($alias) {
                     return $q->find('active')
                         ->select(['id', 'album_id', 'modified'])
-                        ->order([sprintf('%s.modified', $table->Photos->getAlias()) => 'DESC']);
+                        ->order([sprintf('%s.modified', $alias) => 'DESC']);
                 });
 
             if ($albums->isEmpty()) {
@@ -104,15 +111,15 @@ class Sitemap extends SitemapBuilder
 
             $latest = $table->Photos->find('active')
                 ->select(['modified'])
-                ->order([sprintf('%s.modified', $table->Photos->getAlias()) => 'DESC'])
+                ->order([sprintf('%s.modified', $alias) => 'DESC'])
                 ->firstOrFail();
 
             //Adds albums index
             $url[] = self::parse(['_name' => 'albums'], ['lastmod' => $latest->modified]);
 
-            foreach ($albums->toArray() as $album) {
+            foreach ($albums as $album) {
                 //Adds the album
-                $url[] = self::parse(['_name' => 'album', $album->slug], ['lastmod' => $album->photos[0]->modified]);
+                $url[] = self::parse(['_name' => 'album', $album->slug], ['lastmod' => array_value_first($album->photos)->modified]);
 
                 //Adds each photo
                 foreach ($album->photos as $photo) {
@@ -144,12 +151,13 @@ class Sitemap extends SitemapBuilder
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if (!$url) {
+            $alias = $table->Posts->getAlias();
             $categories = $table->find('active')
                 ->select(['id', 'lft', 'slug'])
-                ->contain($table->Posts->getAlias(), function (Query $q) use ($table) {
+                ->contain($alias, function (Query $q) use ($alias) {
                     return $q->find('active')
                         ->select(['category_id', 'slug', 'modified'])
-                        ->order([sprintf('%s.modified', $table->Posts->getAlias()) => 'DESC']);
+                        ->order([sprintf('%s.modified', $alias) => 'DESC']);
                 })
                 ->order(['lft' => 'ASC']);
 
@@ -159,7 +167,7 @@ class Sitemap extends SitemapBuilder
 
             $latest = $table->Posts->find('active')
                 ->select(['modified'])
-                ->order([sprintf('%s.modified', $table->Posts->getAlias()) => 'DESC'])
+                ->order([sprintf('%s.modified', $alias) => 'DESC'])
                 ->firstOrFail();
 
             //Adds posts index, categories index and posts search
@@ -169,7 +177,10 @@ class Sitemap extends SitemapBuilder
 
             foreach ($categories as $category) {
                 //Adds the category
-                $url[] = self::parse(['_name' => 'postsCategory', $category->slug], ['lastmod' => $category->posts[0]->modified]);
+                $url[] = self::parse(
+                    ['_name' => 'postsCategory', $category->slug],
+                    ['lastmod' => array_value_first($category->posts)->modified]
+                );
 
                 //Adds each post
                 foreach ($category->posts as $post) {
@@ -237,14 +248,9 @@ class Sitemap extends SitemapBuilder
             return [];
         }
 
-        $pages = StaticPage::all();
-
-        //Adds each static page
-        foreach ($pages as $page) {
-            $url[] = self::parse(['_name' => 'page', $page->slug], ['lastmod' => $page->modified]);
-        }
-
-        return $url;
+        return array_map(function ($page) {
+            return self::parse(['_name' => 'page', $page->slug], ['lastmod' => $page->modified]);
+        }, StaticPage::all());
     }
 
     /**
