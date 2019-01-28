@@ -51,7 +51,7 @@ class CheckupTest extends TestCase
     {
         parent::tearDown();
 
-        safe_unlink_recursive(KCFINDER, 'empty');
+        @unlink_recursive(KCFINDER, 'empty');
     }
 
     /**

@@ -140,9 +140,9 @@ class UsersTableTest extends TableTestCase
         $token = (new TokenCreator)->create('testToken', ['user_id' => 4]);
         $tokens = $this->Table->findById(4)->contain('Tokens')->extract('tokens')->first();
         $this->assertEquals(1, count($tokens));
-        $this->assertInstanceOf(Token::class, first_value($tokens));
-        $this->assertEquals(4, first_value($tokens)->user_id);
-        $this->assertEquals($token, first_value($tokens)->token);
+        $this->assertInstanceOf(Token::class, array_value_first($tokens));
+        $this->assertEquals(4, array_value_first($tokens)->user_id);
+        $this->assertEquals($token, array_value_first($tokens)->token);
     }
 
     /**

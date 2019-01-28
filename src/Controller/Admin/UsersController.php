@@ -255,7 +255,7 @@ class UsersController extends AppController
         if ($this->request->getData('file')) {
             //Deletes any picture that already exists
             foreach (((new Folder(USER_PICTURES))->find($id . '\..+')) as $filename) {
-                safe_unlink(USER_PICTURES . $filename);
+                @unlink(USER_PICTURES . $filename);
             }
 
             $filename = sprintf('%s.%s', $id, pathinfo($this->request->getData('file')['tmp_name'], PATHINFO_EXTENSION));

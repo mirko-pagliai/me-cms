@@ -50,7 +50,7 @@ class BannersPositionsControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'BannersPositions' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(BannersPosition::class, $this->viewVariable('positions'));
+        $this->assertContainsOnlyInstancesOf(BannersPosition::class, $this->viewVariable('positions'));
     }
 
     /**

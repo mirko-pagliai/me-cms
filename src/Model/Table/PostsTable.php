@@ -18,7 +18,6 @@ use Cake\Event\Event;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use InvalidArgumentException;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Table\PostsAndPagesTables;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;

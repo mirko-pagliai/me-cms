@@ -50,7 +50,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'UsersGroups' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(UsersGroup::class, $this->viewVariable('groups'));
+        $this->assertContainsOnlyInstancesOf(UsersGroup::class, $this->viewVariable('groups'));
     }
 
     /**

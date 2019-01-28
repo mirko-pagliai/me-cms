@@ -128,7 +128,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Users' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(User::class, $this->viewVariable('users'));
+        $this->assertContainsOnlyInstancesOf(User::class, $this->viewVariable('users'));
     }
 
     /**
@@ -148,7 +148,7 @@ class UsersControllerTest extends ControllerTestCase
 
         Configure::write('MeCms.users.login_log', 1);
         $this->get($url);
-        $this->assertContainsInstanceof(Entity::class, $this->viewVariable('loginLog'));
+        $this->assertContainsOnlyInstancesOf(Entity::class, $this->viewVariable('loginLog'));
     }
 
     /**
@@ -339,7 +339,7 @@ class UsersControllerTest extends ControllerTestCase
 
         //Creates some files that simulate previous user pictures. These files
         //  will be deleted before upload
-        array_map('safe_create_file', [$expectedPicture, USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
+        @array_map('create_file', [$expectedPicture, USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
 
         $this->assertSession(null, 'Auth.User.picture');
 
@@ -351,7 +351,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertFileNotExists(USER_PICTURES . '1.jpeg');
         $this->assertFileNotExists(USER_PICTURES . '1.png');
 
-        safe_unlink($expectedPicture);
+        @unlink($expectedPicture);
     }
 
     /**

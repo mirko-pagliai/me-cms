@@ -64,7 +64,7 @@ class StaticPage
      */
     protected static function getAppPath()
     {
-        return Folder::slashTerm(first_value(App::path('Template'))) . 'StaticPages' . DS;
+        return Folder::slashTerm(array_value_first(App::path('Template'))) . 'StaticPages' . DS;
     }
 
     /**
@@ -75,7 +75,7 @@ class StaticPage
      */
     protected static function getPluginPath($plugin)
     {
-        return Folder::slashTerm(first_value(App::path('Template', $plugin))) . 'StaticPages' . DS;
+        return Folder::slashTerm(array_value_first(App::path('Template', $plugin))) . 'StaticPages' . DS;
     }
 
     /**
@@ -88,7 +88,7 @@ class StaticPage
      */
     protected static function getSlug($path, $relativePath)
     {
-        if (starts_with($path, $relativePath)) {
+        if (string_starts_with($path, $relativePath)) {
             $path = substr($path, strlen(Folder::slashTerm($relativePath)));
         }
         $path = preg_replace(sprintf('/\.[^\.]+$/'), null, $path);

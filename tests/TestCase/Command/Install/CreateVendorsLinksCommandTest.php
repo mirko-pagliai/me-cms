@@ -14,6 +14,7 @@ namespace MeCms\Test\TestCase\Command\Install;
 
 use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
+use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\TestSuite\TestCase;
 use MeTools\Command\Install\CreateVendorsLinksCommand;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
@@ -31,7 +32,7 @@ class CreateVendorsLinksCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $io = new ConsoleIo;
+        $io = new ConsoleIo(new ConsoleOutput, new ConsoleOutput);
         $Command = $this->getMockBuilder(CreateVendorsLinksCommand::class)
             ->setMethods(['createLink'])
             ->getMock();

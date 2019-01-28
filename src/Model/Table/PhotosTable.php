@@ -53,7 +53,7 @@ class PhotosTable extends AppTable
     public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         //Deletes the file
-        safe_unlink($entity->path);
+        @unlink($entity->path);
 
         parent::afterDelete($event, $entity, $options);
     }

@@ -64,6 +64,11 @@ class SitemapTest extends TestCase
         $this->loadFixtures('Pages', 'PagesCategories');
         $table = $this->getMockForModel('MeCms.PagesCategories', null);
 
+        //Pages are disabled for the sitemap
+        Configure::write('MeCms.sitemap.pages', false);
+        $this->assertEmpty(Sitemap::pages());
+        Configure::write('MeCms.sitemap.pages', true);
+
         $expected = [
             [
                 'loc' => 'http://localhost/pages/categories',
@@ -107,6 +112,11 @@ class SitemapTest extends TestCase
     {
         $this->loadFixtures('Photos', 'PhotosAlbums');
         $table = $this->getMockForModel('MeCms.PhotosAlbums', null);
+
+        //Photos are disabled for the sitemap
+        Configure::write('MeCms.sitemap.photos', false);
+        $this->assertEmpty(Sitemap::photos());
+        Configure::write('MeCms.sitemap.photos', true);
 
         $expected = [
             [
@@ -157,6 +167,11 @@ class SitemapTest extends TestCase
     {
         $this->loadFixtures('Posts', 'PostsCategories');
         $table = $this->getMockForModel('MeCms.PostsCategories', null);
+
+        //Posts are disabled for the sitemap
+        Configure::write('MeCms.sitemap.posts', false);
+        $this->assertEmpty(Sitemap::posts());
+        Configure::write('MeCms.sitemap.posts', true);
 
         $expected = [
             [
@@ -231,6 +246,11 @@ class SitemapTest extends TestCase
         $this->loadFixtures('Posts', 'PostsTags', 'Tags');
         $table = $this->getMockForModel('MeCms.Tags', null);
 
+        //Posts tags are disabled for the sitemap
+        Configure::write('MeCms.sitemap.posts_tags', false);
+        $this->assertEmpty(Sitemap::postsTags());
+        Configure::write('MeCms.sitemap.posts_tags', true);
+
         $expected = [
             [
                 'loc' => 'http://localhost/posts/tags',
@@ -273,6 +293,11 @@ class SitemapTest extends TestCase
      */
     public function testStaticPages()
     {
+        //Static pages are disabled for the sitemap
+        Configure::write('MeCms.sitemap.static_pages', false);
+        $this->assertEmpty(Sitemap::staticPages());
+        Configure::write('MeCms.sitemap.static_pages', true);
+
         $map = Sitemap::staticPages();
 
         //It checks here the `lastmod` value and removes it from the array
@@ -315,6 +340,11 @@ class SitemapTest extends TestCase
      */
     public function testSystems()
     {
+        //System pages are disabled for the sitemap
+        Configure::write('MeCms.sitemap.systems', false);
+        $this->assertEmpty(Sitemap::systems());
+        Configure::write('MeCms.sitemap.systems', true);
+
         $this->assertEquals([[
             'loc' => 'http://localhost/contact/us',
             'priority' => '0.5',

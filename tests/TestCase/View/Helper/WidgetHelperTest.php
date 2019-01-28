@@ -43,7 +43,7 @@ class WidgetHelperTest extends HelperTestCase
             return $this->invokeMethod($this->Helper, 'getAll');
         };
 
-        $widgets = array_map('first_value', array_map('array_keys', $getAllMethod()));
+        $widgets = array_map('array_value_first', array_map('array_keys', $getAllMethod()));
         $this->assertEquals([
             'MeCms.Pages::categories',
             'MeCms.Pages::pages',

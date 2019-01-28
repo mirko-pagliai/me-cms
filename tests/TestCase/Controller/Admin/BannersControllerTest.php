@@ -96,7 +96,7 @@ class BannersControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(Banner::class, $this->viewVariable('banners'));
+        $this->assertContainsOnlyInstancesOf(Banner::class, $this->viewVariable('banners'));
         $this->assertCookieIsEmpty('renderBanners');
     }
 
@@ -109,7 +109,7 @@ class BannersControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index', '?' => ['render' => 'grid']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'index_as_grid.ctp');
-        $this->assertContainsInstanceof(Banner::class, $this->viewVariable('banners'));
+        $this->assertContainsOnlyInstancesOf(Banner::class, $this->viewVariable('banners'));
         $this->assertCookie('grid', 'renderBanners');
     }
 

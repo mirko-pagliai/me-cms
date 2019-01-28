@@ -133,13 +133,13 @@ class AppViewTest extends TestCase
     public function testRenderLayoutFromApp()
     {
         //Creates a new layout
-        $layoutFromApp = first_value(App::path('Template/Plugin/' . 'MeCms/Layout')) . 'default.ctp';
-        safe_create_file($layoutFromApp, 'This is a layout from app');
+        $layoutFromApp = array_value_first(App::path('Template/Plugin/' . 'MeCms/Layout')) . 'default.ctp';
+        @create_file($layoutFromApp, 'This is a layout from app');
         $this->assertEquals('This is a layout from app', $this->View->render(false));
         $this->assertEquals('default', $this->View->getLayout());
         $this->assertEquals('MeCms', $this->View->getPlugin());
         $this->assertEquals(null, $this->View->getTheme());
-        safe_unlink($layoutFromApp);
+        @unlink($layoutFromApp);
     }
 
     /**

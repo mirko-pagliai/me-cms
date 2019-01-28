@@ -76,7 +76,7 @@ class SystemsController extends AppController
 
         //If there's only one type, it automatically sets the query value
         if (!$type && count($types) < 2) {
-            $type = first_key($types);
+            $type = array_key_first($types);
             $this->request = $this->request->withQueryParams(compact('type'));
         }
 
@@ -188,18 +188,18 @@ class SystemsController extends AppController
 
         switch ($type) {
             case 'all':
-                safe_unlink_recursive($assetsTarget, 'empty');
-                safe_unlink_recursive(LOGS, 'empty');
+                @unlink_recursive($assetsTarget, 'empty');
+                @unlink_recursive(LOGS, 'empty');
                 $success = self::clearCache() && self::clearSitemap() && (new ThumbManager)->clearAll();
                 break;
             case 'cache':
                 $success = self::clearCache();
                 break;
             case 'assets':
-                safe_unlink_recursive($assetsTarget, 'empty');
+                @unlink_recursive($assetsTarget, 'empty');
                 break;
             case 'logs':
-                safe_unlink_recursive(LOGS, 'empty');
+                @unlink_recursive(LOGS, 'empty');
                 break;
             case 'sitemap':
                 $success = self::clearSitemap();

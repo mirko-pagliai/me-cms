@@ -100,7 +100,7 @@ class PhotosControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(Photo::class, $this->viewVariable('photos'));
+        $this->assertContainsOnlyInstancesOf(Photo::class, $this->viewVariable('photos'));
         $this->assertCookieIsEmpty('renderPhotos');
     }
 
@@ -113,7 +113,7 @@ class PhotosControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index', '?' => ['render' => 'grid']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'index_as_grid.ctp');
-        $this->assertContainsInstanceof(Photo::class, $this->viewVariable('photos'));
+        $this->assertContainsOnlyInstancesOf(Photo::class, $this->viewVariable('photos'));
         $this->assertCookie('grid', 'renderPhotos');
     }
 

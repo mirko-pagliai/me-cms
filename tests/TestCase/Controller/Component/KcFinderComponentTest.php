@@ -93,9 +93,9 @@ class KcFinderComponentTest extends ComponentTestCase
     {
         $this->assertEquals(['images' => '*img'], $this->Component->getTypes());
 
-        safe_mkdir(UPLOADED . 'docs');
+        @mkdir(UPLOADED . 'docs');
         $this->assertEquals(['docs' => '', 'images' => '*img'], $this->Component->getTypes());
-        safe_rmdir(UPLOADED . 'docs');
+        @rmdir(UPLOADED . 'docs');
     }
 
     /**

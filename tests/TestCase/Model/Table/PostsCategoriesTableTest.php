@@ -118,12 +118,12 @@ class PostsCategoriesTableTest extends TableTestCase
     {
         $this->loadFixtures();
         $childs = $this->Table->find()->contain('Childs')->extract('childs')->first();
-        $this->assertContainsInstanceOf(PostsCategory::class, $childs);
+        $this->assertContainsOnlyInstancesOf(PostsCategory::class, $childs);
 
         foreach ($childs as $children) {
             $this->assertEquals(1, $children->parent_id);
             $childs = $this->Table->findById($children->id)->contain('Childs')->extract('childs')->first();
-            $this->assertContainsInstanceOf(PostsCategory::class, $childs);
+            $this->assertContainsOnlyInstancesOf(PostsCategory::class, $childs);
             $this->assertEquals([3], Hash::extract($childs, '0.parent_id'));
         }
     }

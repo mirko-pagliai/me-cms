@@ -50,7 +50,7 @@ class LogsController extends AppController
         is_readable_or_fail($log);
         $log = file_get_contents($log);
 
-        return $serialized ? safe_unserialize($log) : trim($log);
+        return $serialized ? @unserialize($log) : trim($log);
     }
 
     /**

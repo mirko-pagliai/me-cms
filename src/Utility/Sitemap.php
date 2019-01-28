@@ -35,6 +35,10 @@ class Sitemap extends SitemapBuilder
      */
     public static function pages()
     {
+        if (!getConfig('sitemap.pages')) {
+            return [];
+        }
+
         $table = TableRegistry::get('MeCms.PagesCategories');
         $url = Cache::read('sitemap', $table->getCacheName());
 
@@ -78,6 +82,10 @@ class Sitemap extends SitemapBuilder
      */
     public static function photos()
     {
+        if (!getConfig('sitemap.photos')) {
+            return [];
+        }
+
         $table = TableRegistry::get('MeCms.PhotosAlbums');
         $url = Cache::read('sitemap', $table->getCacheName());
 
@@ -128,6 +136,10 @@ class Sitemap extends SitemapBuilder
      */
     public static function posts()
     {
+        if (!getConfig('sitemap.posts')) {
+            return [];
+        }
+
         $table = TableRegistry::get('MeCms.PostsCategories');
         $url = Cache::read('sitemap', $table->getCacheName());
 
@@ -178,6 +190,10 @@ class Sitemap extends SitemapBuilder
      */
     public static function postsTags()
     {
+        if (!getConfig('sitemap.posts_tags')) {
+            return [];
+        }
+
         $table = TableRegistry::get('MeCms.Tags');
         $url = Cache::read('sitemap', $table->getCacheName());
 
@@ -217,6 +233,10 @@ class Sitemap extends SitemapBuilder
      */
     public static function staticPages()
     {
+        if (!getConfig('sitemap.static_pages')) {
+            return [];
+        }
+
         $pages = StaticPage::all();
 
         //Adds each static page
@@ -234,6 +254,10 @@ class Sitemap extends SitemapBuilder
      */
     public static function systems()
     {
+        if (!getConfig('sitemap.systems')) {
+            return [];
+        }
+
         $url = [];
 
         //Contact form

@@ -42,7 +42,7 @@ class PhotosAlbumsTableTest extends TableTestCase
     {
         parent::tearDown();
 
-        safe_unlink_recursive(PHOTOS, 'empty');
+        @unlink_recursive(PHOTOS, 'empty');
     }
 
     /**

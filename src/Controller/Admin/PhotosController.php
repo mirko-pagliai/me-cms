@@ -108,7 +108,7 @@ class PhotosController extends AppController
 
         //If there's only one available album
         if (!$album && count($albums) < 2) {
-            $album = first_key($albums);
+            $album = array_key_first($albums);
             $this->request = $this->request->withQueryParams(compact('album'));
         }
 
@@ -129,7 +129,7 @@ class PhotosController extends AppController
             ]);
 
             if ($entity->getErrors()) {
-                return $this->setUploadError(first_value_recursive($entity->getErrors()));
+                return $this->setUploadError(array_value_first_recursive($entity->getErrors()));
             }
 
             if (!$this->Photos->save($entity)) {

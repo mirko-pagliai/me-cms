@@ -43,7 +43,7 @@ class PhotosAlbumsTable extends AppTable
     public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         //Deletes the directory
-        safe_rmdir($entity->path);
+        @rmdir($entity->path);
 
         parent::afterDelete($event, $entity, $options);
     }

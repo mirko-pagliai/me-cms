@@ -69,7 +69,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         parent::tearDown();
 
         //Deletes the file
-        safe_unlink(LOGIN_RECORDS . 'user_1.log');
+        @unlink_recursive(LOGIN_RECORDS);
     }
 
     /**
@@ -150,7 +150,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $this->assertIsArray($result);
 
         //Creates an empty file. Now is always empty
-        safe_create_file(LOGIN_RECORDS . 'user_1.log');
+        @create_file(LOGIN_RECORDS . 'user_1.log');
         $result = $this->getMockForLoginRecorder()->read();
         $this->assertEmpty($result);
         $this->assertIsArray($result);

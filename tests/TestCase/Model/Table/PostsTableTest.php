@@ -63,13 +63,13 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     {
         $this->loadFixtures();
         $tags = $this->Table->newEntity(self::$example)->tags;
-        $this->assertContainsInstanceOf(Tag::class, $tags);
+        $this->assertContainsOnlyInstancesOf(Tag::class, $tags);
         $this->assertEquals(['first tag', 'second tag'], Hash::extract($tags, '{n}.tag'));
 
         //In this case, the `dog` tag already exists
         self::$example['tags_as_string'] = 'first tag, dog';
         $tags = $this->Table->newEntity(self::$example)->tags;
-        $this->assertContainsInstanceOf(Tag::class, $tags);
+        $this->assertContainsOnlyInstancesOf(Tag::class, $tags);
         $this->assertEquals([2], Hash::extract($tags, '{n}.id'));
         $this->assertEquals(['first tag', 'dog'], Hash::extract($tags, '{n}.tag'));
     }
@@ -149,7 +149,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     {
         $this->loadFixtures();
         $tags = $this->Table->findById(2)->contain('Tags')->extract('tags')->first();
-        $this->assertContainsInstanceOf(Tag::class, $tags);
+        $this->assertContainsOnlyInstancesOf(Tag::class, $tags);
         foreach ($tags as $tag) {
             $this->assertInstanceOf(PostsTag::class, $tag->_joinData);
             $this->assertEquals(2, $tag->_joinData->post_id);
@@ -192,7 +192,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertCount(2, $relatedPosts);
         $this->assertEquals($relatedPosts, Cache::read('related_2_posts_for_1', $this->Table->getCacheName()));
 
-        $this->assertContainsInstanceOf(Post::class, $relatedPosts);
+        $this->assertContainsOnlyInstancesOf(Post::class, $relatedPosts);
         foreach ($relatedPosts as $related) {
             $this->assertTrue($related->has(['id', 'title', 'slug', 'text']));
         }
@@ -201,16 +201,16 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $related = $this->Table->getRelated($post, 2, true);
         $this->assertCount(1, $related);
         $this->assertEquals($related, Cache::read('related_2_posts_for_1_with_images', $this->Table->getCacheName()));
-        $firstRelated = first_value($related);
+        $firstRelated = array_value_first($related);
         $this->assertInstanceOf(Post::class, $firstRelated);
         $this->assertEquals(2, $firstRelated->id);
         $this->assertNotEmpty($firstRelated->title);
         $this->assertNotEmpty($firstRelated->slug);
         $this->assertContains('<img src="image.jpg" />Text of the second post', $firstRelated->text);
         $this->assertCount(1, $firstRelated->preview);
-        $this->assertEquals('image.jpg', first_value($firstRelated->preview)->url);
-        $this->assertEquals(400, first_value($firstRelated->preview)->width);
-        $this->assertEquals(400, first_value($firstRelated->preview)->height);
+        $this->assertEquals('image.jpg', array_value_first($firstRelated->preview)->url);
+        $this->assertEquals(400, array_value_first($firstRelated->preview)->width);
+        $this->assertEquals(400, array_value_first($firstRelated->preview)->height);
 
         //This post has no tags
         $post = $this->Table->findById(4)->contain('Tags')->first();

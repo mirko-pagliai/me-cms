@@ -40,7 +40,7 @@ class WidgetHelper extends Helper
                 return [$args => []];
             }
 
-            list($name, $args) = [first_key($args), first_value($args)];
+            list($name, $args) = [array_key_first($args), array_value_first($args)];
 
             return is_int($name) && is_string($args) ? [$args => []] : [$name => $args];
         })->toList() : [];

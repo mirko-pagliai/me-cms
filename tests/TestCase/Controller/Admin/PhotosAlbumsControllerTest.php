@@ -57,7 +57,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'PhotosAlbums' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(PhotosAlbum::class, $this->viewVariable('albums'));
+        $this->assertContainsOnlyInstancesOf(PhotosAlbum::class, $this->viewVariable('albums'));
     }
 
     /**

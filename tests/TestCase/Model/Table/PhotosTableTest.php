@@ -51,10 +51,8 @@ class PhotosTableTest extends TableTestCase
         parent::setUp();
 
         $file = PHOTOS . self::$example['album_id'] . DS . self::$example['filename'];
-
-        //Creates the file for the example
-        safe_mkdir(dirname($file));
-        safe_copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
+        @mkdir(dirname($file));
+        @copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
     }
 
     /**
@@ -65,7 +63,7 @@ class PhotosTableTest extends TableTestCase
     {
         parent::tearDown();
 
-        safe_unlink_recursive(PHOTOS, 'empty');
+        @unlink_recursive(PHOTOS, 'empty');
     }
 
     /**

@@ -40,9 +40,9 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         $this->get(['_name' => 'albums']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('PhotosAlbums' . DS . 'index.ctp');
-        $this->assertContainsInstanceof(PhotosAlbum::class, $this->viewVariable('albums'));
+        $this->assertContainsOnlyInstancesOf(PhotosAlbum::class, $this->viewVariable('albums'));
         foreach ($this->viewVariable('albums') as $album) {
-            $this->assertContainsInstanceof(Photo::class, $album->photos);
+            $this->assertContainsOnlyInstancesOf(Photo::class, $album->photos);
         }
 
         $cache = Cache::read('albums_index', $this->Table->getCacheName());
@@ -70,7 +70,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('PhotosAlbums' . DS . 'view.ctp');
         $this->assertInstanceof(PhotosAlbum::class, $this->viewVariable('album'));
-        $this->assertContainsInstanceof(Photo::class, $this->viewVariable('photos'));
+        $this->assertContainsOnlyInstancesOf(Photo::class, $this->viewVariable('photos'));
 
         $cache = Cache::read(sprintf('album_%s', md5($slug)), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('album'), $cache->first());

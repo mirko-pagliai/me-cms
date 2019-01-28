@@ -26,7 +26,7 @@ use MeCms\Database\Type\JsonEntityType;
 require_once __DIR__ . DS . 'constants.php';
 
 foreach ([BANNERS, LOGIN_RECORDS, PHOTOS, UPLOADED, USER_PICTURES] as $dir) {
-    safe_mkdir($dir);
+    @mkdir($dir);
 
     if (!is_writeable($dir)) {
         trigger_error(sprintf('Directory %s not writeable', $dir), E_USER_ERROR);

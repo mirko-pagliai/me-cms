@@ -108,7 +108,7 @@ class BannersController extends AppController
 
         //If there's only one available position
         if (!$position && count($positions) < 2) {
-            $position = first_key($positions);
+            $position = array_key_first($positions);
             $this->request = $this->request->withQueryParams(compact('position'));
         }
 
@@ -129,7 +129,7 @@ class BannersController extends AppController
             ]);
 
             if ($entity->getErrors()) {
-                return $this->setUploadError(first_value_recursive($entity->getErrors()));
+                return $this->setUploadError(array_value_first_recursive($entity->getErrors()));
             }
 
             if (!$this->Banners->save($entity)) {
