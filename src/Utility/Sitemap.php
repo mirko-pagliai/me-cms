@@ -35,7 +35,7 @@ class Sitemap extends SitemapBuilder
      */
     public static function pages()
     {
-        if (!getConfigOrFail('sitemap.pages')) {
+        if (!getConfig('sitemap.pages')) {
             return [];
         }
 
@@ -82,7 +82,7 @@ class Sitemap extends SitemapBuilder
      */
     public static function photos()
     {
-        if (!getConfigOrFail('sitemap.photos')) {
+        if (!getConfig('sitemap.photos')) {
             return [];
         }
 
@@ -136,7 +136,7 @@ class Sitemap extends SitemapBuilder
      */
     public static function posts()
     {
-        if (!getConfigOrFail('sitemap.posts')) {
+        if (!getConfig('sitemap.posts')) {
             return [];
         }
 
@@ -190,7 +190,7 @@ class Sitemap extends SitemapBuilder
      */
     public static function postsTags()
     {
-        if (!getConfigOrFail('sitemap.posts_tags')) {
+        if (!getConfig('sitemap.posts_tags')) {
             return [];
         }
 
@@ -233,7 +233,7 @@ class Sitemap extends SitemapBuilder
      */
     public static function staticPages()
     {
-        if (!getConfigOrFail('sitemap.static_pages')) {
+        if (!getConfig('sitemap.static_pages')) {
             return [];
         }
 
@@ -254,7 +254,7 @@ class Sitemap extends SitemapBuilder
      */
     public static function systems()
     {
-        if (!getConfigOrFail('sitemap.systems')) {
+        if (!getConfig('sitemap.systems')) {
             return [];
         }
 
