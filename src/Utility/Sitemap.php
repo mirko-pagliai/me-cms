@@ -14,6 +14,7 @@
 namespace MeCms\Utility;
 
 use Cake\Cache\Cache;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use MeCms\Utility\SitemapBuilder;
@@ -248,7 +249,7 @@ class Sitemap extends SitemapBuilder
             return [];
         }
 
-        return array_map(function ($page) {
+        return array_map(function (Entity $page) {
             return self::parse(['_name' => 'page', $page->slug], ['lastmod' => $page->modified]);
         }, StaticPage::all());
     }
