@@ -163,6 +163,10 @@ class StaticPageTest extends TestCase
         $expected = 'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy';
         $this->assertEquals($expected, $this->StaticPage->get('cookies-policy'));
 
+        $originalDefaultlLocale = ini_set('intl.default_locale', 'it_IT');
+        $this->assertEquals(sprintf('%s-it', $expected), $this->StaticPage->get('cookies-policy'));
+        ini_set('intl.default_locale', $originalDefaultlLocale);
+
         $originalDefaultlLocale = ini_set('intl.default_locale', 'it');
         $this->assertEquals(sprintf('%s-it', $expected), $this->StaticPage->get('cookies-policy'));
         ini_set('intl.default_locale', $originalDefaultlLocale);

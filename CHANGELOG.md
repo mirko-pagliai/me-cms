@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.26 branch
+### 2.26.3
+* fixed bug for static pages with locales.
+
 ### 2.26.2
 * it is now possible to disable the sitemap for some content, using the MeCms
     configuration file;
