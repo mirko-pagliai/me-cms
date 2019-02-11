@@ -51,18 +51,20 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAddEnableCommentsField()
     {
-        $this->loadFixtures();
+        $getTable = function ($name) {
+            return $this->getMockForModel(sprintf('MeCms.%s', $name), null);
+        };
+
+        $this->loadFixtures('Pages', 'Posts');
 
         foreach (['Pages', 'Posts'] as $table) {
-            $Table = $this->getMockForModel('MeCms.' . $table, null);
-            $Table->getConnection()->execute(sprintf('ALTER TABLE `%s` DROP `enable_comments`', $Table->getTable()));
+            $getTable($table)->getConnection()->execute(sprintf('ALTER TABLE `%s` DROP `enable_comments`', $getTable($table)->getTable()));
         }
 
         $this->Command->addEnableCommentsField();
 
         foreach (['Pages', 'Posts'] as $table) {
-            $Table = $this->getMockForModel('MeCms.' . $table, null);
-            $this->assertTrue($this->getMockForModel('MeCms.' . $table, null)->getSchema()->hasColumn('enable_comments'));
+            $this->assertTrue($getTable($table)->getSchema()->hasColumn('enable_comments'));
         }
     }
 
@@ -72,14 +74,17 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAlterTagColumnSize()
     {
-        $this->loadFixtures();
+        $getTable = function () {
+            return $this->getMockForModel('MeCms.Tags', null);
+        };
 
-        $Tags = $this->getMockForModel('MeCms.Tags', null);
-        $Tags->getConnection()->execute('ALTER TABLE tags MODIFY tag varchar(254) NOT NULL');
-        $this->assertEquals(254, $this->getMockForModel('MeCms.Tags', null)->getSchema()->getColumn('tag')['length']);
+        $this->loadFixtures('Tags');
+
+        $getTable()->getConnection()->execute(sprintf('ALTER TABLE %s MODIFY tag varchar(254) NOT NULL', $getTable()->getTable()));
+        $this->assertEquals(254, $getTable()->getSchema()->getColumn('tag')['length']);
 
         $this->Command->alterTagColumnSize();
-        $this->assertEquals(255, $this->getMockForModel('MeCms.Tags', null)->getSchema()->getColumn('tag')['length']);
+        $this->assertEquals(255, $getTable()->getSchema()->getColumn('tag')['length']);
     }
 
     /**
@@ -102,14 +107,12 @@ class VersionUpdatesCommandTest extends TestCase
     public function testExecute()
     {
         $methods = get_child_methods(VersionUpdatesCommand::class);
-
         $Command = $this->getMockBuilder(VersionUpdatesCommand::class)
             ->setMethods($methods)
             ->getMock();
 
         foreach ($methods as $method) {
-            $Command->expects($this->once())
-            ->method($method);
+            $Command->expects($this->once())->method($method);
         }
 
         $this->assertNull($Command->run([], new ConsoleIo(new ConsoleOutput, new ConsoleOutput)));
