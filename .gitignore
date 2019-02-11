@@ -1,5 +1,6 @@
 .directory
 *_old
+*.lock
 *.old.*
 composer.lock
 coverage/

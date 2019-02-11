@@ -40,8 +40,31 @@ class VersionUpdatesCommandTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'plugin.MeCms.Pages',
+        'plugin.MeCms.Posts',
         'plugin.MeCms.Tags',
     ];
+
+    /**
+     * Test for `addEnableCommentsField()` method
+     * @test
+     */
+    public function testAddEnableCommentsField()
+    {
+        $this->loadFixtures();
+
+        foreach (['Pages', 'Posts'] as $table) {
+            $Table = $this->getMockForModel('MeCms.' . $table, null);
+            $Table->getConnection()->execute(sprintf('ALTER TABLE `%s` DROP `enable_comments`', $Table->getTable()));
+        }
+
+        $this->Command->addEnableCommentsField();
+
+        foreach (['Pages', 'Posts'] as $table) {
+            $Table = $this->getMockForModel('MeCms.' . $table, null);
+            $this->assertTrue($this->getMockForModel('MeCms.' . $table, null)->getSchema()->hasColumn('enable_comments'));
+        }
+    }
 
     /**
      * Test for `alterTagColumnSize()` method

@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.3
+* added `enable_comments` field to `Pages` and `Posts` tables.
+    Added `VersionUpdatesCommand::addEnableCommentsField()` method;
 * fixed bug for static pages with locales.
 
 ### 2.26.2
