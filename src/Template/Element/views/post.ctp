@@ -10,6 +10,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+$isView = $this->request->isAction('view', 'Posts') && !$this->request->isAjax();
 ?>
 
 <article class="clearfix mb-4">
@@ -90,19 +91,33 @@
         </div>
     <?php endif; ?>
 
+    <?php if (!empty($truncatedText) && $truncatedText !== $post->text) : ?>
     <div class="buttons mt-2 text-right">
-        <?php
-        //If it was requested to truncate the text and that has been
-        //truncated, it shows the "Read more" link
-        if (!empty($truncatedText) && $truncatedText !== $post->text) {
-            echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $post->slug], ['class' => ' readmore']);
-        }
-        ?>
+        <?= $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $post->slug], ['class' => ' readmore']) ?>
     </div>
+    <?php endif; ?>
 
-    <?php
-    if (getConfig('post.shareaholic') && $this->request->isAction('view', 'Posts') && !$this->request->isAjax()) {
-        echo $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id'));
-    }
-    ?>
+    <?php if (getConfig('post.shareaholic') && $isView) : ?>
+    <div class="mt-3">
+        <?= $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id')) ?>
+    </div>
+    <?php endif; ?>
+
+    <?php if (getConfig('disqus.shortname') && getConfig('post.enable_comments') && $post->get('enable_comments') && $isView) : ?>
+    <div id="disqus_thread" class="mt-3"></div>
+    <script>
+    /*
+    var disqus_config = function () {
+    this.page.url = '<?= $this->Url->build(['_name' => 'post', $post->slug], true) ?>';
+    this.page.identifier = '<?= sprintf('post-#%s', $post->id) ?>';
+    };
+    */
+    (function() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://<?= getConfig('disqus.shortname') ?>.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <?php endif; ?>
 </article>

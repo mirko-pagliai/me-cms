@@ -47,6 +47,12 @@ return ['MeCms' => [
         //  manually where to truncate a text
         'truncate_to' => 1000,
     ],
+    //Disqus
+    'disqus' => [
+        //Site shortname or `false` to disable Disqus. To get the site shortname,
+        //  you must first create and set up your site on Disqus
+        'shortname' => false,
+    ],
     //Email
     'email' => [
         //EmailTransport configuration
@@ -99,6 +105,9 @@ return ['MeCms' => [
         'category' => true,
         //Displays the page created datetime
         'created' => false,
+        //This enables or disables the comment system for pages. You will then
+        //  be able to choose whether to enable comments for each page
+        'enable_comments' => false,
         //Displays the Shareaholic social buttons.
         //Remember you have to set app and site IDs. See `shareaholic.app_id`
         //  and `shareaholic.site_id`
@@ -114,6 +123,9 @@ return ['MeCms' => [
         'category' => true,
         //Displays the post created datetime
         'created' => true,
+        //This enables or disables the comment system for posts. You will then
+        //  be able to choose whether to enable comments for each post
+        'enable_comments' => true,
         //Adds post tags as keywords meta-tag
         'keywords' => true,
         //Related posts. `false` to disable

@@ -37,6 +37,10 @@ $this->Library->slugify();
                 'help' => I18N_HELP_DRAFT,
                 'label' => I18N_PUBLISHED,
             ]);
+            echo $this->Form->control('enable_comments', [
+                'help' => I18N_HELP_ENABLE_COMMENTS,
+                'label' => I18N_ENABLE_COMMENTS,
+            ]);
         ?>
         </div>
     </div>

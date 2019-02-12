@@ -143,7 +143,11 @@ class StaticPage
             $filename = implode(DS, $slug);
 
             //Sets the filename patterns
-            $patterns = [$filename . '-' . $locale, $filename];
+            $patterns = [$filename . '-' . $locale];
+            if (preg_match('/^(\w+)_\w+$/', $locale, $matches)) {
+                $patterns[] = $filename . '-' . $matches[1];
+            }
+            $patterns[] = $filename;
 
             //Checks if the page exists in APP
             foreach ($patterns as $pattern) {

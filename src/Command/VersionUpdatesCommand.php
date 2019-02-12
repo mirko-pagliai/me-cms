@@ -13,6 +13,7 @@
  */
 namespace MeCms\Command;
 
+use Cake\Cache\Cache;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
@@ -31,6 +32,24 @@ class VersionUpdatesCommand extends Command
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
         return $parser->setDescription(__d('me_cms', 'Performs some updates to the database or files needed for versioning'));
+    }
+
+    /**
+     * Adds the `enable_comments` field to `Pages` and `Posts` tables
+     * @return void
+     * @since 2.26.3
+     */
+    public function addEnableCommentsField()
+    {
+        Cache::clear(false, '_cake_model_');
+
+        foreach (['Pages', 'Posts'] as $table) {
+            $Table = $this->loadModel('MeCms.' . $table);
+
+            if (!$Table->getSchema()->hasColumn('enable_comments')) {
+                $Table->getConnection()->execute(sprintf('ALTER TABLE `%s` ADD `enable_comments` BOOLEAN NOT NULL DEFAULT TRUE AFTER `preview`', $Table->getTable()));
+            }
+        }
     }
 
     /**
@@ -61,11 +80,13 @@ class VersionUpdatesCommand extends Command
      * @param Arguments $args The command arguments
      * @param ConsoleIo $io The console io
      * @return null|int The exit code or null for success
+     * @uses addEnableCommentsField()
      * @uses alterTagColumnSize()
      * @uses deleteOldDirectories()
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
+        $this->addEnableCommentsField();
         $this->alterTagColumnSize();
         $this->deleteOldDirectories();
 
