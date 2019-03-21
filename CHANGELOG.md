@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.26 branch
+### 2.26.4
+* updated for `php-tools` 1.2.
+
 ### 2.26.3
 * added the Disqus comment system for pages and posts. By default, comments are
     enabled for posts;
