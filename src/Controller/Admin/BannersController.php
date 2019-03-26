@@ -13,6 +13,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\Http\Cookie\Cookie;
 use Cake\Http\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
@@ -69,12 +70,8 @@ class BannersController extends AppController
      */
     public function index()
     {
-        $render = $this->request->getQuery('render');
-
-        //The "render" type can also be set via cookies, if it's not set by query
-        if (!$render && $this->Cookie->check('renderBanners')) {
-            $render = $this->Cookie->read('renderBanners');
-        }
+        //The "render" type can set by query or by cookies
+        $render = $this->request->getQuery('render', $this->request->getCookie('render-banners'));
 
         $query = $this->Banners->find()->contain(['Positions' => ['fields' => ['id', 'title']]]);
 
@@ -84,13 +81,13 @@ class BannersController extends AppController
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         if ($render === 'grid') {
             $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.photos');
+            $this->viewBuilder()->setTemplate('index_as_grid');
         }
 
         $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->getQueryParams())));
 
         if ($render) {
-            $this->Cookie->write('renderBanners', $render);
-            $this->render(sprintf('index_as_%s', $render));
+            $this->response = $this->response->withCookie((new Cookie('render-banners', $render))->withNeverExpire());
         }
     }
 

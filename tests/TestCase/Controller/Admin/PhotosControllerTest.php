@@ -101,7 +101,7 @@ class PhotosControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'index.ctp');
         $this->assertContainsOnlyInstancesOf(Photo::class, $this->viewVariable('photos'));
-        $this->assertCookieIsEmpty('renderPhotos');
+        $this->assertCookieIsEmpty('render-photos');
     }
 
     /**
@@ -114,7 +114,7 @@ class PhotosControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'index_as_grid.ctp');
         $this->assertContainsOnlyInstancesOf(Photo::class, $this->viewVariable('photos'));
-        $this->assertCookie('grid', 'renderPhotos');
+        $this->assertCookie('grid', 'render-photos');
     }
 
     /**
@@ -123,11 +123,11 @@ class PhotosControllerTest extends ControllerTestCase
      */
     public function testIndexWithCookie()
     {
-        $this->cookie('renderPhotos', 'grid');
+        $this->cookie('render-photos', 'grid');
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Photos' . DS . 'index_as_grid.ctp');
-        $this->assertCookie('grid', 'renderPhotos');
+        $this->assertCookie('grid', 'render-photos');
     }
 
     /**

@@ -72,7 +72,6 @@ class UsersControllerTest extends ControllerTestCase
             $controller->method('redirect')->will($this->returnArgument(0));
         }
 
-        $controller->Cookie->setConfig('key', 'somerandomhaskeysomerandomhaskey');
         $controller->LoginRecorder = $this->getLoginRecorderMock();
 
         return $controller;
@@ -188,8 +187,7 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testInitialize()
     {
-        $expectedComponents = [
-            'Cookie',
+        $this->assertHasComponent([
             'Auth',
             'Flash',
             'RequestHandler',
@@ -197,8 +195,7 @@ class UsersControllerTest extends ControllerTestCase
             'Recaptcha',
             'Token',
             'LoginRecorder',
-        ];
-        array_map([$this, 'assertHasComponent'], $expectedComponents);
+        ]);
     }
 
     /**

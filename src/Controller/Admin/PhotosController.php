@@ -13,6 +13,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\Http\Cookie\Cookie;
 use Cake\Http\Exception\InternalErrorException;
 use MeCms\Controller\AppController;
 
@@ -69,12 +70,8 @@ class PhotosController extends AppController
      */
     public function index()
     {
-        $render = $this->request->getQuery('render');
-
-        //The "render" type can also be set via cookies, if it's not set by query
-        if (!$render && $this->Cookie->check('renderPhotos')) {
-            $render = $this->Cookie->read('renderPhotos');
-        }
+        //The "render" type can set by query or by cookies
+        $render = $this->request->getQuery('render', $this->request->getCookie('render-photos'));
 
         $query = $this->Photos->find()->contain(['Albums' => ['fields' => ['id', 'slug', 'title']]]);
 
@@ -84,13 +81,13 @@ class PhotosController extends AppController
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         if ($render === 'grid') {
             $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.photos');
+            $this->viewBuilder()->setTemplate('index_as_grid');
         }
 
         $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->request->getQueryParams())));
 
         if ($render) {
-            $this->Cookie->write('renderPhotos', $render);
-            $this->render(sprintf('index_as_%s', $render));
+            $this->response = $this->response->withCookie((new Cookie('render-photos', $render))->withNeverExpire());
         }
     }
 

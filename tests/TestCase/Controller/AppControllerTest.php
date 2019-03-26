@@ -65,15 +65,13 @@ class AppControllerTest extends ControllerTestCase
      */
     public function testInitialize()
     {
-        $expectedComponents = [
+        $this->assertHasComponent([
             'Auth',
-            'Cookie',
             'Flash',
             'Recaptcha',
             'RequestHandler',
             'Uploader',
-        ];
-        array_map([$this, 'assertHasComponent'], $expectedComponents);
+        ]);
     }
 
     /**
