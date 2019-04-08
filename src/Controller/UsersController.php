@@ -39,7 +39,6 @@ class UsersController extends AppController
     {
         $username = $this->request->getCookie('login.username');
         $password = $this->request->getCookie('login.password');
-        debug([$username, $password]);
 
         //Checks if the cookies exist
         if (!$username || !$password) {
