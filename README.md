@@ -20,6 +20,12 @@ On Windows, it must be done this way:
 
     vendor\bin\phpunit.bat --exclude-group=onlyUnix
 
+## How to generate POT files
+To generate POT files for this plugin, use the following command:
+```bash
+$ bin/cake i18n extract --plugin MeCms --paths vendor/mirko-pagliai/me-cms/src/,vendor/mirko-pagliai/me-cms/config/
+```
+
 ## Versioning
 For transparency and insight into our release cycle and to maintain backward compatibility, 
 Reflection will be maintained under the [Semantic Versioning guidelines](http://semver.org).
