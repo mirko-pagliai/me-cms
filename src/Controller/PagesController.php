@@ -69,6 +69,7 @@ class PagesController extends AppController
             return $this->render($static);
         }
 
+        $slug = rtrim($slug, '/');
         $page = $this->Pages->findActiveBySlug($slug)
             ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
             ->cache(sprintf('view_%s', md5($slug)), $this->Pages->getCacheName())

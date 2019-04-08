@@ -2,6 +2,7 @@
 ## 2.26 branch
 ### 2.26.4
 * fixed bug for login cookies;
+* fixed a little bug for pages slug;
 * improved and updated cookie writing/reading;
 * `ControllerTestCase::assertHasComponent()` can take an array as argument;
 * updated for `php-tools` 1.2.
