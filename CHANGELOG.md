@@ -5,6 +5,7 @@
 * fixed a little bug for pages slug;
 * improved and updated cookie writing/reading;
 * `ControllerTestCase::assertHasComponent()` can take an array as argument;
+* it suggest the `mirko-pagliai/me-cms-link-scanner` package;
 * updated for `php-tools` 1.2.
 
 ### 2.26.3
