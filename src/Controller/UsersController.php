@@ -14,9 +14,11 @@ namespace MeCms\Controller;
 
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
+use Cake\Http\Cookie\Cookie;
 use Cake\Log\Log;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Routing\Router;
+use DateTime;
 use MeCms\Controller\AppController;
 
 /**
@@ -95,7 +97,6 @@ class UsersController extends AppController
     {
         parent::initialize();
 
-        $this->Cookie->configKey('login', ['encryption' => 'aes', 'expires' => '+365 days']);
         $this->loadComponent('Tokens.Token');
         $this->loadComponent('MeCms.LoginRecorder');
     }
@@ -231,10 +232,11 @@ class UsersController extends AppController
 
                 //Saves the login data as cookies, if requested
                 if ($this->request->getData('remember_me')) {
-                    $this->Cookie->write('login', [
+                    $cookie = new Cookie('login', [
                         'username' => $this->request->getData('username'),
                         'password' => $this->request->getData('password'),
-                    ]);
+                    ], new DateTime('+1 year'));
+                    $this->response = $this->response->withCookie($cookie);
                 }
 
                 return $this->redirect($this->Auth->redirectUrl());

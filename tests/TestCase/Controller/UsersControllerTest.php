@@ -72,7 +72,6 @@ class UsersControllerTest extends ControllerTestCase
             $controller->method('redirect')->will($this->returnArgument(0));
         }
 
-        $controller->Cookie->setConfig('key', 'somerandomhaskeysomerandomhaskey');
         $controller->LoginRecorder = $this->getLoginRecorderMock();
 
         return $controller;
@@ -188,8 +187,7 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testInitialize()
     {
-        $expectedComponents = [
-            'Cookie',
+        $this->assertHasComponent([
             'Auth',
             'Flash',
             'RequestHandler',
@@ -197,10 +195,7 @@ class UsersControllerTest extends ControllerTestCase
             'Recaptcha',
             'Token',
             'LoginRecorder',
-        ];
-        array_map([$this, 'assertHasComponent'], $expectedComponents);
-        $this->assertEquals('aes', $this->Controller->Cookie->configKey('login')['encryption']);
-        $this->assertEquals('+365 days', $this->Controller->Cookie->configKey('login')['expires']);
+        ]);
     }
 
     /**
@@ -327,7 +322,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertCookieEncrypted([
             'username' => $user->username,
             'password' => $password,
-        ], 'login', 'aes', $this->_controller->Cookie->getConfig('key'));
+        ], 'login', 'aes', Configure::read('Security.cookieKey', md5(Configure::read('Security.salt'))));
         $cookieExpire = Time::createFromTimestamp($this->_response->getCookie('login')['expire']);
         $this->assertTrue($cookieExpire->isWithinNext('1 year'));
 

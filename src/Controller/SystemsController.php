@@ -13,6 +13,7 @@
 namespace MeCms\Controller;
 
 use Cake\Filesystem\File;
+use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 use MeCms\Form\ContactUsForm;
@@ -31,12 +32,7 @@ class SystemsController extends AppController
      */
     public function acceptCookies()
     {
-        //Sets the cookie
-        $this->Cookie->configKey('cookies-policy', [
-            'encryption' => false,
-            'expires' => '+999 days',
-        ]);
-        $this->Cookie->write('cookies-policy', true);
+        $this->response = $this->response->withCookie((new Cookie('cookies-policy', true))->withNeverExpire());
 
         return $this->redirect($this->referer(['_name' => 'homepage'], true));
     }

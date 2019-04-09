@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Controller;
 
+use Cake\Chronos\Chronos;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
 use MeCms\Form\ContactUsForm;
@@ -52,7 +53,7 @@ class SystemsControllerTest extends ControllerTestCase
 
         $expire = Time::createFromTimestamp($this->_response->getCookie('cookies-policy')['expire']);
         $this->assertCookie(true, 'cookies-policy');
-        $this->assertTrue($expire->isWithinNext('999 days'));
+        $this->assertTrue($expire->isWithinNext(Chronos::createFromDate(2038, 1, 1)));
     }
 
     /**

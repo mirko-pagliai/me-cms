@@ -97,7 +97,7 @@ class BannersControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'index.ctp');
         $this->assertContainsOnlyInstancesOf(Banner::class, $this->viewVariable('banners'));
-        $this->assertCookieIsEmpty('renderBanners');
+        $this->assertCookieIsEmpty('render-banners');
     }
 
     /**
@@ -110,7 +110,7 @@ class BannersControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'index_as_grid.ctp');
         $this->assertContainsOnlyInstancesOf(Banner::class, $this->viewVariable('banners'));
-        $this->assertCookie('grid', 'renderBanners');
+        $this->assertCookie('grid', 'render-banners');
     }
 
     /**
@@ -119,11 +119,11 @@ class BannersControllerTest extends ControllerTestCase
      */
     public function testIndexWithCookie()
     {
-        $this->cookie('renderBanners', 'grid');
+        $this->cookie('render-banners', 'grid');
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'index_as_grid.ctp');
-        $this->assertCookie('grid', 'renderBanners');
+        $this->assertCookie('grid', 'render-banners');
     }
 
     /**

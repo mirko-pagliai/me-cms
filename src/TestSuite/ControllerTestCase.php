@@ -55,7 +55,7 @@ abstract class ControllerTestCase extends TestCase
 
     /**
      * Asserts that the controller has a component
-     * @param string $component Component name
+     * @param string|array $component Component name
      * @param string|null $action Optional action for this assert
      * @return void
      * @uses $Controller
@@ -71,7 +71,9 @@ abstract class ControllerTestCase extends TestCase
         }
         $this->Controller->initialize();
 
-        $this->assertTrue($this->Controller->components()->has($component));
+        foreach ((array)$component as $var) {
+            $this->assertTrue($this->Controller->components()->has($var));
+        }
 
         $this->Controller = $controller;
     }

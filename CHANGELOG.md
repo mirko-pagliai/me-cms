@@ -1,5 +1,13 @@
 # 2.x branch
 ## 2.26 branch
+### 2.26.4
+* fixed bug for login cookies;
+* fixed a little bug for pages slug;
+* improved and updated cookie writing/reading;
+* `ControllerTestCase::assertHasComponent()` can take an array as argument;
+* it suggest the `mirko-pagliai/me-cms-link-scanner` package;
+* updated for `php-tools` 1.2.
+
 ### 2.26.3
 * added the Disqus comment system for pages and posts. By default, comments are
     enabled for posts;

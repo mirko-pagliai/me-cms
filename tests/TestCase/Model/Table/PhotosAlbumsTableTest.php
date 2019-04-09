@@ -69,7 +69,7 @@ class PhotosAlbumsTableTest extends TableTestCase
         $entity = $this->Table->newEntity(['title' => 'new album', 'slug' => 'new-album']);
         $this->assertNotEmpty($this->Table->save($entity));
         $this->assertFileExists($entity->path);
-        $this->assertFilePerms($entity->path, '0777');
+        $this->assertFilePerms('0777', $entity->path);
     }
 
     /**

@@ -16,6 +16,7 @@ namespace MeCms;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
+use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use DebugKit\Plugin as DebugKit;
 use MeCms\Command\AddUserCommand;
 use MeCms\Command\GroupsCommand;
@@ -122,6 +123,19 @@ class Plugin extends BasePlugin
         $commands->add('me_cms.set_permissions', SetPermissionsCommand::class);
 
         return $commands;
+    }
+
+    /**
+     * Adds middleware for the plugin
+     * @param Cake\Http\MiddlewareQueue $middleware The middleware queue to update
+     * @return Cake\Http\MiddlewareQueue
+     * @since 2.26.4
+     */
+    public function middleware($middleware)
+    {
+        $key = Configure::read('Security.cookieKey', md5(Configure::read('Security.salt')));
+
+        return $middleware->add(new EncryptedCookieMiddleware(['login'], $key));
     }
 
     /**
