@@ -34,10 +34,10 @@ class Plugin extends AbstractCheckup
         $plugins['me_cms'] = trim(file_get_contents($Plugin->path('MeCms', 'version')));
 
         foreach ($Plugin->all(['exclude' => 'MeCms']) as $plugin) {
-            $file = $Plugin->path($plugin, 'version', true);
+            $file = $Plugin->path($plugin, 'version', false);
             $plugins['others'][$plugin] = __d('me_cms', 'n.a.');
 
-            if ($file) {
+            if (is_readable($file)) {
                 $plugins['others'][$plugin] = trim(file_get_contents($file));
             }
         }

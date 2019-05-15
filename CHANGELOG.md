@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.26 branch
+### 2.26.5
+* updated for `me-tools` 2.18.7.
+
 ### 2.26.4
 * fixed bug for login cookies;
 * fixed a little bug for pages slug;
