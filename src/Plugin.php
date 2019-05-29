@@ -60,6 +60,7 @@ class Plugin extends BasePlugin
             'DatabaseBackup',
             'Recaptcha' => ['path' => ROOT . DS . 'vendor' . DS . 'crabstudio' . DS . 'recaptcha' . DS],
             'RecaptchaMailhide',
+            'StopSpam',
             'Thumber',
             'Tokens',
         ];

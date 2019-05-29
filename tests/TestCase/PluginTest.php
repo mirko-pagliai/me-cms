@@ -74,6 +74,7 @@ class PluginTest extends TestCase
             'DatabaseBackup',
             'Recaptcha',
             'RecaptchaMailhide',
+            'StopSpam',
             'Thumber',
             'Tokens',
         ];

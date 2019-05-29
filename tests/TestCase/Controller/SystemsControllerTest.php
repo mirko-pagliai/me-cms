@@ -108,9 +108,8 @@ class SystemsControllerTest extends ControllerTestCase
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertRedirect(['_name' => 'homepage']);
 
-        //Now the current IP is banned
-        Configure::write('Banned', ['99.99.99.99']);
-        $this->configRequest(['environment' => ['REMOTE_ADDR' => '99.99.99.99']]);
+        //Spammer IP
+        $this->configRequest(['environment' => ['REMOTE_ADDR' => '92.61.176.106']]);
 
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertResponseOkAndNotEmpty();

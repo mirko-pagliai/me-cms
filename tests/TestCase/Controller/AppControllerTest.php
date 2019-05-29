@@ -104,9 +104,9 @@ class AppControllerTest extends ControllerTestCase
         $controller->beforeFilter($this->Event);
         $this->assertEquals('MeCms.ajax', $controller->viewBuilder()->getLayout());
 
-        //Request with banned user
-        $controller = $this->getMockForController(null, ['isBanned']);
-        $controller->method('isBanned')->willReturn(true);
+        //Request with a spammer
+        $controller = $this->getMockForController(null, ['isSpammer']);
+        $controller->method('isSpammer')->willReturn(true);
         $this->_response = $controller->beforeFilter($this->Event);
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
 

@@ -31,7 +31,6 @@ class CopyConfigCommand extends Command
      */
     public $config = [
         'MeCms.recaptcha',
-        'MeCms.banned_ip',
         'MeCms.me_cms',
         'MeCms.widgets',
     ];

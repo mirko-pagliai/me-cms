@@ -74,11 +74,6 @@ foreach (Configure::consume('Cache') as $key => $config) {
     Cache::setConfig($key, $config);
 }
 
-//Loads the banned IP configuration
-if (is_readable(CONFIG . 'banned_ip.php')) {
-    Configure::load('banned_ip');
-}
-
 //Loads the widgets configuration and merges with the configuration from
 //  application, if exists
 Configure::load('MeCms.widgets');

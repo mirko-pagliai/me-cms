@@ -79,8 +79,8 @@ class SystemsController extends AppController
      */
     public function ipNotAllowed()
     {
-        //If the user's IP address is not banned
-        if (!$this->request->isBanned()) {
+        //If the user's IP address is not reported as spammer
+        if (!$this->request->isSpammer()) {
             return $this->redirect($this->referer(['_name' => 'homepage'], true));
         }
 
