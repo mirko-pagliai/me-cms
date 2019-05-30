@@ -32,7 +32,7 @@ class SetPermissionsCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $io = new ConsoleIo(new ConsoleOutput, new ConsoleOutput);
+        $io = new ConsoleIo(new ConsoleOutput(), new ConsoleOutput());
         $Command = $this->getMockBuilder(SetPermissionsCommand::class)
             ->setMethods(['folderChmod'])
             ->getMock();

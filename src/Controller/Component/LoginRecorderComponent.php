@@ -52,7 +52,7 @@ class LoginRecorderComponent extends Component
     /**
      * Gets the `FileArray` instance
      * @return \Tools\FileArray
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @uses $FileArray
      */
     public function getFileArray()
@@ -97,7 +97,10 @@ class LoginRecorderComponent extends Component
      */
     public function write()
     {
-        $current = $this->getUserAgent() + ['agent' => filter_input(INPUT_SERVER, 'HTTP_USER_AGENT'), 'ip' => $this->getClientIp()];
+        $current = $this->getUserAgent() + [
+            'agent' => filter_input(INPUT_SERVER, 'HTTP_USER_AGENT'),
+            'ip' => $this->getClientIp(),
+        ];
         $last = $this->getFileArray()->exists(0) ? $this->getFileArray()->get(0) : [];
 
         //Removes the first record (last in order of time), if it has been saved
@@ -109,7 +112,7 @@ class LoginRecorderComponent extends Component
         }
 
         //Adds the current request, takes only a specified number of records and writes
-        return $this->getFileArray()->prepend(new Entity($current + ['time' => new Time]))
+        return $this->getFileArray()->prepend(new Entity($current + ['time' => new Time()]))
             ->take(getConfig('users.login_log'))
             ->write();
     }

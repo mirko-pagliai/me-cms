@@ -12,9 +12,7 @@
  */
 namespace MeCms\Model\Entity;
 
-use Cake\ORM\Entity;
-use Cake\View\HelperRegistry;
-use Cake\View\View;
+use MeCms\ORM\PostAndPageEntity;
 
 /**
  * Post entity
@@ -34,40 +32,13 @@ use Cake\View\View;
  * @property \MeCms\Model\Entity\User $user
  * @property \MeCms\Model\Entity\Tag[] $tags
  */
-class Post extends Entity
+class Post extends PostAndPageEntity
 {
-    /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
-     * @var array
-     */
-    protected $_accessible = [
-        '*' => true,
-        'id' => false,
-        'preview' => false,
-        'modified' => false,
-    ];
-
     /**
      * Virtual fields that should be exposed
      * @var array
      */
     protected $_virtual = ['plain_text', 'tags_as_string'];
-
-    /**
-     * Gets text as plain text (virtual field)
-     * @return string|null
-     */
-    protected function _getPlainText()
-    {
-        if (empty($this->_properties['text'])) {
-            return null;
-        }
-
-        //Loads the `BBCode` helper
-        $BBCode = (new HelperRegistry(new View))->load('MeTools.BBCode');
-
-        return trim(strip_tags($BBCode->remove($this->_properties['text'])));
-    }
 
     /**
      * Gets tags as string, separated by a comma and a space (virtual field)

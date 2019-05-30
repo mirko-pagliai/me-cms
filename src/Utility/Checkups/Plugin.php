@@ -29,7 +29,7 @@ class Plugin extends AbstractCheckup
      */
     public function versions()
     {
-        $Plugin = new BasePlugin;
+        $Plugin = new BasePlugin();
 
         $plugins['me_cms'] = trim(file_get_contents($Plugin->path('MeCms', 'version')));
 

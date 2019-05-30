@@ -13,9 +13,6 @@
 namespace MeCms\View;
 
 use App\View\AppView;
-use Cake\Event\EventManager;
-use Cake\Network\Request;
-use Cake\Network\Response;
 
 /**
  * Base view class.

@@ -52,7 +52,7 @@ class SystemsController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $contact = new ContactUsForm;
+        $contact = new ContactUsForm();
 
         if ($this->request->is('post')) {
             //Checks for reCAPTCHA, if requested

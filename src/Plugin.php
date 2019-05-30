@@ -47,7 +47,7 @@ class Plugin extends BasePlugin
 
     /**
      * Load all the application configuration and bootstrap logic
-     * @param PluginApplicationInterface $app The host application
+     * @param \Cake\Core\PluginApplicationInterface $app The host application
      * @return void
      * @uses isCli()
      * @uses setVendorLinks()
@@ -72,7 +72,7 @@ class Plugin extends BasePlugin
 
             $className = sprintf('%s\Plugin', $plugin);
             if (class_exists($className)) {
-                $plugin = new $className;
+                $plugin = new $className();
                 $plugin->bootstrap($app);
             }
 
@@ -97,8 +97,8 @@ class Plugin extends BasePlugin
 
     /**
      * Add console commands for the plugin
-     * @param Cake\Console\CommandCollection $commands The command collection to update
-     * @return Cake\Console\CommandCollection
+     * @param \Cake\Console\CommandCollection $commands The command collection to update
+     * @return \Cake\Console\CommandCollection
      * @uses setVendorLinks()
      * @uses setWritableDirs()
      */
@@ -128,8 +128,8 @@ class Plugin extends BasePlugin
 
     /**
      * Adds middleware for the plugin
-     * @param Cake\Http\MiddlewareQueue $middleware The middleware queue to update
-     * @return Cake\Http\MiddlewareQueue
+     * @param \Cake\Http\MiddlewareQueue $middleware The middleware queue to update
+     * @return \Cake\Http\MiddlewareQueue
      * @since 2.26.4
      */
     public function middleware($middleware)

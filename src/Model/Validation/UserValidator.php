@@ -37,7 +37,7 @@ class UserValidator extends AppValidator
         $this->add('group_id', [
             'naturalNumber' => [
                 'message' => I18N_SELECT_VALID_OPTION,
-                'rule' => 'naturalNumber'
+                'rule' => 'naturalNumber',
             ],
         ])->requirePresence('group_id', 'create');
 
@@ -107,7 +107,7 @@ class UserValidator extends AppValidator
                         ->firstOrFail();
 
                     //Checks if the password matches
-                    return (new DefaultPasswordHasher)->check($value, $user->password);
+                    return (new DefaultPasswordHasher())->check($value, $user->password);
                 },
             ],
         ]);

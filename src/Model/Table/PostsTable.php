@@ -19,9 +19,9 @@ use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
-use MeCms\Model\Table\PostsAndPagesTables;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
 use MeCms\Model\Validation\PostValidator;
+use MeCms\ORM\PostsAndPagesTables;
 
 /**
  * Posts model
@@ -96,9 +96,9 @@ class PostsTable extends PostsAndPagesTables
 
     /**
      * `forIndex()` find method
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $options Options
-     * @return Query Query object
+     * @return \Cake\ORM\Query Query object
      * @since 2.22.8
      */
     public function findForIndex(Query $query, array $options)
@@ -204,7 +204,7 @@ class PostsTable extends PostsAndPagesTables
      * Gets the query for related posts from a tag ID
      * @param int $tagId Tag ID
      * @param bool $images If `true`, gets only posts with images
-     * @return Cake\ORM\Query The query builder
+     * @return \Cake\ORM\Query The query builder
      * @since 2.23.0
      */
     public function queryForRelated($tagId, $images = true)
@@ -224,9 +224,9 @@ class PostsTable extends PostsAndPagesTables
 
     /**
      * Build query from filter data
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $data Filter data ($this->request->getQueryParams())
-     * @return Query $query Query object
+     * @return \Cake\ORM\Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
     public function queryFromFilter(Query $query, array $data = [])

@@ -26,25 +26,23 @@ class CreateAdminCommand extends Command
 {
     /**
      * Hook method for defining this command's option parser
-     * @param ConsoleOptionParser $parser The parser to be defined
-     * @return ConsoleOptionParser
+     * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
+     * @return \Cake\Console\ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
-        $parser->setDescription(__d('me_cms', 'Creates an admin user'));
-
-        return $parser;
+        return $parser->setDescription(__d('me_cms', 'Creates an admin user'));
     }
 
     /**
      * Creates an admin user
-     * @param Arguments $args The command arguments
-     * @param ConsoleIo $io The console io
-     * @return null|int The exit code or null for success
+     * @param \Cake\Console\Arguments $args The command arguments
+     * @param \Cake\Console\ConsoleIo $io The console io
+     * @return int|null The exit code or null for success
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
-        $command = new AddUserCommand;
+        $command = new AddUserCommand();
 
         return $command->run(['--group', 1] + $args->getOptions(), $io);
     }

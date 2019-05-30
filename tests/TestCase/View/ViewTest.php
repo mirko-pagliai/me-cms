@@ -13,7 +13,7 @@
 namespace MeCms\Test\TestCase\View;
 
 use Cake\Core\Configure;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\View;
 
@@ -37,7 +37,7 @@ class ViewTest extends TestCase
 
         $this->View = $this->getMockBuilder(View::class)
             ->setMethods(null)
-            ->setConstructorArgs([(new Request)->withEnv('REQUEST_URI', '/some-page')])
+            ->setConstructorArgs([(new ServerRequest())->withEnv('REQUEST_URI', '/some-page')])
             ->getMock();
         $this->View->setPlugin('MeCms');
     }
@@ -54,7 +54,7 @@ class ViewTest extends TestCase
         $theme = 'TestPlugin';
         $this->loadPlugins([$theme]);
         Configure::write('MeCms.default.theme', $theme);
-        $this->assertEquals($theme, (new View)->getTheme());
+        $this->assertEquals($theme, (new View())->getTheme());
     }
 
     /**
@@ -91,7 +91,7 @@ class ViewTest extends TestCase
 
         //If this is the homepage, it only returns the main title from the
         //  configuration, even if you have set another
-        $this->View = new View;
+        $this->View = new View();
         $this->assertEquals($getTitleForLayoutMethod(), $mainTitle);
     }
 

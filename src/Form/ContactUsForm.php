@@ -35,7 +35,7 @@ class ContactUsForm extends Form
      */
     protected function _buildValidator(Validator $validator)
     {
-        $validator = new AppValidator;
+        $validator = new AppValidator();
 
         //First name
         $validator->requirePresence('first_name');

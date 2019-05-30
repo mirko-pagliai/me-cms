@@ -125,7 +125,7 @@ class PagesWidgetsCellTest extends CellTestCase
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
-        $this->Widget->getView()->setRequest(new ServerRequest);
+        $this->Widget->getView()->setRequest(new ServerRequest());
         $this->assertEquals(2, Cache::read('widget_categories', $this->Table->getCacheName())->count());
 
         //With no pages
@@ -176,7 +176,7 @@ class PagesWidgetsCellTest extends CellTestCase
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
-        $this->Widget->getView()->setRequest(new ServerRequest);
+        $this->Widget->getView()->setRequest(new ServerRequest());
         $this->assertEquals(2, Cache::read('widget_list', $this->Table->getCacheName())->count());
 
         //With no pages

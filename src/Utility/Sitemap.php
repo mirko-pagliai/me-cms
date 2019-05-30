@@ -120,7 +120,10 @@ class Sitemap extends SitemapBuilder
 
             foreach ($albums as $album) {
                 //Adds the album
-                $url[] = self::parse(['_name' => 'album', $album->slug], ['lastmod' => array_value_first($album->photos)->modified]);
+                $url[] = self::parse(
+                    ['_name' => 'album', $album->slug],
+                    ['lastmod' => array_value_first($album->photos)->modified]
+                );
 
                 //Adds each photo
                 foreach ($album->photos as $photo) {

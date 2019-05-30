@@ -40,7 +40,7 @@ class PostsCategoriesController extends AppController
      * Lists posts for a category
      * @param string $slug Category slug
      * @return \Cake\Network\Response|null|void
-     * @throws RecordNotFoundException
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException
      */
     public function view($slug = null)
     {

@@ -40,15 +40,15 @@ class KcFinderComponent extends Component
 
     /**
      * Construct
-     * @param ComponentRegistry $registry A ComponentRegistry this component can
-     *  use to lazy load its components
+     * @param \Cake\Controller\ComponentRegistry $registry A ComponentRegistry
+     *  this component can use to lazy load its components
      * @param array $config Array of configuration settings
      * @since 2.22.8
      * @uses $Checkup
      */
     public function __construct(ComponentRegistry $registry, array $config = [])
     {
-        $this->Checkup = new Checkup;
+        $this->Checkup = new Checkup();
 
         parent::__construct($registry, $config);
     }
@@ -142,8 +142,8 @@ class KcFinderComponent extends Component
      * @param array $config The configuration settings provided to this
      *  component
      * @return void
-     * @throws ErrorException
-     * @throws NotWritableException
+     * @throws \ErrorException
+     * @throws \Tools\Exception\NotWritableException
      * @uses getDefaultConfig()
      * @uses kcFinderIsAvailable()
      * @uses uploadedDirIsWriteable()

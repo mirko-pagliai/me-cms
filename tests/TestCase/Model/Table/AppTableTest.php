@@ -79,7 +79,7 @@ class AppTableTest extends TableTestCase
     {
         foreach (['afterDelete', 'afterSave'] as $method) {
             Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
-            $this->Posts->$method(new Event(null), new Entity, new ArrayObject);
+            $this->Posts->$method(new Event(null), new Entity(), new ArrayObject());
             $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
         }
     }
@@ -108,7 +108,7 @@ class AppTableTest extends TableTestCase
             $this->Posts->delete($entity);
         }
 
-        $example['created'] = new Time;
+        $example['created'] = new Time();
         $entity = $this->Posts->save($this->Posts->newEntity($example));
         $this->assertEquals($example['created'], $entity->created);
         $this->Posts->delete($entity);

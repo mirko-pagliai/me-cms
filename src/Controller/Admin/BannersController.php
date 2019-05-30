@@ -66,7 +66,7 @@ class BannersController extends AppController
      *
      * This action can use the `index_as_grid` template.
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Model\Table\BannersTable::queryFromFilter()
+     * @uses \MeCms\Model\Table\BannersTable::queryFromFilter()
      */
     public function index()
     {
@@ -94,9 +94,9 @@ class BannersController extends AppController
     /**
      * Uploads banners
      * @return null
-     * @throws InternalErrorException
-     * @uses MeCms\Controller\AppController::setUploadError()
-     * @uses MeTools\Controller\Component\UploaderComponent
+     * @throws \Cake\Http\Exception\InternalErrorException
+     * @uses \MeCms\Controller\AppController::setUploadError()
+     * @uses \MeTools\Controller\Component\UploaderComponent
      */
     public function upload()
     {

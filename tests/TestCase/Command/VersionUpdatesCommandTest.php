@@ -115,6 +115,6 @@ class VersionUpdatesCommandTest extends TestCase
             $Command->expects($this->once())->method($method);
         }
 
-        $this->assertNull($Command->run([], new ConsoleIo(new ConsoleOutput, new ConsoleOutput)));
+        $this->assertNull($Command->run([], new ConsoleIo(new ConsoleOutput(), new ConsoleOutput())));
     }
 }

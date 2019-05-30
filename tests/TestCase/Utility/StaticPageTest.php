@@ -39,7 +39,7 @@ class StaticPageTest extends TestCase
     {
         parent::setUp();
 
-        $this->StaticPage = new StaticPage;
+        $this->StaticPage = new StaticPage();
         $this->loadPlugins(['TestPlugin']);
     }
 

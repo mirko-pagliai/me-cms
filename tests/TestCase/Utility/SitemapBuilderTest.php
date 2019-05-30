@@ -60,7 +60,7 @@ class SitemapBuilderTest extends TestCase
     {
         parent::setUp();
 
-        $this->SitemapBuilder = new SitemapBuilder;
+        $this->SitemapBuilder = new SitemapBuilder();
     }
 
     /**

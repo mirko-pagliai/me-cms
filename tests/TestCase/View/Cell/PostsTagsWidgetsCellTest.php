@@ -245,7 +245,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'postsTags']));
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
-        $this->Widget->getView()->setRequest(new ServerRequest);
+        $this->Widget->getView()->setRequest(new ServerRequest());
 
         //Tests cache
         $fromCache = Cache::read('widget_tags_popular_2', $this->Table->getCacheName());

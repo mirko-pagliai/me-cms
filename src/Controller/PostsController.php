@@ -106,7 +106,12 @@ class PostsController extends AppController
         $page = $this->request->getQuery('page', 1);
 
         //Sets the cache name
-        $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$start, $end])), $this->paginate['limit'], $page);
+        $cache = sprintf(
+            'index_date_%s_limit_%s_page_%s',
+            md5(serialize([$start, $end])),
+            $this->paginate['limit'],
+            $page
+        );
 
         //Tries to get data from the cache
         list($posts, $paging) = array_values(Cache::readMany(
@@ -140,7 +145,7 @@ class PostsController extends AppController
     /**
      * Lists posts as RSS
      * @return void
-     * @throws ForbiddenException
+     * @throws \Cake\Http\Exception\ForbiddenException
      */
     public function rss()
     {
@@ -158,8 +163,8 @@ class PostsController extends AppController
 
     /**
      * Searches posts
-     * @return Cake\Network\Response|null
-     * @uses MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
+     * @return \Cake\Network\Response|null
+     * @uses \MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
      */
     public function search()
     {
@@ -253,7 +258,7 @@ class PostsController extends AppController
      * It uses the `view` template.
      * @param string $slug Post slug
      * @return void
-     * @uses MeCms\Model\Table\PostsTable::getRelated()
+     * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
     public function preview($slug = null)
     {

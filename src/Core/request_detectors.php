@@ -10,8 +10,8 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 use Cake\Http\ServerRequest;
-use StopSpam\SpamDetector;
 
 /**
  * Adds `is('add')`, `is('delete')`, `is('edit')`, `is('index')` and

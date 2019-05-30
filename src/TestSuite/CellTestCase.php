@@ -47,7 +47,7 @@ abstract class CellTestCase extends TestCase
         if (!$this->Widget && $this->autoInitializeClass) {
             $this->Widget = $this->getMockBuilder(WidgetHelper::class)
                 ->setMethods(null)
-                ->setConstructorArgs([new View])
+                ->setConstructorArgs([new View()])
                 ->getMock();
         }
     }

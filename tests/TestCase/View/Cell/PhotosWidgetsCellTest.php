@@ -114,7 +114,7 @@ class PhotosWidgetsCellTest extends CellTestCase
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'albums']));
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
-        $this->Widget->getView()->setRequest(new ServerRequest);
+        $this->Widget->getView()->setRequest(new ServerRequest());
         $this->assertEquals(2, Cache::read('widget_albums', $this->Table->getCacheName())->count());
 
         //With no photos
@@ -170,7 +170,7 @@ class PhotosWidgetsCellTest extends CellTestCase
             $this->Widget->getView()->setRequest($request);
             $this->assertEmpty($this->Widget->widget($widget)->render());
         }
-        $this->Widget->getView()->setRequest(new ServerRequest);
+        $this->Widget->getView()->setRequest(new ServerRequest());
 
         //Tests cache
         $this->assertEquals(1, Cache::read('widget_latest_1', $this->Table->getCacheName())->count());
@@ -228,7 +228,7 @@ class PhotosWidgetsCellTest extends CellTestCase
             $this->Widget->getView()->setRequest($request);
             $this->assertEmpty($this->Widget->widget($widget)->render());
         }
-        $this->Widget->getView()->setRequest(new ServerRequest);
+        $this->Widget->getView()->setRequest(new ServerRequest());
 
         //Tests cache
         $this->assertEquals(3, Cache::read('widget_random_1', $this->Table->getCacheName())->count());

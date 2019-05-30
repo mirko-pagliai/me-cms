@@ -46,7 +46,7 @@ class UserMailerTest extends TestCase
             'last_name' => 'Blue',
         ]);
 
-        $this->Mailer = new UserMailer;
+        $this->Mailer = new UserMailer();
         $this->Mailer->viewBuilder()->setLayout(false);
     }
 

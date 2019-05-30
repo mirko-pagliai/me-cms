@@ -59,6 +59,10 @@ class PhotosAlbum extends Entity
      */
     protected function _getPreview()
     {
-        return empty($this->_properties['photos']) ? null : collection($this->_properties['photos'])->extract('path')->first();
+        if (empty($this->_properties['photos'])) {
+            return null;
+        }
+
+        return collection($this->_properties['photos'])->extract('path')->first();
     }
 }

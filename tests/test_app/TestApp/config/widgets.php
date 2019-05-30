@@ -17,7 +17,7 @@ return ['Widgets' => [
             'prefix' => '#',
             'render' => 'cloud',
             'shuffle' => true,
-            'style' => ['maxFont' => 40, 'minFont' => 12]
+            'style' => ['maxFont' => 40, 'minFont' => 12],
         ],
     ],
     //Specific widgets for the homepage.

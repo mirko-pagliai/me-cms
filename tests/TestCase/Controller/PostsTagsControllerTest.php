@@ -76,7 +76,7 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
         $this->assertInstanceof(Tag::class, $this->viewVariable('tag'));
 
-        $tagFromCache = Cache::read((sprintf('tag_%s', md5($slug))), $this->Table->getCacheName());
+        $tagFromCache = Cache::read(sprintf('tag_%s', md5($slug)), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('tag'), $tagFromCache->first());
 
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);

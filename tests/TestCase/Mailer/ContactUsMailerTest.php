@@ -44,7 +44,7 @@ class ContactUsMailerTest extends TestCase
     {
         parent::setUp();
 
-        $this->Mailer = new ContactUsMailer;
+        $this->Mailer = new ContactUsMailer();
         $this->Mailer->viewBuilder()->setLayout(false);
     }
 

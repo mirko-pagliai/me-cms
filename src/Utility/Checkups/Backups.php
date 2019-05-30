@@ -29,6 +29,6 @@ class Backups extends AbstractCheckup
      */
     public function isWriteable()
     {
-        return $this->_isWriteable((array)(new BackupManager)->getTarget());
+        return $this->_isWriteable((array)(new BackupManager())->getTarget());
     }
 }

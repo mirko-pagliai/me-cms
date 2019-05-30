@@ -72,7 +72,7 @@ class WidgetHelperTest extends HelperTestCase
             ['Third' => ['key' => 'value']],
             ['Third' => ['anotherKey' => 'anotherValue']],
             ['Fourth' => ['fourth' => 'fourthValue']],
-            ['Fifth' => []]
+            ['Fifth' => []],
         ], $getAllMethod());
 
         //Test empty values from widgets

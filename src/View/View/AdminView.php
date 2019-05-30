@@ -44,8 +44,8 @@ class AdminView extends View
      * Renders view for given template file and layout
      * @param string|null $view Name of view file to use
      * @param string|null $layout Layout to use
-     * @return Rendered content or null if content already rendered and
-     *  returned earlier
+     * @return string|null Rendered content or null if content already rendered
+     *  and returned earlier
      * @see http://api.cakephp.org/3.4/class-Cake.View.View.html#_render
      */
     public function render($view = null, $layout = null)
@@ -56,7 +56,7 @@ class AdminView extends View
             '2' => sprintf('2 - %s', __d('me_cms', 'Low')),
             '3' => sprintf('3 - %s', __d('me_cms', 'Normal')),
             '4' => sprintf('4 - %s', __d('me_cms', 'High')),
-            '5' => sprintf('5 - %s', __d('me_cms', 'Very high'))
+            '5' => sprintf('5 - %s', __d('me_cms', 'Very high')),
         ]);
 
         return parent::render($view, $layout);
