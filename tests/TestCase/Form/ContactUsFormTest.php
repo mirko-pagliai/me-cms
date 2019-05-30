@@ -91,17 +91,13 @@ class ContactUsFormTest extends TestCase
     public function testValidationForMessage()
     {
         $expected = ['message' => ['lengthBetween' => 'Must be between 10 and 1000 chars']];
-        foreach ([str_repeat('a', 9), str_repeat('a', 1001)] as $value) {
-            $this->example['message'] = $value;
-
-            $this->assertFalse($this->Form->validate($this->example));
+        foreach ([str_repeat('a', 9), str_repeat('a', 1001)] as $message) {
+            $this->assertFalse($this->Form->validate(compact('message') + $this->example));
             $this->assertEquals($expected, $this->Form->getErrors());
         }
 
-        foreach ([str_repeat('a', 10), str_repeat('a', 1000)] as $value) {
-            $this->example['message'] = $value;
-
-            $this->assertTrue($this->Form->validate($this->example));
+        foreach ([str_repeat('a', 10), str_repeat('a', 1000)] as $message) {
+            $this->assertTrue($this->Form->validate(compact('message') + $this->example));
             $this->assertEmpty($this->Form->getErrors());
         }
     }
