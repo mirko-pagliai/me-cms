@@ -5,7 +5,8 @@
 * the `ContactUs` form checks if the email address used was reported as a spammer;
 * `AppController::isBanned()` method renamed as `isSpammer()`;
 * updated for `me-tools` 2.18.7;
-* added `MeCms\ORM\PostAndPageEntity` abstract class.
+* added `MeCms\ORM\PostAndPageEntity` abstract class;
+* `PostsAndPagesTables` class moved to `MeCms\ORM` namespace.
 
 ### 2.26.4
 * fixed bug for login cookies;
