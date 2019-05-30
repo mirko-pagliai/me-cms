@@ -18,6 +18,7 @@ use Cake\Mailer\MailerAwareTrait;
 use Cake\Validation\Validator;
 use MeCms\Form\Form;
 use MeCms\Validation\AppValidator;
+use StopSpam\SpamDetector;
 
 /**
  * ContactUsForm class
@@ -43,7 +44,14 @@ class ContactUsForm extends Form
         $validator->requirePresence('last_name');
 
         //Email
-        $validator->requirePresence('email');
+        $validator->add('email', [
+            'notSpammer' => [
+                'message' => __d('me_cms', 'This email address has been reported as a spammer'),
+                'rule' => function ($value) {
+                    return (new SpamDetector())->email($value)->verify();
+                },
+            ],
+        ])->requirePresence('email');
 
         //Message
         $validator->add('message', [

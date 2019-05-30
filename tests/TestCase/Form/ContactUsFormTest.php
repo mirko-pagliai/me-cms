@@ -32,7 +32,7 @@ class ContactUsFormTest extends TestCase
      * @var array
      */
     protected $example = [
-        'email' => 'test@test.com',
+        'email' => 'mymail@example.com',
         'first_name' => 'First name',
         'last_name' => 'Last name',
         'message' => 'Example of message',
@@ -70,6 +70,18 @@ class ContactUsFormTest extends TestCase
             $this->assertFalse($this->Form->validate($copy));
             $this->assertEquals($expected, $this->Form->getErrors());
         }
+    }
+
+    /**
+     * Test validation for `email` property
+     * @test
+     */
+    public function testValidationForEmail()
+    {
+        $this->assertFalse($this->Form->validate(['email' => 'spammer@example.com'] + $this->example));
+        $this->assertEquals([
+            'email' => ['notSpammer' => 'This email address has been reported as a spammer'],
+        ], $this->Form->getErrors());
     }
 
     /**

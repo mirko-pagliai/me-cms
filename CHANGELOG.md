@@ -2,6 +2,7 @@
 ## 2.26 branch
 ### 2.26.5
 * it uses the `cakephp-stop-spam` package to detect spammers;
+* the `ContactUs` form checks if the email address used was reported as a spammer;
 * `AppController::isBanned()` method renamed as `isSpammer()`;
 * updated for `me-tools` 2.18.7.
 
