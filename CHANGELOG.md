@@ -4,7 +4,8 @@
 * it uses the `cakephp-stop-spam` package to detect spammers;
 * the `ContactUs` form checks if the email address used was reported as a spammer;
 * `AppController::isBanned()` method renamed as `isSpammer()`;
-* updated for `me-tools` 2.18.7.
+* updated for `me-tools` 2.18.7;
+* added `MeCms\ORM\PostAndPageEntity` abstract class.
 
 ### 2.26.4
 * fixed bug for login cookies;
