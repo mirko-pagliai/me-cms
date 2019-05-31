@@ -6,7 +6,8 @@
 * `AppController::isBanned()` method renamed as `isSpammer()`;
 * updated for `me-tools` 2.18.7;
 * added `MeCms\ORM\PostAndPageEntity` abstract class;
-* `PostsAndPagesTables` class moved to `MeCms\ORM` namespace.
+* `PostsAndPagesTables` class moved to `MeCms\ORM` namespace;
+* updated for `php-tools` 1.2.5.
 
 ### 2.26.4
 * fixed bug for login cookies;
