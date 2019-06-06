@@ -81,7 +81,7 @@ class BackupsControllerTest extends ControllerTestCase
                 return '`' . $arg . '`';
             }, func_get_args()));
 
-            return Log::write('debug', 'Called `send()` with args: ' . $args);
+            return Log::write('debug', 'Args for `send()`: ' . $args);
         }));
     }
 
@@ -186,8 +186,7 @@ class BackupsControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'restore', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertFalse(Cache::read('firstKey'));
-        $this->assertFalse(Cache::read('secondKey'));
+        array_map([$this, 'assertFalse'], [Cache::read('firstKey'), Cache::read('secondKey')]);
     }
 
     /**
@@ -196,11 +195,10 @@ class BackupsControllerTest extends ControllerTestCase
      */
     public function testSend()
     {
-        $email = getConfigOrFail('MeCms.email.webmaster');
         $file = $this->createSingleBackup();
         $this->post($this->url + ['action' => 'send', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertLogContains(sprintf('Called `send()` with args: `%s`, `%s`', $file, $email), 'debug');
+        $this->assertLogContains('Args for `send()`: `' . $file . '`, `' . getConfigOrFail('MeCms.email.webmaster') . '`', 'debug');
     }
 }

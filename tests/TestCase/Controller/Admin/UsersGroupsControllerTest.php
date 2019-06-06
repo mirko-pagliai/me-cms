@@ -109,32 +109,23 @@ class UsersGroupsControllerTest extends ControllerTestCase
      */
     public function testDelete()
     {
-        $getUsersGroupId = function ($conditions = []) {
-            return $this->Table->find()->where($conditions)->extract('id')->first();
-        };
-        $idIsEmpty = function ($id) {
-            return $this->Table->findById($id)->isEmpty();
-        };
-
         $url = $this->url + ['action' => 'delete'];
 
-        //Cannot delete a default group
-        $id = $getUsersGroupId(['id <=' => 3, 'user_count' => 0]);
-        $this->post($url + [$id]);
-        $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('You cannot delete this users group');
-        $this->assertFalse($idIsEmpty($id));
-
-        $id = $getUsersGroupId(['id >' => 3, 'user_count >' => 0]);
-        $this->post($url + [$id]);
-        $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage(I18N_BEFORE_DELETE);
-        $this->assertFalse($idIsEmpty($id));
-
-        $id = $getUsersGroupId(['id >' => 3, 'user_count' => 0]);
-        $this->post($url + [$id]);
+        $this->post($url + [5]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertTrue($idIsEmpty($id));
+        $this->assertTrue($this->Table->findById(5)->isEmpty());
+
+        //Cannot delete a default group
+        $this->post($url + [2]);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertFlashMessage('You cannot delete this users group');
+        $this->assertFalse($this->Table->findById(2)->isEmpty());
+
+        //Cannot delete a group with users
+        $this->post($url + [4]);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertFlashMessage(I18N_BEFORE_DELETE);
+        $this->assertFalse($this->Table->findById(4)->isEmpty());
     }
 }

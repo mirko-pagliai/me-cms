@@ -29,8 +29,7 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function assertCacheIsEmpty()
     {
-        $this->assertFalse(Cache::read('value'));
-        $this->assertFalse(Cache::read('valueFromGroup', 'posts'));
+        array_map([$this, 'assertFalse'], [Cache::read('value'), Cache::read('varFromGroup', 'posts')]);
     }
 
     /**
@@ -76,23 +75,14 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function tearDown()
     {
+        Cache::clearAll();
+
         //Deletes all temporary files
         @unlink_recursive(getConfigOrFail('Assets.target'));
         @unlink_recursive(getConfigOrFail('Thumber.target'));
         @unlink(SITEMAP);
 
-        Cache::clearAll();
-
         parent::tearDown();
-    }
-
-    /**
-     * Tests for `initialize()` method
-     * @test
-     */
-    public function testInitialize()
-    {
-        $this->assertHasComponent('KcFinder', 'browser');
     }
 
     /**
@@ -188,10 +178,6 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function testCheckup()
     {
-        $this->get($this->url + ['action' => 'checkup']);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'checkup.ctp');
-
         $expectedViewVars = [
             'webroot',
             'temporary',
@@ -203,9 +189,10 @@ class SystemsControllerTest extends ControllerTestCase
             'backups',
             'apache',
         ];
-        foreach ($expectedViewVars as $varName) {
-            $this->assertNotEmpty($this->viewVariable($varName));
-        }
+        $this->get($this->url + ['action' => 'checkup']);
+        $this->assertResponseOkAndNotEmpty();
+        $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'checkup.ctp');
+        array_map([$this, 'assertNotEmpty'], array_map([$this, 'viewVariable'], $expectedViewVars));
     }
 
     /**
@@ -269,11 +256,6 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function testTmpViewer()
     {
-        $this->createSomeTemporaryData();
-        $this->get($this->url + ['action' => 'tmpViewer']);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'tmp_viewer.ctp');
-
         $expectedViewVars = [
             'assetsSize',
             'cacheSize',
@@ -283,8 +265,10 @@ class SystemsControllerTest extends ControllerTestCase
             'totalSize',
             'cacheStatus',
         ];
-        foreach ($expectedViewVars as $varName) {
-            $this->assertNotEmpty($this->viewVariable($varName));
-        }
+        $this->createSomeTemporaryData();
+        $this->get($this->url + ['action' => 'tmpViewer']);
+        $this->assertResponseOkAndNotEmpty();
+        $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'tmp_viewer.ctp');
+        array_map([$this, 'assertNotEmpty'], array_map([$this, 'viewVariable'], $expectedViewVars));
     }
 }

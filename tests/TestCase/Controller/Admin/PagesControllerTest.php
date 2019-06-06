@@ -81,17 +81,6 @@ class PagesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `initialize()` method
-     * @test
-     */
-    public function testInitialize()
-    {
-        foreach (['add', 'edit'] as $action) {
-            $this->assertHasComponent('KcFinder', $action);
-        }
-    }
-
-    /**
      * Tests for `isAuthorized()` method
      * @test
      */
@@ -182,8 +171,6 @@ class PagesControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'edit.ctp');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
-
-        //Checks if the `created` field has been properly formatted
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('page')->created);
 
         //POST request. Data are valid

@@ -43,14 +43,11 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function testView()
     {
-        $slug = $this->Table->find('active')->extract('slug')->first();
-
-        $this->get(['_name' => 'page', $slug]);
+        $this->get(['_name' => 'page', 'first-page']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Pages' . DS . 'view.ctp');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
-
-        $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Table->getCacheName());
+        $cache = Cache::read('view_' . md5('first-page'), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('page'), $cache->first());
     }
 
@@ -64,16 +61,14 @@ class PagesControllerTest extends ControllerTestCase
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page');
         $this->assertTemplate('StaticPages' . DS . 'page-from-app.ctp');
-
-        $pageFromView = $this->viewVariable('page');
-        $this->assertInstanceof(Entity::class, $pageFromView);
-        $this->assertInstanceof(Entity::class, $pageFromView->category);
+        $this->assertInstanceof(Entity::class, $this->viewVariable('page'));
+        $this->assertInstanceof(Entity::class, $this->viewVariable('page')->get('category'));
         $this->assertEquals([
             'category' => ['slug' => null, 'title' => null],
             'title' => 'Page From App',
             'subtitle' => null,
             'slug' => 'page-from-app',
-        ], $pageFromView->toArray());
+        ], $this->viewVariable('page')->toArray());
     }
 
     /**
@@ -96,9 +91,7 @@ class PagesControllerTest extends ControllerTestCase
     public function testPreview()
     {
         $this->setUserGroup('user');
-        $slug = $this->Table->find('pending')->extract('slug')->first();
-
-        $this->get(['_name' => 'pagesPreview', $slug]);
+        $this->get(['_name' => 'pagesPreview', 'disabled-page']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Pages' . DS . 'view.ctp');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));

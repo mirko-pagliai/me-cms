@@ -64,12 +64,11 @@ class RequestDetectorsTest extends TestCase
         $this->assertFalse($this->Request->isIndex());
         $this->assertFalse($this->Request->isView());
 
-        $this->assertTrue($this->Request->is('add'));
-
         foreach (['delete', 'edit', 'index', 'view'] as $action) {
             $this->assertFalse($this->Request->is($action));
         }
 
+        $this->assertTrue($this->Request->is('add'));
         $this->assertTrue($this->Request->is(['add', 'edit']));
         $this->assertFalse($this->Request->is(['delete', 'edit']));
     }
@@ -98,7 +97,6 @@ class RequestDetectorsTest extends TestCase
         $this->assertFalse($this->Request->is('offline'));
 
         Configure::write('MeCms.default.offline', true);
-
         $request = $this->getMockForRequest();
         $this->assertTrue($request->isOffline());
         $this->assertTrue($request->is('offline'));

@@ -42,7 +42,7 @@ class PhotosControllerTest extends ControllerTestCase
         //Only for the `testUploadErrorOnSave()` method, it mocks the `Photos`
         //  table, so the `save()` method returns `false`
         if ($this->getName() === 'testUploadErrorOnSave') {
-            $this->_controller->Photos = $this->getMockForModel(sprintf('%s.%s', 'MeCms', $this->Table->getRegistryAlias()), ['save']);
+            $this->_controller->Photos = $this->getMockForModel('MeCms.' . $this->Table->getRegistryAlias(), ['save']);
             $this->_controller->Photos->method('save')->will($this->returnValue(false));
         }
     }
@@ -53,19 +53,7 @@ class PhotosControllerTest extends ControllerTestCase
      */
     public function testBeforeFilter()
     {
-        $this->get($this->url + ['action' => 'index']);
-        $this->assertNotEmpty($this->viewVariable('albums'));
-    }
-
-    /**
-     * Tests for `beforeFilter()` method, with no positions
-     * @test
-     */
-    public function testBeforeFilterNoAlbums()
-    {
-        //Deletes all albums
         $this->Table->Albums->deleteAll(['id IS NOT' => null]);
-
         $this->get($this->url + ['action' => 'add']);
         $this->assertRedirect(['controller' => 'PhotosAlbums', 'action' => 'index']);
         $this->assertFlashMessage('You must first create an album');
@@ -149,10 +137,9 @@ class PhotosControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
 
         //Checks the photo has been saved
-        $photo = $this->Table->find()->last();
-        $this->assertEquals(1, $photo->album_id);
-        $this->assertEquals($file['name'], $photo->filename);
-        $this->assertFileExists(PHOTOS . $photo->album_id . DS . $photo->filename);
+        $photo = $this->Table->find()->last()->extract(['album_id', 'filename']);
+        $this->assertEquals(['album_id' => 1, 'filename' => $file['name']], $photo);
+        $this->assertFileExists(PHOTOS . 1 . DS . $file['name']);
     }
 
     /**
@@ -223,10 +210,9 @@ class PhotosControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
 
         //Checks the photo has been saved
-        $photo = $this->Table->find()->last();
-        $this->assertEquals(1, $photo->album_id);
-        $this->assertEquals($file['name'], $photo->filename);
-        $this->assertFileExists(PHOTOS . $photo->album_id . DS . $photo->filename);
+        $photo = $this->Table->find()->last()->extract(['album_id', 'filename']);
+        $this->assertEquals(['album_id' => 1, 'filename' => $file['name']], $photo);
+        $this->assertFileExists(PHOTOS . 1 . DS . $file['name']);
     }
 
     /**
@@ -260,10 +246,9 @@ class PhotosControllerTest extends ControllerTestCase
      */
     public function testDownload()
     {
-        $photo = $this->Table->find()->first();
-        $this->get($this->url + ['action' => 'download', $photo->id]);
+        $this->get($this->url + ['action' => 'download', 1]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertFileResponse(PHOTOS . $photo->album_id . DS . $photo->filename);
+        $this->assertFileResponse(PHOTOS . 1 . DS . 'photo1.jpg');
     }
 
     /**
@@ -272,11 +257,10 @@ class PhotosControllerTest extends ControllerTestCase
      */
     public function testDelete()
     {
-        $photo = $this->Table->find()->first();
-        $this->post($this->url + ['action' => 'delete', $photo->id]);
-        $this->assertRedirect(['action' => 'index', $photo->album_id]);
+        $this->post($this->url + ['action' => 'delete', 1]);
+        $this->assertRedirect(['action' => 'index', 1]);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertTrue($this->Table->findById($photo->id)->isEmpty());
+        $this->assertTrue($this->Table->findById(1)->isEmpty());
         $this->skipIf(IS_WIN);
         $this->assertFileNotExists(PHOTOS . $photo->album_id . DS . $photo->filename);
     }

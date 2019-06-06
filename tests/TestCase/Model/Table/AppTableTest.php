@@ -66,9 +66,9 @@ class AppTableTest extends TableTestCase
     {
         parent::setUp();
 
-        $this->Photos = $this->getMockForModel('MeCms.Photos', null);
-        $this->Posts = $this->getMockForModel('MeCms.Posts', null);
-        $this->PostsCategories = $this->getMockForModel('MeCms.PostsCategories', null);
+        foreach (['Photos', 'Posts', 'PostsCategories'] as $table) {
+            $this->$table = $this->getMockForModel('MeCms.' . $table, null);
+        }
     }
 
     /**

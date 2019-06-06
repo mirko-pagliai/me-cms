@@ -44,7 +44,6 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('PostsCategories' . DS . 'index.ctp');
         $this->assertContainsOnlyInstancesOf(PostsCategory::class, $this->viewVariable('categories'));
-
         $cache = Cache::read('categories_index', $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('categories')->toArray(), $cache->toArray());
     }
@@ -55,8 +54,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
      */
     public function testView()
     {
-        $slug = $this->Table->find('active')->extract('slug')->first();
-        $url = ['_name' => 'postsCategory', $slug];
+        $url = ['_name' => 'postsCategory', 'first-post-category'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -64,7 +62,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
 
-        $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);
+        $cache = sprintf('category_%s_limit_%s_page_%s', md5('first-post-category'), getConfigOrFail('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Table->getCacheName()
@@ -78,7 +76,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
 
         //GET request with query string
-        $this->get($url + ['?' => ['q' => $slug]]);
+        $this->get($url + ['?' => ['q' => 'first-post-category']]);
         $this->assertRedirect($url);
 
         //GET request with a no existing category

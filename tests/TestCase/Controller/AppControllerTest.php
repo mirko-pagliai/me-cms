@@ -60,21 +60,6 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `initialize()` method
-     * @test
-     */
-    public function testInitialize()
-    {
-        $this->assertHasComponent([
-            'Auth',
-            'Flash',
-            'Recaptcha',
-            'RequestHandler',
-            'Uploader',
-        ]);
-    }
-
-    /**
      * Tests for `beforeFilter()` method
      * @test
      */
@@ -104,28 +89,16 @@ class AppControllerTest extends ControllerTestCase
         $controller->beforeFilter($this->Event);
         $this->assertEquals('MeCms.ajax', $controller->viewBuilder()->getLayout());
 
-        //Request with a spammer
-        $controller = $this->getMockForController(null, ['isSpammer']);
-        $controller->method('isSpammer')->willReturn(true);
-        $this->_response = $controller->beforeFilter($this->Event);
-        $this->assertRedirect(['_name' => 'ipNotAllowed']);
-
-        //Request with offline site
-        $controller = $this->getMockForController(null, ['isOffline']);
-        $controller->method('isOffline')->willReturn(true);
-        $this->_response = $controller->beforeFilter($this->Event);
-        $this->assertRedirect(['_name' => 'offline']);
-    }
-
-    /**
-     * Tests for `beforeRender()` method
-     * @test
-     */
-    public function testBeforeRender()
-    {
-        $expectedHelpers = ['Recaptcha.Recaptcha', 'MeCms.Auth'];
-        $this->Controller->beforeRender($this->Event);
-        $this->assertArrayKeysEqual($expectedHelpers, $this->Controller->viewBuilder()->getHelpers());
+        //Methods that, if they return `true`, make a redirect
+        foreach ([
+            'isSpammer' => 'ipNotAllowed',
+            'isOffline' => 'offline',
+        ] as $method => $expectedRedirect) {
+            $controller = $this->getMockForController(null, [$method]);
+            $controller->method($method)->willReturn(true);
+            $this->_response = $controller->beforeFilter($this->Event);
+            $this->assertRedirect(['_name' => $expectedRedirect]);
+        }
     }
 
     /**
@@ -136,14 +109,11 @@ class AppControllerTest extends ControllerTestCase
     {
         parent::testIsAuthorized();
 
-        //With `admin` prefix
-        $this->Controller->request = $this->Controller->request->withParam('prefix', ADMIN_PREFIX);
-        $this->Controller->request->clearDetectorCache();
-        parent::testIsAuthorized();
-
-        //With other prefix
-        $this->Controller->request = $this->Controller->request->withParam('prefix', 'otherPrefix');
-        $this->Controller->request->clearDetectorCache();
-        parent::testIsAuthorized();
+        //With prefixes
+        foreach ([ADMIN_PREFIX, 'otherPrefix'] as $prefix) {
+            $this->Controller->request = $this->Controller->request->withParam('prefix', $prefix);
+            $this->Controller->request->clearDetectorCache();
+            parent::testIsAuthorized();
+        }
     }
 }

@@ -86,15 +86,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `initialize()` method
-     * @test
-     */
-    public function testInitialize()
-    {
-        $this->assertHasComponent('LoginRecorder');
-    }
-
-    /**
      * Tests for `isAuthorized()` method
      * @test
      */
@@ -200,16 +191,15 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
-        $url = $this->url + ['action' => 'edit', $this->Table->findByGroupId(1)->extract('id')->first()];
+        $url = $this->url + ['action' => 'edit', 1];
 
         //An admin cannot edit other admin users
         $this->get($url);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('Only the admin founder can do this');
 
-        $this->setUserId(1);
-
         //The admin founder can edit others admin users
+        $this->setUserId(1);
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
     }
@@ -220,39 +210,30 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testDelete()
     {
-        $getUserId = function ($conditions = []) {
-            return $this->Table->find()->where($conditions)->extract('id')->first();
-        };
-        $idIsEmpty = function ($id) {
-            return $this->Table->findById($id)->isEmpty();
-        };
-
         $url = $this->url + ['action' => 'delete'];
+
+        $this->post($url + [2]);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertFlashMessage(I18N_OPERATION_OK);
+        $this->assertTrue($this->Table->findById(2)->isEmpty());
 
         //Cannot delete the admin founder
         $this->post($url + [1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('You cannot delete the admin founder');
-        $this->assertFalse($idIsEmpty(1));
+        $this->assertFalse($this->Table->findById(1)->isEmpty());
 
-        //Only the admin founder can delete others admin users
-        $id = $getUserId(['group_id' => 1, 'id !=' => 1]);
-        $this->post($url + [$id]);
-        $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage('Only the admin founder can do this');
-        $this->assertFalse($idIsEmpty($id));
-
-        $id = $getUserId(['group_id !=' => 1, 'post_count >=' => 1]);
-        $this->post($url + [$id]);
+        //Cannot delete an user with posts
+        $this->post($url + [4]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
-        $this->assertFalse($idIsEmpty($id));
+        $this->assertFalse($this->Table->findById(4)->isEmpty());
 
-        $id = $getUserId(['group_id !=' => 1, 'post_count' => 0]);
-        $this->post($url + [$id]);
+        //Only the admin founder can delete others admin users
+        $this->post($url + [5]);
         $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertTrue($idIsEmpty($id));
+        $this->assertFlashMessage('Only the admin founder can do this');
+        $this->assertFalse($this->Table->findById(5)->isEmpty());
     }
 
     /**
@@ -261,13 +242,10 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testActivate()
     {
-        $id = $this->Table->find('pending')->extract('id')->first();
-        $this->get($this->url + ['action' => 'activate', $id]);
+        $this->get($this->url + ['action' => 'activate', 2]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-
-        //The user is now active
-        $this->assertTrue($this->Table->findById($id)->extract('active')->first());
+        $this->assertTrue($this->Table->findById(2)->extract('active')->first());
     }
 
     /**
@@ -282,8 +260,7 @@ class UsersControllerTest extends ControllerTestCase
 
         //Saves the password for the first user
         $user = $this->Table->get(1);
-        $user->password = $oldPassword;
-        $this->Table->save($user);
+        $this->Table->save($user->set('password', $oldPassword));
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -304,8 +281,7 @@ class UsersControllerTest extends ControllerTestCase
 
         //Saves the password for the first user
         $user = $this->Table->get(1);
-        $user->password = $oldPassword;
-        $this->Table->save($user);
+        $this->Table->save($user->set('password', $oldPassword));
 
         //POST request. Data are invalid (the old password is wrong)
         $this->post($url, [
@@ -336,20 +312,18 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Users' . DS . 'change_picture.ctp');
+        $this->assertSession(null, 'Auth.User.picture');
 
         //Creates some files that simulate previous user pictures. These files
         //  will be deleted before upload
         @array_map('create_file', [$expectedPicture, USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
-
-        $this->assertSession(null, 'Auth.User.picture');
 
         //POST request. This works
         $this->post($url + ['_ext' => 'json'], compact('file'));
         $this->assertResponseOkAndNotEmpty();
         $this->assertSession($expectedPicture, 'Auth.User.picture');
         $this->assertFileExists($expectedPicture);
-        $this->assertFileNotExists(USER_PICTURES . '1.jpeg');
-        $this->assertFileNotExists(USER_PICTURES . '1.png');
+        array_map([$this, 'assertFileNotExists'], [USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
 
         @unlink($expectedPicture);
     }
@@ -361,7 +335,6 @@ class UsersControllerTest extends ControllerTestCase
     public function testChangePictureErrorDuringUpload()
     {
         $file = ['error' => UPLOAD_ERR_NO_FILE] + $this->createImageToUpload();
-
         $this->post($this->url + ['action' => 'changePicture', '_ext' => 'json'], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"No file was uploaded"}');

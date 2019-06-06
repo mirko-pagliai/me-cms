@@ -67,8 +67,7 @@ class PostsTagsControllerTest extends ControllerTestCase
      */
     public function testView()
     {
-        $slug = $this->Table->Tags->find('active')->extract('slug')->first();
-        $url = ['_name' => 'postsTag', $slug];
+        $url = ['_name' => 'postsTag', 'cat'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -76,10 +75,10 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
         $this->assertInstanceof(Tag::class, $this->viewVariable('tag'));
 
-        $tagFromCache = Cache::read(sprintf('tag_%s', md5($slug)), $this->Table->getCacheName());
+        $tagFromCache = Cache::read('tag_' . md5('cat'), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('tag'), $tagFromCache->first());
 
-        $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.records'), 1);
+        $cache = sprintf('tag_%s_limit_%s_page_%s', md5('cat'), getConfigOrFail('default.records'), 1);
         list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Table->getCacheName()
@@ -93,7 +92,7 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
 
         //GET request with query string
-        $this->get($url + ['?' => ['q' => $slug]]);
+        $this->get($url + ['?' => ['q' => 'cat']]);
         $this->assertRedirect($url);
 
         //GET request with a no existing tag

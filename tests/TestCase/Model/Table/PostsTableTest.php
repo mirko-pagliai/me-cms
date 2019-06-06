@@ -19,7 +19,6 @@ use Cake\Utility\Hash;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Entity\PostsTag;
 use MeCms\Model\Entity\Tag;
-use MeCms\Model\Table\PostsCategoriesTable;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\TestSuite\PostsAndPagesTablesTestCase;
 use ReflectionFunction;
@@ -80,30 +79,15 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      */
     public function testBuildRules()
     {
-        $this->loadFixtures();
-        $entity = $this->Table->newEntity(self::$example);
-        $this->assertNotEmpty($this->Table->save($entity));
-
-        //Saves again the same entity
-        $entity = $this->Table->newEntity(self::$example);
-        $this->assertFalse($this->Table->save($entity));
-        $this->assertEquals([
-            'slug' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
-            'title' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
-        ], $entity->getErrors());
+        parent::testBuildRules();
 
         $entity = $this->Table->newEntity([
-            'category_id' => 999,
-            'user_id' => 999,
             'title' => 'My title 2',
             'slug' => 'my-slug-2',
-            'text' => 'My text',
-        ]);
+            'user_id' => 999,
+        ] + self::$example);
         $this->assertFalse($this->Table->save($entity));
-        $this->assertEquals([
-            'category_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
-            'user_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION],
-        ], $entity->getErrors());
+        $this->assertEquals(['user_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
     }
 
     /**
@@ -112,17 +96,9 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      */
     public function testInitialize()
     {
-        $this->assertEquals('posts', $this->Table->getTable());
-        $this->assertEquals('title', $this->Table->getDisplayField());
-        $this->assertEquals('id', $this->Table->getPrimaryKey());
+        parent::testInitialize();
 
-        $this->assertBelongsTo($this->Table->Categories);
-        $this->assertEquals('category_id', $this->Table->Categories->getForeignKey());
-        $this->assertEquals('INNER', $this->Table->Categories->getJoinType());
-        $this->assertEquals('MeCms.PostsCategories', $this->Table->Categories->getClassName());
-        $this->assertInstanceOf(PostsCategoriesTable::class, $this->Table->Categories->getTarget());
-        $this->assertEquals('MeCms.PostsCategories', $this->Table->Categories->getTarget()->getRegistryAlias());
-        $this->assertEquals('Categories', $this->Table->Categories->getAlias());
+        $this->assertEquals('posts', $this->Table->getTable());
 
         $this->assertBelongsTo($this->Table->Users);
         $this->assertEquals('user_id', $this->Table->Users->getForeignKey());
@@ -135,8 +111,6 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertEquals('posts_tags', $this->Table->Tags->junction()->getTable());
         $this->assertEquals('MeCms.Tags', $this->Table->Tags->getClassName());
         $this->assertEquals('MeCms.PostsTags', $this->Table->Tags->getThrough());
-
-        $this->assertHasBehavior(['Timestamp', 'CounterCache']);
 
         $this->assertInstanceOf(PostValidator::class, $this->Table->getValidator());
     }

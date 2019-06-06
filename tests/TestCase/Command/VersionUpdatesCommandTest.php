@@ -52,9 +52,8 @@ class VersionUpdatesCommandTest extends TestCase
     public function testAddEnableCommentsField()
     {
         $getTable = function ($name) {
-            return $this->getMockForModel(sprintf('MeCms.%s', $name), null);
+            return $this->getMockForModel('MeCms.' . $name, null);
         };
-
         $this->loadFixtures('Pages', 'Posts');
 
         foreach (['Pages', 'Posts'] as $table) {
@@ -62,7 +61,6 @@ class VersionUpdatesCommandTest extends TestCase
         }
 
         $this->Command->addEnableCommentsField();
-
         foreach (['Pages', 'Posts'] as $table) {
             $this->assertTrue($getTable($table)->getSchema()->hasColumn('enable_comments'));
         }
@@ -77,7 +75,6 @@ class VersionUpdatesCommandTest extends TestCase
         $getTable = function () {
             return $this->getMockForModel('MeCms.Tags', null);
         };
-
         $this->loadFixtures('Tags');
 
         $getTable()->getConnection()->execute(sprintf('ALTER TABLE %s MODIFY tag varchar(254) NOT NULL', $getTable()->getTable()));

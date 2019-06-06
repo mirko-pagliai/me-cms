@@ -33,11 +33,8 @@ class BannersControllerTest extends ControllerTestCase
      */
     public function testOpen()
     {
-        $banner = $this->Table->find('active')->first();
-        $this->get(['_name' => 'banner', $banner->id]);
-        $this->assertRedirect($banner->target);
-
-        //Checks the `click_count` has been incremented
-        $this->assertEquals(++$banner->click_count, $this->Table->findById(1)->extract('click_count')->first());
+        $this->get(['_name' => 'banner', 1]);
+        $this->assertRedirect('http://www.example.com');
+        $this->assertSame(3, $this->Table->findById(1)->extract('click_count')->first());
     }
 }

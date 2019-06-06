@@ -21,6 +21,17 @@ use MeCms\TestSuite\EntityTestCase;
 class PhotosAlbumTest extends EntityTestCase
 {
     /**
+     * Called before every test method
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Entity->set('id', 1);
+    }
+
+    /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
      * @test
@@ -45,7 +56,7 @@ class PhotosAlbumTest extends EntityTestCase
      */
     public function testPathGetMutator()
     {
-        $this->assertNotEmpty($this->Entity->set('id', 1)->get('path'));
+        $this->assertNotEmpty($this->Entity->get('path'));
     }
 
     /**
@@ -54,7 +65,7 @@ class PhotosAlbumTest extends EntityTestCase
      */
     public function testPreviewGetMutator()
     {
-        $this->assertNull($this->Entity->set('id', 1)->get('preview'));
+        $this->assertNull($this->Entity->get('preview'));
 
         $this->Entity->photos = [new Photo(['album_id' => 1, 'filename' => 'photo.jpg'])];
         $this->assertNotEmpty($this->Entity->photos[0]->path);

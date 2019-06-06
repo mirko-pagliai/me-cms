@@ -117,17 +117,15 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
     public function testDelete()
     {
         //POST request. This album has no photos
-        $id = $this->Table->findByPhotoCount(0)->extract('id')->first();
-        $this->post($this->url + ['action' => 'delete', $id]);
+        $this->post($this->url + ['action' => 'delete', 3]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertTrue($this->Table->findById($id)->isEmpty());
+        $this->assertTrue($this->Table->findById(3)->isEmpty());
 
         //POST request. This album has some photos, so it cannot be deleted
-        $id = $this->Table->find()->where(['photo_count >=' => 1])->extract('id')->first();
-        $this->post($this->url + ['action' => 'delete', $id]);
+        $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
-        $this->assertFalse($this->Table->findById($id)->isEmpty());
+        $this->assertFalse($this->Table->findById(1)->isEmpty());
     }
 }

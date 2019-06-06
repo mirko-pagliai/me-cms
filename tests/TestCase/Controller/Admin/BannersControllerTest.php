@@ -42,7 +42,7 @@ class BannersControllerTest extends ControllerTestCase
         //Only for the `testUploadErrorOnSave()` method, it mocks the `Banners`
         //  table, so the `save()` method returns `false`
         if ($this->getName() === 'testUploadErrorOnSave') {
-            $this->_controller->Banners = $this->getMockForModel(sprintf('%s.%s', 'MeCms', $this->Table->getRegistryAlias()), ['save']);
+            $this->_controller->Banners = $this->getMockForModel('MeCms.' . $this->Table->getRegistryAlias(), ['save']);
             $this->_controller->Banners->method('save')->will($this->returnValue(false));
         }
     }
@@ -53,19 +53,7 @@ class BannersControllerTest extends ControllerTestCase
      */
     public function testBeforeFilter()
     {
-        $this->get($this->url + ['action' => 'index']);
-        $this->assertNotEmpty($this->viewVariable('positions'));
-    }
-
-    /**
-     * Tests for `beforeFilter()` method, with no positions
-     * @test
-     */
-    public function testBeforeFilterNoPositions()
-    {
-        //Deletes all positions
         $this->Table->Positions->deleteAll(['id IS NOT' => null]);
-
         $this->get($this->url + ['action' => 'index']);
         $this->assertRedirect(['controller' => 'BannersPositions', 'action' => 'index']);
         $this->assertFlashMessage('You must first create a banner position');
@@ -111,14 +99,8 @@ class BannersControllerTest extends ControllerTestCase
         $this->assertTemplate('Admin' . DS . 'Banners' . DS . 'index_as_grid.ctp');
         $this->assertContainsOnlyInstancesOf(Banner::class, $this->viewVariable('banners'));
         $this->assertCookie('grid', 'render-banners');
-    }
 
-    /**
-     * Tests for `index()` method, render as `grid` with cookie
-     * @test
-     */
-    public function testIndexWithCookie()
-    {
+        //With cookie
         $this->cookie('render-banners', 'grid');
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
@@ -145,10 +127,9 @@ class BannersControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
 
         //Checks the banner has been saved
-        $banner = $this->Table->find()->last();
-        $this->assertEquals(1, $banner->position_id);
-        $this->assertEquals($file['name'], $banner->filename);
-        $this->assertFileExists(BANNERS . $banner->filename);
+        $banner = $this->Table->find()->last()->extract(['position_id', 'filename']);
+        $this->assertEquals(['position_id' => 1, 'filename' => $file['name']], $banner);
+        $this->assertFileExists(BANNERS . $file['name']);
     }
 
     /**
@@ -219,10 +200,9 @@ class BannersControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
 
         //Checks the banner has been saved
-        $banner = $this->Table->find()->last();
-        $this->assertEquals(1, $banner->position_id);
-        $this->assertEquals($file['name'], $banner->filename);
-        $this->assertFileExists(BANNERS . $banner->filename);
+        $banner = $this->Table->find()->last()->extract(['position_id', 'filename']);
+        $this->assertEquals(['position_id' => 1, 'filename' => $file['name']], $banner);
+        $this->assertFileExists(BANNERS . $file['name']);
     }
 
     /**
@@ -258,7 +238,7 @@ class BannersControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'download', 1]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertFileResponse(BANNERS . $this->Table->find()->first()->filename);
+        $this->assertFileResponse(BANNERS . 'banner1.jpg');
     }
 
     /**
@@ -267,11 +247,11 @@ class BannersControllerTest extends ControllerTestCase
      */
     public function testDelete()
     {
-        $banner = $this->Table->find()->first();
-        $this->post($this->url + ['action' => 'delete', $banner->id]);
+        $this->assertFileExists(BANNERS . 'banner1.jpg');
+        $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertTrue($this->Table->findById($banner->id)->isEmpty());
+        $this->assertTrue($this->Table->findById(1)->isEmpty());
         $this->skipIf(IS_WIN);
         $this->assertFileNotExists(BANNERS . $banner->filename);
     }

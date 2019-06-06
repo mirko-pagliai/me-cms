@@ -154,17 +154,11 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $result = $this->getMockForLoginRecorder()->read();
         $this->assertEmpty($result);
         $this->assertIsArray($result);
-    }
 
-    /**
-     * Test for `read()` method, without the user ID
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage You have to set a valid user id
-     * @test
-     */
-    public function testReadMissingUserId()
-    {
-        $this->Component->setConfig('user', null)->read();
+        //Without the user ID
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('You have to set a valid user id');
+        $this->getMockForLoginRecorder()->setConfig('user', false)->read();
     }
 
     /**

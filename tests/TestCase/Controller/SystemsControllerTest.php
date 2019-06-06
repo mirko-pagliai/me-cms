@@ -50,7 +50,6 @@ class SystemsControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'acceptCookies']);
         $this->assertRedirect(['_name' => 'homepage']);
-
         $expire = Time::createFromTimestamp($this->_response->getCookie('cookies-policy')['expire']);
         $this->assertCookie(true, 'cookies-policy');
         $this->assertTrue($expire->isWithinNext(Chronos::createFromDate(2038, 1, 1)));
@@ -110,7 +109,6 @@ class SystemsControllerTest extends ControllerTestCase
 
         //Spammer IP
         $this->configRequest(['environment' => ['REMOTE_ADDR' => '92.61.176.106']]);
-
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Systems' . DS . 'ip_not_allowed.ctp');

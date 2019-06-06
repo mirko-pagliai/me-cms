@@ -20,6 +20,17 @@ use MeCms\TestSuite\EntityTestCase;
 class BannerTest extends EntityTestCase
 {
     /**
+     * Called before every test method
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Entity->set('filename', 'example.gif');
+    }
+
+    /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
      * @test
@@ -44,7 +55,7 @@ class BannerTest extends EntityTestCase
      */
     public function testPathGetMutator()
     {
-        $this->assertEquals(BANNERS . 'example.gif', $this->Entity->set('filename', 'example.gif')->get('path'));
+        $this->assertEquals(BANNERS . 'example.gif', $this->Entity->get('path'));
     }
 
     /**
@@ -53,6 +64,6 @@ class BannerTest extends EntityTestCase
      */
     public function testWwwGetMutator()
     {
-        $this->assertEquals(BANNERS_WWW . 'example.gif', $this->Entity->set('filename', 'example.gif')->get('www'));
+        $this->assertEquals(BANNERS_WWW . 'example.gif', $this->Entity->get('www'));
     }
 }

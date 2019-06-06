@@ -14,6 +14,7 @@ namespace MeCms\Test\TestCase\Core;
 
 use Cake\Core\Configure;
 use MeCms\TestSuite\TestCase;
+use RuntimeException;
 
 /**
  * GlobalFunctionsTest class
@@ -60,15 +61,9 @@ class GlobalFunctionsTest extends TestCase
 
         Configure::write('MeCms.exampleKey', 'MeCmsExampleValue');
         $this->assertEquals('MeCmsExampleValue', getConfigOrFail('exampleKey'));
-    }
 
-    /**
-     * Test for `getConfigOrFail()` global function, with a no existing value
-     * @expectedException RuntimeException
-     * @test
-     */
-    public function testGetConfigOrFailNoExistingValue()
-    {
+        //With a no existing value
+        $this->expectException(RuntimeException::class);
         getConfigOrFail('noExisting');
     }
 }

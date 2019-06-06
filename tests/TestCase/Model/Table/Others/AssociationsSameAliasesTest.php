@@ -41,10 +41,8 @@ class AssociationsSameAliasesTest extends TableTestCase
      */
     public function testAssociationsSameAliases()
     {
-        $tables = [
-            'Pages' => $this->getMockForModel('MeCms.Pages', null),
-            'Posts' => $this->getMockForModel('MeCms.Posts', null),
-        ];
+        $tables['Pages'] = $this->getMockForModel('MeCms.Pages', null);
+        $tables['Posts'] = $this->getMockForModel('MeCms.Posts', null);
 
         foreach ($tables as $table) {
             $categories = $table->Categories;
