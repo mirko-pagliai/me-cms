@@ -272,6 +272,7 @@ class BannersControllerTest extends ControllerTestCase
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertTrue($this->Table->findById($banner->id)->isEmpty());
+        $this->skipIf(IS_WIN);
         $this->assertFileNotExists(BANNERS . $banner->filename);
     }
 }

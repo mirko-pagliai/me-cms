@@ -117,16 +117,17 @@ class LogsControllerTest extends ControllerTestCase
      */
     public function testDelete()
     {
+        //POST request. The log file doesn't exist
+        $this->post($this->url + ['action' => 'delete', 'noExisting.log']);
+        $this->assertRedirect(['action' => 'index']);
+        $this->assertFlashMessage(I18N_OPERATION_NOT_OK);
+
         //POST request
         $this->writeSomeLogs();
         $this->post($this->url + ['action' => 'delete', 'error.log']);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
+        $this->skipIf(IS_WIN);
         $this->assertFileNotExists(LOGS . 'error.log');
-
-        //POST request. The log file doesn't exist
-        $this->post($this->url + ['action' => 'delete', 'noExisting.log']);
-        $this->assertRedirect(['action' => 'index']);
-        $this->assertFlashMessage(I18N_OPERATION_NOT_OK);
     }
 }
