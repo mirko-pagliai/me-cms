@@ -253,6 +253,6 @@ class BannersControllerTest extends ControllerTestCase
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertTrue($this->Table->findById(1)->isEmpty());
         $this->skipIf(IS_WIN);
-        $this->assertFileNotExists(BANNERS . $banner->filename);
+        $this->assertFileNotExists(BANNERS . 1);
     }
 }
