@@ -14,7 +14,6 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\I18n\I18n;
 use Cake\Routing\Router;
@@ -172,7 +171,7 @@ class SystemsController extends AppController
      */
     protected function clearSitemap()
     {
-        return is_readable(SITEMAP) ? (new File(SITEMAP))->delete() : true;
+        return is_readable(SITEMAP) ? @unlink(SITEMAP) : true;
     }
 
     /**
