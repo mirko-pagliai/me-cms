@@ -277,6 +277,7 @@ class PhotosControllerTest extends ControllerTestCase
         $this->assertRedirect(['action' => 'index', $photo->album_id]);
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertTrue($this->Table->findById($photo->id)->isEmpty());
+        $this->skipIf(IS_WIN);
         $this->assertFileNotExists(PHOTOS . $photo->album_id . DS . $photo->filename);
     }
 }

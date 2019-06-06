@@ -14,7 +14,6 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Event\Event;
-use Cake\Filesystem\File;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -44,7 +43,7 @@ class BannersTable extends AppTable
     public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
         //Deletes the file
-        (new File(BANNERS . $entity->filename))->delete();
+        @unlink(BANNERS . $entity->filename);
 
         parent::afterDelete($event, $entity, $options);
     }

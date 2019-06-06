@@ -12,7 +12,6 @@
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\ORM\Entity;
 use MeCms\Controller\AppController;
@@ -128,12 +127,12 @@ class LogsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        $success = (new File($this->getPath($filename, false)))->delete();
+        $success = @unlink($this->getPath($filename, false));
         $serialized = $this->getPath($filename, true);
 
         //Deletes the serialized log copy, if it exists
         if (file_exists($serialized)) {
-            $successSerialized = (new File($serialized))->delete();
+            $successSerialized = @unlink($serialized);
         }
 
         if ($success && $successSerialized) {
