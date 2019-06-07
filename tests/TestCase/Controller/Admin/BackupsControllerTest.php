@@ -69,20 +69,19 @@ class BackupsControllerTest extends ControllerTestCase
         //Only for the `testSend` test, mocks the `send()` method of
         //  `BackupManager` class, so that it writes on the debug log
         //  instead of sending a real mail
-        if ($this->getName() !== 'testSend') {
-            return;
+        if ($this->getName() == 'testSend') {
+            $this->_controller->BackupManager = $this->getMockBuilder(BackupManager::class)
+                ->setMethods(['send'])
+                ->getMock();
+
+            $this->_controller->BackupManager->method('send')->will($this->returnCallback(function () {
+                $args = implode(', ', array_map(function ($arg) {
+                    return '`' . $arg . '`';
+                }, func_get_args()));
+
+                return Log::write('debug', 'Args for `send()`: ' . $args);
+            }));
         }
-        $this->_controller->BackupManager = $this->getMockBuilder(BackupManager::class)
-            ->setMethods(['send'])
-            ->getMock();
-
-        $this->_controller->BackupManager->method('send')->will($this->returnCallback(function () {
-            $args = implode(', ', array_map(function ($arg) {
-                return '`' . $arg . '`';
-            }, func_get_args()));
-
-            return Log::write('debug', 'Args for `send()`: ' . $args);
-        }));
     }
 
     /**
