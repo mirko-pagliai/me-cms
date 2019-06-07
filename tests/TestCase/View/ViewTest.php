@@ -35,7 +35,7 @@ class ViewTest extends TestCase
     {
         parent::setUp();
 
-        $this->View = $this->getMockBuilder(View::class)
+        $this->View = $this->View ?: $this->getMockBuilder(View::class)
             ->setMethods(null)
             ->setConstructorArgs([(new ServerRequest())->withEnv('REQUEST_URI', '/some-page')])
             ->getMock();

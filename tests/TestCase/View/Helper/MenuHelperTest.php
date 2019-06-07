@@ -21,22 +21,6 @@ use MeTools\View\Helper\HtmlHelper;
 class MenuHelperTest extends HelperTestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $Html;
-
-    /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Html = $this->getMockForHelper(HtmlHelper::class, null);
-    }
-
-    /**
      * Internal method to build links
      * @param array $links Links
      * @return array
@@ -44,7 +28,7 @@ class MenuHelperTest extends HelperTestCase
     protected function buildLinks($links)
     {
         return array_map(function ($link) {
-            return call_user_func_array([$this->Html, 'link'], $link);
+            return call_user_func_array([$this->getMockForHelper(HtmlHelper::class, null), 'link'], $link);
         }, $links);
     }
 

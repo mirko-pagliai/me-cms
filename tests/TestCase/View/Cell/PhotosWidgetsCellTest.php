@@ -44,7 +44,7 @@ class PhotosWidgetsCellTest extends CellTestCase
     {
         parent::setUp();
 
-        $this->Table = $this->getMockForModel('MeCms.Photos', null);
+        $this->Table = $this->Table ?: $this->getMockForModel('MeCms.Photos', null);
     }
 
     /**

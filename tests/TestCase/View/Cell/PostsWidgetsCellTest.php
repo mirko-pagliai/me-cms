@@ -45,7 +45,7 @@ class PostsWidgetsCellTest extends CellTestCase
     {
         parent::setUp();
 
-        $this->Table = $this->getMockForModel('MeCms.Posts', null);
+        $this->Table = $this->Table ?: $this->getMockForModel('MeCms.Posts', null);
     }
 
     /**
