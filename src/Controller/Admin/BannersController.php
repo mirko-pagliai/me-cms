@@ -150,7 +150,7 @@ class BannersController extends AppController
             if ($this->Banners->save($banner)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index', $banner->position_id]);
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -176,10 +176,12 @@ class BannersController extends AppController
      */
     public function delete($id = null)
     {
+        $banner = $this->Banners->get($id);
+
         $this->request->allowMethod(['post', 'delete']);
-        $this->Banners->deleteOrFail($this->Banners->get($id));
+        $this->Banners->deleteOrFail($banner);
         $this->Flash->success(I18N_OPERATION_OK);
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'index', $banner->position_id]);
     }
 }
