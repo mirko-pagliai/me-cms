@@ -54,31 +54,6 @@ abstract class ControllerTestCase extends TestCase
     protected $url;
 
     /**
-     * Asserts that the controller has a component
-     * @param string|array $component Component name
-     * @param string|null $action Optional action for this assert
-     * @return void
-     * @uses $Controller
-     */
-    public function assertHasComponent($component, $action = null)
-    {
-        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
-
-        $controller = &$this->Controller;
-
-        if ($action) {
-            $this->Controller->request = $this->Controller->request->withParam('action', $action);
-        }
-        $this->Controller->initialize();
-
-        foreach ((array)$component as $var) {
-            $this->assertTrue($this->Controller->components()->has($var));
-        }
-
-        $this->Controller = $controller;
-    }
-
-    /**
      * Asserts that groups are authorized
      * @param array $values Group name as key and boolean as value
      * @param string|null $action Optional action for this assert

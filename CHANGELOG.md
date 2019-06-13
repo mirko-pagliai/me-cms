@@ -8,6 +8,7 @@
 * added `MeCms\ORM\PostAndPageEntity` abstract class;
 * added `MeCms\TestSuite\BannersAndPhotosAdminControllerTestCase` abstract class;
 * `PostsAndPagesTables` class moved to `MeCms\ORM` namespace;
+* removed useless `ControllerTestCase::assertHasComponent()` method;
 * updated for `php-tools` 1.2.5.
 
 ### 2.26.4
