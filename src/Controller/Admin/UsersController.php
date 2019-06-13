@@ -70,7 +70,7 @@ class UsersController extends AppController
      * @param array $user The user to check the authorization of. If empty
      *  the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function isAuthorized($user = null)
     {
@@ -86,7 +86,7 @@ class UsersController extends AppController
     /**
      * Lists users
      * @return void
-     * @uses MeCms\Model\Table\UsersTable::queryFromFilter()
+     * @uses \MeCms\Model\Table\UsersTable::queryFromFilter()
      */
     public function index()
     {
@@ -103,7 +103,7 @@ class UsersController extends AppController
      * Views user
      * @param string $id User ID
      * @return void
-     * @uses MeCms\Controller\Component\LoginRecorderComponent::read()
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::read()
      */
     public function view($id = null)
     {
@@ -145,7 +145,7 @@ class UsersController extends AppController
      * Edits user
      * @param string $id User ID
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\AuthComponent::isFounder()
+     * @uses \MeCms\Controller\Component\AuthComponent::isFounder()
      */
     public function edit($id = null)
     {
@@ -176,7 +176,7 @@ class UsersController extends AppController
      * Deletes user
      * @param string $id User ID
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\AuthComponent::isFounder()
+     * @uses \MeCms\Controller\Component\AuthComponent::isFounder()
      */
     public function delete($id = null)
     {
@@ -258,7 +258,7 @@ class UsersController extends AppController
                 @unlink(USER_PICTURES . $filename);
             }
 
-            $filename = sprintf('%s.%s', $id, pathinfo($this->request->getData('file')['tmp_name'], PATHINFO_EXTENSION));
+            $filename = $id . '.' . pathinfo($this->request->getData('file')['tmp_name'], PATHINFO_EXTENSION);
 
             $uploaded = $this->Uploader->set($this->request->getData('file'))
                 ->mimetype('image')
@@ -270,7 +270,7 @@ class UsersController extends AppController
 
             //Updates the authentication data and clears similar thumbnails
             $this->Auth->setUser(array_merge($this->Auth->user(), ['picture' => $uploaded]));
-            (new ThumbManager)->clear($uploaded);
+            (new ThumbManager())->clear($uploaded);
         }
     }
 

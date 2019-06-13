@@ -29,17 +29,13 @@ class Plugin extends AbstractCheckup
      */
     public function versions()
     {
-        $Plugin = new BasePlugin;
+        $Plugin = new BasePlugin();
 
         $plugins['me_cms'] = trim(file_get_contents($Plugin->path('MeCms', 'version')));
 
         foreach ($Plugin->all(['exclude' => 'MeCms']) as $plugin) {
-            $file = $Plugin->path($plugin, 'version', true);
-            $plugins['others'][$plugin] = __d('me_cms', 'n.a.');
-
-            if ($file) {
-                $plugins['others'][$plugin] = trim(file_get_contents($file));
-            }
+            $file = $Plugin->path($plugin, 'version', false);
+            $plugins['others'][$plugin] = is_readable($file) ? trim(file_get_contents($file)) : __d('me_cms', 'n.a.');
         }
 
         return $plugins;

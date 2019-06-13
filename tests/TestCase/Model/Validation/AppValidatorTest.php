@@ -80,9 +80,9 @@ class AppValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->Banners = $this->getMockForModel('MeCms.Banners', null);
-        $this->Posts = $this->getMockForModel('MeCms.Posts', null);
-        $this->Users = $this->getMockForModel('MeCms.Users', null);
+        foreach (['Banners', 'Posts', 'Users'] as $table) {
+            $this->$table = $this->getMockForModel('MeCms.' . $table, null);
+        }
     }
 
     /**

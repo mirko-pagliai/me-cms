@@ -26,7 +26,7 @@ class MailerTest extends TestCase
      */
     public function testConstruct()
     {
-        $mailer = new Mailer;
+        $mailer = new Mailer();
 
         $this->assertEquals(['MeTools.Html'], $mailer->viewBuilder()->getHelpers());
         $this->assertEquals(['email@example.com' => 'MeCms'], $mailer->getEmailInstance()->getSender());

@@ -10,6 +10,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 use Cake\Http\ServerRequest;
 
 /**
@@ -36,40 +37,6 @@ foreach (['add', 'delete', 'edit', 'index', 'view'] as $action) {
  */
 ServerRequest::addDetector('admin', function (ServerRequest $request) {
     return $request->getParam('prefix') === ADMIN_PREFIX;
-});
-
-/**
- * Adds `is('banned')` detector.
- *
- * It checks if the user's IP address is banned.
- *
- * Example:
- * <code>
- * $this->request->isBanned();
- * </code>
- */
-ServerRequest::addDetector('banned', function (ServerRequest $request) {
-    $banned = getConfig('Banned');
-
-    //The IP address is allowed if:
-    //  - the list of banned IP is empty;
-    //  - is localhost;
-    //  - the IP address has already been verified.
-    if (!$banned || $request->is('localhost') || $request->getSession()->read('allowed_ip')) {
-        return false;
-    }
-
-    //Replaces asteriskes
-    $banned = preg_replace('/\\\\\*/', '[0-9]{1,3}', array_map('preg_quote', (array)$banned));
-
-    if (preg_match(sprintf('/^(%s)$/', implode('|', $banned)), $request->clientIp())) {
-        return true;
-    }
-
-    //In any other case, saves the result in the session
-    $request->getSession()->write('allowed_ip', true);
-
-    return false;
 });
 
 /**

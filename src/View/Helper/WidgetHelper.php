@@ -68,7 +68,7 @@ class WidgetHelper extends Helper
      * @param string $name Cell name
      * @param array $data Additional arguments for cell method
      * @param array $options Options for Cell's constructor
-     * @return Cake\View\Cell The cell instance
+     * @return \Cake\View\Cell The cell instance
      */
     public function widget($name, array $data = [], array $options = [])
     {

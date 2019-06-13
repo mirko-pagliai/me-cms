@@ -94,7 +94,7 @@ class PhotosController extends AppController
     /**
      * Uploads photos
      * @return null
-     * @throws InternalErrorException
+     * @throws \Cake\Http\Exception\InternalErrorException
      * @uses MeCms\Controller\AppController::setUploadError()
      * @uses MeTools\Controller\Component\UploaderComponent
      */

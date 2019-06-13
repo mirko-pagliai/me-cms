@@ -45,7 +45,7 @@ abstract class TableTestCase extends TestCase
 
     /**
      * Asserts that the table has a "belogs to" association
-     * @param Association $association Association
+     * @param \Cake\ORM\Association $association Association
      * @return void
      */
     public function assertBelongsTo(Association $association)
@@ -55,7 +55,7 @@ abstract class TableTestCase extends TestCase
 
     /**
      * Asserts that the table has a "belogs to many" association
-     * @param Association $association Association
+     * @param \Cake\ORM\Association $association Association
      * @return void
      */
     public function assertBelongsToMany(Association $association)
@@ -80,7 +80,7 @@ abstract class TableTestCase extends TestCase
 
     /**
      * Asserts that the table has a "many" association
-     * @param Association $association Association
+     * @param \Cake\ORM\Association $association Association
      * @return void
      */
     public function assertHasMany(Association $association)

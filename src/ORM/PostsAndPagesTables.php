@@ -11,7 +11,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       2.23.0
  */
-namespace MeCms\Model\Table;
+namespace MeCms\ORM;
 
 use ArrayObject;
 use Cake\Cache\Cache;
@@ -24,9 +24,9 @@ use MeCms\Model\Table\Traits\GetPreviewsFromTextTrait;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
 
 /**
- * Abstract class for `PostsTable` and `PagesTable` classes.
+ * Abstract class for `PostsTable` and `PagesTable` table classes.
  *
- * This class provides some methods common to both classes.
+ * This class provides some methods and properties common to both classes.
  */
 abstract class PostsAndPagesTables extends AppTable
 {
@@ -36,8 +36,8 @@ abstract class PostsAndPagesTables extends AppTable
     /**
      * Alters the schema used by this table. This function is only called after
      *  fetching the schema out of the database
-     * @param Cake\Database\Schema\TableSchema $schema TableSchema instance
-     * @return Cake\Database\Schema\TableSchema TableSchema instance
+     * @param \Cake\Database\Schema\TableSchema $schema TableSchema instance
+     * @return \Cake\Database\Schema\TableSchema TableSchema instance
      * @since 2.17.0
      */
     protected function _initializeSchema(TableSchema $schema)
@@ -100,7 +100,7 @@ abstract class PostsAndPagesTables extends AppTable
      * Creates a new Query for this repository and applies some defaults based
      *  on the type of search that was selected
      * @param string $type The type of query to perform
-     * @param array|ArrayAccess $options An array that will be passed to
+     * @param array|\ArrayAccess $options An array that will be passed to
      *  Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
      * @uses getCacheName()

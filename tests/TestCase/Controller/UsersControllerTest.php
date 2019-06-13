@@ -91,18 +91,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        //Deletes all tokens
-        $this->Table->Tokens->deleteAll(['id IS NOT' => null]);
-    }
-
-    /**
      * Test for `loginWithCookie()` method
      * @test
      */
@@ -122,32 +110,29 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertEmpty($controller->request->getCookieCollection());
 
         //Gets an user and sets a password, then writes right data on cookies
-        $user = $this->Table->findByActiveAndBanned(true, false)->first();
         $password = 'mypassword1!';
-        $user->password = $user->password_repeat = $password;
-        $this->Table->save($user);
+        $user = $this->Table->findByActiveAndBanned(true, false)->first();
+        $this->Table->save($user->set(compact('password') + ['password_repeat' => $password]));
         $controller = $this->getMockForController();
-        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username, 'password' => $password]]);
+        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username] + compact('password')]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->redirectUrl());
         $this->assertNotEmpty($controller->Auth->user());
         $this->assertNotEmpty($controller->request->getCookieCollection());
 
         //Sets the user as "pending" user, then writes again data on cookies
-        $user->active = false;
-        $this->Table->save($user);
+        $this->Table->save($user->set('active', false));
         $controller = $this->getMockForController();
-        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username, 'password' => $password]]);
+        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username] + compact('password')]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->logout());
         $this->assertNull($controller->Auth->user());
         $this->assertEmpty($controller->request->getCookieCollection());
 
         //Sets the user as "banned" user,then writes again data on cookies
-        $user->active = $user->banned = true;
-        $this->Table->save($user);
+        $this->Table->save($user->set(['active' => true, 'banned' => true]));
         $controller = $this->getMockForController();
-        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username, 'password' => $password]]);
+        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username] + compact('password')]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->logout());
         $this->assertNull($controller->Auth->user());
@@ -182,23 +167,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `initialize()` method
-     * @test
-     */
-    public function testInitialize()
-    {
-        $this->assertHasComponent([
-            'Auth',
-            'Flash',
-            'RequestHandler',
-            'Uploader',
-            'Recaptcha',
-            'Token',
-            'LoginRecorder',
-        ]);
-    }
-
-    /**
      * Test for `beforeFilter()` method
      * @test
      */
@@ -216,33 +184,26 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testActivation()
     {
+        //Creates a token for an active user
+        $tokenOptions = ['type' => 'signup', 'user_id' => 1];
+        $token = $this->Controller->Token->create('alfa@test.com', $tokenOptions);
         $url = ['_name' => 'activation'];
 
-        //Gets an active user and creates a token
-        $user = $this->Table->find('active')->first();
-        $tokenOptions = ['type' => 'signup', 'user_id' => $user->id];
-        $token = $this->Controller->Token->create($user->email, $tokenOptions);
-
         //GET request. This request is invalid, because the user is already active
-        $this->get($url + ['id' => $user->id] + compact('token'));
+        $this->get($url + ['id' => 1] + compact('token'));
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage(I18N_OPERATION_NOT_OK);
-
-        //The token no longer exists
         $this->assertFalse($this->Controller->Token->check($token, $tokenOptions));
 
-        //Gets a pending user and creates a token
-        $user = $this->Table->find('pending')->first();
-        $tokenOptions = ['type' => 'signup', 'user_id' => $user->id];
-        $token = $this->Controller->Token->create($user->email, $tokenOptions);
+        //Creates a token for a pending user
+        $tokenOptions = ['type' => 'signup', 'user_id' => 2];
+        $token = $this->Controller->Token->create('gamma@test.com', $tokenOptions);
 
         //GET request. This request is valid, because the user is pending
-        $this->get($url + ['id' => $user->id] + compact('token'));
+        $this->get($url + ['id' => 2] + compact('token'));
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-
-        //Now the user is active and the token no longer exists
-        $this->assertTrue($this->Table->findById($user->id)->extract('active')->first());
+        $this->assertTrue($this->Table->findById(2)->extract('active')->first());
         $this->assertFalse($this->Controller->Token->check($token, $tokenOptions));
 
         //With an invalid token
@@ -273,8 +234,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertLogContains('Resend activation request with invalid email `' . $wrongEmail . '`', 'users');
 
         //POST request. Now, data are valid
-        $email = $this->Table->find('pending')->extract('email')->first();
-        $this->post($url, ['email' => $email, 'email_repeat' => $email]);
+        $this->post($url, ['email' => 'gamma@test.com', 'email_repeat' => 'gamma@test.com']);
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage('We send you an email to activate your account');
 
@@ -314,31 +274,27 @@ class UsersControllerTest extends ControllerTestCase
         //POST request. Now data are valid
         $password = 'newPassword1!';
         $user = $this->Table->get(1);
-        $user->password = $password;
-        $this->Table->save($user);
-        $this->post($url, ['username' => $user->username, 'password' => $password, 'remember_me' => true]);
+        $this->Table->save($user->set('password', $password));
+        $this->post($url, ['username' => $user->username, 'remember_me' => true] + compact('password'));
         $this->assertRedirect($this->Controller->Auth->redirectUrl());
         $this->assertSession($user->id, 'Auth.User.id');
         $this->assertCookieEncrypted([
             'username' => $user->username,
-            'password' => $password,
-        ], 'login', 'aes', Configure::read('Security.cookieKey', md5(Configure::read('Security.salt'))));
+        ] + compact('password'), 'login', 'aes', Configure::read('Security.cookieKey', md5(Configure::read('Security.salt'))));
         $cookieExpire = Time::createFromTimestamp($this->_response->getCookie('login')['expire']);
         $this->assertTrue($cookieExpire->isWithinNext('1 year'));
 
         //POST request. The user is banned
-        $user->banned = true;
-        $this->Table->save($user);
-        $this->post($url, ['username' => $user->username, 'password' => $password, 'remember_me' => true]);
+        $this->Table->save($user->set('banned', true));
+        $this->post($url, ['username' => $user->username, 'remember_me' => true] + compact('password'));
         $this->assertRedirect($this->Controller->Auth->logout());
         $this->assertCookieNotSet('login');
         $this->assertSession(null, 'Auth');
         $this->assertFlashMessage('Your account has been banned by an admin');
 
         //POST request. The user is pending
-        $user->active = $user->banned = false;
-        $this->Table->save($user);
-        $this->post($url, ['username' => $user->username, 'password' => $password, 'remember_me' => true]);
+        $this->Table->save($user->set(['active' => false, 'banned' => false]));
+        $this->post($url, ['username' => $user->username, 'remember_me' => true] + compact('password'));
         $this->assertRedirect($this->Controller->Auth->logout());
         $this->assertCookieNotSet('login');
         $this->assertSession(null, 'Auth');
@@ -379,15 +335,13 @@ class UsersControllerTest extends ControllerTestCase
         $this->deleteLog('users');
 
         //POST request. This request is invalid, because the user is pending
-        $email = $this->Table->find('pending')->extract('email')->first();
-        $this->post($url, ['email' => $email, 'email_repeat' => $email]);
+        $this->post($url, ['email' => 'gamma@test.com', 'email_repeat' => 'gamma@test.com']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('No account found');
-        $this->assertLogContains('Forgot password request with invalid email `' . $email . '`', 'users');
+        $this->assertLogContains('Forgot password request with invalid email `gamma@test.com`', 'users');
 
         //POST request. This request is valid
-        $email = $this->Table->find('active')->extract('email')->first();
-        $this->post($url, ['email' => $email, 'email_repeat' => $email]);
+        $this->post($url, ['email' => 'alfa@test.com', 'email_repeat' => 'alfa@test.com']);
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage('We have sent you an email to reset your password');
 
@@ -410,12 +364,10 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testPasswordReset()
     {
-        //Gets an active user and creates the token
-        $user = $this->Table->find('active')->first();
-        $tokenOptions = ['type' => 'password_forgot', 'user_id' => $user->id];
-        $token = $this->Controller->Token->create($user->email, $tokenOptions);
-
-        $url = ['_name' => 'passwordReset', 'id' => $user->id] + compact('token');
+        //Creates the token for an active user
+        $tokenOptions = ['type' => 'password_forgot', 'user_id' => 1];
+        $token = $this->Controller->Token->create('alfa@test.com', $tokenOptions);
+        $url = ['_name' => 'passwordReset', 'id' => 1] + compact('token');
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -429,20 +381,16 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseContains('The password has not been edited');
 
         //The password has not been changed and the token still exists
-        $newPassword = $this->Table->findById($user->id)->extract('password')->first();
         $this->assertTrue($this->Controller->Token->check($token, $tokenOptions));
-        $this->assertEquals($newPassword, $user->password);
+        $this->assertEmpty($this->Table->findById(1)->extract('password')->first());
 
         //POST request again. Now data are valid
-        $password = 'newPassword1!';
-        $this->post($url, ['password' => $password, 'password_repeat' => $password]);
+        $this->post($url, ['password' => 'newPassword1!', 'password_repeat' => 'newPassword1!']);
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage('The password has been edited');
 
         //The password has changed and the token no longer exists
-        $newPassword = $this->Table->findById($user->id)->extract('password')->first();
-        $this->assertNotEmpty($newPassword);
-        $this->assertNotEquals($newPassword, $user->password);
+        $this->assertNotEmpty($this->Table->findById(1)->extract('password')->first());
         $this->assertFalse($this->Controller->Token->check($token, $tokenOptions));
 
         //With an invalid token
@@ -484,9 +432,8 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('Account created, but it needs to be activated by an admin');
-        $user = $this->Table->findByUsername($data['username'])->first();
-        $this->assertEquals(getConfigOrFail('users.default_group'), $user->group_id);
-        $this->assertFalse($user->active);
+        $user = $this->Table->findByUsername($data['username'])->first()->extract(['group_id', 'active']);
+        $this->assertEquals(['group_id' => getConfigOrFail('users.default_group'), 'active' => false], $user);
 
         //Deletes the user
         $this->Table->deleteAll(['username' => $data['username']]);
@@ -496,10 +443,8 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('We send you an email to activate your account');
-
-        $user = $this->Table->findByUsername($data['username'])->first();
-        $this->assertEquals(getConfigOrFail('users.default_group'), $user->group_id);
-        $this->assertFalse($user->active);
+        $user = $this->Table->findByUsername($data['username'])->first()->extract(['group_id', 'active']);
+        $this->assertEquals(['group_id' => getConfigOrFail('users.default_group'), 'active' => false], $user);
 
         //Deletes the user
         $this->Table->deleteAll(['username' => $data['username']]);
@@ -509,9 +454,8 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('Account created. Now you can login');
-        $user = $this->Table->findByUsername($data['username'])->first();
-        $this->assertEquals(getConfigOrFail('users.default_group'), $user->group_id);
-        $this->assertTrue($user->active);
+        $user = $this->Table->findByUsername($data['username'])->first()->extract(['group_id', 'active']);
+        $this->assertEquals(['group_id' => getConfigOrFail('users.default_group'), 'active' => true], $user);
 
         //With reCAPTCHA
         Configure::write('MeCms.security.recaptcha', true);

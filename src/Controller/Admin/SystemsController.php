@@ -14,7 +14,6 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\I18n\I18n;
 use Cake\Routing\Router;
@@ -84,9 +83,12 @@ class SystemsController extends AppController
         if ($type && array_key_exists($type, $types)) {
             //Sets locale
             $locale = substr(I18n::getLocale(), 0, 2);
-            $locale = empty($locale) ? 'en' : $locale;
-
-            $this->set('kcfinder', sprintf('%s/kcfinder/browse.php?lang=%s&type=%s', Router::url('/vendor', true), $locale, $type));
+            $this->set('kcfinder', sprintf(
+                '%s/kcfinder/browse.php?lang=%s&type=%s',
+                Router::url('/vendor', true),
+                empty($locale) ? 'en' : $locale,
+                $type
+            ));
         }
 
         $this->set('types', array_combine(array_keys($types), array_keys($types)));
@@ -101,9 +103,9 @@ class SystemsController extends AppController
     public function changelogs()
     {
         foreach (Plugin::all() as $plugin) {
-            $file = Plugin::path($plugin, 'CHANGELOG.md', true);
+            $file = Plugin::path($plugin, 'CHANGELOG.md', false);
 
-            if ($file) {
+            if (is_readable($file)) {
                 $files[$plugin] = rtr($file);
             }
         }
@@ -131,7 +133,7 @@ class SystemsController extends AppController
      */
     public function checkup()
     {
-        $Checkup = new Checkup;
+        $Checkup = new Checkup();
 
         $results = [
             'apache' => [
@@ -169,7 +171,7 @@ class SystemsController extends AppController
      */
     protected function clearSitemap()
     {
-        return is_readable(SITEMAP) ? (new File(SITEMAP))->delete() : true;
+        return is_readable(SITEMAP) ? @unlink(SITEMAP) : true;
     }
 
     /**
@@ -190,7 +192,7 @@ class SystemsController extends AppController
             case 'all':
                 @unlink_recursive($assetsTarget, 'empty');
                 @unlink_recursive(LOGS, 'empty');
-                $success = self::clearCache() && self::clearSitemap() && (new ThumbManager)->clearAll();
+                $success = self::clearCache() && self::clearSitemap() && (new ThumbManager())->clearAll();
                 break;
             case 'cache':
                 $success = self::clearCache();
@@ -205,7 +207,7 @@ class SystemsController extends AppController
                 $success = self::clearSitemap();
                 break;
             case 'thumbs':
-                $success = (new ThumbManager)->clearAll();
+                $success = (new ThumbManager())->clearAll();
                 break;
             default:
                 $success = false;

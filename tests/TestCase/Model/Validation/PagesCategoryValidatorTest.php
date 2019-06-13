@@ -31,14 +31,4 @@ class PagesCategoryValidatorTest extends ValidationTestCase
     public $fixtures = [
         'plugin.MeCms.PagesCategories',
     ];
-
-    /**
-     * Test validation.
-     * It tests the proper functioning of the example data.
-     * @test
-     */
-    public function testValidationExampleData()
-    {
-        $this->assertAllDataAreRequired($this->example);
-    }
 }

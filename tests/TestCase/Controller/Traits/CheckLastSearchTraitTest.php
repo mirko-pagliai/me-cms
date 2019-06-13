@@ -28,38 +28,37 @@ class CheckLastSearchTraitTest extends TestCase
     public function testCheckLastSearch()
     {
         $controller = $this->getMockForController(PostsController::class, null);
-
         $checkLastSearchMethod = function ($queryId = false) use ($controller) {
             return $this->invokeMethod($controller, 'checkLastSearch', [$queryId]);
         };
 
         $this->assertTrue($checkLastSearchMethod('my-query'));
-        $firstSession = $controller->request->getSession()->read('last_search');
-        $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $firstSession['id']);
+        $firstSession = $controller->request->getSession()->read('last_search.id');
+        $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $firstSession);
 
         //Tries with the same query
         $this->assertTrue($checkLastSearchMethod('my-query'));
-        $secondSession = $controller->request->getSession()->read('last_search');
-        $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $secondSession['id']);
+        $secondSession = $controller->request->getSession()->read('last_search.id');
+        $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $secondSession);
 
         $this->assertEquals($firstSession, $secondSession);
 
         //Tries with another query
         $this->assertFalse($checkLastSearchMethod('another-query'));
-        $thirdSession = $controller->request->getSession()->read('last_search');
+        $thirdSession = $controller->request->getSession()->read('last_search.id');
         $this->assertEquals($firstSession, $thirdSession);
 
         //Deletes the session and tries again with another query
         $controller->request->getSession()->delete('last_search');
         $this->assertTrue($checkLastSearchMethod('another-query'));
-        $fourthSession = $controller->request->getSession()->read('last_search');
+        $fourthSession = $controller->request->getSession()->read('last_search.id');
         $this->assertNotEquals($firstSession, $fourthSession);
 
         foreach ([0, false] as $value) {
             $controller->request->getSession()->delete('last_search');
             Configure::write('MeCms.security.search_interval', $value);
             $this->assertTrue($checkLastSearchMethod());
-            $this->assertNull($controller->request->getSession()->read('last_search'));
+            $this->assertNull($controller->request->getSession()->read('last_search.id'));
         }
     }
 }

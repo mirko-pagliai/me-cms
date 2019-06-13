@@ -41,13 +41,13 @@ trait NextToBePublishedTrait
         $next = $this->find()
             ->where([
                 sprintf('%s.active', $this->getAlias()) => true,
-                sprintf('%s.created >', $this->getAlias()) => new Time,
+                sprintf('%s.created >', $this->getAlias()) => new Time(),
             ])
             ->order([sprintf('%s.created', $this->getAlias()) => 'ASC'])
             ->extract('created')
             ->first();
 
-        $next = empty($next) ? false : $next->toUnixString();
+        $next = $next ? $next->toUnixString() : false;
 
         Cache::write('next_to_be_published', $next, $this->getCacheName());
 

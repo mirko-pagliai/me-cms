@@ -36,7 +36,7 @@ class PostsTagsWidgetsCell extends Cell
      * @param array|bool $style Style for tags. Array with `maxFont` and
      *  `minFont` keys or `false` to disable
      * @return array
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function getFontSizes(array $style = [])
     {
@@ -107,7 +107,10 @@ class PostsTagsWidgetsCell extends Cell
                 $diffFont = $maxFont - $minFont;
 
                 return $results->map(function (Tag $tag) use ($minCount, $diffCount, $maxFont, $minFont, $diffFont) {
-                    $tag->size = $diffCount ? round((($tag->post_count - $minCount) / $diffCount * $diffFont) + $minFont) : $maxFont;
+                    $tag->size = $maxFont;
+                    if ($diffCount) {
+                        $tag->size = round((($tag->post_count - $minCount) / $diffCount * $diffFont) + $minFont);
+                    }
 
                     return $tag;
                 });

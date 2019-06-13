@@ -39,7 +39,7 @@ class AppViewTest extends TestCase
         Configure::write('Widgets.general', []);
         Configure::write('MeCms.default.theme', false);
 
-        $this->View = $this->getMockBuilder(View::class)
+        $this->View = $this->View ?: $this->getMockBuilder(View::class)
             ->setMethods(null)
             ->getMock();
         $this->View->setPlugin('MeCms');

@@ -36,19 +36,17 @@ class PhotosControllerTest extends ControllerTestCase
      */
     public function testView()
     {
-        $photo = $this->Table->find('active')->contain('Albums')->first();
-        $url = ['_name' => 'photo', $photo->album->slug, $photo->id];
+        $url = ['_name' => 'photo', 'test-album', 1];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Photos' . DS . 'view.ctp');
         $this->assertInstanceof(Photo::class, $this->viewVariable('photo'));
-
-        $cache = Cache::read(sprintf('view_%s', md5($photo->id)), $this->Table->getCacheName());
+        $cache = Cache::read('view_' . md5(1), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('photo'), $cache->first());
 
-        //Backward compatibility for URLs like `/photo/11`
-        $this->get('/photo/' . $photo->id);
+        //Backward compatibility for URLs like `/photo/1`
+        $this->get('/photo/1');
         $this->assertRedirect($url);
     }
 
@@ -58,9 +56,7 @@ class PhotosControllerTest extends ControllerTestCase
      */
     public function testPreview()
     {
-        $id = $this->Table->find('pending')->extract('id')->first();
-
-        $this->get(['_name' => 'photosPreview', $id]);
+        $this->get(['_name' => 'photosPreview', 4]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Photos' . DS . 'view.ctp');
         $this->assertInstanceof(Photo::class, $this->viewVariable('photo'));

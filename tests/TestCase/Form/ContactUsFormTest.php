@@ -32,7 +32,7 @@ class ContactUsFormTest extends TestCase
      * @var array
      */
     protected $example = [
-        'email' => 'test@test.com',
+        'email' => 'mymail@example.com',
         'first_name' => 'First name',
         'last_name' => 'Last name',
         'message' => 'Example of message',
@@ -73,23 +73,31 @@ class ContactUsFormTest extends TestCase
     }
 
     /**
+     * Test validation for `email` property
+     * @test
+     */
+    public function testValidationForEmail()
+    {
+        $this->assertFalse($this->Form->validate(['email' => 'spammer@example.com'] + $this->example));
+        $this->assertEquals([
+            'email' => ['notSpammer' => 'This email address has been reported as a spammer'],
+        ], $this->Form->getErrors());
+    }
+
+    /**
      * Test validation for `message` property
      * @test
      */
     public function testValidationForMessage()
     {
         $expected = ['message' => ['lengthBetween' => 'Must be between 10 and 1000 chars']];
-        foreach ([str_repeat('a', 9), str_repeat('a', 1001)] as $value) {
-            $this->example['message'] = $value;
-
-            $this->assertFalse($this->Form->validate($this->example));
+        foreach ([str_repeat('a', 9), str_repeat('a', 1001)] as $message) {
+            $this->assertFalse($this->Form->validate(compact('message') + $this->example));
             $this->assertEquals($expected, $this->Form->getErrors());
         }
 
-        foreach ([str_repeat('a', 10), str_repeat('a', 1000)] as $value) {
-            $this->example['message'] = $value;
-
-            $this->assertTrue($this->Form->validate($this->example));
+        foreach ([str_repeat('a', 10), str_repeat('a', 1000)] as $message) {
+            $this->assertTrue($this->Form->validate(compact('message') + $this->example));
             $this->assertEmpty($this->Form->getErrors());
         }
     }

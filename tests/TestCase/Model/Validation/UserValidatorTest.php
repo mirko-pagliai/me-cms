@@ -46,7 +46,7 @@ class UserValidatorTest extends ValidationTestCase
      * It tests the proper functioning of the example data.
      * @test
      */
-    public function testValidationExampleData()
+    public function testAllDataAreRequired()
     {
         $this->assertAllDataAreRequired($this->example, ['password']);
     }

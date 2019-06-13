@@ -14,7 +14,6 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Event\Event;
-use Cake\Filesystem\Folder;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -59,7 +58,7 @@ class PhotosAlbumsTable extends AppTable
     public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
         //Creates the folder
-        (new Folder($entity->path, true, 0777));
+        @mkdir($entity->path, 0777, true);
 
         parent::afterSave($event, $entity, $options);
     }
@@ -78,9 +77,9 @@ class PhotosAlbumsTable extends AppTable
 
     /**
      * "active" find method
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $options Options
-     * @return Query Query object
+     * @return \Cake\ORM\Query Query object
      */
     public function findActive(Query $query, array $options)
     {

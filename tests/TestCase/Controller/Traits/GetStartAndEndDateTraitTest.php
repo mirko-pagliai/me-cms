@@ -27,7 +27,6 @@ class GetStartAndEndDateTraitTest extends TestCase
     public function testGetStartAndEndDate()
     {
         $controller = $this->getMockForController(PostsController::class, null);
-
         $getStartAndEndDateMethod = function ($date) use ($controller) {
             return $this->invokeMethod($controller, 'getStartAndEndDate', [$date]);
         };

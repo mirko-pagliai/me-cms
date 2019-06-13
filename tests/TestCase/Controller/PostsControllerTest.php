@@ -199,15 +199,12 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testView()
     {
-        $slug = $this->Table->find('active')->where(['preview IS' => null])->extract('slug')->first();
-
-        $this->get(['_name' => 'post', $slug]);
+        $this->get(['_name' => 'post', 'first-post']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Posts' . DS . 'view.ctp');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('related'));
-
-        $cache = Cache::read(sprintf('view_%s', md5($slug)), $this->Table->getCacheName());
+        $cache = Cache::read('view_' . md5('first-post'), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('post'), $cache->first());
     }
 
@@ -218,9 +215,7 @@ class PostsControllerTest extends ControllerTestCase
     public function testPreview()
     {
         $this->setUserGroup('user');
-        $slug = $this->Table->find('pending')->where(['preview IS' => null])->extract('slug')->first();
-
-        $this->get(['_name' => 'postsPreview', $slug]);
+        $this->get(['_name' => 'postsPreview', 'inactive-post']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Posts' . DS . 'view.ctp');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));

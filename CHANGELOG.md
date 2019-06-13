@@ -1,5 +1,16 @@
 # 2.x branch
 ## 2.26 branch
+### 2.26.5
+* it uses the `cakephp-stop-spam` package to detect spammers;
+* the `ContactUs` form checks if the email address used was reported as a spammer;
+* `AppController::isBanned()` method renamed as `isSpammer()`;
+* updated for `me-tools` 2.18.7;
+* added `MeCms\ORM\PostAndPageEntity` abstract class;
+* added `MeCms\TestSuite\BannersAndPhotosAdminControllerTestCase` abstract class;
+* `PostsAndPagesTables` class moved to `MeCms\ORM` namespace;
+* removed useless `ControllerTestCase::assertHasComponent()` method;
+* updated for `php-tools` 1.2.5.
+
 ### 2.26.4
 * fixed bug for login cookies;
 * fixed a little bug for pages slug;

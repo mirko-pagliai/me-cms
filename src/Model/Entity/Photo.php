@@ -71,14 +71,14 @@ class Photo extends Entity
         }
 
         //Loads the `BBCode` helper
-        $BBCode = (new HelperRegistry(new View))->load('MeTools.BBCode');
+        $BBCode = (new HelperRegistry(new View()))->load('MeTools.BBCode');
 
         return trim(strip_tags($BBCode->remove($this->_properties['description'])));
     }
 
     /**
      * Gets the photo preview (virtual field)
-     * @return Entity|null Entity with `preview`, `width` and `height`
+     * @return \Cake\ORM\Entity|null Entity with `preview`, `width` and `height`
      *  properties
      * @uses _getPath()
      */

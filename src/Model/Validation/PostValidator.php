@@ -72,7 +72,7 @@ class PostValidator extends AppValidator
      */
     public function validTags($value)
     {
-        $validator = new TagValidator;
+        $validator = new TagValidator();
         $messages = [];
 
         foreach ($value as $tag) {

@@ -64,8 +64,7 @@ class AuthComponentTest extends ComponentTestCase
 
         $this->Component->setUser(['id' => 1]);
         $this->Component->initialize([]);
-        $expected['authError'] = 'You are not authorized for this action';
-        $this->assertEquals($expected, $this->Component->getConfig());
+        $this->assertEquals(['authError' => 'You are not authorized for this action'] + $expected, $this->Component->getConfig());
     }
 
     /**
@@ -103,8 +102,8 @@ class AuthComponentTest extends ComponentTestCase
             'picture' => 'MeCms.no-avatar.jpg',
         ];
         $this->Component->constructAuthenticate();
-        $this->Component->request = $this->Component->request->withData('username', 'zeta');
-        $this->Component->request = $this->Component->request->withData('password', 'zeta');
+        $this->Component->request = $this->Component->request->withData('username', 'zeta')
+            ->withData('password', 'zeta');
         $user = $this->Component->identify();
         foreach ($expectedValues as $key => $value) {
             $this->assertEquals($user[$key], $value);

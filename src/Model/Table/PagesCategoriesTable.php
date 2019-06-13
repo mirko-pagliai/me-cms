@@ -45,9 +45,9 @@ class PagesCategoriesTable extends AppTable
 
     /**
      * "active" find method
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $options Options
-     * @return Query Query object
+     * @return \Cake\ORM\Query Query object
      */
     public function findActive(Query $query, array $options)
     {

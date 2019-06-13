@@ -41,7 +41,6 @@ class PagesCategoriesControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('PagesCategories' . DS . 'index.ctp');
         $this->assertContainsOnlyInstancesOf(PagesCategory::class, $this->viewVariable('categories'));
-
         $cache = Cache::read('categories_index', $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('categories')->toArray(), $cache->toArray());
     }
@@ -52,20 +51,18 @@ class PagesCategoriesControllerTest extends ControllerTestCase
      */
     public function testView()
     {
-        $slug = $this->Table->find('active')->extract('slug')->first();
-        $url = ['_name' => 'pagesCategory', $slug];
+        $url = ['_name' => 'pagesCategory', 'first-page-category'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('PagesCategories' . DS . 'view.ctp');
         $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
-        $this->assertContainsOnlyInstancesOf(Page::class, $this->viewVariable('category')->pages);
-
-        $categoryFromCache = Cache::read(sprintf('category_%s', md5($slug)), $this->Table->getCacheName());
-        $this->assertEquals($this->viewVariable('category'), $categoryFromCache->first());
+        $this->assertContainsOnlyInstancesOf(Page::class, $this->viewVariable('category')->get('pages'));
+        $cache = Cache::read('category_' . md5('first-page-category'), $this->Table->getCacheName());
+        $this->assertEquals($this->viewVariable('category'), $cache->first());
 
         //GET request with query string
-        $this->get($url + ['?' => ['q' => $slug]]);
+        $this->get($url + ['?' => ['q' => 'first-page-category']]);
         $this->assertRedirect($url);
     }
 }

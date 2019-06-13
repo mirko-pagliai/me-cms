@@ -39,7 +39,29 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      * @return void
      * @test
      */
-    abstract public function testBuildRules();
+    public function testBuildRules()
+    {
+        $this->loadFixtures();
+        $entity = $this->Table->newEntity(self::$example);
+        $this->assertNotEmpty($this->Table->save($entity));
+
+        //Saves again the same entity
+        $entity = $this->Table->newEntity(self::$example);
+        $this->assertFalse($this->Table->save($entity));
+        $this->assertEquals([
+            'slug' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
+            'title' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
+        ], $entity->getErrors());
+
+        $entity = $this->Table->newEntity([
+            'category_id' => 999,
+            'title' => 'My title 2',
+            'slug' => 'my-slug-2',
+            'text' => 'My text',
+        ] + self::$example);
+        $this->assertFalse($this->Table->save($entity));
+        $this->assertEquals(['category_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
+    }
 
     /**
      * Test for `_initializeSchema()` method
@@ -52,31 +74,20 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     }
 
     /**
-     * Test for `afterDelete()` method
+     * Test for `afterDelete()` and `afterSave()` methods
      * @return void
      * @test
      */
-    public function testAfterDelete()
+    public function testAfterDeleteAndAfterSave()
     {
         $this->loadFixtures();
+        $className = get_parent_class($this->Table);
 
-        $this->Table = $this->getMockForModel($this->Table->getAlias(), ['setNextToBePublished'], ['className' => get_parent_class($this->Table)]);
-        $this->Table->expects($this->once())->method('setNextToBePublished');
-        $this->Table->afterDelete(new Event(null), new Entity, new ArrayObject);
-    }
-
-    /**
-     * Test for `afterSave()` method
-     * @return void
-     * @test
-     */
-    public function testAfterSave()
-    {
-        $this->loadFixtures();
-
-        $Table = $this->getMockForModel($this->Table->getAlias(), ['setNextToBePublished'], ['className' => get_parent_class($this->Table)]);
-        $Table->expects($this->once())->method('setNextToBePublished');
-        $Table->afterSave(new Event(null), new Entity, new ArrayObject);
+        foreach (['afterDelete', 'afterSave'] as $methodToCall) {
+            $Table = $this->getMockForModel($this->Table->getAlias(), ['setNextToBePublished'], compact('className'));
+            $Table->expects($this->once())->method('setNextToBePublished');
+            $Table->$methodToCall(new Event(null), new Entity(), new ArrayObject());
+        }
     }
 
     /**
@@ -95,19 +106,15 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
         $entity = $Table->newEntity(self::$example);
         $this->assertNotEmpty($Table->save($entity));
         $this->assertEmpty($entity->preview);
-
         $Table->delete($entity);
 
         //Tries with a text with an image
-        $example = self::$example;
-        $example['text'] = '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg' . '\' />';
-        $entity = $Table->newEntity($example);
+        $entity = $Table->newEntity(['text' => '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg' . '\' />'] + self::$example);
         $this->assertNotEmpty($Table->save($entity));
         $this->assertCount(1, $entity->preview);
         $this->assertInstanceOf(Entity::class, $entity->preview[0]);
         $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $entity->preview[0]->url);
-        $this->assertEquals(400, $entity->preview[0]->width);
-        $this->assertEquals(300, $entity->preview[0]->height);
+        $this->assertEquals([400, 300], [$entity->preview[0]->width, $entity->preview[0]->height]);
     }
 
     /**
@@ -115,7 +122,16 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      * @return void
      * @test
      */
-    abstract public function testInitialize();
+    public function testInitialize()
+    {
+        $this->assertEquals('title', $this->Table->getDisplayField());
+        $this->assertEquals('id', $this->Table->getPrimaryKey());
+
+        $this->assertEquals('Categories', $this->Table->Categories->getAlias());
+        $this->assertEquals(sprintf('MeCms.%sCategories', $this->Table->getAlias()), $this->Table->Categories->getClassName());
+
+        $this->assertHasBehavior(['Timestamp', 'CounterCache']);
+    }
 
     /**
      * Test for `find()` method

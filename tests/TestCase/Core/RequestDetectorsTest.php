@@ -64,12 +64,11 @@ class RequestDetectorsTest extends TestCase
         $this->assertFalse($this->Request->isIndex());
         $this->assertFalse($this->Request->isView());
 
-        $this->assertTrue($this->Request->is('add'));
-
         foreach (['delete', 'edit', 'index', 'view'] as $action) {
             $this->assertFalse($this->Request->is($action));
         }
 
+        $this->assertTrue($this->Request->is('add'));
         $this->assertTrue($this->Request->is(['add', 'edit']));
         $this->assertFalse($this->Request->is(['delete', 'edit']));
     }
@@ -89,72 +88,6 @@ class RequestDetectorsTest extends TestCase
     }
 
     /**
-     * Tests for `is('banned')` detector
-     * @test
-     */
-    public function testIsBanned()
-    {
-        $this->assertFalse($this->Request->isBanned());
-        $this->assertNull($this->Request->getSession()->read('allowed_ip'));
-
-        //It is NOT banned. This is not the same IP
-        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
-        Configure::write('Banned', ['99.99.99.98']);
-        $this->assertFalse($this->Request->isBanned());
-        $this->assertTrue($this->Request->getSession()->read('allowed_ip'));
-
-        //It is NOT banned. None of the IP coincided
-        $this->Request->getSession()->delete('allowed_ip');
-        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
-        Configure::write('Banned', ['99.99.99.97', '99.99.99.98']);
-        $this->assertFalse($this->Request->isBanned());
-        $this->assertTrue($this->Request->getSession()->read('allowed_ip'));
-
-        //It is NOT banned. None of the IP coincided
-        $this->Request->getSession()->delete('allowed_ip');
-        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
-        Configure::write('Banned', ['99.99.98.*', '99.99.*.98']);
-        $this->assertFalse($this->Request->isBanned());
-        $this->assertTrue($this->Request->getSession()->read('allowed_ip'));
-
-        //It is banned. This is the same IP
-        $this->Request->getSession()->delete('allowed_ip');
-        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
-        Configure::write('Banned', ['99.99.99.99']);
-        $this->assertTrue($this->Request->isBanned());
-        $this->assertNull($this->Request->getSession()->read('allowed_ip'));
-
-        //It is banned. One of the IP coincided
-        $this->Request->getSession()->delete('allowed_ip');
-        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
-        Configure::write('Banned', ['99.99.99.98', '99.99.99.99']);
-        $this->assertTrue($this->Request->isBanned());
-        $this->assertNull($this->Request->getSession()->read('allowed_ip'));
-
-        //It is banned. One of the IP coincided
-        $this->Request->getSession()->delete('allowed_ip');
-        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
-        Configure::write('Banned', ['99.99.99.*']);
-        $this->assertTrue($this->Request->isBanned());
-        $this->assertNull($this->Request->getSession()->read('allowed_ip'));
-
-        //It is banned. One of the IP coincided
-        $this->Request->getSession()->delete('allowed_ip');
-        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
-        Configure::write('Banned', ['99.99.*.99']);
-        $this->assertTrue($this->Request->isBanned());
-        $this->assertNull($this->Request->getSession()->read('allowed_ip'));
-        $this->assertNull($this->Request->getSession()->read('allowed_ip'));
-
-        //It is banned. One of the IP coincided
-        $this->Request->getSession()->delete('allowed_ip');
-        $this->Request = $this->Request->withEnv('REMOTE_ADDR', '99.99.99.99');
-        Configure::write('Banned', ['99.99.99.98', '99.99.*.99']);
-        $this->assertTrue($this->Request->isBanned());
-        $this->assertNull($this->Request->getSession()->read('allowed_ip'));
-    }
-
-    /**
      * Tests for `is('offline')` detector
      * @test
      */
@@ -164,7 +97,6 @@ class RequestDetectorsTest extends TestCase
         $this->assertFalse($this->Request->is('offline'));
 
         Configure::write('MeCms.default.offline', true);
-
         $request = $this->getMockForRequest();
         $this->assertTrue($request->isOffline());
         $this->assertTrue($request->is('offline'));

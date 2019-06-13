@@ -37,7 +37,7 @@ class BackupForm extends Form
      */
     protected function _buildValidator(Validator $validator)
     {
-        $validator = new AppValidator;
+        $validator = new AppValidator();
 
         //Filename
         $validator->add('filename', 'extension', [
@@ -58,7 +58,7 @@ class BackupForm extends Form
     protected function getBackupExportInstance()
     {
         if (!$this->BackupExport) {
-            $this->BackupExport = new BackupExport;
+            $this->BackupExport = new BackupExport();
         }
 
         return $this->BackupExport;

@@ -31,14 +31,4 @@ class PhotosAlbumValidatorTest extends ValidationTestCase
     public $fixtures = [
         'plugin.MeCms.PhotosAlbums',
     ];
-
-    /**
-     * Test validation.
-     * It tests the proper functioning of the example data.
-     * @test
-     */
-    public function testValidationExampleData()
-    {
-        $this->assertAllDataAreRequired($this->example);
-    }
 }

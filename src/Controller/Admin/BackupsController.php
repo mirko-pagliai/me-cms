@@ -51,7 +51,7 @@ class BackupsController extends AppController
     {
         parent::initialize();
 
-        $this->BackupManager = new BackupManager;
+        $this->BackupManager = new BackupManager();
     }
 
     /**
@@ -89,7 +89,7 @@ class BackupsController extends AppController
      */
     public function add()
     {
-        $backup = new BackupForm;
+        $backup = new BackupForm();
 
         if ($this->request->is('post')) {
             //Creates the backup
@@ -157,7 +157,7 @@ class BackupsController extends AppController
     public function restore($filename)
     {
         //Imports and clears the cache
-        (new BackupImport)->filename($this->getFilename($filename))->import();
+        (new BackupImport())->filename($this->getFilename($filename))->import();
         Cache::clearAll();
 
         $this->Flash->success(I18N_OPERATION_OK);

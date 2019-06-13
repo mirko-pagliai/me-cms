@@ -12,7 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\ValidationTestCase;
 
 /**
@@ -38,7 +37,7 @@ class TagValidatorTest extends ValidationTestCase
      * It tests the proper functioning of the example data.
      * @test
      */
-    public function testValidationExampleData()
+    public function testAllDataAreRequired()
     {
         $this->assertEmpty($this->Table->newEntity($this->example)->getErrors());
     }

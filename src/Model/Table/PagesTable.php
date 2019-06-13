@@ -14,8 +14,8 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
-use MeCms\Model\Table\PostsAndPagesTables;
 use MeCms\Model\Validation\PageValidator;
+use MeCms\ORM\PostsAndPagesTables;
 
 /**
  * Pages model

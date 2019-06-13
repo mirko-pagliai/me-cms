@@ -56,25 +56,11 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `beforeFilter()` method
-     * @test
-     */
-    public function testBeforeFilter()
-    {
-        foreach (['add', 'edit', 'index'] as $action) {
-            $this->get($this->url + compact('action') + [1]);
-            $this->assertNotEmpty($this->viewVariable('categories'));
-            $this->assertNotEmpty($this->viewVariable('users'));
-        }
-    }
-
-    /**
      * Tests for `beforeFilter()` method, with no categories
      * @test
      */
     public function testBeforeFilterNoCategories()
     {
-        //Deletes all categories
         $this->Table->Categories->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
@@ -90,24 +76,12 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testBeforeFilterNoUsers()
     {
-        //Deletes all users
         $this->Table->Users->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [1]);
             $this->assertRedirect(['controller' => 'Users', 'action' => 'index']);
             $this->assertFlashMessage('You must first create an user');
-        }
-    }
-
-    /**
-     * Tests for `initialize()` method
-     * @test
-     */
-    public function testInitialize()
-    {
-        foreach (['add', 'edit'] as $action) {
-            $this->assertHasComponent('KcFinder', $action);
         }
     }
 
@@ -200,8 +174,6 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'edit.ctp');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
         $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('post')->tags);
-
-        //Checks if the `created` field has been properly formatted
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('post')->created);
 
         //POST request. Data are valid

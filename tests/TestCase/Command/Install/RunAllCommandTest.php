@@ -44,7 +44,7 @@ class RunAllCommandTest extends TestCase
     {
         $io = $this->getMockBuilder(ConsoleIo::class)
             ->setMethods(['askChoice'])
-            ->setConstructorArgs([new ConsoleOutput, new ConsoleOutput])
+            ->setConstructorArgs([new ConsoleOutput(), new ConsoleOutput()])
             ->getMock();
 
         $io->method('askChoice')->will($this->returnValue('y'));

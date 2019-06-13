@@ -66,7 +66,7 @@ class BannersController extends AppController
      *
      * This action can use the `index_as_grid` template.
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Model\Table\BannersTable::queryFromFilter()
+     * @uses \MeCms\Model\Table\BannersTable::queryFromFilter()
      */
     public function index()
     {
@@ -94,9 +94,9 @@ class BannersController extends AppController
     /**
      * Uploads banners
      * @return null
-     * @throws InternalErrorException
-     * @uses MeCms\Controller\AppController::setUploadError()
-     * @uses MeTools\Controller\Component\UploaderComponent
+     * @throws \Cake\Http\Exception\InternalErrorException
+     * @uses \MeCms\Controller\AppController::setUploadError()
+     * @uses \MeTools\Controller\Component\UploaderComponent
      */
     public function upload()
     {
@@ -150,7 +150,7 @@ class BannersController extends AppController
             if ($this->Banners->save($banner)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index', $banner->position_id]);
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -176,10 +176,12 @@ class BannersController extends AppController
      */
     public function delete($id = null)
     {
+        $banner = $this->Banners->get($id);
+
         $this->request->allowMethod(['post', 'delete']);
-        $this->Banners->deleteOrFail($this->Banners->get($id));
+        $this->Banners->deleteOrFail($banner);
         $this->Flash->success(I18N_OPERATION_OK);
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'index', $banner->position_id]);
     }
 }

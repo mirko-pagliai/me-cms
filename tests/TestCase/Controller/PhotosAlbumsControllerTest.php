@@ -42,9 +42,8 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         $this->assertTemplate('PhotosAlbums' . DS . 'index.ctp');
         $this->assertContainsOnlyInstancesOf(PhotosAlbum::class, $this->viewVariable('albums'));
         foreach ($this->viewVariable('albums') as $album) {
-            $this->assertContainsOnlyInstancesOf(Photo::class, $album->photos);
+            $this->assertContainsOnlyInstancesOf(Photo::class, $album->get('photos'));
         }
-
         $cache = Cache::read('albums_index', $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('albums')->toArray(), $cache->toArray());
 
@@ -63,20 +62,18 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
      */
     public function testView()
     {
-        $slug = $this->Table->find('active')->extract('slug')->first();
-        $url = ['_name' => 'album', $slug];
+        $url = ['_name' => 'album', 'test-album'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('PhotosAlbums' . DS . 'view.ctp');
         $this->assertInstanceof(PhotosAlbum::class, $this->viewVariable('album'));
         $this->assertContainsOnlyInstancesOf(Photo::class, $this->viewVariable('photos'));
-
-        $cache = Cache::read(sprintf('album_%s', md5($slug)), $this->Table->getCacheName());
+        $cache = Cache::read('album_' . md5('test-album'), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('album'), $cache->first());
 
         //Sets the cache name
-        $cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), getConfigOrFail('default.photos'), 1);
+        $cache = sprintf('album_%s_limit_%s_page_%s', md5('test-album'), getConfigOrFail('default.photos'), 1);
         list($photosFromCache, $pagingFromCache) = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Table->getCacheName()
@@ -91,7 +88,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         $this->assertNotEmpty($this->_controller->request->getParam('paging')['Photos']);
 
         //GET request with query string
-        $this->get($url + ['?' => ['q' => $slug]]);
+        $this->get($url + ['?' => ['q' => 'test-album']]);
         $this->assertRedirect($url);
     }
 }

@@ -74,9 +74,9 @@ class UsersController extends AppController
 
     /**
      * Internal method to send the activation mail
-     * @param MeCms\Model\Entity\User $user User entity
+     * @param \MeCms\Model\Entity\User $user User entity
      * @return bool
-     * @see MeCms\Mailer\UserMailer::activation()
+     * @see \MeCms\Mailer\UserMailer::activation()
      */
     protected function sendActivationMail($user)
     {
@@ -124,7 +124,7 @@ class UsersController extends AppController
      * @param string $id User ID
      * @param string $token Token
      * @return \Cake\Network\Response|null
-     * @throws RecordNotFoundException
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException
      */
     public function activation($id, $token)
     {
@@ -272,7 +272,7 @@ class UsersController extends AppController
     /**
      * Password forgot (requests a new password)
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Mailer\UserMailer::passwordForgot()
+     * @uses \MeCms\Mailer\UserMailer::passwordForgot()
      */
     public function passwordForgot()
     {
@@ -323,7 +323,7 @@ class UsersController extends AppController
      * @param string $id User ID
      * @param string $token Token
      * @return \Cake\Network\Response|null|void
-     * @throws RecordNotFoundException
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException
      */
     public function passwordReset($id, $token)
     {
@@ -377,7 +377,10 @@ class UsersController extends AppController
                     switch (getConfig('users.activation')) {
                         //The account will be enabled by an administrator
                         case 2:
-                            $this->Flash->success(__d('me_cms', 'Account created, but it needs to be activated by an admin'));
+                            $this->Flash->success(__d(
+                                'me_cms',
+                                'Account created, but it needs to be activated by an admin'
+                            ));
                             break;
                         //The account will be enabled by the user via email
                         //  (default)

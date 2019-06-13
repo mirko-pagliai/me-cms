@@ -40,7 +40,7 @@ class CheckupTest extends TestCase
     {
         parent::setUp();
 
-        $this->Checkup = new Checkup;
+        $this->Checkup = new Checkup();
     }
 
     /**

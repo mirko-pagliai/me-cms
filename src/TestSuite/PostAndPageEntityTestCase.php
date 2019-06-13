@@ -47,6 +47,6 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
     {
         $this->assertNull($this->Entity->plain_text);
 
-        $this->assertEquals('This is a text', $this->Entity->set('text', 'This is a [readmore /]text')->get('plain_text'));
+        $this->assertEquals('A text', $this->Entity->set('text', 'A [readmore /]text')->get('plain_text'));
     }
 }

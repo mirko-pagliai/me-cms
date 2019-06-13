@@ -72,7 +72,7 @@ class AuthComponent extends CakeAuthComponent
      */
     public function hasId($id)
     {
-        return $this->user('id') ? in_array($this->user('id'), (array)$id) : false;
+        return in_array($this->user('id'), (array)$id);
     }
 
     /**
@@ -81,7 +81,7 @@ class AuthComponent extends CakeAuthComponent
      */
     public function isFounder()
     {
-        return $this->user('id') ? $this->user('id') === 1 : false;
+        return $this->user('id') === 1;
     }
 
     /**
@@ -104,6 +104,6 @@ class AuthComponent extends CakeAuthComponent
      */
     public function isGroup($group)
     {
-        return $this->user('group.name') ? in_array($this->user('group.name'), (array)$group) : false;
+        return in_array($this->user('group.name'), (array)$group);
     }
 }

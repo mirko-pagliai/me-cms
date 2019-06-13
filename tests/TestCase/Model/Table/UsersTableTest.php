@@ -137,7 +137,7 @@ class UsersTableTest extends TableTestCase
     public function testHasManyTokens()
     {
         $this->loadFixtures();
-        $token = (new TokenCreator)->create('testToken', ['user_id' => 4]);
+        $token = (new TokenCreator())->create('testToken', ['user_id' => 4]);
         $tokens = $this->Table->findById(4)->contain('Tokens')->extract('tokens')->first();
         $this->assertEquals(1, count($tokens));
         $this->assertInstanceOf(Token::class, array_value_first($tokens));

@@ -41,8 +41,8 @@ class AuthHelperTest extends HelperTestCase
 
         $this->Helper->initialize(['id' => 1]);
         $this->assertTrue($this->Helper->hasId(1));
-        $this->assertFalse($this->Helper->hasId(2));
         $this->assertTrue($this->Helper->hasId([1, 2]));
+        $this->assertFalse($this->Helper->hasId(2));
         $this->assertFalse($this->Helper->hasId([2, 3]));
     }
 

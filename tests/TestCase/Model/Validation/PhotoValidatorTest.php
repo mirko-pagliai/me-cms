@@ -33,16 +33,6 @@ class PhotoValidatorTest extends ValidationTestCase
     ];
 
     /**
-     * Test validation.
-     * It tests the proper functioning of the example data.
-     * @test
-     */
-    public function testValidationExampleData()
-    {
-        $this->assertAllDataAreRequired($this->example);
-    }
-
-    /**
      * Test validation for `album_id` property
      * @test
      */

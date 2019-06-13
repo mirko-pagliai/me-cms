@@ -75,7 +75,7 @@ class AppTable extends Table
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
         if (empty($entity->created)) {
-            $entity->created = new Time;
+            $entity->created = new Time();
         } elseif (!empty($entity->created) && !$entity->created instanceof Time) {
             $entity->created = new Time($entity->created);
         }
@@ -83,35 +83,35 @@ class AppTable extends Table
 
     /**
      * "active" find method
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $options Options
-     * @return Query Query object
+     * @return \Cake\ORM\Query Query object
      */
     public function findActive(Query $query, array $options)
     {
         return $query->where([sprintf('%s.active', $this->getAlias()) => true])
-            ->where([sprintf('%s.created <=', $this->getAlias()) => new Time]);
+            ->where([sprintf('%s.created <=', $this->getAlias()) => new Time()]);
     }
 
     /**
      * "pending" find method
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $options Options
-     * @return Query Query object
+     * @return \Cake\ORM\Query Query object
      */
     public function findPending(Query $query, array $options)
     {
         return $query->where(['OR' => [
             sprintf('%s.active', $this->getAlias()) => false,
-            sprintf('%s.created >', $this->getAlias()) => new Time,
+            sprintf('%s.created >', $this->getAlias()) => new Time(),
         ]]);
     }
 
     /**
      * "random" find method
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $options Options
-     * @return Query Query object
+     * @return \Cake\ORM\Query Query object
      */
     public function findRandom(Query $query, array $options)
     {
@@ -139,7 +139,8 @@ class AppTable extends Table
         if ($associations) {
             $values = [$values];
             foreach ($this->associations()->getIterator() as $association) {
-                if (method_exists($association->getTarget(), 'getCacheName') && $association->getTarget()->getCacheName()) {
+                if (method_exists($association->getTarget(), 'getCacheName')
+                    && $association->getTarget()->getCacheName()) {
                     $values[] = $association->getTarget()->getCacheName();
                 }
             }
@@ -152,7 +153,7 @@ class AppTable extends Table
 
     /**
      * Gets records as list
-     * @return Query $query Query object
+     * @return \Cake\ORM\Query $query Query object
      * @uses getCacheName()
      */
     public function getList()
@@ -164,7 +165,7 @@ class AppTable extends Table
 
     /**
      * Gets records as tree list
-     * @return Query $query Query object
+     * @return \Cake\ORM\Query $query Query object
      * @uses getCacheName()
      */
     public function getTreeList()
@@ -175,9 +176,9 @@ class AppTable extends Table
 
     /**
      * Build query from filter data
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $data Filter data ($this->request->getQueryParams())
-     * @return Query $query Query object
+     * @return \Cake\ORM\Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = [])
     {

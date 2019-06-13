@@ -29,8 +29,8 @@ class AppController extends BaseController
      * @return \Cake\Network\Response|null|void
      * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeFilter
      * @uses App\Controller\AppController::beforeFilter()
-     * @uses isBanned()
      * @uses isOffline()
+     * @uses isSpammer()
      */
     public function beforeFilter(Event $event)
     {
@@ -39,8 +39,8 @@ class AppController extends BaseController
             return $this->redirect(['_name' => 'offline']);
         }
 
-        //Checks if the user's IP address is banned
-        if ($this->isBanned()) {
+        //Checks if the user's IP address is reported as spammer
+        if ($this->isSpammer()) {
             return $this->redirect(['_name' => 'ipNotAllowed']);
         }
 
@@ -134,16 +134,6 @@ class AppController extends BaseController
     }
 
     /**
-     * Checks if the user's IP address is banned
-     * @return bool
-     * @since 2.15.2
-     */
-    protected function isBanned()
-    {
-        return $this->request->isBanned() && !$this->request->isAction('ipNotAllowed', 'Systems');
-    }
-
-    /**
      * Checks if the site is offline
      * @return bool
      * @since 2.15.2
@@ -151,6 +141,16 @@ class AppController extends BaseController
     protected function isOffline()
     {
         return $this->request->isOffline();
+    }
+
+    /**
+     * Checks if the user's IP address is reported as a spammer
+     * @return bool
+     * @since 2.15.2
+     */
+    protected function isSpammer()
+    {
+        return $this->request->isSpammer() && !$this->request->isAction('ipNotAllowed', 'Systems');
     }
 
     /**

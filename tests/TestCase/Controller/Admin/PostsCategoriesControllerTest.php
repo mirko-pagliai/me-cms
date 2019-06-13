@@ -125,17 +125,15 @@ class PostsCategoriesControllerTest extends ControllerTestCase
     public function testDelete()
     {
         //POST request. This category has no pages
-        $id = $this->Table->findByPostCount(0)->extract('id')->first();
-        $this->post($this->url + ['action' => 'delete', $id]);
+        $this->post($this->url + ['action' => 'delete', 2]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertTrue($this->Table->findById($id)->isEmpty());
+        $this->assertTrue($this->Table->findById(2)->isEmpty());
 
-        //POST request. This category has some pages, so it cannot be deleted
-        $id = $this->Table->find()->where(['post_count >=' => 1])->extract('id')->first();
-        $this->post($this->url + ['action' => 'delete', $id]);
+        //POST request. This category has some pages, so it cannot be delete
+        $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
-        $this->assertFalse($this->Table->findById($id)->isEmpty());
+        $this->assertFalse($this->Table->findById(1)->isEmpty());
     }
 }

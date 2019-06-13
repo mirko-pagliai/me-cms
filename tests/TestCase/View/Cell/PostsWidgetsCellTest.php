@@ -45,7 +45,7 @@ class PostsWidgetsCellTest extends CellTestCase
     {
         parent::setUp();
 
-        $this->Table = $this->getMockForModel('MeCms.Posts', null);
+        $this->Table = $this->Table ?: $this->getMockForModel('MeCms.Posts', null);
     }
 
     /**
@@ -116,7 +116,7 @@ class PostsWidgetsCellTest extends CellTestCase
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'postsCategories']));
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
-        $this->Widget->getView()->setRequest(new ServerRequest);
+        $this->Widget->getView()->setRequest(new ServerRequest());
         $this->assertEquals(2, Cache::read('widget_categories', $this->Table->getCacheName())->count());
 
         //With no posts
@@ -195,7 +195,7 @@ class PostsWidgetsCellTest extends CellTestCase
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'posts']));
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
-        $this->Widget->getView()->setRequest(new ServerRequest);
+        $this->Widget->getView()->setRequest(new ServerRequest());
 
         //Tests cache
         $this->assertEquals(1, Cache::read('widget_latest_1', $this->Table->getCacheName())->count());
@@ -274,7 +274,7 @@ class PostsWidgetsCellTest extends CellTestCase
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'posts']));
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
-        $this->Widget->getView()->setRequest(new ServerRequest);
+        $this->Widget->getView()->setRequest(new ServerRequest());
 
         //Tests cache
         $fromCache = Cache::read('widget_months', $this->Table->getCacheName());

@@ -67,9 +67,9 @@ class UsersTable extends AppTable
 
     /**
      * "active" find method
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $options Options
-     * @return Query Query object
+     * @return \Cake\ORM\Query Query object
      */
     public function findActive(Query $query, array $options)
     {
@@ -81,9 +81,9 @@ class UsersTable extends AppTable
 
     /**
      * "auth" find method
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $options Options
-     * @return Query Query object
+     * @return \Cake\ORM\Query Query object
      * @since 2.25.1
      */
     public function findAuth(Query $query, array $options)
@@ -95,9 +95,9 @@ class UsersTable extends AppTable
 
     /**
      * "banned" find method
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $options Options
-     * @return Query Query object
+     * @return \Cake\ORM\Query Query object
      */
     public function findBanned(Query $query, array $options)
     {
@@ -106,9 +106,9 @@ class UsersTable extends AppTable
 
     /**
      * "pending" find method
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $options Options
-     * @return Query Query object
+     * @return \Cake\ORM\Query Query object
      */
     public function findPending(Query $query, array $options)
     {
@@ -120,7 +120,7 @@ class UsersTable extends AppTable
 
     /**
      * Gets active users as list
-     * @return Query $query Query object
+     * @return \Cake\ORM\Query $query Query object
      */
     public function getActiveList()
     {
@@ -167,9 +167,9 @@ class UsersTable extends AppTable
 
     /**
      * Build query from filter data
-     * @param Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $data Filter data ($this->request->getQueryParams())
-     * @return Query $query Query object
+     * @return \Cake\ORM\Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
     public function queryFromFilter(Query $query, array $data = [])
@@ -214,13 +214,13 @@ class UsersTable extends AppTable
      * Validation "do not require presence".
      *
      * This validator doesn't require the presence of fields.
-     * @param UserValidator $validator Validator instance
-     * @return UserValidator
+     * @param \MeCms\Model\Validation\UserValidator $validator Validator instance
+     * @return \MeCms\Model\Validation\UserValidator
      */
     public function validationDoNotRequirePresence(UserValidator $validator)
     {
         //No field is required
-        foreach ($validator->getIterator() as $field => $rules) {
+        foreach (array_keys((array)$validator->getIterator()) as $field) {
             $validator->requirePresence($field, false);
         }
 
@@ -231,8 +231,8 @@ class UsersTable extends AppTable
      * Validation "empty password".
      *
      * This validator allows passwords are empty.
-     * @param UserValidator $validator Validator instance
-     * @return UserValidator
+     * @param \MeCms\Model\Validation\UserValidator $validator Validator instance
+     * @return \MeCms\Model\Validation\UserValidator
      */
     public function validationEmptyPassword(UserValidator $validator)
     {

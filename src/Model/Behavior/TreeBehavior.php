@@ -32,14 +32,12 @@ class TreeBehavior extends CakeTreeBehavior
      *  relative depth in the tree
      * @param \Cake\ORM\Query $query Query
      * @param array $options Options
-     * @return Cake\ORM\Query Query
+     * @return \Cake\ORM\Query Query
      * @see http://api.cakephp.org/3.4/class-Cake.ORM.Behavior.TreeBehavior.html#_findTreeList
-     * @uses Cake\ORM\Behavior\TreeBehavior::findTreeList()
+     * @uses \Cake\ORM\Behavior\TreeBehavior::findTreeList()
      */
     public function findTreeList(Query $query, array $options)
     {
-        $options['spacer'] = empty($options['spacer']) ? '—' : $options['spacer'];
-
-        return parent::findTreeList($query, $options);
+        return parent::findTreeList($query, $options + ['spacer' => '—']);
     }
 }

@@ -31,7 +31,7 @@ class ContactUsMailerTest extends TestCase
      */
     protected $example = [
         'first_name' => 'James',
-        'email' => 'test@test.com',
+        'email' => 'mymail@example.com',
         'last_name' => 'Blue',
         'message' => 'Example of message',
     ];
@@ -44,7 +44,7 @@ class ContactUsMailerTest extends TestCase
     {
         parent::setUp();
 
-        $this->Mailer = new ContactUsMailer;
+        $this->Mailer = new ContactUsMailer();
         $this->Mailer->viewBuilder()->setLayout(false);
     }
 
@@ -56,13 +56,13 @@ class ContactUsMailerTest extends TestCase
     {
         $this->Mailer->contactUsMail($this->example);
         $result = $this->Mailer->getEmailInstance();
-        $this->assertEquals(['test@test.com' => 'James Blue'], $result->getSender());
-        $this->assertEquals(['test@test.com' => 'James Blue'], $result->getReplyTo());
+        $this->assertEquals(['mymail@example.com' => 'James Blue'], $result->getSender());
+        $this->assertEquals(['mymail@example.com' => 'James Blue'], $result->getReplyTo());
         $this->assertEquals(['email@example.com' => 'email@example.com'], $result->getTo());
         $this->assertEquals('Email from MeCms', $result->getSubject());
         $this->assertEquals('MeCms.Systems/contact_us', $result->viewBuilder()->getTemplate());
         $this->assertEquals([
-            'email' => 'test@test.com',
+            'email' => 'mymail@example.com',
             'message' => 'Example of message',
             'firstName' => 'James',
             'lastName' => 'Blue',
@@ -90,14 +90,14 @@ class ContactUsMailerTest extends TestCase
 
         //Checks headers
         $this->assertContains('From: MeCms <email@example.com>', $headers);
-        $this->assertContains('Reply-To: James Blue <test@test.com>', $headers);
-        $this->assertContains('Sender: James Blue <test@test.com>', $headers);
+        $this->assertContains('Reply-To: James Blue <mymail@example.com>', $headers);
+        $this->assertContains('Sender: James Blue <mymail@example.com>', $headers);
         $this->assertContains('To: email@example.com', $headers);
         $this->assertContains('Subject: Email from MeCms', $headers);
         $this->assertContains('Content-Type: text/html; charset=UTF-8', $headers);
 
         //Checks message
-        $this->assertContains('Email from James Blue (test@test.com)', $message);
+        $this->assertContains('Email from James Blue (mymail@example.com)', $message);
         $this->assertContains('Example of message', $message);
     }
 }

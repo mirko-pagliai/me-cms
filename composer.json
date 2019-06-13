@@ -18,10 +18,11 @@
         "mirko-pagliai/cakephp-database-backup": "^2.5",
         "mirko-pagliai/cakephp-entity-file-log": "^1.0",
         "mirko-pagliai/cakephp-recaptcha-mailhide": "^1.2",
+        "mirko-pagliai/cakephp-stop-spam": "^1.0.1-beta2",
         "mirko-pagliai/cakephp-thumber": "^1.5.2",
         "mirko-pagliai/cakephp-tokens": "^1.2",
-        "mirko-pagliai/me-tools": "^2.18.1",
-        "mirko-pagliai/php-tools": "^1.2",
+        "mirko-pagliai/me-tools": "^2.18.7",
+        "mirko-pagliai/php-tools": "^1.2.5",
         "npm-asset/js-cookie": "^v2.2",
         "wyrihaximus/minify-html": "^1.1"
     },
@@ -34,7 +35,6 @@
     "suggest": {
         "mirko-pagliai/me-cms-instagram": "Instagram plugin for MeCms",
         "mirko-pagliai/me-cms-link-scanner": "Link scanner plugin for MeCms",
-        "mirko-pagliai/me-cms-youtube": "Youtube plugin for MeCms",
         "sunhater/kcfinder:dev-master": "To use KCFinder to browse and upload files"
     },
     "repositories": [
