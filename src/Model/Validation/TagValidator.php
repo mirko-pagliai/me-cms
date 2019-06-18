@@ -20,16 +20,12 @@ use MeCms\Validation\AppValidator;
 class TagValidator extends AppValidator
 {
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Validation\AppValidator::__construct()
+     * Construct
      */
     public function __construct()
     {
         parent::__construct();
 
-        //Tag
         $this->add('tag', [
             'lengthBetween' => [
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 40),

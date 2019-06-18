@@ -22,19 +22,14 @@ use MeCms\Validation\PageAndPostValidator;
 class PostValidator extends PageAndPostValidator
 {
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Validation\AppValidator::__construct()
+     * Construct
      */
     public function __construct()
     {
         parent::__construct();
 
-        //User (author)
         $this->requirePresence('user_id', 'create');
 
-        //Tags
         $this->add('tags', [
             'validTags' => [
                 'last' => true,

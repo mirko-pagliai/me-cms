@@ -20,16 +20,12 @@ use MeCms\Validation\BannerAndPhotoValidator;
 class BannerValidator extends BannerAndPhotoValidator
 {
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Validation\AppValidator::__construct()
+     * Construct
      */
     public function __construct()
     {
         parent::__construct();
 
-        //Position
         $this->add('position_id', [
             'naturalNumber' => [
                 'message' => I18N_SELECT_VALID_OPTION,
@@ -37,7 +33,6 @@ class BannerValidator extends BannerAndPhotoValidator
             ],
         ])->requirePresence('position_id', 'create');
 
-        //Target
         $this->add('target', [
             'maxLength' => [
                 'message' => __d('me_cms', 'Must be at most {0} chars', 255),
@@ -49,7 +44,6 @@ class BannerValidator extends BannerAndPhotoValidator
             ],
         ])->allowEmpty('target');
 
-        //Thumbnail
         $this->add('thumbnail', [
             'boolean' => [
                 'message' => I18N_SELECT_VALID_OPTION,

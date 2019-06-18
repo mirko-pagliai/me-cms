@@ -23,16 +23,12 @@ use MeCms\Validation\AppValidator;
 abstract class PageAndPostValidator extends AppValidator
 {
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Validation\AppValidator::__construct()
+     * Construct
      */
     public function __construct()
     {
         parent::__construct();
 
-        //Category
         $this->add('category_id', [
             'naturalNumber' => [
                 'message' => I18N_SELECT_VALID_OPTION,
@@ -40,13 +36,10 @@ abstract class PageAndPostValidator extends AppValidator
             ],
         ])->requirePresence('category_id', 'create');
 
-        //Title
         $this->requirePresence('title', 'create');
 
-        //Slug
         $this->requirePresence('slug', 'create');
 
-        //Text
         $this->requirePresence('text', 'create');
     }
 }

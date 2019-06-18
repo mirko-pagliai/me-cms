@@ -20,19 +20,14 @@ use MeCms\Validation\AppValidator;
 class PagesCategoryValidator extends AppValidator
 {
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Validation\AppValidator::__construct()
+     * Construct
      */
     public function __construct()
     {
         parent::__construct();
 
-        //Title
         $this->requirePresence('title', 'create');
 
-        //Slug
         $this->requirePresence('slug', 'create');
     }
 }

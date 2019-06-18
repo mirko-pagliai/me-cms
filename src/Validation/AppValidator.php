@@ -23,9 +23,7 @@ use Cake\Validation\Validator;
 class AppValidator extends Validator
 {
     /**
-     * Construct.
-     *
-     * Adds some default validation rules.
+     * Construct
      * @uses Cake\Validation\Validator::__construct()
      */
     public function __construct()

@@ -20,16 +20,12 @@ use MeCms\Validation\AppValidator;
 class BannersPositionValidator extends AppValidator
 {
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Validation\AppValidator::__construct()
+     * Construct
      */
     public function __construct()
     {
         parent::__construct();
 
-        //Name
         $this->add('title', [
             'lengthBetween' => [
                 'last' => true,

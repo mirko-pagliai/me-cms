@@ -28,16 +28,12 @@ abstract class BannerAndPhotoValidator extends AppValidator
     const VALID_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png'];
 
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Validation\AppValidator::__construct()
+     * Construct
      */
     public function __construct()
     {
         parent::__construct();
 
-        //Filename
         $this->add('filename', [
             'extension' => [
                 'message' => __d('me_cms', 'Valid extensions: {0}', implode(', ', self::VALID_EXTENSIONS)),

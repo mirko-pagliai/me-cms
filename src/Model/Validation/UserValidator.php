@@ -22,18 +22,12 @@ use MeCms\Validation\AppValidator;
 class UserValidator extends AppValidator
 {
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses Cake\Auth\DefaultPasswordHasher::check()
-     * @uses Cake\ORM\TableRegistry::get()
-     * @uses MeCms\Validation\AppValidator::__construct()
+     * Construct
      */
     public function __construct()
     {
         parent::__construct();
 
-        //Users group
         $this->add('group_id', [
             'naturalNumber' => [
                 'message' => I18N_SELECT_VALID_OPTION,
@@ -41,7 +35,6 @@ class UserValidator extends AppValidator
             ],
         ])->requirePresence('group_id', 'create');
 
-        //Username
         $this->add('username', [
             'lengthBetween' => [
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 4, 40),
@@ -57,10 +50,8 @@ class UserValidator extends AppValidator
             ],
         ])->requirePresence('username', 'create');
 
-        //Email
         $this->requirePresence('email', 'create');
 
-        //Email repeat
         $this->add('email_repeat', [
             'compareWith' => [
                 'message' => __d('me_cms', 'Email addresses don\'t match'),
@@ -68,7 +59,6 @@ class UserValidator extends AppValidator
             ],
         ]);
 
-        //Password
         $this->add('password', [
             'minLength' => [
                 'last' => true,
@@ -84,7 +74,6 @@ class UserValidator extends AppValidator
             ],
         ])->requirePresence('password', 'create');
 
-        //Password repeat
         $this->add('password_repeat', [
             'compareWith' => [
                 'message' => __d('me_cms', 'Passwords don\'t match'),
@@ -92,7 +81,6 @@ class UserValidator extends AppValidator
             ],
         ])->requirePresence('password_repeat', 'create');
 
-        //Old password
         $this->add('password_old', [
             'oldPasswordIsRight' => [
                 'message' => __d('me_cms', 'The old password is wrong'),
@@ -109,13 +97,10 @@ class UserValidator extends AppValidator
             ],
         ]);
 
-        //First name
         $this->requirePresence('first_name', 'create');
 
-        //Last name
         $this->requirePresence('last_name', 'create');
 
-        //Banned
         $this->add('banned', [
             'boolean' => [
                 'message' => I18N_SELECT_VALID_OPTION,
