@@ -14,12 +14,12 @@ namespace MeCms\Model\Validation;
 
 use Cake\Utility\Hash;
 use MeCms\Model\Validation\TagValidator;
-use MeCms\Validation\AppValidator;
+use MeCms\Validation\PageAndPostValidator;
 
 /**
  * Post validator class
  */
-class PostValidator extends AppValidator
+class PostValidator extends PageAndPostValidator
 {
     /**
      * Construct.
@@ -31,25 +31,8 @@ class PostValidator extends AppValidator
     {
         parent::__construct();
 
-        //Category
-        $this->add('category_id', [
-            'naturalNumber' => [
-                'message' => I18N_SELECT_VALID_OPTION,
-                'rule' => 'naturalNumber',
-            ],
-        ])->requirePresence('category_id', 'create');
-
         //User (author)
         $this->requirePresence('user_id', 'create');
-
-        //Title
-        $this->requirePresence('title', 'create');
-
-        //Slug
-        $this->requirePresence('slug', 'create');
-
-        //Text
-        $this->requirePresence('text', 'create');
 
         //Tags
         $this->add('tags', [

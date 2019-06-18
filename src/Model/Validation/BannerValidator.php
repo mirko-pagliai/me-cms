@@ -12,12 +12,12 @@
  */
 namespace MeCms\Model\Validation;
 
-use MeCms\Validation\AppValidator;
+use MeCms\Validation\BannerAndPhotoValidator;
 
 /**
  * Banner validator class
  */
-class BannerValidator extends AppValidator
+class BannerValidator extends BannerAndPhotoValidator
 {
     /**
      * Construct.
@@ -36,14 +36,6 @@ class BannerValidator extends AppValidator
                 'rule' => 'naturalNumber',
             ],
         ])->requirePresence('position_id', 'create');
-
-        //Filename
-        $this->add('filename', [
-            'extension' => [
-                'message' => __d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
-                'rule' => ['extension', ['gif', 'jpg', 'jpeg', 'png']],
-            ],
-        ])->requirePresence('filename', 'create');
 
         //Target
         $this->add('target', [

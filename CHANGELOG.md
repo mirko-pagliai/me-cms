@@ -1,7 +1,9 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.6
-* improved validation rules. Removed some useless validation methods.
+* improved validation rules. Removed some useless validation methods;
+* added `MeCms\Validation\BannerAndPhotoValidator` abstract class;
+* added `MeCms\Validation\PageAndPostValidator` abstract class.
 
 ### 2.26.5
 * it uses the `cakephp-stop-spam` package to detect spammers;
