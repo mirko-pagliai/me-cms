@@ -65,7 +65,7 @@ class AppValidator extends Validator
                     __d('me_cms', 'letters, apostrophe, space'),
                     __d('me_cms', 'Has to begin with a capital letter')
                 ),
-                'rule' => [$this, 'personName'],
+                'rule' => ['custom', '/^[A-Z][A-z\'\ ]+$/'],
             ],
         ]);
 
@@ -82,7 +82,7 @@ class AppValidator extends Validator
                     __d('me_cms', 'letters, apostrophe, space'),
                     __d('me_cms', 'Has to begin with a capital letter')
                 ),
-                'rule' => [$this, 'personName'],
+                'rule' => ['custom', '/^[A-Z][A-z\'\ ]+$/'],
             ],
         ]);
 
@@ -157,29 +157,6 @@ class AppValidator extends Validator
                 'rule' => 'datetime',
             ],
         ])->allowEmpty('created');
-    }
-
-    /**
-     * Lowercase letters validation method.
-     * Checks if a field contains only lowercase letters.
-     * @param string $value Field value
-     * @return bool
-     */
-    public function lowercaseLetters($value)
-    {
-        return (bool)preg_match('/^[a-z]+$/', $value);
-    }
-
-    /**
-     * Person name validation method.
-     * Checks if the name is a valid person name, so contains letters,
-     *  apostrophe and/or space.
-     * @param string $value Field value
-     * @return bool
-     */
-    public function personName($value)
-    {
-        return (bool)preg_match('/^[A-Z][A-z\'\ ]+$/', $value);
     }
 
     /**

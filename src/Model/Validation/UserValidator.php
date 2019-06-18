@@ -51,11 +51,9 @@ class UserValidator extends AppValidator
                 'message' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_DASH),
                 'rule' => [$this, 'slug'],
             ],
-            'usernameNotReserved' => [
+            'notReservedWord' => [
                 'message' => __d('me_cms', 'This value contains a reserved word'),
-                'rule' => function ($value) {
-                    return preg_match('/(admin|manager|root|supervisor|moderator)/i', $value) === 0;
-                },
+                'rule' => ['custom', '/^((?!admin|manager|root|supervisor|moderator).)+$/i'],
             ],
         ])->requirePresence('username', 'create');
 
@@ -80,8 +78,7 @@ class UserValidator extends AppValidator
             'passwordIsStrong' => [
                 'message' => __d('me_cms', 'The password should contain letters, numbers and symbols'),
                 'rule' => function ($value) {
-                    return preg_match('/[A-z]/', $value) &&
-                        preg_match('/\d/', $value) &&
+                    return preg_match('/[A-z]/', $value) && preg_match('/\d/', $value) &&
                         preg_match('/[^A-z\d]/', $value);
                 },
             ],

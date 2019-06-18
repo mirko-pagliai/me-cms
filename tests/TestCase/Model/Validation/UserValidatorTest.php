@@ -72,7 +72,7 @@ class UserValidatorTest extends ValidationTestCase
             $this->assertEquals(['username' => ['slug' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_DASH)]], $errors);
         }
 
-        $expected = ['username' => ['usernameNotReserved' => 'This value contains a reserved word']];
+        $expected = ['username' => ['notReservedWord' => 'This value contains a reserved word']];
 
         foreach (['admin', 'manager', 'root', 'supervisor', 'moderator'] as $username) {
             $errors = $this->Table->newEntity(compact('username') + $this->example)->getErrors();
