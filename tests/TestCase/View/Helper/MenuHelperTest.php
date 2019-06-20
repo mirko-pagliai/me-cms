@@ -56,8 +56,7 @@ class MenuHelperTest extends HelperTestCase
         ];
         foreach (['manager', 'admin'] as $name) {
             $this->Helper->Auth->initialize(['user' => ['group' => compact('name')]]);
-            list($links) = $this->Helper->posts();
-            $this->assertEquals($expected, $this->buildLinks($links));
+            $this->assertEquals($expected, $this->buildLinks($this->Helper->posts()[0]));
         }
     }
 
@@ -84,8 +83,7 @@ class MenuHelperTest extends HelperTestCase
         ];
         foreach (['manager', 'admin'] as $name) {
             $this->Helper->Auth->initialize(['user' => ['group' => compact('name')]]);
-            list($links) = $this->Helper->pages();
-            $this->assertEquals($expected, $this->buildLinks($links));
+            $this->assertEquals($expected, $this->buildLinks($this->Helper->pages()[0]));
         }
     }
 
@@ -109,8 +107,7 @@ class MenuHelperTest extends HelperTestCase
 
         foreach (['manager', 'admin'] as $name) {
             $this->Helper->Auth->initialize(['user' => ['group' => compact('name')]]);
-            list($links) = $this->Helper->photos();
-            $this->assertEquals($expected, $this->buildLinks($links));
+            $this->assertEquals($expected, $this->buildLinks($this->Helper->photos()[0]));
         }
     }
 
@@ -177,13 +174,12 @@ class MenuHelperTest extends HelperTestCase
         $this->Helper->Auth->initialize(['user' => ['group' => ['name' => 'manager']]]);
         $this->assertNull($this->Helper->backups());
 
-        $expected = [
-            '<a href="/me-cms/admin/backups" title="List backups">List backups</a>',
-            '<a href="/me-cms/admin/backups/add" title="Add backup">Add backup</a>',
-        ];
         $this->Helper->Auth->initialize(['user' => ['group' => ['name' => 'admin']]]);
         list($links, $title, $options) = $this->Helper->backups();
-        $this->assertEquals($expected, $this->buildLinks($links));
+        $this->assertEquals([
+            '<a href="/me-cms/admin/backups" title="List backups">List backups</a>',
+            '<a href="/me-cms/admin/backups/add" title="Add backup">Add backup</a>',
+        ], $this->buildLinks($links));
         $this->assertEquals('Backups', $title);
         $this->assertEquals(['icon' => 'database'], $options);
     }
@@ -208,13 +204,12 @@ class MenuHelperTest extends HelperTestCase
         $this->assertEquals(['icon' => 'wrench'], $options);
 
         $this->Helper->Auth->initialize(['user' => ['group' => ['name' => 'admin']]]);
-        list($links) = $this->Helper->systems();
         $this->assertEquals([
             '<a href="/me-cms/admin/systems/tmp-viewer" title="Temporary files">Temporary files</a>',
             '<a href="/me-cms/admin/logs" title="Log management">Log management</a>',
             '<a href="/me-cms/admin/systems/checkup" title="System checkup">System checkup</a>',
             '<a href="/me-cms/admin/systems/browser" title="Media browser">Media browser</a>',
             '<a href="/me-cms/admin/systems/changelogs" title="Changelogs">Changelogs</a>',
-        ], $this->buildLinks($links));
+        ], $this->buildLinks($this->Helper->systems()[0]));
     }
 }
