@@ -76,7 +76,7 @@ class AppController extends BaseAppController
     {
         //Loads the `Auth` helper.
         //This helper is loaded here (instead of the view) so we can pass user data
-        $this->viewBuilder()->setHelpers(['MeCms.Auth' => $this->Auth->user()]);
+        $this->viewBuilder()->setHelpers(['MeCms.Auth' => ['user' => $this->Auth->user()]]);
 
         parent::beforeRender($event);
     }

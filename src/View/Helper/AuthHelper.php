@@ -23,23 +23,20 @@ use Cake\View\Helper;
 class AuthHelper extends Helper
 {
     /**
-     * User data.
-     * You should use the `user()` method to access user data.
+     * Default configuration
      * @var array
-     * @see user()
      */
-    protected $user;
+    protected $_defaultConfig = ['user' => []];
 
     /**
      * Constructor hook method
      * @param array $config The configuration settings provided to this helper
      * @return void
-     * @uses $user
      * @see http://api.cakephp.org/3.4/class-Cake.View.Helper.html#_initialize
      */
     public function initialize(array $config)
     {
-        $this->user = $config;
+        $this->setConfig($config);
     }
 
     /**
@@ -53,7 +50,7 @@ class AuthHelper extends Helper
      */
     public function hasId($id)
     {
-        return $this->user('id') ? in_array($this->user('id'), (array)$id) : false;
+        return in_array($this->user('id'), (array)$id);
     }
 
     /**
@@ -78,7 +75,7 @@ class AuthHelper extends Helper
      */
     public function isGroup($group)
     {
-        return $this->user('group.name') ? in_array($this->user('group.name'), (array)$group) : false;
+        return in_array($this->user('group.name'), (array)$group);
     }
 
     /**
@@ -88,7 +85,7 @@ class AuthHelper extends Helper
      */
     public function isLogged()
     {
-        return !empty($this->user('id'));
+        return (bool)$this->user('id');
     }
 
     /**
@@ -97,14 +94,9 @@ class AuthHelper extends Helper
      *  record
      * @return mixed|null Either User record or null if no user is logged in,
      *  or retrieved field if key is specified
-     * @uses $user
      */
     public function user($key = null)
     {
-        if (empty($this->user)) {
-            return null;
-        }
-
-        return $key ? Hash::get($this->user, $key) : $this->user;
+        return $key ? Hash::get($this->getConfig('user'), $key) : $this->getConfig('user');
     }
 }
