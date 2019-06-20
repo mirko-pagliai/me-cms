@@ -42,9 +42,7 @@ class BackupForm extends Form
         //Filename
         $validator->add('filename', 'extension', [
             'message' => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2'),
-            'rule' => function ($value) {
-                return (bool)preg_match('/[^\.]\.sql(\.(bz2|gz))?$/', $value);
-            },
+            'rule' => ['custom', '/[^\.]\.sql(\.(bz2|gz))?$/'],
         ])->requirePresence('filename');
 
         return $validator;
@@ -57,9 +55,7 @@ class BackupForm extends Form
      */
     protected function getBackupExportInstance()
     {
-        if (!$this->BackupExport) {
-            $this->BackupExport = new BackupExport();
-        }
+        $this->BackupExport = $this->BackupExport ?: new BackupExport();
 
         return $this->BackupExport;
     }
