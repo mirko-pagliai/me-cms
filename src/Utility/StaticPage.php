@@ -30,38 +30,24 @@ class StaticPage
      * Internal method to get all paths for static pages
      * @return array
      * @uses MeCms\Core\Plugin::all()
-     * @uses getAppPath()
-     * @uses getPluginPath()
+     * @uses getPath()
      */
     protected static function getAllPaths()
     {
         return Cache::remember('paths', function () {
-            //Adds all plugins to paths
-            $plugins = array_map([__CLASS__, 'getPluginPath'], Plugin::all());
-            $plugins = array_values(array_filter($plugins, 'file_exists'));
+            $plugins = array_map([__CLASS__, 'getPath'], array_merge([null], Plugin::all()));
 
-            //Adds the APP path and returns
-            return array_merge([self::getAppPath()], $plugins);
+            return array_values(array_filter($plugins, 'file_exists'));
         }, 'static_pages');
     }
 
     /**
-     * Internal method to get the app path
+     * Internal method to get paths for static pages from plugins or from APP
+     * @param string|null $plugin Plugin name or `null` for APP path
      * @return string
-     * @since 2.17.1
+     * @since 2.26.6
      */
-    protected static function getAppPath()
-    {
-        return array_value_first(App::path('Template/StaticPages'));
-    }
-
-    /**
-     * Internal method to get a plugin path
-     * @param string $plugin Plugin name
-     * @return string
-     * @since 2.17.1
-     */
-    protected static function getPluginPath($plugin)
+    protected static function getPath($plugin = null)
     {
         return array_value_first(App::path('Template/StaticPages', $plugin));
     }
@@ -116,8 +102,7 @@ class StaticPage
      * @param string $slug Slug
      * @return string|bool Static page or `false`
      * @uses MeCms\Core\Plugin::all()
-     * @uses getAppPath()
-     * @uses getPluginPath()
+     * @uses getPath()
      */
     public static function get($slug)
     {
@@ -125,7 +110,7 @@ class StaticPage
         $slug = array_filter(explode('/', $slug));
         $cache = sprintf('page_%s_locale_%s', md5(serialize($slug)), $locale);
 
-        return Cache::remember($cache, function() use ($locale, $slug) {
+        return Cache::remember($cache, function () use ($locale, $slug) {
             //Sets the (partial) filename
             $filename = implode(DS, $slug);
 
@@ -138,7 +123,7 @@ class StaticPage
 
             //Checks if the page exists in APP
             foreach ($patterns as $pattern) {
-                $filename = self::getAppPath() . $pattern . '.ctp';
+                $filename = self::getPath() . $pattern . '.ctp';
 
                 if (is_readable($filename)) {
                     $page = DS . 'StaticPages' . DS . $pattern;
@@ -150,7 +135,7 @@ class StaticPage
             //Checks if the page exists in each plugin
             foreach (Plugin::all() as $plugin) {
                 foreach ($patterns as $pattern) {
-                    $filename = self::getPluginPath($plugin) . $pattern . '.ctp';
+                    $filename = self::getPath($plugin) . $pattern . '.ctp';
 
                     if (is_readable($filename)) {
                         $page = $plugin . '.' . DS . 'StaticPages' . DS . $pattern;

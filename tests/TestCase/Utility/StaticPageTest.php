@@ -55,26 +55,6 @@ class StaticPageTest extends TestCase
     }
 
     /**
-     * Test for `getAppPath()` method
-     * @test
-     */
-    public function testGetAppPath()
-    {
-        $result = $this->invokeMethod($this->StaticPage, 'getAppPath');
-        $this->assertEquals(APP . 'Template' . DS . 'StaticPages' . DS, $result);
-    }
-
-    /**
-     * Test for `getPluginPath()` method
-     * @test
-     */
-    public function testGetPluginPath()
-    {
-        $result = $this->invokeMethod($this->StaticPage, 'getPluginPath', ['TestPlugin']);
-        $this->assertEquals(Plugin::path('TestPlugin') . 'src' . DS . 'Template' . DS . 'StaticPages' . DS, $result);
-    }
-
-    /**
      * Test for `all()` method
      * @test
      */
@@ -82,7 +62,6 @@ class StaticPageTest extends TestCase
     {
         $pages = $this->StaticPage->all();
         $this->assertContainsOnlyInstancesOf(Entity::class, $pages);
-
         foreach ($pages as $page) {
             $this->assertInstanceOf(FrozenTime::class, $page->modified);
         }

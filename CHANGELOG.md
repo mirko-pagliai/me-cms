@@ -2,6 +2,8 @@
 ## 2.26 branch
 ### 2.26.6
 * removed useless `AppController::isOffline()` method;
+* `StaticPage::getAppPath()` and `StaticPage::getPluginPath()` been replaced by
+    the `StaticPage::getPath()` method;
 * improved and fixed the `AuthHelper`. Now it is loaded from the view (instead of
     from the controller) requires an array with the `user` key as configuration;
 * improved validation rules. Removed some useless validation methods;
