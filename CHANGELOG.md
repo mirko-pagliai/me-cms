@@ -2,8 +2,8 @@
 ## 2.26 branch
 ### 2.26.6
 * removed useless `AppController::isOffline()` method;
-* improved and fixed the `AuthHelper`. Now it requires an array with the `user`
-    key as configuration;
+* improved and fixed the `AuthHelper`. Now it is loaded from the view (instead of
+    from the controller) requires an array with the `user` key as configuration;
 * improved validation rules. Removed some useless validation methods;
 * added `MeCms\Validation\BannerAndPhotoValidator` abstract class;
 * added `MeCms\Validation\PageAndPostValidator` abstract class.

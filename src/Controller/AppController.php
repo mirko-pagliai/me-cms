@@ -66,22 +66,6 @@ class AppController extends BaseAppController
     }
 
     /**
-     * Called after the controller action is run, but before the view is
-     *  rendered
-     * @param \Cake\Event\Event $event An Event instance
-     * @return void
-     * @see http://api.cakephp.org/3.7/class-Cake.Controller.Controller.html#_beforeRender
-     */
-    public function beforeRender(Event $event)
-    {
-        //Loads the `Auth` helper.
-        //This helper is loaded here (instead of the view) so we can pass user data
-        $this->viewBuilder()->setHelpers(['MeCms.Auth' => ['user' => $this->Auth->user()]]);
-
-        parent::beforeRender($event);
-    }
-
-    /**
      * Initialization hook method
      * @return void
      */

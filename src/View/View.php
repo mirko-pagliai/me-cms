@@ -84,6 +84,7 @@ class View extends AppView
         $this->loadHelper('MeTools.Paginator');
         $this->loadHelper('Assets.Asset');
         $this->loadHelper('Thumber.Thumb');
+        $this->loadHelper('MeCms.Auth');
         $this->loadHelper('WyriHaximus/MinifyHtml.MinifyHtml');
     }
 

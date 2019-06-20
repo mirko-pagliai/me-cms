@@ -22,12 +22,6 @@ use Cake\View\Helper;
 class AuthHelper extends Helper
 {
     /**
-     * Default configuration
-     * @var array
-     */
-    protected $_defaultConfig = ['user' => []];
-
-    /**
      * Constructor hook method
      * @param array $config The configuration settings provided to this helper
      * @return void
@@ -35,7 +29,7 @@ class AuthHelper extends Helper
      */
     public function initialize(array $config)
     {
-        $this->setConfig($config);
+        $this->setConfig('user', $this->getView()->getRequest()->getSession()->read('Auth.User'));
     }
 
     /**
