@@ -12,7 +12,6 @@
  */
 namespace MeCms\View\Helper;
 
-use Cake\Utility\Hash;
 use Cake\View\Helper;
 
 /**
@@ -42,8 +41,7 @@ class AuthHelper extends Helper
     /**
      * Checks whether the logged user has a specific ID.
      *
-     * You can pass the ID as string or array of IDs.
-     * In the last case, it will be sufficient that the user has one of the IDs.
+     * If you pass an array of IDs, it will check that at least one matches.
      * @param string|array $id User ID as string or array
      * @return bool
      * @uses user()
@@ -66,9 +64,7 @@ class AuthHelper extends Helper
     /**
      * Checks whether the logged user belongs to a group.
      *
-     * You can pass the group as string or array of groups.
-     * In the last case, it will be sufficient that the user belongs to one of
-     *  the groups.
+     * If you pass an array of groups, it will check that at least one matches.
      * @param string|array $group User group as string or array
      * @return bool
      * @uses user()
@@ -90,13 +86,12 @@ class AuthHelper extends Helper
 
     /**
      * Get the current user from storage
-     * @param string|null $key Field to retrieve. Leave null to get entire User
-     *  record
-     * @return mixed|null Either User record or null if no user is logged in,
+     * @param string|null $key Field to retrieve or `null`
+     * @return mixed|null Either User record or `null` if no user is logged in,
      *  or retrieved field if key is specified
      */
     public function user($key = null)
     {
-        return $key ? Hash::get($this->getConfig('user'), $key) : $this->getConfig('user');
+        return $key ? $this->getConfig('user.' . $key) : $this->getConfig('user');
     }
 }
