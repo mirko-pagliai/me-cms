@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.6
+* removed useless `AppController::isOffline()` method;
 * improved validation rules. Removed some useless validation methods;
 * added `MeCms\Validation\BannerAndPhotoValidator` abstract class;
 * added `MeCms\Validation\PageAndPostValidator` abstract class.

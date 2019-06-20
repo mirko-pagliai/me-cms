@@ -89,16 +89,11 @@ class AppControllerTest extends ControllerTestCase
         $controller->beforeFilter($this->Event);
         $this->assertEquals('MeCms.ajax', $controller->viewBuilder()->getLayout());
 
-        //Methods that, if they return `true`, make a redirect
-        foreach ([
-            'isSpammer' => 'ipNotAllowed',
-            'isOffline' => 'offline',
-        ] as $method => $expectedRedirect) {
-            $controller = $this->getMockForController(null, [$method]);
-            $controller->method($method)->willReturn(true);
-            $this->_response = $controller->beforeFilter($this->Event);
-            $this->assertRedirect(['_name' => $expectedRedirect]);
-        }
+        //This method makes a redirect
+        $controller = $this->getMockForController(null, ['isSpammer']);
+        $controller->method('isSpammer')->willReturn(true);
+        $this->_response = $controller->beforeFilter($this->Event);
+        $this->assertRedirect(['_name' => 'ipNotAllowed']);
     }
 
     /**
