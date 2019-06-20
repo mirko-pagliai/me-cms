@@ -77,9 +77,9 @@ class AppTableTest extends TableTestCase
      */
     public function testAfterDeleteAndAfterSave()
     {
-        foreach (['afterDelete', 'afterSave'] as $method) {
+        foreach (['afterDelete', 'afterSave'] as $methodToCall) {
             Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
-            $this->Posts->$method(new Event(null), new Entity(), new ArrayObject());
+            $this->Posts->$methodToCall(new Event(null), new Entity(), new ArrayObject());
             $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
         }
     }
@@ -153,6 +153,7 @@ class AppTableTest extends TableTestCase
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 OR Posts.created > :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertNotEmpty($query->count());
         foreach ($query as $entity) {
             $this->assertTrue(!$entity->active || $entity->created->isFuture());
         }
@@ -230,6 +231,17 @@ class AppTableTest extends TableTestCase
      */
     public function testQueryFromFilter()
     {
+        $expectedSql = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
+        $expectedParams = [
+            2,
+            '%Title%',
+            3,
+            4,
+            true,
+            3,
+            '2016/12/01, 00:00',
+            '2017/01/01, 00:00',
+        ];
         $data = [
             'id' => 2,
             'title' => 'Title',
@@ -239,30 +251,17 @@ class AppTableTest extends TableTestCase
             'priority' => 3,
             'created' => '2016-12',
         ];
-        $expectedSql = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
-        $expectedParams = [
-            2,
-            '%Title%',
-            3,
-            4,
-            true,
-            3,
-            '2016-12-01 00:00:00',
-            '2017-01-01 00:00:00',
-        ];
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
         $this->assertStringEndsWith($expectedSql, $query->sql());
 
-        $params = collection($query->getValueBinder()->bindings())->extract('value')->map(function ($value) {
-            return $value instanceof Time ? $value->i18nFormat('yyyy-MM-dd HH:mm:ss') : $value;
-        })->toList();
+        $params = collection($query->getValueBinder()->bindings())->extract('value')->toList();
         $this->assertEquals($expectedParams, $params);
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['active' => I18N_NO] + $data);
         $this->assertStringEndsWith($expectedSql, $query->sql());
         $this->assertEquals(false, $query->getValueBinder()->bindings()[':c4']['value']);
 
-        $query = $this->Photos->queryFromFilter($this->Photos->find(), $data = ['filename' => 'image.jpg']);
+        $query = $this->Photos->queryFromFilter($this->Photos->find(), ['filename' => 'image.jpg']);
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.filename like :c0', $query->sql());
         $this->assertEquals('%image.jpg%', $query->getValueBinder()->bindings()[':c0']['value']);
 

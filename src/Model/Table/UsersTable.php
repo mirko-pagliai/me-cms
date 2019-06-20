@@ -47,7 +47,7 @@ class UsersTable extends AppTable
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
         //Prevents that a blank password is saved
-        if ($options['validate'] === 'EmptyPassword' && isset($data['password']) && $data['password'] === '') {
+        if ($options['validate'] === 'EmptyPassword' && isset($data['password']) && !$data['password']) {
             unset($data['password'], $data['password_repeat']);
         }
     }
@@ -129,8 +129,8 @@ class UsersTable extends AppTable
             ->where([sprintf('%s.active', $this->getAlias()) => true])
             ->order(['username' => 'ASC'])
             ->formatResults(function (ResultSet $results) {
-                return $results->indexBy('id')->map(function (User $user) {
-                    return $user->first_name . ' ' . $user->last_name;
+                return $results->indexBy('id')->map(function (User $result) {
+                    return $result->first_name . ' ' . $result->last_name;
                 });
             })
             ->cache(sprintf('active_%s_list', $this->getTable()), $this->getCacheName());
@@ -220,7 +220,7 @@ class UsersTable extends AppTable
     public function validationDoNotRequirePresence(UserValidator $validator)
     {
         //No field is required
-        foreach (array_keys((array)$validator->getIterator()) as $field) {
+        foreach (array_keys(iterator_to_array($validator->getIterator())) as $field) {
             $validator->requirePresence($field, false);
         }
 

@@ -203,11 +203,11 @@ class PostsTable extends PostsAndPagesTables
     /**
      * Gets the query for related posts from a tag ID
      * @param int $tagId Tag ID
-     * @param bool $images If `true`, gets only posts with images
+     * @param bool $onlyWithImages If `true`, gets only posts with images
      * @return \Cake\ORM\Query The query builder
      * @since 2.23.0
      */
-    public function queryForRelated($tagId, $images = true)
+    public function queryForRelated($tagId, $onlyWithImages = true)
     {
         $query = $this->find('active')
             ->select(['id', 'title', 'preview', 'slug', 'text'])
@@ -215,7 +215,7 @@ class PostsTable extends PostsAndPagesTables
                 return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tagId]);
             });
 
-        if ($images) {
+        if ($onlyWithImages) {
             $query->where([sprintf('%s.preview NOT IN', $this->getAlias()) => [null, []]]);
         }
 
