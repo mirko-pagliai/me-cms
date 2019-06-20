@@ -35,26 +35,14 @@ class StaticPage
      */
     protected static function getAllPaths()
     {
-        $paths = Cache::read('paths', 'static_pages');
-
-        if (empty($paths)) {
+        return Cache::remember('paths', function () {
             //Adds all plugins to paths
-            $paths = collection(Plugin::all())
-                ->map(function ($plugin) {
-                    return self::getPluginPath($plugin);
-                })
-                ->filter(function ($path) {
-                    return file_exists($path);
-                })
-                ->toList();
+            $plugins = array_map([__CLASS__, 'getPluginPath'], Plugin::all());
+            $plugins = array_values(array_filter($plugins, 'file_exists'));
 
-            //Adds APP to paths
-            array_unshift($paths, self::getAppPath());
-
-            Cache::write('paths', $paths, 'static_pages');
-        }
-
-        return $paths;
+            //Adds the APP path and returns
+            return array_merge([self::getAppPath()], $plugins);
+        }, 'static_pages');
     }
 
     /**
@@ -64,7 +52,7 @@ class StaticPage
      */
     protected static function getAppPath()
     {
-        return Folder::slashTerm(array_value_first(App::path('Template'))) . 'StaticPages' . DS;
+        return array_value_first(App::path('Template/StaticPages'));
     }
 
     /**
@@ -75,7 +63,7 @@ class StaticPage
      */
     protected static function getPluginPath($plugin)
     {
-        return Folder::slashTerm(array_value_first(App::path('Template', $plugin))) . 'StaticPages' . DS;
+        return array_value_first(App::path('Template/StaticPages', $plugin));
     }
 
     /**
@@ -93,7 +81,7 @@ class StaticPage
         }
         $path = preg_replace(sprintf('/\.[^\.]+$/'), null, $path);
 
-        return DS == '/' ? $path : str_replace(DS, '/', $path);
+        return IS_WIN ? str_replace(DS, '/', $path) : $path;
     }
 
     /**
@@ -136,9 +124,8 @@ class StaticPage
         $locale = I18n::getLocale();
         $slug = array_filter(explode('/', $slug));
         $cache = sprintf('page_%s_locale_%s', md5(serialize($slug)), $locale);
-        $page = Cache::read($cache, 'static_pages');
 
-        if (empty($page)) {
+        return Cache::remember($cache, function() use ($locale, $slug) {
             //Sets the (partial) filename
             $filename = implode(DS, $slug);
 
@@ -173,10 +160,8 @@ class StaticPage
                 }
             }
 
-            Cache::write($cache, $page, 'static_pages');
-        }
-
-        return $page;
+            return isset($page) ? $page : false;
+        }, 'static_pages');
     }
 
     /**
@@ -186,11 +171,9 @@ class StaticPage
      */
     public static function title($slugOrPath)
     {
-        //Gets only the filename (without extension)
+        //Gets only the filename (without extension), then turns dashes into
+        //  underscores (because `Inflector::humanize` will remove only underscores)
         $slugOrPath = pathinfo($slugOrPath, PATHINFO_FILENAME);
-
-        //Turns dashes into underscores (because `Inflector::humanize` will
-        //  remove only underscores)
         $slugOrPath = str_replace('-', '_', $slugOrPath);
 
         return Inflector::humanize($slugOrPath);
