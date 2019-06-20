@@ -74,7 +74,7 @@ class AppView extends View
     /**
      * Initialization hook method
      * @return void
-     * @see http://api.cakephp.org/3.4/class-Cake.View.View.html#_initialize
+     * @see http://api.cakephp.org/3.7/class-Cake.View.View.html#_initialize
      * @uses MeCms\View\View::initialize()
      */
     public function initialize()
@@ -95,7 +95,7 @@ class AppView extends View
      *  surrounding layout
      * @param string|null $layout Layout name
      * @return mixed Rendered output, or false on error
-     * @see http://api.cakephp.org/3.4/class-Cake.View.View.html#_renderLayout
+     * @see http://api.cakephp.org/3.7/class-Cake.View.View.html#_renderLayout
      * @uses MeCms\View\View::renderLayout()
      * @uses setBlocks()
      * @uses userbar()

@@ -33,7 +33,7 @@ class PostsController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return void
-     * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeFilter
+     * @see http://api.cakephp.org/3.7/class-Cake.Controller.Controller.html#_beforeFilter
      * @uses MeCms\Controller\AppController::beforeFilter()
      */
     public function beforeFilter(\Cake\Event\Event $event)
