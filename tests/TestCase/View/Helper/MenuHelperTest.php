@@ -206,10 +206,10 @@ class MenuHelperTest extends HelperTestCase
         $this->Helper->Auth->initialize(['user' => ['group' => ['name' => 'admin']]]);
         $this->assertEquals([
             '<a href="/me-cms/admin/systems/tmp-viewer" title="Temporary files">Temporary files</a>',
-            '<a href="/me-cms/admin/logs" title="Log management">Log management</a>',
             '<a href="/me-cms/admin/systems/checkup" title="System checkup">System checkup</a>',
             '<a href="/me-cms/admin/systems/browser" title="Media browser">Media browser</a>',
             '<a href="/me-cms/admin/systems/changelogs" title="Changelogs">Changelogs</a>',
+            '<a href="/me-cms/admin/logs" title="Log management">Log management</a>',
         ], $this->buildLinks($this->Helper->systems()[0]));
     }
 }

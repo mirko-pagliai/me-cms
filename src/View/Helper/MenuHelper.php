@@ -37,41 +37,21 @@ class MenuHelper extends Helper
      */
     public function posts()
     {
-        $links[] = [__d('me_cms', 'List posts'), [
-            'controller' => 'Posts',
-            'action' => 'index',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
-        $links[] = [__d('me_cms', 'Add post'), [
-            'controller' => 'Posts',
-            'action' => 'add',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
+        $params = ['controller' => 'Posts', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $links[] = [__d('me_cms', 'List posts'), ['action' => 'index'] + $params];
+        $links[] = [__d('me_cms', 'Add post'), ['action' => 'add'] + $params];
 
         //Only admins and managers can access these actions
         if ($this->Auth->isGroup(['admin', 'manager'])) {
-            $links[] = [__d('me_cms', 'List categories'), [
-                'controller' => 'PostsCategories',
-                'action' => 'index',
-                'plugin' => 'MeCms',
-                'prefix' => ADMIN_PREFIX,
-            ]];
-            $links[] = [__d('me_cms', 'Add category'), [
-                'controller' => 'PostsCategories',
-                'action' => 'add',
-                'plugin' => 'MeCms',
-                'prefix' => ADMIN_PREFIX,
-            ]];
+            $params['controller'] = 'PostsCategories';
+            $links[] = [__d('me_cms', 'List categories'), ['action' => 'index'] + $params];
+            $links[] = [__d('me_cms', 'Add category'), ['action' => 'add'] + $params];
         }
 
         $links[] = [__d('me_cms', 'List tags'), [
             'controller' => 'PostsTags',
             'action' => 'index',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
+        ] + $params];
 
         return [$links, I18N_POSTS, ['icon' => 'far file-alt']];
     }
@@ -82,41 +62,22 @@ class MenuHelper extends Helper
      */
     public function pages()
     {
-        $links[] = [__d('me_cms', 'List pages'), [
-            'controller' => 'Pages',
-            'action' => 'index',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
+        $params = ['controller' => 'Pages', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $links[] = [__d('me_cms', 'List pages'), ['action' => 'index'] + $params];
 
         //Only admins and managers can access these actions
         if ($this->Auth->isGroup(['admin', 'manager'])) {
-            $links[] = [__d('me_cms', 'Add page'), [
-                'controller' => 'Pages',
-                'action' => 'add',
-                'plugin' => 'MeCms',
-                'prefix' => ADMIN_PREFIX,
-            ]];
-            $links[] = [__d('me_cms', 'List categories'), [
-                'controller' => 'PagesCategories',
-                'action' => 'index',
-                'plugin' => 'MeCms',
-                'prefix' => ADMIN_PREFIX,
-            ]];
-            $links[] = [__d('me_cms', 'Add category'), [
-                'controller' => 'PagesCategories',
-                'action' => 'add',
-                'plugin' => 'MeCms',
-                'prefix' => ADMIN_PREFIX,
-            ]];
+            $links[] = [__d('me_cms', 'Add page'), ['action' => 'add'] + $params];
+
+            $params['controller'] = 'PagesCategories';
+            $links[] = [__d('me_cms', 'List categories'), ['action' => 'index'] + $params];
+            $links[] = [__d('me_cms', 'Add category'), ['action' => 'add'] + $params];
         }
 
         $links[] = [__d('me_cms', 'List static pages'), [
             'controller' => 'Pages',
             'action' => 'indexStatics',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
+        ] + $params];
 
         return [$links, I18N_PAGES, ['icon' => 'far copy']];
     }
@@ -127,30 +88,13 @@ class MenuHelper extends Helper
      */
     public function photos()
     {
-        $links[] = [__d('me_cms', 'List photos'), [
-            'controller' => 'Photos',
-            'action' => 'index',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
-        $links[] = [__d('me_cms', 'Upload photos'), [
-            'controller' => 'Photos',
-            'action' => 'upload',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
-        $links[] = [__d('me_cms', 'List albums'), [
-            'controller' => 'PhotosAlbums',
-            'action' => 'index',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
-        $links[] = [__d('me_cms', 'Add album'), [
-            'controller' => 'PhotosAlbums',
-            'action' => 'add',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
+        $params = ['controller' => 'Photos', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $links[] = [__d('me_cms', 'List photos'), ['action' => 'index'] + $params];
+        $links[] = [__d('me_cms', 'Upload photos'), ['action' => 'upload'] + $params];
+
+        $params['controller'] = 'PhotosAlbums';
+        $links[] = [__d('me_cms', 'List albums'), ['action' => 'index'] + $params];
+        $links[] = [__d('me_cms', 'Add album'), ['action' => 'add'] + $params];
 
         return [$links, I18N_PHOTOS, ['icon' => 'camera-retro']];
     }
@@ -166,33 +110,15 @@ class MenuHelper extends Helper
             return;
         }
 
-        $links[] = [__d('me_cms', 'List banners'), [
-            'controller' => 'Banners',
-            'action' => 'index',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
-        $links[] = [__d('me_cms', 'Upload banners'), [
-            'controller' => 'Banners',
-            'action' => 'upload',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
+        $params = ['controller' => 'Banners', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $links[] = [__d('me_cms', 'List banners'), ['action' => 'index'] + $params];
+        $links[] = [__d('me_cms', 'Upload banners'), ['action' => 'upload'] + $params];
 
         //Only admin can access this controller
         if ($this->Auth->isGroup('admin')) {
-            $links[] = [__d('me_cms', 'List positions'), [
-                'controller' => 'BannersPositions',
-                'action' => 'index',
-                'plugin' => 'MeCms',
-                'prefix' => ADMIN_PREFIX,
-            ]];
-            $links[] = [__d('me_cms', 'Add position'), [
-                'controller' => 'BannersPositions',
-                'action' => 'add',
-                'plugin' => 'MeCms',
-                'prefix' => ADMIN_PREFIX,
-            ]];
+            $params['controller'] = 'BannersPositions';
+            $links[] = [__d('me_cms', 'List positions'), ['action' => 'index'] + $params];
+            $links[] = [__d('me_cms', 'Add position'), ['action' => 'add'] + $params];
         }
 
         return [$links, __d('me_cms', 'Banners'), ['icon' => 'shopping-cart']];
@@ -209,33 +135,15 @@ class MenuHelper extends Helper
             return;
         }
 
-        $links[] = [__d('me_cms', 'List users'), [
-            'controller' => 'Users',
-            'action' => 'index',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
-        $links[] = [__d('me_cms', 'Add user'), [
-            'controller' => 'Users',
-            'action' => 'add',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
+        $params = ['controller' => 'Users', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $links[] = [__d('me_cms', 'List users'), ['action' => 'index'] + $params];
+        $links[] = [__d('me_cms', 'Add user'), ['action' => 'add'] + $params];
 
         //Only admins can access these actions
         if ($this->Auth->isGroup('admin')) {
-            $links[] = [__d('me_cms', 'List groups'), [
-                'controller' => 'UsersGroups',
-                'action' => 'index',
-                'plugin' => 'MeCms',
-                'prefix' => ADMIN_PREFIX,
-            ]];
-            $links[] = [__d('me_cms', 'Add group'), [
-                'controller' => 'UsersGroups',
-                'action' => 'add',
-                'plugin' => 'MeCms',
-                'prefix' => ADMIN_PREFIX,
-            ]];
+            $params['controller'] = 'UsersGroups';
+            $links[] = [__d('me_cms', 'List groups'), ['action' => 'index'] + $params];
+            $links[] = [__d('me_cms', 'Add group'), ['action' => 'add'] + $params];
         }
 
         return [$links, I18N_USERS, ['icon' => 'users']];
@@ -252,18 +160,9 @@ class MenuHelper extends Helper
             return;
         }
 
-        $links[] = [__d('me_cms', 'List backups'), [
-            'controller' => 'Backups',
-            'action' => 'index',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
-        $links[] = [__d('me_cms', 'Add backup'), [
-            'controller' => 'Backups',
-            'action' => 'add',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
+        $params = ['controller' => 'Backups', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $links[] = [__d('me_cms', 'List backups'), ['action' => 'index'] + $params];
+        $links[] = [__d('me_cms', 'Add backup'), ['action' => 'add'] + $params];
 
         return [$links, __d('me_cms', 'Backups'), ['icon' => 'database']];
     }
@@ -279,41 +178,19 @@ class MenuHelper extends Helper
             return;
         }
 
-        $links[] = [__d('me_cms', 'Temporary files'), [
-            'controller' => 'Systems',
-            'action' => 'tmpViewer',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
+        $params = ['controller' => 'Systems', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $links[] = [__d('me_cms', 'Temporary files'), ['action' => 'tmpViewer'] + $params];
+        $links[] = [__d('me_cms', 'System checkup'), ['action' => 'checkup'] + $params];
+        $links[] = [__d('me_cms', 'Media browser'), ['action' => 'browser'] + $params];
+        $links[] = [__d('me_cms', 'Changelogs'), ['action' => 'changelogs'] + $params];
 
         //Only admins can manage logs
         if ($this->Auth->isGroup('admin')) {
             $links[] = [__d('me_cms', 'Log management'), [
                 'controller' => 'Logs',
                 'action' => 'index',
-                'plugin' => 'MeCms',
-                'prefix' => ADMIN_PREFIX,
-            ]];
+            ] + $params];
         }
-
-        $links[] = [__d('me_cms', 'System checkup'), [
-            'controller' => 'Systems',
-            'action' => 'checkup',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
-        $links[] = [__d('me_cms', 'Media browser'), [
-            'controller' => 'Systems',
-            'action' => 'browser',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
-        $links[] = [__d('me_cms', 'Changelogs'), [
-            'controller' => 'Systems',
-            'action' => 'changelogs',
-            'plugin' => 'MeCms',
-            'prefix' => ADMIN_PREFIX,
-        ]];
 
         return [$links, __d('me_cms', 'System'), ['icon' => 'wrench']];
     }
