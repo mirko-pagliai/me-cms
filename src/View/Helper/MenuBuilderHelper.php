@@ -73,22 +73,17 @@ class MenuBuilderHelper extends Helper
             return [];
         }
 
-        $className = sprintf('%s.Menu', $plugin);
-
-        //Loads the helper
-        $helper = $this->_View->loadHelper($className, compact('className'));
-
         $menus = [];
+        $className = sprintf('%s.Menu', $plugin);
+        $helper = $this->getView()->loadHelper($className, compact('className'));
 
         //Calls dynamically each method
         foreach ($methods as $method) {
             list($links, $title, $titleOptions) = call_user_func([$helper, $method]);
 
-            if (empty($links) || empty($title)) {
-                continue;
+            if (!empty($links) && !empty($title)) {
+                $menus[sprintf('%s.%s', $plugin, $method)] = compact('links', 'title', 'titleOptions');
             }
-
-            $menus[sprintf('%s.%s', $plugin, $method)] = compact('links', 'title', 'titleOptions');
         }
 
         return $menus;
@@ -130,10 +125,11 @@ class MenuBuilderHelper extends Helper
     public function renderAsDropdown($plugin, array $titleOptions = [])
     {
         return array_map(function ($menu) use ($titleOptions) {
-            $titleOptions = optionsParser($menu['titleOptions'], $titleOptions);
-            $links = $this->buildLinks($menu['links'], ['class' => 'dropdown-item']);
-
-            return $this->Dropdown->menu($menu['title'], $links, $titleOptions->toArray());
+            return $this->Dropdown->menu(
+                $menu['title'],
+                $this->buildLinks($menu['links'], ['class' => 'dropdown-item']),
+                optionsParser($menu['titleOptions'], $titleOptions)->toArray()
+            );
         }, $this->generate($plugin));
     }
 }
