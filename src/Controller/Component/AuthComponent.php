@@ -14,6 +14,7 @@
 namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component\AuthComponent as CakeAuthComponent;
+use MeCms\AuthTrait;
 
 /**
  * Authentication control component class.
@@ -22,6 +23,8 @@ use Cake\Controller\Component\AuthComponent as CakeAuthComponent;
  */
 class AuthComponent extends CakeAuthComponent
 {
+    use AuthTrait;
+
     /**
      * Constructor hook method
      * @param array $config The configuration settings provided to this
@@ -60,50 +63,5 @@ class AuthComponent extends CakeAuthComponent
         $this->setConfig($config);
 
         parent::initialize($config);
-    }
-
-    /**
-     * Checks whether the logged user has a specific ID.
-     *
-     * You can pass the ID as string or array of IDS.
-     * In the last case, it will be sufficient that the user has one of the IDS.
-     * @param string|array $id User ID as string or array
-     * @return bool
-     */
-    public function hasId($id)
-    {
-        return in_array($this->user('id'), (array)$id);
-    }
-
-    /**
-     * Checks whether the logged user is the admin founder (ID 1)
-     * @return bool
-     */
-    public function isFounder()
-    {
-        return $this->user('id') === 1;
-    }
-
-    /**
-     * Checks whether the user is logged in
-     * @return bool
-     */
-    public function isLogged()
-    {
-        return (bool)$this->user('id');
-    }
-
-    /**
-     * Checks whether the logged user belongs to a group.
-     *
-     * You can pass the group as string or array of groups.
-     * In the last case, it will be sufficient that the user belongs to one of
-     *  the groups.
-     * @param string|array $group User group as string or array
-     * @return bool
-     */
-    public function isGroup($group)
-    {
-        return in_array($this->user('group.name'), (array)$group);
     }
 }

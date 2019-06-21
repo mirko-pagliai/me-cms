@@ -13,14 +13,17 @@
 namespace MeCms\View\Helper;
 
 use Cake\View\Helper;
+use MeCms\AuthTrait;
 
 /**
  * Auth Helper.
  *
- * This helper allows you to check the user data.
+ * Allows you to check the user data.
  */
 class AuthHelper extends Helper
 {
+    use AuthTrait;
+
     /**
      * Constructor hook method
      * @param array $config The configuration settings provided to this helper
@@ -29,53 +32,8 @@ class AuthHelper extends Helper
      */
     public function initialize(array $config)
     {
-        $this->setConfig('user', $this->getView()->getRequest()->getSession()->read('Auth.User'));
-    }
-
-    /**
-     * Checks whether the logged user has a specific ID.
-     *
-     * If you pass an array of IDs, it will check that at least one matches.
-     * @param string|array $id User ID as string or array
-     * @return bool
-     * @uses user()
-     */
-    public function hasId($id)
-    {
-        return in_array($this->user('id'), (array)$id);
-    }
-
-    /**
-     * Checks whether the logged user is the admin founder (ID 1)
-     * @return bool
-     * @uses user()
-     */
-    public function isFounder()
-    {
-        return $this->user('id') === 1;
-    }
-
-    /**
-     * Checks whether the logged user belongs to a group.
-     *
-     * If you pass an array of groups, it will check that at least one matches.
-     * @param string|array $group User group as string or array
-     * @return bool
-     * @uses user()
-     */
-    public function isGroup($group)
-    {
-        return in_array($this->user('group.name'), (array)$group);
-    }
-
-    /**
-     * Checks whether the user is logged in
-     * @return bool
-     * @uses user()
-     */
-    public function isLogged()
-    {
-        return (bool)$this->user('id');
+        $config += ['user' => $this->getView()->getRequest()->getSession()->read('Auth.User')];
+        $this->setConfig($config);
     }
 
     /**
