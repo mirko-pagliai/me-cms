@@ -6,6 +6,7 @@
     the `StaticPage::getPath()` method;
 * improved and fixed the `AuthHelper`. Now it is loaded from the view (instead of
     from the controller) requires an array with the `user` key as configuration;
+* improved and fixed the `KcFinderComponent`;
 * improved validation rules. Removed some useless validation methods;
 * added `MeCms\AuthTrait`. It provides some methods for classes that need to
     verify the data of the logged in user;

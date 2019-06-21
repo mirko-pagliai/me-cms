@@ -13,8 +13,7 @@
 namespace MeCms\Test\TestCase\Controller\Component;
 
 use ErrorException;
-use MeCms\Utility\Checkups\KCFinder;
-use MeCms\Utility\Checkups\Webroot;
+use MeCms\Controller\Component\KcFinderComponent;
 use MeTools\TestSuite\ComponentTestCase;
 use Tools\Exception\NotWritableException;
 
@@ -32,57 +31,6 @@ class KcFinderComponentTest extends ComponentTestCase
         create_kcfinder_files();
 
         parent::setUp();
-    }
-
-    /**
-     * Test for `getDefaultConfig()` method
-     * @test
-     */
-    public function testGetDefaultConfig()
-    {
-        $getDefaultConfigMethod = function () {
-            return $this->invokeMethod($this->Component, 'getDefaultConfig');
-        };
-
-        $expected = [
-            'denyExtensionRename' => true,
-            'denyUpdateCheck' => true,
-            'dirnameChangeChars' => [
-                ' ' => '_',
-                ':' => '_',
-            ],
-            'disabled' => false,
-            'filenameChangeChars' => [
-                ' ' => '_',
-                ':' => '_',
-            ],
-            'jpegQuality' => 100,
-            'uploadDir' => UPLOADED,
-            'uploadURL' => 'http://localhost/files',
-            'types' => [
-                'images' => '*img',
-            ],
-            'access' => [
-                'dirs' => [
-                    'create' => true,
-                    'delete' => false,
-                    'rename' => false,
-                ],
-                'files' => [
-                    'upload' => true,
-                    'delete' => false,
-                    'copy' => true,
-                    'move' => false,
-                    'rename' => false,
-                ],
-            ],
-        ];
-        $this->assertEquals($expected, $getDefaultConfigMethod());
-
-        //With an admin user
-        $this->Component->Auth->setUser(['group' => ['name' => 'admin']]);
-        unset($expected['access']);
-        $this->assertEquals($expected, $getDefaultConfigMethod());
     }
 
     /**
@@ -104,29 +52,60 @@ class KcFinderComponentTest extends ComponentTestCase
      */
     public function testInitialize()
     {
-        $this->assertArrayKeysEqual([
-            'denyExtensionRename',
-            'denyUpdateCheck',
-            'dirnameChangeChars',
-            'disabled',
-            'filenameChangeChars',
-            'jpegQuality',
-            'uploadDir',
-            'uploadURL',
-            'types',
-            'access',
-        ], $this->Component->request->getSession()->read('KCFINDER'));
+        $expected = [
+            'access' => [
+                'dirs' => [
+                    'create' => true,
+                    'delete' => false,
+                    'rename' => false,
+                ],
+                'files' => [
+                    'upload' => true,
+                    'delete' => false,
+                    'copy' => true,
+                    'move' => false,
+                    'rename' => false,
+                ],
+            ],
+            'denyExtensionRename' => true,
+            'denyUpdateCheck' => true,
+            'dirnameChangeChars' => [
+                ' ' => '_',
+                ':' => '_',
+            ],
+            'disabled' => false,
+            'filenameChangeChars' => [
+                ' ' => '_',
+                ':' => '_',
+            ],
+            'jpegQuality' => 100,
+            'types' => [
+                'images' => '*img',
+            ],
+            'uploadDir' => UPLOADED,
+            'uploadURL' => 'http://localhost/files',
+        ];
+        $this->assertSame($expected, $this->Component->getConfig());
+        $this->assertSame($expected, $this->Component->getController()->request->getSession()->read('KCFINDER'));
+
+        $expected = ['access' => []] + $expected;
+        $this->Component->Auth->setUser(['group' => ['name' => 'admin']]);
+        $this->Component->initialize([]);
+        $this->assertEquals($expected, $this->Component->getConfig());
+        $this->assertSame($expected, $this->Component->getController()->request->getSession()->read('KCFINDER'));
 
         //With `uploaded` dir not writable
         $this->assertException(NotWritableException::class, function () {
-            $this->Component->Checkup->Webroot = $this->getMockBuilder(Webroot::class)->getMock();
-            $this->Component->initialize([]);
+            $component = $this->getMockForComponent(KcFinderComponent::class, ['uploadedDirIsWriteable']);
+            $component->method('uploadedDirIsWriteable')->willReturn(false);
+            $component->initialize([]);
         }, 'File or directory `' . rtr(UPLOADED) . '` is not writable');
 
         //With KCFinder not available
         $this->assertException(ErrorException::class, function () {
-            $this->Component->Checkup->KCFinder = $this->getMockBuilder(KCFinder::class)->getMock();
-            $this->Component->initialize([]);
+            $component = $this->getMockForComponent(KcFinderComponent::class, ['kcFinderIsAvailable']);
+            $component->method('kcFinderIsAvailable')->willReturn(false);
+            $component->initialize([]);
         }, 'KCFinder is not available');
     }
 }
