@@ -49,7 +49,7 @@ class StaticPage
      */
     protected static function getPath($plugin = null)
     {
-        return array_value_first(App::path('Template/StaticPages', $plugin));
+        return array_value_first(App::path('Template' . DS . 'StaticPages', $plugin));
     }
 
     /**
