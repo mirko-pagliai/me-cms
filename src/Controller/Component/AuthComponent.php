@@ -33,14 +33,13 @@ class AuthComponent extends CakeAuthComponent
      */
     public function initialize(array $config)
     {
-        $defaultConfig = [
+        $config += [
             'authenticate' => [
                 'Form' => [
                     'finder' => 'auth',
                     'userModel' => 'MeCms.Users',
                 ],
             ],
-            'authError' => __d('me_cms', 'You are not authorized for this action'),
             'authorize' => 'Controller',
             'flash' => [
                 'element' => 'MeTools.flash',
@@ -54,14 +53,9 @@ class AuthComponent extends CakeAuthComponent
 
         //The authorization error is shown only if the user is already logged
         //  in and he is trying to do something not allowed
-        if (!$this->user('id')) {
-            $defaultConfig['authError'] = false;
-        }
-
-        $config = array_merge($defaultConfig, $config);
-
-        $this->setConfig($config);
+        $config += ['authError' => $this->user('id') ? __d('me_cms', 'You are not authorized for this action') : false];
 
         parent::initialize($config);
+        $this->setConfig($config);
     }
 }
