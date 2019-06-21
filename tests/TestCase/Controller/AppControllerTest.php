@@ -23,11 +23,6 @@ use MeCms\TestSuite\ControllerTestCase;
 class AppControllerTest extends ControllerTestCase
 {
     /**
-     * @var \Cake\Event\Event|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $Event;
-
-    /**
      * Mocks a controller
      * @param string $className Controller class name
      * @param array|null $methods The list of methods to mock
@@ -40,45 +35,32 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
-     * Called before every test method
-     * @return void
+     * Tests for `beforeFilter()` method
+     * @test
      */
-    public function setUp()
+    public function testBeforeFilter()
     {
-        parent::setUp();
-
         //Sets some configuration values
         Configure::write('MeCms.admin.records', 7);
         Configure::write('MeCms.default.records', 5);
         Configure::write('MeCms.security.recaptcha', true);
         Configure::write('MeCms.security.search_interval', 15);
 
-        $this->Controller = $this->getMockForController();
-        $this->Event = $this->getMockBuilder(Event::class)
-            ->setConstructorArgs(['exampleEvent'])
-            ->getMock();
-    }
-
-    /**
-     * Tests for `beforeFilter()` method
-     * @test
-     */
-    public function testBeforeFilter()
-    {
-        $this->Controller->request = $this->Controller->request->withParam('action', 'my-action')
+        $controller = $this->getMockForController();
+        $controller->request = $this->Controller->request->withParam('action', 'my-action')
             ->withQueryParams(['sort' => 'my-field']);
-        $this->Controller->beforeFilter($this->Event);
-        $this->assertNotEmpty($this->Controller->Auth->allowedActions);
-        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $this->Controller->paginate);
-        $this->assertNull($this->Controller->viewBuilder()->getLayout());
-        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
+        $controller->beforeFilter(new Event('myEvent'));
+        $this->assertNotEmpty($controller->Auth->allowedActions);
+        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $controller->paginate);
+        $this->assertNull($controller->viewBuilder()->getLayout());
+        $this->assertEquals('MeCms.View/App', $controller->viewBuilder()->getClassName());
 
         //Admin request
         $controller = $this->getMockForController();
         $controller->request = $controller->request->withParam('action', 'my-action')
             ->withQueryParams(['sort' => 'my-field'])
             ->withParam('prefix', ADMIN_PREFIX);
-        $controller->beforeFilter($this->Event);
+        $controller->beforeFilter(new Event('myEvent'));
         $this->assertEmpty($controller->Auth->allowedActions);
         $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $controller->paginate);
         $this->assertEquals('MeCms.View/Admin', $controller->viewBuilder()->getClassName());
@@ -86,14 +68,20 @@ class AppControllerTest extends ControllerTestCase
         //Ajax request
         $controller = $this->getMockForController();
         $controller->request = $controller->request->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
-        $controller->beforeFilter($this->Event);
+        $controller->beforeFilter(new Event('myEvent'));
         $this->assertEquals('MeCms.ajax', $controller->viewBuilder()->getLayout());
 
-        //This method makes a redirect
+        //If the user has been reported as a spammer this makes a redirect
         $controller = $this->getMockForController(null, ['isSpammer']);
         $controller->method('isSpammer')->willReturn(true);
-        $this->_response = $controller->beforeFilter($this->Event);
+        $this->_response = $controller->beforeFilter(new Event('myEvent'));
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
+
+        //If the site is offline this makes a redirect
+        Configure::write('MeCms.default.offline', true);
+        $controller = $this->getMockForController();
+        $this->_response = $controller->beforeFilter(new Event('myEvent'));
+        $this->assertRedirect(['_name' => 'offline']);
     }
 
     /**
@@ -106,8 +94,9 @@ class AppControllerTest extends ControllerTestCase
 
         //With prefixes
         foreach ([ADMIN_PREFIX, 'otherPrefix'] as $prefix) {
-            $this->Controller->request = $this->Controller->request->withParam('prefix', $prefix);
-            $this->Controller->request->clearDetectorCache();
+            $controller = $this->getMockForController();
+            $controller->request = $controller->request->withParam('prefix', $prefix)
+                ->clearDetectorCache();
             parent::testIsAuthorized();
         }
     }
