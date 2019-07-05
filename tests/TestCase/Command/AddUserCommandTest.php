@@ -68,7 +68,7 @@ class AddUserCommandTest extends TestCase
         $this->assertErrorContains('Invalid group ID');
 
         //Tries with empty data
-        $this->exec('me_cms.add_user -v', []);
+        $this->exec('me_cms.add_user -v', ['', '', '', '', '', '', '']);
         $this->assertExitWithSuccess();
         $this->assertErrorContains('Field `username` is empty. Try again');
 
