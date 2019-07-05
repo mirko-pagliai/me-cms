@@ -166,7 +166,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertEmpty($this->viewVariable('changelog'));
 
         //GET request. Asks for a changelog file
-        $this->get($url + ['?' => ['file' => 'MeCms']]);
+        $this->get($url + ['?' => ['file' => 'mecms']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'changelogs.ctp');
         $this->assertNotEmpty($this->viewVariable('changelog'));

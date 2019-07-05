@@ -31,7 +31,7 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
     <?= $this->Form->end() ?>
 </div>
 
-<?php if ($changelog) : ?>
+<?php if (!empty($changelog)) : ?>
 <div id="changelog">
     <?= $changelog ?>
 </div>

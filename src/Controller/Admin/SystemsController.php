@@ -107,11 +107,9 @@ class SystemsController extends AppController
             $file = Plugin::path($plugin, 'CHANGELOG.md', false);
 
             if (is_readable($file)) {
-                $files[$plugin] = rtr($file);
+                $files[strtolower($plugin)] = rtr($file);
             }
         }
-
-        $changelog = null;
 
         //If a changelog file has been specified
         if ($this->request->getQuery('file')) {
@@ -121,9 +119,11 @@ class SystemsController extends AppController
             ]);
             $changelog = file_get_contents(ROOT . $files[$this->request->getQuery('file')]);
             $changelog = $converter->convertToHtml($changelog);
+
+            $this->set(compact('changelog'));
         }
 
-        $this->set(compact('changelog', 'files'));
+        $this->set(compact('files'));
     }
 
     /**
