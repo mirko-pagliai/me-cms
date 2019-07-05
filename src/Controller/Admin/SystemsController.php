@@ -17,6 +17,7 @@ use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\I18n\I18n;
 use Cake\Routing\Router;
+use League\CommonMark\CommonMarkConverter;
 use MeCms\Controller\AppController;
 use MeCms\Core\Plugin;
 use MeCms\Utility\Checkup;
@@ -114,7 +115,12 @@ class SystemsController extends AppController
 
         //If a changelog file has been specified
         if ($this->request->getQuery('file')) {
-            $changelog = file_get_contents(ROOT . DS . $files[$this->request->getQuery('file')]);
+            $converter = new CommonMarkConverter([
+                'html_input' => 'strip',
+                'allow_unsafe_links' => false,
+            ]);
+            $changelog = file_get_contents(ROOT . $files[$this->request->getQuery('file')]);
+            $changelog = $converter->convertToHtml($changelog);
         }
 
         $this->set(compact('changelog', 'files'));

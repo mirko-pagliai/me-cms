@@ -169,7 +169,8 @@ class SystemsControllerTest extends ControllerTestCase
         $this->get($url + ['?' => ['file' => 'MeCms']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'changelogs.ctp');
-        $this->assertIsString($this->viewVariable('changelog'));
+        $this->assertNotEmpty($this->viewVariable('changelog'));
+        $this->assertTrue(is_html($this->viewVariable('changelog')));
     }
 
     /**

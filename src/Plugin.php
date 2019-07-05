@@ -87,7 +87,6 @@ class Plugin extends BasePlugin
                 $app->addPlugin(DebugKit::class);
             }
 
-            $app->addPlugin('CommonMark', ['path' => ROOT . DS . 'vendor' . DS . 'gourmet' . DS . 'common-mark' . DS]);
             $app->addPlugin('WyriHaximus/MinifyHtml', ['path' => ROOT . DS . 'vendor' . DS . 'wyrihaximus' . DS . 'minify-html' . DS]);
         }
 

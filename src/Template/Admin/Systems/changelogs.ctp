@@ -33,6 +33,6 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
 
 <?php if ($changelog) : ?>
 <div id="changelog">
-    <?= $this->CommonMark->convertToHtml($changelog) ?>
+    <?= $changelog ?>
 </div>
 <?php endif; ?>
