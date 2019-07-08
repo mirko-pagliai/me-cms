@@ -225,17 +225,6 @@ abstract class ControllerTestCase extends TestCase
      */
     public function testIsAuthorized()
     {
-        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
-
-        if ($this->Controller->request->isAdmin()) {
-            $this->assertGroupsAreAuthorized([
-                'admin' => true,
-                'manager' => true,
-                'user' => false,
-            ]);
-        } else {
-            $methodToCall = $this->Controller->request->getParam('prefix') ? 'assertFalse' : 'assertTrue';
-            call_user_func([$this, $methodToCall], $this->Controller->isAuthorized());
-        }
+        $this->assertTrue($this->Controller->isAuthorized());
     }
 }
