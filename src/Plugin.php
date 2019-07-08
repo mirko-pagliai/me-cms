@@ -133,7 +133,7 @@ class Plugin extends BasePlugin
      */
     public function middleware($middleware)
     {
-        $key = Configure::read('Security.cookieKey', md5(Configure::read('Security.salt')));
+        $key = Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
         return $middleware->add(new EncryptedCookieMiddleware(['login'], $key));
     }
