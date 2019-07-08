@@ -280,7 +280,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertSession($user->id, 'Auth.User.id');
         $this->assertCookieEncrypted([
             'username' => $user->username,
-        ] + compact('password'), 'login', 'aes', Configure::read('Security.cookieKey', md5(Configure::read('Security.salt'))));
+        ] + compact('password'), 'login', 'aes', Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', ''))));
         $cookieExpire = Time::createFromTimestamp($this->_response->getCookie('login')['expire']);
         $this->assertTrue($cookieExpire->isWithinNext('1 year'));
 

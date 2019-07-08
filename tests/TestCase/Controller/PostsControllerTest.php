@@ -187,7 +187,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertRedirect($url);
         $this->assertFlashMessage('You have to search at least a word of 4 characters');
 
-        $this->session(['last_search' => ['id' => md5(time()), 'time' => time()]]);
+        $this->session(['last_search' => ['id' => md5((string)time()), 'time' => time()]]);
         $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertRedirect($url);
         $this->assertFlashMessage('You have to wait 10 seconds to perform a new search');

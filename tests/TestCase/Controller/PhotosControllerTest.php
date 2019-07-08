@@ -42,7 +42,7 @@ class PhotosControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Photos' . DS . 'view.ctp');
         $this->assertInstanceof(Photo::class, $this->viewVariable('photo'));
-        $cache = Cache::read('view_' . md5(1), $this->Table->getCacheName());
+        $cache = Cache::read('view_' . md5('1'), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('photo'), $cache->first());
 
         //Backward compatibility for URLs like `/photo/1`
