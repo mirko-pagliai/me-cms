@@ -192,6 +192,7 @@ class PostsController extends AppController
 
         $this->set(compact('post'));
     }
+
     /**
      * Deletes post
      * @param string $id Post ID

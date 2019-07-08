@@ -92,6 +92,7 @@ class PhotosAlbumsController extends AppController
 
         $this->set(compact('album'));
     }
+
     /**
      * Deletes photos album
      * @param string $id Photos Album ID

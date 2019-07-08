@@ -10,6 +10,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -47,7 +48,7 @@ if (is_readable(CONFIG . 'me_cms.php')) {
 }
 
 //Forces debug on localhost, if required
-if ((new Request)->is('localhost') && getConfig('main.debug_on_localhost')) {
+if ((new Request())->is('localhost') && getConfig('main.debug_on_localhost')) {
     Configure::write('debug', true);
 }
 

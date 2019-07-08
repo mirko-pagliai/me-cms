@@ -170,6 +170,7 @@ class PagesController extends AppController
 
         $this->set(compact('page'));
     }
+
     /**
      * Deletes page
      * @param string $id Page ID

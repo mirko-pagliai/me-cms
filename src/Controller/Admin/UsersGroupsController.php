@@ -92,6 +92,7 @@ class UsersGroupsController extends AppController
 
         $this->set(compact('group'));
     }
+
     /**
      * Deletes users group
      * @param string $id Users Group ID

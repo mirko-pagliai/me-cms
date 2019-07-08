@@ -92,6 +92,7 @@ class PostsCategoriesTableTest extends TableTestCase
 
         $this->assertInstanceOf(PostsCategoryValidator::class, $this->Table->getValidator());
     }
+
     /**
      * Test for the `belongsTo` association with `PostsCategories` parents
      * @test

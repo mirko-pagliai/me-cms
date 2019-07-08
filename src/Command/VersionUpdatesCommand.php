@@ -50,7 +50,10 @@ class VersionUpdatesCommand extends Command
             $Table = $this->loadModel('MeCms.' . $table);
 
             if (!$Table->getSchema()->hasColumn('enable_comments')) {
-                $Table->getConnection()->execute(sprintf('ALTER TABLE `%s` ADD `enable_comments` BOOLEAN NOT NULL DEFAULT TRUE AFTER `preview`', $Table->getTable()));
+                $Table->getConnection()->execute(sprintf(
+                    'ALTER TABLE `%s` ADD `enable_comments` BOOLEAN NOT NULL DEFAULT TRUE AFTER `preview`',
+                    $Table->getTable()
+                ));
             }
         }
     }

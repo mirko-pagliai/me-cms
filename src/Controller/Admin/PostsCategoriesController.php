@@ -122,6 +122,7 @@ class PostsCategoriesController extends AppController
 
         $this->set(compact('category'));
     }
+
     /**
      * Deletes posts category
      * @param string $id Posts category ID

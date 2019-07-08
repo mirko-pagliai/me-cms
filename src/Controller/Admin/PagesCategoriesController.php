@@ -122,6 +122,7 @@ class PagesCategoriesController extends AppController
 
         $this->set(compact('category'));
     }
+
     /**
      * Deletes pages category
      * @param string $id Pages category ID

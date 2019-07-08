@@ -92,6 +92,7 @@ class BannersPositionsController extends AppController
 
         $this->set(compact('position'));
     }
+
     /**
      * Deletes banners position
      * @param string $id Banners Position ID

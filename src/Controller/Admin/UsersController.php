@@ -80,7 +80,9 @@ class UsersController extends AppController
         }
 
         //Only admins can activate account and delete users. Admins and managers can access other actions
-        return $this->Auth->isGroup($this->request->isAction(['activate', 'delete']) ? ['admin'] : ['admin', 'manager']);
+        $group = $this->request->isAction(['activate', 'delete']) ? ['admin'] : ['admin', 'manager'];
+
+        return $this->Auth->isGroup($group);
     }
 
     /**
@@ -172,6 +174,7 @@ class UsersController extends AppController
 
         $this->set(compact('user'));
     }
+
     /**
      * Deletes user
      * @param string $id User ID

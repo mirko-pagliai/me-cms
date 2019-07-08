@@ -248,8 +248,10 @@ class PostsController extends AppController
 
         //Gets related posts
         if (getConfig('post.related')) {
-            $related = $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'));
-            $this->set(compact('related'));
+            $this->set(
+                'related',
+                $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'))
+            );
         }
     }
 
@@ -270,8 +272,10 @@ class PostsController extends AppController
 
         //Gets related posts
         if (getConfig('post.related')) {
-            $related = $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'));
-            $this->set(compact('related'));
+            $this->set(
+                'related',
+                $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'))
+            );
         }
 
         $this->render('view');
