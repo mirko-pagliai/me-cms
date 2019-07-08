@@ -9,7 +9,7 @@
         "email": "mirko.pagliai@gmail.com"
     }],
     "require": {
-        "php": ">=7.2",
+        "php": ">=5.5.9",
         "cakephp/cakephp": "^3.7.1",
         "donatj/phpuseragentparser": "*",
         "enyo/dropzone": "^5.1",
