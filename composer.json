@@ -9,11 +9,11 @@
         "email": "mirko.pagliai@gmail.com"
     }],
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7.2",
         "cakephp/cakephp": "^3.7.1",
         "donatj/phpuseragentparser": "*",
         "enyo/dropzone": "^5.1",
-        "league/commonmark": "^0.18",
+        "league/commonmark": "^0.19",
         "mirko-pagliai/cakephp-database-backup": "^2.5",
         "mirko-pagliai/cakephp-entity-file-log": "^1.0",
         "mirko-pagliai/cakephp-recaptcha-mailhide": "^1.2",
