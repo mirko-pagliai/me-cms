@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -103,7 +104,7 @@ trait GetPreviewsFromTextTrait
                 $url = $thumber->getUrl();
             }
 
-            list($width, $height) = $this->getPreviewSize($url);
+            [$width, $height] = $this->getPreviewSize($url);
 
             return new Entity(compact('url', 'width', 'height'));
         }, $this->extractImages($html));

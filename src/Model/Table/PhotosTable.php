@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -71,7 +72,7 @@ class PhotosTable extends AppTable
     {
         parent::beforeSave($event, $entity, $options);
 
-        list($width, $height) = getimagesize($entity->path);
+        [$width, $height] = getimagesize($entity->path);
         $entity->size = compact('width', 'height');
     }
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -79,7 +80,7 @@ class MenuBuilderHelper extends Helper
 
         //Calls dynamically each method
         foreach ($methods as $method) {
-            list($links, $title, $titleOptions) = call_user_func([$helper, $method]);
+            [$links, $title, $titleOptions] = call_user_func([$helper, $method]);
 
             if (!empty($links) && !empty($title)) {
                 $menus[sprintf('%s.%s', $plugin, $method)] = compact('links', 'title', 'titleOptions');

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -81,7 +82,7 @@ class PostsTagsWidgetsCell extends Cell
 
         if ($style && is_array($style)) {
             //Updates maximum and minimun font sizes we want to use
-            list($maxFont, $minFont) = $this->getFontSizes($style);
+            [$maxFont, $minFont] = $this->getFontSizes($style);
 
             //Updates the cache name
             $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);

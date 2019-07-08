@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -67,7 +68,7 @@ class Plugin extends BasePlugin
 
         foreach ($pluginsToLoad as $plugin => $config) {
             if (is_int($plugin) && !is_array($config)) {
-                list($plugin, $config) = [$config, []];
+                [$plugin, $config] = [$config, []];
             }
 
             $className = sprintf('%s\Plugin', $plugin);

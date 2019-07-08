@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -113,21 +114,21 @@ class WidgetHelperTest extends HelperTestCase
     public function testWidget()
     {
         $cell = $this->Helper->widget('Example');
-        list($action, $args) = array_values($cell->__debugInfo());
+        [$action, $args] = array_values($cell->__debugInfo());
         $this->assertEquals('display', $action);
         $this->assertEquals([], $args);
         $this->assertEquals('display', $cell->viewBuilder()->getTemplate());
         $this->assertInstanceOf(ExampleWidgetsCell::class, $cell);
 
         $cell = $this->Helper->widget('Example', ['example of value']);
-        list($action, $args) = array_values($cell->__debugInfo());
+        [$action, $args] = array_values($cell->__debugInfo());
         $this->assertEquals('display', $action);
         $this->assertEquals([0 => 'example of value'], $args);
         $this->assertEquals('display', $cell->viewBuilder()->getTemplate());
 
         //From plugin
         $cell = $this->Helper->widget('TestPlugin.PluginExample');
-        list($action, $args) = array_values($cell->__debugInfo());
+        [$action, $args] = array_values($cell->__debugInfo());
         $this->assertEquals('display', $action);
         $this->assertEquals([], $args);
         $this->assertEquals('display', $cell->viewBuilder()->getTemplate());

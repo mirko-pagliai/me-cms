@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -145,7 +146,7 @@ class StaticPage
                 }
             }
 
-            return isset($page) ? $page : false;
+            return $page ?? false;
         }, 'static_pages');
     }
 

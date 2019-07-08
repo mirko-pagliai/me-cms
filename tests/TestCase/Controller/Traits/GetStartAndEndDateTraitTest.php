@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -32,27 +33,27 @@ class GetStartAndEndDateTraitTest extends TestCase
         };
 
         //"today" special word
-        list($start, $end) = $getStartAndEndDateMethod('today');
+        [$start, $end] = $getStartAndEndDateMethod('today');
         $this->assertEquals(date('Y-m-d') . ' 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals(date('Y-m-d', time() + DAY) . ' 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //"yesterday" special word
-        list($start, $end) = $getStartAndEndDateMethod('yesterday');
+        [$start, $end] = $getStartAndEndDateMethod('yesterday');
         $this->assertEquals(date('Y-m-d', time() - DAY) . ' 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals(date('Y-m-d') . ' 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //Only year
-        list($start, $end) = $getStartAndEndDateMethod('2017');
+        [$start, $end] = $getStartAndEndDateMethod('2017');
         $this->assertEquals('2017-01-01 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals('2018-01-01 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //only year and month
-        list($start, $end) = $getStartAndEndDateMethod('2017/04');
+        [$start, $end] = $getStartAndEndDateMethod('2017/04');
         $this->assertEquals('2017-04-01 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals('2017-05-01 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         //Full date
-        list($start, $end) = $getStartAndEndDateMethod('2017/04/15');
+        [$start, $end] = $getStartAndEndDateMethod('2017/04/15');
         $this->assertEquals('2017-04-15 00:00:00', $start->i18nFormat('yyyy-MM-dd HH:mm:ss'));
         $this->assertEquals('2017-04-16 00:00:00', $end->i18nFormat('yyyy-MM-dd HH:mm:ss'));
     }

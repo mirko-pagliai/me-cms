@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -67,7 +68,7 @@ class KcFinderComponent extends Component
     public function getTypes()
     {
         //Gets the folders list
-        list($folders) = (new Folder(UPLOADED))->read(true, true);
+        [$folders] = (new Folder(UPLOADED))->read(true, true);
 
         //Each folder is a file type supported by KCFinder
         //Adds the default "images" type and returns

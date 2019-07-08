@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -17,7 +18,7 @@ if ($date === 'today') {
 } elseif ($date === 'yesterday') {
     $title = __d('me_cms', 'Posts of yesterday');
 } else {
-    list($year, $month, $day) = array_replace([null, null, null], explode('/', $date));
+    [$year, $month, $day] = array_replace([null, null, null], explode('/', $date));
 
     if ($year && $month && $day) {
         $title = __dx('me_cms', 'posts of day', 'Posts of {0}', $start->i18nFormat(getConfigOrFail('main.date.long')));

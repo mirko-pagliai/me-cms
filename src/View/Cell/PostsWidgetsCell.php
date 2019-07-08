@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -103,7 +104,7 @@ class PostsWidgetsCell extends Cell
             ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('month')
                     ->map(function (Post $post) {
-                        list($year, $month) = explode('/', $post->month);
+                        [$year, $month] = explode('/', $post->month);
                         $post->month = (new FrozenDate())->day(1)->month($month)->year($year);
 
                         return $post;

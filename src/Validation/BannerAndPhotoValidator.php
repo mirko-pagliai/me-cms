@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -25,7 +26,7 @@ abstract class BannerAndPhotoValidator extends AppValidator
     /**
      * Valid extensions
      */
-    const VALID_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png'];
+    protected const VALID_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png'];
 
     /**
      * Construct

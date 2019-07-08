@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -71,7 +72,7 @@ class PhotosAlbumsController extends AppController
         $cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($photos, $paging) = array_values(Cache::readMany(
+        [$photos, $paging] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->PhotosAlbums->getCacheName()
         ));

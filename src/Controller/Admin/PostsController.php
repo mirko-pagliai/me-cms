@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -94,7 +95,7 @@ class PostsController extends AppController
 
         //Users can edit only their own post
         if ($this->request->isEdit()) {
-            list($postId, $userId) = [$this->request->getParam('pass.0'), $this->Auth->user('id')];
+            [$postId, $userId] = [$this->request->getParam('pass.0'), $this->Auth->user('id')];
 
             return $postId && $userId ? $this->Posts->isOwnedBy($postId, $userId) : false;
         }

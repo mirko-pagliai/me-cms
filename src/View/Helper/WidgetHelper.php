@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -40,7 +41,7 @@ class WidgetHelper extends Helper
                 return [$args => []];
             }
 
-            list($name, $args) = [array_key_first($args), array_value_first($args)];
+            [$name, $args] = [array_key_first($args), array_value_first($args)];
 
             return is_int($name) && is_string($args) ? [$args => []] : [$name => $args];
         })->toList() : [];

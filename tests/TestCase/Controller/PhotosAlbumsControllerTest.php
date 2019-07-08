@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -74,7 +75,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
 
         //Sets the cache name
         $cache = sprintf('album_%s_limit_%s_page_%s', md5('test-album'), getConfigOrFail('default.photos'), 1);
-        list($photosFromCache, $pagingFromCache) = array_values(Cache::readMany(
+        [$photosFromCache, $pagingFromCache] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Table->getCacheName()
         ));

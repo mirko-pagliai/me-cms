@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -63,7 +64,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
 
         $cache = sprintf('category_%s_limit_%s_page_%s', md5('first-post-category'), getConfigOrFail('default.records'), 1);
-        list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
+        [$postsFromCache, $pagingFromCache] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Table->getCacheName()
         ));

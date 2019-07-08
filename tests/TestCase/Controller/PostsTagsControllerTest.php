@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -48,7 +49,7 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('tags'));
 
         $cache = sprintf('tags_limit_%s_page_%s', getConfigOrFail('default.records') * 4, 1);
-        list($tagsFromCache, $pagingFromCache) = array_values(Cache::readMany(
+        [$tagsFromCache, $pagingFromCache] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Table->getCacheName()
         ));
@@ -79,7 +80,7 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->assertEquals($this->viewVariable('tag'), $tagFromCache->first());
 
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5('cat'), getConfigOrFail('default.records'), 1);
-        list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
+        [$postsFromCache, $pagingFromCache] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Table->getCacheName()
         ));

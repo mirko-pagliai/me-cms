@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -40,7 +41,7 @@ class PostsTagsController extends AppController
         $cache = sprintf('tags_limit_%s_page_%s', $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($tags, $paging) = array_values(Cache::readMany(
+        [$tags, $paging] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->PostsTags->getCacheName()
         ));
@@ -87,7 +88,7 @@ class PostsTagsController extends AppController
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(Cache::readMany(
+        [$posts, $paging] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->PostsTags->getCacheName()
         ));

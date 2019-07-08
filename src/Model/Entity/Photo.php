@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -90,7 +91,7 @@ class Photo extends Entity
             return null;
         }
 
-        list($width, $height) = getimagesize($path);
+        [$width, $height] = getimagesize($path);
 
         $thumber = new ThumbCreator($path);
         $thumber->resize(1200, 1200)->save(['format' => 'jpg']);

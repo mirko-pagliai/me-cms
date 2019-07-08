@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -55,7 +56,7 @@ class PostsController extends AppController
         $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(Cache::readMany(
+        [$posts, $paging] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Posts->getCacheName()
         ));
@@ -101,7 +102,7 @@ class PostsController extends AppController
             return $this->redirect([$this->request->getQuery('q')]);
         }
 
-        list($start, $end) = $this->getStartAndEndDate($date);
+        [$start, $end] = $this->getStartAndEndDate($date);
 
         $page = $this->request->getQuery('page', 1);
 
@@ -114,7 +115,7 @@ class PostsController extends AppController
         );
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(Cache::readMany(
+        [$posts, $paging] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Posts->getCacheName()
         ));
@@ -197,7 +198,7 @@ class PostsController extends AppController
             $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), $this->paginate['limit'], $page);
 
             //Tries to get data from the cache
-            list($posts, $paging) = array_values(Cache::readMany(
+            [$posts, $paging] = array_values(Cache::readMany(
                 [$cache, sprintf('%s_paging', $cache)],
                 $this->Posts->getCacheName()
             ));

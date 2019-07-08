@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -36,7 +37,7 @@ class Mailer extends CakeMailer
      * @param \Cake\Mailer\Email|null $email Email instance
      * @uses getEmailInstance()
      */
-    public function __construct(Email $email = null)
+    public function __construct(?Email $email = null)
     {
         parent::__construct($email);
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -55,7 +56,7 @@ class CopyConfigCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io)
     {
         foreach ($this->config as $file) {
-            list($plugin, $file) = pluginSplit($file);
+            [$plugin, $file] = pluginSplit($file);
             $this->copyFile(
                 $io,
                 Plugin::path($plugin, 'config' . DS . $file . '.php'),
