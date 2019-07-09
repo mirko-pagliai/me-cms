@@ -140,7 +140,7 @@ class BannersController extends AppController
      * @param string $id Banner ID
      * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $banner = $this->Banners->get($id);
 
@@ -164,7 +164,7 @@ class BannersController extends AppController
      * @param string $id Banner ID
      * @return \Cake\Network\Response
      */
-    public function download($id = null)
+    public function download($id)
     {
         return $this->response->withFile($this->Banners->get($id)->path, ['download' => true]);
     }
@@ -174,7 +174,7 @@ class BannersController extends AppController
      * @param string $id Banner ID
      * @return \Cake\Network\Response|null
      */
-    public function delete($id = null)
+    public function delete($id)
     {
         $banner = $this->Banners->get($id);
 

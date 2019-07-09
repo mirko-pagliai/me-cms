@@ -238,7 +238,7 @@ class PostsController extends AppController
      * @return void
      * @uses MeCms\Model\Table\PostsTable::getRelated()
      */
-    public function view($slug = null)
+    public function view($slug)
     {
         $post = $this->Posts->findActiveBySlug($slug)
             ->find('forIndex')
@@ -263,7 +263,7 @@ class PostsController extends AppController
      * @return void
      * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
-    public function preview($slug = null)
+    public function preview($slug)
     {
         $post = $this->Posts->findPendingBySlug($slug)
             ->find('forIndex')

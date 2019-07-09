@@ -140,7 +140,7 @@ class PhotosController extends AppController
      * @param string $id Photo ID
      * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $photo = $this->Photos->get($id);
 
@@ -164,7 +164,7 @@ class PhotosController extends AppController
      * @param string $id Photo ID
      * @return \Cake\Network\Response
      */
-    public function download($id = null)
+    public function download($id)
     {
         return $this->response->withFile($this->Photos->get($id)->path, ['download' => true]);
     }
@@ -174,7 +174,7 @@ class PhotosController extends AppController
      * @param string $id Photo ID
      * @return \Cake\Network\Response|null|void
      */
-    public function delete($id = null)
+    public function delete($id)
     {
         $this->request->allowMethod(['post', 'delete']);
 

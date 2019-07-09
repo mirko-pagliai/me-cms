@@ -74,7 +74,7 @@ class BannersPositionsController extends AppController
      * @param string $id Banners Position ID
      * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $position = $this->BannersPositions->get($id);
 
@@ -98,7 +98,7 @@ class BannersPositionsController extends AppController
      * @param string $id Banners Position ID
      * @return \Cake\Network\Response|null
      */
-    public function delete($id = null)
+    public function delete($id)
     {
         $this->request->allowMethod(['post', 'delete']);
 

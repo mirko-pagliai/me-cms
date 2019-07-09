@@ -146,7 +146,7 @@ class PagesController extends AppController
      * @param string $id Page ID
      * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $page = $this->Pages->findById($id)
             ->formatResults(function (ResultSet $results) {
@@ -176,7 +176,7 @@ class PagesController extends AppController
      * @param string $id Page ID
      * @return \Cake\Network\Response|null|void
      */
-    public function delete($id = null)
+    public function delete($id)
     {
         $this->request->allowMethod(['post', 'delete']);
         $this->Pages->deleteOrFail($this->Pages->get($id));

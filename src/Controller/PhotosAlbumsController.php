@@ -51,7 +51,7 @@ class PhotosAlbumsController extends AppController
      * @param string $slug Album slug
      * @return \Cake\Network\Response|null|void
      */
-    public function view($slug = null)
+    public function view($slug)
     {
         //Data can be passed as query string, from a widget
         if ($this->request->getQuery('q')) {

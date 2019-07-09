@@ -26,7 +26,7 @@ class BannersController extends AppController
      * @param string $id Banner ID
      * @return \Cake\Network\Response|null
      */
-    public function open($id = null)
+    public function open($id)
     {
         $banner = $this->Banners->findActiveById($id)
             ->select(['target'])

@@ -52,7 +52,7 @@ class PagesController extends AppController
      * @uses MeCms\Utility\StaticPage::get()
      * @uses MeCms\Utility\StaticPage::title()
      */
-    public function view($slug = null)
+    public function view($slug)
     {
         //Checks if there exists a static page
         $static = StaticPage::get($slug);
@@ -84,7 +84,7 @@ class PagesController extends AppController
      * @param string $slug Page slug
      * @return void
      */
-    public function preview($slug = null)
+    public function preview($slug)
     {
         $page = $this->Pages->findPendingBySlug($slug)
             ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])

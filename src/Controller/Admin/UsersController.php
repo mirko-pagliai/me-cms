@@ -107,7 +107,7 @@ class UsersController extends AppController
      * @return void
      * @uses \MeCms\Controller\Component\LoginRecorderComponent::read()
      */
-    public function view($id = null)
+    public function view($id)
     {
         $user = $this->Users->findById($id)
             ->contain(['Groups' => ['fields' => ['label']]])
@@ -149,7 +149,7 @@ class UsersController extends AppController
      * @return \Cake\Network\Response|null|void
      * @uses \MeCms\Controller\Component\AuthComponent::isFounder()
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $user = $this->Users->get($id);
 
@@ -181,7 +181,7 @@ class UsersController extends AppController
      * @return \Cake\Network\Response|null|void
      * @uses \MeCms\Controller\Component\AuthComponent::isFounder()
      */
-    public function delete($id = null)
+    public function delete($id)
     {
         $this->request->allowMethod(['post', 'delete']);
 

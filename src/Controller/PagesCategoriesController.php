@@ -40,7 +40,7 @@ class PagesCategoriesController extends AppController
      * @param string $slug Category slug
      * @return \Cake\Network\Response|null|void
      */
-    public function view($slug = null)
+    public function view($slug)
     {
         //The category can be passed as query string, from a widget
         if ($this->request->getQuery('q')) {
