@@ -253,9 +253,9 @@ class UsersController extends AppController
      */
     public function changePicture()
     {
-        $id = $this->Auth->user('id');
-
         if ($this->request->getData('file')) {
+            $id = $this->Auth->user('id');
+
             //Deletes any picture that already exists
             foreach (((new Folder(USER_PICTURES))->find($id . '\..+')) as $filename) {
                 @unlink(USER_PICTURES . $filename);
