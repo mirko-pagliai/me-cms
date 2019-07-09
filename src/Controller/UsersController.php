@@ -84,7 +84,7 @@ class UsersController extends AppController
         //Creates the token
         $token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
 
-        return $this->getMailer('MeCms.User')
+        return (bool)$this->getMailer('MeCms.User')
             ->set('url', Router::url(['_name' => 'activation', $user->id, $token], true))
             ->send('activation', [$user]);
     }
@@ -172,8 +172,7 @@ class UsersController extends AppController
                 if (!$entity->getErrors()) {
                     $user = $this->Users->findPendingByEmail($this->request->getData('email'))->first();
 
-                    if ($user) {
-                        $this->sendActivationMail($user);
+                    if ($user && $this->sendActivationMail($user)) {
                         $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
 
                         return $this->redirect(['_name' => 'login']);

@@ -280,6 +280,6 @@ class PostsController extends AppController
             );
         }
 
-        $this->render('view');
+        return $this->render('view');
     }
 }
