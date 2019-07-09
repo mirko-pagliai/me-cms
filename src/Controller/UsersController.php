@@ -43,7 +43,7 @@ class UsersController extends AppController
 
         //Checks if the cookies exist
         if (!$username || !$password) {
-            return;
+            return null;
         }
 
         //Tries to login
