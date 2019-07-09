@@ -28,9 +28,8 @@ class CopyConfigCommand extends Command
 {
     /**
      * Configuration files to be copied
-     * @var array
      */
-    public $config = [
+    public const FILES = [
         'MeCms.recaptcha',
         'MeCms.me_cms',
         'MeCms.widgets',
@@ -51,11 +50,10 @@ class CopyConfigCommand extends Command
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
-     * @uses $config
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
-        foreach ($this->config as $file) {
+        foreach (self::FILES as $file) {
             [$plugin, $file] = pluginSplit($file);
             $this->copyFile(
                 $io,
