@@ -161,7 +161,7 @@ class PostsController extends AppController
      * @return \Cake\Network\Response|null|void
      * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $post = $this->Posts->findById($id)
             ->contain('Tags', function (Query $q) {
@@ -199,7 +199,7 @@ class PostsController extends AppController
      * @param string $id Post ID
      * @return \Cake\Network\Response|null|void
      */
-    public function delete($id = null)
+    public function delete($id)
     {
         $this->request->allowMethod(['post', 'delete']);
 

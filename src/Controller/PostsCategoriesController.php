@@ -43,7 +43,7 @@ class PostsCategoriesController extends AppController
      * @return \Cake\Network\Response|null|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException
      */
-    public function view($slug = null)
+    public function view($slug)
     {
         //The category can be passed as query string, from a widget
         if ($this->request->getQuery('q')) {

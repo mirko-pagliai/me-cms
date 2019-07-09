@@ -54,7 +54,7 @@ class PhotosController extends AppController
      * @param string $id Photo ID
      * @return \Cake\Network\Response|null|void
      */
-    public function preview($id = null)
+    public function preview($id)
     {
         $photo = $this->Photos->findPendingById($id)
             ->select(['id', 'album_id', 'filename'])

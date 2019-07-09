@@ -105,7 +105,7 @@ class PagesCategoriesController extends AppController
      * @param string $id Pages category ID
      * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $category = $this->PagesCategories->get($id);
 
@@ -129,7 +129,7 @@ class PagesCategoriesController extends AppController
      * @param string $id Pages category ID
      * @return \Cake\Network\Response|null
      */
-    public function delete($id = null)
+    public function delete($id)
     {
         $this->request->allowMethod(['post', 'delete']);
 

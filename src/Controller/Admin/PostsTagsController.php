@@ -58,7 +58,7 @@ class PostsTagsController extends AppController
      * @param string $id Tag ID
      * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $tag = $this->PostsTags->Tags->get($id);
 
