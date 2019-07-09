@@ -161,9 +161,7 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testSendActivationMail()
     {
-        $result = $this->invokeMethod($this->Controller, 'sendActivationMail', [$this->Table->find()->first()]);
-        $this->assertNotEmpty($result);
-        $this->assertIsArray($result);
+        $this->assertTrue($this->invokeMethod($this->Controller, 'sendActivationMail', [$this->Table->find()->first()]));
     }
 
     /**
