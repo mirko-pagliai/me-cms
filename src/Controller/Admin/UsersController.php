@@ -212,8 +212,7 @@ class UsersController extends AppController
     public function activate($id)
     {
         $user = $this->Users->get($id);
-        $user->active = true;
-        $this->Users->save($user);
+        $this->Users->save($user->set('active', true));
         $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
