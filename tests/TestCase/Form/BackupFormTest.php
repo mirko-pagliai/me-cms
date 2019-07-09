@@ -136,6 +136,6 @@ class BackupFormTest extends TestCase
             ->method('getBackupExportInstance')
             ->will($this->throwException(new InternalErrorException()));
 
-        $this->assertFalse($BackupForm->execute(['filename' => 'test.sql']));
+        $this->assertNull($BackupForm->execute(['filename' => 'test.sql']));
     }
 }
