@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Event\Event;
 use Cake\Http\Exception\ForbiddenException;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
@@ -37,7 +38,7 @@ class PostsController extends AppController
      * @see http://api.cakephp.org/3.7/class-Cake.Controller.Controller.html#_beforeFilter
      * @uses MeCms\Controller\AppController::beforeFilter()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
