@@ -38,7 +38,7 @@ class CopyConfigCommandTest extends TestCase
         $this->exec('me_cms.copy_config -v');
         $this->assertExitWithSuccess();
 
-        foreach ($this->Command->config as $file) {
+        foreach ($this->Command::FILES as $file) {
             $this->assertOutputContains('File or directory `' . rtr(CONFIG . pluginSplit($file)[1] . '.php') . '` already exists');
         }
     }
