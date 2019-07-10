@@ -62,7 +62,7 @@ class MenuBuilderHelper extends Helper
     /**
      * Generates all menus for a plugin
      * @param string $plugin Plugin name
-     * @return string|null Html code
+     * @return array Menus
      * @uses getMenuMethods()
      */
     public function generate($plugin)
