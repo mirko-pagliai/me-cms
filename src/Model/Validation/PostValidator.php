@@ -43,17 +43,17 @@ class PostValidator extends PageAndPostValidator
      *
      * It uses the `TagValidator`, checks its rules on each tag and returns
      *  `true` on success or a string with all errors found on failure.
-     * @param string $value Field value
+     * @param array $values Field values
      * @return bool|string `true` on success or an error message on failure
      * @since 2.26.1
      * @uses \MeCms\Model\Validation\TagValidator
      */
-    public function validTags($value)
+    public function validTags(array $values)
     {
         $validator = new TagValidator();
         $messages = [];
 
-        foreach ($value as $tag) {
+        foreach ($values as $tag) {
             $errors = Hash::get($validator->errors($tag), 'tag') ?: [];
 
             foreach ($errors as $error) {
