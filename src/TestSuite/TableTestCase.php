@@ -65,7 +65,7 @@ abstract class TableTestCase extends TestCase
 
     /**
      * Asserts that the table has a behavior
-     * @param string $behavior Behavior name
+     * @param string|array $behavior Behavior name as string or array
      * @return void
      * @uses $Table
      */
