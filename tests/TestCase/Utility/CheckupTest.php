@@ -97,7 +97,7 @@ class CheckupTest extends TestCase
             ->setMethods(['isAvailable'])
             ->getMock();
         $KCFinder->method('isAvailable')->will($this->returnValue(false));
-        $this->assertFalse($KCFinder->version());
+        $this->assertNull($KCFinder->version());
     }
 
     /**
