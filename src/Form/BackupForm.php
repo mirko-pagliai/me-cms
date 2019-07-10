@@ -10,7 +10,6 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         MeCms\Controller\Admin\BackupsController::add()
  */
 namespace MeCms\Form;
 
@@ -22,6 +21,8 @@ use MeCms\Validation\AppValidator;
 
 /**
  * BackupForm class
+ * @see \DatabaseBackup\Utility\BackupExport
+ * @see \MeCms\Controller\Admin\BackupsController::add()
  */
 class BackupForm extends Form
 {
@@ -36,7 +37,7 @@ class BackupForm extends Form
      * @param \Cake\Validation\Validator $validator Validator instance
      * @return \MeCms\Validation\AppValidator
      */
-    protected function _buildValidator(Validator $validator)
+    protected function _buildValidator(Validator $validator): AppValidator
     {
         $validator = new AppValidator();
 
@@ -54,7 +55,7 @@ class BackupForm extends Form
      * @return \DatabaseBackup\Utility\BackupExport
      * @uses $BackupExport
      */
-    protected function getBackupExportInstance()
+    protected function getBackupExportInstance(): BackupExport
     {
         $this->BackupExport = $this->BackupExport ?: new BackupExport();
 
@@ -65,11 +66,9 @@ class BackupForm extends Form
      * Used by `execute()` to execute the form's action
      * @param array $data Form data
      * @return string|null Filename or `null` on failure
-     * @uses DatabaseBackup\Utility\BackupExport::filename()
-     * @uses DatabaseBackup\Utility\BackupExport::export()
      * @uses getBackupExportInstance()
      */
-    protected function _execute(array $data)
+    protected function _execute(array $data): ?string
     {
         try {
             return $this->getBackupExportInstance()

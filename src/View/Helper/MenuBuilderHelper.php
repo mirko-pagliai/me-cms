@@ -38,9 +38,9 @@ class MenuBuilderHelper extends Helper
      * @param array $linksOptions Array of options and HTML attributes
      * @return array
      */
-    protected function buildLinks($links, array $linksOptions = [])
+    protected function buildLinks(array $links, array $linksOptions = []): array
     {
-        return array_map(function ($link) use ($linksOptions) {
+        return array_map(function (array $link) use ($linksOptions) {
             return $this->Html->link($link[0], $link[1], $linksOptions);
         }, $links);
     }
@@ -50,7 +50,7 @@ class MenuBuilderHelper extends Helper
      * @param string $plugin Plugin name
      * @return array
      */
-    protected function getMenuMethods($plugin)
+    protected function getMenuMethods(string $plugin): array
     {
         //Gets all methods from `$PLUGIN\View\Helper\MenuHelper`
         $methods = get_child_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
@@ -65,7 +65,7 @@ class MenuBuilderHelper extends Helper
      * @return array Menus
      * @uses getMenuMethods()
      */
-    public function generate($plugin)
+    public function generate(string $plugin): array
     {
         //Gets all menu name methods
         $methods = $this->getMenuMethods($plugin);
@@ -80,11 +80,13 @@ class MenuBuilderHelper extends Helper
 
         //Calls dynamically each method
         foreach ($methods as $method) {
-            [$links, $title, $titleOptions] = call_user_func([$helper, $method]);
-
-            if (!empty($links) && !empty($title)) {
-                $menus[sprintf('%s.%s', $plugin, $method)] = compact('links', 'title', 'titleOptions');
+            $menu = call_user_func([$helper, $method]);
+            if (!$menu || count($menu) < 2) {
+                continue;
             }
+
+            [$links, $title, $titleOptions] = $menu;
+            $menus[sprintf('%s.%s', $plugin, $method)] = compact('links', 'title', 'titleOptions');
         }
 
         return $menus;
@@ -97,9 +99,9 @@ class MenuBuilderHelper extends Helper
      * @uses buildLinks()
      * @uses generate()
      */
-    public function renderAsCollapse($plugin)
+    public function renderAsCollapse(string $plugin): string
     {
-        return implode(PHP_EOL, array_map(function ($menu) {
+        return implode(PHP_EOL, array_map(function (array $menu) {
             //Sets the collapse name
             $collapseName = 'collapse-' . strtolower(Text::slug($menu['title']));
             $titleOptions = optionsParser($menu['titleOptions'], [
@@ -123,9 +125,9 @@ class MenuBuilderHelper extends Helper
      * @uses buildLinks()
      * @uses generate()
      */
-    public function renderAsDropdown($plugin, array $titleOptions = [])
+    public function renderAsDropdown(string $plugin, array $titleOptions = []): array
     {
-        return array_map(function ($menu) use ($titleOptions) {
+        return array_map(function (array $menu) use ($titleOptions) {
             return $this->Dropdown->menu(
                 $menu['title'],
                 $this->buildLinks($menu['links'], ['class' => 'dropdown-item']),

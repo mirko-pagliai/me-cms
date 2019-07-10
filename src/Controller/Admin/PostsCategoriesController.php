@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\Http\Response;
 use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
 use MeCms\Model\Entity\PostsCategory;
@@ -30,10 +31,9 @@ class PostsCategoriesController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(Event $event): void
     {
         parent::beforeFilter($event);
 
@@ -44,12 +44,11 @@ class PostsCategoriesController extends AppController
 
     /**
      * Checks if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admins can delete posts categories. Admins and managers can access other actions
         return $this->Auth->isGroup($this->request->isDelete() ? ['admin'] : ['admin', 'manager']);
@@ -58,9 +57,9 @@ class PostsCategoriesController extends AppController
     /**
      * Lists posts categories
      * @return void
-     * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      */
-    public function index()
+    public function index(): void
     {
         $categories = $this->PostsCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
@@ -79,7 +78,7 @@ class PostsCategoriesController extends AppController
 
     /**
      * Adds posts category
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function add()
     {
@@ -103,9 +102,9 @@ class PostsCategoriesController extends AppController
     /**
      * Edits posts category
      * @param string $id Posts category ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         $category = $this->PostsCategories->get($id);
 
@@ -127,9 +126,9 @@ class PostsCategoriesController extends AppController
     /**
      * Deletes posts category
      * @param string $id Posts category ID
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
-    public function delete($id)
+    public function delete(string $id): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
 

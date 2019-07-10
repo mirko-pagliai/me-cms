@@ -39,9 +39,8 @@ class BannersTable extends AppTable
      * @param \Cake\ORM\Entity $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options): void
     {
         //Deletes the file
         @unlink(BANNERS . $entity->filename);
@@ -55,7 +54,7 @@ class BannersTable extends AppTable
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         return $rules->add($rules->existsIn(['position_id'], 'Positions', I18N_SELECT_VALID_OPTION))
             ->add($rules->isUnique(['filename'], I18N_VALUE_ALREADY_USED));
@@ -67,7 +66,7 @@ class BannersTable extends AppTable
      * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query, array $options)
+    public function findActive(Query $query, array $options): Query
     {
         return $query->where([sprintf('%s.active', $this->getAlias()) => true]);
     }
@@ -77,7 +76,7 @@ class BannersTable extends AppTable
      * @param array $config The configuration for the table
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -100,9 +99,8 @@ class BannersTable extends AppTable
      * @param \Cake\ORM\Query $query Query object
      * @param array $data Filter data ($this->request->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
-     * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
-    public function queryFromFilter(Query $query, array $data = [])
+    public function queryFromFilter(Query $query, array $data = []): Query
     {
         $query = parent::queryFromFilter($query, $data);
 

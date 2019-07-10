@@ -27,7 +27,7 @@ class PostsCategoriesController extends AppController
      * Lists posts categories
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $categories = $this->PostsCategories->find('active')
             ->select(['title', 'slug'])
@@ -40,10 +40,10 @@ class PostsCategoriesController extends AppController
     /**
      * Lists posts for a category
      * @param string $slug Category slug
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException
      */
-    public function view($slug)
+    public function view(string $slug)
     {
         //The category can be passed as query string, from a widget
         if ($this->request->getQuery('q')) {

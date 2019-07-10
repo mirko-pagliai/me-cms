@@ -26,7 +26,7 @@ class Webroot extends AbstractCheckup
      * @return array Array with paths as keys and boolean as value
      * @uses _isWriteable()
      */
-    public function isWriteable()
+    public function isWriteable(): array
     {
         return $this->_isWriteable([
             BANNERS,

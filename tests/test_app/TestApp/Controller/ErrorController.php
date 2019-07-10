@@ -23,7 +23,7 @@ class ErrorController extends AppController
     /**
      * beforeRender callback
      * @param \Cake\Event\Event $event Event
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function beforeRender(Event $event)
     {

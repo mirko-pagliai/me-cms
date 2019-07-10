@@ -32,7 +32,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * @param array $userAgent Data returned by the `getUserAgent()` method
      * @return \MeCms\Controller\Component\LoginRecorderComponent|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getMockForLoginRecorder($methods = ['getUserAgent'], array $userAgent = [])
+    protected function getMockForLoginRecorder(?array $methods = ['getUserAgent'], array $userAgent = [])
     {
         $component = $this->getMockForComponent(LoginRecorderComponent::class, $methods);
 
@@ -54,7 +54,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->Component = $this->getMockForLoginRecorder();
 
@@ -65,7 +65,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Called after every test method
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

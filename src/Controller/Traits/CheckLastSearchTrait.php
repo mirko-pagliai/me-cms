@@ -26,7 +26,7 @@ trait CheckLastSearchTrait
      * @param string|null $id Query ID
      * @return bool
      */
-    protected function checkLastSearch($id = null)
+    protected function checkLastSearch(?string $id = null): bool
     {
         $interval = getConfig('security.search_interval');
 

@@ -45,7 +45,7 @@ class Post extends PostAndPageEntity
      * Gets tags as string, separated by a comma and a space (virtual field)
      * @return string|null
      */
-    protected function _getTagsAsString()
+    protected function _getTagsAsString(): ?string
     {
         if (empty($this->_properties['tags'])) {
             return null;

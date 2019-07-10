@@ -42,7 +42,7 @@ class AppTable extends Table
      * @return void
      * @uses getCacheName()
      */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options): void
     {
         if ($this->getCacheName()) {
             Cache::clear(false, $this->getCacheName());
@@ -57,7 +57,7 @@ class AppTable extends Table
      * @return void
      * @uses getCacheName()
      */
-    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options): void
     {
         if ($this->getCacheName()) {
             Cache::clear(false, $this->getCacheName());
@@ -74,7 +74,7 @@ class AppTable extends Table
      * @return void
      * @since 2.16.1
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options): void
     {
         if (empty($entity->created)) {
             $entity->created = new Time();
@@ -89,7 +89,7 @@ class AppTable extends Table
      * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query, array $options)
+    public function findActive(Query $query, array $options): Query
     {
         return $query->where([sprintf('%s.active', $this->getAlias()) => true])
             ->where([sprintf('%s.created <=', $this->getAlias()) => new Time()]);
@@ -101,7 +101,7 @@ class AppTable extends Table
      * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findPending(Query $query, array $options)
+    public function findPending(Query $query, array $options): Query
     {
         return $query->where(['OR' => [
             sprintf('%s.active', $this->getAlias()) => false,
@@ -115,7 +115,7 @@ class AppTable extends Table
      * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findRandom(Query $query, array $options)
+    public function findRandom(Query $query, array $options): Query
     {
         $query->order('rand()');
 
@@ -134,7 +134,7 @@ class AppTable extends Table
      * @since 2.26.0
      * @uses $cache
      */
-    public function getCacheName($associations = false)
+    public function getCacheName(bool $associations = false)
     {
         $values = $this->cache ?: null;
 
@@ -158,7 +158,7 @@ class AppTable extends Table
      * @return \Cake\ORM\Query $query Query object
      * @uses getCacheName()
      */
-    public function getList()
+    public function getList(): Query
     {
         return $this->find('list')
             ->order([$this->getDisplayField() => 'ASC'])
@@ -170,7 +170,7 @@ class AppTable extends Table
      * @return \Cake\ORM\Query $query Query object
      * @uses getCacheName()
      */
-    public function getTreeList()
+    public function getTreeList(): Query
     {
         return $this->find('treeList')
             ->cache(sprintf('%s_tree_list', $this->getTable()), $this->getCacheName());
@@ -182,7 +182,7 @@ class AppTable extends Table
      * @param array $data Filter data ($this->request->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
      */
-    public function queryFromFilter(Query $query, array $data = [])
+    public function queryFromFilter(Query $query, array $data = []): Query
     {
         //"ID" field
         if (!empty($data['id']) && is_positive($data['id'])) {

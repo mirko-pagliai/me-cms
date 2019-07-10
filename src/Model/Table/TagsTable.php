@@ -36,7 +36,7 @@ class TagsTable extends AppTable
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         return $rules->add($rules->isUnique(['tag'], I18N_VALUE_ALREADY_USED));
     }
@@ -47,7 +47,7 @@ class TagsTable extends AppTable
      * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query, array $options)
+    public function findActive(Query $query, array $options): Query
     {
         return $query->innerJoinWith('Posts', function (Query $q) {
             return $q->find('active');
@@ -59,7 +59,7 @@ class TagsTable extends AppTable
      * @param array $config The configuration for the table
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -83,7 +83,7 @@ class TagsTable extends AppTable
      * @param array $data Filter data ($this->request->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
      */
-    public function queryFromFilter(Query $query, array $data = [])
+    public function queryFromFilter(Query $query, array $data = []): Query
     {
         $query = parent::queryFromFilter($query, $data);
 

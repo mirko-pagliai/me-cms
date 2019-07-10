@@ -30,7 +30,7 @@ trait AuthTrait
      * @return bool
      * @uses user()
      */
-    public function hasId($id)
+    public function hasId($id): bool
     {
         return in_array($this->user('id'), (array)$id);
     }
@@ -40,7 +40,7 @@ trait AuthTrait
      * @return bool
      * @uses user()
      */
-    public function isFounder()
+    public function isFounder(): bool
     {
         return $this->user('id') === 1;
     }
@@ -53,7 +53,7 @@ trait AuthTrait
      * @return bool
      * @uses user()
      */
-    public function isGroup($group)
+    public function isGroup($group): bool
     {
         return in_array($this->user('group.name'), (array)$group);
     }
@@ -63,7 +63,7 @@ trait AuthTrait
      * @return bool
      * @uses user()
      */
-    public function isLogged()
+    public function isLogged(): bool
     {
         return (bool)$this->user('id');
     }

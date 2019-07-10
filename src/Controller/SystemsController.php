@@ -15,6 +15,7 @@ namespace MeCms\Controller;
 
 use Cake\Filesystem\File;
 use Cake\Http\Cookie\Cookie;
+use Cake\Http\Response;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 use MeCms\Form\ContactUsForm;
@@ -29,9 +30,9 @@ class SystemsController extends AppController
      * Accept cookies policy.
      * It sets the cookie to remember the user accepted the cookie policy and
      *  redirects
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
-    public function acceptCookies()
+    public function acceptCookies(): ?Response
     {
         $this->response = $this->response->withCookie((new Cookie('cookies-policy', true))->withNeverExpire());
 
@@ -40,7 +41,7 @@ class SystemsController extends AppController
 
     /**
      * "Contact us" form
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      * @see MeCms\Form\ContactUsForm
      * @see MeCms\Mailer\ContactUsMailer
      */
@@ -76,7 +77,7 @@ class SystemsController extends AppController
 
     /**
      * "IP not allowed" page
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function ipNotAllowed()
     {
@@ -90,7 +91,7 @@ class SystemsController extends AppController
 
     /**
      * Offline page
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function offline()
     {
@@ -106,9 +107,9 @@ class SystemsController extends AppController
      * Returns the site sitemap.
      * If the sitemap doesn't exist or has expired, it generates and writes
      *  the sitemap.
-     * @return \Cake\Network\Response
+     * @return \Cake\Http\Response
      */
-    public function sitemap()
+    public function sitemap(): Response
     {
         //Checks if the sitemap exist and is not expired
         if (is_readable(SITEMAP)) {

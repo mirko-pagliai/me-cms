@@ -32,7 +32,7 @@ class Form extends CakeForm
      * @param array $data The data to check.
      * @return bool Whether or not the data is valid
      */
-    public function validate(array $data)
+    public function validate(array $data): bool
     {
         $validator = $this->getValidator();
         if (!$validator->count()) {

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\Http\Response;
 use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
@@ -30,12 +31,11 @@ class PostsController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
-     * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\PostsCategoriesTable::getList()
-     * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
-     * @uses MeCms\Model\Table\UsersTable::getActiveList()
-     * @uses MeCms\Model\Table\UsersTable::getList()
+     * @return \Cake\Http\Response|null|void
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
+     * @uses \MeCms\Model\Table\UsersTable::getActiveList()
+     * @uses \MeCms\Model\Table\UsersTable::getList()
      */
     public function beforeFilter(Event $event)
     {
@@ -67,9 +67,8 @@ class PostsController extends AppController
     /**
      * Initialization hook method
      * @return void
-     * @uses MeCms\Controller\AppController::initialize()
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -81,13 +80,12 @@ class PostsController extends AppController
 
     /**
      * Check if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-     * @uses MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
+     * @uses \MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         if ($this->Auth->isGroup(['admin', 'manager'])) {
             return true;
@@ -97,7 +95,7 @@ class PostsController extends AppController
         if ($this->request->isEdit()) {
             [$postId, $userId] = [$this->request->getParam('pass.0'), $this->Auth->user('id')];
 
-            return $postId && $userId ? $this->Posts->isOwnedBy($postId, $userId) : false;
+            return $postId && $userId ? $this->Posts->isOwnedBy((int)$postId, $userId) : false;
         }
 
         //Only admins and managers can delete posts
@@ -107,9 +105,9 @@ class PostsController extends AppController
     /**
      * Lists posts
      * @return void
-     * @uses MeCms\Model\Table\PostsTable::queryFromFilter()
+     * @uses \MeCms\Model\Table\PostsTable::queryFromFilter()
      */
-    public function index()
+    public function index(): void
     {
         $query = $this->Posts->find()->contain([
             'Categories' => ['fields' => ['id', 'title']],
@@ -128,8 +126,7 @@ class PostsController extends AppController
 
     /**
      * Adds post
-     * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @return \Cake\Http\Response|null|void
      */
     public function add()
     {
@@ -158,10 +155,9 @@ class PostsController extends AppController
     /**
      * Edits post
      * @param string $id Post ID
-     * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @return \Cake\Http\Response|null|void
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         $post = $this->Posts->findById($id)
             ->contain('Tags', function (Query $q) {
@@ -197,12 +193,11 @@ class PostsController extends AppController
     /**
      * Deletes post
      * @param string $id Post ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null
      */
-    public function delete($id)
+    public function delete(string $id): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
-
         $this->Posts->deleteOrFail($this->Posts->get($id));
         $this->Flash->success(I18N_OPERATION_OK);
 

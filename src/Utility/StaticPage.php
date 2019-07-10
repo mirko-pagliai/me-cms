@@ -30,10 +30,10 @@ class StaticPage
     /**
      * Internal method to get all paths for static pages
      * @return array
-     * @uses MeCms\Core\Plugin::all()
+     * @uses \MeCms\Core\Plugin::all()
      * @uses getPath()
      */
-    protected static function getAllPaths()
+    protected static function getAllPaths(): array
     {
         return Cache::remember('paths', function () {
             $plugins = array_map([__CLASS__, 'getPath'], array_merge([null], Plugin::all()));
@@ -48,7 +48,7 @@ class StaticPage
      * @return string
      * @since 2.26.6
      */
-    protected static function getPath($plugin = null)
+    protected static function getPath(?string $plugin = null): string
     {
         return array_value_first(App::path('Template' . DS . 'StaticPages', $plugin));
     }
@@ -61,7 +61,7 @@ class StaticPage
      * @param string $relativePath Relative path
      * @return string
      */
-    protected static function getSlug($path, $relativePath)
+    protected static function getSlug(string $path, string $relativePath): string
     {
         if (string_starts_with($path, $relativePath)) {
             $path = substr($path, strlen(Folder::slashTerm($relativePath)));
@@ -78,7 +78,7 @@ class StaticPage
      * @uses getSlug()
      * @uses title()
      */
-    public static function all()
+    public static function all(): array
     {
         foreach (self::getAllPaths() as $path) {
             //Gets all files for each path
@@ -101,11 +101,11 @@ class StaticPage
     /**
      * Gets a static page
      * @param string $slug Slug
-     * @return string|bool Static page or `false`
-     * @uses MeCms\Core\Plugin::all()
+     * @return string|null Static page or `null`
+     * @uses \MeCms\Core\Plugin::all()
      * @uses getPath()
      */
-    public static function get($slug)
+    public static function get(string $slug): ?string
     {
         $locale = I18n::getLocale();
         $slug = array_filter(explode('/', $slug));
@@ -146,7 +146,7 @@ class StaticPage
                 }
             }
 
-            return $page ?? false;
+            return $page ?? null;
         }, 'static_pages');
     }
 
@@ -155,7 +155,7 @@ class StaticPage
      * @param string $slugOrPath Slug or path
      * @return string
      */
-    public static function title($slugOrPath)
+    public static function title(string $slugOrPath): string
     {
         //Gets only the filename (without extension), then turns dashes into
         //  underscores (because `Inflector::humanize` will remove only underscores)

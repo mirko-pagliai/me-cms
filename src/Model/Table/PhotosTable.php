@@ -49,9 +49,8 @@ class PhotosTable extends AppTable
      * @param \Cake\ORM\Entity $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options): void
     {
         //Deletes the file
         @unlink($entity->path);
@@ -66,9 +65,8 @@ class PhotosTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @since 2.17.0
-     * @uses MeCms\Model\Table\AppTable::beforeSave()
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options): void
     {
         parent::beforeSave($event, $entity, $options);
 
@@ -82,7 +80,7 @@ class PhotosTable extends AppTable
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         return $rules->add($rules->existsIn(['album_id'], 'Albums', I18N_SELECT_VALID_OPTION))
             ->add($rules->isUnique(['filename'], I18N_VALUE_ALREADY_USED));
@@ -94,7 +92,7 @@ class PhotosTable extends AppTable
      * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query, array $options)
+    public function findActive(Query $query, array $options): Query
     {
         return $query->where([sprintf('%s.active', $this->getAlias()) => true]);
     }
@@ -105,7 +103,7 @@ class PhotosTable extends AppTable
      * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findPending(Query $query, array $options)
+    public function findPending(Query $query, array $options): Query
     {
         return $query->where([sprintf('%s.active', $this->getAlias()) => false]);
     }
@@ -115,7 +113,7 @@ class PhotosTable extends AppTable
      * @param array $config The configuration for the table
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -138,9 +136,8 @@ class PhotosTable extends AppTable
      * @param \Cake\ORM\Query $query Query object
      * @param array $data Filter data ($this->request->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
-     * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
-    public function queryFromFilter(Query $query, array $data = [])
+    public function queryFromFilter(Query $query, array $data = []): Query
     {
         $query = parent::queryFromFilter($query, $data);
 

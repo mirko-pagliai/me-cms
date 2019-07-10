@@ -25,7 +25,7 @@ class KCFinder extends AbstractCheckup
      * Checks if the `.htaccess` is readable
      * @return bool
      */
-    public function htaccess()
+    public function htaccess(): bool
     {
         return is_readable(KCFINDER . '.htaccess');
     }
@@ -34,7 +34,7 @@ class KCFinder extends AbstractCheckup
      * Checks if KCFinder is available
      * @return bool
      */
-    public function isAvailable()
+    public function isAvailable(): bool
     {
         return is_readable(KCFINDER . 'browse.php');
     }
@@ -44,7 +44,7 @@ class KCFinder extends AbstractCheckup
      * @return string|null Version or `null`
      * @uses isAvailable()
      */
-    public function version()
+    public function version(): ?string
     {
         return $this->isAvailable() &&
             preg_match('/@version\s+([\d\.]+)/', file_get_contents(KCFINDER . 'browse.php'), $matches)

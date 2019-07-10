@@ -25,7 +25,7 @@ class PagesWidgetsCell extends Cell
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadModel('MeCms.Pages');
     }
@@ -35,7 +35,7 @@ class PagesWidgetsCell extends Cell
      * @param string $render Render type (`form` or `list`)
      * @return void
      */
-    public function categories($render = 'form')
+    public function categories(string $render = 'form'): void
     {
         $this->viewBuilder()->setTemplate(sprintf('categories_as_%s', $render));
 
@@ -60,7 +60,7 @@ class PagesWidgetsCell extends Cell
      * Pages list widget
      * @return void
      */
-    public function pages()
+    public function pages(): void
     {
         //Returns on pages index
         if ($this->request->isUrl(['_name' => 'pagesCategories'])) {

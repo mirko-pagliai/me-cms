@@ -58,7 +58,7 @@ class UsersControllerTest extends ControllerTestCase
      * @param string|null $className Controller class name
      * @param array|null $methods The list of methods to mock
      * @param string $alias Controller alias
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Cake\Controller\Controller|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function getMockForController($className = null, $methods = null, $alias = 'Users')
     {
@@ -208,7 +208,7 @@ class UsersControllerTest extends ControllerTestCase
         //With an invalid token
         $this->expectException(RecordNotFoundException::class);
         $this->expectExceptionMessage('Invalid token');
-        $this->Controller->activation(1, 'invalidToken');
+        $this->Controller->activation('1', 'invalidToken');
     }
 
     /**
@@ -395,7 +395,7 @@ class UsersControllerTest extends ControllerTestCase
         //With an invalid token
         $this->expectException(RecordNotFoundException::class);
         $this->expectExceptionMessage('Invalid token');
-        $this->Controller->passwordReset(1, 'invalidToken');
+        $this->Controller->passwordReset('1', 'invalidToken');
     }
 
     /**

@@ -55,7 +55,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -66,7 +66,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      * Called after every test method
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

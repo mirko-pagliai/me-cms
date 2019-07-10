@@ -27,20 +27,20 @@ class BackupsControllerTest extends ControllerTestCase
     /**
      * Internal method to create a backup file
      * @param string $extension Extension
-     * @return string File path
+     * @return string|null File path
      */
-    protected function createSingleBackup($extension = 'sql')
+    protected function createSingleBackup(string $extension = 'sql'): ?string
     {
         $file = getConfigOrFail('DatabaseBackup.target') . DS . sprintf('backup.%s', $extension);
 
-        return create_file($file) ? $file : false;
+        return create_file($file) ? $file : null;
     }
 
     /**
      * Internal method to create some backup files
      * @return array Files paths
      */
-    protected function createSomeBackups()
+    protected function createSomeBackups(): array
     {
         return array_map([$this, 'createSingleBackup'], ['sql', 'sql.gz', 'sql.bz2']);
     }
@@ -49,7 +49,7 @@ class BackupsControllerTest extends ControllerTestCase
      * Called after every test method
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

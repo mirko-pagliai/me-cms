@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Http\Response;
 use MeCms\Controller\AppController;
 
 /**
@@ -23,12 +24,11 @@ class UsersGroupsController extends AppController
 {
     /**
      * Check if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admins can access this controller
         return $this->Auth->isGroup('admin');
@@ -38,7 +38,7 @@ class UsersGroupsController extends AppController
      * Lists usersGroups
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->paginate['order'] = ['name' => 'ASC'];
 
@@ -49,7 +49,7 @@ class UsersGroupsController extends AppController
 
     /**
      * Adds users group
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function add()
     {
@@ -73,9 +73,9 @@ class UsersGroupsController extends AppController
     /**
      * Edits users group
      * @param string $id Users Group ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         $group = $this->UsersGroups->get($id);
 
@@ -97,9 +97,9 @@ class UsersGroupsController extends AppController
     /**
      * Deletes users group
      * @param string $id Users Group ID
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
-    public function delete($id)
+    public function delete(string $id): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
 
@@ -108,7 +108,6 @@ class UsersGroupsController extends AppController
         //Before deleting, checks if the group is a necessary group or if the group has some users
         if ($id > 3 && !$group->user_count) {
             $this->UsersGroups->deleteOrFail($group);
-
             $this->Flash->success(I18N_OPERATION_OK);
         } else {
             $this->Flash->alert($id <= 3 ? __d('me_cms', 'You cannot delete this users group') : I18N_BEFORE_DELETE);

@@ -31,13 +31,13 @@ class AppView extends View
     /**
      * Internal method to set some blocks
      * @return void
+     * @uses \MeCms\View\View::getTitleForLayout()
+     * @uses \MeTools\View\Helper\HtmlHelper::meta()
+     * @uses \MeTools\View\Helper\LibraryHelper::analytics()
+     * @uses \MeTools\View\Helper\LibraryHelper::shareaholic()
      * @uses $userbar
-     * @uses MeCms\View\View::getTitleForLayout()
-     * @uses MeTools\View\Helper\HtmlHelper::meta()
-     * @uses MeTools\View\Helper\LibraryHelper::analytics()
-     * @uses MeTools\View\Helper\LibraryHelper::shareaholic()
      */
-    protected function setBlocks()
+    protected function setBlocks(): void
     {
         //Sets the "theme color" (the toolbar color for some mobile browser)
         if (getConfig('default.toolbar_color')) {
@@ -75,10 +75,8 @@ class AppView extends View
     /**
      * Initialization hook method
      * @return void
-     * @see http://api.cakephp.org/3.7/class-Cake.View.View.html#_initialize
-     * @uses MeCms\View\View::initialize()
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -95,9 +93,8 @@ class AppView extends View
      * @param string $content Content to render in a view, wrapped by the
      *  surrounding layout
      * @param string|null $layout Layout name
-     * @return mixed Rendered output, or false on error
-     * @see http://api.cakephp.org/3.7/class-Cake.View.View.html#_renderLayout
-     * @uses MeCms\View\View::renderLayout()
+     * @return string Rendered output.
+     * @uses \MeCms\View\View::renderLayout()
      * @uses setBlocks()
      * @uses userbar()
      */

@@ -41,7 +41,7 @@ abstract class CellTestCase extends TestCase
      * @uses $Widget
      * @uses $autoInitializeClass
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

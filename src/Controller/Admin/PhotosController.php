@@ -16,6 +16,7 @@ namespace MeCms\Controller\Admin;
 use Cake\Event\Event;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Exception\InternalErrorException;
+use Cake\Http\Response;
 use MeCms\Controller\AppController;
 
 /**
@@ -29,9 +30,8 @@ class PhotosController extends AppController
      * You can use this method to perform logic that needs to happen before
      *   each controller action.
      * @param \Cake\Event\Event $event An Event instance
-     * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\PhotosAlbums::getList()
+     * @return \Cake\Http\Response|null|void
+     * @uses \MeCms\Model\Table\PhotosAlbums::getList()
      */
     public function beforeFilter(Event $event)
     {
@@ -51,12 +51,11 @@ class PhotosController extends AppController
 
     /**
      * Check if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admins and managers can delete photos
         return $this->request->isDelete() ? $this->Auth->isGroup(['admin', 'manager']) : true;
@@ -66,10 +65,10 @@ class PhotosController extends AppController
      * Lists photos.
      *
      * This action can use the `index_as_grid` template.
-     * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Model\Table\PhotosTable::queryFromFilter()
+     * @return void
+     * @uses \MeCms\Model\Table\PhotosTable::queryFromFilter()
      */
-    public function index()
+    public function index(): void
     {
         //The "render" type can set by query or by cookies
         $render = $this->request->getQuery('render', $this->request->getCookie('render-photos'));
@@ -94,12 +93,12 @@ class PhotosController extends AppController
 
     /**
      * Uploads photos
-     * @return null
+     * @return void
      * @throws \Cake\Http\Exception\InternalErrorException
-     * @uses MeCms\Controller\AppController::setUploadError()
-     * @uses MeTools\Controller\Component\UploaderComponent
+     * @uses \MeCms\Controller\AppController::setUploadError()
+     * @uses \MeTools\Controller\Component\UploaderComponent
      */
-    public function upload()
+    public function upload(): void
     {
         $album = $this->request->getQuery('album');
         $albums = $this->viewVars['albums']->toArray();
@@ -118,7 +117,9 @@ class PhotosController extends AppController
                 ->save(PHOTOS . $album);
 
             if (!$uploaded) {
-                return $this->setUploadError($this->Uploader->getError());
+                $this->setUploadError($this->Uploader->getError());
+
+                return;
             }
 
             $entity = $this->Photos->newEntity([
@@ -127,7 +128,9 @@ class PhotosController extends AppController
             ]);
 
             if ($entity->getErrors()) {
-                return $this->setUploadError(array_value_first_recursive($entity->getErrors()));
+                $this->setUploadError(array_value_first_recursive($entity->getErrors()));
+
+                return;
             }
 
             if (!$this->Photos->save($entity)) {
@@ -139,9 +142,9 @@ class PhotosController extends AppController
     /**
      * Edits photo
      * @param string $id Photo ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         $photo = $this->Photos->get($id);
 
@@ -163,9 +166,9 @@ class PhotosController extends AppController
     /**
      * Downloads photo
      * @param string $id Photo ID
-     * @return \Cake\Network\Response
+     * @return \Cake\Http\Response
      */
-    public function download($id)
+    public function download(string $id): Response
     {
         return $this->response->withFile($this->Photos->get($id)->path, ['download' => true]);
     }
@@ -173,12 +176,11 @@ class PhotosController extends AppController
     /**
      * Deletes photo
      * @param string $id Photo ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null
      */
-    public function delete($id)
+    public function delete(string $id): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
-
         $photo = $this->Photos->get($id);
         $this->Photos->deleteOrFail($photo);
         $this->Flash->success(I18N_OPERATION_OK);

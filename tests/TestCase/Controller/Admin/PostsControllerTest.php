@@ -49,7 +49,7 @@ class PostsControllerTest extends ControllerTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         create_kcfinder_files();
 

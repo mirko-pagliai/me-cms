@@ -27,6 +27,7 @@ class SystemsControllerTest extends ControllerTestCase
      *
      * If uses the same cache keys used by `createSomeTemporaryData()`.
      * @see createSomeTemporaryData()
+     * @return void
      */
     public function assertCacheIsEmpty()
     {
@@ -38,7 +39,7 @@ class SystemsControllerTest extends ControllerTestCase
      *  sitemap, thumbnails)
      * @return array Files
      */
-    protected function createSomeTemporaryData()
+    protected function createSomeTemporaryData(): array
     {
         //Writes some cache data
         Cache::write('value', 'data');
@@ -62,7 +63,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         create_kcfinder_files();
         I18n::setLocale('en_US');
@@ -74,7 +75,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Called after every test method
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         Cache::clearAll();
 

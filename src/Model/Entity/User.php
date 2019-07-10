@@ -58,7 +58,7 @@ class User extends Entity
      * Gets the full name (virtual field)
      * @return string|null
      */
-    protected function _getFullName()
+    protected function _getFullName(): ?string
     {
         if (empty($this->_properties['first_name']) || empty($this->_properties['last_name'])) {
             return null;
@@ -71,7 +71,7 @@ class User extends Entity
      * Gets the picture (virtual field)
      * @return string
      */
-    protected function _getPicture()
+    protected function _getPicture(): string
     {
         if (!empty($this->_properties['id'])) {
             $files = ((new Folder(USER_PICTURES))->find($this->_properties['id'] . '\..+'));
@@ -94,7 +94,7 @@ class User extends Entity
      * @param string $password Password
      * @return string Hash
      */
-    protected function _setPassword($password)
+    protected function _setPassword(string $password): string
     {
         return (new DefaultPasswordHasher())->hash($password);
     }

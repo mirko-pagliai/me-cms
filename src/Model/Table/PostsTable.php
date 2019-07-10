@@ -57,9 +57,8 @@ class PostsTable extends PostsAndPagesTables
      * @param \ArrayObject $options Options
      * @return void
      * @since 2.15.2
-     * @uses \MeCms\Model\Table\AppTable::getList()
      */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
     {
         if (!empty($data['tags_as_string'])) {
             //Gets existing tags
@@ -71,7 +70,6 @@ class PostsTable extends PostsAndPagesTables
             //If a tag exists in the database, it sets also the tag ID
             foreach ($tags as $k => $tag) {
                 $id = array_search($tag, $existingTags);
-
                 if ($id) {
                     $data['tags'][$k]['id'] = $id;
                 }
@@ -87,7 +85,7 @@ class PostsTable extends PostsAndPagesTables
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         return $rules->add($rules->existsIn(['category_id'], 'Categories', I18N_SELECT_VALID_OPTION))
             ->add($rules->existsIn(['user_id'], 'Users', I18N_SELECT_VALID_OPTION))
@@ -102,7 +100,7 @@ class PostsTable extends PostsAndPagesTables
      * @return \Cake\ORM\Query Query object
      * @since 2.22.8
      */
-    public function findForIndex(Query $query, array $options)
+    public function findForIndex(Query $query, array $options): Query
     {
         return $query->contain([
                 $this->Categories->getAlias() => ['fields' => ['title', 'slug']],
@@ -124,7 +122,7 @@ class PostsTable extends PostsAndPagesTables
      * @uses queryForRelated()
      * @uses $cache
      */
-    public function getRelated(Post $post, $limit = 5, $images = true)
+    public function getRelated(Post $post, int $limit = 5, bool $images = true): array
     {
         key_exists_or_fail(['id', 'tags'], $post->toArray(), __d('me_cms', 'ID or tags of the post are missing'));
 
@@ -169,7 +167,7 @@ class PostsTable extends PostsAndPagesTables
      * @param array $config The configuration for the table
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -205,10 +203,10 @@ class PostsTable extends PostsAndPagesTables
      * Gets the query for related posts from a tag ID
      * @param int $tagId Tag ID
      * @param bool $onlyWithImages If `true`, gets only posts with images
-     * @return \Cake\ORM\Query The query builder
+     * @return \Cake\ORM\Query $query Query object
      * @since 2.23.0
      */
-    public function queryForRelated($tagId, $onlyWithImages = true)
+    public function queryForRelated(int $tagId, bool $onlyWithImages = true): Query
     {
         $query = $this->find('active')
             ->select(['id', 'title', 'preview', 'slug', 'text'])
@@ -228,9 +226,8 @@ class PostsTable extends PostsAndPagesTables
      * @param \Cake\ORM\Query $query Query object
      * @param array $data Filter data ($this->request->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
-     * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
-    public function queryFromFilter(Query $query, array $data = [])
+    public function queryFromFilter(Query $query, array $data = []): Query
     {
         $query = parent::queryFromFilter($query, $data);
 

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace MeCms\Controller\Admin;
 
 use Cake\Filesystem\Folder;
+use Cake\Http\Response;
 use Cake\ORM\Entity;
 use MeCms\Controller\AppController;
 
@@ -28,7 +29,7 @@ class LogsController extends AppController
      * @param bool $serialized `true` for a serialized log
      * @return string
      */
-    protected function getPath($filename, $serialized)
+    protected function getPath(string $filename, bool $serialized): string
     {
         if ($serialized) {
             $filename = pathinfo($filename, PATHINFO_FILENAME) . '_serialized.log';
@@ -42,9 +43,10 @@ class LogsController extends AppController
      * @param string $filename Filename
      * @param bool $serialized `true` for a serialized log
      * @return string|array Log as array for serialized logs, otherwise a string
+     * @throws \Tools\Exception\NotReadableException
      * @uses getPath()
      */
-    protected function read($filename, $serialized)
+    protected function read(string $filename, bool $serialized)
     {
         $log = $this->getPath($filename, $serialized);
         is_readable_or_fail($log);
@@ -55,12 +57,11 @@ class LogsController extends AppController
 
     /**
      * Check if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admins can access this controller
         return $this->Auth->isGroup('admin');
@@ -71,17 +72,16 @@ class LogsController extends AppController
      * @return void
      * @uses getPath()
      */
-    public function index()
+    public function index(): void
     {
         //Gets all log files, except those serialized
-        $logs = collection((new Folder(LOGS))->find('(?!.*_serialized).+\.log'))
-            ->map(function ($log) {
-                return new Entity([
-                    'filename' => $log,
-                    'hasSerialized' => is_readable($this->getPath($log, true)),
-                    'size' => filesize(LOGS . $log),
-                ]);
-            });
+        $logs = array_map(function (string $log) {
+            return new Entity([
+                'filename' => $log,
+                'hasSerialized' => is_readable($this->getPath($log, true)),
+                'size' => filesize(LOGS . $log),
+            ]);
+        }, (new Folder(LOGS))->find('(?!.*_serialized).+\.log'));
 
         $this->set(compact('logs'));
     }
@@ -92,7 +92,7 @@ class LogsController extends AppController
      * @return void
      * @uses read()
      */
-    public function view($filename)
+    public function view(string $filename): void
     {
         $serialized = false;
 
@@ -109,10 +109,10 @@ class LogsController extends AppController
     /**
      * Downloads a log
      * @param string $filename Log filename
-     * @return \Cake\Network\Response
+     * @return \Cake\Http\Response
      * @uses getPath()
      */
-    public function download($filename)
+    public function download(string $filename): Response
     {
         return $this->response->withFile($this->getPath($filename, false), ['download' => true]);
     }
@@ -121,10 +121,10 @@ class LogsController extends AppController
      * Deletes a log.
      * If there's even a serialized log copy, it also deletes that.
      * @param string $filename Filename
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      * @uses getPath()
      */
-    public function delete($filename)
+    public function delete(string $filename): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
 

@@ -33,7 +33,7 @@ trait GetPreviewsFromTextTrait
      * @return array
      * @since 2.23.0
      */
-    protected function extractImages($html)
+    protected function extractImages(string $html): array
     {
         if (empty($html)) {
             return [];
@@ -73,7 +73,7 @@ trait GetPreviewsFromTextTrait
      * @param string $image Image url or path
      * @return array Array with width and height
      */
-    protected function getPreviewSize($image)
+    protected function getPreviewSize(string $image): array
     {
         return array_slice(getimagesize($image), 0, 2);
     }
@@ -88,7 +88,7 @@ trait GetPreviewsFromTextTrait
      * @uses extractImages()
      * @uses getPreviewSize()
      */
-    public function getPreviews($html)
+    public function getPreviews(string $html): array
     {
         $images = array_map(function ($url) {
             if ($url && !is_url($url)) {

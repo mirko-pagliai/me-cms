@@ -27,7 +27,7 @@ class PostsWidgetsCell extends Cell
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadModel('MeCms.Posts');
     }
@@ -37,7 +37,7 @@ class PostsWidgetsCell extends Cell
      * @param string $render Render type (`form` or `list`)
      * @return void
      */
-    public function categories($render = 'form')
+    public function categories(string $render = 'form'): void
     {
         $this->viewBuilder()->setTemplate(sprintf('categories_as_%s', $render));
 
@@ -63,7 +63,7 @@ class PostsWidgetsCell extends Cell
      * @param int $limit Limit
      * @return void
      */
-    public function latest($limit = 10)
+    public function latest(int $limit = 10): void
     {
         //Returns on posts index
         if ($this->request->isUrl(['_name' => 'posts'])) {
@@ -85,7 +85,7 @@ class PostsWidgetsCell extends Cell
      * @param string $render Render type (`form` or `list`)
      * @return void
      */
-    public function months($render = 'form')
+    public function months(string $render = 'form'): void
     {
         $this->viewBuilder()->setTemplate(sprintf('months_as_%s', $render));
 
@@ -121,7 +121,7 @@ class PostsWidgetsCell extends Cell
      * Search widget
      * @return void
      */
-    public function search()
+    public function search(): void
     {
         //For this widget, control of the action takes place in the view
     }

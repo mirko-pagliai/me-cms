@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\Controller\Admin;
 
+use Cake\Http\Response;
 use MeCms\Controller\AppController;
 
 /**
@@ -23,12 +24,11 @@ class BannersPositionsController extends AppController
 {
     /**
      * Checks if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admins can access this controller
         return $this->Auth->isGroup('admin');
@@ -38,7 +38,7 @@ class BannersPositionsController extends AppController
      * Lists positions
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->paginate['order'] = ['title' => 'ASC'];
 
@@ -49,7 +49,7 @@ class BannersPositionsController extends AppController
 
     /**
      * Adds banners position
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function add()
     {
@@ -73,9 +73,9 @@ class BannersPositionsController extends AppController
     /**
      * Edits banners position
      * @param string $id Banners Position ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         $position = $this->BannersPositions->get($id);
 
@@ -97,9 +97,9 @@ class BannersPositionsController extends AppController
     /**
      * Deletes banners position
      * @param string $id Banners Position ID
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
-    public function delete($id)
+    public function delete(string $id): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
 

@@ -31,7 +31,7 @@ trait GetStartAndEndDateTrait
      *  `YYYY/MM` or `YYYY`
      * @return array Array with start and end date as `Time` instances
      */
-    protected function getStartAndEndDate($date)
+    protected function getStartAndEndDate(string $date): array
     {
         $year = $month = $day = null;
 

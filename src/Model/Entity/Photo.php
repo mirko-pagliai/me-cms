@@ -52,7 +52,7 @@ class Photo extends Entity
      * Gets the photo path (virtual field)
      * @return string|null
      */
-    protected function _getPath()
+    protected function _getPath(): ?string
     {
         if (empty($this->_properties['album_id']) || empty($this->_properties['filename'])) {
             return null;
@@ -65,7 +65,7 @@ class Photo extends Entity
      * Gets description as plain text (virtual field)
      * @return string|null
      */
-    protected function _getPlainDescription()
+    protected function _getPlainDescription(): ?string
     {
         if (empty($this->_properties['description'])) {
             return null;
@@ -83,7 +83,7 @@ class Photo extends Entity
      *  properties
      * @uses _getPath()
      */
-    protected function _getPreview()
+    protected function _getPreview(): ?Entity
     {
         $path = $this->_getPath();
 

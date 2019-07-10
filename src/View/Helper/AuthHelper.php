@@ -31,7 +31,7 @@ class AuthHelper extends Helper
      * @return void
      * @see http://api.cakephp.org/3.7/class-Cake.View.Helper.html#_initialize
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $config += ['user' => $this->getView()->getRequest()->getSession()->read('Auth.User')];
         $this->setConfig($config);
@@ -40,10 +40,10 @@ class AuthHelper extends Helper
     /**
      * Get the current user from storage
      * @param string|null $key Field to retrieve or `null`
-     * @return mixed|null Either User record or `null` if no user is logged in,
+     * @return mixed Either User record or `null` if no user is logged in,
      *  or retrieved field if key is specified
      */
-    public function user($key = null)
+    public function user(?string $key = null)
     {
         return $key ? $this->getConfig('user.' . $key) : $this->getConfig('user');
     }

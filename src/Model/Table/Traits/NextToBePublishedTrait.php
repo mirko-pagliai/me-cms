@@ -24,20 +24,20 @@ trait NextToBePublishedTrait
     /**
      * Gets from cache the timestamp of the next record to be published.
      * This value can be used to check if the cache is valid
-     * @return string|bool Timestamp or `false`
+     * @return string|null Timestamp
      */
-    public function getNextToBePublished()
+    public function getNextToBePublished(): ?string
     {
-        return Cache::read('next_to_be_published', $this->getCacheName());
+        return Cache::read('next_to_be_published', $this->getCacheName()) ?: null;
     }
 
     /**
      * Sets to cache the timestamp of the next record to be published.
      * This value can be used to check if the cache is valid
-     * @return string|bool Timestamp or `false`
+     * @return string|null Timestamp
      * @uses $cache
      */
-    public function setNextToBePublished()
+    public function setNextToBePublished(): ?string
     {
         $next = $this->find()
             ->where([
@@ -48,7 +48,7 @@ trait NextToBePublishedTrait
             ->extract('created')
             ->first();
 
-        $next = $next ? $next->toUnixString() : false;
+        $next = $next ? $next->toUnixString() : null;
 
         Cache::write('next_to_be_published', $next, $this->getCacheName());
 

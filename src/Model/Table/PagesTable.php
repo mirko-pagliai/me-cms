@@ -46,7 +46,7 @@ class PagesTable extends PostsAndPagesTables
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         return $rules->add($rules->existsIn(['category_id'], 'Categories', I18N_SELECT_VALID_OPTION))
             ->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED))
@@ -58,7 +58,7 @@ class PagesTable extends PostsAndPagesTables
      * @param array $config The configuration for the table
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 

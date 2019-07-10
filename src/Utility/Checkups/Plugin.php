@@ -25,10 +25,10 @@ class Plugin extends AbstractCheckup
     /**
      * Returns the version number for each plugin
      * @return array
-     * @uses MeCms\Core\Plugin::all()
-     * @uses MeCms\Core\Plugin::path()
+     * @uses \MeCms\Core\Plugin::all()
+     * @uses \MeCms\Core\Plugin::path()
      */
-    public function versions()
+    public function versions(): array
     {
         $Plugin = new BasePlugin();
 

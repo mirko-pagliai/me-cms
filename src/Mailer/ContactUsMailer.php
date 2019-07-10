@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         MeCms\Controller\SystemsController::contactUs()
- * @see         MeCms\Form\ContactUsForm
  */
 namespace MeCms\Mailer;
 
@@ -29,8 +27,9 @@ class ContactUsMailer extends Mailer
      *  and `message` keys.
      * @param array $data Form data
      * @return void
+     * @see \MeCms\Controller\SystemsController::contactUs()
      */
-    public function contactUsMail($data)
+    public function contactUsMail(array $data): void
     {
         //Checks that all required data is present
         key_exists_or_fail(['email', 'first_name', 'last_name', 'message'], $data);

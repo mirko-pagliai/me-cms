@@ -30,9 +30,9 @@ class Plugin extends CakePlugin
      *  - `order`, if `true` the plugins will be sorted.
      * @param array $options Options
      * @return array Plugins
-     * @uses MeTools\Core\Plugin::all()
+     * @uses \MeTools\Core\Plugin::all()
      */
-    public static function all(array $options = [])
+    public static function all(array $options = []): array
     {
         $options = array_merge(['order' => true], $options);
         $plugins = parent::all($options);

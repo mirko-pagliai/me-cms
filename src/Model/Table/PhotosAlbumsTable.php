@@ -38,9 +38,8 @@ class PhotosAlbumsTable extends AppTable
      * @param \Cake\ORM\Entity $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options): void
     {
         //Deletes the directory
         @rmdir($entity->path);
@@ -54,9 +53,8 @@ class PhotosAlbumsTable extends AppTable
      * @param \Cake\ORM\Entity $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses MeCms\Model\Table\AppTable::afterSave()
      */
-    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options): void
     {
         //Creates the folder
         @mkdir($entity->path, 0777, true);
@@ -70,7 +68,7 @@ class PhotosAlbumsTable extends AppTable
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         return $rules->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED))
             ->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
@@ -82,7 +80,7 @@ class PhotosAlbumsTable extends AppTable
      * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query, array $options)
+    public function findActive(Query $query, array $options): Query
     {
         return $query->matching($this->Photos->getAlias(), function (Query $q) {
             return $q->find('active');
@@ -94,7 +92,7 @@ class PhotosAlbumsTable extends AppTable
      * @param array $config The configuration for the table
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 

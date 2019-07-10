@@ -15,6 +15,9 @@ namespace MeCms\Model\Table;
 
 use Tokens\Model\Table\TokensTable as BaseTokensTable;
 
+/**
+ * Tokens model
+ */
 class TokensTable extends BaseTokensTable
 {
 }

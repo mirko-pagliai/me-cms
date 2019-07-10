@@ -40,7 +40,7 @@ abstract class PostAndPageEntity extends Entity
      * Gets text as plain text (virtual field)
      * @return string|null
      */
-    protected function _getPlainText()
+    protected function _getPlainText(): ?string
     {
         if (empty($this->_properties['text'])) {
             return null;

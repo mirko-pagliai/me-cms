@@ -25,7 +25,7 @@ class PhotosAlbumsController extends AppController
 {
     /**
      * Lists albums
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function index()
     {
@@ -50,9 +50,9 @@ class PhotosAlbumsController extends AppController
     /**
      * Views album
      * @param string $slug Album slug
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function view($slug)
+    public function view(string $slug)
     {
         //Data can be passed as query string, from a widget
         if ($this->request->getQuery('q')) {

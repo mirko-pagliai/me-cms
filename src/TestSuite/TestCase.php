@@ -25,7 +25,7 @@ abstract class TestCase extends BaseTestCase
      * Called after every test method
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

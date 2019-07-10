@@ -42,7 +42,7 @@ class PostsWidgetsCellTest extends CellTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

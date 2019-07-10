@@ -20,6 +20,7 @@ use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
+use Cake\ORM\Query;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Table\Traits\GetPreviewsFromTextTrait;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
@@ -41,7 +42,7 @@ abstract class PostsAndPagesTables extends AppTable
      * @return \Cake\Database\Schema\TableSchema TableSchema instance
      * @since 2.17.0
      */
-    protected function _initializeSchema(TableSchema $schema)
+    protected function _initializeSchema(TableSchema $schema): TableSchema
     {
         return $schema->setColumnType('preview', 'jsonEntity');
     }
@@ -52,10 +53,9 @@ abstract class PostsAndPagesTables extends AppTable
      * @param \Cake\ORM\Entity $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses MeCms\Model\Table\AppTable::afterDelete()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
+     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
+    public function afterDelete(Event $event, Entity $entity, ArrayObject $options): void
     {
         parent::afterDelete($event, $entity, $options);
 
@@ -69,10 +69,9 @@ abstract class PostsAndPagesTables extends AppTable
      * @param \Cake\ORM\Entity $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses MeCms\Model\Table\AppTable::afterSave()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
+     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options): void
     {
         parent::afterSave($event, $entity, $options);
 
@@ -87,10 +86,9 @@ abstract class PostsAndPagesTables extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @since 2.17.0
-     * @uses MeCms\Model\Table\AppTable::beforeSave()
-     * @uses MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreviews()
+     * @uses \MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreviews()
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options): void
     {
         parent::beforeSave($event, $entity, $options);
 
@@ -105,10 +103,10 @@ abstract class PostsAndPagesTables extends AppTable
      *  Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
      * @uses getCacheName()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
+     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
+     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function find($type = 'all', $options = [])
+    public function find($type = 'all', $options = []): Query
     {
         //Gets from cache the timestamp of the next record to be published
         $next = $this->getNextToBePublished();

@@ -26,7 +26,7 @@ abstract class AbstractCheckup
      * @param array $paths Paths to check
      * @return array Array with paths as keys and boolean as value
      */
-    protected function _isWriteable($paths)
+    protected function _isWriteable(array $paths): array
     {
         foreach ((array)$paths as $path) {
             $result[$path] = is_writable_resursive($path);

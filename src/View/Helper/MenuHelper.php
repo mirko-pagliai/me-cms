@@ -34,9 +34,9 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "posts" actions
-     * @return mixed Array with links, title and title options
+     * @return array Links, title and title options
      */
-    public function posts()
+    public function posts(): array
     {
         $params = ['controller' => 'Posts', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
         $links[] = [__d('me_cms', 'List posts'), ['action' => 'index'] + $params];
@@ -59,9 +59,9 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "pages" actions
-     * @return mixed Array with links, title and title options
+     * @return array Links, title and title options
      */
-    public function pages()
+    public function pages(): array
     {
         $params = ['controller' => 'Pages', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
         $links[] = [__d('me_cms', 'List pages'), ['action' => 'index'] + $params];
@@ -85,9 +85,9 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "photos" actions
-     * @return mixed Array with links, title and title options
+     * @return array Links, title and title options
      */
-    public function photos()
+    public function photos(): array
     {
         $params = ['controller' => 'Photos', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
         $links[] = [__d('me_cms', 'List photos'), ['action' => 'index'] + $params];
@@ -102,13 +102,13 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "banners" actions
-     * @return mixed Array with links, title and title options
+     * @return array Links, title and title options
      */
-    public function banners()
+    public function banners(): array
     {
         //Only admins and managers can access these controllers
         if (!$this->Auth->isGroup(['admin', 'manager'])) {
-            return;
+            return [];
         }
 
         $params = ['controller' => 'Banners', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
@@ -127,13 +127,13 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "users" actions
-     * @return mixed Array with links, title and title options
+     * @return array Links, title and title options
      */
-    public function users()
+    public function users(): array
     {
         //Only admins and managers can access this controller
         if (!$this->Auth->isGroup(['admin', 'manager'])) {
-            return;
+            return [];
         }
 
         $params = ['controller' => 'Users', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
@@ -152,13 +152,13 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "backups" actions
-     * @return mixed Array with links, title and title options
+     * @return array Links, title and title options
      */
-    public function backups()
+    public function backups(): array
     {
         //Only admins can access this controller
         if (!$this->Auth->isGroup('admin')) {
-            return;
+            return [];
         }
 
         $params = ['controller' => 'Backups', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
@@ -170,13 +170,13 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "systems" actions
-     * @return mixed Array with links, title and title options
+     * @return array Links, title and title options
      */
-    public function systems()
+    public function systems(): array
     {
         //Only admins and managers can access this controller
         if (!$this->Auth->isGroup(['admin', 'manager'])) {
-            return;
+            return [];
         }
 
         $params = ['controller' => 'Systems', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];

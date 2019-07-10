@@ -32,7 +32,7 @@ class PHP extends AbstractCheckup
      * @return array Array with extension name as key and boolean as value
      * @uses $extensionsToCheck
      */
-    public function extensions()
+    public function extensions(): array
     {
         foreach ($this->extensionsToCheck as $extension) {
             $extensions[$extension] = extension_loaded($extension);

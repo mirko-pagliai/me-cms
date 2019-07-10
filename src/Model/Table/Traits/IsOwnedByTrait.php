@@ -27,10 +27,10 @@ trait IsOwnedByTrait
      * </code>
      * it checks if the posts with ID 2 belongs to the user with ID 4.
      * @param int $recordId Record ID
-     * @param int $userId User ID
+     * @param int|null $userId User ID
      * @return bool
      */
-    public function isOwnedBy($recordId, $userId = null)
+    public function isOwnedBy(int $recordId, ?int $userId = null): bool
     {
         return (bool)$this->find()
             ->where(['id' => $recordId, 'user_id' => $userId])

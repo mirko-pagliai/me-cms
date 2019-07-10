@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         MeCms\Controller\SystemsController::contactUs()
- * @see         MeCms\Mailer\ContactUsMailer
  */
 namespace MeCms\Form;
 
@@ -23,6 +21,8 @@ use StopSpam\SpamDetector;
 
 /**
  * ContactUsForm class
+ * @see \MeCms\Controller\SystemsController::contactUs()
+ * @see \MeCms\Mailer\ContactUsMailer
  */
 class ContactUsForm extends Form
 {
@@ -34,7 +34,7 @@ class ContactUsForm extends Form
      * @param \Cake\Validation\Validator $validator Validator instance
      * @return \MeCms\Validation\AppValidator
      */
-    protected function _buildValidator(Validator $validator)
+    protected function _buildValidator(Validator $validator): AppValidator
     {
         $validator = new AppValidator();
 
@@ -73,7 +73,7 @@ class ContactUsForm extends Form
      * @param array $data Form data
      * @return bool
      */
-    protected function _execute(array $data)
+    protected function _execute(array $data): array
     {
         return $this->getMailer('MeCms.ContactUs')->send('contactUsMail', [$data]);
     }

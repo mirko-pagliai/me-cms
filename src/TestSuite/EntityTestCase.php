@@ -39,7 +39,7 @@ abstract class EntityTestCase extends TestCase
      * @return void
      * @uses $Entity
      */
-    public function assertHasNoAccessibleProperty($property)
+    public function assertHasNoAccessibleProperty($property): void
     {
         $this->Entity ?: $this->fail('The property `$this->Entity` has not been set');
 
@@ -54,7 +54,7 @@ abstract class EntityTestCase extends TestCase
      * @return void
      * @uses $Entity
      */
-    public function assertHasVirtualField($virtualField)
+    public function assertHasVirtualField($virtualField): void
     {
         $this->Entity ?: $this->fail('The property `$this->Entity` has not been set');
 
@@ -69,7 +69,7 @@ abstract class EntityTestCase extends TestCase
      * @uses $Entity
      * @uses $autoInitializeClass
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

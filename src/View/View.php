@@ -35,7 +35,7 @@ class View extends AppView
      * @return string Title
      * @uses $titleForLayout
      */
-    protected function getTitleForLayout()
+    protected function getTitleForLayout(): string
     {
         if (!empty($this->titleForLayout)) {
             return $this->titleForLayout;
@@ -65,10 +65,8 @@ class View extends AppView
     /**
      * Initialization hook method
      * @return void
-     * @see http://api.cakephp.org/3.7/class-Cake.View.View.html#_initialize
-     * @uses App\View\AppView::initialize()
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -95,9 +93,8 @@ class View extends AppView
      * @param string $content Content to render in a view, wrapped by the
      *  surrounding layout
      * @param string|null $layout Layout name
-     * @return mixed Rendered output, or false on error
-     * @see http://api.cakephp.org/3.7/class-Cake.View.View.html#_renderLayout
-     * @uses MeTools\View\Helper\HtmlHelper::meta()
+     * @return string Rendered output.
+     * @uses \MeTools\View\Helper\HtmlHelper::meta()
      * @uses getTitleForLayout()
      */
     public function renderLayout($content, $layout = null)

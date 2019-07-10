@@ -29,8 +29,9 @@ class LogsControllerTest extends ControllerTestCase
 
     /**
      * Internal method to write some logs
+     * @return void
      */
-    protected function writeSomeLogs()
+    protected function writeSomeLogs(): void
     {
         Log::write('error', 'This is an error message');
         Log::write('critical', 'This is a critical message');

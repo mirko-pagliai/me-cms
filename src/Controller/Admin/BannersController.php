@@ -16,6 +16,7 @@ namespace MeCms\Controller\Admin;
 use Cake\Event\Event;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Exception\InternalErrorException;
+use Cake\Http\Response;
 use MeCms\Controller\AppController;
 
 /**
@@ -29,9 +30,8 @@ class BannersController extends AppController
      * You can use this method to perform logic that needs to happen before
      *   each controller action.
      * @param \Cake\Event\Event $event An Event instance
-     * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\BannersPositions::getList()
+     * @return \Cake\Http\Response|null|void
+     * @uses \MeCms\Model\Table\BannersPositions::getList()
      */
     public function beforeFilter(Event $event)
     {
@@ -51,12 +51,11 @@ class BannersController extends AppController
 
     /**
      * Check if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *   the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admins can delete banners. Admins and managers can access other actions
         return $this->Auth->isGroup($this->request->isDelete() ? ['admin'] : ['admin', 'manager']);
@@ -66,10 +65,10 @@ class BannersController extends AppController
      * Lists banners.
      *
      * This action can use the `index_as_grid` template.
-     * @return \Cake\Network\Response|null|void
+     * @return void
      * @uses \MeCms\Model\Table\BannersTable::queryFromFilter()
      */
-    public function index()
+    public function index(): void
     {
         //The "render" type can set by query or by cookies
         $render = $this->request->getQuery('render', $this->request->getCookie('render-banners'));
@@ -94,12 +93,11 @@ class BannersController extends AppController
 
     /**
      * Uploads banners
-     * @return null
+     * @return void
      * @throws \Cake\Http\Exception\InternalErrorException
-     * @uses \MeCms\Controller\AppController::setUploadError()
      * @uses \MeTools\Controller\Component\UploaderComponent
      */
-    public function upload()
+    public function upload(): void
     {
         $position = $this->request->getQuery('position');
         $positions = $this->viewVars['positions']->toArray();
@@ -118,7 +116,9 @@ class BannersController extends AppController
                 ->save(BANNERS);
 
             if (!$uploaded) {
-                return $this->setUploadError($this->Uploader->getError());
+                $this->setUploadError($this->Uploader->getError());
+
+                return;
             }
 
             $entity = $this->Banners->newEntity([
@@ -127,7 +127,9 @@ class BannersController extends AppController
             ]);
 
             if ($entity->getErrors()) {
-                return $this->setUploadError(array_value_first_recursive($entity->getErrors()));
+                $this->setUploadError(array_value_first_recursive($entity->getErrors()));
+
+                return;
             }
 
             if (!$this->Banners->save($entity)) {
@@ -139,9 +141,9 @@ class BannersController extends AppController
     /**
      * Edits banner
      * @param string $id Banner ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         $banner = $this->Banners->get($id);
 
@@ -163,9 +165,9 @@ class BannersController extends AppController
     /**
      * Downloads banner
      * @param string $id Banner ID
-     * @return \Cake\Network\Response
+     * @return \Cake\Http\Response
      */
-    public function download($id)
+    public function download(string $id): Response
     {
         return $this->response->withFile($this->Banners->get($id)->path, ['download' => true]);
     }
@@ -173,9 +175,9 @@ class BannersController extends AppController
     /**
      * Deletes banner
      * @param string $id Banner ID
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
-    public function delete($id)
+    public function delete(string $id): ?Response
     {
         $banner = $this->Banners->get($id);
 

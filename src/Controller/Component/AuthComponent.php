@@ -32,7 +32,7 @@ class AuthComponent extends CakeAuthComponent
      *  component
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $config += [
             'authenticate' => [

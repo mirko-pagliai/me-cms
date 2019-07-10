@@ -142,7 +142,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     public function testFind()
     {
         //Writes `next_to_be_published` and some data on cache
-        $anHourAgo = time() - HOUR;
+        $anHourAgo = (string)(time() - HOUR);
         Cache::write('next_to_be_published', $anHourAgo, $this->Table->getCacheName());
         Cache::write('someData', 'someValue', $this->Table->getCacheName());
 

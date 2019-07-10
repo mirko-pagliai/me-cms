@@ -164,7 +164,7 @@ class AppValidator extends Validator
      * @param string $value Field value
      * @return bool
      */
-    public function slug($value)
+    public function slug(string $value): bool
     {
         //Lowercase letters, numbers, dash. At least three chars.
         //It must contain at least one letter and must begin and end with a letter or a number.

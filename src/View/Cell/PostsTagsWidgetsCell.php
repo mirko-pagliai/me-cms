@@ -27,7 +27,7 @@ class PostsTagsWidgetsCell extends Cell
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadModel('MeCms.Tags');
     }
@@ -39,7 +39,7 @@ class PostsTagsWidgetsCell extends Cell
      * @return array
      * @throws \InvalidArgumentException
      */
-    protected function getFontSizes(array $style = [])
+    protected function getFontSizes(array $style = []): array
     {
         //Maximum and minimun font sizes we want to use
         $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
@@ -61,12 +61,12 @@ class PostsTagsWidgetsCell extends Cell
      * @uses getFontSizes()
      */
     public function popular(
-        $limit = 10,
-        $prefix = '#',
-        $render = 'cloud',
-        $shuffle = true,
+        int $limit = 10,
+        string $prefix = '#',
+        string $render = 'cloud',
+        bool $shuffle = true,
         $style = ['maxFont' => 40, 'minFont' => 12]
-    ) {
+    ): void {
         $this->viewBuilder()->setTemplate(sprintf('popular_as_%s', $render));
 
         //Returns on tags index

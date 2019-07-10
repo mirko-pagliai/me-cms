@@ -37,7 +37,7 @@ class BackupFormTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -125,12 +125,12 @@ class BackupFormTest extends TestCase
         $BackupForm->expects($this->atLeastOnce())
             ->method('getBackupExportInstance')
             ->will($this->returnCallback(function () {
-                $this->BackupExport->method('export')->will($this->returnValue(true));
+                $this->BackupExport->method('export')->will($this->returnValue('test.sql'));
 
                 return $this->BackupExport;
             }));
 
-        $this->assertTrue($BackupForm->execute(['filename' => 'test.sql']));
+        $this->assertSame('test.sql', $BackupForm->execute(['filename' => 'test.sql']));
 
         $BackupForm->expects($this->atLeastOnce())
             ->method('getBackupExportInstance')

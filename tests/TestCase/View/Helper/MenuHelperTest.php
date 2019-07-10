@@ -37,9 +37,9 @@ class MenuHelperTest extends HelperTestCase
      * @param array $links Links
      * @return array
      */
-    protected function buildLinks($links)
+    protected function buildLinks(array $links): array
     {
-        return array_map(function ($link) {
+        return array_map(function (array $link) {
             return call_user_func_array([$this->getMockForHelper(HtmlHelper::class, null), 'link'], $link);
         }, $links);
     }
@@ -129,7 +129,7 @@ class MenuHelperTest extends HelperTestCase
      */
     public function testBanners()
     {
-        $this->assertNull($this->Helper->banners());
+        $this->assertEmpty($this->Helper->banners());
 
         $expected = [
             '<a href="/me-cms/admin/banners" title="List banners">List banners</a>',
@@ -155,7 +155,7 @@ class MenuHelperTest extends HelperTestCase
      */
     public function testUsers()
     {
-        $this->assertNull($this->Helper->users());
+        $this->assertEmpty($this->Helper->users());
 
         $expected = [
             '<a href="/me-cms/admin/users" title="List users">List users</a>',
@@ -181,10 +181,10 @@ class MenuHelperTest extends HelperTestCase
      */
     public function testBackups()
     {
-        $this->assertNull($this->Helper->backups());
+        $this->assertEmpty($this->Helper->backups());
 
         $this->writeAuthOnSession(['group' => ['name' => 'manager']]);
-        $this->assertNull($this->Helper->backups());
+        $this->assertEmpty($this->Helper->backups());
 
         $this->writeAuthOnSession(['group' => ['name' => 'admin']]);
         [$links, $title, $options] = $this->Helper->backups();
@@ -202,7 +202,7 @@ class MenuHelperTest extends HelperTestCase
      */
     public function testSystems()
     {
-        $this->assertNull($this->Helper->systems());
+        $this->assertEmpty($this->Helper->systems());
 
         $this->writeAuthOnSession(['group' => ['name' => 'manager']]);
         [$links, $title, $options] = $this->Helper->systems();

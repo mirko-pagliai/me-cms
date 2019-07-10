@@ -27,10 +27,10 @@ class UserMailer extends Mailer
      * The `$user` object must contain the `email` and `full_name` properties
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
-     * @see MeCms\Controller\Admin\UsersController::activationResend()
-     * @see MeCms\Controller\Admin\UsersController::signup()
+     * @see \MeCms\Controller\Admin\UsersController::activationResend()
+     * @see \MeCms\Controller\Admin\UsersController::signup()
      */
-    public function activation(User $user)
+    public function activation(User $user): void
     {
         //Checks that all required data is present
         key_exists_or_fail(['email', 'full_name'], $user->toArray());
@@ -47,9 +47,9 @@ class UserMailer extends Mailer
      * The `$user` object must contain the `email` and `full_name` properties
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
-     * @see MeCms\Controller\Admin\UsersController::changePassword()
+     * @see \MeCms\Controller\Admin\UsersController::changePassword()
      */
-    public function changePassword(User $user)
+    public function changePassword(User $user): void
     {
         //Checks that all required data is present
         key_exists_or_fail(['email', 'full_name'], $user->toArray());
@@ -66,9 +66,9 @@ class UserMailer extends Mailer
      * The `$user` object must contain the `email` and `full_name` properties
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
-     * @see MeCms\Controller\UsersController::passwordForgot()
+     * @see \MeCms\Controller\UsersController::passwordForgot()
      */
-    public function passwordForgot(User $user)
+    public function passwordForgot(User $user): void
     {
         //Checks that all required data is present
         key_exists_or_fail(['email', 'full_name'], $user->toArray());

@@ -33,9 +33,9 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns pages urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::parse()
+     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
-    public static function pages()
+    public static function pages(): array
     {
         if (!getConfig('sitemap.pages')) {
             return [];
@@ -85,9 +85,9 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns photos urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::parse()
+     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
-    public static function photos()
+    public static function photos(): array
     {
         if (!getConfig('sitemap.photos')) {
             return [];
@@ -144,9 +144,9 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns posts urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::parse()
+     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
-    public static function posts()
+    public static function posts(): array
     {
         if (!getConfig('sitemap.posts')) {
             return [];
@@ -202,9 +202,9 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns posts tags urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::parse()
+     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
-    public static function postsTags()
+    public static function postsTags(): array
     {
         if (!getConfig('sitemap.posts_tags')) {
             return [];
@@ -244,10 +244,10 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns static pages urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::parse()
-     * @uses MeCms\Utility\StaticPage::all()
+     * @uses \MeCms\Utility\SitemapBuilder::parse()
+     * @uses \MeCms\Utility\StaticPage::all()
      */
-    public static function staticPages()
+    public static function staticPages(): array
     {
         if (!getConfig('sitemap.static_pages')) {
             return [];
@@ -261,9 +261,9 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns systems urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::parse()
+     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
-    public static function systems()
+    public static function systems(): array
     {
         if (!getConfig('sitemap.systems')) {
             return [];

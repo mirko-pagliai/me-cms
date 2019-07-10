@@ -16,6 +16,7 @@ namespace MeCms\Controller;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Http\Exception\ForbiddenException;
+use Cake\Http\Response;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
@@ -35,10 +36,8 @@ class PostsController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return void
-     * @see http://api.cakephp.org/3.7/class-Cake.Controller.Controller.html#_beforeFilter
-     * @uses MeCms\Controller\AppController::beforeFilter()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(Event $event): void
     {
         parent::beforeFilter($event);
 
@@ -49,7 +48,7 @@ class PostsController extends AppController
      * Lists posts
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $page = $this->request->getQuery('page', 1);
 
@@ -93,10 +92,10 @@ class PostsController extends AppController
      * <pre>/posts/yesterday</pre>
      * @param string $date Date as `today`, `yesterday`, `YYYY/MM/dd`,
      *  `YYYY/MM` or `YYYY`
-     * @return \Cake\Network\Response|null|void
-     * @use \MeCms\Controller\Traits\GetStartAndEndDateTrait\getStartAndEndDate()
+     * @return \Cake\Http\Response|null|void
+     * @use \MeCms\Controller\Traits\GetStartAndEndDateTrait::getStartAndEndDate()
      */
-    public function indexByDate($date)
+    public function indexByDate(string $date)
     {
         //Data can be passed as query string, from a widget
         if ($this->request->getQuery('q')) {
@@ -149,7 +148,7 @@ class PostsController extends AppController
      * @return void
      * @throws \Cake\Http\Exception\ForbiddenException
      */
-    public function rss()
+    public function rss(): void
     {
         //This method works only for RSS
         is_true_or_fail($this->RequestHandler->prefers('rss'), ForbiddenException::class);
@@ -165,7 +164,7 @@ class PostsController extends AppController
 
     /**
      * Searches posts
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
      */
     public function search()
@@ -237,9 +236,9 @@ class PostsController extends AppController
      * Views post
      * @param string $slug Post slug
      * @return void
-     * @uses MeCms\Model\Table\PostsTable::getRelated()
+     * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
-    public function view($slug)
+    public function view(string $slug): void
     {
         $post = $this->Posts->findActiveBySlug($slug)
             ->find('forIndex')
@@ -261,10 +260,10 @@ class PostsController extends AppController
      * Preview for posts.
      * It uses the `view` template.
      * @param string $slug Post slug
-     * @return void
+     * @return \Cake\Http\Response|null
      * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
-    public function preview($slug)
+    public function preview(string $slug): ?Response
     {
         $post = $this->Posts->findPendingBySlug($slug)
             ->find('forIndex')

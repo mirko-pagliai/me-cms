@@ -25,8 +25,7 @@ class AppController extends BaseAppController
     /**
      * Called before the controller action
      * @param \Cake\Event\Event $event An Event instance
-     * @return \Cake\Network\Response|null
-     * @see http://api.cakephp.org/3.7/class-Cake.Controller.Controller.html#_beforeFilter
+     * @return \Cake\Http\Response|null|void
      * @uses isSpammer()
      */
     public function beforeFilter(Event $event)
@@ -44,7 +43,7 @@ class AppController extends BaseAppController
         $this->viewBuilder()->setClassName('MeCms.View/App');
 
         //Sets the paginate limit and the maximum paginate limit
-        //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
+        //See http://book.cakephp.org/4.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = getConfigOrFail('default.records');
 
         if ($this->request->isAdmin()) {
@@ -70,7 +69,7 @@ class AppController extends BaseAppController
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         //Loads components
         //The configuration for `AuthComponent`  takes place in the same class
@@ -89,12 +88,11 @@ class AppController extends BaseAppController
 
     /**
      * Checks if the user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admin and managers can access admin actions
         if ($this->request->isAdmin()) {
@@ -110,7 +108,7 @@ class AppController extends BaseAppController
      * @return bool
      * @since 2.15.2
      */
-    protected function isSpammer()
+    protected function isSpammer(): bool
     {
         return $this->request->isSpammer() && !$this->request->isAction('ipNotAllowed', 'Systems');
     }
@@ -124,7 +122,7 @@ class AppController extends BaseAppController
      * @return void
      * @since 2.18.1
      */
-    protected function setUploadError($error)
+    protected function setUploadError(string $error): void
     {
         $this->response = $this->response->withStatus(500);
 

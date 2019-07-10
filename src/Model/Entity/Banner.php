@@ -51,7 +51,7 @@ class Banner extends Entity
      * Gets the banner full path (virtual field)
      * @return string|null
      */
-    protected function _getPath()
+    protected function _getPath(): ?string
     {
         return empty($this->_properties['filename']) ? null : BANNERS . $this->_properties['filename'];
     }
@@ -60,7 +60,7 @@ class Banner extends Entity
      * Gets the banner web address (virtual field)
      * @return string|null
      */
-    protected function _getWww()
+    protected function _getWww(): ?string
     {
         return empty($this->_properties['filename']) ? null : BANNERS_WWW . $this->_properties['filename'];
     }

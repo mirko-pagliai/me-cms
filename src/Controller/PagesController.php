@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace MeCms\Controller;
 
 use Cake\Event\Event;
+use Cake\Http\Response;
 use Cake\ORM\Entity;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
@@ -30,10 +31,8 @@ class PagesController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return void
-     * @see http://api.cakephp.org/3.7/class-Cake.Controller.Controller.html#_beforeFilter
-     * @uses MeCms\Controller\AppController::beforeFilter()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(Event $event): void
     {
         parent::beforeFilter($event);
 
@@ -49,11 +48,11 @@ class PagesController extends AppController
      *
      * Static pages must be located in `APP/View/StaticPages/`.
      * @param string $slug Page slug
-     * @return \Cake\Network\Response|void
-     * @uses MeCms\Utility\StaticPage::get()
-     * @uses MeCms\Utility\StaticPage::title()
+     * @return \Cake\Http\Response|null|void
+     * @uses \MeCms\Utility\StaticPage::get()
+     * @uses \MeCms\Utility\StaticPage::title()
      */
-    public function view($slug)
+    public function view(string $slug)
     {
         //Checks if there exists a static page
         $static = StaticPage::get($slug);
@@ -83,15 +82,16 @@ class PagesController extends AppController
      * Preview for pages.
      * It uses the `view` template.
      * @param string $slug Page slug
-     * @return void
+     * @return \Cake\Http\Response
      */
-    public function preview($slug)
+    public function preview(string $slug): Response
     {
         $page = $this->Pages->findPendingBySlug($slug)
             ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
             ->firstOrFail();
 
         $this->set(compact('page'));
-        $this->render('view');
+
+        return $this->render('view');
     }
 }

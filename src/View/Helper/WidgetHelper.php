@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\View\Helper;
 
+use Cake\View\Cell;
 use Cake\View\Helper;
 
 /**
@@ -26,7 +27,7 @@ class WidgetHelper extends Helper
      * Internal method to get all widgets
      * @return array
      */
-    protected function getAll()
+    protected function getAll(): array
     {
         $widgets = getConfig('Widgets.general', []);
 
@@ -49,19 +50,21 @@ class WidgetHelper extends Helper
 
     /**
      * Renders all widgets
-     * @return string|void Html code
+     * @return string Html code
      * @uses getAll()
      * @uses widget()
      */
-    public function all()
+    public function all(): string
     {
+        $widgets = [];
+
         foreach ($this->getAll() as $widget) {
             foreach ($widget as $name => $args) {
                 $widgets[] = $this->widget($name, $args);
             }
         }
 
-        return empty($widgets) ? null : trim(implode(PHP_EOL, $widgets));
+        return $widgets ? trim(implode(PHP_EOL, $widgets)) : '';
     }
 
     /**
@@ -71,7 +74,7 @@ class WidgetHelper extends Helper
      * @param array $options Options for Cell's constructor
      * @return \Cake\View\Cell The cell instance
      */
-    public function widget($name, array $data = [], array $options = [])
+    public function widget(string $name, array $data = [], array $options = []): Cell
     {
         $parts = explode('::', $name);
         $name = $parts[0] . 'Widgets';

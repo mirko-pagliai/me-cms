@@ -28,7 +28,7 @@ class PostsTagsController extends AppController
      * Lists posts tags
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $page = $this->request->getQuery('page', 1);
 
@@ -67,9 +67,9 @@ class PostsTagsController extends AppController
     /**
      * Lists posts for a tag
      * @param string $slug Tag slug
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function view($slug)
+    public function view(string $slug)
     {
         //Data can be passed as query string, from a widget
         if ($this->request->getQuery('q')) {

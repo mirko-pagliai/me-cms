@@ -31,7 +31,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -49,8 +49,6 @@ class GetPreviewsFromTextTraitTest extends TestCase
         };
 
         foreach ([
-            null,
-            false,
             '',
             'Text',
             '<img src=\'\'>',
@@ -155,8 +153,6 @@ class GetPreviewsFromTextTraitTest extends TestCase
         $this->Posts->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         foreach ([
-            null,
-            false,
             '',
             'Text',
             '<img src=\'\'>',

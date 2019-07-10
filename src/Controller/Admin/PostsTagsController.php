@@ -23,12 +23,11 @@ class PostsTagsController extends AppController
 {
     /**
      * Check if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admins and managers can edit tags
         return $this->request->isEdit() ? $this->Auth->isGroup(['admin', 'manager']) : true;
@@ -37,9 +36,9 @@ class PostsTagsController extends AppController
     /**
      * Lists tags
      * @return void
-     * @uses MeCms\Model\Table\Tags::queryFromFilter()
+     * @uses \MeCms\Model\Table\Tags::queryFromFilter()
      */
-    public function index()
+    public function index(): void
     {
         $query = $this->PostsTags->Tags->find()->matching('Posts');
 
@@ -56,9 +55,9 @@ class PostsTagsController extends AppController
     /**
      * Edits tag
      * @param string $id Tag ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         $tag = $this->PostsTags->Tags->get($id);
 

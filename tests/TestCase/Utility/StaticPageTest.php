@@ -36,7 +36,7 @@ class StaticPageTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -48,7 +48,7 @@ class StaticPageTest extends TestCase
      * Called after every test method
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -131,7 +131,7 @@ class StaticPageTest extends TestCase
         ], $pages);
 
         //Tries to get a no existing page
-        $this->assertFalse($this->StaticPage->get('no-Existing'));
+        $this->assertNull($this->StaticPage->get('no-Existing'));
     }
 
     /**
