@@ -40,17 +40,6 @@ abstract class ValidationTestCase extends TestCase
     protected $example;
 
     /**
-     * Test validation.
-     * It tests the proper functioning of the example data.
-     * @return void
-     * @test
-     */
-    public function testAllDataAreRequired()
-    {
-        $this->assertAllDataAreRequired($this->example);
-    }
-
-    /**
      * Assert that all data are required.
      *
      * It first verifies that the entity, compiled with passed data, has no
@@ -104,5 +93,16 @@ abstract class ValidationTestCase extends TestCase
                 $this->Table = $this->getMockForModel($alias, null, compact('className'));
             }
         }
+    }
+
+    /**
+     * Test validation.
+     * It tests the proper functioning of the example data.
+     * @return void
+     * @test
+     */
+    public function testAllDataAreRequired()
+    {
+        $this->assertAllDataAreRequired($this->example);
     }
 }
