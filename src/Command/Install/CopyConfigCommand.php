@@ -16,7 +16,6 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\Filesystem\Folder;
 use MeCms\Core\Plugin;
 use MeTools\Console\Command;
 
@@ -59,7 +58,7 @@ class CopyConfigCommand extends Command
             $this->copyFile(
                 $io,
                 Plugin::path($plugin, 'config' . DS . $file . '.php'),
-                Folder::slashTerm(CONFIG) . $file . '.php'
+                add_slash_term(CONFIG) . $file . '.php'
             );
         }
 

@@ -12,7 +12,8 @@
 * added `MeCms\AuthTrait`. It provides some methods for classes that need to
     verify the data of the logged in user;
 * added `MeCms\Validation\BannerAndPhotoValidator` abstract class;
-* added `MeCms\Validation\PageAndPostValidator` abstract class.
+* added `MeCms\Validation\PageAndPostValidator` abstract class;
+* updated for `php-tools` `1.2.6`.
 
 ### 2.26.5
 * it uses the `cakephp-stop-spam` package to detect spammers;
