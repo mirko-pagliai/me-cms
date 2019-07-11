@@ -260,7 +260,7 @@ class PostsController extends AppController
      * Preview for posts.
      * It uses the `view` template.
      * @param string $slug Post slug
-     * @return void
+     * @return \Cake\Http\Response
      * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
     public function preview($slug)
