@@ -260,10 +260,10 @@ class PostsController extends AppController
      * Preview for posts.
      * It uses the `view` template.
      * @param string $slug Post slug
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response
      * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
-    public function preview(string $slug): ?Response
+    public function preview(string $slug): Response
     {
         $post = $this->Posts->findPendingBySlug($slug)
             ->find('forIndex')
