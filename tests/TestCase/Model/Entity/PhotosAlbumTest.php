@@ -67,8 +67,11 @@ class PhotosAlbumTest extends EntityTestCase
     {
         $this->assertNull($this->Entity->get('preview'));
 
+        $path = WWW_ROOT . 'img' . DS . 'photos' . DS . '1' . DS . 'photo.jpg';
+        copy(WWW_ROOT . 'img' . DS . 'image.jpg', $path);
         $this->Entity->photos = [new Photo(['album_id' => 1, 'filename' => 'photo.jpg'])];
         $this->assertNotEmpty($this->Entity->photos[0]->path);
         $this->assertEquals($this->Entity->preview, $this->Entity->photos[0]->path);
+        unlink($path);
     }
 }

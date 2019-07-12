@@ -87,7 +87,7 @@ class SystemsController extends AppController
             $this->set('kcfinder', sprintf(
                 '%s/kcfinder/browse.php?lang=%s&type=%s',
                 Router::url('/vendor', true),
-                empty($locale) ? 'en' : $locale,
+                $locale ?: 'en',
                 $type
             ));
         }
@@ -129,13 +129,7 @@ class SystemsController extends AppController
     /**
      * System checkup
      * @return void
-     * @uses MeCms\Utility\Checkup::$Apache
-     * @uses MeCms\Utility\Checkup::$Backups
-     * @uses MeCms\Utility\Checkup::$KCFinder
-     * @uses MeCms\Utility\Checkup::$PHP
-     * @uses MeCms\Utility\Checkup::$Plugin
-     * @uses MeCms\Utility\Checkup::$TMP
-     * @uses MeCms\Utility\Checkup::$Webroot
+     * @uses MeCms\Utility\Checkup
      */
     public function checkup()
     {

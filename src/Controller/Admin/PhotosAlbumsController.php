@@ -102,10 +102,9 @@ class PhotosAlbumsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        $album = $this->PhotosAlbums->get($id);
-
         //Before deleting, it checks if the album has some photos
-        if (!$album->photo_count) {
+        $album = $this->PhotosAlbums->get($id);
+        if (!$album->get('photo_count')) {
             $this->PhotosAlbums->deleteOrFail($album);
             $this->Flash->success(I18N_OPERATION_OK);
         } else {

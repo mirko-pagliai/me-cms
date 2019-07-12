@@ -74,7 +74,7 @@ class BackupsController extends AppController
     public function index()
     {
         $backups = $this->BackupManager->index()->map(function (Entity $backup) {
-            return $backup->set('slug', urlencode($backup->filename));
+            return $backup->set('slug', urlencode($backup->get('filename')));
         });
 
         $this->set(compact('backups'));

@@ -112,9 +112,7 @@ class PostsController extends AppController
     {
         $query = $this->Posts->find()->contain([
             'Categories' => ['fields' => ['id', 'title']],
-            'Tags' => function (Query $q) {
-                return $q->order(['tag' => 'ASC']);
-            },
+            'Tags' => ['sort' => ['tag' => 'ASC']],
             'Users' => ['fields' => ['id', 'first_name', 'last_name']],
         ]);
 
@@ -163,9 +161,7 @@ class PostsController extends AppController
     public function edit($id)
     {
         $post = $this->Posts->findById($id)
-            ->contain('Tags', function (Query $q) {
-                return $q->order(['tag' => 'ASC']);
-            })
+            ->contain(['Tags' => ['sort' => ['tag' => 'ASC']]])
             ->formatResults(function (ResultSet $results) {
                 return $results->map(function (Post $post) {
                     return $post->set('created', $post->created->i18nFormat(FORMAT_FOR_MYSQL));
@@ -201,7 +197,6 @@ class PostsController extends AppController
     public function delete($id)
     {
         $this->request->allowMethod(['post', 'delete']);
-
         $this->Posts->deleteOrFail($this->Posts->get($id));
         $this->Flash->success(I18N_OPERATION_OK);
 
