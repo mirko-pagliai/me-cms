@@ -22,16 +22,6 @@ use Cake\Mailer\Mailer as CakeMailer;
 class Mailer extends CakeMailer
 {
     /**
-     * Gets the Email instance
-     * @return \Cake\Mailer\Email Email instance
-     * @since 2.15.3
-     */
-    public function getEmailInstance()
-    {
-        return $this->_email;
-    }
-
-    /**
      * Constructor
      * @param \Cake\Mailer\Email|null $email Email instance
      * @uses getEmailInstance()
@@ -40,9 +30,8 @@ class Mailer extends CakeMailer
     {
         parent::__construct($email);
 
-        $email = $this->getEmailInstance();
-        $email->viewBuilder()->setHelpers(['MeTools.Html'], false);
-        $email->setFrom(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
+        $this->_email->viewBuilder()->setHelpers(['MeTools.Html'], false);
+        $this->_email->setFrom(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
             ->setSender(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
             ->setEmailFormat('html');
     }

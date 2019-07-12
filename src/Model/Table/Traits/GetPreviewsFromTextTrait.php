@@ -91,7 +91,6 @@ trait GetPreviewsFromTextTrait
     {
         $images = array_map(function ($url) {
             if ($url && !is_url($url)) {
-                //If is relative path
                 $url = Folder::isAbsolute($url) ? $url : WWW_ROOT . 'img' . DS . $url;
 
                 if (!file_exists($url)) {

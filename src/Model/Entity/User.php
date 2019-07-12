@@ -76,16 +76,13 @@ class User extends Entity
             $files = ((new Folder(USER_PICTURES))->find($this->_properties['id'] . '\..+'));
 
             if (!empty($files)) {
-                return 'users' . DS . array_values($files)[0];
+                return 'users' . DS . array_value_first($files);
             }
         }
 
-        //Checks for `webroot/img/no-avatar.jpg`
-        if (is_readable(WWW_ROOT . 'img' . DS . 'no-avatar.jpg')) {
-            return 'no-avatar.jpg';
-        }
+        $path = 'no-avatar.jpg';
 
-        return 'MeCms.no-avatar.jpg';
+        return is_readable(WWW_ROOT . 'img' . DS . $path) ? $path : 'MeCms.' . $path;
     }
 
     /**

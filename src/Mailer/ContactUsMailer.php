@@ -28,6 +28,7 @@ class ContactUsMailer extends Mailer
      *  and `message` keys.
      * @param array $data Form data
      * @return void
+     * @throws \Tools\Exception\KeyNotExistsException
      */
     public function contactUsMail($data)
     {

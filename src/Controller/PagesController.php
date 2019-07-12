@@ -58,11 +58,11 @@ class PagesController extends AppController
         $static = StaticPage::get($slug);
 
         if ($static) {
-            $page = new Entity(array_merge([
+            $page = new Entity([
                 'category' => new Entity(['slug' => null, 'title' => null]),
                 'title' => StaticPage::title($slug),
                 'subtitle' => null,
-            ], compact('slug')));
+            ] + compact('slug'));
 
             $this->set(compact('page'));
 

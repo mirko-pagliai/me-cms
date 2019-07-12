@@ -28,16 +28,16 @@ class UserMailer extends Mailer
      * @return void
      * @see MeCms\Controller\Admin\UsersController::activationResend()
      * @see MeCms\Controller\Admin\UsersController::signup()
+     * @throws \Tools\Exception\KeyNotExistsException
      */
     public function activation(User $user)
     {
-        //Checks that all required data is present
         key_exists_or_fail(['email', 'full_name'], $user->toArray());
 
         $this->viewBuilder()->setTemplate('MeCms.Users/activation');
-        $this->setTo([$user->email => $user->full_name])
+        $this->setTo([$user->get('email') => $user->get('full_name')])
             ->setSubject(__d('me_cms', 'Activate your account'))
-            ->setViewVars(['fullName' => $user->full_name]);
+            ->setViewVars(['fullName' => $user->get('full_name')]);
     }
 
     /**
@@ -47,16 +47,16 @@ class UserMailer extends Mailer
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
      * @see MeCms\Controller\Admin\UsersController::changePassword()
+     * @throws \Tools\Exception\KeyNotExistsException
      */
     public function changePassword(User $user)
     {
-        //Checks that all required data is present
         key_exists_or_fail(['email', 'full_name'], $user->toArray());
 
         $this->viewBuilder()->setTemplate('MeCms.Users/change_password');
-        $this->setTo([$user->email => $user->full_name])
+        $this->setTo([$user->get('email') => $user->get('full_name')])
             ->setSubject(__d('me_cms', 'Your password has been changed'))
-            ->setViewVars(['fullName' => $user->full_name]);
+            ->setViewVars(['fullName' => $user->get('full_name')]);
     }
 
     /**
@@ -66,15 +66,15 @@ class UserMailer extends Mailer
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
      * @see MeCms\Controller\UsersController::passwordForgot()
+     * @throws \Tools\Exception\KeyNotExistsException
      */
     public function passwordForgot(User $user)
     {
-        //Checks that all required data is present
         key_exists_or_fail(['email', 'full_name'], $user->toArray());
 
         $this->viewBuilder()->setTemplate('MeCms.Users/password_forgot');
-        $this->setTo([$user->email => $user->full_name])
+        $this->setTo([$user->get('email') => $user->get('full_name')])
             ->setSubject(__d('me_cms', 'Reset your password'))
-            ->setViewVars(['fullName' => $user->full_name]);
+            ->setViewVars(['fullName' => $user->get('full_name')]);
     }
 }

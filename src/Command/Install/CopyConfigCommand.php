@@ -27,7 +27,7 @@ class CopyConfigCommand extends Command
     /**
      * Configuration files to be copied
      */
-    const CONFIG_FILES  = [
+    const CONFIG_FILES = [
         'MeCms.recaptcha',
         'MeCms.me_cms',
         'MeCms.widgets',

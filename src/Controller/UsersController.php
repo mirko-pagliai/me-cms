@@ -80,11 +80,10 @@ class UsersController extends AppController
      */
     protected function sendActivationMail($user)
     {
-        //Creates the token
-        $token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
+        $token = $this->Token->create($user->get('email'), ['type' => 'signup', 'user_id' => $user->get('id')]);
 
         return (bool)$this->getMailer('MeCms.User')
-            ->set('url', Router::url(['_name' => 'activation', $user->id, $token], true))
+            ->set('url', Router::url(['_name' => 'activation', $user->get('id'), $token], true))
             ->send('activation', [$user]);
     }
 
@@ -130,6 +129,7 @@ class UsersController extends AppController
     {
         $tokenExists = $this->Token->check($token, ['type' => 'signup', 'user_id' => $id]);
         is_true_or_fail($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
+        $this->Token->delete($token);
 
         $update = $this->Users->findPendingById($id)
             ->update()
@@ -141,9 +141,6 @@ class UsersController extends AppController
         } else {
             $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
-
-        //Deletes the token
-        $this->Token->delete($token);
 
         return $this->redirect(['_name' => 'login']);
     }
@@ -290,7 +287,10 @@ class UsersController extends AppController
                 $user = $this->Users->findActiveByEmail($this->request->getData('email'))->first();
 
                 if ($user) {
-                    $token = $this->Token->create($user->email, ['type' => 'password_forgot', 'user_id' => $user->id]);
+                    $token = $this->Token->create(
+                        $user->get('email'),
+                        ['type' => 'password_forgot', 'user_id' => $user->get('id')]
+                    );
                     $this->getMailer('MeCms.User')
                         ->set('url', Router::url(['_name' => 'passwordReset', $user->id, $token], true))
                         ->send('passwordForgot', [$user]);
@@ -367,8 +367,8 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
 
-            $user->group_id = getConfigOrFail('users.default_group');
-            $user->active = (bool)!getConfig('users.activation');
+            $user->set('group_id', getConfigOrFail('users.default_group'))
+                ->set('active', (bool)!getConfig('users.activation'));
 
             //Checks for reCAPTCHA, if requested
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
@@ -376,10 +376,7 @@ class UsersController extends AppController
                     switch (getConfig('users.activation')) {
                         //The account will be enabled by an administrator
                         case 2:
-                            $this->Flash->success(__d(
-                                'me_cms',
-                                'Account created, but it needs to be activated by an admin'
-                            ));
+                            $success = __d('me_cms', 'Account created, but it needs to be activated by an admin');
                             break;
                         //The account will be enabled by the user via email
                         //  (default)
@@ -387,13 +384,14 @@ class UsersController extends AppController
                             //Sends the activation mail
                             $this->sendActivationMail($user);
 
-                            $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
+                            $success = __d('me_cms', 'We send you an email to activate your account');
                             break;
                         //No activation required, the account is immediately active
                         default:
-                            $this->Flash->success(__d('me_cms', 'Account created. Now you can login'));
+                            $success = __d('me_cms', 'Account created. Now you can login');
                             break;
                     }
+                    $this->Flash->success($success);
 
                     return $this->redirect(['_name' => 'homepage']);
                 }
