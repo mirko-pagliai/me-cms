@@ -61,7 +61,6 @@ class UsersController extends AppController
     {
         parent::initialize();
 
-        //Loads components
         $this->loadComponent('MeCms.LoginRecorder');
     }
 
@@ -152,7 +151,7 @@ class UsersController extends AppController
         $user = $this->Users->get($id);
 
         //Only the admin founder can edit others admin users
-        if ($user->group_id === 1 && !$this->Auth->isFounder()) {
+        if ($user->get('group_id') === 1 && !$this->Auth->isFounder()) {
             $this->Flash->alert(I18N_ONLY_ADMIN_FOUNDER);
 
             return $this->redirect(['action' => 'index']);
@@ -184,17 +183,16 @@ class UsersController extends AppController
 
         $user = $this->Users->get($id);
 
-        //You cannot delete the admin founder
-        if ($user->id === 1) {
+        //Cannot delete the admin founder
+        if ($user->get('id') === 1) {
             $this->Flash->error(__d('me_cms', 'You cannot delete the admin founder'));
         //Only the admin founder can delete others admin users
-        } elseif ($user->group_id === 1 && !$this->Auth->isFounder()) {
+        } elseif ($user->get('group_id') === 1 && !$this->Auth->isFounder()) {
             $this->Flash->alert(I18N_ONLY_ADMIN_FOUNDER);
-        } elseif ($user->post_count) {
+        } elseif ($user->get('post_count')) {
             $this->Flash->alert(I18N_BEFORE_DELETE);
         } else {
             $this->Users->deleteOrFail($user);
-
             $this->Flash->success(I18N_OPERATION_OK);
         }
 
@@ -227,7 +225,6 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->getData());
 
             if ($this->Users->save($user)) {
-                //Sends email
                 $this->getMailer('MeCms.User')->send('changePassword', [$user]);
                 $this->Flash->success(I18N_OPERATION_OK);
 

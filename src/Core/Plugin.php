@@ -14,12 +14,12 @@ declare(strict_types=1);
  */
 namespace MeCms\Core;
 
-use MeTools\Core\Plugin as CakePlugin;
+use MeTools\Core\Plugin as BasePlugin;
 
 /**
  * An utility to handle plugins
  */
-class Plugin extends CakePlugin
+class Plugin extends BasePlugin
 {
     /**
      * Gets all loaded plugins.
@@ -34,7 +34,7 @@ class Plugin extends CakePlugin
      */
     public static function all(array $options = []): array
     {
-        $options = array_merge(['order' => true], $options);
+        $options += ['order' => true];
         $plugins = parent::all($options);
 
         if ($options['order']) {

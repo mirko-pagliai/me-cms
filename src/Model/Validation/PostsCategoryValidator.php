@@ -13,22 +13,11 @@ declare(strict_types=1);
  */
 namespace MeCms\Model\Validation;
 
-use MeCms\Validation\AppValidator;
+use MeCms\Validation\CategoryValidator;
 
 /**
  * PostsCategory validator class
  */
-class PostsCategoryValidator extends AppValidator
+class PostsCategoryValidator extends CategoryValidator
 {
-    /**
-     * Construct
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->requirePresence('title', 'create');
-
-        $this->requirePresence('slug', 'create');
-    }
 }

@@ -41,6 +41,6 @@ class BannersController extends AppController
         $this->Banners->updateAll([$expression], [compact('id')]);
 
         //Redirects
-        return $this->redirect($banner->target);
+        return $this->redirect($banner->get('target'));
     }
 }

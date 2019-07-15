@@ -135,7 +135,7 @@ class PagesCategoriesController extends AppController
         $category = $this->PagesCategories->get($id);
 
         //Before deleting, it checks if the category has some pages
-        if (!$category->page_count) {
+        if (!$category->get('page_count')) {
             $this->PagesCategories->deleteOrFail($category);
             $this->Flash->success(I18N_OPERATION_OK);
         } else {

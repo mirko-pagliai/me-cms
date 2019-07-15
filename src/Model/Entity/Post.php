@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\Model\Entity;
 
+use Cake\Utility\Hash;
 use MeCms\ORM\PostAndPageEntity;
 
 /**
@@ -51,6 +52,6 @@ class Post extends PostAndPageEntity
             return null;
         }
 
-        return implode(', ', collection($this->_properties['tags'])->extract('tag')->toList());
+        return implode(', ', Hash::extract($this->_properties['tags'], '{*}.tag'));
     }
 }

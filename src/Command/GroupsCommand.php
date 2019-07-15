@@ -56,9 +56,9 @@ class GroupsCommand extends Command
             return null;
         }
 
-        //Sets header and prints as table
-        $header = [I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS];
-        $io->helper('table')->output(array_merge([$header], $groups->toList()));
+        //Sets headers and prints as table
+        $headers = [I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS];
+        $io->helper('table')->output(array_merge([$headers], $groups->toList()));
 
         return null;
     }

@@ -154,7 +154,7 @@ class PhotosController extends AppController
             if ($this->Photos->save($photo)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect(['action' => 'index', $photo->album_id]);
+                return $this->redirect(['action' => 'index', $photo->get('album_id')]);
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -185,6 +185,6 @@ class PhotosController extends AppController
         $this->Photos->deleteOrFail($photo);
         $this->Flash->success(I18N_OPERATION_OK);
 
-        return $this->redirect(['action' => 'index', $photo->album_id]);
+        return $this->redirect(['action' => 'index', $photo->get('album_id')]);
     }
 }

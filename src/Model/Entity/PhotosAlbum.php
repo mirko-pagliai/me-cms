@@ -64,6 +64,6 @@ class PhotosAlbum extends Entity
             return null;
         }
 
-        return collection($this->_properties['photos'])->extract('path')->first();
+        return array_value_first($this->_properties['photos'])->get('path');
     }
 }

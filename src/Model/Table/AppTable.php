@@ -91,8 +91,10 @@ class AppTable extends Table
      */
     public function findActive(Query $query, array $options): Query
     {
-        return $query->where([sprintf('%s.active', $this->getAlias()) => true])
-            ->where([sprintf('%s.created <=', $this->getAlias()) => new Time()]);
+        return $query->where([
+            sprintf('%s.active', $this->getAlias()) => true,
+            sprintf('%s.created <=', $this->getAlias()) => new Time(),
+        ]);
     }
 
     /**

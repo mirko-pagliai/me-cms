@@ -95,7 +95,6 @@ class LogsController extends AppController
     public function view(string $filename): void
     {
         $serialized = false;
-
         if ($this->request->getQuery('as') === 'serialized') {
             $serialized = true;
             $this->viewBuilder()->setTemplate('view_as_serialized');

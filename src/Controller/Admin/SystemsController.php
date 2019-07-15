@@ -87,7 +87,7 @@ class SystemsController extends AppController
             $this->set('kcfinder', sprintf(
                 '%s/kcfinder/browse.php?lang=%s&type=%s',
                 Router::url('/vendor', true),
-                empty($locale) ? 'en' : $locale,
+                $locale ?: 'en',
                 $type
             ));
         }

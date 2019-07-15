@@ -23,18 +23,16 @@ class PHP extends AbstractCheckup
 {
     /**
      * Extensions to check
-     * @var array
      */
-    protected $extensionsToCheck = ['exif', 'imagick', 'mcrypt', 'zip'];
+    const EXT_TO_CHECK = ['exif', 'imagick', 'mcrypt', 'zip'];
 
     /**
      * Checks if some extensions are loaded
      * @return array Array with extension name as key and boolean as value
-     * @uses $extensionsToCheck
      */
     public function extensions(): array
     {
-        foreach ($this->extensionsToCheck as $extension) {
+        foreach (self::EXT_TO_CHECK as $extension) {
             $extensions[$extension] = extension_loaded($extension);
         }
 

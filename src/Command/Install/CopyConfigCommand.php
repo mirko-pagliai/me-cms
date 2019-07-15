@@ -17,7 +17,6 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\Filesystem\Folder;
 use MeCms\Core\Plugin;
 use MeTools\Console\Command;
 
@@ -29,7 +28,7 @@ class CopyConfigCommand extends Command
     /**
      * Configuration files to be copied
      */
-    public const FILES = [
+    public const CONFIG_FILES = [
         'MeCms.recaptcha',
         'MeCms.me_cms',
         'MeCms.widgets',
@@ -53,12 +52,12 @@ class CopyConfigCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        foreach (self::FILES as $file) {
+        foreach (self::CONFIG_FILES as $file) {
             [$plugin, $file] = pluginSplit($file);
             $this->copyFile(
                 $io,
                 Plugin::path($plugin, 'config' . DS . $file . '.php'),
-                Folder::slashTerm(CONFIG) . $file . '.php'
+                add_slash_term(CONFIG) . $file . '.php'
             );
         }
 

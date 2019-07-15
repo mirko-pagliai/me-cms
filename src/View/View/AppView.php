@@ -80,7 +80,6 @@ class AppView extends View
     {
         parent::initialize();
 
-        //Loads helpers
         $this->loadHelper('MeTools.BBCode');
         $this->loadHelper('MeTools.Breadcrumbs');
         $this->loadHelper('RecaptchaMailhide.Mailhide');
@@ -93,12 +92,12 @@ class AppView extends View
      * @param string $content Content to render in a view, wrapped by the
      *  surrounding layout
      * @param string|null $layout Layout name
-     * @return string Rendered output.
+     * @return string Rendered output
      * @uses \MeCms\View\View::renderLayout()
      * @uses setBlocks()
      * @uses userbar()
      */
-    public function renderLayout($content, $layout = null)
+    public function renderLayout($content, $layout = null): string
     {
         $this->plugin = 'MeCms';
 

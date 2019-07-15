@@ -106,7 +106,7 @@ class UsersGroupsController extends AppController
         $group = $this->UsersGroups->get($id);
 
         //Before deleting, checks if the group is a necessary group or if the group has some users
-        if ($id > 3 && !$group->user_count) {
+        if ($id > 3 && !$group->get('user_count')) {
             $this->UsersGroups->deleteOrFail($group);
             $this->Flash->success(I18N_OPERATION_OK);
         } else {

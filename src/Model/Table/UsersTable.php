@@ -131,7 +131,7 @@ class UsersTable extends AppTable
             ->order(['username' => 'ASC'])
             ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('id')->map(function (User $result) {
-                    return $result->first_name . ' ' . $result->last_name;
+                    return $result->get('first_name') . ' ' . $result->get('last_name');
                 });
             })
             ->cache(sprintf('active_%s_list', $this->getTable()), $this->getCacheName());

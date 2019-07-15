@@ -132,10 +132,9 @@ class PostsCategoriesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        $category = $this->PostsCategories->get($id);
-
         //Before deleting, it checks if the category has some posts
-        if (!$category->post_count) {
+        $category = $this->PostsCategories->get($id);
+        if (!$category->get('post_count')) {
             $this->PostsCategories->deleteOrFail($category);
             $this->Flash->success(I18N_OPERATION_OK);
         } else {

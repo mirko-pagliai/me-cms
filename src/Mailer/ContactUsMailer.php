@@ -27,7 +27,7 @@ class ContactUsMailer extends Mailer
      *  and `message` keys.
      * @param array $data Form data
      * @return void
-     * @see \MeCms\Controller\SystemsController::contactUs()
+     * @throws \Tools\Exception\KeyNotExistsException
      */
     public function contactUsMail(array $data): void
     {

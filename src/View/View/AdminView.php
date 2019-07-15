@@ -34,7 +34,6 @@ class AdminView extends View
     {
         parent::initialize();
 
-        //Loads helpers
         $this->loadHelper('MeCms.MenuBuilder');
     }
 
@@ -44,7 +43,7 @@ class AdminView extends View
      * @param string|null $layout Layout to use
      * @return string Rendered content
      */
-    public function render($view = null, $layout = null)
+    public function render($view = null, $layout = null): string
     {
         //Sets some view vars
         $this->set('priorities', [

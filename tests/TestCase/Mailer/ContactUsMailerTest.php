@@ -56,18 +56,17 @@ class ContactUsMailerTest extends TestCase
     public function testContactUsMail()
     {
         $this->Mailer->contactUsMail($this->example);
-        $result = $this->Mailer->getEmailInstance();
-        $this->assertEquals(['mymail@example.com' => 'James Blue'], $result->getSender());
-        $this->assertEquals(['mymail@example.com' => 'James Blue'], $result->getReplyTo());
-        $this->assertEquals(['email@example.com' => 'email@example.com'], $result->getTo());
-        $this->assertEquals('Email from MeCms', $result->getSubject());
-        $this->assertEquals('MeCms.Systems/contact_us', $result->viewBuilder()->getTemplate());
+        $this->assertEquals(['mymail@example.com' => 'James Blue'], $this->Mailer->getSender());
+        $this->assertEquals(['mymail@example.com' => 'James Blue'], $this->Mailer->getReplyTo());
+        $this->assertEquals(['email@example.com' => 'email@example.com'], $this->Mailer->getTo());
+        $this->assertEquals('Email from MeCms', $this->Mailer->getSubject());
+        $this->assertEquals('MeCms.Systems/contact_us', $this->Mailer->viewBuilder()->getTemplate());
         $this->assertEquals([
             'email' => 'mymail@example.com',
             'message' => 'Example of message',
             'firstName' => 'James',
             'lastName' => 'Blue',
-        ], $result->getViewVars());
+        ], $this->Mailer->getViewVars());
 
         //With some missing data
         $this->expectException(KeyNotExistsException::class);

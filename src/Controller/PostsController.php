@@ -27,8 +27,7 @@ use MeCms\Controller\Traits\GetStartAndEndDateTrait;
  */
 class PostsController extends AppController
 {
-    use CheckLastSearchTrait;
-    use GetStartAndEndDateTrait;
+    use CheckLastSearchTrait, GetStartAndEndDateTrait;
 
     /**
      * Called before the controller action.
@@ -170,6 +169,7 @@ class PostsController extends AppController
     public function search()
     {
         $pattern = $this->request->getQuery('p');
+        $posts = false;
 
         //Checks if the pattern is at least 4 characters long
         if ($pattern && strlen($pattern) < 4) {
@@ -225,11 +225,9 @@ class PostsController extends AppController
             } else {
                 $this->request = $this->request->withParam('paging', $paging);
             }
-
-            $this->set(compact('posts'));
         }
 
-        $this->set(compact('pattern'));
+        $this->set(compact('pattern', 'posts'));
     }
 
     /**

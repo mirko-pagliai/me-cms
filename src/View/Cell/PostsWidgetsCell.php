@@ -102,13 +102,11 @@ class PostsWidgetsCell extends Cell
             ])
             ->distinct(['month'])
             ->formatResults(function (ResultSet $results) {
-                return $results->indexBy('month')
-                    ->map(function (Post $post) {
-                        [$year, $month] = explode('/', $post->month);
-                        $post->month = (new FrozenDate())->day(1)->month($month)->year($year);
+                return $results->indexBy('month')->map(function (Post $post) {
+                    [$year, $month] = explode('/', $post->get('month'));
 
-                        return $post;
-                    });
+                    return $post->set('month', (new FrozenDate())->day(1)->month($month)->year($year));
+                });
             })
             ->order(['month' => 'DESC'])
             ->cache('widget_months', $this->Posts->getCacheName())

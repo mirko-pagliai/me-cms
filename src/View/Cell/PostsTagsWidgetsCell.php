@@ -102,17 +102,14 @@ class PostsTagsWidgetsCell extends Cell
                 }
 
                 //Highest and lowest numbers of occurrences and their difference
-                $minCount = $results->last()->post_count;
-                $diffCount = $results->first()->post_count - $minCount;
+                $minCount = $results->last()->get('post_count');
+                $diffCount = $results->first()->get('post_count') - $minCount;
                 $diffFont = $maxFont - $minFont;
 
                 return $results->map(function (Tag $tag) use ($minCount, $diffCount, $maxFont, $minFont, $diffFont) {
-                    $tag->size = $maxFont;
-                    if ($diffCount) {
-                        $tag->size = round((($tag->post_count - $minCount) / $diffCount * $diffFont) + $minFont);
-                    }
+                    $size = $diffCount ? round((($tag->get('post_count') - $minCount) / $diffCount * $diffFont) + $minFont) : $maxFont;
 
-                    return $tag;
+                    return $tag->set('size', $size);
                 });
             })
             ->cache($cache, $this->Tags->getCacheName())

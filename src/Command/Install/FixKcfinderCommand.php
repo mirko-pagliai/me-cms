@@ -17,7 +17,6 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\Filesystem\Folder;
 use MeCms\Utility\Checkups\KCFinder;
 use MeTools\Console\Command;
 
@@ -44,12 +43,12 @@ class FixKcfinderCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $file = Folder::slashTerm(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
+        $file = add_slash_term(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
 
         if ($this->verboseIfFileExists($io, $file)) {
         } elseif ((new KCFinder())->isAvailable()) {
             $io->createFile(
-                Folder::slashTerm(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess',
+                add_slash_term(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess',
                 'php_value session.cache_limiter must-revalidate' . PHP_EOL .
                 'php_value session.cookie_httponly On' . PHP_EOL .
                 'php_value session.cookie_lifetime 14400' . PHP_EOL .

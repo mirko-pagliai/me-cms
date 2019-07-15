@@ -21,7 +21,7 @@
         "mirko-pagliai/cakephp-thumber": "^1.5.2",
         "mirko-pagliai/cakephp-tokens": "^1.2",
         "mirko-pagliai/me-tools": "^2.18.7",
-        "mirko-pagliai/php-tools": "^1.2.5",
+        "mirko-pagliai/php-tools": "^1.2.6",
         "npm-asset/js-cookie": "^v2.2",
         "wyrihaximus/minify-html": "^1.1"
     },

@@ -36,13 +36,9 @@ class SitemapBuilder
         //Gets all methods from the `Sitemap` class of the plugin
         $methods = get_child_methods($class);
 
-        if (empty($methods)) {
-            return [];
-        }
-
-        return collection($methods)->map(function ($method) use ($class) {
+        return $methods ? array_map(function ($method) use ($class) {
             return array_merge(compact('class'), ['name' => $method]);
-        })->toList();
+        }, $methods) : [];
     }
 
     /**
