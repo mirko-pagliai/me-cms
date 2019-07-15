@@ -25,8 +25,7 @@ use MeCms\Controller\Traits\GetStartAndEndDateTrait;
  */
 class PostsController extends AppController
 {
-    use CheckLastSearchTrait;
-    use GetStartAndEndDateTrait;
+    use CheckLastSearchTrait, GetStartAndEndDateTrait;
 
     /**
      * Called before the controller action.
@@ -34,7 +33,6 @@ class PostsController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return void
-     * @see http://api.cakephp.org/3.7/class-Cake.Controller.Controller.html#_beforeFilter
      * @uses MeCms\Controller\AppController::beforeFilter()
      */
     public function beforeFilter(Event $event)

@@ -33,7 +33,6 @@ class TreeBehavior extends CakeTreeBehavior
      * @param \Cake\ORM\Query $query Query
      * @param array $options Options
      * @return \Cake\ORM\Query Query
-     * @see http://api.cakephp.org/3.7/class-Cake.ORM.Behavior.TreeBehavior.html#_findTreeList
      * @uses \Cake\ORM\Behavior\TreeBehavior::findTreeList()
      */
     public function findTreeList(Query $query, array $options)

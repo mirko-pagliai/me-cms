@@ -25,7 +25,6 @@ class AppController extends BaseAppController
      * Called before the controller action
      * @param \Cake\Event\Event $event An Event instance
      * @return \Cake\Network\Response|null
-     * @see http://api.cakephp.org/3.7/class-Cake.Controller.Controller.html#_beforeFilter
      * @uses isSpammer()
      */
     public function beforeFilter(Event $event)
