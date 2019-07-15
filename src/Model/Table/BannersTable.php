@@ -42,7 +42,6 @@ class BannersTable extends AppTable
      */
     public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
-        //Deletes the file
         @unlink(BANNERS . $entity->filename);
 
         parent::afterDelete($event, $entity, $options);

@@ -37,9 +37,7 @@ abstract class PageAndPostValidator extends AppValidator
         ])->requirePresence('category_id', 'create');
 
         $this->requirePresence('title', 'create');
-
         $this->requirePresence('slug', 'create');
-
         $this->requirePresence('text', 'create');
     }
 }

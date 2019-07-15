@@ -27,7 +27,6 @@ class PagesCategoryValidator extends AppValidator
         parent::__construct();
 
         $this->requirePresence('title', 'create');
-
         $this->requirePresence('slug', 'create');
     }
 }

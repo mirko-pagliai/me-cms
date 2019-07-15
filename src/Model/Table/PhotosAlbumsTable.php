@@ -41,7 +41,6 @@ class PhotosAlbumsTable extends AppTable
      */
     public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
-        //Deletes the directory
         @rmdir($entity->path);
 
         parent::afterDelete($event, $entity, $options);
@@ -57,7 +56,6 @@ class PhotosAlbumsTable extends AppTable
      */
     public function afterSave(Event $event, Entity $entity, ArrayObject $options)
     {
-        //Creates the folder
         @mkdir($entity->path, 0777, true);
 
         parent::afterSave($event, $entity, $options);

@@ -52,7 +52,6 @@ class PhotosTable extends AppTable
      */
     public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
     {
-        //Deletes the file
         @unlink($entity->path);
 
         parent::afterDelete($event, $entity, $options);
@@ -71,8 +70,8 @@ class PhotosTable extends AppTable
     {
         parent::beforeSave($event, $entity, $options);
 
-        list($width, $height) = getimagesize($entity->path);
-        $entity->size = compact('width', 'height');
+        list($width, $height) = getimagesize($entity->get('path'));
+        $entity->set('size', compact('width', 'height'));
     }
 
     /**

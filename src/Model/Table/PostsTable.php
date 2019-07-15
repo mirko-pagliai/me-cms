@@ -40,8 +40,7 @@ use MeCms\ORM\PostsAndPagesTables;
  */
 class PostsTable extends PostsAndPagesTables
 {
-    use IsOwnedByTrait;
-    use LocatorAwareTrait;
+    use IsOwnedByTrait, LocatorAwareTrait;
 
     /**
      * Cache configuration name
@@ -105,9 +104,7 @@ class PostsTable extends PostsAndPagesTables
     {
         return $query->contain([
                 $this->Categories->getAlias() => ['fields' => ['title', 'slug']],
-                $this->Tags->getAlias() => function (Query $q) {
-                    return $q->order(['tag' => 'ASC']);
-                },
+                $this->Tags->getAlias() => ['sort' => ['tag' => 'ASC']],
                 $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
             ])
             ->select(['id', 'title', 'preview', 'subtitle', 'slug', 'text', 'enable_comments', 'created'])
@@ -128,9 +125,7 @@ class PostsTable extends PostsAndPagesTables
         key_exists_or_fail(['id', 'tags'], $post->toArray(), __d('me_cms', 'ID or tags of the post are missing'));
 
         $cache = sprintf('related_%s_posts_for_%s', $limit, $post->id);
-        if ($images) {
-            $cache .= '_with_images';
-        }
+        $cache = $images ? $cache . '_with_images' : $cache;
 
         return Cache::remember($cache, function () use ($images, $limit, $post) {
             $related = [];
