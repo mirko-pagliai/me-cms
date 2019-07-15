@@ -31,11 +31,7 @@ class BannersPositionValidator extends AppValidator
                 'last' => true,
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
                 'rule' => ['lengthBetween', 3, 100],
-            ],
-            'slug' => [
-                'message' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_DASH),
-                'rule' => [$this, 'slug'],
-            ],
+            ]
         ])->requirePresence('title', 'create');
     }
 }
