@@ -47,22 +47,19 @@ class UsersCommand extends Command
     {
         $this->loadModel('MeCms.Users');
 
-        $users = $this->Users->find()->contain('Groups', function (Query $q) {
-            return $q->select(['label']);
-        })->map(function (User $user) {
-            if ($user->banned) {
-                $user->status = __d('me_cms', 'Banned');
-            } elseif (!$user->active) {
-                $user->status = __d('me_cms', 'Pending');
+        $users = $this->Users->find()->contain('Groups')->map(function (User $user) {
+            if ($user->get('banned')) {
+                $status = __d('me_cms', 'Banned');
             } else {
-                $user->status = __d('me_cms', 'Active');
+                $status = $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending');
             }
+            $user->set('status', $status);
 
-            if ($user->created instanceof Time) {
-                $user->created = $user->created->i18nFormat('yyyy/MM/dd HH:mm');
+            if ($user->get('created') instanceof Time) {
+                $user->set('created', $user->get('created')->i18nFormat('yyyy/MM/dd HH:mm'));
             }
-            if ($user->group instanceof UsersGroup) {
-                $user->group = $user->group->label;
+            if ($user->get('group') instanceof UsersGroup) {
+                $user->set('group', $user->get('group')->get('label'));
             }
 
             return $user->extract(['id', 'username', 'group', 'full_name', 'email', 'post_count', 'status', 'created']);
