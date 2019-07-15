@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Form;
 
 use Cake\Form\Form as CakeForm;
+use Cake\Validation\Validator;
 
 /**
  * Form abstraction used to create forms not tied to ORM backed models,
@@ -34,10 +35,21 @@ class Form extends CakeForm
      */
     public function validate(array $data): bool
     {
+        $oldValidator = function(Validator $validator = null) {
+            if ($validator === null && empty($this->_validator)) {
+                $validator = $this->_buildValidator(new $this->_validatorClass);
+            }
+            if ($validator) {
+                $this->_validator = $validator;
+                $this->setValidator('default', $validator);
+            }
+
+            return $this->getValidator();
+        };
+
         $validator = $this->getValidator();
         if (!$validator->count()) {
-            //@codingStandardsIgnoreStart
-            $validator = @$this->validator();
+            $validator = $oldValidator();
         }
         $this->_errors = $validator->errors($data);
 
