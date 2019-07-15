@@ -63,7 +63,7 @@ class BackupForm extends Form
     /**
      * Used by `execute()` to execute the form's action
      * @param array $data Form data
-     * @return string|null Filename or `null` on failure
+     * @return bool
      * @uses DatabaseBackup\Utility\BackupExport::filename()
      * @uses DatabaseBackup\Utility\BackupExport::export()
      * @uses getBackupExportInstance()
@@ -71,11 +71,13 @@ class BackupForm extends Form
     protected function _execute(array $data)
     {
         try {
-            return $this->getBackupExportInstance()
+            $this->getBackupExportInstance()
                 ->filename($data['filename'])
                 ->export();
+
+            return true;
         } catch (InternalErrorException $e) {
-            return null;
+            return false;
         }
     }
 }
