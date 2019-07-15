@@ -12,21 +12,11 @@
  */
 namespace MeCms\Model\Validation;
 
-use MeCms\Validation\AppValidator;
+use MeCms\Validation\CategoryValidator;
 
 /**
  * PagesCategory validator class
  */
-class PagesCategoryValidator extends AppValidator
+class PagesCategoryValidator extends CategoryValidator
 {
-    /**
-     * Construct
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->requirePresence('title', 'create');
-        $this->requirePresence('slug', 'create');
-    }
 }

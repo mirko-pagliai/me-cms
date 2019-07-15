@@ -13,6 +13,7 @@
     verify the data of the logged in user;
 * added `MeCms\Validation\BannerAndPhotoValidator` abstract class;
 * added `MeCms\Validation\PageAndPostValidator` abstract class;
+* added `MeCms\Validation\CategoryValidator` abstract class;
 * updated for `php-tools` `1.2.6`.
 
 ### 2.26.5
