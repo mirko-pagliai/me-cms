@@ -22,7 +22,6 @@ use MeCms\Model\Entity\PostsTag;
 use MeCms\Model\Entity\Tag;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\TestSuite\PostsAndPagesTablesTestCase;
-use ReflectionFunction;
 use Tools\Exception\KeyNotExistsException;
 
 /**
