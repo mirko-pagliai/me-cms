@@ -44,20 +44,19 @@ class GroupsCommand extends Command
     {
         $this->loadModel('MeCms.UsersGroups');
 
-        $groups = $this->UsersGroups->find()->map(function (UsersGroup $group) {
+        $table = $this->UsersGroups->find()->map(function (UsersGroup $group) {
             return $group->extract(['id', 'name', 'label', 'user_count']);
-        });
+        })->toList();
 
         //Checks for user groups
-        if ($groups->isEmpty()) {
+        if (!$table) {
             $io->error(__d('me_cms', 'There are no user groups'));
 
             return null;
         }
 
-        //Sets headers and prints as table
-        $headers = [I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS];
-        $io->helper('table')->output(array_merge([$headers], $groups->toList()));
+        array_unshift($table, [I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS]);
+        $io->helper('table')->output($table);
 
         return null;
     }

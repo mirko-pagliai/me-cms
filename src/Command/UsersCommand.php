@@ -16,7 +16,7 @@ namespace MeCms\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\I18n\Time;
+use Cake\I18n\Chronos;
 use Cake\ORM\Query;
 use MeCms\Model\Entity\User;
 use MeCms\Model\Entity\UsersGroup;
@@ -38,22 +38,17 @@ class UsersCommand extends Command
     }
 
     /**
-     * Lists users
-     * @param \Cake\Console\Arguments $args The command arguments
-     * @param \Cake\Console\ConsoleIo $io The console io
-     * @return int|null The exit code or null for success
+     * Internal method to get formatted users data for the table
+     * @return array
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    protected function getUsersForTable()
     {
-        $this->loadModel('MeCms.Users');
-
-        $users = $this->Users->find()->contain('Groups')->map(function (User $user) {
+        return $this->Users->find()->contain('Groups')->map(function (User $user) {
             if ($user->get('banned')) {
-                $status = __d('me_cms', 'Banned');
+                $user->set('status', __d('me_cms', 'Banned'));
             } else {
-                $status = $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending');
+                $user->set('status', $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending'));
             }
-            $user->set('status', $status);
 
             if ($user->get('created') instanceof Time) {
                 $user->set('created', $user->get('created')->i18nFormat('yyyy/MM/dd HH:mm'));
@@ -63,17 +58,29 @@ class UsersCommand extends Command
             }
 
             return $user->extract(['id', 'username', 'group', 'full_name', 'email', 'post_count', 'status', 'created']);
-        });
+        })->toList();
+    }
 
-        if ($users->isEmpty()) {
+    /**
+     * Lists users
+     * @param \Cake\Console\Arguments $args The command arguments
+     * @param \Cake\Console\ConsoleIo $io The console io
+     * @return int|null The exit code or null for success
+     * @uses getUsersForTable()
+     */
+    public function execute(Arguments $args, ConsoleIo $io)
+    {
+        $this->loadModel('MeCms.Users');
+
+        $table = $this->getUsersForTable();
+        if (!$table) {
             $io->error(__d('me_cms', 'There are no users'));
 
             return null;
         }
 
-        //Sets headers and prints as table
-        $headers = [I18N_ID, I18N_USERNAME, I18N_GROUP, I18N_NAME, I18N_EMAIL, I18N_POSTS, I18N_STATUS, I18N_DATE];
-        $io->helper('table')->output(array_merge([$headers], $users->toList()));
+        array_unshift($table, [I18N_ID, I18N_USERNAME, I18N_GROUP, I18N_NAME, I18N_EMAIL, I18N_POSTS, I18N_STATUS, I18N_DATE]);
+        $io->helper('table')->output($table);
 
         return null;
     }

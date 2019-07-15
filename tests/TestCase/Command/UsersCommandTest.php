@@ -12,9 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Command;
 
-use Cake\I18n\Time;
-use MeCms\Model\Entity\User;
-use MeCms\Model\Entity\UsersGroup;
+use MeCms\Command\UsersCommand;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
@@ -40,30 +38,17 @@ class UsersCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $Users = $this->getMockForModel('MeCms.Users', null);
-
-        $expectedRows = $Users->find()->contain('Groups')->map(function (User $user) {
-            if ($user->banned) {
-                $user->status = __d('me_cms', 'Banned');
-            } elseif (!$user->active) {
-                $user->status = __d('me_cms', 'Pending');
-            } else {
-                $user->status = __d('me_cms', 'Active');
-            }
-
-            $user->set('created', $user->created instanceof Time ? $user->created->i18nFormat('yyyy/MM/dd HH:mm') : $user->created);
-            $user->set('group', $user->group instanceof UsersGroup ? $user->group->label : $user->group);
-
-            return $user->extract(['id', 'username', 'group', 'full_name', 'email', 'post_count', 'status', 'created']);
-        })->toList();
-        $expectedRows[] = ['<info>ID</info>', '<info>Username</info>', '<info>Group</info>', '<info>Name</info>', '<info>Email</info>', '<info>Posts</info>', '<info>Status</info>', '<info>Date</info>'];
+        $command = new UsersCommand;
+        $command->Users = $this->getMockForModel('MeCms.Users', null);
+        $expectedRows = $this->invokeMethod($command, 'getUsersForTable');
+        array_unshift($expectedRows, ['<info>ID</info>', '<info>Username</info>', '<info>Group</info>', '<info>Name</info>', '<info>Email</info>', '<info>Posts</info>', '<info>Status</info>', '<info>Date</info>']);
 
         $this->exec('me_cms.users');
         $this->assertExitWithSuccess();
         array_walk($expectedRows, [$this, 'assertOutputContainsRow']);
 
         //Deletes all users
-        $Users->deleteAll(['id >=' => '1']);
+        $command->Users->deleteAll(['id >=' => '1']);
         $this->exec('me_cms.users');
         $this->assertExitWithSuccess();
         $this->assertErrorContains('There are no users');
