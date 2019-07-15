@@ -26,12 +26,6 @@ class BannersPositionValidator extends AppValidator
     {
         parent::__construct();
 
-        $this->add('title', [
-            'lengthBetween' => [
-                'last' => true,
-                'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
-                'rule' => ['lengthBetween', 3, 100],
-            ]
-        ])->requirePresence('title', 'create');
+        $this->requirePresence('title', 'create');
     }
 }
