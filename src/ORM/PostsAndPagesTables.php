@@ -89,9 +89,7 @@ abstract class PostsAndPagesTables extends AppTable
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options): void
     {
-        parent::beforeSave($event, $entity, $options);
-
-        $entity->preview = $this->getPreviews($entity->text);
+        $entity->set('preview', $this->getPreviews($entity->get('text')));
     }
 
     /**

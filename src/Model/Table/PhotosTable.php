@@ -67,8 +67,6 @@ class PhotosTable extends AppTable
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options): void
     {
-        parent::beforeSave($event, $entity, $options);
-
         [$width, $height] = getimagesize($entity->get('path'));
         $entity->set('size', compact('width', 'height'));
     }
