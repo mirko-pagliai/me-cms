@@ -76,10 +76,11 @@ class AppTable extends Table
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options): void
     {
-        if (empty($entity->created)) {
-            $entity->created = new Time();
-        } elseif (!empty($entity->created) && !$entity->created instanceof Time) {
-            $entity->created = new Time($entity->created);
+        $created = $entity->get('created');
+        if (!$created) {
+            $entity->set('created', new Time());
+        } elseif ($created && !$created instanceof Time) {
+            $entity->set('created', new Time($created));
         }
     }
 
