@@ -80,8 +80,7 @@ class AppTable extends Table
                 $created = new Time($data['created']);
             } catch (Exception $e) {
             }
-        }
-        elseif (array_key_exists('created', $data) && is_null($data['created'])) {
+        } elseif (array_key_exists('created', $data) && is_null($data['created'])) {
             $created = new Time();
         }
         if (isset($created)) {
