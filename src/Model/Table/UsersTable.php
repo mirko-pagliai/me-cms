@@ -46,6 +46,8 @@ class UsersTable extends AppTable
      */
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
+        parent::beforeMarshal($event, $data, $options);
+
         //Prevents that a blank password is saved
         if ($options['validate'] === 'EmptyPassword' && isset($data['password']) && !$data['password']) {
             unset($data['password'], $data['password_repeat']);

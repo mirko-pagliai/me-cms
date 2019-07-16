@@ -64,12 +64,9 @@ class PhotosTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @since 2.17.0
-     * @uses MeCms\Model\Table\AppTable::beforeSave()
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        parent::beforeSave($event, $entity, $options);
-
         list($width, $height) = getimagesize($entity->get('path'));
         $entity->set('size', compact('width', 'height'));
     }

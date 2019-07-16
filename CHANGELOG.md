@@ -2,6 +2,7 @@
 ## 2.26 branch
 ### 2.26.6
 * removed useless `AppController::isOffline()` method;
+* removed `AppTable::beforeSave()`, added `AppTable::beforeMarshal()`;
 * `StaticPage::getAppPath()` and `StaticPage::getPluginPath()` been replaced by
     the `StaticPage::getPath()` method;
 * improved and fixed the `AuthHelper`. Now it is loaded from the view (instead of

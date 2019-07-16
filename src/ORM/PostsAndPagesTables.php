@@ -85,14 +85,11 @@ abstract class PostsAndPagesTables extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @since 2.17.0
-     * @uses MeCms\Model\Table\AppTable::beforeSave()
      * @uses MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreviews()
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        parent::beforeSave($event, $entity, $options);
-
-        $entity->preview = $this->getPreviews($entity->text);
+        $entity->set('preview', $this->getPreviews($entity->get('text')));
     }
 
     /**

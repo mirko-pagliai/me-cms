@@ -21,6 +21,7 @@ use Cake\I18n\Time;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use Exception;
 
 /**
  * Application table class
@@ -64,22 +65,27 @@ class AppTable extends Table
     }
 
     /**
-     * Called before each entity is saved. Stopping this event will abort the
-     *  save operation. When the event is stopped the result of the event will
-     *  be returned
+     * Called before request data is converted into entities
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\Datasource\EntityInterface $entity EntityInterface object
+     * @param \ArrayObject $data Request data
      * @param \ArrayObject $options Options
      * @return void
-     * @since 2.16.1
+     * @since 2.26.6
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
-        $created = $entity->get('created');
-        if (!$created) {
-            $entity->set('created', new Time());
-        } elseif ($created && !$created instanceof Time) {
-            $entity->set('created', new Time($created));
+        //Tries to transform the `created` string into a `Time` entity
+        if (isset($data['created']) && is_string($data['created'])) {
+            try {
+                $created = new Time($data['created']);
+            } catch (Exception $e) {
+            }
+        }
+        elseif (array_key_exists('created', $data) && is_null($data['created'])) {
+            $created = new Time();
+        }
+        if (isset($created)) {
+            $data['created'] = $created;
         }
     }
 

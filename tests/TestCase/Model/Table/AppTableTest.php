@@ -85,10 +85,10 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `beforeSave()` method
+     * Test for `beforeMarshal()` method
      * @test
      */
-    public function testBeforeSave()
+    public function testBeforeMarshal()
     {
         $example = [
             'user_id' => 1,
@@ -117,12 +117,6 @@ class AppTableTest extends TableTestCase
             $entity = $this->Posts->save($this->Posts->newEntity(compact('created') + $example));
             $this->assertEquals('2017-03-14 20:19:00', $entity->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'));
             $this->Posts->delete($entity);
-        }
-
-        //Now tries with a record that already exists
-        $entity = $this->Posts->get(1);
-        foreach ([null, ''] as $created) {
-            $this->assertNotEmpty($this->Posts->save($entity->set('created', $created))->get('created'));
         }
     }
 
