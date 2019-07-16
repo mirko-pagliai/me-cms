@@ -15,7 +15,6 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
-use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
@@ -73,7 +72,7 @@ class AppTable extends Table
      * @return void
      * @since 2.26.6
      */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
     {
         //Tries to transform the `created` string into a `Time` entity
         if (isset($data['created']) && is_string($data['created'])) {
