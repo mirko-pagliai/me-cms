@@ -99,31 +99,30 @@ class AppTableTest extends TableTestCase
         ];
 
         $entity = $this->Posts->save($this->Posts->newEntity($example));
-        $this->assertNotEmpty($entity->created);
+        $this->assertNotEmpty($entity->get('created'));
         $this->Posts->delete($entity);
 
-        foreach ([null, ''] as $value) {
-            $entity = $this->Posts->save($this->Posts->newEntity(['created' => $value] + $example));
-            $this->assertNotEmpty($entity->created);
+        foreach ([null, ''] as $created) {
+            $entity = $this->Posts->save($this->Posts->newEntity(compact('created') + $example));
+            $this->assertNotEmpty($entity->get('created'));
             $this->Posts->delete($entity);
         }
 
-        $example['created'] = new Time();
-        $entity = $this->Posts->save($this->Posts->newEntity($example));
-        $this->assertEquals($example['created'], $entity->created);
+        $now = new Time();
+        $entity = $this->Posts->save($this->Posts->newEntity(['created' => $now] + $example));
+        $this->assertEquals($now, $entity->get('created'));
         $this->Posts->delete($entity);
 
-        foreach (['2017-03-14 20:19', '2017-03-14 20:19:00'] as $value) {
-            $entity = $this->Posts->save($this->Posts->newEntity(['created' => $value] + $example));
-            $this->assertEquals('2017-03-14 20:19:00', $entity->created->i18nFormat('yyyy-MM-dd HH:mm:ss'));
+        foreach (['2017-03-14 20:19', '2017-03-14 20:19:00'] as $created) {
+            $entity = $this->Posts->save($this->Posts->newEntity(compact('created') + $example));
+            $this->assertEquals('2017-03-14 20:19:00', $entity->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'));
             $this->Posts->delete($entity);
         }
 
         //Now tries with a record that already exists
         $entity = $this->Posts->get(1);
-        foreach ([null, ''] as $value) {
-            $entity = $this->Posts->save($entity->set('created', $value));
-            $this->assertNotEmpty($entity->created);
+        foreach ([null, ''] as $created) {
+            $this->assertNotEmpty($this->Posts->save($entity->set('created', $created))->get('created'));
         }
     }
 
