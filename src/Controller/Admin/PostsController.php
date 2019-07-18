@@ -91,8 +91,8 @@ class PostsController extends AppController
         }
 
         //Users can edit only their own post
-        if ($this->getRequest->isEdit()) {
-            [$postId, $userId] = [$this->getRequest->getParam('pass.0'), $this->Auth->user('id')];
+        if ($this->getRequest()->isEdit()) {
+            [$postId, $userId] = [$this->getRequest()->getParam('pass.0'), $this->Auth->user('id')];
 
             return $postId && $userId ? $this->Posts->isOwnedBy((int)$postId, $userId) : false;
         }
