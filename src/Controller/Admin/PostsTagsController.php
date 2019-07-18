@@ -30,7 +30,7 @@ class PostsTagsController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins and managers can edit tags
-        return $this->request->isEdit() ? $this->Auth->isGroup(['admin', 'manager']) : true;
+        return $this->getRequest()->isEdit() ? $this->Auth->isGroup(['admin', 'manager']) : true;
     }
 
     /**
@@ -47,7 +47,7 @@ class PostsTagsController extends AppController
         //Limit X4
         $this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 4;
 
-        $tags = $this->paginate($this->PostsTags->Tags->queryFromFilter($query, $this->request->getQueryParams()));
+        $tags = $this->paginate($this->PostsTags->Tags->queryFromFilter($query, $this->getRequest()->getQueryParams()));
 
         $this->set(compact('tags'));
     }
@@ -61,8 +61,8 @@ class PostsTagsController extends AppController
     {
         $tag = $this->PostsTags->Tags->get($id);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $tag = $this->PostsTags->Tags->patchEntity($tag, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $tag = $this->PostsTags->Tags->patchEntity($tag, $this->getRequest()->getData());
 
             if ($this->PostsTags->Tags->save($tag)) {
                 $this->Flash->success(I18N_OPERATION_OK);

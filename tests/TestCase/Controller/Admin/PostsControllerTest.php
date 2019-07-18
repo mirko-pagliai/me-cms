@@ -107,7 +107,7 @@ class PostsControllerTest extends ControllerTestCase
         }
 
         //With `edit` action and an user who owns the record
-        $this->Controller->request = $this->Controller->request->withParam('pass.0', 1);
+        $this->Controller->request = $this->Controller->getRequest()->withParam('pass.0', 1);
         $this->assertUsersAreAuthorized([
             1 => true,
             2 => false,
@@ -115,7 +115,7 @@ class PostsControllerTest extends ControllerTestCase
             4 => false,
         ], 'edit');
 
-        $this->Controller->request = $this->Controller->request->withParam('pass.0', 2);
+        $this->Controller->request = $this->Controller->getRequest()->withParam('pass.0', 2);
         $this->assertUsersAreAuthorized([
             1 => false,
             2 => false,

@@ -39,7 +39,7 @@ class PostsController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($this->request->isAction(['add', 'edit'])) {
+        if ($this->getRequest()->isAction(['add', 'edit'])) {
             $categories = $this->Posts->Categories->getTreeList();
             $users = $this->Posts->Users->getActiveList();
         } else {
@@ -72,7 +72,7 @@ class PostsController extends AppController
         parent::initialize();
 
         //Loads KcFinderComponent
-        if ($this->request->isAction(['add', 'edit'])) {
+        if ($this->getRequest()->isAction(['add', 'edit'])) {
             $this->loadComponent('MeCms.KcFinder');
         }
     }
@@ -92,14 +92,14 @@ class PostsController extends AppController
         }
 
         //Users can edit only their own post
-        if ($this->request->isEdit()) {
-            list($postId, $userId) = [$this->request->getParam('pass.0'), $this->Auth->user('id')];
+        if ($this->getRequest()->isEdit()) {
+            list($postId, $userId) = [$this->getRequest()->getParam('pass.0'), $this->Auth->user('id')];
 
             return $postId && $userId ? $this->Posts->isOwnedBy($postId, $userId) : false;
         }
 
         //Only admins and managers can delete posts
-        return !$this->request->isDelete();
+        return !$this->getRequest()->isDelete();
     }
 
     /**
@@ -117,7 +117,7 @@ class PostsController extends AppController
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
-        $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->request->getQueryParams()));
+        $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->getRequest()->getQueryParams()));
 
         $this->set(compact('posts'));
     }
@@ -131,13 +131,13 @@ class PostsController extends AppController
     {
         $post = $this->Posts->newEntity();
 
-        if ($this->request->is('post')) {
+        if ($this->getRequest()->is('post')) {
             //Only admins and managers can add posts on behalf of other users
             if (!$this->Auth->isGroup(['admin', 'manager'])) {
-                $this->request = $this->request->withData('user_id', $this->Auth->user('id'));
+                $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
             }
 
-            $post = $this->Posts->patchEntity($post, $this->request->getData());
+            $post = $this->Posts->patchEntity($post, $this->getRequest()->getData());
 
             if ($this->Posts->save($post)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -168,13 +168,13 @@ class PostsController extends AppController
             })
             ->firstOrFail();
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
             //Only admins and managers can edit posts on behalf of other users
             if (!$this->Auth->isGroup(['admin', 'manager'])) {
-                $this->request = $this->request->withData('user_id', $this->Auth->user('id'));
+                $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
             }
 
-            $post = $this->Posts->patchEntity($post, $this->request->getData());
+            $post = $this->Posts->patchEntity($post, $this->getRequest()->getData());
 
             if ($this->Posts->save($post)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -195,7 +195,7 @@ class PostsController extends AppController
      */
     public function delete($id)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
         $this->Posts->deleteOrFail($this->Posts->get($id));
         $this->Flash->success(I18N_OPERATION_OK);
 

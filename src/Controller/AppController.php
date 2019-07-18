@@ -30,7 +30,7 @@ class AppController extends BaseAppController
     public function beforeFilter(Event $event)
     {
         //Checks if the site is offline
-        if ($this->request->isOffline()) {
+        if ($this->getRequest()->isOffline()) {
             return $this->redirect(['_name' => 'offline']);
         }
 
@@ -45,7 +45,7 @@ class AppController extends BaseAppController
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = getConfigOrFail('default.records');
 
-        if ($this->request->isAdmin()) {
+        if ($this->getRequest()->isAdmin()) {
             $this->viewBuilder()->setClassName('MeCms.View/Admin');
 
             $this->paginate['limit'] = getConfigOrFail('admin.records');
@@ -57,7 +57,7 @@ class AppController extends BaseAppController
         $this->paginate['maxLimit'] = $this->paginate['limit'];
 
         //Layout for ajax and json requests
-        if ($this->request->is(['ajax', 'json'])) {
+        if ($this->getRequest()->is(['ajax', 'json'])) {
             $this->viewBuilder()->setLayout('MeCms.ajax');
         }
 
@@ -95,12 +95,12 @@ class AppController extends BaseAppController
     public function isAuthorized($user = null)
     {
         //Only admin and managers can access admin actions
-        if ($this->request->isAdmin()) {
+        if ($this->getRequest()->isAdmin()) {
             return $this->Auth->isGroup(['admin', 'manager']);
         }
 
         //Any registered user can access actions without prefix. Default deny
-        return !$this->request->getParam('prefix');
+        return !$this->getRequest()->getParam('prefix');
     }
 
     /**
@@ -110,7 +110,7 @@ class AppController extends BaseAppController
      */
     protected function isSpammer()
     {
-        return $this->request->isSpammer() && !$this->request->isAction('ipNotAllowed', 'Systems');
+        return $this->getRequest()->isSpammer() && !$this->getRequest()->isAction('ipNotAllowed', 'Systems');
     }
 
     /**

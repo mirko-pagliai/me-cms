@@ -30,7 +30,7 @@ class PhotosAlbumsController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins and managers can delete albums
-        return $this->request->isDelete() ? $this->Auth->isGroup(['admin', 'manager']) : true;
+        return $this->getRequest()->isDelete() ? $this->Auth->isGroup(['admin', 'manager']) : true;
     }
 
     /**
@@ -54,8 +54,8 @@ class PhotosAlbumsController extends AppController
     {
         $album = $this->PhotosAlbums->newEntity();
 
-        if ($this->request->is('post')) {
-            $album = $this->PhotosAlbums->patchEntity($album, $this->request->getData());
+        if ($this->getRequest()->is('post')) {
+            $album = $this->PhotosAlbums->patchEntity($album, $this->getRequest()->getData());
 
             if ($this->PhotosAlbums->save($album)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -78,8 +78,8 @@ class PhotosAlbumsController extends AppController
     {
         $album = $this->PhotosAlbums->get($id);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $album = $this->PhotosAlbums->patchEntity($album, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $album = $this->PhotosAlbums->patchEntity($album, $this->getRequest()->getData());
 
             if ($this->PhotosAlbums->save($album)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -100,7 +100,7 @@ class PhotosAlbumsController extends AppController
      */
     public function delete($id)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         //Before deleting, it checks if the album has some photos
         $album = $this->PhotosAlbums->get($id);

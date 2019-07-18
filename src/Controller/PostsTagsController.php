@@ -29,7 +29,7 @@ class PostsTagsController extends AppController
      */
     public function index()
     {
-        $page = $this->request->getQuery('page', 1);
+        $page = $this->getRequest()->getQuery('page', 1);
 
         $this->paginate['order'] = ['tag' => 'ASC'];
 
@@ -53,11 +53,11 @@ class PostsTagsController extends AppController
             //Writes on cache
             Cache::writeMany([
                 $cache => $tags,
-                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
             ], $this->PostsTags->getCacheName());
         //Else, sets the paging parameter
         } else {
-            $this->request = $this->request->withParam('paging', $paging);
+            $this->setRequest($this->getRequest()->withParam('paging', $paging));
         }
 
         $this->set(compact('tags'));
@@ -71,8 +71,8 @@ class PostsTagsController extends AppController
     public function view($slug)
     {
         //Data can be passed as query string, from a widget
-        if ($this->request->getQuery('q')) {
-            return $this->redirect([$this->request->getQuery('q')]);
+        if ($this->getRequest()->getQuery('q')) {
+            return $this->redirect([$this->getRequest()->getQuery('q')]);
         }
 
         $slug = Text::slug($slug, ['replacement' => ' ']);
@@ -81,7 +81,7 @@ class PostsTagsController extends AppController
             ->cache(sprintf('tag_%s', md5($slug)), $this->PostsTags->getCacheName())
             ->firstOrFail();
 
-        $page = $this->request->getQuery('page', 1);
+        $page = $this->getRequest()->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
@@ -104,11 +104,11 @@ class PostsTagsController extends AppController
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
             ], $this->PostsTags->getCacheName());
         //Else, sets the paging parameter
         } else {
-            $this->request = $this->request->withParam('paging', $paging);
+            $this->setRequest($this->getRequest()->withParam('paging', $paging));
         }
 
         $this->set(compact('posts', 'tag'));

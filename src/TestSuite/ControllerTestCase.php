@@ -66,10 +66,10 @@ abstract class ControllerTestCase extends TestCase
         $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
-        $this->Controller->request->clearDetectorCache();
+        $this->Controller->getRequest()->clearDetectorCache();
 
         if ($action) {
-            $this->Controller->request = $this->Controller->request->withParam('action', $action);
+            $this->Controller->request = $this->Controller->getRequest()->withParam('action', $action);
         }
 
         foreach ($values as $group => $isAllowed) {
@@ -93,10 +93,10 @@ abstract class ControllerTestCase extends TestCase
         $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
-        $controller->request->clearDetectorCache();
+        $controller->getRequest()->clearDetectorCache();
 
         if ($action) {
-            $this->Controller->request = $this->Controller->request->withParam('action', $action);
+            $this->Controller->request = $this->Controller->getRequest()->withParam('action', $action);
         }
 
         foreach ($values as $id => $isAllowed) {

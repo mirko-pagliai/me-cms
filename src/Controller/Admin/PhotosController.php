@@ -58,7 +58,7 @@ class PhotosController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins and managers can delete photos
-        return $this->request->isDelete() ? $this->Auth->isGroup(['admin', 'manager']) : true;
+        return $this->getRequest()->isDelete() ? $this->Auth->isGroup(['admin', 'manager']) : true;
     }
 
     /**
@@ -71,7 +71,7 @@ class PhotosController extends AppController
     public function index()
     {
         //The "render" type can set by query or by cookies
-        $render = $this->request->getQuery('render', $this->request->getCookie('render-photos'));
+        $render = $this->getRequest()->getQuery('render', $this->getRequest()->getCookie('render-photos'));
 
         $query = $this->Photos->find()->contain(['Albums' => ['fields' => ['id', 'slug', 'title']]]);
 
@@ -84,7 +84,7 @@ class PhotosController extends AppController
             $this->viewBuilder()->setTemplate('index_as_grid');
         }
 
-        $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->request->getQueryParams())));
+        $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->getRequest()->getQueryParams())));
 
         if ($render) {
             $this->response = $this->response->withCookie((new Cookie('render-photos', $render))->withNeverExpire());
@@ -100,19 +100,19 @@ class PhotosController extends AppController
      */
     public function upload()
     {
-        $album = $this->request->getQuery('album');
+        $album = $this->getRequest()->getQuery('album');
         $albums = $this->viewVars['albums']->toArray();
 
         //If there's only one available album
         if (!$album && count($albums) < 2) {
             $album = array_key_first($albums);
-            $this->request = $this->request->withQueryParams(compact('album'));
+            $this->setRequest($this->getRequest()->withQueryParams(compact('album')));
         }
 
-        if ($this->request->getData('file')) {
+        if ($this->getRequest()->getData('file')) {
             is_true_or_fail($album, __d('me_cms', 'Missing ID'), InternalErrorException::class);
 
-            $uploaded = $this->Uploader->set($this->request->getData('file'))
+            $uploaded = $this->Uploader->set($this->getRequest()->getData('file'))
                 ->mimetype('image')
                 ->save(PHOTOS . $album);
 
@@ -144,8 +144,8 @@ class PhotosController extends AppController
     {
         $photo = $this->Photos->get($id);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $photo = $this->Photos->patchEntity($photo, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $photo = $this->Photos->patchEntity($photo, $this->getRequest()->getData());
 
             if ($this->Photos->save($photo)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -176,7 +176,7 @@ class PhotosController extends AppController
      */
     public function delete($id)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         $photo = $this->Photos->get($id);
         $this->Photos->deleteOrFail($photo);

@@ -48,7 +48,7 @@ class PostsController extends AppController
      */
     public function index()
     {
-        $page = $this->request->getQuery('page', 1);
+        $page = $this->getRequest()->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $page);
@@ -66,11 +66,11 @@ class PostsController extends AppController
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
             ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
-            $this->request = $this->request->withParam('paging', $paging);
+            $this->setRequest($this->getRequest()->withParam('paging', $paging));
         }
 
         $this->set(compact('posts'));
@@ -96,13 +96,13 @@ class PostsController extends AppController
     public function indexByDate($date)
     {
         //Data can be passed as query string, from a widget
-        if ($this->request->getQuery('q')) {
-            return $this->redirect([$this->request->getQuery('q')]);
+        if ($this->getRequest()->getQuery('q')) {
+            return $this->redirect([$this->getRequest()->getQuery('q')]);
         }
 
         list($start, $end) = $this->getStartAndEndDate($date);
 
-        $page = $this->request->getQuery('page', 1);
+        $page = $this->getRequest()->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf(
@@ -131,11 +131,11 @@ class PostsController extends AppController
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
             ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
-            $this->request = $this->request->withParam('paging', $paging);
+            $this->setRequest($this->getRequest()->withParam('paging', $paging));
         }
 
         $this->set(compact('date', 'posts', 'start'));
@@ -167,14 +167,14 @@ class PostsController extends AppController
      */
     public function search()
     {
-        $pattern = $this->request->getQuery('p');
+        $pattern = $this->getRequest()->getQuery('p');
         $posts = false;
 
         //Checks if the pattern is at least 4 characters long
         if ($pattern && strlen($pattern) < 4) {
             $this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
 
-            return $this->redirect(['action' => $this->request->getParam('action')]);
+            return $this->redirect(['action' => $this->getRequest()->getParam('action')]);
         }
 
         //Checks the last search
@@ -185,13 +185,13 @@ class PostsController extends AppController
                 getConfigOrFail('security.search_interval')
             ));
 
-            return $this->redirect(['action' => $this->request->getParam('action')]);
+            return $this->redirect(['action' => $this->getRequest()->getParam('action')]);
         }
 
         if ($pattern) {
             $this->paginate['limit'] = getConfigOrFail('default.records_for_searches');
 
-            $page = $this->request->getQuery('page', 1);
+            $page = $this->getRequest()->getQuery('page', 1);
 
             //Sets the cache name
             $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), $this->paginate['limit'], $page);
@@ -218,11 +218,11 @@ class PostsController extends AppController
                 //Writes on cache
                 Cache::writeMany([
                     $cache => $posts,
-                    sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+                    sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
                 ], $this->Posts->getCacheName());
             //Else, sets the paging parameter
             } else {
-                $this->request = $this->request->withParam('paging', $paging);
+                $this->setRequest($this->getRequest()->withParam('paging', $paging));
             }
         }
 

@@ -10,7 +10,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$isView = $this->request->isAction('view', 'Pages') && !$this->request->isAjax();
+$isView = $this->getRequest()->isAction('view', 'Pages') && !$this->getRequest()->isAjax();
 ?>
 
 <article class="clearfix mb-4">
@@ -51,7 +51,7 @@ $isView = $this->request->isAction('view', 'Pages') && !$this->request->isAjax()
         //Truncates the text when necessary. The text will be truncated to the
         //  location of the `<!-- readmore -->` tag. If the tag is not present,
         //  the value in the configuration will be used
-        if (!$this->request->isAction(['view', 'preview'])) {
+        if (!$this->getRequest()->isAction(['view', 'preview'])) {
             $strpos = strpos($text, '<!-- read-more -->');
             $truncatedOptions = ['ellipsis' => false];
 

@@ -39,7 +39,7 @@ class UsersController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($this->request->isAction(['index', 'add', 'edit'])) {
+        if ($this->getRequest()->isAction(['index', 'add', 'edit'])) {
             $groups = $this->Users->Groups->getList();
 
             if ($groups->isEmpty()) {
@@ -74,12 +74,12 @@ class UsersController extends AppController
     public function isAuthorized($user = null)
     {
         //Every user can change his password
-        if ($this->request->isAction('changePassword')) {
+        if ($this->getRequest()->isAction('changePassword')) {
             return true;
         }
 
         //Only admins can activate account and delete users. Admins and managers can access other actions
-        $group = $this->request->isAction(['activate', 'delete']) ? ['admin'] : ['admin', 'manager'];
+        $group = $this->getRequest()->isAction(['activate', 'delete']) ? ['admin'] : ['admin', 'manager'];
 
         return $this->Auth->isGroup($group);
     }
@@ -95,7 +95,7 @@ class UsersController extends AppController
 
         $this->paginate['order'] = ['username' => 'ASC'];
 
-        $users = $this->paginate($this->Users->queryFromFilter($query, $this->request->getQueryParams()));
+        $users = $this->paginate($this->Users->queryFromFilter($query, $this->getRequest()->getQueryParams()));
 
         $this->set(compact('users'));
     }
@@ -127,8 +127,8 @@ class UsersController extends AppController
     {
         $user = $this->Users->newEntity();
 
-        if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+        if ($this->getRequest()->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
 
             if ($this->Users->save($user)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -159,9 +159,9 @@ class UsersController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $user = $this->Users->patchEntity($user, $this->request->getData(), ['validate' => 'EmptyPassword']);
+        $user = $this->Users->patchEntity($user, $this->getRequest()->getData(), ['validate' => 'EmptyPassword']);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
             if ($this->Users->save($user)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
@@ -182,7 +182,7 @@ class UsersController extends AppController
      */
     public function delete($id)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         $user = $this->Users->get($id);
 
@@ -224,8 +224,8 @@ class UsersController extends AppController
     {
         $user = $this->Users->get($this->Auth->user('id'));
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
 
             if ($this->Users->save($user)) {
                 $this->getMailer('MeCms.User')->send('changePassword', [$user]);
@@ -248,7 +248,7 @@ class UsersController extends AppController
      */
     public function changePicture()
     {
-        if ($this->request->getData('file')) {
+        if ($this->getRequest()->getData('file')) {
             $id = $this->Auth->user('id');
 
             //Deletes any picture that already exists
@@ -256,9 +256,9 @@ class UsersController extends AppController
                 @unlink(USER_PICTURES . $filename);
             }
 
-            $filename = $id . '.' . pathinfo($this->request->getData('file')['tmp_name'], PATHINFO_EXTENSION);
+            $filename = $id . '.' . pathinfo($this->getRequest()->getData('file')['tmp_name'], PATHINFO_EXTENSION);
 
-            $uploaded = $this->Uploader->set($this->request->getData('file'))
+            $uploaded = $this->Uploader->set($this->getRequest()->getData('file'))
                 ->mimetype('image')
                 ->save(USER_PICTURES, $filename);
 

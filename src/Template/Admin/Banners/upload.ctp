@@ -20,7 +20,7 @@ $this->assign('title', __d('me_cms', 'Upload banners'));
     <?php
         echo $this->Form->label('position', __d('me_cms', 'Position where to upload banners'));
         echo $this->Form->control('position', [
-            'default' => $this->request->getQuery('position'),
+            'default' => $this->getRequest()->getQuery('position'),
             'label' => __d('me_cms', 'Position where to upload banners'),
             'onchange' => 'send_form(this)',
             'options' => $positions,
@@ -32,7 +32,7 @@ $this->assign('title', __d('me_cms', 'Upload banners'));
 </div>
 
 <?php
-if ($this->request->getQuery('position')) {
+if ($this->getRequest()->getQuery('position')) {
     echo $this->element('admin/uploader');
 }
 ?>

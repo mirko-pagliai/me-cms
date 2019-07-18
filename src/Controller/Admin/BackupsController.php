@@ -89,9 +89,9 @@ class BackupsController extends AppController
     {
         $backup = new BackupForm();
 
-        if ($this->request->is('post')) {
+        if ($this->getRequest()->is('post')) {
             //Creates the backup
-            if ($backup->execute($this->request->getData())) {
+            if ($backup->execute($this->getRequest()->getData())) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirect(['action' => 'index']);
@@ -112,7 +112,7 @@ class BackupsController extends AppController
      */
     public function delete($filename)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
         $this->BackupManager->delete($this->getFilename($filename));
         $this->Flash->success(I18N_OPERATION_OK);
 
@@ -126,7 +126,7 @@ class BackupsController extends AppController
      */
     public function deleteAll()
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
         $this->BackupManager->deleteAll();
         $this->Flash->success(I18N_OPERATION_OK);
 

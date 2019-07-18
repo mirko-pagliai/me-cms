@@ -47,7 +47,7 @@ class AppControllerTest extends ControllerTestCase
         Configure::write('MeCms.security.search_interval', 15);
 
         $controller = $this->getMockForController();
-        $controller->request = $this->Controller->request->withParam('action', 'my-action')
+        $controller->request = $this->Controller->getRequest()->withParam('action', 'my-action')
             ->withQueryParams(['sort' => 'my-field']);
         $controller->beforeFilter(new Event('myEvent'));
         $this->assertNotEmpty($controller->Auth->allowedActions);
@@ -57,7 +57,7 @@ class AppControllerTest extends ControllerTestCase
 
         //Admin request
         $controller = $this->getMockForController();
-        $controller->request = $controller->request->withParam('action', 'my-action')
+        $controller->request = $controller->getRequest()->withParam('action', 'my-action')
             ->withQueryParams(['sort' => 'my-field'])
             ->withParam('prefix', ADMIN_PREFIX);
         $controller->beforeFilter(new Event('myEvent'));
@@ -67,7 +67,7 @@ class AppControllerTest extends ControllerTestCase
 
         //Ajax request
         $controller = $this->getMockForController();
-        $controller->request = $controller->request->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
+        $controller->request = $controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
         $controller->beforeFilter(new Event('myEvent'));
         $this->assertEquals('MeCms.ajax', $controller->viewBuilder()->getLayout());
 
@@ -95,7 +95,7 @@ class AppControllerTest extends ControllerTestCase
         //With prefixes
         foreach ([ADMIN_PREFIX, 'otherPrefix'] as $prefix) {
             $controller = $this->getMockForController();
-            $controller->request = $controller->request->withParam('prefix', $prefix)
+            $controller->request = $controller->getRequest()->withParam('prefix', $prefix)
                 ->clearDetectorCache();
             parent::testIsAuthorized();
         }

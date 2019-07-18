@@ -36,7 +36,7 @@ class PagesCategoriesController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($this->request->isAction(['add', 'edit'])) {
+        if ($this->getRequest()->isAction(['add', 'edit'])) {
             $this->set('categories', $this->PagesCategories->getTreeList());
         }
     }
@@ -51,7 +51,7 @@ class PagesCategoriesController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can delete pages categories. Admins and managers can access other actions
-        return $this->Auth->isGroup($this->request->isDelete() ? ['admin'] : ['admin', 'manager']);
+        return $this->Auth->isGroup($this->getRequest()->isDelete() ? ['admin'] : ['admin', 'manager']);
     }
 
     /**
@@ -84,8 +84,8 @@ class PagesCategoriesController extends AppController
     {
         $category = $this->PagesCategories->newEntity();
 
-        if ($this->request->is('post')) {
-            $category = $this->PagesCategories->patchEntity($category, $this->request->getData());
+        if ($this->getRequest()->is('post')) {
+            $category = $this->PagesCategories->patchEntity($category, $this->getRequest()->getData());
 
             if ($this->PagesCategories->save($category)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -108,8 +108,8 @@ class PagesCategoriesController extends AppController
     {
         $category = $this->PagesCategories->get($id);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $category = $this->PagesCategories->patchEntity($category, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $category = $this->PagesCategories->patchEntity($category, $this->getRequest()->getData());
 
             if ($this->PagesCategories->save($category)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -130,7 +130,7 @@ class PagesCategoriesController extends AppController
      */
     public function delete($id)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         $category = $this->PagesCategories->get($id);
 
