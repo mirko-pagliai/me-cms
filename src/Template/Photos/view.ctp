@@ -46,7 +46,7 @@ $this->Breadcrumbs->add($title, ['_name' => 'photo', 'slug' => $photo->album->sl
 /**
  * Meta tags
  */
-if ($this->request->isAction('view', 'Photos')) {
+if ($this->getRequest()->isAction('view', 'Photos')) {
     if ($photo->has('modified')) {
         $this->Html->meta(['content' => $photo->modified->toUnixString(), 'property' => 'og:updated_time']);
     }

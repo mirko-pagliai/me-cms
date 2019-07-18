@@ -55,8 +55,8 @@ class UsersGroupsController extends AppController
     {
         $group = $this->UsersGroups->newEntity();
 
-        if ($this->request->is('post')) {
-            $group = $this->UsersGroups->patchEntity($group, $this->request->getData());
+        if ($this->getRequest()->is('post')) {
+            $group = $this->UsersGroups->patchEntity($group, $this->getRequest()->getData());
 
             if ($this->UsersGroups->save($group)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -79,8 +79,8 @@ class UsersGroupsController extends AppController
     {
         $group = $this->UsersGroups->get($id);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $group = $this->UsersGroups->patchEntity($group, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $group = $this->UsersGroups->patchEntity($group, $this->getRequest()->getData());
 
             if ($this->UsersGroups->save($group)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -101,7 +101,7 @@ class UsersGroupsController extends AppController
      */
     public function delete(string $id): ?Response
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         $group = $this->UsersGroups->get($id);
 

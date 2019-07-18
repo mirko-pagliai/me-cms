@@ -55,8 +55,8 @@ class BannersPositionsController extends AppController
     {
         $position = $this->BannersPositions->newEntity();
 
-        if ($this->request->is('post')) {
-            $position = $this->BannersPositions->patchEntity($position, $this->request->getData());
+        if ($this->getRequest()->is('post')) {
+            $position = $this->BannersPositions->patchEntity($position, $this->getRequest()->getData());
 
             if ($this->BannersPositions->save($position)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -79,8 +79,8 @@ class BannersPositionsController extends AppController
     {
         $position = $this->BannersPositions->get($id);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $position = $this->BannersPositions->patchEntity($position, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $position = $this->BannersPositions->patchEntity($position, $this->getRequest()->getData());
 
             if ($this->BannersPositions->save($position)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -101,7 +101,7 @@ class BannersPositionsController extends AppController
      */
     public function delete(string $id): ?Response
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         $position = $this->BannersPositions->get($id);
 

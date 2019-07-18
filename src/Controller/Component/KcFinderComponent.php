@@ -125,6 +125,6 @@ class KcFinderComponent extends Component
 
         //Sets config and writes it on session
         $this->configShallow($config + getConfig('kcfinder', []));
-        $this->getController()->request->getSession()->write('KCFINDER', $this->getConfig());
+        $this->getController()->getRequest()->getSession()->write('KCFINDER', $this->getConfig());
     }
 }

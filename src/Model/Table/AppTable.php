@@ -80,8 +80,7 @@ class AppTable extends Table
                 $created = new Time($data['created']);
             } catch (Exception $e) {
             }
-        }
-        elseif (array_key_exists('created', $data) && is_null($data['created'])) {
+        } elseif (array_key_exists('created', $data) && is_null($data['created'])) {
             $created = new Time();
         }
         if (isset($created)) {
@@ -187,7 +186,7 @@ class AppTable extends Table
     /**
      * Build query from filter data
      * @param \Cake\ORM\Query $query Query object
-     * @param array $data Filter data ($this->request->getQueryParams())
+     * @param array $data Filter data ($this->getRequest()->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = []): Query

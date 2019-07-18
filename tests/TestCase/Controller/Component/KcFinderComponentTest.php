@@ -87,13 +87,13 @@ class KcFinderComponentTest extends ComponentTestCase
             'uploadURL' => 'http://localhost/files',
         ];
         $this->assertSame($expected, $this->Component->getConfig());
-        $this->assertSame($expected, $this->Component->getController()->request->getSession()->read('KCFINDER'));
+        $this->assertSame($expected, $this->Component->getController()->getRequest()->getSession()->read('KCFINDER'));
 
         $expected = ['access' => []] + $expected;
         $this->Component->Auth->setUser(['group' => ['name' => 'admin']]);
         $this->Component->initialize([]);
         $this->assertEquals($expected, $this->Component->getConfig());
-        $this->assertSame($expected, $this->Component->getController()->request->getSession()->read('KCFINDER'));
+        $this->assertSame($expected, $this->Component->getController()->getRequest()->getSession()->read('KCFINDER'));
 
         //With `uploaded` dir not writable
         $this->assertException(NotWritableException::class, function () {

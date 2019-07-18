@@ -171,7 +171,7 @@ class UsersTable extends AppTable
     /**
      * Build query from filter data
      * @param \Cake\ORM\Query $query Query object
-     * @param array $data Filter data ($this->request->getQueryParams())
+     * @param array $data Filter data ($this->getRequest()->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = []): Query

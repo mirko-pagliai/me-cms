@@ -40,8 +40,8 @@ class UsersController extends AppController
      */
     protected function loginWithCookie(): ?Response
     {
-        $username = $this->request->getCookie('login.username');
-        $password = $this->request->getCookie('login.password');
+        $username = $this->getRequest()->getCookie('login.username');
+        $password = $this->getRequest()->getCookie('login.password');
 
         //Checks if the cookies exist
         if (!$username || !$password) {
@@ -49,7 +49,7 @@ class UsersController extends AppController
         }
 
         //Tries to login
-        $this->request = $this->request->withParsedBody(compact('username', 'password'));
+        $this->setRequest($this->getRequest()->withParsedBody(compact('username', 'password')));
         $user = $this->Auth->identify();
         if (!$user || !$user['active'] || $user['banned']) {
             return $this->buildLogout();
@@ -68,9 +68,9 @@ class UsersController extends AppController
     protected function buildLogout(): ?Response
     {
         //Deletes some cookies and KCFinder session
-        $cookies = $this->request->getCookieCollection()->remove('login')->remove('sidebar-lastmenu');
-        $this->request = $this->request->withCookieCollection($cookies);
-        $this->request->getSession()->delete('KCFINDER');
+        $cookies = $this->getRequest()->getCookieCollection()->remove('login')->remove('sidebar-lastmenu');
+        $this->setRequest($this->getRequest()->withCookieCollection($cookies));
+        $this->getRequest()->getSession()->delete('KCFINDER');
 
         return $this->redirect($this->Auth->logout());
     }
@@ -114,7 +114,7 @@ class UsersController extends AppController
         parent::beforeFilter($event);
 
         //Checks if the user is already logged in
-        if (!$this->request->isAction('logout') && $this->Auth->isLogged()) {
+        if (!$this->getRequest()->isAction('logout') && $this->Auth->isLogged()) {
             return $this->redirect(['_name' => 'dashboard']);
         }
     }
@@ -161,13 +161,13 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $entity = $this->Users->newEntity($this->request->getData(), ['validate' => 'DoNotRequirePresence']);
+        $entity = $this->Users->newEntity($this->getRequest()->getData(), ['validate' => 'DoNotRequirePresence']);
 
-        if ($this->request->is('post')) {
+        if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
                 if (!$entity->getErrors()) {
-                    $user = $this->Users->findPendingByEmail($this->request->getData('email'))->first();
+                    $user = $this->Users->findPendingByEmail($this->getRequest()->getData('email'))->first();
 
                     if ($user && $this->sendActivationMail($user)) {
                         $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
@@ -175,11 +175,11 @@ class UsersController extends AppController
                         return $this->redirect(['_name' => 'login']);
                     }
 
-                    if ($this->request->getData('email')) {
+                    if ($this->getRequest()->getData('email')) {
                         Log::error(sprintf(
                             '%s - Resend activation request with invalid email `%s`',
-                            $this->request->clientIp(),
-                            $this->request->getData('email')
+                            $this->getRequest()->clientIp(),
+                            $this->getRequest()->getData('email')
                         ), 'users');
                     }
 
@@ -207,7 +207,7 @@ class UsersController extends AppController
             $this->loginWithCookie();
         }
 
-        if ($this->request->is('post')) {
+        if ($this->getRequest()->is('post')) {
             $user = $this->Auth->identify();
 
             if ($user) {
@@ -228,10 +228,10 @@ class UsersController extends AppController
                 $this->LoginRecorder->setConfig('user', $user['id'])->write();
 
                 //Saves the login data as cookies, if requested
-                if ($this->request->getData('remember_me')) {
+                if ($this->getRequest()->getData('remember_me')) {
                     $cookie = new Cookie('login', [
-                        'username' => $this->request->getData('username'),
-                        'password' => $this->request->getData('password'),
+                        'username' => $this->getRequest()->getData('username'),
+                        'password' => $this->getRequest()->getData('password'),
                     ], new DateTime('+1 year'));
                     $this->response = $this->response->withCookie($cookie);
                 }
@@ -239,12 +239,12 @@ class UsersController extends AppController
                 return $this->redirect($this->Auth->redirectUrl());
             }
 
-            if ($this->request->getData('username') && $this->request->getData('password')) {
+            if ($this->getRequest()->getData('username') && $this->getRequest()->getData('password')) {
                 Log::error(sprintf(
                     '%s - Failed login with username `%s` and password `%s`',
-                    $this->request->clientIp(),
-                    $this->request->getData('username'),
-                    $this->request->getData('password')
+                    $this->getRequest()->clientIp(),
+                    $this->getRequest()->getData('username'),
+                    $this->getRequest()->getData('password')
                 ), 'users');
             }
 
@@ -280,12 +280,12 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $entity = $this->Users->newEntity($this->request->getData(), ['validate' => 'DoNotRequirePresence']);
+        $entity = $this->Users->newEntity($this->getRequest()->getData(), ['validate' => 'DoNotRequirePresence']);
 
-        if ($this->request->is('post')) {
+        if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
-                $user = $this->Users->findActiveByEmail($this->request->getData('email'))->first();
+                $user = $this->Users->findActiveByEmail($this->getRequest()->getData('email'))->first();
 
                 if ($user) {
                     $token = $this->Token->create(
@@ -300,11 +300,11 @@ class UsersController extends AppController
                     return $this->redirect(['_name' => 'login']);
                 }
 
-                if ($this->request->getData('email')) {
+                if ($this->getRequest()->getData('email')) {
                     Log::error(sprintf(
                         '%s - Forgot password request with invalid email `%s`',
-                        $this->request->clientIp(),
-                        $this->request->getData('email')
+                        $this->getRequest()->clientIp(),
+                        $this->getRequest()->getData('email')
                     ), 'users');
                 }
 
@@ -332,8 +332,8 @@ class UsersController extends AppController
 
         $user = $this->Users->findActiveById($id)->select(['id'])->firstOrFail();
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
 
             if ($user->isDirty() && $this->Users->save($user)) {
                 $this->Token->delete($token);
@@ -365,8 +365,8 @@ class UsersController extends AppController
 
         $user = $this->Users->newEntity();
 
-        if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+        if ($this->getRequest()->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
 
             $user->set('group_id', getConfigOrFail('users.default_group'))
                 ->set('active', (bool)!getConfig('users.activation'));

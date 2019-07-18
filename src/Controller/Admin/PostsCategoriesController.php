@@ -37,7 +37,7 @@ class PostsCategoriesController extends AppController
     {
         parent::beforeFilter($event);
 
-        if ($this->request->isAction(['add', 'edit'])) {
+        if ($this->getRequest()->isAction(['add', 'edit'])) {
             $this->set('categories', $this->PostsCategories->getTreeList());
         }
     }
@@ -51,7 +51,7 @@ class PostsCategoriesController extends AppController
     public function isAuthorized($user = null): bool
     {
         //Only admins can delete posts categories. Admins and managers can access other actions
-        return $this->Auth->isGroup($this->request->isDelete() ? ['admin'] : ['admin', 'manager']);
+        return $this->Auth->isGroup($this->getRequest()->isDelete() ? ['admin'] : ['admin', 'manager']);
     }
 
     /**
@@ -84,8 +84,8 @@ class PostsCategoriesController extends AppController
     {
         $category = $this->PostsCategories->newEntity();
 
-        if ($this->request->is('post')) {
-            $category = $this->PostsCategories->patchEntity($category, $this->request->getData());
+        if ($this->getRequest()->is('post')) {
+            $category = $this->PostsCategories->patchEntity($category, $this->getRequest()->getData());
 
             if ($this->PostsCategories->save($category)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -108,8 +108,8 @@ class PostsCategoriesController extends AppController
     {
         $category = $this->PostsCategories->get($id);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $category = $this->PostsCategories->patchEntity($category, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $category = $this->PostsCategories->patchEntity($category, $this->getRequest()->getData());
 
             if ($this->PostsCategories->save($category)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -130,7 +130,7 @@ class PostsCategoriesController extends AppController
      */
     public function delete(string $id): ?Response
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         //Before deleting, it checks if the category has some posts
         $category = $this->PostsCategories->get($id);

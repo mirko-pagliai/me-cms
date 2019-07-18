@@ -18,12 +18,12 @@ declare(strict_types=1);
         <?php
             echo $this->Html->button(
                 __d('me_cms', 'Show as list'),
-                ['?' => ['render' => 'list'] + $this->request->getQueryParams()],
+                ['?' => ['render' => 'list'] + $this->getRequest()->getQueryParams()],
                 ['class' => 'btn-primary', 'icon' => 'align-justify']
             );
             echo $this->Html->button(
                 __d('me_cms', 'Show as grid'),
-                ['?' => ['render' => 'grid'] + $this->request->getQueryParams()],
+                ['?' => ['render' => 'grid'] + $this->getRequest()->getQueryParams()],
                 ['class' => 'btn-primary', 'icon' => 'th-large']
             );
         ?>

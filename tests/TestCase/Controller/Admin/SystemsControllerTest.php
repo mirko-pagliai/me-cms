@@ -103,7 +103,7 @@ class SystemsControllerTest extends ControllerTestCase
         ], 'tmpCleaner');
 
         foreach (['all', 'logs'] as $param) {
-            $this->Controller->request = $this->Controller->request->withParam('pass.0', $param);
+            $this->Controller->request = $this->Controller->getRequest()->withParam('pass.0', $param);
             $this->assertGroupsAreAuthorized([
                 'admin' => true,
                 'manager' => false,

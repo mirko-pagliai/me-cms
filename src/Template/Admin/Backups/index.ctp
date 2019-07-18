@@ -56,7 +56,7 @@ $this->append('actions', $this->Form->postButton(
                                 'some data may be lost. Are you sure?'),
                         ]),
                         $this->Form->postLink(__d('me_cms', 'Send'), ['action' => 'send', $backup->slug], [
-                            'icon' => ' envelope-o',
+                            'icon' => 'envelope',
                             'confirm' => __d('me_cms', 'The backup file will be sent by mail. Are you sure?'),
                         ]),
                         $this->Form->postLink(

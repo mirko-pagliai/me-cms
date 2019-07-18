@@ -91,8 +91,9 @@ class AuthComponentTest extends ComponentTestCase
     {
         $this->loadFixtures();
         $this->Component->constructAuthenticate();
-        $this->Component->request = $this->Component->request->withData('username', 'zeta')
+        $request = $this->Component->getController()->getRequest()->withData('username', 'zeta')
             ->withData('password', 'zeta');
+        $this->Component->getController()->setRequest($request);
         $this->assertNotEmpty($this->Component->identify());
     }
 

@@ -101,43 +101,43 @@ class UsersControllerTest extends ControllerTestCase
         $controller = $this->getMockForController();
         $this->assertNull($this->invokeMethod($controller, 'loginWithCookie'));
         $this->assertNull($controller->Auth->user());
-        $this->assertEmpty($controller->request->getCookieCollection());
+        $this->assertEmpty($controller->getRequest()->getCookieCollection());
 
         //Writes wrong data on cookies
-        $controller->request = $controller->request->withCookieParams(['login' => ['username' => 'a', 'password' => 'b']]);
+        $controller->request = $controller->getRequest()->withCookieParams(['login' => ['username' => 'a', 'password' => 'b']]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->logout());
         $this->assertNull($controller->Auth->user());
-        $this->assertEmpty($controller->request->getCookieCollection());
+        $this->assertEmpty($controller->getRequest()->getCookieCollection());
 
         //Gets an user and sets a password, then writes right data on cookies
         $password = 'mypassword1!';
         $user = $this->Table->findByActiveAndBanned(true, false)->first();
         $this->Table->save($user->set(compact('password') + ['password_repeat' => $password]));
         $controller = $this->getMockForController();
-        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username] + compact('password')]);
+        $controller->request = $controller->getRequest()->withCookieParams(['login' => ['username' => $user->username] + compact('password')]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->redirectUrl());
         $this->assertNotEmpty($controller->Auth->user());
-        $this->assertNotEmpty($controller->request->getCookieCollection());
+        $this->assertNotEmpty($controller->getRequest()->getCookieCollection());
 
         //Sets the user as "pending" user, then writes again data on cookies
         $this->Table->save($user->set('active', false));
         $controller = $this->getMockForController();
-        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username] + compact('password')]);
+        $controller->request = $controller->getRequest()->withCookieParams(['login' => ['username' => $user->username] + compact('password')]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->logout());
         $this->assertNull($controller->Auth->user());
-        $this->assertEmpty($controller->request->getCookieCollection());
+        $this->assertEmpty($controller->getRequest()->getCookieCollection());
 
         //Sets the user as "banned" user,then writes again data on cookies
         $this->Table->save($user->set(['active' => true, 'banned' => true]));
         $controller = $this->getMockForController();
-        $controller->request = $controller->request->withCookieParams(['login' => ['username' => $user->username] + compact('password')]);
+        $controller->request = $controller->getRequest()->withCookieParams(['login' => ['username' => $user->username] + compact('password')]);
         $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
         $this->assertRedirect($controller->Auth->logout());
         $this->assertNull($controller->Auth->user());
-        $this->assertEmpty($controller->request->getCookieCollection());
+        $this->assertEmpty($controller->getRequest()->getCookieCollection());
     }
 
     /**
@@ -148,12 +148,12 @@ class UsersControllerTest extends ControllerTestCase
     {
         //Sets cookies and session values
         $controller = $this->getMockForController();
-        $controller->request = $controller->request->withCookieParams(['login' => 'testLogin', 'sidebar-lastmenu' => 'testSidebar']);
-        $controller->request->getSession()->write('KCFINDER', 'value');
+        $controller->request = $controller->getRequest()->withCookieParams(['login' => 'testLogin', 'sidebar-lastmenu' => 'testSidebar']);
+        $controller->getRequest()->getSession()->write('KCFINDER', 'value');
         $this->_response = $this->invokeMethod($controller, 'buildLogout');
         $this->assertRedirect($controller->Auth->logout());
-        $this->assertEmpty($controller->request->getCookieCollection());
-        $this->assertEmpty($controller->request->getSession()->read());
+        $this->assertEmpty($controller->getRequest()->getCookieCollection());
+        $this->assertEmpty($controller->getRequest()->getSession()->read());
     }
 
     /**
@@ -172,7 +172,7 @@ class UsersControllerTest extends ControllerTestCase
     public function testBeforeFilter()
     {
         $this->setUserId(1);
-        $this->Controller->request = $this->Controller->request->withParam('action', 'my-action');
+        $this->Controller->request = $this->Controller->getRequest()->withParam('action', 'my-action');
         $this->_response = $this->Controller->beforeFilter(new Event('myEvent'));
         $this->assertRedirect(['_name' => 'dashboard']);
     }

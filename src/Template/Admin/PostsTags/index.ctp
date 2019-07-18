@@ -25,12 +25,12 @@ $this->append('actions', $this->Html->button(
         <?= $this->Html->legend(I18N_FILTER, ['icon' => 'eye']) ?>
         <?php
             echo $this->Form->control('id', [
-                'default' => $this->request->getQuery('id'),
+                'default' => $this->getRequest()->getQuery('id'),
                 'placeholder' => I18N_ID,
                 'size' => 1,
             ]);
             echo $this->Form->control('name', [
-                'default' => $this->request->getQuery('name'),
+                'default' => $this->getRequest()->getQuery('name'),
                 'placeholder' => I18N_NAME,
                 'size' => 13,
             ]);

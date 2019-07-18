@@ -95,7 +95,7 @@ class LogsController extends AppController
     public function view(string $filename): void
     {
         $serialized = false;
-        if ($this->request->getQuery('as') === 'serialized') {
+        if ($this->getRequest()->getQuery('as') === 'serialized') {
             $serialized = true;
             $this->viewBuilder()->setTemplate('view_as_serialized');
         }
@@ -125,7 +125,7 @@ class LogsController extends AppController
      */
     public function delete(string $filename): ?Response
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         $success = @unlink($this->getPath($filename, false));
         $serialized = $this->getPath($filename, true);

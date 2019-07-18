@@ -39,7 +39,7 @@ class SystemsController extends AppController
         parent::initialize();
 
         //Loads KcFinderComponent
-        if ($this->request->isAction('browser')) {
+        if ($this->getRequest()->isAction('browser')) {
             $this->loadComponent('MeCms.KcFinder');
         }
     }
@@ -53,7 +53,7 @@ class SystemsController extends AppController
     public function isAuthorized($user = null): bool
     {
         //Only admins can clear all temporary files or logs
-        if ($this->request->isAction('tmpCleaner') && in_array($this->request->getParam('pass.0'), ['all', 'logs'])) {
+        if ($this->getRequest()->isAction('tmpCleaner') && in_array($this->getRequest()->getParam('pass.0'), ['all', 'logs'])) {
             return $this->Auth->isGroup('admin');
         }
 
@@ -71,13 +71,13 @@ class SystemsController extends AppController
     public function browser(): void
     {
         //Gets the type from the query and the supported types from configuration
-        $type = $this->request->getQuery('type');
+        $type = $this->getRequest()->getQuery('type');
         $types = $this->KcFinder->getTypes();
 
         //If there's only one type, it automatically sets the query value
         if (!$type && count($types) < 2) {
             $type = array_key_first($types);
-            $this->request = $this->request->withQueryParams(compact('type'));
+            $this->setRequest($this->getRequest()->withQueryParams(compact('type')));
         }
 
         //Checks the type, then sets the KCFinder path
@@ -112,12 +112,12 @@ class SystemsController extends AppController
         }
 
         //If a changelog file has been specified
-        if ($this->request->getQuery('file')) {
+        if ($this->getRequest()->getQuery('file')) {
             $converter = new CommonMarkConverter([
                 'html_input' => 'strip',
                 'allow_unsafe_links' => false,
             ]);
-            $changelog = file_get_contents(ROOT . $files[$this->request->getQuery('file')]);
+            $changelog = file_get_contents(ROOT . $files[$this->getRequest()->getQuery('file')]);
             $changelog = $converter->convertToHtml($changelog);
 
             $this->set(compact('changelog'));
@@ -183,7 +183,7 @@ class SystemsController extends AppController
      */
     public function tmpCleaner(string $type): ?Response
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         $assetsTarget = getConfigOrFail('Assets.target');
         $success = true;

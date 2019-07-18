@@ -34,32 +34,32 @@ class CheckLastSearchTraitTest extends TestCase
         };
 
         $this->assertTrue($checkLastSearchMethod('my-query'));
-        $firstSession = $controller->request->getSession()->read('last_search.id');
+        $firstSession = $controller->getRequest()->getSession()->read('last_search.id');
         $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $firstSession);
 
         //Tries with the same query
         $this->assertTrue($checkLastSearchMethod('my-query'));
-        $secondSession = $controller->request->getSession()->read('last_search.id');
+        $secondSession = $controller->getRequest()->getSession()->read('last_search.id');
         $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $secondSession);
 
         $this->assertEquals($firstSession, $secondSession);
 
         //Tries with another query
         $this->assertFalse($checkLastSearchMethod('another-query'));
-        $thirdSession = $controller->request->getSession()->read('last_search.id');
+        $thirdSession = $controller->getRequest()->getSession()->read('last_search.id');
         $this->assertEquals($firstSession, $thirdSession);
 
         //Deletes the session and tries again with another query
-        $controller->request->getSession()->delete('last_search');
+        $controller->getRequest()->getSession()->delete('last_search');
         $this->assertTrue($checkLastSearchMethod('another-query'));
-        $fourthSession = $controller->request->getSession()->read('last_search.id');
+        $fourthSession = $controller->getRequest()->getSession()->read('last_search.id');
         $this->assertNotEquals($firstSession, $fourthSession);
 
         foreach ([0, false] as $value) {
-            $controller->request->getSession()->delete('last_search');
+            $controller->getRequest()->getSession()->delete('last_search');
             Configure::write('MeCms.security.search_interval', $value);
             $this->assertTrue($checkLastSearchMethod());
-            $this->assertNull($controller->request->getSession()->read('last_search.id'));
+            $this->assertNull($controller->getRequest()->getSession()->read('last_search.id'));
         }
     }
 }

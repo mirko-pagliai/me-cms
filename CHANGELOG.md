@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.6
+* uses `getRequest()`/`setRequest()` methods instead of `$request` property
+    whenever possible;
 * removed useless `AppController::isOffline()` method;
 * removed `AppTable::beforeSave()`, added `AppTable::beforeMarshal()`;
 * `StaticPage::getAppPath()` and `StaticPage::getPluginPath()` been replaced by

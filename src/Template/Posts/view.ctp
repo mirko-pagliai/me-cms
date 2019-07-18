@@ -46,7 +46,7 @@ $this->Breadcrumbs->add($post->title, ['_name' => 'post', $post->slug]);
 /**
  * Meta tags
  */
-if ($this->request->isAction('view', 'Posts')) {
+if ($this->getRequest()->isAction('view', 'Posts')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
 
     if ($post->has('modified')) {

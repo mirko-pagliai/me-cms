@@ -86,7 +86,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Photos']);
+        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Photos']);
 
         //GET request with query string
         $this->get($url + ['?' => ['q' => 'test-album']]);

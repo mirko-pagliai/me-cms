@@ -23,7 +23,7 @@ $this->Asset->script('MeCms.admin/kcfinder', ['block' => 'script_bottom']);
     <?php
         echo $this->Form->label('type', __d('me_cms', 'Type'));
         echo $this->Form->control('type', [
-            'default' => $this->request->getQuery('type'),
+            'default' => $this->getRequest()->getQuery('type'),
             'onchange' => 'send_form(this)',
         ]);
         echo $this->Form->submit(I18N_SELECT);
