@@ -30,6 +30,7 @@ class PhotosAlbumsController extends AppController
     public function index()
     {
         $albums = $this->PhotosAlbums->find('active')
+            ->select(['id', 'title', 'slug', 'photo_count', 'created'])
             ->contain($this->PhotosAlbums->Photos->getAlias(), function (Query $q) {
                 return $q->find('active')
                     ->select(['album_id', 'filename'])
@@ -40,7 +41,7 @@ class PhotosAlbumsController extends AppController
 
         //If there is only one record, redirects
         if ($albums->count() === 1) {
-            return $this->redirect(['_name' => 'album', $albums->extract('slug')->first()]);
+            return $this->redirect(['_name' => 'album', $albums->first()->get('slug')]);
         }
 
         $this->set(compact('albums'));

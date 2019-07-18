@@ -49,7 +49,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         $this->assertEquals($this->viewVariable('albums')->toArray(), $cache->toArray());
 
         //Deletes all albums, except the first one and clears the cache
-        $this->Table->deleteAll(['id !=' => 1]);
+        $this->Table->deleteAll(['id >' => 1]);
         Cache::clear(false, $this->Table->getCacheName());
 
         //Now it redirects to the first album
