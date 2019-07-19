@@ -35,7 +35,7 @@ class Form extends CakeForm
      */
     public function validate(array $data): bool
     {
-        $oldValidator = function (Validator $validator = null) {
+        $oldValidator = function (?Validator $validator = null) {
             if ($validator === null && empty($this->_validator)) {
                 $validator = $this->_buildValidator(new $this->_validatorClass());
             }
