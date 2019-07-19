@@ -90,8 +90,8 @@ trait GetPreviewsFromTextTrait
      */
     public function getPreviews(string $html): array
     {
-        $images = array_map(function ($url) {
-            if ($url && !is_url($url)) {
+        $images = array_map(function (string $url) {
+            if (!is_url($url)) {
                 $url = Folder::isAbsolute($url) ? $url : WWW_ROOT . 'img' . DS . $url;
 
                 if (!file_exists($url)) {
