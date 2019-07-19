@@ -121,21 +121,18 @@ class BackupFormTest extends TestCase
         $BackupForm = $this->getMockBuilder(BackupForm::class)
             ->setMethods(['getBackupExportInstance'])
             ->getMock();
-
-        $BackupForm->expects($this->atLeastOnce())
+        $BackupForm->expects($this->at(0))
             ->method('getBackupExportInstance')
             ->will($this->returnCallback(function () {
                 $this->BackupExport->method('export')->will($this->returnValue('test.sql'));
 
                 return $this->BackupExport;
             }));
-
-        $this->assertTrue($BackupForm->execute(['filename' => 'test.sql']));
-
-        $BackupForm->expects($this->atLeastOnce())
+        $BackupForm->expects($this->at(1))
             ->method('getBackupExportInstance')
             ->will($this->throwException(new InternalErrorException()));
 
+        $this->assertTrue($BackupForm->execute(['filename' => 'test.sql']));
         $this->assertFalse($BackupForm->execute(['filename' => 'test.sql']));
     }
 }
