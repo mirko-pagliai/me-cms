@@ -14,7 +14,6 @@
 namespace MeCms\ORM;
 
 use ArrayObject;
-use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
