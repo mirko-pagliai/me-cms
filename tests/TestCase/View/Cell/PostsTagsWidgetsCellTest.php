@@ -257,7 +257,6 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         array_map([$this, 'assertNotEmpty'], $fromCache->extract('size')->toArray());
 
         //With no tags
-        Cache::clearAll();
         $this->Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty($this->Widget->widget($widget, $this->example)->render());
         $this->assertEmpty($this->Widget->widget($widget, array_merge($this->example, ['render' => 'form']))->render());

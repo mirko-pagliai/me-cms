@@ -120,7 +120,6 @@ class PostsWidgetsCellTest extends CellTestCase
         $this->assertEquals(2, Cache::read('widget_categories', $this->Table->getCacheName())->count());
 
         //With no posts
-        Cache::clearAll();
         $this->Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
@@ -202,7 +201,6 @@ class PostsWidgetsCellTest extends CellTestCase
         $this->assertEquals(2, Cache::read('widget_latest_2', $this->Table->getCacheName())->count());
 
         //With no posts
-        Cache::clearAll();
         $this->Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
     }
@@ -285,7 +283,6 @@ class PostsWidgetsCellTest extends CellTestCase
         }
 
         //With no posts
-        Cache::clearAll();
         $this->Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());

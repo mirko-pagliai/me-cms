@@ -88,6 +88,23 @@ class AppTable extends Table
     }
 
     /**
+     * Deletes all records matching the provided conditions
+     * @param mixed $conditions Conditions to be used, accepts anything
+     *  `Query::where()` can take
+     * @return int Returns the number of affected rows
+     */
+    public function deleteAll($conditions)
+    {
+        $result = parent::deleteAll($conditions);
+
+        if ($this->getCacheName()) {
+            Cache::clear(false, $this->getCacheName());
+        }
+
+        return $result;
+    }
+
+    /**
      * "active" find method
      * @param \Cake\ORM\Query $query Query object
      * @param array $options Options

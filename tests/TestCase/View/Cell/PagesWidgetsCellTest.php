@@ -129,7 +129,6 @@ class PagesWidgetsCellTest extends CellTestCase
         $this->assertEquals(2, Cache::read('widget_categories', $this->Table->getCacheName())->count());
 
         //With no pages
-        Cache::clearAll();
         $this->Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
@@ -180,7 +179,6 @@ class PagesWidgetsCellTest extends CellTestCase
         $this->assertEquals(2, Cache::read('widget_list', $this->Table->getCacheName())->count());
 
         //With no pages
-        Cache::clearAll();
         $this->Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
     }

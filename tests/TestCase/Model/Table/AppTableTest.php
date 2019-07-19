@@ -121,6 +121,17 @@ class AppTableTest extends TableTestCase
     }
 
     /**
+     * Test for `deleteAll()` method
+     * @test
+     */
+    public function testDeleteAll()
+    {
+        Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
+        $this->Posts->deleteAll(['id IS NOT' => null]);
+        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
+    }
+
+    /**
      * Test for `findActive()` method
      * @test
      */

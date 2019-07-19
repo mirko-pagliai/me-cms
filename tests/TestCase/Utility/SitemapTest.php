@@ -100,7 +100,6 @@ class SitemapTest extends TestCase
 
         //Deletes all records
         $table->deleteAll(['id IS NOT' => null]);
-        Cache::clearAll();
         $this->assertEmpty(Sitemap::pages());
     }
 
@@ -155,7 +154,6 @@ class SitemapTest extends TestCase
 
         //Deletes all records
         $table->deleteAll(['id IS NOT' => null]);
-        Cache::clearAll();
         $this->assertEmpty(Sitemap::photos());
     }
 
@@ -233,7 +231,6 @@ class SitemapTest extends TestCase
 
         //Deletes all records
         $table->deleteAll(['id IS NOT' => null]);
-        Cache::clearAll();
         $this->assertEmpty(Sitemap::posts());
     }
 
@@ -283,7 +280,6 @@ class SitemapTest extends TestCase
 
         //Deletes all records
         $table->deleteAll(['id IS NOT' => null]);
-        Cache::clearAll();
         $this->assertEmpty(Sitemap::postsTags());
     }
 
