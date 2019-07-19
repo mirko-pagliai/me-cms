@@ -130,7 +130,7 @@ class BackupFormTest extends TestCase
                 return $this->BackupExport;
             }));
 
-        $this->assertSame('test.sql', $BackupForm->execute(['filename' => 'test.sql']));
+        $this->assertTrue($BackupForm->execute(['filename' => 'test.sql']));
 
         $BackupForm->expects($this->atLeastOnce())
             ->method('getBackupExportInstance')
