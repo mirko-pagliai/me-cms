@@ -19,6 +19,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
+use Cake\ORM\Association;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Exception;
@@ -168,10 +169,10 @@ class AppTable extends Table
         }
 
         $values = collection($this->associations()->getIterator())
-            ->filter(function ($association) {
+            ->filter(function (Association $association) {
                 return method_exists($association->getTarget(), 'getCacheName');
             })
-            ->map(function ($association) {
+            ->map(function (Association $association) {
                 return $association->getTarget()->getCacheName();
             })
             ->prependItem($this->cache ?: null);
