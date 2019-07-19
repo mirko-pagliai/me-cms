@@ -18,7 +18,6 @@ use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\ORM\Entity;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Table\Traits\GetPreviewsFromTextTrait;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
@@ -47,13 +46,13 @@ abstract class PostsAndPagesTables extends AppTable
     /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
+     * @param Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
+    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options)
     {
         parent::afterDelete($event, $entity, $options);
 
@@ -64,13 +63,13 @@ abstract class PostsAndPagesTables extends AppTable
     /**
      * Called after an entity is saved
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterSave()
      * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
+    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
         parent::afterSave($event, $entity, $options);
 
@@ -81,7 +80,7 @@ abstract class PostsAndPagesTables extends AppTable
     /**
      * Called before each entity is saved
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
      * @since 2.17.0
@@ -99,9 +98,9 @@ abstract class PostsAndPagesTables extends AppTable
      * @param array|\ArrayAccess $options An array that will be passed to
      *  Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
-     * @uses getCacheName()
      * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
      * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
+     * @uses clearCache()
      */
     public function find($type = 'all', $options = [])
     {
@@ -111,9 +110,7 @@ abstract class PostsAndPagesTables extends AppTable
         //If the cache is invalid, it clears the cache and sets the next record
         //  to be published
         if ($next && time() >= $next) {
-            Cache::clear(false, $this->getCacheName());
-
-            //Sets the next record to be published
+            $this->clearCache();
             $this->setNextToBePublished();
         }
 
