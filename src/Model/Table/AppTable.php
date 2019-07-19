@@ -162,21 +162,20 @@ class AppTable extends Table
      */
     public function getCacheName($associations = false)
     {
-        $values = $this->cache ?: null;
-
-        if ($associations) {
-            $values = [$values];
-            foreach ($this->associations()->getIterator() as $association) {
-                if (method_exists($association->getTarget(), 'getCacheName')
-                    && $association->getTarget()->getCacheName()) {
-                    $values[] = $association->getTarget()->getCacheName();
-                }
-            }
-
-            $values = array_values(array_unique(array_filter($values)));
+        if (!$associations) {
+            return $this->cache ?: null;
         }
 
-        return $values;
+        $values = collection($this->associations()->getIterator())
+            ->filter(function ($association) {
+                return method_exists($association->getTarget(), 'getCacheName');
+            })
+            ->map(function ($association) {
+                return $association->getTarget()->getCacheName();
+            })
+            ->prependItem($this->cache ?: null);
+
+        return array_values(array_unique($values->toList()));
     }
 
     /**
