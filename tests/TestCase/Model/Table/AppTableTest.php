@@ -17,7 +17,6 @@ use BadMethodCallException;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\I18n\Time;
-use Cake\ORM\Entity;
 use MeCms\TestSuite\TableTestCase;
 
 /**
@@ -77,13 +76,12 @@ class AppTableTest extends TableTestCase
      */
     public function testAfterDeleteAndAfterSave()
     {
-        $table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
-        $table->expects($this->exactly(2))
-            ->method('clearCache');
+        $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
+        $Table->expects($this->exactly(2))->method('clearCache');
 
-        list($event, $entity, $options) = [new Event(null), new Entity(), new ArrayObject()];
-        $table->afterDelete($event, $entity, $options);
-        $table->afterSave($event, $entity, $options);
+        list($event, $entity, $options) = [new Event(null), $Table->newEntity([]), new ArrayObject()];
+        $Table->afterDelete($event, $entity, $options);
+        $Table->afterSave($event, $entity, $options);
     }
 
     /**
