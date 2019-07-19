@@ -119,7 +119,7 @@ class PhotosWidgetsCellTest extends CellTestCase
 
         //With no photos
         Cache::clearAll();
-        $this->Table->deleteAll(['id >=' => 1]);
+        $this->Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }
@@ -178,7 +178,7 @@ class PhotosWidgetsCellTest extends CellTestCase
 
         //With no photos
         Cache::clearAll();
-        $this->Table->deleteAll(['id >=' => 1]);
+        $this->Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
     }
 
@@ -236,7 +236,7 @@ class PhotosWidgetsCellTest extends CellTestCase
 
         //With no photos
         Cache::clearAll();
-        $this->Table->deleteAll(['id >=' => 1]);
+        $this->Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
     }
 }
