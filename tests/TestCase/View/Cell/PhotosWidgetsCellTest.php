@@ -119,8 +119,7 @@ class PhotosWidgetsCellTest extends CellTestCase
         $this->assertEquals(2, Cache::read('widget_albums', $this->Table->getCacheName())->count());
 
         //With no photos
-        Cache::clearAll();
-        $this->Table->deleteAll(['id >=' => 1]);
+        $this->Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }
@@ -178,8 +177,7 @@ class PhotosWidgetsCellTest extends CellTestCase
         $this->assertEquals(2, Cache::read('widget_latest_2', $this->Table->getCacheName())->count());
 
         //With no photos
-        Cache::clearAll();
-        $this->Table->deleteAll(['id >=' => 1]);
+        $this->Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
     }
 
@@ -236,8 +234,7 @@ class PhotosWidgetsCellTest extends CellTestCase
         $this->assertEquals(3, Cache::read('widget_random_2', $this->Table->getCacheName())->count());
 
         //With no photos
-        Cache::clearAll();
-        $this->Table->deleteAll(['id >=' => 1]);
+        $this->Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty($this->Widget->widget($widget)->render());
     }
 }

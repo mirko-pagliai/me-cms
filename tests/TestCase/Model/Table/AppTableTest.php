@@ -18,7 +18,6 @@ use BadMethodCallException;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\I18n\Time;
-use Cake\ORM\Entity;
 use MeCms\TestSuite\TableTestCase;
 
 /**
@@ -78,11 +77,12 @@ class AppTableTest extends TableTestCase
      */
     public function testAfterDeleteAndAfterSave()
     {
-        foreach (['afterDelete', 'afterSave'] as $methodToCall) {
-            Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
-            $this->Posts->$methodToCall(new Event(null), new Entity(), new ArrayObject());
-            $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
-        }
+        $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
+        $Table->expects($this->exactly(2))->method('clearCache');
+
+        list($event, $entity, $options) = [new Event(null), $Table->newEntity([]), new ArrayObject()];
+        $Table->afterDelete($event, $entity, $options);
+        $Table->afterSave($event, $entity, $options);
     }
 
     /**
@@ -119,6 +119,30 @@ class AppTableTest extends TableTestCase
             $this->assertEquals('2017-03-14 20:19:00', $entity->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'));
             $this->Posts->delete($entity);
         }
+    }
+
+    /**
+     * Test for `clearCache()` method
+     * @test
+     */
+    public function testClearCache()
+    {
+        Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
+        $this->assertTrue($this->Posts->clearCache());
+        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
+    }
+
+    /**
+     * Test for `deleteAll()` method
+     * @test
+     */
+    public function testDeleteAll()
+    {
+        $this->assertNotEmpty($this->Posts->find()->count());
+        Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
+        $this->assertGreaterThan(0, $this->Posts->deleteAll(['id IS NOT' => null]));
+        $this->assertEmpty($this->Posts->find()->count());
+        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
     }
 
     /**

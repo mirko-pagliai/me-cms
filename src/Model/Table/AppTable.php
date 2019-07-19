@@ -15,10 +15,10 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
-use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Exception;
@@ -37,31 +37,27 @@ class AppTable extends Table
     /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses getCacheName()
+     * @uses clearCache()
      */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options): void
+    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options): void
     {
-        if ($this->getCacheName()) {
-            Cache::clear(false, $this->getCacheName());
-        }
+        $this->clearCache();
     }
 
     /**
      * Called after an entity is saved
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses getCacheName()
+     * @uses clearCache()
      */
-    public function afterSave(Event $event, Entity $entity, ArrayObject $options): void
+    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options): void
     {
-        if ($this->getCacheName()) {
-            Cache::clear(false, $this->getCacheName());
-        }
+        $this->clearCache();
     }
 
     /**
@@ -86,6 +82,30 @@ class AppTable extends Table
         if (isset($created)) {
             $data['created'] = $created;
         }
+    }
+
+    /**
+     * Delete all keys from the cache
+     * @return bool `true` if the cache was successfully cleared, `false` otherwise
+     * @uses getCacheName()
+     */
+    public function clearCache(): bool
+    {
+        return Cache::clear(false, $this->getCacheName());
+    }
+
+    /**
+     * Deletes all records matching the provided conditions
+     * @param mixed $conditions Conditions to be used, accepts anything
+     *  `Query::where()` can take
+     * @return int Returns the number of affected rows
+     * @uses clearCache()
+     */
+    public function deleteAll($conditions): int
+    {
+        $this->clearCache();
+
+        return parent::deleteAll($conditions);
     }
 
     /**

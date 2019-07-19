@@ -1,6 +1,9 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.6
+* added `AppTable::deleteAll()` method. This automatically clears the cache
+    associated with the table, when possible;
+* added `AppTable::clearCache()`;
 * uses `getRequest()`/`setRequest()` methods instead of `$request` property
     whenever possible;
 * removed useless `AppController::isOffline()` method;

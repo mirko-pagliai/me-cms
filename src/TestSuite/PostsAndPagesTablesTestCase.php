@@ -81,13 +81,13 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      */
     public function testAfterDeleteAndAfterSave()
     {
-        $this->loadFixtures();
-        $className = get_parent_class($this->Table);
+        list($event, $entity, $options) = [new Event(null), $this->Table->newEntity([]), new ArrayObject()];
 
         foreach (['afterDelete', 'afterSave'] as $methodToCall) {
-            $Table = $this->getMockForModel($this->Table->getAlias(), ['setNextToBePublished'], compact('className'));
+            $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'setNextToBePublished']);
+            $Table->expects($this->once())->method('clearCache');
             $Table->expects($this->once())->method('setNextToBePublished');
-            $Table->$methodToCall(new Event(null), new Entity(), new ArrayObject());
+            $Table->$methodToCall($event, $entity, $options);
         }
     }
 
@@ -100,7 +100,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     {
         $this->loadFixtures();
 
-        $Table = $this->getMockForModel($this->Table->getAlias(), ['getPreviewSize'], ['className' => get_parent_class($this->Table)]);
+        $Table = $this->getMockForModel('MeCms.' . $this->Table->getAlias(), ['getPreviewSize']);
         $Table->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos

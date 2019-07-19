@@ -49,7 +49,7 @@ class UsersCommandTest extends TestCase
         array_walk($expectedRows, [$this, 'assertOutputContainsRow']);
 
         //Deletes all users
-        $command->Users->deleteAll(['id >=' => '1']);
+        $command->Users->deleteAll(['id IS NOT' => null]);
         $this->exec('me_cms.users');
         $this->assertExitWithSuccess();
         $this->assertErrorContains('There are no users');

@@ -16,7 +16,6 @@ namespace MeCms\Model\Table;
 use ArrayObject;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
@@ -46,13 +45,13 @@ class PhotosTable extends AppTable
     /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
      */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options): void
+    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options): void
     {
-        @unlink($entity->path);
+        @unlink($entity->get('path'));
 
         parent::afterDelete($event, $entity, $options);
     }
@@ -60,7 +59,7 @@ class PhotosTable extends AppTable
     /**
      * Called before each entity is saved
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
      * @since 2.17.0
