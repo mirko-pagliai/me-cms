@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -26,7 +26,6 @@ use Cake\View\Helper;
  */
 class RssHelper extends Helper
 {
-
     /**
      * Helpers used by RSS Helper
      *

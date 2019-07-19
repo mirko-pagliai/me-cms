@@ -80,7 +80,7 @@ class AppTableTest extends TableTestCase
         $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
         $Table->expects($this->exactly(2))->method('clearCache');
 
-        list($event, $entity, $options) = [new Event(null), $Table->newEntity([]), new ArrayObject()];
+        [$event, $entity, $options] = [new Event(null), $Table->newEntity([]), new ArrayObject()];
         $Table->afterDelete($event, $entity, $options);
         $Table->afterSave($event, $entity, $options);
     }

@@ -47,7 +47,7 @@ abstract class PostsAndPagesTables extends AppTable
     /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
-     * @param Cake\Datasource\EntityInterface $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
      * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()

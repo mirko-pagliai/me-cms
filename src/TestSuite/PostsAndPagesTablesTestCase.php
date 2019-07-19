@@ -81,7 +81,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      */
     public function testAfterDeleteAndAfterSave()
     {
-        list($event, $entity, $options) = [new Event(null), $this->Table->newEntity([]), new ArrayObject()];
+        [$event, $entity, $options] = [new Event(null), $this->Table->newEntity([]), new ArrayObject()];
 
         foreach (['afterDelete', 'afterSave'] as $methodToCall) {
             $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'setNextToBePublished']);

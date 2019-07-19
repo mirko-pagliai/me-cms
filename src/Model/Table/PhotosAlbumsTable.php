@@ -35,7 +35,7 @@ class PhotosAlbumsTable extends AppTable
     /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
-     * @param Cake\Datasource\EntityInterface $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
      */
@@ -49,7 +49,7 @@ class PhotosAlbumsTable extends AppTable
     /**
      * Called after an entity is saved
      * @param \Cake\Event\Event $event Event object
-     * @param Cake\Datasource\EntityInterface $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
      */
