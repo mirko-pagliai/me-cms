@@ -146,12 +146,11 @@ class UsersTableTest extends TableTestCase
     }
 
     /**
-     * Test for `findActive()` method
+     * Test for `find()` methods
      * @test
      */
-    public function testFindActive()
+    public function testFindMethods()
     {
-        $this->loadFixtures();
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
@@ -160,40 +159,16 @@ class UsersTableTest extends TableTestCase
         foreach ($query as $entity) {
             $this->assertTrue($entity->active && !$entity->banned);
         }
-    }
 
-    /**
-     * Test for `findAuth()` method
-     * @test
-     */
-    public function testFindAuth()
-    {
-        $this->loadFixtures();
         $query = $this->Table->find('auth');
         $this->assertStringEndsWith('FROM users Users INNER JOIN users_groups Groups ON Groups.id = (Users.group_id)', $query->sql());
-    }
 
-    /**
-     * Test for `findBanned()` method
-     * @test
-     */
-    public function testFindBanned()
-    {
-        $this->loadFixtures();
         $query = $this->Table->find('banned');
         $this->assertStringEndsWith('FROM users Users WHERE Users.banned = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
         array_map([$this, 'assertTrue'], $query->all()->extract('banned')->toArray());
-    }
 
-    /**
-     * Test for `findPending()` method
-     * @test
-     */
-    public function testFindPending()
-    {
-        $this->loadFixtures();
         $query = $this->Table->find('pending');
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);

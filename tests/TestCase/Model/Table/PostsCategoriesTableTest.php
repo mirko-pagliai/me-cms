@@ -13,7 +13,6 @@
 namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\I18n\Time;
-use Cake\Utility\Hash;
 use MeCms\Model\Entity\PostsCategory;
 use MeCms\Model\Validation\PostsCategoryValidator;
 use MeCms\TestSuite\TableTestCase;
@@ -43,7 +42,6 @@ class PostsCategoriesTableTest extends TableTestCase
      */
     public function testBuildRules()
     {
-        $this->loadFixtures();
         $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
         $entity = $this->Table->newEntity($example);
@@ -94,55 +92,44 @@ class PostsCategoriesTableTest extends TableTestCase
     }
 
     /**
-     * Test for the `belongsTo` association with `PostsCategories` parents
+     * Test for associations
      * @test
      */
-    public function testBelongsToParents()
+    public function testAssociations()
     {
-        $this->loadFixtures();
-
         $category = $this->Table->findById(4)->contain('Parents')->first();
-        $this->assertNotEmpty($category->parent);
-        $this->assertInstanceOf(PostsCategory::class, $category->parent);
-        $this->assertEquals(3, $category->parent->id);
+        $this->assertNotEmpty($category->get('parent'));
+        $this->assertInstanceOf(PostsCategory::class, $category->get('parent'));
+        $this->assertEquals(3, $category->get('parent')->get('id'));
 
-        $category = $this->Table->findById($category->parent->id)->contain('Parents')->first();
-        $this->assertInstanceOf(PostsCategory::class, $category->parent);
-        $this->assertEquals(1, $category->parent->id);
-    }
+        $category = $this->Table->findById($category->get('parent')->get('id'))->contain('Parents')->first();
+        $this->assertInstanceOf(PostsCategory::class, $category->get('parent'));
+        $this->assertEquals(1, $category->get('parent')->get('id'));
 
-    /**
-     * Test for the `hasMany` association with `PostsCategories` childs
-     * @test
-     */
-    public function testHasManyChilds()
-    {
-        $this->loadFixtures();
         $childs = $this->Table->find()->contain('Childs')->extract('childs')->first();
         $this->assertContainsOnlyInstancesOf(PostsCategory::class, $childs);
 
         foreach ($childs as $children) {
-            $this->assertEquals(1, $children->parent_id);
+            $this->assertEquals(1, $children->get('parent_id'));
             $childs = $this->Table->findById($children->id)->contain('Childs')->extract('childs')->first();
             $this->assertContainsOnlyInstancesOf(PostsCategory::class, $childs);
-            $this->assertEquals([3], Hash::extract($childs, '0.parent_id'));
+            $this->assertEquals([3], $childs[0]->get('parent_id'));
         }
     }
 
     /**
-     * Test for `findActive()` method
+     * Test for `find()` methods
      * @test
      */
-    public function testFindActive()
+    public function testFindMethods()
     {
-        $this->loadFixtures();
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM posts_categories PostsCategories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND PostsCategories.id = (Posts.category_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
         foreach ($query->all()->extract('_matchingData.Posts') as $post) {
-            $this->assertTrue($post->active && !$post->created->isFuture());
+            $this->assertTrue($post->get('active') && !$post->get('created')->isFuture());
         }
     }
 }

@@ -76,12 +76,11 @@ class TagsTableTest extends TableTestCase
     }
 
     /**
-     * Test for `findActive()` method
+     * Test for `find()` methods
      * @test
      */
-    public function testFindActive()
+    public function testFindMethods()
     {
-        $this->loadFixtures();
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM tags Tags INNER JOIN posts_tags PostsTags ON Tags.id = (PostsTags.tag_id) INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Posts.id = (PostsTags.post_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);

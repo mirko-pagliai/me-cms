@@ -113,12 +113,11 @@ class PagesCategoriesTableTest extends TableTestCase
     }
 
     /**
-     * Test for `findActive()` method
+     * Test for `find()` methods
      * @test
      */
-    public function testFindActive()
+    public function testFindMethods()
     {
-        $this->loadFixtures();
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM pages_categories Categories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND Categories.id = (Pages.category_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);

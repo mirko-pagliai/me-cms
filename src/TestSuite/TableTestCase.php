@@ -99,6 +99,10 @@ abstract class TableTestCase extends TestCase
     {
         parent::setUp();
 
+        if (string_starts_with('testFind', $this->getName())) {
+            $this->loadFixtures();
+        }
+
         if (!$this->Table && $this->autoInitializeClass) {
             $parts = explode('\\', get_class($this));
             array_splice($parts, 1, 2, []);
