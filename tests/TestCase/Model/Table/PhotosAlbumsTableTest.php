@@ -47,30 +47,17 @@ class PhotosAlbumsTableTest extends TableTestCase
     }
 
     /**
-     * Test for `afterDelete()` method
+     * Test for event methods
      * @test
      */
-    public function testAfterDelete()
+    public function testEventMethods()
     {
-        $this->loadFixtures();
         $entity = $this->Table->newEntity(['title' => 'new album', 'slug' => 'new-album']);
         $this->assertNotEmpty($this->Table->save($entity));
-        $this->assertFileExists($entity->path);
+        $this->assertFileExists($entity->get('path'));
+        $this->assertIsWritable($entity->get('path'));
         $this->assertTrue($this->Table->delete($entity));
-        $this->assertFileNotExists($entity->path);
-    }
-
-    /**
-     * Test for `afterSave()` method
-     * @test
-     */
-    public function testAfterSave()
-    {
-        $this->loadFixtures();
-        $entity = $this->Table->newEntity(['title' => 'new album', 'slug' => 'new-album']);
-        $this->assertNotEmpty($this->Table->save($entity));
-        $this->assertFileExists($entity->path);
-        $this->assertFilePerms([0755, 0775, 0777], $entity->path);
+        $this->assertFileNotExists($entity->get('path'));
     }
 
     /**
@@ -79,7 +66,6 @@ class PhotosAlbumsTableTest extends TableTestCase
      */
     public function testBuildRules()
     {
-        $this->loadFixtures();
         $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
         $entity = $this->Table->newEntity($example);
@@ -114,12 +100,11 @@ class PhotosAlbumsTableTest extends TableTestCase
     }
 
     /**
-     * Test for `findActive()` method
+     * Test for `find()` methods
      * @test
      */
-    public function testFindActive()
+    public function testFindMethods()
     {
-        $this->loadFixtures();
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM photos_albums PhotosAlbums INNER JOIN photos Photos ON (Photos.active = :c0 AND PhotosAlbums.id = (Photos.album_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);

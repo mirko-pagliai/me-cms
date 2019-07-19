@@ -100,6 +100,12 @@ abstract class TableTestCase extends TestCase
     {
         parent::setUp();
 
+        //Automatically loads fixtures for some tests
+        if (preg_match('/^test(Associations|EventMethods|Find|BuildRules|QueryFromFilter)/', $this->getName())
+            && !$this->autoFixtures) {
+            $this->loadFixtures();
+        }
+
         if (!$this->Table && $this->autoInitializeClass) {
             $parts = explode('\\', get_class($this));
             array_splice($parts, 1, 2, []);

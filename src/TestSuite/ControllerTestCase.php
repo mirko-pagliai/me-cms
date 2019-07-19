@@ -144,7 +144,7 @@ abstract class ControllerTestCase extends TestCase
 
             //Tries to retrieve the table
             $className = sprintf('%s\\Model\\Table\\%sTable', $parts[0], $alias);
-            if (class_exists($className)) {
+            if (class_exists($className) && $alias !== 'App') {
                 $this->Table = $this->getMockForModel($alias, null, compact('className'));
 
                 //Tries to retrieve all cache names related to this table and associated tables

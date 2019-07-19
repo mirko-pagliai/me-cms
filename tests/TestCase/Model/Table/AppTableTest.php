@@ -13,10 +13,8 @@ declare(strict_types=1);
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use ArrayObject;
 use BadMethodCallException;
 use Cake\Cache\Cache;
-use Cake\Event\Event;
 use Cake\I18n\Time;
 use MeCms\TestSuite\TableTestCase;
 
@@ -72,24 +70,10 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `afterDelete()` and `afterSave()` methods
+     * Test for event methods
      * @test
      */
-    public function testAfterDeleteAndAfterSave()
-    {
-        $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
-        $Table->expects($this->exactly(2))->method('clearCache');
-
-        [$event, $entity, $options] = [new Event(null), $Table->newEntity([]), new ArrayObject()];
-        $Table->afterDelete($event, $entity, $options);
-        $Table->afterSave($event, $entity, $options);
-    }
-
-    /**
-     * Test for `beforeMarshal()` method
-     * @test
-     */
-    public function testBeforeMarshal()
+    public function testEventMethods()
     {
         $example = [
             'user_id' => 1,
@@ -99,25 +83,28 @@ class AppTableTest extends TableTestCase
             'text' => 'Example text',
         ];
 
-        $entity = $this->Posts->save($this->Posts->newEntity($example));
+        $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
+        $Table->expects($this->atLeast(2))->method('clearCache');
+
+        $entity = $Table->save($Table->newEntity($example));
         $this->assertNotEmpty($entity->get('created'));
-        $this->Posts->delete($entity);
+        $Table->delete($entity);
 
         foreach ([null, ''] as $created) {
-            $entity = $this->Posts->save($this->Posts->newEntity(compact('created') + $example));
+            $entity = $Table->save($Table->newEntity(compact('created') + $example));
             $this->assertNotEmpty($entity->get('created'));
-            $this->Posts->delete($entity);
+            $Table->delete($entity);
         }
 
         $now = new Time();
-        $entity = $this->Posts->save($this->Posts->newEntity(['created' => $now] + $example));
+        $entity = $Table->save($Table->newEntity(['created' => $now] + $example));
         $this->assertEquals($now, $entity->get('created'));
-        $this->Posts->delete($entity);
+        $Table->delete($entity);
 
         foreach (['2017-03-14 20:19', '2017-03-14 20:19:00'] as $created) {
-            $entity = $this->Posts->save($this->Posts->newEntity(compact('created') + $example));
+            $entity = $Table->save($Table->newEntity(compact('created') + $example));
             $this->assertEquals('2017-03-14 20:19:00', $entity->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-            $this->Posts->delete($entity);
+            $Table->delete($entity);
         }
     }
 
@@ -146,10 +133,10 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `findActive()` method
+     * Test for `find()` methods
      * @test
      */
-    public function testFindActive()
+    public function testFindMethods()
     {
         $query = $this->Posts->find('active');
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 AND Posts.created <= :c1)', $query->sql());
@@ -157,32 +144,18 @@ class AppTableTest extends TableTestCase
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
         foreach ($query as $entity) {
-            $this->assertTrue($entity->active && !$entity->created->isFuture());
+            $this->assertTrue($entity->get('active') && !$entity->get('created')->isFuture());
         }
-    }
 
-    /**
-     * Test for `findPending()` method
-     * @test
-     */
-    public function testFindPending()
-    {
         $query = $this->Posts->find('pending');
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 OR Posts.created > :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
         foreach ($query as $entity) {
-            $this->assertTrue(!$entity->active || $entity->created->isFuture());
+            $this->assertTrue(!$entity->get('active') || $entity->get('created')->isFuture());
         }
-    }
 
-    /**
-     * Test for `findRandom()` method
-     * @test
-     */
-    public function testFindRandom()
-    {
         $query = $this->Posts->find('random');
         $this->assertStringEndsWith('FROM posts Posts ORDER BY rand() LIMIT 1', $query->sql());
 

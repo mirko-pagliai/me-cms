@@ -41,7 +41,6 @@ class UsersGroupsTableTest extends TableTestCase
      */
     public function testBuildRules()
     {
-        $this->loadFixtures();
         $example = ['name' => 'group', 'label' => 'Group label'];
 
         $entity = $this->Table->newEntity($example);
