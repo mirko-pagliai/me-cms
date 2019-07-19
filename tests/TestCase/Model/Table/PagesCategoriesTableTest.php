@@ -13,7 +13,6 @@
 namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\I18n\Time;
-use Cake\Utility\Hash;
 use MeCms\Model\Entity\PagesCategory;
 use MeCms\Model\Validation\PagesCategoryValidator;
 use MeCms\TestSuite\TableTestCase;
@@ -43,7 +42,6 @@ class PagesCategoriesTableTest extends TableTestCase
      */
     public function testBuildRules()
     {
-        $this->loadFixtures();
         $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
         $entity = $this->Table->newEntity($example);
@@ -95,20 +93,18 @@ class PagesCategoriesTableTest extends TableTestCase
     }
 
     /**
-     * Test for the `hasMany` association with `PagesCategories` childs
+     * Test for associations
      * @test
      */
-    public function testHasManyChilds()
+    public function testAssociations()
     {
-        $this->loadFixtures();
-
         $childs = $this->Table->findById(1)->contain('Childs')->extract('childs')->first();
         $this->assertContainsOnlyInstancesOf(PagesCategory::class, $childs);
         foreach ($childs as $children) {
-            $this->assertEquals(1, $children->parent_id);
+            $this->assertEquals(1, $children->get('parent_id'));
             $childs = $this->Table->findById($children->id)->contain('Childs')->extract('childs')->first();
             $this->assertContainsOnlyInstancesOf(PagesCategory::class, $childs);
-            $this->assertEquals([3], Hash::extract($childs, '0.parent_id'));
+            $this->assertEquals(3, $childs[0]->get('parent_id'));
         }
     }
 

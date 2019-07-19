@@ -99,7 +99,9 @@ abstract class TableTestCase extends TestCase
     {
         parent::setUp();
 
-        if (string_starts_with('testFind', $this->getName())) {
+        //Automatically loads fixtures for some tests
+        if (preg_match('/^test(Associations|EventMethods|Find|BuildRules|QueryFromFilter)/', $this->getName())
+            && !$this->autoFixtures) {
             $this->loadFixtures();
         }
 

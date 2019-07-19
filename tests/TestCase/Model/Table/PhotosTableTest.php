@@ -67,12 +67,11 @@ class PhotosTableTest extends TableTestCase
     }
 
     /**
-     * Test for `afterDelete()` and `beforeSave()` methods
+     * Test for event methods
      * @test
      */
-    public function testAfterDeleteAndBeforeSave()
+    public function testEventMethods()
     {
-        $this->loadFixtures();
         $entity = $this->Table->newEntity(self::$example);
         $this->assertNotEmpty($this->Table->save($entity));
         $this->assertEquals(['width' => 400, 'height' => 400], $entity->get('size'));
@@ -87,7 +86,6 @@ class PhotosTableTest extends TableTestCase
      */
     public function testBuildRules()
     {
-        $this->loadFixtures();
         $entity = $this->Table->newEntity(self::$example);
         $this->assertNotEmpty($this->Table->save($entity));
 
@@ -146,7 +144,6 @@ class PhotosTableTest extends TableTestCase
      */
     public function testQueryFromFilter()
     {
-        $this->loadFixtures();
         $query = $this->Table->queryFromFilter($this->Table->find(), ['album' => 2]);
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.album_id = :c0', $query->sql());
         $this->assertEquals(2, $query->getValueBinder()->bindings()[':c0']['value']);

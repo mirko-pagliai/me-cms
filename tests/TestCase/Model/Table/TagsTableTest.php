@@ -42,7 +42,6 @@ class TagsTableTest extends TableTestCase
      */
     public function testBuildRules()
     {
-        $this->loadFixtures();
         $example = ['tag' => 'my tag'];
         $entity = $this->Table->newEntity($example);
         $this->assertNotEmpty($this->Table->save($entity));

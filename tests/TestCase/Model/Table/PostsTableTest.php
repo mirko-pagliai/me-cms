@@ -14,7 +14,6 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
-use Cake\ORM\Query;
 use Cake\Utility\Hash;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Entity\PostsTag;
