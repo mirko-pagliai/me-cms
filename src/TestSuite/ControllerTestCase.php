@@ -147,9 +147,7 @@ abstract class ControllerTestCase extends TestCase
                 $this->Table = $this->getMockForModel($alias, null, compact('className'));
 
                 //Tries to retrieve all cache names related to this table and associated tables
-                if (method_exists($this->Table, 'getCacheName')) {
-                    $this->cacheToClear = array_merge($this->cacheToClear, $this->Table->getCacheName(true));
-                }
+                $this->cacheToClear = $this->Table->getCacheName(true);
             }
         }
 
