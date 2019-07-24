@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Core;
 
 use Cake\Core\Configure;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -23,17 +23,17 @@ use MeCms\TestSuite\TestCase;
 class RequestDetectorsTest extends TestCase
 {
     /**
-     * @var \Cake\Network\Request|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\Http\ServerRequest|\PHPUnit_Framework_MockObject_MockObject
      */
     public $Request;
 
     /**
      * Internal method to mock a request
-     * @return \Cake\Network\Request|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Cake\Http\ServerRequest|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function getMockForRequest()
     {
-        return $this->getMockBuilder(Request::class)
+        return $this->getMockBuilder(ServerRequest::class)
             ->setMethods(null)
             ->getMock();
     }

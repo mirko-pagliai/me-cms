@@ -24,12 +24,6 @@ use MeCms\TestSuite\ControllerTestCase;
 class PagesControllerTest extends ControllerTestCase
 {
     /**
-     * Cache keys to clear for each test
-     * @var array
-     */
-    protected $cacheToClear = ['static_pages'];
-
-    /**
      * Fixtures
      * @var array
      */

@@ -95,10 +95,9 @@ class AppControllerTest extends ControllerTestCase
 
         //With prefixes
         foreach ([ADMIN_PREFIX, 'otherPrefix'] as $prefix) {
-            $controller = $this->getMockForController();
-            $controller->request = $controller->getRequest()->withParam('prefix', $prefix)
-                ->clearDetectorCache();
-            parent::testIsAuthorized();
+            $this->Controller->setRequest($this->Controller->getRequest()->withParam('prefix', $prefix));
+            $this->Controller->getRequest()->clearDetectorCache();
+            $this->assertFalse($this->Controller->isAuthorized());
         }
     }
 }
