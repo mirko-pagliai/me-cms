@@ -175,27 +175,27 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     <?php
                     switch ($post->priority) {
                         case '1':
-                            $priority = 1;
+                            $priority = '1';
                             $class = 'priority-verylow';
                             $tooltip = __d('me_cms', 'Very low');
                             break;
                         case '2':
-                            $priority = 2;
+                            $priority = '2';
                             $class = 'priority-low';
                             $tooltip = __d('me_cms', 'Low');
                             break;
                         case '4':
-                            $priority = 4;
+                            $priority = '4';
                             $class = 'priority-high';
                             $tooltip = __d('me_cms', 'High');
                             break;
                         case '5':
-                            $priority = 5;
+                            $priority = '5';
                             $class = 'priority-veryhigh';
                             $tooltip = __d('me_cms', 'Very high');
                             break;
                         default:
-                            $priority = 3;
+                            $priority = '3';
                             $class = 'priority-normal';
                             $tooltip = __d('me_cms', 'Normal');
                             break;
