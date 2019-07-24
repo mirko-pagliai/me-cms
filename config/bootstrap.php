@@ -20,7 +20,7 @@ use Cake\I18n\FrozenDate;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 use Cake\Log\Log;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest;
 use EntityFileLog\Log\Engine\EntityFileLog;
 use MeCms\Database\Type\JsonEntityType;
 
@@ -48,7 +48,7 @@ if (is_readable(CONFIG . 'me_cms.php')) {
 }
 
 //Forces debug on localhost, if required
-if ((new Request())->is('localhost') && getConfig('main.debug_on_localhost')) {
+if ((new ServerRequest())->is('localhost') && getConfig('main.debug_on_localhost')) {
     Configure::write('debug', true);
 }
 
