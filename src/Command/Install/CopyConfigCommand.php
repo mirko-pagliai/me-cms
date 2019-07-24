@@ -51,7 +51,9 @@ class CopyConfigCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
-        foreach (CopyConfigCommand::CONFIG_FILES as $file) {
+        $class = get_class($this);
+
+        foreach ($class::CONFIG_FILES as $file) {
             list($plugin, $file) = pluginSplit($file);
             $this->copyFile(
                 $io,
