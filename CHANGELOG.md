@@ -4,6 +4,8 @@
 * added `AppTable::deleteAll()` method. This automatically clears the cache
     associated with the table, when possible;
 * added `AppTable::clearCache()`;
+* fixed the `StaticPage` utility. The `getPath()` method becomes `getPaths()` and
+    now returns an array with all possible paths, even if they do not exist;
 * uses `getRequest()`/`setRequest()` methods instead of `$request` property
     whenever possible;
 * removed useless `AppController::isOffline()` method;
@@ -19,7 +21,7 @@
     verify the data of the logged in user;
 * added `BannerAndPhotoValidator`, `PageAndPostValidator` and `CategoryValidator`
     abstract classes;
-* updated for `php-tools` `1.2.6`.
+* updated for `php-tools` `1.2.7`.
 
 ### 2.26.5
 * it uses the `cakephp-stop-spam` package to detect spammers;
