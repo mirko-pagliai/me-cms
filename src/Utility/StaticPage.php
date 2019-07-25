@@ -28,29 +28,40 @@ use MeCms\Core\Plugin;
 class StaticPage
 {
     /**
-     * Internal method to get all paths for static pages
+     * Extension for static pages
+     */
+    const EXTENSION = 'ctp';
+
+    /**
+     * Internal method to get all the existing paths
      * @return array
      * @uses \MeCms\Core\Plugin::all()
-     * @uses getPath()
+     * @uses getPaths()
      */
     protected static function getAllPaths(): array
     {
         return Cache::remember('paths', function () {
-            $plugins = array_map([__CLASS__, 'getPath'], array_merge([null], Plugin::all()));
+            $paths = self::getPaths();
 
-            return array_values(array_filter($plugins, 'file_exists'));
+            foreach (Plugin::all() as $plugin) {
+                $paths = array_merge($paths, self::getPaths($plugin));
+            }
+
+            return array_filter($paths, 'file_exists');
         }, 'static_pages');
     }
 
     /**
-     * Internal method to get paths for static pages from plugins or from APP
+     * Internal method to get paths from APP or from a plugin.
+     *
+     * This also returns paths that do not exist.
      * @param string|null $plugin Plugin name or `null` for APP path
-     * @return string
+     * @return array
      * @since 2.26.6
      */
-    protected static function getPath(?string $plugin = null): string
+    protected static function getPaths(?string $plugin = null): string
     {
-        return array_value_first(App::path('Template' . DS . 'StaticPages', $plugin));
+        return App::path('Template' . DS . 'StaticPages', $plugin);
     }
 
     /**
@@ -64,7 +75,7 @@ class StaticPage
     protected static function getSlug(string $path, string $relativePath): string
     {
         if (string_starts_with($path, $relativePath)) {
-            $path = substr($path, strlen(Folder::slashTerm($relativePath)));
+            $path = substr($path, strlen(add_slash_term($relativePath)));
         }
         $path = preg_replace(sprintf('/\.[^\.]+$/'), null, $path);
 
@@ -82,7 +93,7 @@ class StaticPage
     {
         foreach (self::getAllPaths() as $path) {
             //Gets all files for each path
-            $files = (new Folder($path))->findRecursive('^.+\.ctp$', true);
+            $files = (new Folder($path))->findRecursive('^.+\.' . self::EXTENSION . '$', true);
 
             foreach ($files as $file) {
                 $pages[] = new Entity([
@@ -103,7 +114,7 @@ class StaticPage
      * @param string $slug Slug
      * @return string|null Static page or `null`
      * @uses \MeCms\Core\Plugin::all()
-     * @uses getPath()
+     * @uses getPaths()
      */
     public static function get(string $slug): ?string
     {
@@ -122,26 +133,15 @@ class StaticPage
             }
             $patterns[] = $filename;
 
-            //Checks if the page exists in APP
-            foreach ($patterns as $pattern) {
-                $filename = self::getPath() . $pattern . '.ctp';
+            //Checks if the page exists first in APP, then in each plugin
+            foreach (array_merge([null], Plugin::all()) as $plugin) {
+                foreach (self::getPaths($plugin) as $path) {
+                    foreach ($patterns as $pattern) {
+                        if (is_readable($path . $pattern . '.' . self::EXTENSION)) {
+                            $page = ($plugin ? $plugin . '.' : '') . DS . 'StaticPages' . DS . $pattern;
 
-                if (is_readable($filename)) {
-                    $page = DS . 'StaticPages' . DS . $pattern;
-
-                    break;
-                }
-            }
-
-            //Checks if the page exists in each plugin
-            foreach (Plugin::all() as $plugin) {
-                foreach ($patterns as $pattern) {
-                    $filename = self::getPath($plugin) . $pattern . '.ctp';
-
-                    if (is_readable($filename)) {
-                        $page = $plugin . '.' . DS . 'StaticPages' . DS . $pattern;
-
-                        break;
+                            break 3;
+                        }
                     }
                 }
             }
