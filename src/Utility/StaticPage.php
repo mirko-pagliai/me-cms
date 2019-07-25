@@ -30,7 +30,7 @@ class StaticPage
     /**
      * Extension for static pages
      */
-    const EXTENSION = 'ctp';
+    protected const EXTENSION = 'ctp';
 
     /**
      * Internal method to get all the existing paths
