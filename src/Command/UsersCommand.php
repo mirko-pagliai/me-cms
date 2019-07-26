@@ -18,7 +18,6 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use MeCms\Model\Entity\User;
-use MeCms\Model\Entity\UsersGroup;
 use MeTools\Console\Command;
 
 /**
@@ -53,15 +52,15 @@ class UsersCommand extends Command
                 $created = $created->i18nFormat('yyyy/MM/dd HH:mm');
             }
 
-            $group = $user->get('group.label') ?: $user->get('group');
+            $group = $user->get('group')->get('label') ?: $user->get('group');
 
             return [
-                $user->id,
+                (string)$user->id,
                 $user->username,
                 $group,
                 $user->full_name,
                 $user->email,
-                $user->post_count,
+                (string)$user->post_count,
                 $status,
                 $created,
             ];

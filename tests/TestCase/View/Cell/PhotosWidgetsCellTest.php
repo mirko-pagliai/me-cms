@@ -120,6 +120,8 @@ class PhotosWidgetsCellTest extends CellTestCase
 
         //With no photos
         $this->Table->deleteAll(['id IS NOT' => null]);
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }

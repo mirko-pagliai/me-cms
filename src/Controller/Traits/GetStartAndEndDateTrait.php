@@ -40,7 +40,7 @@ trait GetStartAndEndDateTrait
             $start = Time::parse($date);
         } else {
             [$year, $month, $day] = array_replace([null, null, null], explode('/', $date));
-            $start = Time::now()->setDate($year, $month ?: 1, $day ?: 1);
+            $start = Time::now()->setDate((int)$year, (int)($month ?: 1), (int)($day ?: 1));
         }
 
         $start = $start->setTime(0, 0, 0);

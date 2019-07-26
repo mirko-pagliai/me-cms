@@ -26,7 +26,7 @@ use Cake\View\View;
 abstract class PostAndPageEntity extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned using newEntity([]) or patchEntity()
      * @var array
      */
     protected $_accessible = [
@@ -42,13 +42,13 @@ abstract class PostAndPageEntity extends Entity
      */
     protected function _getPlainText(): ?string
     {
-        if (empty($this->_properties['text'])) {
+        if (!$this->has('text')) {
             return null;
         }
 
         //Loads the `BBCode` helper
         $BBCode = (new HelperRegistry(new View()))->load('MeTools.BBCode');
 
-        return trim(strip_tags($BBCode->remove($this->_properties['text'])));
+        return trim(strip_tags($BBCode->remove($this->get('text'))));
     }
 }

@@ -122,6 +122,8 @@ class PostsWidgetsCellTest extends CellTestCase
 
         //With no posts
         $this->Table->deleteAll(['id IS NOT' => null]);
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }
@@ -203,6 +205,8 @@ class PostsWidgetsCellTest extends CellTestCase
 
         //With no posts
         $this->Table->deleteAll(['id IS NOT' => null]);
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
     }
 
@@ -285,6 +289,8 @@ class PostsWidgetsCellTest extends CellTestCase
 
         //With no posts
         $this->Table->deleteAll(['id IS NOT' => null]);
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }

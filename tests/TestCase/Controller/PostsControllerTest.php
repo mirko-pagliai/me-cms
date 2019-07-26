@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Controller\Controller;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\I18n\Time;
 use MeCms\Model\Entity\Post;
@@ -38,16 +40,16 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
+     * @param \Cake\Event\EventInterface $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
      * @return void
      */
-    public function controllerSpy($event, $controller = null)
+    public function controllerSpy(EventInterface $event, ?Controller $controller = null): void
     {
         parent::controllerSpy($event, $controller);
 
         if ($this->getName() === 'testRss') {
-            $this->_controller->viewBuilder()->setLayout(false);
+            $this->_controller->viewBuilder()->setLayout(null);
         }
     }
 
@@ -61,7 +63,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts' . DS . 'index.ctp');
+        $this->assertTemplate('Posts' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
 
         $cache = sprintf('index_limit_%s_page_%s', getConfigOrFail('default.records'), 1);
@@ -89,7 +91,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts' . DS . 'index_by_date.ctp');
+        $this->assertTemplate('Posts' . DS . 'index_by_date.php');
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
         $this->assertEquals($date, $this->viewVariable('date'));
 
@@ -119,7 +121,7 @@ class PostsControllerTest extends ControllerTestCase
         foreach (['today', 'yesterday', '2016', '2016/12', '2016/12/29'] as $date) {
             $this->get(['_name' => 'postsByDate', $date]);
             $this->assertResponseOkAndNotEmpty();
-            $this->assertTemplate('Posts' . DS . 'index_by_date.ctp');
+            $this->assertTemplate('Posts' . DS . 'index_by_date.php');
         }
 
         //GET request with query string
@@ -133,12 +135,12 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testRss()
     {
-        $expected = '/^\<item\>\<description\>Text of the seventh post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/seventh\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/seventh\-post\<\/link\>\<pubDate\>Thu, 29 Dec 2016 18\:59\:19 \+0000\<\/pubDate\>\<title\>Seventh post\<\/title\>\<\/item\>\<item\>\<description\>Text of the fifth post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/fifth\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/fifth\-post\<\/link\>\<pubDate\>Wed, 28 Dec 2016 18\:59\:19 \+0000\<\/pubDate\>\<title\>Fifth post\<\/title\>\<\/item\>\<item\>\<description\>Text of the fourth post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/fourth\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/fourth\-post\<\/link\>\<pubDate\>Wed, 28 Dec 2016 18\:58\:19 \+0000\<\/pubDate\>\<title\>Fourth post\<\/title\>\<\/item\>\<item\>\<description\>Text of the third post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/third\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/third\-post\<\/link\>\<pubDate\>Wed, 28 Dec 2016 18\:57\:19 \+0000\<\/pubDate\>\<title\>Third post\<\/title\>\<\/item\>\<item\>\<description\>&lt;img src\=&quot;http\:\/\/localhost\/thumb\/[\d\w]+&quot; alt\=&quot;[\d\w]+&quot; class\=&quot;img\-fluid&quot;\/&gt;&lt;br \/&gt;Text of the second post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/second\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/second\-post\<\/link\>\<pubDate\>Wed, 28 Dec 2016 18\:56\:19 \+0000\<\/pubDate\>\<title\>Second post\<\/title\>\<\/item\>\<item\>\<description\>Text of the first post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/first\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/first\-post\<\/link\>\<pubDate\>Mon, 28 Nov 2016 18\:55\:19 \+0000\<\/pubDate\>\<title\>First post\<\/title\>\<\/item\>$/';
+        $expected = '/\<item\>\<description\>Text of the seventh post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/seventh\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/seventh\-post\<\/link\>\<pubDate\>Thu, 29 Dec 2016 18\:59\:19 \+0000\<\/pubDate\>\<title\>Seventh post\<\/title\>\<\/item\>\<item\>\<description\>Text of the fifth post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/fifth\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/fifth\-post\<\/link\>\<pubDate\>Wed, 28 Dec 2016 18\:59\:19 \+0000\<\/pubDate\>\<title\>Fifth post\<\/title\>\<\/item\>\<item\>\<description\>Text of the fourth post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/fourth\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/fourth\-post\<\/link\>\<pubDate\>Wed, 28 Dec 2016 18\:58\:19 \+0000\<\/pubDate\>\<title\>Fourth post\<\/title\>\<\/item\>\<item\>\<description\>Text of the third post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/third\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/third\-post\<\/link\>\<pubDate\>Wed, 28 Dec 2016 18\:57\:19 \+0000\<\/pubDate\>\<title\>Third post\<\/title\>\<\/item\>\<item\>\<description\>&lt;img src\="http\:\/\/localhost\/thumb\/OGIzMWZmYzg0MmQxMThlYTVlMGYzM2E1ZWM0MzVlMWFfNjQ5OWRhOTI3MTIyYTQ5MWRiMzkyOTEzZTRlMThmNjMuanBn" alt\="OGIzMWZmYzg0MmQxMThlYTVlMGYzM2E1ZWM0MzVlMWFfNjQ5OWRhOTI3MTIyYTQ5MWRiMzkyOTEzZTRlMThmNjMuanBn" class\="img\-fluid"\/&gt;&lt;br \/&gt;Text of the second post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/second\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/second\-post\<\/link\>\<pubDate\>Wed, 28 Dec 2016 18\:56\:19 \+0000\<\/pubDate\>\<title\>Second post\<\/title\>\<\/item\>\<item\>\<description\>Text of the first post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/first\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/first\-post\<\/link\>\<pubDate\>Mon, 28 Nov 2016 18\:55\:19 \+0000\<\/pubDate\>\<title\>First post\<\/title\>\<\/item\>/';
 
         $this->get('/posts/rss');
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseRegExp($expected);
-        $this->assertTemplate('Posts' . DS . 'rss' . DS . 'rss.ctp');
+        $this->assertTemplate('Posts' . DS . 'rss' . DS . 'rss.php');
         $this->assertHeaderContains('Content-Type', 'application/rss+xml');
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
 
@@ -159,7 +161,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts' . DS . 'search.ctp');
+        $this->assertTemplate('Posts' . DS . 'search.php');
         $this->assertEmpty($this->viewVariable('posts'));
         $this->assertEmpty($this->viewVariable('pattern'));
 
@@ -168,7 +170,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
         $this->assertEquals($this->viewVariable('pattern'), $pattern);
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
-        $this->assertContains($pattern, $this->viewVariable('posts')->first()->text);
+        $this->assertStringContainsString($pattern, $this->viewVariable('posts')->first()->text);
 
         $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), getConfigOrFail('default.records_for_searches'), 1);
         [$postsFromCache, $pagingFromCache] = array_values(Cache::readMany(
@@ -202,7 +204,7 @@ class PostsControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'post', 'first-post']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts' . DS . 'view.ctp');
+        $this->assertTemplate('Posts' . DS . 'view.php');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('related'));
         $cache = Cache::read('view_' . md5('first-post'), $this->Table->getCacheName());
@@ -218,7 +220,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->setUserGroup('user');
         $this->get(['_name' => 'postsPreview', 'inactive-post']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts' . DS . 'view.ctp');
+        $this->assertTemplate('Posts' . DS . 'view.php');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('related'));
     }

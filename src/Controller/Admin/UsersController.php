@@ -13,7 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Filesystem\Folder;
 use Cake\Http\Response;
 use Cake\Mailer\MailerAwareTrait;
@@ -31,12 +31,12 @@ class UsersController extends AppController
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
-     *  each controller action.
-     * @param \Cake\Event\Event $event An Event instance
+     *  each controller action
+     * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Model\Table\UsersGroupsTable::getList()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
@@ -124,7 +124,7 @@ class UsersController extends AppController
      */
     public function add()
     {
-        $user = $this->Users->newEntity();
+        $user = $this->Users->newEntity([]);
 
         if ($this->getRequest()->is('post')) {
             $user = $this->Users->patchEntity($user, $this->getRequest()->getData());

@@ -42,7 +42,7 @@ class GroupsCommandTest extends TestCase
         $UsersGroups = $this->getMockForModel('MeCms.UsersGroups', null);
 
         $expectedRows = $UsersGroups->find()->map(function (UsersGroup $group) {
-            return [$group->id, $group->name, $group->label, $group->user_count];
+            return [(string)$group->id, $group->name, $group->label, (string)$group->user_count];
         })->toList();
         $expectedRows[] = ['<info>ID</info>', '<info>Name</info>', '<info>Label</info>', '<info>Users</info>'];
 

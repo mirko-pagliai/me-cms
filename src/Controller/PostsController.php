@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Response;
 use MeCms\Controller\AppController;
@@ -32,11 +32,11 @@ class PostsController extends AppController
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
-     *  each controller action.
-     * @param \Cake\Event\Event $event An Event instance
+     *  each controller action
+     * @param \Cake\Event\EventInterface $event An Event instance
      * @return void
      */
-    public function beforeFilter(Event $event): void
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
 

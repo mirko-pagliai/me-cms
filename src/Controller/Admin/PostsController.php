@@ -13,7 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
@@ -28,15 +28,15 @@ class PostsController extends AppController
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
-     *  each controller action.
-     * @param \Cake\Event\Event $event An Event instance
+     *  each controller action
+     * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
      * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      * @uses \MeCms\Model\Table\UsersTable::getActiveList()
      * @uses \MeCms\Model\Table\UsersTable::getList()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
@@ -127,7 +127,7 @@ class PostsController extends AppController
      */
     public function add()
     {
-        $post = $this->Posts->newEntity();
+        $post = $this->Posts->newEntity([]);
 
         if ($this->getRequest()->is('post')) {
             //Only admins and managers can add posts on behalf of other users

@@ -32,6 +32,9 @@ class WidgetHelperTest extends HelperTestCase
         parent::setUp();
 
         $this->loadPlugins(['TestPlugin']);
+
+        $request = $this->Helper->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Helper->getView()->setRequest($request);
     }
 
     /**

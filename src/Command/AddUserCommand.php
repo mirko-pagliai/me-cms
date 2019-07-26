@@ -72,7 +72,7 @@ class AddUserCommand extends Command
         if (!$user['group_id']) {
             //Formats groups
             foreach ($groups as $id => $group) {
-                $groups[$id] = [$id, $group];
+                $groups[$id] = [(string)$id, $group];
             }
 
             //Sets headers and prints as table

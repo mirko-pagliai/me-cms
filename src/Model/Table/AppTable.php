@@ -92,7 +92,7 @@ class AppTable extends Table
      */
     public function clearCache(): bool
     {
-        return Cache::clear(false, $this->getCacheName());
+        return Cache::clear($this->getCacheName());
     }
 
     /**

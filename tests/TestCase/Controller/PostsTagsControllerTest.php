@@ -45,7 +45,7 @@ class PostsTagsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PostsTags' . DS . 'index.ctp');
+        $this->assertTemplate('PostsTags' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('tags'));
 
         $cache = sprintf('tags_limit_%s_page_%s', getConfigOrFail('default.records') * 4, 1);
@@ -72,7 +72,7 @@ class PostsTagsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PostsTags' . DS . 'view.ctp');
+        $this->assertTemplate('PostsTags' . DS . 'view.php');
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
         $this->assertInstanceof(Tag::class, $this->viewVariable('tag'));
 

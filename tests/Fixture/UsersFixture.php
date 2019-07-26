@@ -123,7 +123,7 @@ class UsersFixture extends TestFixture
      * Initialize the fixture
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $user = new User([
             'id' => 6,

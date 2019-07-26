@@ -13,7 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\Http\Response;
@@ -28,12 +28,12 @@ class PhotosController extends AppController
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
-     *   each controller action.
-     * @param \Cake\Event\Event $event An Event instance
+     *   each controller action
+     * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Model\Table\PhotosAlbums::getList()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
@@ -101,7 +101,7 @@ class PhotosController extends AppController
     public function upload(): void
     {
         $album = $this->getRequest()->getQuery('album');
-        $albums = $this->viewVars['albums']->toArray();
+        $albums = $this->viewBuilder()->getVar('albums')->toArray();
 
         //If there's only one available album
         if (!$album && count($albums) < 2) {

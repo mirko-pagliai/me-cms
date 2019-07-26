@@ -40,7 +40,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'albums']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PhotosAlbums' . DS . 'index.ctp');
+        $this->assertTemplate('PhotosAlbums' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(PhotosAlbum::class, $this->viewVariable('albums'));
         foreach ($this->viewVariable('albums') as $album) {
             $this->assertContainsOnlyInstancesOf(Photo::class, $album->get('photos'));
@@ -64,7 +64,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PhotosAlbums' . DS . 'view.ctp');
+        $this->assertTemplate('PhotosAlbums' . DS . 'view.php');
         $this->assertInstanceof(PhotosAlbum::class, $this->viewVariable('album'));
         $this->assertContainsOnlyInstancesOf(Photo::class, $this->viewVariable('photos'));
         $cache = Cache::read('album_' . md5('test-album'), $this->Table->getCacheName());

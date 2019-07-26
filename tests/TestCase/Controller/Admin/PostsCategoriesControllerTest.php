@@ -65,7 +65,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'index.ctp');
+        $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(PostsCategory::class, $this->viewVariable('categories'));
     }
 
@@ -79,7 +79,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'add.ctp');
+        $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'add.php');
         $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid
@@ -104,7 +104,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'edit.php');
         $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid

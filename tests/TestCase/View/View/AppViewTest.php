@@ -13,7 +13,6 @@ declare(strict_types=1);
  */
 namespace MeCms\Test\TestCase\View\View;
 
-use Cake\Core\App;
 use Cake\Core\Configure;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\View\AppView as View;
@@ -24,7 +23,7 @@ use MeCms\View\View\AppView as View;
 class AppViewTest extends TestCase
 {
     /**
-     * @var \MeCms\View\View\AppView|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\View\View\AppView
      */
     protected $View;
 
@@ -40,9 +39,8 @@ class AppViewTest extends TestCase
         Configure::write('Widgets.general', []);
         Configure::write('MeCms.default.theme', false);
 
-        $this->View = $this->View ?: $this->getMockBuilder(View::class)
-            ->setMethods(null)
-            ->getMock();
+        $this->View = new View();
+        $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
         $this->View->setPlugin('MeCms');
     }
 
@@ -58,14 +56,14 @@ class AppViewTest extends TestCase
         Configure::write('MeCms.shareaholic.site_id', 'shareaholic-id');
         Configure::write('MeCms.default.facebook_app_id', 'facebook-id');
 
-        $result = $this->View->render(false);
-        $this->assertContains('<meta name="theme-color" content="#ffffff"/>', $result);
-        $this->assertContains('<link href="/posts/rss" type="application/rss+xml" rel="alternate" title="Latest posts"/>', $result);
-        $this->assertContains('<meta content="' . 'MeCms" property="og:title"/>', $result);
-        $this->assertContains('<meta content="http://localhost/" property="og:url"/>', $result);
-        $this->assertContains('<meta content="facebook-id" property="fb:app_id"/>', $result);
-        $this->assertContains('<script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","analytics-id","auto"),ga("send","pageview");</script>', $result);
-        $this->assertContains('<script src="//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js" async="async" data-cfasync="false" data-shr-siteid="shareaholic-id"></script>', $result);
+        $result = $this->View->render('StaticPages/page-from-app');
+        $this->assertStringContainsString('<meta name="theme-color" content="#ffffff"/>', $result);
+        $this->assertStringContainsString('<link href="/posts/rss" type="application/rss+xml" rel="alternate" title="Latest posts"/>', $result);
+        $this->assertStringContainsString('<meta content="' . 'MeCms" property="og:title"/>', $result);
+        $this->assertStringContainsString('<meta content="http://localhost/" property="og:url"/>', $result);
+        $this->assertStringContainsString('<meta content="facebook-id" property="fb:app_id"/>', $result);
+        $this->assertStringContainsString('<script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","analytics-id","auto"),ga("send","pageview");</script>', $result);
+        $this->assertStringContainsString('<script src="//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js" async="async" data-cfasync="false" data-shr-siteid="shareaholic-id"></script>', $result);
     }
 
     /**
@@ -74,7 +72,7 @@ class AppViewTest extends TestCase
      */
     public function testRenderLayout()
     {
-        $this->assertNotEmpty($this->View->render(false));
+        $this->assertNotEmpty($this->View->render('StaticPages/page-from-app'));
         $this->assertEquals('default', $this->View->getLayout());
         $this->assertEquals(null, $this->View->getTheme());
     }
@@ -91,28 +89,11 @@ class AppViewTest extends TestCase
         Configure::write('MeCms.default.theme', $theme);
 
         //Reloads the View
-        $View = $this->getMockBuilder(View::class)
-            ->setMethods(null)
-            ->getMock();
-        $this->assertEquals('This is a layout from TestPlugin', $View->render(false));
-        $this->assertEquals('default', $View->getLayout());
-        $this->assertEquals($theme, $View->getTheme());
-    }
-
-    /**
-     * Tests for `renderLayout()` method, with a layout from the app
-     * @test
-     */
-    public function testRenderLayoutFromApp()
-    {
-        //Creates a new layout
-        $layoutFromApp = array_value_first(App::path('Template/Plugin/' . 'MeCms/Layout')) . 'default.ctp';
-        @create_file($layoutFromApp, 'This is a layout from app');
-        $this->assertEquals('This is a layout from app', $this->View->render(false));
+        $this->View = new View();
+        $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
+        $this->assertEquals('This is a layout from TestPlugin', $this->View->render('StaticPages/page-from-app'));
         $this->assertEquals('default', $this->View->getLayout());
-        $this->assertEquals('MeCms', $this->View->getPlugin());
-        $this->assertEquals(null, $this->View->getTheme());
-        @unlink($layoutFromApp);
+        $this->assertEquals($theme, $this->View->getTheme());
     }
 
     /**
@@ -132,7 +113,7 @@ class AppViewTest extends TestCase
             'second',
             ['nestled'],
         ], $this->View->userbar());
-        $this->View->render(false);
+        $this->View->render('StaticPages/page-from-app');
         $this->assertEquals('<li>string</li>' . PHP_EOL . '<li>first</li>' . PHP_EOL . '<li>second</li>' . PHP_EOL . '<li>nestled</li>', $this->View->fetch('userbar'));
     }
 }

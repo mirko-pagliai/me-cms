@@ -278,10 +278,8 @@ class AppValidatorTest extends TestCase
     {
         $this->loadFixtures('Posts');
 
-        foreach ([time(), 'string', true, false] as $created) {
-            $errors = $this->Posts->newEntity(compact('created') + $this->example['Posts'])->getErrors();
-            $this->assertEquals(['created' => ['datetime' => I18N_ENTER_VALID_VALUE]], $errors);
-        }
+        $errors = $this->Posts->newEntity(['created' => '2016-01-16 19:09aaaa'] + $this->example['Posts'])->getErrors();
+        $this->assertEquals(['created' => ['datetime' => I18N_ENTER_VALID_VALUE]], $errors);
 
         foreach (['2016-01-16 19:09', '2016-01-16 19:09:00'] as $created) {
             $errors = $this->Posts->newEntity(compact('created') + $this->example['Posts'])->getErrors();

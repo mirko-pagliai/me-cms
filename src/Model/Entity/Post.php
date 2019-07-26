@@ -48,10 +48,6 @@ class Post extends PostAndPageEntity
      */
     protected function _getTagsAsString(): ?string
     {
-        if (empty($this->_properties['tags'])) {
-            return null;
-        }
-
-        return implode(', ', Hash::extract($this->_properties['tags'], '{*}.tag'));
+        return $this->has('tags') ? implode(', ', Hash::extract($this->get('tags'), '{*}.tag')) : null;
     }
 }

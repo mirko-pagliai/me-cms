@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseAppController;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\I18n\I18n;
 
 /**
@@ -24,11 +24,11 @@ class AppController extends BaseAppController
 {
     /**
      * Called before the controller action
-     * @param \Cake\Event\Event $event An Event instance
+     * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
      * @uses isSpammer()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         //Checks if the site is offline
         if ($this->getRequest()->isOffline()) {

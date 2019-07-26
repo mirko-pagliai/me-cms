@@ -259,6 +259,8 @@ class PostsTagsWidgetsCellTest extends CellTestCase
 
         //With no tags
         $this->Table->deleteAll(['id IS NOT' => null]);
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget, $this->example)->render());
         $this->assertEmpty($this->Widget->widget($widget, array_merge($this->example, ['render' => 'form']))->render());
         $this->assertEmpty($this->Widget->widget($widget, array_merge($this->example, ['render' => 'list']))->render());

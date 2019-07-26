@@ -33,7 +33,7 @@ use Thumber\Utility\ThumbCreator;
 class Photo extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned using newEntity([]) or patchEntity()
      * @var array
      */
     protected $_accessible = [
@@ -54,11 +54,11 @@ class Photo extends Entity
      */
     protected function _getPath(): ?string
     {
-        if (empty($this->_properties['album_id']) || empty($this->_properties['filename'])) {
+        if (!$this->has('album_id') || !$this->has('filename')) {
             return null;
         }
 
-        return PHOTOS . $this->_properties['album_id'] . DS . $this->_properties['filename'];
+        return PHOTOS . $this->get('album_id') . DS . $this->get('filename');
     }
 
     /**
@@ -67,14 +67,14 @@ class Photo extends Entity
      */
     protected function _getPlainDescription(): ?string
     {
-        if (empty($this->_properties['description'])) {
+        if (!$this->has('description')) {
             return null;
         }
 
         //Loads the `BBCode` helper
         $BBCode = (new HelperRegistry(new View()))->load('MeTools.BBCode');
 
-        return trim(strip_tags($BBCode->remove($this->_properties['description'])));
+        return trim(strip_tags($BBCode->remove($this->get('description'))));
     }
 
     /**

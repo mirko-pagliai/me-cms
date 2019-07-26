@@ -177,7 +177,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertEquals(2, $firstRelated->get('id'));
         $this->assertNotEmpty($firstRelated->get('title'));
         $this->assertNotEmpty($firstRelated->get('slug'));
-        $this->assertContains('<img src="image.jpg" />Text of the second post', $firstRelated->get('text'));
+        $this->assertStringContainsString('<img src="image.jpg" />Text of the second post', $firstRelated->get('text'));
         $this->assertCount(1, $firstRelated->get('preview'));
         $this->assertEquals('image.jpg', array_value_first($firstRelated->get('preview'))->get('url'));
         $this->assertEquals(400, array_value_first($firstRelated->get('preview'))->get('width'));

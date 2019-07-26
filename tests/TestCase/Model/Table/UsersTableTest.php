@@ -185,7 +185,7 @@ class UsersTableTest extends TableTestCase
     {
         $this->loadFixtures();
         $query = $this->Table->getActiveList();
-        $this->assertContains('FROM users Users WHERE Users.active = :c0 ORDER BY username ASC', $query->sql());
+        $this->assertStringContainsString('FROM users Users WHERE Users.active = :c0 ORDER BY username ASC', $query->sql());
         $this->assertNotEmpty($query->toArray());
         $fromCache = Cache::read('active_users_list', $this->Table->getCacheName())->toArray();
         $this->assertEquals($fromCache, $query->toArray());

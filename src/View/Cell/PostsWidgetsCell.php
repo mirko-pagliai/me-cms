@@ -105,7 +105,7 @@ class PostsWidgetsCell extends Cell
                 return $results->indexBy('month')->map(function (Post $post) {
                     [$year, $month] = explode('/', $post->get('month'));
 
-                    return $post->set('month', (new FrozenDate())->day(1)->month($month)->year($year));
+                    return $post->set('month', (new FrozenDate())->day(1)->month((int)$month)->year((int)$year));
                 });
             })
             ->order(['month' => 'DESC'])

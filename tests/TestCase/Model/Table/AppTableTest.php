@@ -116,7 +116,7 @@ class AppTableTest extends TableTestCase
     {
         Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
         $this->assertTrue($this->Posts->clearCache());
-        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
+        $this->assertNull(Cache::read('testKey', $this->Posts->getCacheName()));
     }
 
     /**
@@ -129,7 +129,7 @@ class AppTableTest extends TableTestCase
         Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
         $this->assertGreaterThan(0, $this->Posts->deleteAll(['id IS NOT' => null]));
         $this->assertEmpty($this->Posts->find()->count());
-        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
+        $this->assertNull(Cache::read('testKey', $this->Posts->getCacheName()));
     }
 
     /**

@@ -109,6 +109,6 @@ class ContactUsFormTest extends TestCase
      */
     public function testExecute()
     {
-        $this->assertArrayKeysEqual(['headers', 'message'], $this->Form->execute($this->example));
+        $this->assertTrue($this->Form->execute($this->example));
     }
 }

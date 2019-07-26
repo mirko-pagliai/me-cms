@@ -124,7 +124,7 @@ abstract class TableTestCase extends TestCase
         //Clears all cache keys
         foreach ($this->cacheToClear as $cacheKey) {
             Cache::getConfig($cacheKey) ?: $this->fail('Cache key `' . $cacheKey . '` does not exist');
-            Cache::clear(false, $cacheKey);
+            Cache::clear($cacheKey);
         }
     }
 }

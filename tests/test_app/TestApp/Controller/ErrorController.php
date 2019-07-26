@@ -15,7 +15,7 @@ class ErrorController extends AppController
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadComponent('RequestHandler');
     }

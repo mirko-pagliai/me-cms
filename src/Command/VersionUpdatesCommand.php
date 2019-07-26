@@ -45,7 +45,7 @@ class VersionUpdatesCommand extends Command
      */
     public function addEnableCommentsField(): void
     {
-        Cache::clear(false, '_cake_model_');
+        Cache::clear('_cake_model_');
 
         foreach (['Pages', 'Posts'] as $table) {
             $Table = $this->loadModel('MeCms.' . $table);

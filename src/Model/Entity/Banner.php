@@ -32,7 +32,7 @@ use Cake\ORM\Entity;
 class Banner extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned using newEntity([]) or patchEntity()
      * @var array
      */
     protected $_accessible = [
@@ -53,7 +53,7 @@ class Banner extends Entity
      */
     protected function _getPath(): ?string
     {
-        return empty($this->_properties['filename']) ? null : BANNERS . $this->_properties['filename'];
+        return $this->has('filename') ? BANNERS . $this->get('filename') : null;
     }
 
     /**
@@ -62,6 +62,6 @@ class Banner extends Entity
      */
     protected function _getWww(): ?string
     {
-        return empty($this->_properties['filename']) ? null : BANNERS_WWW . $this->_properties['filename'];
+        return $this->has('filename') ? BANNERS_WWW . $this->get('filename') : null;
     }
 }

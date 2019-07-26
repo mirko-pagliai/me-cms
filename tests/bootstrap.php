@@ -18,6 +18,7 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\Mailer\TransportFactory;
+use Cake\Utility\Security;
 use EntityFileLog\Log\Engine\EntityFileLog;
 
 ini_set('intl.default_locale', 'en_US');
@@ -74,10 +75,7 @@ Configure::write('App', [
     'cssBaseUrl' => 'css/',
     'paths' => [
         'plugins' => [APP . 'Plugin' . DS],
-        'templates' => [
-            APP . 'Template' . DS,
-            ROOT . 'src' . DS . 'Template' . DS,
-        ],
+        'templates' => [APP . 'templates' . DS],
     ],
 ]);
 Configure::write('Session', ['defaults' => 'php']);
@@ -143,6 +141,7 @@ function create_kcfinder_files($htaccess = true)
 
 Configure::write('Assets.target', TMP . 'assets');
 Configure::write('pluginsToLoad', ['MeTools', 'MeCms']);
+Security::setSalt('a-long-but-not-random-value');
 
 $_SERVER['PHP_SELF'] = '/';
 

@@ -13,7 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\ORM\ResultSet;
 use MeCms\Controller\AppController;
@@ -28,12 +28,12 @@ class PagesCategoriesController extends AppController
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
-     *  each controller action.
-     * @param \Cake\Event\Event $event An Event instance
+     *  each controller action
+     * @param \Cake\Event\EventInterface $event An Event instance
      * @return void
      * @uses \MeCms\Model\Table\PagesCategoriesTable::getTreeList()
      */
-    public function beforeFilter(Event $event): void
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
 
@@ -82,7 +82,7 @@ class PagesCategoriesController extends AppController
      */
     public function add()
     {
-        $category = $this->PagesCategories->newEntity();
+        $category = $this->PagesCategories->newEntity([]);
 
         if ($this->getRequest()->is('post')) {
             $category = $this->PagesCategories->patchEntity($category, $this->getRequest()->getData());

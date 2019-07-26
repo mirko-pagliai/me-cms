@@ -14,10 +14,12 @@ declare(strict_types=1);
  */
 namespace MeCms;
 
+use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
+use Cake\Http\MiddlewareQueue;
 use DebugKit\Plugin as DebugKit;
 use MeCms\Command\AddUserCommand;
 use MeCms\Command\GroupsCommand;
@@ -59,7 +61,6 @@ class Plugin extends BasePlugin
         $pluginsToLoad = [
             'MeTools',
             'DatabaseBackup',
-            'Recaptcha' => ['path' => ROOT . DS . 'vendor' . DS . 'crabstudio' . DS . 'recaptcha' . DS],
             'RecaptchaMailhide',
             'StopSpam',
             'Thumber',
@@ -102,7 +103,7 @@ class Plugin extends BasePlugin
      * @uses setVendorLinks()
      * @uses setWritableDirs()
      */
-    public function console($commands)
+    public function console(CommandCollection $commands): CommandCollection
     {
         $this->setVendorLinks();
         $this->setWritableDirs();
@@ -132,7 +133,7 @@ class Plugin extends BasePlugin
      * @return \Cake\Http\MiddlewareQueue
      * @since 2.26.4
      */
-    public function middleware($middleware)
+    public function middleware(MiddlewareQueue $middleware): MiddlewareQueue
     {
         $key = Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 

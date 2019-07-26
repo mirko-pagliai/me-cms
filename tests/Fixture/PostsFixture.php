@@ -145,8 +145,9 @@ class PostsFixture extends TestFixture
 
     /**
      * Initialize the fixture
+     * @return void
      */
-    public function init()
+    public function init(): void
     {
         //Adds a post with preview
         $preview = json_encode([new Entity(['url' => 'image.jpg', 'width' => 400, 'height' => 400])]);

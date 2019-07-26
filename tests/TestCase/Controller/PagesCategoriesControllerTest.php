@@ -40,7 +40,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'pagesCategories']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PagesCategories' . DS . 'index.ctp');
+        $this->assertTemplate('PagesCategories' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(PagesCategory::class, $this->viewVariable('categories'));
         $cache = Cache::read('categories_index', $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('categories')->toArray(), $cache->toArray());
@@ -56,7 +56,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PagesCategories' . DS . 'view.ctp');
+        $this->assertTemplate('PagesCategories' . DS . 'view.php');
         $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
         $this->assertContainsOnlyInstancesOf(Page::class, $this->viewVariable('category')->get('pages'));
         $cache = Cache::read('category_' . md5('first-page-category'), $this->Table->getCacheName());

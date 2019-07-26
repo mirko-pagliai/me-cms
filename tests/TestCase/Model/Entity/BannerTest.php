@@ -32,7 +32,7 @@ class BannerTest extends EntityTestCase
     }
 
     /**
-     * Test for fields that cannot be mass assigned using newEntity() or
+     * Test for fields that cannot be mass assigned using newEntity([]) or
      *  patchEntity()
      * @test
      */

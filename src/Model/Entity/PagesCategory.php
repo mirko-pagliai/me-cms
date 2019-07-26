@@ -33,7 +33,7 @@ use Cake\ORM\Entity;
 class PagesCategory extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned using newEntity([]) or patchEntity()
      * @var array
      */
     protected $_accessible = [

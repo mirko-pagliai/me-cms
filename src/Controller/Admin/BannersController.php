@@ -13,7 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\Http\Response;
@@ -28,12 +28,12 @@ class BannersController extends AppController
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
-     *   each controller action.
-     * @param \Cake\Event\Event $event An Event instance
+     *   each controller action
+     * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Model\Table\BannersPositions::getList()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
@@ -100,7 +100,7 @@ class BannersController extends AppController
     public function upload(): void
     {
         $position = $this->getRequest()->getQuery('position');
-        $positions = $this->viewVars['positions']->toArray();
+        $positions = $this->viewBuilder()->getVar('positions')->toArray();
 
         //If there's only one available position
         if (!$position && count($positions) < 2) {

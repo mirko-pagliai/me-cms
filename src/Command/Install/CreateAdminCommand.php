@@ -43,6 +43,6 @@ class CreateAdminCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        return (new AddUserCommand())->run(['--group', 1] + $args->getOptions(), $io);
+        return $this->executeCommand(AddUserCommand::class, ['--group', '1'] + $args->getOptions(), $io);
     }
 }

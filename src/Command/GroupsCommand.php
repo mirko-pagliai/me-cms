@@ -46,7 +46,7 @@ class GroupsCommand extends Command
         $this->loadModel('MeCms.UsersGroups');
 
         $table = $this->UsersGroups->find()->map(function (UsersGroup $group) {
-            return [$group->id, $group->name, $group->label, $group->user_count];
+            return [(string)$group->id, $group->name, $group->label, (string)$group->user_count];
         })->toList();
 
         //Checks for user groups

@@ -30,7 +30,7 @@ class StaticPage
     /**
      * Extension for static pages
      */
-    protected const EXTENSION = 'ctp';
+    protected const EXTENSION = 'php';
 
     /**
      * Internal method to get all the existing paths
@@ -59,9 +59,15 @@ class StaticPage
      * @return array
      * @since 2.26.6
      */
-    protected static function getPaths(?string $plugin = null): string
+    protected static function getPaths(?string $plugin = null): array
     {
-        return App::path('Template' . DS . 'StaticPages', $plugin);
+        if ($plugin) {
+            $path = Plugin::path($plugin) . 'templates' . DS . 'StaticPages' . DS;
+        } else {
+            $path = APP . 'templates' . DS . 'StaticPages' . DS;
+        }
+
+        return array_merge(App::path('Template' . DS . 'StaticPages', $plugin), [$path]);
     }
 
     /**

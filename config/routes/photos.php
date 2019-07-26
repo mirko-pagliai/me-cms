@@ -43,6 +43,6 @@ if (!$routes->nameExists('photosPreview')) {
  * These URLs will become:
  * <pre>/photo/album-name/1</pre>
  */
-$routes->connect('/photo/:id', ['controller' => 'Photos', 'action' => 'view', 'slug' => false])
+$routes->connect('/photo/:id', ['controller' => 'Photos', 'action' => 'view', 'slug' => ''])
         ->setPatterns(['id' => '\d+'])
         ->setPass(['slug', 'id']);

@@ -51,5 +51,8 @@ abstract class CellTestCase extends TestCase
                 ->setConstructorArgs([new View()])
                 ->getMock();
         }
+
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Widget->getView()->setRequest($request);
     }
 }

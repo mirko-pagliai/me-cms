@@ -114,7 +114,7 @@ class PagesControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'index.ctp');
+        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(Page::class, $this->viewVariable('pages'));
     }
 
@@ -126,7 +126,7 @@ class PagesControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'indexStatics']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'index_statics.ctp');
+        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'index_statics.php');
         $this->assertContainsOnlyInstancesOf(Entity::class, $this->viewVariable('pages'));
     }
 
@@ -140,7 +140,7 @@ class PagesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'add.ctp');
+        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'add.php');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
 
         //POST request. Data are valid
@@ -170,7 +170,7 @@ class PagesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'edit.php');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('page')->created);
 

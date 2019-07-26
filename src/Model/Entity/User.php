@@ -38,7 +38,7 @@ use Cake\ORM\Entity;
 class User extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned using newEntity([]) or patchEntity()
      * @var array
      */
     protected $_accessible = [
@@ -60,11 +60,11 @@ class User extends Entity
      */
     protected function _getFullName(): ?string
     {
-        if (empty($this->_properties['first_name']) || empty($this->_properties['last_name'])) {
+        if (!$this->has('first_name') || !$this->has('last_name')) {
             return null;
         }
 
-        return sprintf('%s %s', $this->_properties['first_name'], $this->_properties['last_name']);
+        return sprintf('%s %s', $this->get('first_name'), $this->get('last_name'));
     }
 
     /**
@@ -73,8 +73,8 @@ class User extends Entity
      */
     protected function _getPicture(): string
     {
-        if (!empty($this->_properties['id'])) {
-            $files = ((new Folder(USER_PICTURES))->find($this->_properties['id'] . '\..+'));
+        if ($this->has('id')) {
+            $files = ((new Folder(USER_PICTURES))->find($this->get('id') . '\..+'));
 
             if (!empty($files)) {
                 return 'users' . DS . array_value_first($files);

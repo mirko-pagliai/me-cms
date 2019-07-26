@@ -48,7 +48,6 @@ class AuthComponentTest extends ComponentTestCase
                 ],
             ],
             'authorize' => 'Controller',
-            'ajaxLogin' => null,
             'flash' => [
                 'element' => 'MeTools.flash',
                 'params' => ['class' => 'alert-danger'],

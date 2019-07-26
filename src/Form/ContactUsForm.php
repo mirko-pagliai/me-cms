@@ -73,8 +73,8 @@ class ContactUsForm extends Form
      * @param array $data Form data
      * @return bool
      */
-    protected function _execute(array $data): array
+    protected function _execute(array $data): bool
     {
-        return $this->getMailer('MeCms.ContactUs')->send('contactUsMail', [$data]);
+        return (bool)$this->getMailer('MeCms.ContactUs')->send('contactUsMail', [$data]);
     }
 }

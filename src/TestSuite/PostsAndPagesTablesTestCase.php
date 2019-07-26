@@ -80,7 +80,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      */
     public function testEventMethods()
     {
-        [$event, $entity, $options] = [new Event(null), $this->Table->newEntity([]), new ArrayObject()];
+        [$event, $entity, $options] = [new Event('myEvent'), $this->Table->newEntity([]), new ArrayObject()];
 
         $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'getPreviewSize', 'setNextToBePublished']);
         $Table->expects($this->exactly(2))->method('clearCache');

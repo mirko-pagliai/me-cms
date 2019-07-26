@@ -159,9 +159,9 @@ class SitemapBuilderTest extends TestCase
         $this->loadFixtures();
         $this->loadPlugins(['TestPlugin']);
         $map = $this->SitemapBuilder->generate();
-        $this->assertContains('first-folder/page-on-first-from-plugin', $map);
-        $this->assertContains('first-folder/second_folder/page_on_second_from_plugin', $map);
-        $this->assertContains('test-from-plugin', $map);
+        $this->assertStringContainsString('first-folder/page-on-first-from-plugin', $map);
+        $this->assertStringContainsString('first-folder/second_folder/page_on_second_from_plugin', $map);
+        $this->assertStringContainsString('test-from-plugin', $map);
         $this->assertNotEmpty(Xml::toArray(Xml::build($map))['urlset']['url']);
     }
 }

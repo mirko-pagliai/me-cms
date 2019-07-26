@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 namespace MeCms\Database\Type;
 
-use Cake\Database\Driver;
+use Cake\Database\DriverInterface;
 use Cake\Database\Type\JsonType;
 use Cake\ORM\Entity;
 
@@ -28,10 +28,10 @@ class JsonEntityType extends JsonType
     /**
      * Convert string values to PHP arrays.
      * @param mixed $value The value to convert
-     * @param \Cake\Database\Driver $driver The driver instance to convert with
+     * @param \Cake\Database\DriverInterface $driver The driver instance to convert with
      * @return mixed
      */
-    public function toPHP($value, Driver $driver)
+    public function toPHP($value, DriverInterface $driver)
     {
         $value = parent::toPHP($value, $driver);
 

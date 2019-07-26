@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace MeCms\ORM;
 
 use ArrayObject;
-use Cake\Database\Schema\TableSchema;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
@@ -35,11 +35,12 @@ abstract class PostsAndPagesTables extends AppTable
     /**
      * Alters the schema used by this table. This function is only called after
      *  fetching the schema out of the database
-     * @param \Cake\Database\Schema\TableSchema $schema TableSchema instance
-     * @return \Cake\Database\Schema\TableSchema TableSchema instance
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema The table
+     *  definition fetched from database
+     * @return \Cake\Database\Schema\TableSchemaInterface The altered schema
      * @since 2.17.0
      */
-    protected function _initializeSchema(TableSchema $schema): TableSchema
+    protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
     {
         return $schema->setColumnType('preview', 'jsonEntity');
     }

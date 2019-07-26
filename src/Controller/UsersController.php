@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace MeCms\Controller;
 
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Response;
 use Cake\Log\Log;
@@ -86,7 +86,7 @@ class UsersController extends AppController
         $token = $this->Token->create($user->get('email'), ['type' => 'signup', 'user_id' => $user->get('id')]);
 
         return (bool)$this->getMailer('MeCms.User')
-            ->set('url', Router::url(['_name' => 'activation', $user->get('id'), $token], true))
+            ->set('url', Router::url(['_name' => 'activation', (string)$user->get('id'), $token], true))
             ->send('activation', [$user]);
     }
 
@@ -105,11 +105,11 @@ class UsersController extends AppController
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
-     *  each controller action.
-     * @param \Cake\Event\Event $event An Event instance
+     *  each controller action
+     * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
@@ -293,7 +293,7 @@ class UsersController extends AppController
                         ['type' => 'password_forgot', 'user_id' => $user->get('id')]
                     );
                     $this->getMailer('MeCms.User')
-                        ->set('url', Router::url(['_name' => 'passwordReset', $user->id, $token], true))
+                        ->set('url', Router::url(['_name' => 'passwordReset', (string)$user->id, $token], true))
                         ->send('passwordForgot', [$user]);
                     $this->Flash->success(__d('me_cms', 'We have sent you an email to reset your password'));
 
@@ -363,7 +363,7 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $user = $this->Users->newEntity();
+        $user = $this->Users->newEntity([]);
 
         if ($this->getRequest()->is('post')) {
             $user = $this->Users->patchEntity($user, $this->getRequest()->getData());

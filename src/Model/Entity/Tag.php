@@ -28,7 +28,7 @@ use Cake\Utility\Text;
 class Tag extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned using newEntity([]) or patchEntity()
      * @var array
      */
     protected $_accessible = [
@@ -50,6 +50,6 @@ class Tag extends Entity
      */
     protected function _getSlug(): ?string
     {
-        return empty($this->_properties['tag']) ? null : strtolower(Text::slug($this->_properties['tag']));
+        return $this->has('tag') ? strtolower(Text::slug($this->get('tag'))) : null;
     }
 }

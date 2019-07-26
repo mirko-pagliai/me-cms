@@ -28,7 +28,7 @@ use Cake\ORM\Entity;
 class PhotosAlbum extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned using newEntity([]) or patchEntity()
      * @var array
      */
     protected $_accessible = [
@@ -50,7 +50,7 @@ class PhotosAlbum extends Entity
      */
     protected function _getPath(): ?string
     {
-        return empty($this->_properties['id']) ? null : PHOTOS . $this->_properties['id'];
+        return $this->has('id') ? PHOTOS . $this->get('id') : null;
     }
 
     /**
@@ -60,10 +60,6 @@ class PhotosAlbum extends Entity
      */
     protected function _getPreview(): ?string
     {
-        if (empty($this->_properties['photos'])) {
-            return null;
-        }
-
-        return array_value_first($this->_properties['photos'])->get('path');
+        return $this->has('photos') ? array_value_first($this->get('photos'))->get('path') : null;
     }
 }

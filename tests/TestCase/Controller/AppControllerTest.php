@@ -27,12 +27,12 @@ class AppControllerTest extends ControllerTestCase
      * Mocks a controller
      * @param string $className Controller class name
      * @param array|null $methods The list of methods to mock
-     * @param string $alias Controller alias
+     * @param string|null $alias Controller alias
      * @return \Cake\Controller\Controller|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getMockForController($className = null, $methods = null, $alias = 'App')
+    protected function getMockForController(string $className, ?array $methods = null, ?string $alias = 'App'): object
     {
-        return parent::getMockForController($className ?: AppController::class, $methods, $alias);
+        return parent::getMockForController($className, $methods, $alias);
     }
 
     /**
@@ -47,7 +47,7 @@ class AppControllerTest extends ControllerTestCase
         Configure::write('MeCms.security.recaptcha', true);
         Configure::write('MeCms.security.search_interval', 15);
 
-        $controller = $this->getMockForController();
+        $controller = $this->getMockForController(AppController::class);
         $controller->request = $this->Controller->getRequest()->withParam('action', 'my-action')
             ->withQueryParams(['sort' => 'my-field']);
         $controller->beforeFilter(new Event('myEvent'));
@@ -57,7 +57,7 @@ class AppControllerTest extends ControllerTestCase
         $this->assertEquals('MeCms.View/App', $controller->viewBuilder()->getClassName());
 
         //Admin request
-        $controller = $this->getMockForController();
+        $controller = $this->getMockForController(AppController::class);
         $controller->request = $controller->getRequest()->withParam('action', 'my-action')
             ->withQueryParams(['sort' => 'my-field'])
             ->withParam('prefix', ADMIN_PREFIX);
@@ -67,20 +67,20 @@ class AppControllerTest extends ControllerTestCase
         $this->assertEquals('MeCms.View/Admin', $controller->viewBuilder()->getClassName());
 
         //Ajax request
-        $controller = $this->getMockForController();
+        $controller = $this->getMockForController(AppController::class);
         $controller->request = $controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
         $controller->beforeFilter(new Event('myEvent'));
         $this->assertEquals('MeCms.ajax', $controller->viewBuilder()->getLayout());
 
         //If the user has been reported as a spammer this makes a redirect
-        $controller = $this->getMockForController(null, ['isSpammer']);
+        $controller = $this->getMockForController(AppController::class, ['isSpammer']);
         $controller->method('isSpammer')->willReturn(true);
         $this->_response = $controller->beforeFilter(new Event('myEvent'));
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
 
         //If the site is offline this makes a redirect
         Configure::write('MeCms.default.offline', true);
-        $controller = $this->getMockForController();
+        $controller = $this->getMockForController(AppController::class);
         $this->_response = $controller->beforeFilter(new Event('myEvent'));
         $this->assertRedirect(['_name' => 'offline']);
     }

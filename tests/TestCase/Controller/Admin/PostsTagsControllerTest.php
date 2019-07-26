@@ -59,7 +59,7 @@ class PostsTagsControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PostsTags' . DS . 'index.ctp');
+        $this->assertTemplate('Admin' . DS . 'PostsTags' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('tags'));
     }
 
@@ -73,7 +73,7 @@ class PostsTagsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PostsTags' . DS . 'edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'PostsTags' . DS . 'edit.php');
         $this->assertInstanceof(Tag::class, $this->viewVariable('tag'));
 
         //POST request. Data are valid

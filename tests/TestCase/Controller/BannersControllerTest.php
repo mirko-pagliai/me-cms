@@ -34,7 +34,7 @@ class BannersControllerTest extends ControllerTestCase
      */
     public function testOpen()
     {
-        $this->get(['_name' => 'banner', 1]);
+        $this->get(['_name' => 'banner', '1']);
         $this->assertRedirect('http://www.example.com');
         $this->assertSame(3, $this->Table->findById(1)->extract('click_count')->first());
     }

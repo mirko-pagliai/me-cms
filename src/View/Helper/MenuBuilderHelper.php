@@ -111,7 +111,7 @@ class MenuBuilderHelper extends Helper
                 'data-toggle' => 'collapse',
             ]);
             $mainLink = $this->Html->link($menu['title'], '#' . $collapseName, $titleOptions->toArray());
-            $links = $this->Html->div('collapse', $this->buildLinks($menu['links']), ['id' => $collapseName]);
+            $links = $this->Html->div('collapse', implode(PHP_EOL, $this->buildLinks($menu['links'])), ['id' => $collapseName]);
 
             return $this->Html->div('card', $mainLink . PHP_EOL . $links);
         }, $this->generate($plugin)));

@@ -66,12 +66,12 @@ class StaticPageTest extends TestCase
 
         //Checks paths
         $this->assertEquals([
-            'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'Template' . DS . 'StaticPages' . DS . 'page-from-app.ctp',
-            'src' . DS . 'Template' . DS . 'StaticPages' . DS . 'cookies-policy-it.ctp',
-            'src' . DS . 'Template' . DS . 'StaticPages' . DS . 'cookies-policy.ctp',
-            $TestPluginPath . 'StaticPages' . DS . 'test-from-plugin.ctp',
-            $TestPluginPath . 'StaticPages' . DS . 'first-folder' . DS . 'page-on-first-from-plugin.ctp',
-            $TestPluginPath . 'StaticPages' . DS . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin.ctp',
+            'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'templates' . DS . 'StaticPages' . DS . 'page-from-app.php',
+            'templates' . DS . 'StaticPages' . DS . 'cookies-policy-it.php',
+            'templates' . DS . 'StaticPages' . DS . 'cookies-policy.php',
+            $TestPluginPath . 'StaticPages' . DS . 'test-from-plugin.php',
+            $TestPluginPath . 'StaticPages' . DS . 'first-folder' . DS . 'page-on-first-from-plugin.php',
+            $TestPluginPath . 'StaticPages' . DS . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin.php',
         ], Hash::extract($pages, '{n}.path'));
 
         //Checks slugs
@@ -144,9 +144,9 @@ class StaticPageTest extends TestCase
     {
         $this->loadPlugins(['TestPlugin']);
         $result = $this->invokeMethod(StaticPage::class, 'getAllPaths');
-        $this->assertContains(APP . 'Template' . DS . 'StaticPages' . DS, $result);
-        $this->assertContains(ROOT . 'src' . DS . 'Template' . DS . 'StaticPages' . DS, $result);
-        $this->assertContains(Plugin::path('TestPlugin') . 'src' . DS . 'Template' . DS . 'StaticPages' . DS, $result);
+        $this->assertContains(APP . 'templates' . DS . 'StaticPages' . DS, $result);
+        $this->assertContains(ROOT . 'templates' . DS . 'StaticPages' . DS, $result);
+        $this->assertContains(Plugin::path('TestPlugin') . 'templates' . DS . 'StaticPages' . DS, $result);
         $this->assertEquals(Cache::read('paths', 'static_pages'), $result);
     }
 
@@ -161,13 +161,13 @@ class StaticPageTest extends TestCase
             return $this->invokeMethod(StaticPage::class, 'getSlug', func_get_args());
         };
 
-        foreach (['my-file', 'my-file.ctp', '/first/second/my-file.ctp'] as $file) {
+        foreach (['my-file', 'my-file.php', '/first/second/my-file.php'] as $file) {
             $this->assertEquals('my-file', $getSlugMethod($file, '/first/second'));
             $this->assertEquals('my-file', $getSlugMethod($file, '/first/second/'));
         }
 
-        $this->assertEquals('first/my-file', $getSlugMethod('first/my-file.ctp', '/first/second'));
-        $this->assertEquals('third/my-file', $getSlugMethod('/first/second/third/my-file.ctp', '/first/second'));
+        $this->assertEquals('first/my-file', $getSlugMethod('first/my-file.php', '/first/second'));
+        $this->assertEquals('third/my-file', $getSlugMethod('/first/second/third/my-file.php', '/first/second'));
     }
 
     /**
@@ -181,11 +181,11 @@ class StaticPageTest extends TestCase
             return $this->invokeMethod(StaticPage::class, 'getSlug', func_get_args());
         };
 
-        $this->assertEquals('my-file', $getSlugMethod('\\first\\second\\my-file.ctp', '\\first\\second'));
-        $this->assertEquals('my-file', $getSlugMethod('\\first\\second\\my-file.ctp', '\\first\\second\\'));
-        $this->assertEquals('my-file', $getSlugMethod('C:\\\\first\\my-file.ctp', 'C:\\\\first'));
-        $this->assertEquals('second/my-file', $getSlugMethod('\\first\\second\\my-file.ctp', '\\first'));
-        $this->assertEquals('second/my-file', $getSlugMethod('\\first\\second\\my-file.ctp', '\\first\\'));
+        $this->assertEquals('my-file', $getSlugMethod('\\first\\second\\my-file.php', '\\first\\second'));
+        $this->assertEquals('my-file', $getSlugMethod('\\first\\second\\my-file.php', '\\first\\second\\'));
+        $this->assertEquals('my-file', $getSlugMethod('C:\\\\first\\my-file.php', 'C:\\\\first'));
+        $this->assertEquals('second/my-file', $getSlugMethod('\\first\\second\\my-file.php', '\\first'));
+        $this->assertEquals('second/my-file', $getSlugMethod('\\first\\second\\my-file.php', '\\first\\'));
     }
 
     /**

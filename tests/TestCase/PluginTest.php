@@ -82,7 +82,7 @@ class PluginTest extends TestCase
         $this->app->getPlugins()->clear();
         $this->Plugin->bootstrap($this->app);
         $this->assertEquals($expected, $getLoadedPlugins());
-        $this->assertContains(getConfig('Assets.target'), Configure::read('WRITABLE_DIRS'));
+        $this->assertStringContainsString(getConfig('Assets.target'), Configure::read('WRITABLE_DIRS'));
 
         //Now is not cli
         $expectedDiff = ['DebugKit', 'WyriHaximus/MinifyHtml'];

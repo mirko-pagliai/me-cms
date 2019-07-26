@@ -50,7 +50,7 @@ class BannersPositionsControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'BannersPositions' . DS . 'index.ctp');
+        $this->assertTemplate('Admin' . DS . 'BannersPositions' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(BannersPosition::class, $this->viewVariable('positions'));
     }
 
@@ -64,7 +64,7 @@ class BannersPositionsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'BannersPositions' . DS . 'add.ctp');
+        $this->assertTemplate('Admin' . DS . 'BannersPositions' . DS . 'add.php');
         $this->assertInstanceof(BannersPosition::class, $this->viewVariable('position'));
 
         //POST request. Data are valid
@@ -89,7 +89,7 @@ class BannersPositionsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'BannersPositions' . DS . 'edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'BannersPositions' . DS . 'edit.php');
         $this->assertInstanceof(BannersPosition::class, $this->viewVariable('position'));
 
         //POST request. Data are valid
