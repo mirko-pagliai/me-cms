@@ -16,7 +16,6 @@ namespace MeCms\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\I18n\Time;
 use MeCms\Model\Entity\User;
 use MeCms\Model\Entity\UsersGroup;
 use MeTools\Console\Command;
@@ -43,20 +42,28 @@ class UsersCommand extends Command
     protected function getUsersForTable()
     {
         return $this->Users->find()->contain('Groups')->map(function (User $user) {
+            $status = $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending');
             if ($user->get('banned')) {
-                $user->set('status', __d('me_cms', 'Banned'));
-            } else {
-                $user->set('status', $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending'));
+                $status = __d('me_cms', 'Banned');
             }
 
-            if ($user->get('created') instanceof Time) {
-                $user->set('created', $user->get('created')->i18nFormat('yyyy/MM/dd HH:mm'));
-            }
-            if ($user->get('group') instanceof UsersGroup) {
-                $user->set('group', $user->get('group')->get('label'));
+            $created = $user->get('created');
+            if (is_object($created) && method_exists($created, 'i18nFormat')) {
+                $created = $created->i18nFormat('yyyy/MM/dd HH:mm');
             }
 
-            return $user->extract(['id', 'username', 'group', 'full_name', 'email', 'post_count', 'status', 'created']);
+            $group = $user->get('group.label') ?: $user->get('group');
+
+            return [
+                $user->id,
+                $user->username,
+                $group,
+                $user->full_name,
+                $user->email,
+                $user->post_count,
+                $status,
+                $created,
+            ];
         })->toList();
     }
 
