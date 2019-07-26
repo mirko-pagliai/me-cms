@@ -17,7 +17,6 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use MeCms\Model\Entity\User;
-use MeCms\Model\Entity\UsersGroup;
 use MeTools\Console\Command;
 
 /**
