@@ -37,16 +37,16 @@ class UsersController extends AppController
      */
     protected function loginWithCookie()
     {
-        $username = $this->request->getCookie('login.username');
-        $password = $this->request->getCookie('login.password');
+        $username = $this->getRequest()->getCookie('login.username');
+        $password = $this->getRequest()->getCookie('login.password');
 
         //Checks if the cookies exist
         if (!$username || !$password) {
-            return;
+            return null;
         }
 
         //Tries to login
-        $this->request = $this->request->withParsedBody(compact('username', 'password'));
+        $this->setRequest($this->getRequest()->withParsedBody(compact('username', 'password')));
         $user = $this->Auth->identify();
         if (!$user || !$user['active'] || $user['banned']) {
             return $this->buildLogout();
@@ -65,9 +65,9 @@ class UsersController extends AppController
     protected function buildLogout()
     {
         //Deletes some cookies and KCFinder session
-        $cookies = $this->request->getCookieCollection()->remove('login')->remove('sidebar-lastmenu');
-        $this->request = $this->request->withCookieCollection($cookies);
-        $this->request->getSession()->delete('KCFINDER');
+        $cookies = $this->getRequest()->getCookieCollection()->remove('login')->remove('sidebar-lastmenu');
+        $this->setRequest($this->getRequest()->withCookieCollection($cookies));
+        $this->getRequest()->getSession()->delete('KCFINDER');
 
         return $this->redirect($this->Auth->logout());
     }
@@ -80,11 +80,10 @@ class UsersController extends AppController
      */
     protected function sendActivationMail($user)
     {
-        //Creates the token
-        $token = $this->Token->create($user->email, ['type' => 'signup', 'user_id' => $user->id]);
+        $token = $this->Token->create($user->get('email'), ['type' => 'signup', 'user_id' => $user->get('id')]);
 
-        return $this->getMailer('MeCms.User')
-            ->set('url', Router::url(['_name' => 'activation', $user->id, $token], true))
+        return (bool)$this->getMailer('MeCms.User')
+            ->set('url', Router::url(['_name' => 'activation', $user->get('id'), $token], true))
             ->send('activation', [$user]);
     }
 
@@ -114,7 +113,7 @@ class UsersController extends AppController
         parent::beforeFilter($event);
 
         //Checks if the user is already logged in
-        if (!$this->request->isAction('logout') && $this->Auth->isLogged()) {
+        if (!$this->getRequest()->isAction('logout') && $this->Auth->isLogged()) {
             return $this->redirect(['_name' => 'dashboard']);
         }
     }
@@ -130,6 +129,7 @@ class UsersController extends AppController
     {
         $tokenExists = $this->Token->check($token, ['type' => 'signup', 'user_id' => $id]);
         is_true_or_fail($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
+        $this->Token->delete($token);
 
         $update = $this->Users->findPendingById($id)
             ->update()
@@ -141,9 +141,6 @@ class UsersController extends AppController
         } else {
             $this->Flash->error(I18N_OPERATION_NOT_OK);
         }
-
-        //Deletes the token
-        $this->Token->delete($token);
 
         return $this->redirect(['_name' => 'login']);
     }
@@ -163,26 +160,25 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $entity = $this->Users->newEntity($this->request->getData(), ['validate' => 'DoNotRequirePresence']);
+        $entity = $this->Users->newEntity($this->getRequest()->getData(), ['validate' => 'DoNotRequirePresence']);
 
-        if ($this->request->is('post')) {
+        if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
                 if (!$entity->getErrors()) {
-                    $user = $this->Users->findPendingByEmail($this->request->getData('email'))->first();
+                    $user = $this->Users->findPendingByEmail($this->getRequest()->getData('email'))->first();
 
-                    if ($user) {
-                        $this->sendActivationMail($user);
+                    if ($user && $this->sendActivationMail($user)) {
                         $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
 
                         return $this->redirect(['_name' => 'login']);
                     }
 
-                    if ($this->request->getData('email')) {
+                    if ($this->getRequest()->getData('email')) {
                         Log::error(sprintf(
                             '%s - Resend activation request with invalid email `%s`',
-                            $this->request->clientIp(),
-                            $this->request->getData('email')
+                            $this->getRequest()->clientIp(),
+                            $this->getRequest()->getData('email')
                         ), 'users');
                     }
 
@@ -210,7 +206,7 @@ class UsersController extends AppController
             $this->loginWithCookie();
         }
 
-        if ($this->request->is('post')) {
+        if ($this->getRequest()->is('post')) {
             $user = $this->Auth->identify();
 
             if ($user) {
@@ -231,10 +227,10 @@ class UsersController extends AppController
                 $this->LoginRecorder->setConfig('user', $user['id'])->write();
 
                 //Saves the login data as cookies, if requested
-                if ($this->request->getData('remember_me')) {
+                if ($this->getRequest()->getData('remember_me')) {
                     $cookie = new Cookie('login', [
-                        'username' => $this->request->getData('username'),
-                        'password' => $this->request->getData('password'),
+                        'username' => $this->getRequest()->getData('username'),
+                        'password' => $this->getRequest()->getData('password'),
                     ], new DateTime('+1 year'));
                     $this->response = $this->response->withCookie($cookie);
                 }
@@ -242,12 +238,12 @@ class UsersController extends AppController
                 return $this->redirect($this->Auth->redirectUrl());
             }
 
-            if ($this->request->getData('username') && $this->request->getData('password')) {
+            if ($this->getRequest()->getData('username') && $this->getRequest()->getData('password')) {
                 Log::error(sprintf(
                     '%s - Failed login with username `%s` and password `%s`',
-                    $this->request->clientIp(),
-                    $this->request->getData('username'),
-                    $this->request->getData('password')
+                    $this->getRequest()->clientIp(),
+                    $this->getRequest()->getData('username'),
+                    $this->getRequest()->getData('password')
                 ), 'users');
             }
 
@@ -283,15 +279,18 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $entity = $this->Users->newEntity($this->request->getData(), ['validate' => 'DoNotRequirePresence']);
+        $entity = $this->Users->newEntity($this->getRequest()->getData(), ['validate' => 'DoNotRequirePresence']);
 
-        if ($this->request->is('post')) {
+        if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
-                $user = $this->Users->findActiveByEmail($this->request->getData('email'))->first();
+                $user = $this->Users->findActiveByEmail($this->getRequest()->getData('email'))->first();
 
                 if ($user) {
-                    $token = $this->Token->create($user->email, ['type' => 'password_forgot', 'user_id' => $user->id]);
+                    $token = $this->Token->create(
+                        $user->get('email'),
+                        ['type' => 'password_forgot', 'user_id' => $user->get('id')]
+                    );
                     $this->getMailer('MeCms.User')
                         ->set('url', Router::url(['_name' => 'passwordReset', $user->id, $token], true))
                         ->send('passwordForgot', [$user]);
@@ -300,11 +299,11 @@ class UsersController extends AppController
                     return $this->redirect(['_name' => 'login']);
                 }
 
-                if ($this->request->getData('email')) {
+                if ($this->getRequest()->getData('email')) {
                     Log::error(sprintf(
                         '%s - Forgot password request with invalid email `%s`',
-                        $this->request->clientIp(),
-                        $this->request->getData('email')
+                        $this->getRequest()->clientIp(),
+                        $this->getRequest()->getData('email')
                     ), 'users');
                 }
 
@@ -332,8 +331,8 @@ class UsersController extends AppController
 
         $user = $this->Users->findActiveById($id)->select(['id'])->firstOrFail();
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
 
             if ($user->isDirty() && $this->Users->save($user)) {
                 $this->Token->delete($token);
@@ -365,11 +364,11 @@ class UsersController extends AppController
 
         $user = $this->Users->newEntity();
 
-        if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+        if ($this->getRequest()->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
 
-            $user->group_id = getConfigOrFail('users.default_group');
-            $user->active = (bool)!getConfig('users.activation');
+            $user->set('group_id', getConfigOrFail('users.default_group'))
+                ->set('active', (bool)!getConfig('users.activation'));
 
             //Checks for reCAPTCHA, if requested
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
@@ -377,10 +376,7 @@ class UsersController extends AppController
                     switch (getConfig('users.activation')) {
                         //The account will be enabled by an administrator
                         case 2:
-                            $this->Flash->success(__d(
-                                'me_cms',
-                                'Account created, but it needs to be activated by an admin'
-                            ));
+                            $success = __d('me_cms', 'Account created, but it needs to be activated by an admin');
                             break;
                         //The account will be enabled by the user via email
                         //  (default)
@@ -388,13 +384,14 @@ class UsersController extends AppController
                             //Sends the activation mail
                             $this->sendActivationMail($user);
 
-                            $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
+                            $success = __d('me_cms', 'We send you an email to activate your account');
                             break;
                         //No activation required, the account is immediately active
                         default:
-                            $this->Flash->success(__d('me_cms', 'Account created. Now you can login'));
+                            $success = __d('me_cms', 'Account created. Now you can login');
                             break;
                     }
+                    $this->Flash->success($success);
 
                     return $this->redirect(['_name' => 'homepage']);
                 }

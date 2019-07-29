@@ -65,7 +65,7 @@ abstract class TableTestCase extends TestCase
 
     /**
      * Asserts that the table has a behavior
-     * @param string $behavior Behavior name
+     * @param string|array $behavior Behavior name as string or array
      * @return void
      * @uses $Table
      */
@@ -99,6 +99,12 @@ abstract class TableTestCase extends TestCase
     {
         parent::setUp();
 
+        //Automatically loads fixtures for some tests
+        if (preg_match('/^test(Associations|EventMethods|Find|BuildRules|QueryFromFilter)/', $this->getName())
+            && !$this->autoFixtures) {
+            $this->loadFixtures();
+        }
+
         if (!$this->Table && $this->autoInitializeClass) {
             $parts = explode('\\', get_class($this));
             array_splice($parts, 1, 2, []);
@@ -110,9 +116,7 @@ abstract class TableTestCase extends TestCase
                 $this->Table = $this->getMockForModel($alias, null, compact('className'));
 
                 //Tries to retrieve all cache names related to this table and associated tables
-                if (method_exists($this->Table, 'getCacheName')) {
-                    $this->cacheToClear = array_merge($this->cacheToClear, $this->Table->getCacheName(true));
-                }
+                $this->cacheToClear = $this->Table->getCacheName(true);
             }
         }
 

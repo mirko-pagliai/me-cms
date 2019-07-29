@@ -10,16 +10,17 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Database\Type;
+use Cake\Http\ServerRequest;
 use Cake\I18n\Date;
 use Cake\I18n\FrozenDate;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 use Cake\Log\Log;
-use Cake\Network\Request;
 use EntityFileLog\Log\Engine\EntityFileLog;
 use MeCms\Database\Type\JsonEntityType;
 
@@ -47,7 +48,7 @@ if (is_readable(CONFIG . 'me_cms.php')) {
 }
 
 //Forces debug on localhost, if required
-if ((new Request)->is('localhost') && getConfig('main.debug_on_localhost')) {
+if ((new ServerRequest())->is('localhost') && getConfig('main.debug_on_localhost')) {
     Configure::write('debug', true);
 }
 

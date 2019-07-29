@@ -30,7 +30,7 @@ class PhotosAlbumsController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins and managers can delete albums
-        return $this->request->isDelete() ? $this->Auth->isGroup(['admin', 'manager']) : true;
+        return $this->getRequest()->isDelete() ? $this->Auth->isGroup(['admin', 'manager']) : true;
     }
 
     /**
@@ -54,8 +54,8 @@ class PhotosAlbumsController extends AppController
     {
         $album = $this->PhotosAlbums->newEntity();
 
-        if ($this->request->is('post')) {
-            $album = $this->PhotosAlbums->patchEntity($album, $this->request->getData());
+        if ($this->getRequest()->is('post')) {
+            $album = $this->PhotosAlbums->patchEntity($album, $this->getRequest()->getData());
 
             if ($this->PhotosAlbums->save($album)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -74,12 +74,12 @@ class PhotosAlbumsController extends AppController
      * @param string $id Photos Album ID
      * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $album = $this->PhotosAlbums->get($id);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $album = $this->PhotosAlbums->patchEntity($album, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $album = $this->PhotosAlbums->patchEntity($album, $this->getRequest()->getData());
 
             if ($this->PhotosAlbums->save($album)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -92,19 +92,19 @@ class PhotosAlbumsController extends AppController
 
         $this->set(compact('album'));
     }
+
     /**
      * Deletes photos album
      * @param string $id Photos Album ID
      * @return \Cake\Network\Response|null
      */
-    public function delete($id = null)
+    public function delete($id)
     {
-        $this->request->allowMethod(['post', 'delete']);
-
-        $album = $this->PhotosAlbums->get($id);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         //Before deleting, it checks if the album has some photos
-        if (!$album->photo_count) {
+        $album = $this->PhotosAlbums->get($id);
+        if (!$album->get('photo_count')) {
             $this->PhotosAlbums->deleteOrFail($album);
             $this->Flash->success(I18N_OPERATION_OK);
         } else {

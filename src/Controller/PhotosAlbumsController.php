@@ -29,7 +29,7 @@ class PhotosAlbumsController extends AppController
     public function index()
     {
         $albums = $this->PhotosAlbums->find('active')
-            ->select(['id', 'title', 'slug', 'photo_count'])
+            ->select(['id', 'title', 'slug', 'photo_count', 'created'])
             ->contain($this->PhotosAlbums->Photos->getAlias(), function (Query $q) {
                 return $q->find('active')
                     ->select(['album_id', 'filename'])
@@ -40,7 +40,7 @@ class PhotosAlbumsController extends AppController
 
         //If there is only one record, redirects
         if ($albums->count() === 1) {
-            return $this->redirect(['_name' => 'album', $albums->extract('slug')->first()]);
+            return $this->redirect(['_name' => 'album', $albums->first()->get('slug')]);
         }
 
         $this->set(compact('albums'));
@@ -51,11 +51,11 @@ class PhotosAlbumsController extends AppController
      * @param string $slug Album slug
      * @return \Cake\Network\Response|null|void
      */
-    public function view($slug = null)
+    public function view($slug)
     {
         //Data can be passed as query string, from a widget
-        if ($this->request->getQuery('q')) {
-            return $this->redirect([$this->request->getQuery('q')]);
+        if ($this->getRequest()->getQuery('q')) {
+            return $this->redirect([$this->getRequest()->getQuery('q')]);
         }
 
         //Gets album ID and title
@@ -64,7 +64,7 @@ class PhotosAlbumsController extends AppController
             ->cache(sprintf('album_%s', md5($slug)), $this->PhotosAlbums->getCacheName())
             ->firstOrFail();
 
-        $page = $this->request->getQuery('page', 1);
+        $page = $this->getRequest()->getQuery('page', 1);
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('default.photos');
 
         //Sets the cache name
@@ -90,11 +90,11 @@ class PhotosAlbumsController extends AppController
             //Writes on cache
             Cache::writeMany([
                 $cache => $photos,
-                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
             ], $this->PhotosAlbums->getCacheName());
         //Else, sets the paging parameter
         } else {
-            $this->request = $this->request->withParam('paging', $paging);
+            $this->setRequest($this->getRequest()->withParam('paging', $paging));
         }
 
         $this->set(compact('album', 'photos'));

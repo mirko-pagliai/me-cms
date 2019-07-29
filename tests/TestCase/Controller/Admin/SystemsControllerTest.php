@@ -101,7 +101,7 @@ class SystemsControllerTest extends ControllerTestCase
         ], 'tmpCleaner');
 
         foreach (['all', 'logs'] as $param) {
-            $this->Controller->request = $this->Controller->request->withParam('pass.0', $param);
+            $this->Controller->request = $this->Controller->getRequest()->withParam('pass.0', $param);
             $this->assertGroupsAreAuthorized([
                 'admin' => true,
                 'manager' => false,
@@ -166,10 +166,11 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertEmpty($this->viewVariable('changelog'));
 
         //GET request. Asks for a changelog file
-        $this->get($url + ['?' => ['file' => 'MeCms']]);
+        $this->get($url + ['?' => ['file' => 'mecms']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'changelogs.ctp');
-        $this->assertIsString($this->viewVariable('changelog'));
+        $this->assertNotEmpty($this->viewVariable('changelog'));
+        $this->assertTrue(is_html($this->viewVariable('changelog')));
     }
 
     /**

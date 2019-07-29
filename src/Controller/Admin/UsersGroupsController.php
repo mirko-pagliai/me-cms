@@ -54,8 +54,8 @@ class UsersGroupsController extends AppController
     {
         $group = $this->UsersGroups->newEntity();
 
-        if ($this->request->is('post')) {
-            $group = $this->UsersGroups->patchEntity($group, $this->request->getData());
+        if ($this->getRequest()->is('post')) {
+            $group = $this->UsersGroups->patchEntity($group, $this->getRequest()->getData());
 
             if ($this->UsersGroups->save($group)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -74,12 +74,12 @@ class UsersGroupsController extends AppController
      * @param string $id Users Group ID
      * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $group = $this->UsersGroups->get($id);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $group = $this->UsersGroups->patchEntity($group, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $group = $this->UsersGroups->patchEntity($group, $this->getRequest()->getData());
 
             if ($this->UsersGroups->save($group)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -92,21 +92,21 @@ class UsersGroupsController extends AppController
 
         $this->set(compact('group'));
     }
+
     /**
      * Deletes users group
      * @param string $id Users Group ID
      * @return \Cake\Network\Response|null
      */
-    public function delete($id = null)
+    public function delete($id)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         $group = $this->UsersGroups->get($id);
 
         //Before deleting, checks if the group is a necessary group or if the group has some users
-        if ($id > 3 && !$group->user_count) {
+        if ($id > 3 && !$group->get('user_count')) {
             $this->UsersGroups->deleteOrFail($group);
-
             $this->Flash->success(I18N_OPERATION_OK);
         } else {
             $this->Flash->alert($id <= 3 ? __d('me_cms', 'You cannot delete this users group') : I18N_BEFORE_DELETE);

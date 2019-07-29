@@ -50,7 +50,7 @@ class GroupsCommandTest extends TestCase
         array_walk($expectedRows, [$this, 'assertOutputContainsRow']);
 
         //Deletes all groups
-        $UsersGroups->deleteAll(['id >=' => '1']);
+        $UsersGroups->deleteAll(['id IS NOT' => null]);
         $this->exec('me_cms.groups');
         $this->assertExitWithSuccess();
         $this->assertErrorContains('There are no user groups');

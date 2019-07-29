@@ -22,10 +22,10 @@ trait CheckLastSearchTrait
     /**
      * Checks if the latest search has been executed out of the minimum
      *  interval
-     * @param string $id Query ID
+     * @param string|null $id Query ID
      * @return bool
      */
-    protected function checkLastSearch($id = false)
+    protected function checkLastSearch($id = null)
     {
         $interval = getConfig('security.search_interval');
 
@@ -33,8 +33,8 @@ trait CheckLastSearchTrait
             return true;
         }
 
-        $id = $id ? md5($id) : false;
-        $lastSearch = $this->request->getSession()->read('last_search');
+        $id = $id ? md5($id) : null;
+        $lastSearch = $this->getRequest()->getSession()->read('last_search');
 
         if ($lastSearch) {
             //Checks if it's the same search
@@ -46,7 +46,7 @@ trait CheckLastSearchTrait
             }
         }
 
-        $this->request->getSession()->write('last_search', compact('id') + ['time' => time()]);
+        $this->getRequest()->getSession()->write('last_search', compact('id') + ['time' => time()]);
 
         return true;
     }

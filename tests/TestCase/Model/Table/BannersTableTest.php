@@ -36,16 +36,15 @@ class BannersTableTest extends TableTestCase
     ];
 
     /**
-     * Test for `afterDelete()` method
+     * Test for event methods
      * @test
      */
-    public function testAfterDelete()
+    public function testEventMethods()
     {
-        $this->loadFixtures();
         $entity = $this->Table->get(1);
-        $this->assertFileExists($entity->path);
+        $this->assertFileExists($entity->get('path'));
         $this->assertTrue($this->Table->delete($entity));
-        $this->assertFileNotExists($entity->path);
+        $this->assertFileNotExists($entity->get('path'));
     }
 
     /**
@@ -54,7 +53,6 @@ class BannersTableTest extends TableTestCase
      */
     public function testBuildRules()
     {
-        $this->loadFixtures();
         $example = ['position_id' => 1, 'filename' => 'pic.jpg'];
 
         $entity = $this->Table->newEntity($example);
@@ -91,24 +89,22 @@ class BannersTableTest extends TableTestCase
     }
 
     /**
-     * Test for the `belongsTo` association with `BannersPositions`
+     * Test for associations
      * @test
      */
-    public function testBelongsToBannersPositions()
+    public function testAssociations()
     {
-        $this->loadFixtures();
         $position = $this->Table->findById(2)->contain('Positions')->extract('position')->first();
         $this->assertInstanceOf(BannersPosition::class, $position);
         $this->assertEquals(1, $position->id);
     }
 
     /**
-     * Test for `findActive()` method
+     * Test for `find()` methods
      * @test
      */
-    public function testFindActive()
+    public function testFindMethods()
     {
-        $this->loadFixtures();
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM banners Banners WHERE Banners.active = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);

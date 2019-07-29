@@ -11,10 +11,9 @@
     "require": {
         "php": ">=5.5.9",
         "cakephp/cakephp": "^3.7.1",
-        "crabstudio/recaptcha": "^2.0",
         "donatj/phpuseragentparser": "*",
         "enyo/dropzone": "^5.1",
-        "gourmet/common-mark": "^1.0",
+        "league/commonmark": "^0.18",
         "mirko-pagliai/cakephp-database-backup": "^2.5",
         "mirko-pagliai/cakephp-entity-file-log": "^1.0",
         "mirko-pagliai/cakephp-recaptcha-mailhide": "^1.2",
@@ -22,7 +21,7 @@
         "mirko-pagliai/cakephp-thumber": "^1.5.2",
         "mirko-pagliai/cakephp-tokens": "^1.2",
         "mirko-pagliai/me-tools": "^2.18.7",
-        "mirko-pagliai/php-tools": "^1.2.5",
+        "mirko-pagliai/php-tools": "^1.2.7",
         "npm-asset/js-cookie": "^v2.2",
         "wyrihaximus/minify-html": "^1.1"
     },

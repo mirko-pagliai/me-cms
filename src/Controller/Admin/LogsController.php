@@ -73,14 +73,13 @@ class LogsController extends AppController
     public function index()
     {
         //Gets all log files, except those serialized
-        $logs = collection((new Folder(LOGS))->find('(?!.*_serialized).+\.log'))
-            ->map(function ($log) {
-                return new Entity([
-                    'filename' => $log,
-                    'hasSerialized' => is_readable($this->getPath($log, true)),
-                    'size' => filesize(LOGS . $log),
-                ]);
-            });
+        $logs = array_map(function ($log) {
+            return new Entity([
+                'filename' => $log,
+                'hasSerialized' => is_readable($this->getPath($log, true)),
+                'size' => filesize(LOGS . $log),
+            ]);
+        }, (new Folder(LOGS))->find('(?!.*_serialized).+\.log'));
 
         $this->set(compact('logs'));
     }
@@ -94,8 +93,7 @@ class LogsController extends AppController
     public function view($filename)
     {
         $serialized = false;
-
-        if ($this->request->getQuery('as') === 'serialized') {
+        if ($this->getRequest()->getQuery('as') === 'serialized') {
             $serialized = true;
             $this->viewBuilder()->setTemplate('view_as_serialized');
         }
@@ -125,7 +123,7 @@ class LogsController extends AppController
      */
     public function delete($filename)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         $success = @unlink($this->getPath($filename, false));
         $serialized = $this->getPath($filename, true);

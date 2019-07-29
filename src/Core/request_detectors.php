@@ -32,7 +32,7 @@ foreach (['add', 'delete', 'edit', 'index', 'view'] as $action) {
  *
  * Example:
  * <code>
- * $this->request->isAdmin();
+ * $this->getRequest()->isAdmin();
  * </code>
  */
 ServerRequest::addDetector('admin', function (ServerRequest $request) {
@@ -46,7 +46,7 @@ ServerRequest::addDetector('admin', function (ServerRequest $request) {
  *
  * Example:
  * <code>
- * $this->request->isOffline();
+ * $this->getRequest()->isOffline();
  * </code>
  */
 ServerRequest::addDetector('offline', function (ServerRequest $request) {

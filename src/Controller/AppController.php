@@ -12,30 +12,25 @@
  */
 namespace MeCms\Controller;
 
-use App\Controller\AppController as BaseController;
+use App\Controller\AppController as BaseAppController;
 use Cake\Event\Event;
 use Cake\I18n\I18n;
 
 /**
  * Application controller class
  */
-class AppController extends BaseController
+class AppController extends BaseAppController
 {
     /**
-     * Called before the controller action.
-     * You can use this method to perform logic that needs to happen before
-     *  each controller action.
+     * Called before the controller action
      * @param \Cake\Event\Event $event An Event instance
-     * @return \Cake\Network\Response|null|void
-     * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeFilter
-     * @uses App\Controller\AppController::beforeFilter()
-     * @uses isOffline()
+     * @return \Cake\Network\Response|null
      * @uses isSpammer()
      */
     public function beforeFilter(Event $event)
     {
         //Checks if the site is offline
-        if ($this->isOffline()) {
+        if ($this->getRequest()->isOffline()) {
             return $this->redirect(['_name' => 'offline']);
         }
 
@@ -50,7 +45,7 @@ class AppController extends BaseController
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = getConfigOrFail('default.records');
 
-        if ($this->request->isAdmin()) {
+        if ($this->getRequest()->isAdmin()) {
             $this->viewBuilder()->setClassName('MeCms.View/Admin');
 
             $this->paginate['limit'] = getConfigOrFail('admin.records');
@@ -62,7 +57,7 @@ class AppController extends BaseController
         $this->paginate['maxLimit'] = $this->paginate['limit'];
 
         //Layout for ajax and json requests
-        if ($this->request->is(['ajax', 'json'])) {
+        if ($this->getRequest()->is(['ajax', 'json'])) {
             $this->viewBuilder()->setLayout('MeCms.ajax');
         }
 
@@ -70,28 +65,8 @@ class AppController extends BaseController
     }
 
     /**
-     * Called after the controller action is run, but before the view is
-     *  rendered.
-     * You can use this method to perform logic or set view variables that are
-     *  required on every request.
-     * @param \Cake\Event\Event $event An Event instance
-     * @return void
-     * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeRender
-     * @uses App\Controller\AppController::beforeRender()
-     */
-    public function beforeRender(Event $event)
-    {
-        //Loads the `Auth` helper.
-        //The `helper is loaded here (instead of the view) to pass user data
-        $this->viewBuilder()->setHelpers(['MeCms.Auth' => $this->Auth->user()]);
-
-        parent::beforeRender($event);
-    }
-
-    /**
      * Initialization hook method
      * @return void
-     * @uses App\Controller\AppController::initialize()
      */
     public function initialize()
     {
@@ -119,28 +94,13 @@ class AppController extends BaseController
      */
     public function isAuthorized($user = null)
     {
-        //Any registered user can access public functions
-        if (!$this->request->getParam('prefix')) {
-            return true;
-        }
-
-        //Only admin and managers can access all admin actions
-        if ($this->request->isAdmin()) {
+        //Only admin and managers can access admin actions
+        if ($this->getRequest()->isAdmin()) {
             return $this->Auth->isGroup(['admin', 'manager']);
         }
 
-        //Default deny
-        return false;
-    }
-
-    /**
-     * Checks if the site is offline
-     * @return bool
-     * @since 2.15.2
-     */
-    protected function isOffline()
-    {
-        return $this->request->isOffline();
+        //Any registered user can access actions without prefix. Default deny
+        return !$this->getRequest()->getParam('prefix');
     }
 
     /**
@@ -150,7 +110,7 @@ class AppController extends BaseController
      */
     protected function isSpammer()
     {
-        return $this->request->isSpammer() && !$this->request->isAction('ipNotAllowed', 'Systems');
+        return $this->getRequest()->isSpammer() && !$this->getRequest()->isAction('ipNotAllowed', 'Systems');
     }
 
     /**

@@ -54,11 +54,11 @@ class SystemsController extends AppController
 
         $contact = new ContactUsForm();
 
-        if ($this->request->is('post')) {
+        if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
                 //Sends the email
-                if ($contact->execute($this->request->getData())) {
+                if ($contact->execute($this->getRequest()->getData())) {
                     $this->Flash->success(I18N_OPERATION_OK);
 
                     return $this->redirect(['_name' => 'homepage']);
@@ -80,7 +80,7 @@ class SystemsController extends AppController
     public function ipNotAllowed()
     {
         //If the user's IP address is not reported as spammer
-        if (!$this->request->isSpammer()) {
+        if (!$this->getRequest()->isSpammer()) {
             return $this->redirect($this->referer(['_name' => 'homepage'], true));
         }
 
@@ -119,9 +119,7 @@ class SystemsController extends AppController
         }
 
         if (empty($sitemap)) {
-            $sitemap = gzencode(Sitemap::generate(), 9);
-
-            (new File(SITEMAP, true, 0777))->write($sitemap);
+            (new File(SITEMAP, true, 0777))->write(gzencode(Sitemap::generate(), 9));
         }
 
         return $this->response->withFile(SITEMAP);

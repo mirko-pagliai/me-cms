@@ -1,5 +1,28 @@
 # 2.x branch
 ## 2.26 branch
+### 2.26.6
+* added `AppTable::deleteAll()` method. This automatically clears the cache
+    associated with the table, when possible;
+* added `AppTable::clearCache()`;
+* fixed the `StaticPage` utility. The `getPath()` method becomes `getPaths()` and
+    now returns an array with all possible paths, even if they do not exist;
+* uses `getRequest()`/`setRequest()` methods instead of `$request` property
+    whenever possible;
+* removed useless `AppController::isOffline()` method;
+* removed `AppTable::beforeSave()`, added `AppTable::beforeMarshal()`;
+* `StaticPage::getAppPath()` and `StaticPage::getPluginPath()` been replaced by
+    the `StaticPage::getPath()` method;
+* improved and fixed the `AuthHelper`. Now it is loaded from the view (instead of
+    from the controller) requires an array with the `user` key as configuration;
+* improved and fixed the `KcFinderComponent`;
+* improved validation rules. Removed some useless validation methods;
+* uses `league/commonmark` package instead of `gourmet/common-mark`;
+* added `MeCms\AuthTrait`. It provides some methods for classes that need to
+    verify the data of the logged in user;
+* added `BannerAndPhotoValidator`, `PageAndPostValidator` and `CategoryValidator`
+    abstract classes;
+* updated for `php-tools` `1.2.7`.
+
 ### 2.26.5
 * it uses the `cakephp-stop-spam` package to detect spammers;
 * the `ContactUs` form checks if the email address used was reported as a spammer;

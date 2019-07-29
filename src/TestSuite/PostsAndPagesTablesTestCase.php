@@ -41,7 +41,6 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      */
     public function testBuildRules()
     {
-        $this->loadFixtures();
         $entity = $this->Table->newEntity(self::$example);
         $this->assertNotEmpty($this->Table->save($entity));
 
@@ -74,47 +73,34 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     }
 
     /**
-     * Test for `afterDelete()` and `afterSave()` methods
+     * Test for event methods
      * @return void
      * @test
      */
-    public function testAfterDeleteAndAfterSave()
+    public function testEventMethods()
     {
-        $this->loadFixtures();
-        $className = get_parent_class($this->Table);
+        list($event, $entity, $options) = [new Event(null), $this->Table->newEntity([]), new ArrayObject()];
 
-        foreach (['afterDelete', 'afterSave'] as $methodToCall) {
-            $Table = $this->getMockForModel($this->Table->getAlias(), ['setNextToBePublished'], compact('className'));
-            $Table->expects($this->once())->method('setNextToBePublished');
-            $Table->$methodToCall(new Event(null), new Entity(), new ArrayObject());
-        }
-    }
+        $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'getPreviewSize', 'setNextToBePublished']);
+        $Table->expects($this->exactly(2))->method('clearCache');
+        $Table->expects($this->exactly(2))->method('setNextToBePublished');
+        $Table->afterDelete($event, $entity, $options);
+        $Table->afterSave($event, $entity, $options);
 
-    /**
-     * Test for `beforeSave()` method
-     * @return void
-     * @test
-     */
-    public function testBeforeSave()
-    {
-        $this->loadFixtures();
-
-        $Table = $this->getMockForModel($this->Table->getAlias(), ['getPreviewSize'], ['className' => get_parent_class($this->Table)]);
         $Table->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos
         $entity = $Table->newEntity(self::$example);
-        $this->assertNotEmpty($Table->save($entity));
-        $this->assertEmpty($entity->preview);
-        $Table->delete($entity);
+        $Table->beforeSave($event, $entity, $options);
+        $this->assertEmpty($entity->get('preview'));
 
         //Tries with a text with an image
         $entity = $Table->newEntity(['text' => '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg' . '\' />'] + self::$example);
-        $this->assertNotEmpty($Table->save($entity));
-        $this->assertCount(1, $entity->preview);
-        $this->assertInstanceOf(Entity::class, $entity->preview[0]);
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $entity->preview[0]->url);
-        $this->assertEquals([400, 300], [$entity->preview[0]->width, $entity->preview[0]->height]);
+        $Table->beforeSave($event, $entity, $options);
+        $this->assertCount(1, $entity->get('preview'));
+        $this->assertInstanceOf(Entity::class, $entity->get('preview')[0]);
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $entity->get('preview')[0]->get('url'));
+        $this->assertEquals([400, 300], [$entity->get('preview')[0]->get('width'), $entity->get('preview')[0]->get('height')]);
     }
 
     /**

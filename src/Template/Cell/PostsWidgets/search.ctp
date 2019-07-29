@@ -11,7 +11,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 //Returns on search
-if ($this->request->isUrl(['_name' => 'postsSearch'])) {
+if ($this->getRequest()->isUrl(['_name' => 'postsSearch'])) {
     return;
 }
 

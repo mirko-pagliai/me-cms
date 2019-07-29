@@ -9,15 +9,18 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ * @since       2.26.6
  */
-namespace MeCms\Model\Validation;
+namespace MeCms\Validation;
 
 use MeCms\Validation\AppValidator;
 
 /**
- * BannersPosition validator class
+ * Abstract class for `PageValidator` and `PostValidator` classes.
+ *
+ * This class provides some methods and properties common to both classes.
  */
-class BannersPositionValidator extends AppValidator
+abstract class PageAndPostValidator extends AppValidator
 {
     /**
      * Construct
@@ -26,6 +29,15 @@ class BannersPositionValidator extends AppValidator
     {
         parent::__construct();
 
+        $this->add('category_id', [
+            'naturalNumber' => [
+                'message' => I18N_SELECT_VALID_OPTION,
+                'rule' => 'naturalNumber',
+            ],
+        ])->requirePresence('category_id', 'create');
+
         $this->requirePresence('title', 'create');
+        $this->requirePresence('slug', 'create');
+        $this->requirePresence('text', 'create');
     }
 }

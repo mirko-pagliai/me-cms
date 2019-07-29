@@ -40,8 +40,7 @@ use MeCms\ORM\PostsAndPagesTables;
  */
 class PostsTable extends PostsAndPagesTables
 {
-    use IsOwnedByTrait;
-    use LocatorAwareTrait;
+    use IsOwnedByTrait, LocatorAwareTrait;
 
     /**
      * Cache configuration name
@@ -60,6 +59,8 @@ class PostsTable extends PostsAndPagesTables
      */
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
+        parent::beforeMarshal($event, $data, $options);
+
         if (!empty($data['tags_as_string'])) {
             //Gets existing tags
             $existingTags = $this->Tags->getList()->toArray();
@@ -105,9 +106,7 @@ class PostsTable extends PostsAndPagesTables
     {
         return $query->contain([
                 $this->Categories->getAlias() => ['fields' => ['title', 'slug']],
-                $this->Tags->getAlias() => function (Query $q) {
-                    return $q->order(['tag' => 'ASC']);
-                },
+                $this->Tags->getAlias() => ['sort' => ['tag' => 'ASC']],
                 $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
             ])
             ->select(['id', 'title', 'preview', 'subtitle', 'slug', 'text', 'enable_comments', 'created'])
@@ -128,9 +127,7 @@ class PostsTable extends PostsAndPagesTables
         key_exists_or_fail(['id', 'tags'], $post->toArray(), __d('me_cms', 'ID or tags of the post are missing'));
 
         $cache = sprintf('related_%s_posts_for_%s', $limit, $post->id);
-        if ($images) {
-            $cache .= '_with_images';
-        }
+        $cache = $images ? $cache . '_with_images' : $cache;
 
         return Cache::remember($cache, function () use ($images, $limit, $post) {
             $related = [];
@@ -203,11 +200,11 @@ class PostsTable extends PostsAndPagesTables
     /**
      * Gets the query for related posts from a tag ID
      * @param int $tagId Tag ID
-     * @param bool $images If `true`, gets only posts with images
+     * @param bool $onlyWithImages If `true`, gets only posts with images
      * @return \Cake\ORM\Query The query builder
      * @since 2.23.0
      */
-    public function queryForRelated($tagId, $images = true)
+    public function queryForRelated($tagId, $onlyWithImages = true)
     {
         $query = $this->find('active')
             ->select(['id', 'title', 'preview', 'slug', 'text'])
@@ -215,7 +212,7 @@ class PostsTable extends PostsAndPagesTables
                 return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tagId]);
             });
 
-        if ($images) {
+        if ($onlyWithImages) {
             $query->where([sprintf('%s.preview NOT IN', $this->getAlias()) => [null, []]]);
         }
 
@@ -225,7 +222,7 @@ class PostsTable extends PostsAndPagesTables
     /**
      * Build query from filter data
      * @param \Cake\ORM\Query $query Query object
-     * @param array $data Filter data ($this->request->getQueryParams())
+     * @param array $data Filter data ($this->getRequest()->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */

@@ -16,10 +16,12 @@ use ArrayObject;
 use Cake\Cache\Cache;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
+use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
-use Cake\ORM\Entity;
+use Cake\ORM\Association;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use Exception;
 
 /**
  * Application table class
@@ -35,50 +37,75 @@ class AppTable extends Table
     /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses getCacheName()
+     * @uses clearCache()
      */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
+    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        if ($this->getCacheName()) {
-            Cache::clear(false, $this->getCacheName());
-        }
+        $this->clearCache();
     }
 
     /**
      * Called after an entity is saved
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
-     * @uses getCacheName()
+     * @uses clearCache()
      */
-    public function afterSave(Event $event, Entity $entity, ArrayObject $options)
+    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        if ($this->getCacheName()) {
-            Cache::clear(false, $this->getCacheName());
+        $this->clearCache();
+    }
+
+    /**
+     * Called before request data is converted into entities
+     * @param \Cake\Event\Event $event Event object
+     * @param \ArrayObject $data Request data
+     * @param \ArrayObject $options Options
+     * @return void
+     * @since 2.26.6
+     */
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    {
+        //Tries to transform the `created` string into a `Time` entity
+        if (isset($data['created']) && is_string($data['created'])) {
+            try {
+                $created = new Time($data['created']);
+            } catch (Exception $e) {
+            }
+        } elseif (array_key_exists('created', $data) && is_null($data['created'])) {
+            $created = new Time();
+        }
+        if (isset($created)) {
+            $data['created'] = $created;
         }
     }
 
     /**
-     * Called before each entity is saved. Stopping this event will abort the
-     *  save operation. When the event is stopped the result of the event will
-     *  be returned
-     * @param \Cake\Event\Event $event Event object
-     * @param \Cake\Datasource\EntityInterface $entity EntityInterface object
-     * @param \ArrayObject $options Options
-     * @return void
-     * @since 2.16.1
+     * Delete all keys from the cache
+     * @return bool `true` if the cache was successfully cleared, `false` otherwise
+     * @uses getCacheName()
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function clearCache()
     {
-        if (empty($entity->created)) {
-            $entity->created = new Time();
-        } elseif (!empty($entity->created) && !$entity->created instanceof Time) {
-            $entity->created = new Time($entity->created);
-        }
+        return Cache::clear(false, $this->getCacheName());
+    }
+
+    /**
+     * Deletes all records matching the provided conditions
+     * @param mixed $conditions Conditions to be used, accepts anything
+     *  `Query::where()` can take
+     * @return int Returns the number of affected rows
+     * @uses clearCache()
+     */
+    public function deleteAll($conditions)
+    {
+        $this->clearCache();
+
+        return parent::deleteAll($conditions);
     }
 
     /**
@@ -89,8 +116,10 @@ class AppTable extends Table
      */
     public function findActive(Query $query, array $options)
     {
-        return $query->where([sprintf('%s.active', $this->getAlias()) => true])
-            ->where([sprintf('%s.created <=', $this->getAlias()) => new Time()]);
+        return $query->where([
+            sprintf('%s.active', $this->getAlias()) => true,
+            sprintf('%s.created <=', $this->getAlias()) => new Time(),
+        ]);
     }
 
     /**
@@ -134,21 +163,20 @@ class AppTable extends Table
      */
     public function getCacheName($associations = false)
     {
-        $values = $this->cache ?: null;
-
-        if ($associations) {
-            $values = [$values];
-            foreach ($this->associations()->getIterator() as $association) {
-                if (method_exists($association->getTarget(), 'getCacheName')
-                    && $association->getTarget()->getCacheName()) {
-                    $values[] = $association->getTarget()->getCacheName();
-                }
-            }
-
-            $values = array_values(array_unique(array_filter($values)));
+        if (!$associations) {
+            return $this->cache ?: null;
         }
 
-        return $values;
+        $values = collection($this->associations()->getIterator())
+            ->filter(function (Association $association) {
+                return method_exists($association->getTarget(), 'getCacheName');
+            })
+            ->map(function (Association $association) {
+                return $association->getTarget()->getCacheName();
+            })
+            ->prependItem($this->cache ?: null);
+
+        return array_values(array_unique($values->toList()));
     }
 
     /**
@@ -177,7 +205,7 @@ class AppTable extends Table
     /**
      * Build query from filter data
      * @param \Cake\ORM\Query $query Query object
-     * @param array $data Filter data ($this->request->getQueryParams())
+     * @param array $data Filter data ($this->getRequest()->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = [])
@@ -187,24 +215,18 @@ class AppTable extends Table
             $query->where([sprintf('%s.id', $this->getAlias()) => $data['id']]);
         }
 
-        //"Title" field
-        if (!empty($data['title']) && strlen($data['title']) > 2) {
-            $query->where([sprintf('%s.title LIKE', $this->getAlias()) => sprintf('%%%s%%', $data['title'])]);
+        //"Title" field and "filename" fields
+        foreach (['title', 'filename'] as $field) {
+            if (!empty($data[$field]) && strlen($data[$field]) > 2) {
+                $query->where([sprintf('%s.%s LIKE', $this->getAlias(), $field) => sprintf('%%%s%%', $data[$field])]);
+            }
         }
 
-        //"Filename" field
-        if (!empty($data['filename']) && strlen($data['filename']) > 2) {
-            $query->where([sprintf('%s.filename LIKE', $this->getAlias()) => sprintf('%%%s%%', $data['filename'])]);
-        }
-
-        //"User" (author) field
-        if (!empty($data['user']) && is_positive($data['user'])) {
-            $query->where([sprintf('%s.user_id', $this->getAlias()) => $data['user']]);
-        }
-
-        //"Category" field
-        if (!empty($data['category']) && is_positive($data['category'])) {
-            $query->where([sprintf('%s.category_id', $this->getAlias()) => $data['category']]);
+        //"User" (author) and "category" fields
+        foreach (['user', 'category'] as $field) {
+            if (!empty($data[$field]) && is_positive($data[$field])) {
+                $query->where([sprintf('%s.%s_id', $this->getAlias(), $field) => $data[$field]]);
+            }
         }
 
         //"Active" field
@@ -213,18 +235,16 @@ class AppTable extends Table
         }
 
         //"Priority" field
-        if (!empty($data['priority']) && preg_match('/^[1-5]$/', $data['priority'])) {
+        if (!empty($data['priority']) && $data['priority'] > 0 && $data['priority'] <= 5) {
             $query->where([sprintf('%s.priority', $this->getAlias()) => $data['priority']]);
         }
 
         //"Created" field
-        if (!empty($data['created']) && preg_match('/^[1-9][0-9]{3}\-[0-1][0-9]$/', $data['created'])) {
-            $start = new Time(sprintf('%s-01', $data['created']));
-            $end = (new Time($start))->addMonth(1);
-
+        if (!empty($data['created']) && preg_match('/^[1-9]\d{3}\-[01]\d$/', $data['created'])) {
+            $start = new FrozenTime(sprintf('%s-01', $data['created']));
             $query->where([
                 sprintf('%s.created >=', $this->getAlias()) => $start,
-                sprintf('%s.created <', $this->getAlias()) => $end,
+                sprintf('%s.created <', $this->getAlias()) => $start->addMonth(1),
             ]);
         }
 

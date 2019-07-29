@@ -58,7 +58,7 @@ class PostsTagsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Tags']);
+        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Tags']);
     }
 
     /**
@@ -89,7 +89,7 @@ class PostsTagsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
+        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Posts']);
 
         //GET request with query string
         $this->get($url + ['?' => ['q' => 'cat']]);

@@ -16,10 +16,7 @@ namespace MeCms\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\I18n\Time;
-use Cake\ORM\Query;
 use MeCms\Model\Entity\User;
-use MeCms\Model\Entity\UsersGroup;
 use MeTools\Console\Command;
 
 /**
@@ -38,45 +35,57 @@ class UsersCommand extends Command
     }
 
     /**
+     * Internal method to get formatted users data for the table
+     * @return array
+     */
+    protected function getUsersForTable()
+    {
+        return $this->Users->find()->contain('Groups')->map(function (User $user) {
+            $status = $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending');
+            if ($user->get('banned')) {
+                $status = __d('me_cms', 'Banned');
+            }
+
+            $created = $user->get('created');
+            if (is_object($created) && method_exists($created, 'i18nFormat')) {
+                $created = $created->i18nFormat('yyyy/MM/dd HH:mm');
+            }
+
+            $group = $user->get('group.label') ?: $user->get('group');
+
+            return [
+                $user->id,
+                $user->username,
+                $group,
+                $user->full_name,
+                $user->email,
+                $user->post_count,
+                $status,
+                $created,
+            ];
+        })->toList();
+    }
+
+    /**
      * Lists users
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
+     * @uses getUsersForTable()
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
         $this->loadModel('MeCms.Users');
 
-        $users = $this->Users->find()->contain('Groups', function (Query $q) {
-            return $q->select(['label']);
-        })->map(function (User $user) {
-            if ($user->banned) {
-                $user->status = __d('me_cms', 'Banned');
-            } elseif (!$user->active) {
-                $user->status = __d('me_cms', 'Pending');
-            } else {
-                $user->status = __d('me_cms', 'Active');
-            }
-
-            if ($user->created instanceof Time) {
-                $user->created = $user->created->i18nFormat('yyyy/MM/dd HH:mm');
-            }
-            if ($user->group instanceof UsersGroup) {
-                $user->group = $user->group->label;
-            }
-
-            return $user->extract(['id', 'username', 'group', 'full_name', 'email', 'post_count', 'status', 'created']);
-        });
-
-        if ($users->isEmpty()) {
+        $table = $this->getUsersForTable();
+        if (!$table) {
             $io->error(__d('me_cms', 'There are no users'));
 
             return null;
         }
 
-        //Sets headers and prints as table
-        $headers = [I18N_ID, I18N_USERNAME, I18N_GROUP, I18N_NAME, I18N_EMAIL, I18N_POSTS, I18N_STATUS, I18N_DATE];
-        $io->helper('table')->output(array_merge([$headers], $users->toList()));
+        array_unshift($table, [I18N_ID, I18N_USERNAME, I18N_GROUP, I18N_NAME, I18N_EMAIL, I18N_POSTS, I18N_STATUS, I18N_DATE]);
+        $io->helper('table')->output($table);
 
         return null;
     }

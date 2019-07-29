@@ -45,8 +45,7 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
      */
     public function testPlainTextGetMutator()
     {
-        $this->assertNull($this->Entity->plain_text);
-
+        $this->assertNull($this->Entity->get('plain_text'));
         $this->assertEquals('A text', $this->Entity->set('text', 'A [readmore /]text')->get('plain_text'));
     }
 }

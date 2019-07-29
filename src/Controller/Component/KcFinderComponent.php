@@ -14,7 +14,6 @@
 namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Controller\ComponentRegistry;
 use Cake\Filesystem\Folder;
 use Cake\Routing\Router;
 use MeCms\Utility\Checkup;
@@ -26,72 +25,40 @@ use Tools\Exception\NotWritableException;
 class KcFinderComponent extends Component
 {
     /**
-     * Instance of `Checkup`
-     * @since 2.22.8
-     * @var \MeCms\Utility\Checkup
+     * Default config
+     * @var array
      */
-    public $Checkup;
+    protected $_defaultConfig = [
+        'access' => [
+            'dirs' => [
+                'create' => true,
+                'delete' => false,
+                'rename' => false,
+            ],
+            'files' => [
+                'upload' => true,
+                'delete' => false,
+                'copy' => true,
+                'move' => false,
+                'rename' => false,
+            ],
+        ],
+        'denyExtensionRename' => true,
+        'denyUpdateCheck' => true,
+        'dirnameChangeChars' => [' ' => '_', ':' => '_'],
+        'disabled' => false,
+        'filenameChangeChars' => [' ' => '_', ':' => '_'],
+        'jpegQuality' => 100,
+        'types' => [],
+        'uploadDir' => UPLOADED,
+        'uploadURL' => null,
+    ];
 
     /**
      * Components
      * @var array
      */
     public $components = ['MeCms.Auth'];
-
-    /**
-     * Construct
-     * @param \Cake\Controller\ComponentRegistry $registry A ComponentRegistry
-     *  this component can use to lazy load its components
-     * @param array $config Array of configuration settings
-     * @since 2.22.8
-     * @uses $Checkup
-     */
-    public function __construct(ComponentRegistry $registry, array $config = [])
-    {
-        $this->Checkup = new Checkup();
-
-        parent::__construct($registry, $config);
-    }
-
-    /**
-     * Internal method to get the default config
-     * @return array
-     * @uses getTypes()
-     */
-    protected function getDefaultConfig()
-    {
-        $defaultConfig = [
-            'denyExtensionRename' => true,
-            'denyUpdateCheck' => true,
-            'dirnameChangeChars' => [' ' => '_', ':' => '_'],
-            'disabled' => false,
-            'filenameChangeChars' => [' ' => '_', ':' => '_'],
-            'jpegQuality' => 100,
-            'uploadDir' => UPLOADED,
-            'uploadURL' => Router::url('/files', true),
-            'types' => $this->getTypes(),
-        ];
-
-        //If the user is not and admin
-        if (!$this->Auth->isGroup(['admin'])) {
-            //Only admins can delete or rename directories
-            $defaultConfig['access']['dirs'] = [
-                'create' => true,
-                'delete' => false,
-                'rename' => false,
-            ];
-            //Only admins can delete, move or rename files
-            $defaultConfig['access']['files'] = [
-                'upload' => true,
-                'delete' => false,
-                'copy' => true,
-                'move' => false,
-                'rename' => false,
-            ];
-        }
-
-        return $defaultConfig;
-    }
 
     /**
      * Gets the file types supported by KCFinder
@@ -103,36 +70,28 @@ class KcFinderComponent extends Component
         list($folders) = (new Folder(UPLOADED))->read(true, true);
 
         //Each folder is a file type supported by KCFinder
-        foreach ($folders as $type) {
-            $types[$type] = '';
-        }
-
-        //Adds the "images" type by default
-        $types['images'] = '*img';
-
-        return $types;
+        //Adds the default "images" type and returns
+        return array_fill_keys($folders, '') + ['images' => '*img'];
     }
 
     /**
      * Internal method to check if KCFinder is available
      * @return bool
      * @since 2.22.8
-     * @uses $Checkup
      */
     protected function kcFinderIsAvailable()
     {
-        return $this->Checkup->KCFinder->isAvailable();
+        return (new Checkup())->KCFinder->isAvailable();
     }
 
     /**
      * Internal method to check if the uploaded directory is writeable
      * @return bool
      * @since 2.22.8
-     * @uses $Checkup
      */
     protected function uploadedDirIsWriteable()
     {
-        $result = $this->Checkup->Webroot->isWriteable();
+        $result = (new Checkup())->Webroot->isWriteable();
 
         return $result && array_key_exists(UPLOADED, $result) ? $result[UPLOADED] : false;
     }
@@ -144,7 +103,6 @@ class KcFinderComponent extends Component
      * @return void
      * @throws \ErrorException
      * @throws \Tools\Exception\NotWritableException
-     * @uses getDefaultConfig()
      * @uses kcFinderIsAvailable()
      * @uses uploadedDirIsWriteable()
      */
@@ -154,13 +112,18 @@ class KcFinderComponent extends Component
         is_true_or_fail($this->kcFinderIsAvailable(), __d('me_tools', '{0} is not available', 'KCFinder'));
         is_true_or_fail($this->uploadedDirIsWriteable(), __d('me_tools', 'File or directory `{0}` is not writable', rtr(UPLOADED)), NotWritableException::class);
 
-        //Merges and writes on session:
-        //  1) default config;
-        //  2) options from configuration;
-        //  3) passed options.
-        $config = array_merge($this->getDefaultConfig(), getConfig('kcfinder', []), $config);
-        $this->getController()->request->getSession()->write('KCFINDER', $config);
+        //Admins can do any action
+        if ($this->Auth->isGroup(['admin'])) {
+            $config['access'] = [];
+        }
 
-        parent::initialize($config);
+        $config += [
+            'uploadURL' => Router::url('/files', true),
+            'types' => $this->getTypes(),
+        ];
+
+        //Sets config and writes it on session
+        $this->configShallow($config + getConfig('kcfinder', []));
+        $this->getController()->getRequest()->getSession()->write('KCFINDER', $this->getConfig());
     }
 }

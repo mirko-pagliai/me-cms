@@ -12,12 +12,9 @@
  */
 namespace MeCms\Test\TestCase\Model\Table;
 
-use ArrayObject;
 use BadMethodCallException;
 use Cake\Cache\Cache;
-use Cake\Event\Event;
 use Cake\I18n\Time;
-use Cake\ORM\Entity;
 use MeCms\TestSuite\TableTestCase;
 
 /**
@@ -72,23 +69,10 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `afterDelete()` and `afterSave()` methods
+     * Test for event methods
      * @test
      */
-    public function testAfterDeleteAndAfterSave()
-    {
-        foreach (['afterDelete', 'afterSave'] as $method) {
-            Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
-            $this->Posts->$method(new Event(null), new Entity(), new ArrayObject());
-            $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
-        }
-    }
-
-    /**
-     * Test for `beforeSave()` method
-     * @test
-     */
-    public function testBeforeSave()
+    public function testEventMethods()
     {
         $example = [
             'user_id' => 1,
@@ -98,40 +82,60 @@ class AppTableTest extends TableTestCase
             'text' => 'Example text',
         ];
 
-        $entity = $this->Posts->save($this->Posts->newEntity($example));
-        $this->assertNotEmpty($entity->created);
-        $this->Posts->delete($entity);
+        $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
+        $Table->expects($this->atLeast(2))->method('clearCache');
 
-        foreach ([null, ''] as $value) {
-            $entity = $this->Posts->save($this->Posts->newEntity(['created' => $value] + $example));
-            $this->assertNotEmpty($entity->created);
-            $this->Posts->delete($entity);
+        $entity = $Table->save($Table->newEntity($example));
+        $this->assertNotEmpty($entity->get('created'));
+        $Table->delete($entity);
+
+        foreach ([null, ''] as $created) {
+            $entity = $Table->save($Table->newEntity(compact('created') + $example));
+            $this->assertNotEmpty($entity->get('created'));
+            $Table->delete($entity);
         }
 
-        $example['created'] = new Time();
-        $entity = $this->Posts->save($this->Posts->newEntity($example));
-        $this->assertEquals($example['created'], $entity->created);
-        $this->Posts->delete($entity);
+        $now = new Time();
+        $entity = $Table->save($Table->newEntity(['created' => $now] + $example));
+        $this->assertEquals($now, $entity->get('created'));
+        $Table->delete($entity);
 
-        foreach (['2017-03-14 20:19', '2017-03-14 20:19:00'] as $value) {
-            $entity = $this->Posts->save($this->Posts->newEntity(['created' => $value] + $example));
-            $this->assertEquals('2017-03-14 20:19:00', $entity->created->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-            $this->Posts->delete($entity);
-        }
-
-        //Now tries with a record that already exists
-        $entity = $this->Posts->get(1);
-        foreach ([null, ''] as $value) {
-            $entity = $this->Posts->save($entity->set('created', $value));
-            $this->assertNotEmpty($entity->created);
+        foreach (['2017-03-14 20:19', '2017-03-14 20:19:00'] as $created) {
+            $entity = $Table->save($Table->newEntity(compact('created') + $example));
+            $this->assertEquals('2017-03-14 20:19:00', $entity->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'));
+            $Table->delete($entity);
         }
     }
 
     /**
-     * Test for `findActive()` method
+     * Test for `clearCache()` method
      * @test
      */
-    public function testFindActive()
+    public function testClearCache()
+    {
+        Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
+        $this->assertTrue($this->Posts->clearCache());
+        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
+    }
+
+    /**
+     * Test for `deleteAll()` method
+     * @test
+     */
+    public function testDeleteAll()
+    {
+        $this->assertNotEmpty($this->Posts->find()->count());
+        Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
+        $this->assertGreaterThan(0, $this->Posts->deleteAll(['id IS NOT' => null]));
+        $this->assertEmpty($this->Posts->find()->count());
+        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
+    }
+
+    /**
+     * Test for `find()` methods
+     * @test
+     */
+    public function testFindMethods()
     {
         $query = $this->Posts->find('active');
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 AND Posts.created <= :c1)', $query->sql());
@@ -139,31 +143,18 @@ class AppTableTest extends TableTestCase
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
         foreach ($query as $entity) {
-            $this->assertTrue($entity->active && !$entity->created->isFuture());
+            $this->assertTrue($entity->get('active') && !$entity->get('created')->isFuture());
         }
-    }
 
-    /**
-     * Test for `findPending()` method
-     * @test
-     */
-    public function testFindPending()
-    {
         $query = $this->Posts->find('pending');
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 OR Posts.created > :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertNotEmpty($query->count());
         foreach ($query as $entity) {
-            $this->assertTrue(!$entity->active || $entity->created->isFuture());
+            $this->assertTrue(!$entity->get('active') || $entity->get('created')->isFuture());
         }
-    }
 
-    /**
-     * Test for `findRandom()` method
-     * @test
-     */
-    public function testFindRandom()
-    {
         $query = $this->Posts->find('random');
         $this->assertStringEndsWith('FROM posts Posts ORDER BY rand() LIMIT 1', $query->sql());
 
@@ -230,6 +221,17 @@ class AppTableTest extends TableTestCase
      */
     public function testQueryFromFilter()
     {
+        $expectedSql = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
+        $expectedParams = [
+            2,
+            '%Title%',
+            3,
+            4,
+            true,
+            3,
+            '2016/12/01, 00:00',
+            '2017/01/01, 00:00',
+        ];
         $data = [
             'id' => 2,
             'title' => 'Title',
@@ -239,30 +241,17 @@ class AppTableTest extends TableTestCase
             'priority' => 3,
             'created' => '2016-12',
         ];
-        $expectedSql = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
-        $expectedParams = [
-            2,
-            '%Title%',
-            3,
-            4,
-            true,
-            3,
-            '2016-12-01 00:00:00',
-            '2017-01-01 00:00:00',
-        ];
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
         $this->assertStringEndsWith($expectedSql, $query->sql());
 
-        $params = collection($query->getValueBinder()->bindings())->extract('value')->map(function ($value) {
-            return $value instanceof Time ? $value->i18nFormat('yyyy-MM-dd HH:mm:ss') : $value;
-        })->toList();
+        $params = collection($query->getValueBinder()->bindings())->extract('value')->toList();
         $this->assertEquals($expectedParams, $params);
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['active' => I18N_NO] + $data);
         $this->assertStringEndsWith($expectedSql, $query->sql());
         $this->assertEquals(false, $query->getValueBinder()->bindings()[':c4']['value']);
 
-        $query = $this->Photos->queryFromFilter($this->Photos->find(), $data = ['filename' => 'image.jpg']);
+        $query = $this->Photos->queryFromFilter($this->Photos->find(), ['filename' => 'image.jpg']);
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.filename like :c0', $query->sql());
         $this->assertEquals('%image.jpg%', $query->getValueBinder()->bindings()[':c0']['value']);
 

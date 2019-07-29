@@ -13,8 +13,8 @@
 namespace MeCms\Model\Table;
 
 use ArrayObject;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
@@ -35,15 +35,14 @@ class BannersTable extends AppTable
     /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
+    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        //Deletes the file
-        @unlink(BANNERS . $entity->filename);
+        @unlink(BANNERS . $entity->get('filename'));
 
         parent::afterDelete($event, $entity, $options);
     }
@@ -97,7 +96,7 @@ class BannersTable extends AppTable
     /**
      * Build query from filter data
      * @param \Cake\ORM\Query $query Query object
-     * @param array $data Filter data ($this->request->getQueryParams())
+     * @param array $data Filter data ($this->getRequest()->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */

@@ -44,7 +44,7 @@ class LoginRecorderComponent extends Component
      */
     protected function getClientIp()
     {
-        $ip = $this->getController()->request->clientIp();
+        $ip = $this->getController()->getRequest()->clientIp();
 
         return $ip === '::1' ? '127.0.0.1' : $ip;
     }

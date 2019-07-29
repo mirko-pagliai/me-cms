@@ -67,28 +67,17 @@ class PhotosTableTest extends TableTestCase
     }
 
     /**
-     * Test for `afterDelete()` method
+     * Test for event methods
      * @test
      */
-    public function testAfterDelete()
+    public function testEventMethods()
     {
-        $this->loadFixtures();
-        $entity = $this->Table->get(1);
-        $this->assertFileExists($entity->path);
-        $this->assertTrue($this->Table->delete($entity));
-        $this->assertFileNotExists($entity->path);
-    }
-
-    /**
-     * Test for `beforeSave()` method
-     * @test
-     */
-    public function testBeforeSave()
-    {
-        $this->loadFixtures();
         $entity = $this->Table->newEntity(self::$example);
         $this->assertNotEmpty($this->Table->save($entity));
-        $this->assertEquals(['width' => 400, 'height' => 400], $entity->size);
+        $this->assertEquals(['width' => 400, 'height' => 400], $entity->get('size'));
+        $this->assertFileExists($entity->get('path'));
+        $this->assertTrue($this->Table->delete($entity));
+        $this->assertFileNotExists($entity->get('path'));
     }
 
     /**
@@ -97,7 +86,6 @@ class PhotosTableTest extends TableTestCase
      */
     public function testBuildRules()
     {
-        $this->loadFixtures();
         $entity = $this->Table->newEntity(self::$example);
         $this->assertNotEmpty($this->Table->save($entity));
 
@@ -132,26 +120,17 @@ class PhotosTableTest extends TableTestCase
     }
 
     /**
-     * Test for `findActive()` method
+     * Test for `find()` methods
      * @test
      */
-    public function testFindActive()
+    public function testFindMethods()
     {
-        $this->loadFixtures();
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertNotEmpty($query->count());
         array_map([$this, 'assertTrue'], $query->all()->extract('active')->toArray());
-    }
 
-    /**
-     * Test for `findPending()` method
-     * @test
-     */
-    public function testFindPending()
-    {
-        $this->loadFixtures();
         $query = $this->Table->find('pending');
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
@@ -165,7 +144,6 @@ class PhotosTableTest extends TableTestCase
      */
     public function testQueryFromFilter()
     {
-        $this->loadFixtures();
         $query = $this->Table->queryFromFilter($this->Table->find(), ['album' => 2]);
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.album_id = :c0', $query->sql());
         $this->assertEquals(2, $query->getValueBinder()->bindings()[':c0']['value']);

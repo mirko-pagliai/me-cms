@@ -13,6 +13,7 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Event\Event;
 use Cake\Http\Exception\ForbiddenException;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
@@ -24,8 +25,7 @@ use MeCms\Controller\Traits\GetStartAndEndDateTrait;
  */
 class PostsController extends AppController
 {
-    use CheckLastSearchTrait;
-    use GetStartAndEndDateTrait;
+    use CheckLastSearchTrait, GetStartAndEndDateTrait;
 
     /**
      * Called before the controller action.
@@ -33,10 +33,9 @@ class PostsController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return void
-     * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeFilter
      * @uses MeCms\Controller\AppController::beforeFilter()
      */
-    public function beforeFilter(\Cake\Event\Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
@@ -49,7 +48,7 @@ class PostsController extends AppController
      */
     public function index()
     {
-        $page = $this->request->getQuery('page', 1);
+        $page = $this->getRequest()->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $page);
@@ -67,11 +66,11 @@ class PostsController extends AppController
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
             ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
-            $this->request = $this->request->withParam('paging', $paging);
+            $this->setRequest($this->getRequest()->withParam('paging', $paging));
         }
 
         $this->set(compact('posts'));
@@ -97,13 +96,13 @@ class PostsController extends AppController
     public function indexByDate($date)
     {
         //Data can be passed as query string, from a widget
-        if ($this->request->getQuery('q')) {
-            return $this->redirect([$this->request->getQuery('q')]);
+        if ($this->getRequest()->getQuery('q')) {
+            return $this->redirect([$this->getRequest()->getQuery('q')]);
         }
 
         list($start, $end) = $this->getStartAndEndDate($date);
 
-        $page = $this->request->getQuery('page', 1);
+        $page = $this->getRequest()->getQuery('page', 1);
 
         //Sets the cache name
         $cache = sprintf(
@@ -132,11 +131,11 @@ class PostsController extends AppController
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
             ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
-            $this->request = $this->request->withParam('paging', $paging);
+            $this->setRequest($this->getRequest()->withParam('paging', $paging));
         }
 
         $this->set(compact('date', 'posts', 'start'));
@@ -168,13 +167,14 @@ class PostsController extends AppController
      */
     public function search()
     {
-        $pattern = $this->request->getQuery('p');
+        $pattern = $this->getRequest()->getQuery('p');
+        $posts = false;
 
         //Checks if the pattern is at least 4 characters long
         if ($pattern && strlen($pattern) < 4) {
             $this->Flash->alert(__d('me_cms', 'You have to search at least a word of {0} characters', 4));
 
-            return $this->redirect(['action' => $this->request->getParam('action')]);
+            return $this->redirect(['action' => $this->getRequest()->getParam('action')]);
         }
 
         //Checks the last search
@@ -185,13 +185,13 @@ class PostsController extends AppController
                 getConfigOrFail('security.search_interval')
             ));
 
-            return $this->redirect(['action' => $this->request->getParam('action')]);
+            return $this->redirect(['action' => $this->getRequest()->getParam('action')]);
         }
 
         if ($pattern) {
             $this->paginate['limit'] = getConfigOrFail('default.records_for_searches');
 
-            $page = $this->request->getQuery('page', 1);
+            $page = $this->getRequest()->getQuery('page', 1);
 
             //Sets the cache name
             $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), $this->paginate['limit'], $page);
@@ -218,17 +218,15 @@ class PostsController extends AppController
                 //Writes on cache
                 Cache::writeMany([
                     $cache => $posts,
-                    sprintf('%s_paging', $cache) => $this->request->getParam('paging'),
+                    sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
                 ], $this->Posts->getCacheName());
             //Else, sets the paging parameter
             } else {
-                $this->request = $this->request->withParam('paging', $paging);
+                $this->setRequest($this->getRequest()->withParam('paging', $paging));
             }
-
-            $this->set(compact('posts'));
         }
 
-        $this->set(compact('pattern'));
+        $this->set(compact('pattern', 'posts'));
     }
 
     /**
@@ -237,7 +235,7 @@ class PostsController extends AppController
      * @return void
      * @uses MeCms\Model\Table\PostsTable::getRelated()
      */
-    public function view($slug = null)
+    public function view($slug)
     {
         $post = $this->Posts->findActiveBySlug($slug)
             ->find('forIndex')
@@ -248,8 +246,10 @@ class PostsController extends AppController
 
         //Gets related posts
         if (getConfig('post.related')) {
-            $related = $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'));
-            $this->set(compact('related'));
+            $this->set(
+                'related',
+                $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'))
+            );
         }
     }
 
@@ -257,10 +257,10 @@ class PostsController extends AppController
      * Preview for posts.
      * It uses the `view` template.
      * @param string $slug Post slug
-     * @return void
+     * @return \Cake\Http\Response
      * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
-    public function preview($slug = null)
+    public function preview($slug)
     {
         $post = $this->Posts->findPendingBySlug($slug)
             ->find('forIndex')
@@ -270,10 +270,12 @@ class PostsController extends AppController
 
         //Gets related posts
         if (getConfig('post.related')) {
-            $related = $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'));
-            $this->set(compact('related'));
+            $this->set(
+                'related',
+                $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'))
+            );
         }
 
-        $this->render('view');
+        return $this->render('view');
     }
 }

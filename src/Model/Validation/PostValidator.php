@@ -12,45 +12,24 @@
  */
 namespace MeCms\Model\Validation;
 
+use Cake\Utility\Hash;
 use MeCms\Model\Validation\TagValidator;
-use MeCms\Validation\AppValidator;
+use MeCms\Validation\PageAndPostValidator;
 
 /**
  * Post validator class
  */
-class PostValidator extends AppValidator
+class PostValidator extends PageAndPostValidator
 {
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Validation\AppValidator::__construct()
+     * Construct
      */
     public function __construct()
     {
         parent::__construct();
 
-        //Category
-        $this->add('category_id', [
-            'naturalNumber' => [
-                'message' => I18N_SELECT_VALID_OPTION,
-                'rule' => 'naturalNumber',
-            ],
-        ])->requirePresence('category_id', 'create');
-
-        //User (author)
         $this->requirePresence('user_id', 'create');
 
-        //Title
-        $this->requirePresence('title', 'create');
-
-        //Slug
-        $this->requirePresence('slug', 'create');
-
-        //Text
-        $this->requirePresence('text', 'create');
-
-        //Tags
         $this->add('tags', [
             'validTags' => [
                 'last' => true,
@@ -62,29 +41,26 @@ class PostValidator extends AppValidator
     /**
      * Tags validation method.
      *
-     * It uses the `TagValidator` and checks its rules on each tag and returns
-     *  `true` on success or a string with all a string with all errors found
-     *  (separated by `PHP_EOL`) on failure.
-     * @param string $value Field value
+     * It uses the `TagValidator`, checks its rules on each tag and returns
+     *  `true` on success or a string with all errors found on failure.
+     * @param array $values Field values
      * @return bool|string `true` on success or an error message on failure
      * @since 2.26.1
      * @uses \MeCms\Model\Validation\TagValidator
      */
-    public function validTags($value)
+    public function validTags(array $values)
     {
         $validator = new TagValidator();
         $messages = [];
 
-        foreach ($value as $tag) {
-            $errors = $validator->errors($tag);
+        foreach ($values as $tag) {
+            $errors = Hash::get($validator->errors($tag), 'tag') ?: [];
 
-            if (!empty($errors['tag'])) {
-                foreach ($errors['tag'] as $error) {
-                    $messages[] = __d('me_cms', 'Tag "{0}": {1}', $tag['tag'], lcfirst($error));
-                }
+            foreach ($errors as $error) {
+                $messages[] = __d('me_cms', 'Tag "{0}": {1}', $tag['tag'], lcfirst($error));
             }
         }
 
-        return empty($messages) ?: implode(PHP_EOL, $messages);
+        return !$messages ?: implode(PHP_EOL, $messages);
     }
 }

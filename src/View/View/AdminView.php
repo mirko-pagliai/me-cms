@@ -28,7 +28,6 @@ class AdminView extends View
     /**
      * Initialization hook method
      * @return void
-     * @see http://api.cakephp.org/3.4/class-Cake.View.View.html#_initialize
      * @uses MeCms\View\View::initialize()
      */
     public function initialize()
@@ -37,7 +36,6 @@ class AdminView extends View
 
         //Loads helpers
         $this->loadHelper('MeCms.MenuBuilder');
-        $this->loadHelper('Gourmet/CommonMark.CommonMark');
     }
 
     /**
@@ -46,7 +44,6 @@ class AdminView extends View
      * @param string|null $layout Layout to use
      * @return string|null Rendered content or null if content already rendered
      *  and returned earlier
-     * @see http://api.cakephp.org/3.4/class-Cake.View.View.html#_render
      */
     public function render($view = null, $layout = null)
     {

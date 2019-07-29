@@ -20,16 +20,12 @@ use MeCms\Validation\AppValidator;
 class UsersGroupValidator extends AppValidator
 {
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Validation\AppValidator::__construct()
+     * Construct
      */
     public function __construct()
     {
         parent::__construct();
 
-        //Name
         $this->add('name', [
             'lengthBetween' => [
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
@@ -37,18 +33,15 @@ class UsersGroupValidator extends AppValidator
             ],
             'valid' => [
                 'message' => sprintf('%s: %s', I18N_ALLOWED_CHARS, __d('me_cms', 'lowercase letters')),
-                'rule' => [$this, 'lowercaseLetters'],
+                'rule' => ['custom', '/^[a-z]+$/'],
             ],
         ])->requirePresence('name', 'create');
 
-        //Label
         $this->add('label', [
             'lengthBetween' => [
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 100),
                 'rule' => ['lengthBetween', 3, 100],
             ],
         ])->requirePresence('label', 'create');
-
-        return $this;
     }
 }

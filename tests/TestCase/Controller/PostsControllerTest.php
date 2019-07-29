@@ -74,7 +74,7 @@ class PostsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
+        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Posts']);
     }
 
     /**
@@ -112,7 +112,7 @@ class PostsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
+        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Posts']);
 
         //Tries with various possible dates
         foreach (['today', 'yesterday', '2016', '2016/12', '2016/12/29'] as $date) {
@@ -143,7 +143,7 @@ class PostsControllerTest extends ControllerTestCase
 
         //With an invalid extension
         $this->expectException(ForbiddenException::class);
-        $this->Controller->request = $this->Controller->request->withParam('_ext', 'html');
+        $this->Controller->request = $this->Controller->getRequest()->withParam('_ext', 'html');
         $this->Controller->rss();
     }
 
@@ -181,13 +181,13 @@ class PostsControllerTest extends ControllerTestCase
         $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
-        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Posts']);
+        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Posts']);
 
         $this->get($url + ['?' => ['p' => 'a']]);
         $this->assertRedirect($url);
         $this->assertFlashMessage('You have to search at least a word of 4 characters');
 
-        $this->session(['last_search' => ['id' => md5(time()), 'time' => time()]]);
+        $this->session(['last_search' => ['id' => md5((string)time()), 'time' => time()]]);
         $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertRedirect($url);
         $this->assertFlashMessage('You have to wait 10 seconds to perform a new search');

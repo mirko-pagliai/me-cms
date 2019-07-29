@@ -68,7 +68,7 @@ class AddUserCommandTest extends TestCase
         $this->assertErrorContains('Invalid group ID');
 
         //Tries with empty data
-        $this->exec('me_cms.add_user -v', []);
+        $this->exec('me_cms.add_user -v', ['', '', '', '', '', '', '']);
         $this->assertExitWithSuccess();
         $this->assertErrorContains('Field `username` is empty. Try again');
 
@@ -88,7 +88,7 @@ class AddUserCommandTest extends TestCase
         $this->assertErrorContains('Field `password_repeat`: passwords don\'t match');
 
         //Tries with no groups
-        $Users->Groups->deleteAll(['id >=' => '1']);
+        $Users->Groups->deleteAll(['id IS NOT' => null]);
         $this->exec('me_cms.add_user -v');
         $this->assertExitWithSuccess();
         $this->assertErrorContains('Before you can manage users, you have to create at least a user group');

@@ -95,6 +95,6 @@ class Photo extends Entity
         $thumber = new ThumbCreator($path);
         $thumber->resize(1200, 1200)->save(['format' => 'jpg']);
 
-        return new Entity(array_merge(['url' => $thumber->getUrl()], compact('width', 'height')));
+        return new Entity(['url' => $thumber->getUrl()] + compact('width', 'height'));
     }
 }

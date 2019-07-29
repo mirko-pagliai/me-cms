@@ -40,7 +40,6 @@ class BannersPositionsTableTest extends TableTestCase
      */
     public function testBuildRules()
     {
-        $this->loadFixtures();
         $example = ['title' => 'my-title'];
 
         $entity = $this->Table->newEntity($example);

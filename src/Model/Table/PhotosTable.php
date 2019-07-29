@@ -15,7 +15,6 @@ namespace MeCms\Model\Table;
 use ArrayObject;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
@@ -45,15 +44,14 @@ class PhotosTable extends AppTable
     /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
-    public function afterDelete(Event $event, Entity $entity, ArrayObject $options)
+    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        //Deletes the file
-        @unlink($entity->path);
+        @unlink($entity->get('path'));
 
         parent::afterDelete($event, $entity, $options);
     }
@@ -61,18 +59,15 @@ class PhotosTable extends AppTable
     /**
      * Called before each entity is saved
      * @param \Cake\Event\Event $event Event object
-     * @param \Cake\ORM\Entity $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @param \ArrayObject $options Options
      * @return void
      * @since 2.17.0
-     * @uses MeCms\Model\Table\AppTable::beforeSave()
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        parent::beforeSave($event, $entity, $options);
-
-        list($width, $height) = getimagesize($entity->path);
-        $entity->size = compact('width', 'height');
+        list($width, $height) = getimagesize($entity->get('path'));
+        $entity->set('size', compact('width', 'height'));
     }
 
     /**
@@ -135,7 +130,7 @@ class PhotosTable extends AppTable
     /**
      * Build query from filter data
      * @param \Cake\ORM\Query $query Query object
-     * @param array $data Filter data ($this->request->getQueryParams())
+     * @param array $data Filter data ($this->getRequest()->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
      * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */

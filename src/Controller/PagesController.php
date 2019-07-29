@@ -29,7 +29,6 @@ class PagesController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return void
-     * @see http://api.cakephp.org/3.4/class-Cake.Controller.Controller.html#_beforeFilter
      * @uses MeCms\Controller\AppController::beforeFilter()
      */
     public function beforeFilter(Event $event)
@@ -52,17 +51,17 @@ class PagesController extends AppController
      * @uses MeCms\Utility\StaticPage::get()
      * @uses MeCms\Utility\StaticPage::title()
      */
-    public function view($slug = null)
+    public function view($slug)
     {
         //Checks if there exists a static page
         $static = StaticPage::get($slug);
 
         if ($static) {
-            $page = new Entity(array_merge([
+            $page = new Entity([
                 'category' => new Entity(['slug' => null, 'title' => null]),
                 'title' => StaticPage::title($slug),
                 'subtitle' => null,
-            ], compact('slug')));
+            ] + compact('slug'));
 
             $this->set(compact('page'));
 
@@ -84,7 +83,7 @@ class PagesController extends AppController
      * @param string $slug Page slug
      * @return void
      */
-    public function preview($slug = null)
+    public function preview($slug)
     {
         $page = $this->Pages->findPendingBySlug($slug)
             ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])

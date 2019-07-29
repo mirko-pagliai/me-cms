@@ -66,10 +66,10 @@ abstract class ControllerTestCase extends TestCase
         $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
-        $this->Controller->request->clearDetectorCache();
+        $this->Controller->getRequest()->clearDetectorCache();
 
         if ($action) {
-            $this->Controller->request = $this->Controller->request->withParam('action', $action);
+            $this->Controller->request = $this->Controller->getRequest()->withParam('action', $action);
         }
 
         foreach ($values as $group => $isAllowed) {
@@ -93,10 +93,10 @@ abstract class ControllerTestCase extends TestCase
         $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
-        $controller->request->clearDetectorCache();
+        $controller->getRequest()->clearDetectorCache();
 
         if ($action) {
-            $this->Controller->request = $this->Controller->request->withParam('action', $action);
+            $this->Controller->request = $this->Controller->getRequest()->withParam('action', $action);
         }
 
         foreach ($values as $id => $isAllowed) {
@@ -143,13 +143,11 @@ abstract class ControllerTestCase extends TestCase
 
             //Tries to retrieve the table
             $className = sprintf('%s\\Model\\Table\\%sTable', $parts[0], $alias);
-            if (class_exists($className)) {
+            if (class_exists($className) && $alias !== 'App') {
                 $this->Table = $this->getMockForModel($alias, null, compact('className'));
 
                 //Tries to retrieve all cache names related to this table and associated tables
-                if (method_exists($this->Table, 'getCacheName')) {
-                    $this->cacheToClear = array_merge($this->cacheToClear, $this->Table->getCacheName(true));
-                }
+                $this->cacheToClear = $this->Table->getCacheName(true);
             }
         }
 
@@ -224,17 +222,6 @@ abstract class ControllerTestCase extends TestCase
      */
     public function testIsAuthorized()
     {
-        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
-
-        if ($this->Controller->request->isAdmin()) {
-            $this->assertGroupsAreAuthorized([
-                'admin' => true,
-                'manager' => true,
-                'user' => false,
-            ]);
-        } else {
-            $methodToCall = $this->Controller->request->getParam('prefix') ? 'assertFalse' : 'assertTrue';
-            call_user_func([$this, $methodToCall], $this->Controller->isAuthorized());
-        }
+        $this->assertTrue($this->Controller->isAuthorized());
     }
 }

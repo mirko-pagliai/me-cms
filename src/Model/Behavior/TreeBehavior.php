@@ -9,7 +9,7 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         http://api.cakephp.org/3.4/class-Cake.ORM.Behavior.TreeBehavior.html
+ * @see         http://api.cakephp.org/3.7/class-Cake.ORM.Behavior.TreeBehavior.html
  */
 namespace MeCms\Model\Behavior;
 
@@ -33,7 +33,6 @@ class TreeBehavior extends CakeTreeBehavior
      * @param \Cake\ORM\Query $query Query
      * @param array $options Options
      * @return \Cake\ORM\Query Query
-     * @see http://api.cakephp.org/3.4/class-Cake.ORM.Behavior.TreeBehavior.html#_findTreeList
      * @uses \Cake\ORM\Behavior\TreeBehavior::findTreeList()
      */
     public function findTreeList(Query $query, array $options)

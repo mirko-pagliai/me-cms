@@ -41,11 +41,11 @@ class PagesController extends AppController
         parent::beforeFilter($event);
 
         //Returns, if it's the `indexStatics` action
-        if ($this->request->isAction('indexStatics')) {
+        if ($this->getRequest()->isAction('indexStatics')) {
             return;
         }
 
-        $methodToCall = $this->request->isAction(['add', 'edit']) ? 'getTreeList' : 'getList';
+        $methodToCall = $this->getRequest()->isAction(['add', 'edit']) ? 'getTreeList' : 'getList';
         $categories = call_user_func([$this->Pages->Categories, $methodToCall]);
 
         if ($categories->isEmpty()) {
@@ -67,7 +67,7 @@ class PagesController extends AppController
         parent::initialize();
 
         //Loads KcFinderComponent
-        if ($this->request->isAction(['add', 'edit'])) {
+        if ($this->getRequest()->isAction(['add', 'edit'])) {
             $this->loadComponent('MeCms.KcFinder');
         }
     }
@@ -82,12 +82,12 @@ class PagesController extends AppController
     public function isAuthorized($user = null)
     {
         //Everyone can list pages and static pages
-        if ($this->request->isAction(['index', 'indexStatics'])) {
+        if ($this->getRequest()->isAction(['index', 'indexStatics'])) {
             return true;
         }
 
         //Only admins can delete pages. Admins and managers can access other actions
-        return $this->Auth->isGroup($this->request->isDelete() ? ['admin'] : ['admin', 'manager']);
+        return $this->Auth->isGroup($this->getRequest()->isDelete() ? ['admin'] : ['admin', 'manager']);
     }
 
     /**
@@ -101,7 +101,7 @@ class PagesController extends AppController
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
-        $pages = $this->paginate($this->Pages->queryFromFilter($query, $this->request->getQueryParams()));
+        $pages = $this->paginate($this->Pages->queryFromFilter($query, $this->getRequest()->getQueryParams()));
 
         $this->set(compact('pages'));
     }
@@ -126,8 +126,8 @@ class PagesController extends AppController
     {
         $page = $this->Pages->newEntity();
 
-        if ($this->request->is('post')) {
-            $page = $this->Pages->patchEntity($page, $this->request->getData());
+        if ($this->getRequest()->is('post')) {
+            $page = $this->Pages->patchEntity($page, $this->getRequest()->getData());
 
             if ($this->Pages->save($page)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -146,7 +146,7 @@ class PagesController extends AppController
      * @param string $id Page ID
      * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $page = $this->Pages->findById($id)
             ->formatResults(function (ResultSet $results) {
@@ -156,8 +156,8 @@ class PagesController extends AppController
             })
             ->firstOrFail();
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $page = $this->Pages->patchEntity($page, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $page = $this->Pages->patchEntity($page, $this->getRequest()->getData());
 
             if ($this->Pages->save($page)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -170,14 +170,15 @@ class PagesController extends AppController
 
         $this->set(compact('page'));
     }
+
     /**
      * Deletes page
      * @param string $id Page ID
      * @return \Cake\Network\Response|null|void
      */
-    public function delete($id = null)
+    public function delete($id)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
         $this->Pages->deleteOrFail($this->Pages->get($id));
         $this->Flash->success(I18N_OPERATION_OK);
 

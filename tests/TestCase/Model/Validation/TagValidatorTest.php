@@ -51,13 +51,13 @@ class TagValidatorTest extends ValidationTestCase
         foreach (['AbC', 'ab_c', 'ab-c', 'abc$'] as $tag) {
             $errors = $this->Table->newEntity(compact('tag') + $this->example)->getErrors();
             $this->assertEquals(['tag' => [
-                'validTagChars' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_SPACE),
+                'validChars' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_SPACE),
             ]], $errors);
         }
 
         foreach (['ab', str_repeat('a', 41)] as $tag) {
             $errors = $this->Table->newEntity(compact('tag') + $this->example)->getErrors();
-            $this->assertEquals(['tag' => ['validTagLength' => 'Must be between 3 and 40 chars']], $errors);
+            $this->assertEquals(['tag' => ['lengthBetween' => 'Must be between 3 and 40 chars']], $errors);
         }
 
         foreach (['abc', str_repeat('a', 40)] as $tag) {

@@ -58,7 +58,7 @@ class BannersController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can delete banners. Admins and managers can access other actions
-        return $this->Auth->isGroup($this->request->isDelete() ? ['admin'] : ['admin', 'manager']);
+        return $this->Auth->isGroup($this->getRequest()->isDelete() ? ['admin'] : ['admin', 'manager']);
     }
 
     /**
@@ -71,7 +71,7 @@ class BannersController extends AppController
     public function index()
     {
         //The "render" type can set by query or by cookies
-        $render = $this->request->getQuery('render', $this->request->getCookie('render-banners'));
+        $render = $this->getRequest()->getQuery('render', $this->getRequest()->getCookie('render-banners'));
 
         $query = $this->Banners->find()->contain(['Positions' => ['fields' => ['id', 'title']]]);
 
@@ -84,7 +84,7 @@ class BannersController extends AppController
             $this->viewBuilder()->setTemplate('index_as_grid');
         }
 
-        $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->request->getQueryParams())));
+        $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->getRequest()->getQueryParams())));
 
         if ($render) {
             $this->response = $this->response->withCookie((new Cookie('render-banners', $render))->withNeverExpire());
@@ -100,19 +100,19 @@ class BannersController extends AppController
      */
     public function upload()
     {
-        $position = $this->request->getQuery('position');
+        $position = $this->getRequest()->getQuery('position');
         $positions = $this->viewVars['positions']->toArray();
 
         //If there's only one available position
         if (!$position && count($positions) < 2) {
             $position = array_key_first($positions);
-            $this->request = $this->request->withQueryParams(compact('position'));
+            $this->setRequest($this->getRequest()->withQueryParams(compact('position')));
         }
 
-        if ($this->request->getData('file')) {
+        if ($this->getRequest()->getData('file')) {
             is_true_or_fail($position, __d('me_cms', 'Missing ID'), InternalErrorException::class);
 
-            $uploaded = $this->Uploader->set($this->request->getData('file'))
+            $uploaded = $this->Uploader->set($this->getRequest()->getData('file'))
                 ->mimetype('image')
                 ->save(BANNERS);
 
@@ -140,17 +140,17 @@ class BannersController extends AppController
      * @param string $id Banner ID
      * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $banner = $this->Banners->get($id);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $banner = $this->Banners->patchEntity($banner, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $banner = $this->Banners->patchEntity($banner, $this->getRequest()->getData());
 
             if ($this->Banners->save($banner)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect(['action' => 'index', $banner->position_id]);
+                return $this->redirect(['action' => 'index', $banner->get('position_id')]);
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -164,9 +164,9 @@ class BannersController extends AppController
      * @param string $id Banner ID
      * @return \Cake\Network\Response
      */
-    public function download($id = null)
+    public function download($id)
     {
-        return $this->response->withFile($this->Banners->get($id)->path, ['download' => true]);
+        return $this->response->withFile($this->Banners->get($id)->get('path'), ['download' => true]);
     }
 
     /**
@@ -174,14 +174,14 @@ class BannersController extends AppController
      * @param string $id Banner ID
      * @return \Cake\Network\Response|null
      */
-    public function delete($id = null)
+    public function delete($id)
     {
         $banner = $this->Banners->get($id);
 
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
         $this->Banners->deleteOrFail($banner);
         $this->Flash->success(I18N_OPERATION_OK);
 
-        return $this->redirect(['action' => 'index', $banner->position_id]);
+        return $this->redirect(['action' => 'index', $banner->get('position_id')]);
     }
 }

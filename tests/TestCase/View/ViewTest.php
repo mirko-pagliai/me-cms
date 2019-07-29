@@ -96,30 +96,6 @@ class ViewTest extends TestCase
     }
 
     /**
-     * Tests for `initialize()` method
-     * @test
-     */
-    public function testInitialize()
-    {
-        //Gets loaded helpers, as class names
-        $helpers = array_map(function ($helper) {
-            return get_class($this->View->helpers()->get($helper));
-        }, $this->View->helpers()->loaded());
-        sort($helpers);
-
-        $this->assertEquals([
-            'Assets\View\Helper\AssetHelper',
-            'MeTools\View\Helper\DropdownHelper',
-            'MeTools\View\Helper\FormHelper',
-            'MeTools\View\Helper\HtmlHelper',
-            'MeTools\View\Helper\LibraryHelper',
-            'MeTools\View\Helper\PaginatorHelper',
-            'Thumber\View\Helper\ThumbHelper',
-            'WyriHaximus\MinifyHtml\View\Helper\MinifyHtmlHelper',
-        ], $helpers);
-    }
-
-    /**
      * Tests for `renderLayout()` method
      * @test
      */

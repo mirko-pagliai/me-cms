@@ -27,55 +27,40 @@ use MeCms\Core\Plugin;
 class StaticPage
 {
     /**
-     * Internal method to get all paths for static pages
+     * Extension for static pages
+     */
+    const EXTENSION = 'ctp';
+
+    /**
+     * Internal method to get all the existing paths
      * @return array
      * @uses MeCms\Core\Plugin::all()
-     * @uses getAppPath()
-     * @uses getPluginPath()
+     * @uses getPaths()
      */
     protected static function getAllPaths()
     {
-        $paths = Cache::read('paths', 'static_pages');
+        return Cache::remember('paths', function () {
+            $paths = self::getPaths();
 
-        if (empty($paths)) {
-            //Adds all plugins to paths
-            $paths = collection(Plugin::all())
-                ->map(function ($plugin) {
-                    return self::getPluginPath($plugin);
-                })
-                ->filter(function ($path) {
-                    return file_exists($path);
-                })
-                ->toList();
+            foreach (Plugin::all() as $plugin) {
+                $paths = array_merge($paths, self::getPaths($plugin));
+            }
 
-            //Adds APP to paths
-            array_unshift($paths, self::getAppPath());
-
-            Cache::write('paths', $paths, 'static_pages');
-        }
-
-        return $paths;
+            return array_filter($paths, 'file_exists');
+        }, 'static_pages');
     }
 
     /**
-     * Internal method to get the app path
-     * @return string
-     * @since 2.17.1
+     * Internal method to get paths from APP or from a plugin.
+     *
+     * This also returns paths that do not exist.
+     * @param string|null $plugin Plugin name or `null` for APP path
+     * @return array
+     * @since 2.26.6
      */
-    protected static function getAppPath()
+    protected static function getPaths($plugin = null)
     {
-        return Folder::slashTerm(array_value_first(App::path('Template'))) . 'StaticPages' . DS;
-    }
-
-    /**
-     * Internal method to get a plugin path
-     * @param string $plugin Plugin name
-     * @return string
-     * @since 2.17.1
-     */
-    protected static function getPluginPath($plugin)
-    {
-        return Folder::slashTerm(array_value_first(App::path('Template', $plugin))) . 'StaticPages' . DS;
+        return App::path('Template' . DS . 'StaticPages', $plugin);
     }
 
     /**
@@ -89,11 +74,11 @@ class StaticPage
     protected static function getSlug($path, $relativePath)
     {
         if (string_starts_with($path, $relativePath)) {
-            $path = substr($path, strlen(Folder::slashTerm($relativePath)));
+            $path = substr($path, strlen(add_slash_term($relativePath)));
         }
         $path = preg_replace(sprintf('/\.[^\.]+$/'), null, $path);
 
-        return DS == '/' ? $path : str_replace(DS, '/', $path);
+        return IS_WIN ? str_replace(DS, '/', $path) : $path;
     }
 
     /**
@@ -107,7 +92,7 @@ class StaticPage
     {
         foreach (self::getAllPaths() as $path) {
             //Gets all files for each path
-            $files = (new Folder($path))->findRecursive('^.+\.ctp$', true);
+            $files = (new Folder($path))->findRecursive('^.+\.' . self::EXTENSION . '$', true);
 
             foreach ($files as $file) {
                 $pages[] = new Entity([
@@ -127,18 +112,16 @@ class StaticPage
      * Gets a static page
      * @param string $slug Slug
      * @return string|bool Static page or `false`
-     * @uses MeCms\Core\Plugin::all()
-     * @uses getAppPath()
-     * @uses getPluginPath()
+     * @uses \MeCms\Core\Plugin::all()
+     * @uses getPaths()
      */
     public static function get($slug)
     {
         $locale = I18n::getLocale();
         $slug = array_filter(explode('/', $slug));
         $cache = sprintf('page_%s_locale_%s', md5(serialize($slug)), $locale);
-        $page = Cache::read($cache, 'static_pages');
 
-        if (empty($page)) {
+        return Cache::remember($cache, function () use ($locale, $slug) {
             //Sets the (partial) filename
             $filename = implode(DS, $slug);
 
@@ -149,34 +132,21 @@ class StaticPage
             }
             $patterns[] = $filename;
 
-            //Checks if the page exists in APP
-            foreach ($patterns as $pattern) {
-                $filename = self::getAppPath() . $pattern . '.ctp';
+            //Checks if the page exists first in APP, then in each plugin
+            foreach (array_merge([null], Plugin::all()) as $plugin) {
+                foreach (self::getPaths($plugin) as $path) {
+                    foreach ($patterns as $pattern) {
+                        if (is_readable($path . $pattern . '.' . self::EXTENSION)) {
+                            $page = ($plugin ? $plugin . '.' : '') . DS . 'StaticPages' . DS . $pattern;
 
-                if (is_readable($filename)) {
-                    $page = DS . 'StaticPages' . DS . $pattern;
-
-                    break;
-                }
-            }
-
-            //Checks if the page exists in each plugin
-            foreach (Plugin::all() as $plugin) {
-                foreach ($patterns as $pattern) {
-                    $filename = self::getPluginPath($plugin) . $pattern . '.ctp';
-
-                    if (is_readable($filename)) {
-                        $page = $plugin . '.' . DS . 'StaticPages' . DS . $pattern;
-
-                        break;
+                            break 3;
+                        }
                     }
                 }
             }
 
-            Cache::write($cache, $page, 'static_pages');
-        }
-
-        return $page;
+            return isset($page) ? $page : null;
+        }, 'static_pages');
     }
 
     /**
@@ -186,11 +156,9 @@ class StaticPage
      */
     public static function title($slugOrPath)
     {
-        //Gets only the filename (without extension)
+        //Gets only the filename (without extension), then turns dashes into
+        //  underscores (because `Inflector::humanize` will remove only underscores)
         $slugOrPath = pathinfo($slugOrPath, PATHINFO_FILENAME);
-
-        //Turns dashes into underscores (because `Inflector::humanize` will
-        //  remove only underscores)
         $slugOrPath = str_replace('-', '_', $slugOrPath);
 
         return Inflector::humanize($slugOrPath);

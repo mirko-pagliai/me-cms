@@ -12,24 +12,20 @@
  */
 namespace MeCms\Model\Validation;
 
-use MeCms\Validation\AppValidator;
+use MeCms\Validation\BannerAndPhotoValidator;
 
 /**
  * Banner validator class
  */
-class BannerValidator extends AppValidator
+class BannerValidator extends BannerAndPhotoValidator
 {
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Validation\AppValidator::__construct()
+     * Construct
      */
     public function __construct()
     {
         parent::__construct();
 
-        //Position
         $this->add('position_id', [
             'naturalNumber' => [
                 'message' => I18N_SELECT_VALID_OPTION,
@@ -37,15 +33,6 @@ class BannerValidator extends AppValidator
             ],
         ])->requirePresence('position_id', 'create');
 
-        //Filename
-        $this->add('filename', [
-            'extension' => [
-                'message' => __d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
-                'rule' => ['extension', ['gif', 'jpg', 'jpeg', 'png']],
-            ],
-        ])->requirePresence('filename', 'create');
-
-        //Target
         $this->add('target', [
             'maxLength' => [
                 'message' => __d('me_cms', 'Must be at most {0} chars', 255),
@@ -57,7 +44,6 @@ class BannerValidator extends AppValidator
             ],
         ])->allowEmpty('target');
 
-        //Thumbnail
         $this->add('thumbnail', [
             'boolean' => [
                 'message' => I18N_SELECT_VALID_OPTION,

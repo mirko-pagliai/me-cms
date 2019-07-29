@@ -47,11 +47,8 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         $cache = Cache::read('albums_index', $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('albums')->toArray(), $cache->toArray());
 
-        //Deletes all albums, except the first one and clears the cache
-        $this->Table->deleteAll(['id !=' => 1]);
-        Cache::clear(false, $this->Table->getCacheName());
-
-        //Now it redirects to the first album
+        //Deletes all albums, except the first one. Now it redirects to the first album
+        $this->Table->deleteAll(['id >' => 1]);
         $this->get(['_name' => 'albums']);
         $this->assertRedirect(['_name' => 'album', 'test-album']);
     }
@@ -85,7 +82,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertNotEmpty($this->_controller->request->getParam('paging')['Photos']);
+        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Photos']);
 
         //GET request with query string
         $this->get($url + ['?' => ['q' => 'test-album']]);

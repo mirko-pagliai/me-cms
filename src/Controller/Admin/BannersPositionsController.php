@@ -54,8 +54,8 @@ class BannersPositionsController extends AppController
     {
         $position = $this->BannersPositions->newEntity();
 
-        if ($this->request->is('post')) {
-            $position = $this->BannersPositions->patchEntity($position, $this->request->getData());
+        if ($this->getRequest()->is('post')) {
+            $position = $this->BannersPositions->patchEntity($position, $this->getRequest()->getData());
 
             if ($this->BannersPositions->save($position)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -74,12 +74,12 @@ class BannersPositionsController extends AppController
      * @param string $id Banners Position ID
      * @return \Cake\Network\Response|null|void
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $position = $this->BannersPositions->get($id);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $position = $this->BannersPositions->patchEntity($position, $this->request->getData());
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+            $position = $this->BannersPositions->patchEntity($position, $this->getRequest()->getData());
 
             if ($this->BannersPositions->save($position)) {
                 $this->Flash->success(I18N_OPERATION_OK);
@@ -92,19 +92,20 @@ class BannersPositionsController extends AppController
 
         $this->set(compact('position'));
     }
+
     /**
      * Deletes banners position
      * @param string $id Banners Position ID
      * @return \Cake\Network\Response|null
      */
-    public function delete($id = null)
+    public function delete($id)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
 
         $position = $this->BannersPositions->get($id);
 
         //Before deleting, it checks if the position has some banners
-        if (!$position->banner_count) {
+        if (!$position->get('banner_count')) {
             $this->BannersPositions->deleteOrFail($position);
             $this->Flash->success(I18N_OPERATION_OK);
         } else {

@@ -12,27 +12,11 @@
  */
 namespace MeCms\Model\Validation;
 
-use MeCms\Validation\AppValidator;
+use MeCms\Validation\CategoryValidator;
 
 /**
  * PhotosAlbum validator class
  */
-class PhotosAlbumValidator extends AppValidator
+class PhotosAlbumValidator extends CategoryValidator
 {
-    /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Validation\AppValidator::__construct()
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        //Title
-        $this->requirePresence('title', 'create');
-
-        //Slug
-        $this->requirePresence('slug', 'create');
-    }
 }

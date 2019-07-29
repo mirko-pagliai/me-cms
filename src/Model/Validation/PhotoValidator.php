@@ -12,37 +12,25 @@
  */
 namespace MeCms\Model\Validation;
 
-use MeCms\Validation\AppValidator;
+use MeCms\Validation\BannerAndPhotoValidator;
 
 /**
  * Photo validator class
  */
-class PhotoValidator extends AppValidator
+class PhotoValidator extends BannerAndPhotoValidator
 {
     /**
-     * Construct.
-     *
-     * Adds some validation rules.
-     * @uses MeCms\Validation\AppValidator::__construct()
+     * Construct
      */
     public function __construct()
     {
         parent::__construct();
 
-        //Album
         $this->add('album_id', [
             'naturalNumber' => [
                 'message' => I18N_SELECT_VALID_OPTION,
                 'rule' => 'naturalNumber',
             ],
         ])->requirePresence('album_id', 'create');
-
-        //Filename
-        $this->add('filename', [
-            'extension' => [
-                'message' => __d('me_cms', 'Valid extensions: {0}', 'gif, jpg, jpeg, png'),
-                'rule' => ['extension', ['gif', 'jpg', 'jpeg', 'png']],
-            ],
-        ])->requirePresence('filename', 'create');
     }
 }

@@ -37,7 +37,8 @@ define('I18N_FIRST_NAME', __d('me_cms', 'First name'));
 define('I18N_GROUP', __d('me_cms', 'Group'));
 define('I18N_HELP_DRAFT', __d('me_cms', 'Disable this option to save as a draft'));
 define('I18N_HELP_ENABLE_COMMENTS', __d('me_cms', 'Enable comments, according to the general settings'));
-define('I18N_HELP_SLUG', __d('me_cms', 'The slug is a string identifying a resource. If you do not have special needs, let it be generated automatically'));
+define('I18N_HELP_SLUG', __d('me_cms', 'The slug is a string identifying a resource. If you do not' .
+    'have special needs, let it be generated automatically'));
 define('I18N_ID', __d('me_cms', 'ID'));
 define('I18N_LABEL', __d('me_cms', 'Label'));
 define('I18N_LAST_LOGIN', __d('me_cms', 'Last login'));

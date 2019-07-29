@@ -9,16 +9,16 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         http://api.cakephp.org/3.4/class-Cake.Core.Plugin.html
+ * @see         http://api.cakephp.org/3.7/class-Cake.Core.Plugin.html
  */
 namespace MeCms\Core;
 
-use MeTools\Core\Plugin as CakePlugin;
+use MeTools\Core\Plugin as BasePlugin;
 
 /**
  * An utility to handle plugins
  */
-class Plugin extends CakePlugin
+class Plugin extends BasePlugin
 {
     /**
      * Gets all loaded plugins.
@@ -33,7 +33,7 @@ class Plugin extends CakePlugin
      */
     public static function all(array $options = [])
     {
-        $options = array_merge(['order' => true], $options);
+        $options += ['order' => true];
         $plugins = parent::all($options);
 
         if ($options['order']) {
