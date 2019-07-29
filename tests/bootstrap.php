@@ -144,7 +144,3 @@ Configure::write('pluginsToLoad', ['MeTools', 'MeCms']);
 Security::setSalt('a-long-but-not-random-value');
 
 $_SERVER['PHP_SELF'] = '/';
-
-if (!class_exists('PHPUnit\Runner\Version')) {
-    class_alias('PHPUnit_Framework_MockObject_MockObject', 'PHPUnit\Framework\MockObject\MockObject');
-}
