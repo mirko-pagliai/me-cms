@@ -34,7 +34,7 @@ class StaticPageTest extends TestCase
     {
         parent::tearDown();
 
-        Cache::clear('static_pages');
+        Cache::clear(false, 'static_pages');
         $this->removePlugins(['TestPlugin']);
     }
 
@@ -45,7 +45,7 @@ class StaticPageTest extends TestCase
     public function testAll()
     {
         $this->loadPlugins(['TestPlugin']);
-        $TestPluginPath = rtr(array_value_first(App::path('Template', 'TestPlugin')));
+        $TestPluginPath = rtr(array_value_first(App::path('Template', 'TestPlugin'))) . DS;
 
         $pages = StaticPage::all();
         $this->assertContainsOnlyInstancesOf(Entity::class, $pages);
