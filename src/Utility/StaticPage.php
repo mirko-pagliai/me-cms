@@ -14,12 +14,12 @@ namespace MeCms\Utility;
 
 use Cake\Cache\Cache;
 use Cake\Core\App;
-use Cake\Filesystem\Folder;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
 use Cake\ORM\Entity;
 use Cake\Utility\Inflector;
 use MeCms\Core\Plugin;
+use Symfony\Component\Finder\Finder;
 
 /**
  * An utility to handle static pages
@@ -88,21 +88,19 @@ class StaticPage
     public static function all()
     {
         foreach (self::getAllPaths() as $path) {
-            //Gets all files for each path
-            $files = (new Folder($path))->findRecursive('^.+\.' . self::EXTENSION . '$', true);
-
-            foreach ($files as $file) {
+            $finder = new Finder();
+            foreach ($finder->files()->name('/^.+\.' . self::EXTENSION . '$/')->in($path) as $file) {
                 $pages[] = new Entity([
-                    'filename' => pathinfo($file, PATHINFO_FILENAME),
-                    'path' => rtr($file),
-                    'slug' => self::getSlug($file, $path),
-                    'title' => self::title(pathinfo($file, PATHINFO_FILENAME)),
-                    'modified' => new FrozenTime(filemtime($file)),
+                    'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
+                    'path' => rtr($file->getPathname()),
+                    'slug' => self::getSlug($file->getPathname(), $path),
+                    'title' => self::title(pathinfo($file->getPathname(), PATHINFO_FILENAME)),
+                    'modified' => new FrozenTime($file->getMTime()),
                 ]);
             }
         }
 
-        return $pages;
+        return isset($pages) ? $pages : [];
     }
 
     /**
