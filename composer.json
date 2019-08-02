@@ -21,14 +21,14 @@
         "mirko-pagliai/cakephp-thumber": "^1.5.2",
         "mirko-pagliai/cakephp-tokens": "^1.2",
         "mirko-pagliai/me-tools": "^2.18.7",
-        "mirko-pagliai/php-tools": "^1.2.7",
+        "mirko-pagliai/php-tools": "^1.2.8",
         "npm-asset/js-cookie": "^v2.2",
         "wyrihaximus/minify-html": "^1.1"
     },
     "require-dev": {
         "cakephp/debug_kit": "~3.0",
         "cakephp/cakephp-codesniffer": "^3.0",
-        "mirko-pagliai/cakephp-assets": "^1.3",
+        "mirko-pagliai/cakephp-assets": "dev-develop as 1.4.4",
         "phpunit/phpunit": "^5.7|^6.0"
     },
     "suggest": {

@@ -14,13 +14,13 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Filesystem\Folder;
 use Cake\I18n\I18n;
 use Cake\Routing\Router;
 use League\CommonMark\CommonMarkConverter;
 use MeCms\Controller\AppController;
 use MeCms\Core\Plugin;
 use MeCms\Utility\Checkup;
+use Symfony\Component\Finder\Finder;
 use Thumber\Utility\ThumbManager;
 
 /**
@@ -228,11 +228,20 @@ class SystemsController extends AppController
      */
     public function tmpViewer()
     {
-        $assetsSize = (new Folder(getConfigOrFail('Assets.target')))->dirsize();
-        $cacheSize = (new Folder(CACHE))->dirsize();
-        $logsSize = (new Folder(LOGS))->dirsize();
+        $getDirSize = function ($path) {
+            $size = 0;
+            foreach ((new Finder())->in($path) as $file) {
+                $size += $file->getSize();
+            }
+
+            return $size;
+        };
+
+        $assetsSize = $getDirSize(getConfigOrFail('Assets.target'));
+        $cacheSize = $getDirSize(CACHE);
+        $logsSize = $getDirSize(LOGS);
         $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
-        $thumbsSize = (new Folder(getConfigOrFail('Thumber.target')))->dirsize();
+        $thumbsSize = $getDirSize(getConfigOrFail('Thumber.target'));
 
         $this->set('cacheStatus', Cache::enabled());
         $this->set('totalSize', $assetsSize + $cacheSize + $logsSize + $sitemapSize + $thumbsSize);

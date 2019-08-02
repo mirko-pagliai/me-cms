@@ -13,9 +13,9 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
-use Cake\Filesystem\Folder;
 use Cake\Mailer\MailerAwareTrait;
 use MeCms\Controller\AppController;
+use Symfony\Component\Finder\Finder;
 use Thumber\Utility\ThumbManager;
 
 /**
@@ -252,8 +252,9 @@ class UsersController extends AppController
             $id = $this->Auth->user('id');
 
             //Deletes any picture that already exists
-            foreach (((new Folder(USER_PICTURES))->find($id . '\..+')) as $filename) {
-                @unlink(USER_PICTURES . $filename);
+            $finder = new Finder();
+            foreach ($finder->files()->name('/^' . $id . '\..+/')->in(USER_PICTURES) as $file) {
+                @unlink($file->getPathname());
             }
 
             $filename = $id . '.' . pathinfo($this->getRequest()->getData('file')['tmp_name'], PATHINFO_EXTENSION);

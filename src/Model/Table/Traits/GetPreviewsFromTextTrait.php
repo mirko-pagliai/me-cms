@@ -13,7 +13,6 @@
  */
 namespace MeCms\Model\Table\Traits;
 
-use Cake\Filesystem\Folder;
 use Cake\ORM\Entity;
 use DOMDocument;
 use MeTools\Utility\Youtube;
@@ -91,7 +90,7 @@ trait GetPreviewsFromTextTrait
     {
         $images = array_map(function ($url) {
             if ($url && !is_url($url)) {
-                $url = Folder::isAbsolute($url) ? $url : WWW_ROOT . 'img' . DS . $url;
+                $url = is_absolute($url) ? $url : WWW_ROOT . 'img' . DS . $url;
 
                 if (!file_exists($url)) {
                     return false;
