@@ -40,13 +40,10 @@ class StaticPage
     protected static function getAllPaths()
     {
         return Cache::remember('paths', function () {
-            $paths = self::getPaths();
+            $paths = array_map([__CLASS__, 'getPaths'], Plugin::all());
+            array_unshift($paths, self::getPaths());
 
-            foreach (Plugin::all() as $plugin) {
-                $paths = array_merge($paths, self::getPaths($plugin));
-            }
-
-            return array_filter($paths, 'file_exists');
+            return array_filter(array_map('array_value_first', $paths), 'file_exists');
         }, 'static_pages');
     }
 
