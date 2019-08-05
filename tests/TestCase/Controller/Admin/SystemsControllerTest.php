@@ -47,6 +47,7 @@ class SystemsControllerTest extends ControllerTestCase
 
         $files = [
             'assets' => getConfigOrFail('Assets.target') . DS . 'asset_file',
+            'assets2' => getConfigOrFail('Assets.target') . DS . 'asset_file2',
             'logs' => LOGS . 'log_file',
             'sitemap' => SITEMAP,
             'thumbs' => getConfigOrFail('Thumber.target') . DS . md5('a') . '_' . md5('a') . '.jpg',

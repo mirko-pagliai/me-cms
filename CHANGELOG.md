@@ -4,6 +4,9 @@
 * updated for `cakephp` 4 and `phpunit` 8.
 
 ## 2.26 branch
+### 2.26.7
+* updated for `php-tools` `1.2.8`.
+
 ### 2.26.6
 * added `AppTable::deleteAll()` method. This automatically clears the cache
     associated with the table, when possible;

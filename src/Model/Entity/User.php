@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace MeCms\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
-use Cake\Filesystem\Folder;
 use Cake\ORM\Entity;
+use Symfony\Component\Finder\Finder;
 
 /**
  * User entity
@@ -74,7 +74,9 @@ class User extends Entity
     protected function _getPicture(): string
     {
         if ($this->has('id')) {
-            $files = ((new Folder(USER_PICTURES))->find($this->get('id') . '\..+'));
+            $finder = new Finder();
+            $finder->files()->name('/^' . $this->_properties['id'] . '\..+/')->in(USER_PICTURES);
+            $files = objects_map(iterator_to_array($finder), 'getFilename');
 
             if (!empty($files)) {
                 return 'users' . DS . array_value_first($files);

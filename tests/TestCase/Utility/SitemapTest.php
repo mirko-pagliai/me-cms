@@ -309,11 +309,11 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
             [
-                'loc' => 'http://localhost/page/cookies-policy-it',
+                'loc' => 'http://localhost/page/cookies-policy',
                 'priority' => '0.5',
             ],
             [
-                'loc' => 'http://localhost/page/cookies-policy',
+                'loc' => 'http://localhost/page/cookies-policy-it',
                 'priority' => '0.5',
             ],
             [
@@ -321,11 +321,11 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
             [
-                'loc' => 'http://localhost/page/first-folder/page-on-first-from-plugin',
+                'loc' => 'http://localhost/page/first-folder/second_folder/page_on_second_from_plugin',
                 'priority' => '0.5',
             ],
             [
-                'loc' => 'http://localhost/page/first-folder/second_folder/page_on_second_from_plugin',
+                'loc' => 'http://localhost/page/first-folder/page-on-first-from-plugin',
                 'priority' => '0.5',
             ],
         ], $map);

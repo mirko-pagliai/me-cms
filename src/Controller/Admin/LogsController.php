@@ -13,10 +13,11 @@ declare(strict_types=1);
  */
 namespace MeCms\Controller\Admin;
 
-use Cake\Filesystem\Folder;
 use Cake\Http\Response;
 use Cake\ORM\Entity;
 use MeCms\Controller\AppController;
+use SplFileInfo;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Logs controller
@@ -25,12 +26,15 @@ class LogsController extends AppController
 {
     /**
      * Internal method to get the path for a log
-     * @param string $filename Filename
+     * @param string|SplFileInfo $file File as filename string or a
+     *  `SplFileInfo` instance
      * @param bool $serialized `true` for a serialized log
      * @return string
      */
-    protected function getPath(string $filename, bool $serialized): string
+    protected function getPath($file, bool $serialized): string
     {
+        $filename = $file instanceof SplFileInfo ? $file->getFilename() : $file;
+
         if ($serialized) {
             $filename = pathinfo($filename, PATHINFO_FILENAME) . '_serialized.log';
         }
@@ -74,14 +78,15 @@ class LogsController extends AppController
      */
     public function index(): void
     {
-        //Gets all log files, except those serialized
-        $logs = array_map(function (string $log) {
+        $finder = new Finder();
+        $finder->files()->name('(?!.*_serialized).+\.log')->in(LOGS);
+        $logs = array_map(function (SplFileInfo $log) {
             return new Entity([
-                'filename' => $log,
+                'filename' => $log->getFilename(),
                 'hasSerialized' => is_readable($this->getPath($log, true)),
-                'size' => filesize(LOGS . $log),
+                'size' => $log->getSize()
             ]);
-        }, (new Folder(LOGS))->find('(?!.*_serialized).+\.log'));
+        }, iterator_to_array($finder));
 
         $this->set(compact('logs'));
     }
