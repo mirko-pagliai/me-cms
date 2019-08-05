@@ -10,30 +10,33 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\Page;
+
 $this->extend('/Common/index');
-$this->assign('title', $category->title);
+$this->assign('title', $category->get('title'));
 
 /**
  * Userbar
  */
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit category'),
-    ['action' => 'edit', $category->id, 'prefix' => ADMIN_PREFIX],
+    ['action' => 'edit', $category->get('id'), 'prefix' => ADMIN_PREFIX],
     ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']
 ));
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete category'),
-    ['action' => 'delete', $category->id, 'prefix' => ADMIN_PREFIX],
+    ['action' => 'delete', $category->get('id'), 'prefix' => ADMIN_PREFIX],
     ['class' => 'nav-link text-danger', 'icon' => 'trash-alt', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
 ));
 
 /**
  * Breadcrumb
  */
-$this->Breadcrumbs->add($category->title, ['_name' => 'pagesCategory', $category->title]);
+$this->Breadcrumbs->add($category->get('title'), ['_name' => 'pagesCategory', $category->get('title')]);
 
-$pages = collection($category->pages)->map(function ($page) {
-    return $this->Html->link($page->title, ['_name' => 'page', $page->slug]);
+$pages = collection($category->get('pages'))->map(function (Page $page) {
+    return $this->Html->link($page->get('title'), ['_name' => 'page', $page->get('slug')]);
 })->toList();
 
 echo $this->Html->ul($pages, ['icon' => 'caret-right']);

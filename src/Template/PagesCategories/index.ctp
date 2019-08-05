@@ -10,6 +10,9 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\PagesCategory;
+
 $this->extend('/Common/index');
 $this->assign('title', $title = __d('me_cms', 'Pages categories'));
 
@@ -18,8 +21,8 @@ $this->assign('title', $title = __d('me_cms', 'Pages categories'));
  */
 $this->Breadcrumbs->add($title, ['_name' => 'pagesCategories']);
 
-$categories = $categories->map(function ($category) {
-    return $this->Html->link($category->title, ['_name' => 'pagesCategory', $category->slug]);
+$categories = $categories->map(function (PagesCategory $category) {
+    return $this->Html->link($category->get('title'), ['_name' => 'pagesCategory', $category->get('slug')]);
 })->toList();
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);
