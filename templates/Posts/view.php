@@ -11,27 +11,30 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\Post;
+
 $this->extend('/Common/view');
-$this->assign('title', $post->title);
+$this->assign('title', $post->get('title'));
 
 /**
  * Userbar
  */
 $class = 'badge badge-warning';
-if (!$post->active) {
+if (!$post->get('active')) {
     $this->userbar($this->Html->span(I18N_DRAFT, compact('class')));
 }
-if ($post->created->isFuture()) {
+if ($post->get('created')->isFuture()) {
     $this->userbar($this->Html->span(I18N_SCHEDULED, compact('class')));
 }
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit post'),
-    ['action' => 'edit', $post->id, 'prefix' => ADMIN_PREFIX],
+    ['action' => 'edit', $post->get('id'), 'prefix' => ADMIN_PREFIX],
     ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']
 ));
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete post'),
-    ['action' => 'delete', $post->id, 'prefix' => ADMIN_PREFIX],
+    ['action' => 'delete', $post->get('id'), 'prefix' => ADMIN_PREFIX],
     ['class' => 'nav-link text-danger', 'icon' => 'trash-alt', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
 ));
 
@@ -39,9 +42,12 @@ $this->userbar($this->Form->postLink(
  * Breadcrumb
  */
 if (getConfig('post.category')) {
-    $this->Breadcrumbs->add($post->category->title, ['_name' => 'postsCategory', $post->category->slug]);
+    $this->Breadcrumbs->add(
+        $post->get('category')->get('title'),
+        ['_name' => 'postsCategory', $post->get('category')->get('slug')]
+    );
 }
-$this->Breadcrumbs->add($post->title, ['_name' => 'post', $post->slug]);
+$this->Breadcrumbs->add($post->get('title'), ['_name' => 'post', $post->get('slug')]);
 
 /**
  * Meta tags
@@ -50,26 +56,26 @@ if ($this->getRequest()->isAction('view', 'Posts')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
 
     if ($post->has('modified')) {
-        $this->Html->meta(['content' => $post->modified->toUnixString(), 'property' => 'og:updated_time']);
+        $this->Html->meta(['content' => $post->get('modified')->toUnixString(), 'property' => 'og:updated_time']);
     }
 
     //Adds tags as keywords
     if (getConfig('post.keywords') && $post->has('tags_as_string')) {
-        $this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->tags_as_string));
+        $this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->get('tags_as_string')));
     }
 
     if ($post->has('preview')) {
-        foreach ($post->preview as $preview) {
-            $this->Html->meta(['href' => $preview->url, 'rel' => 'image_src']);
-            $this->Html->meta(['content' => $preview->url, 'property' => 'og:image']);
-            $this->Html->meta(['content' => $preview->width, 'property' => 'og:image:width']);
-            $this->Html->meta(['content' => $preview->height, 'property' => 'og:image:height']);
+        foreach ($post->get('preview') as $preview) {
+            $this->Html->meta(['href' => $preview->get('url'), 'rel' => 'image_src']);
+            $this->Html->meta(['content' => $preview->get('url'), 'property' => 'og:image']);
+            $this->Html->meta(['content' => $preview->get('width'), 'property' => 'og:image:width']);
+            $this->Html->meta(['content' => $preview->get('height'), 'property' => 'og:image:height']);
         }
     }
 
     if ($post->has('text')) {
         $this->Html->meta([
-            'content' => $this->Text->truncate($post->plain_text, 100, ['html' => true]),
+            'content' => $this->Text->truncate($post->get('plain_text'), 100, ['html' => true]),
             'property' => 'og:description',
         ]);
     }
@@ -80,8 +86,8 @@ echo $this->element('views/post', compact('post'));
 
 <?php if (!empty($related)) : ?>
     <?php
-        $relatedAsArray = collection($related)->map(function ($post) {
-            return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
+        $relatedAsArray = collection($related)->map(function (Post $post) {
+            return $this->Html->link($post->get('title'), ['_name' => 'post', $post->get('slug')]);
         })->toArray();
     ?>
     <div class="related-contents mb-4">

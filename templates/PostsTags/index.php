@@ -11,6 +11,9 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\Tag;
+
 $this->extend('/Common/index');
 $this->assign('title', $title = __d('me_cms', 'Posts tags'));
 
@@ -19,8 +22,8 @@ $this->assign('title', $title = __d('me_cms', 'Posts tags'));
  */
 $this->Breadcrumbs->add($title, ['_name' => 'postsTags']);
 
-$tags = $tags->map(function ($tag) {
-    return $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug]);
+$tags = $tags->map(function (Tag $tag) {
+    return $this->Html->link($tag->get('tag'), ['_name' => 'postsTag', $tag->get('slug')]);
 })->toList();
 
 echo $this->Html->ul($tags, ['icon' => 'caret-right']);

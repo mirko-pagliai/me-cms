@@ -11,6 +11,9 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\PostsCategory;
+
 $this->extend('/Common/index');
 $this->assign('title', $title = I18N_POSTS_CATEGORIES);
 
@@ -19,8 +22,8 @@ $this->assign('title', $title = I18N_POSTS_CATEGORIES);
  */
 $this->Breadcrumbs->add($title, ['_name' => 'postsCategories']);
 
-$categories = $categories->map(function ($category) {
-    return $this->Html->link($category->title, ['_name' => 'postsCategory', $category->slug]);
+$categories = $categories->map(function (PostsCategory $category) {
+    return $this->Html->link($category->get('title'), ['_name' => 'postsCategory', $category->get('slug')]);
 })->toList();
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);
