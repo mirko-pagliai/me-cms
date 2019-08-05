@@ -11,6 +11,9 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\PagesCategory;
+
 if (empty($categories) || $categories->count() < 2) {
     return;
 }
@@ -18,8 +21,8 @@ if (empty($categories) || $categories->count() < 2) {
 $this->extend('/Common/widget');
 $this->assign('title', __d('me_cms', 'Pages categories'));
 
-$categories = $categories->map(function ($category) {
-    return $this->Html->link($category->title, ['_name' => 'pagesCategory', $category->slug]);
+$categories = $categories->map(function (PagesCategory $category) {
+    return $this->Html->link($category->get('title'), ['_name' => 'pagesCategory', $category->get('slug')]);
 })->toArray();
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);

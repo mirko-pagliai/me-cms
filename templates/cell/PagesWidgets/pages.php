@@ -11,6 +11,9 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\Page;
+
 if (empty($pages) || $pages->isEmpty()) {
     return;
 }
@@ -18,8 +21,8 @@ if (empty($pages) || $pages->isEmpty()) {
 $this->extend('/Common/widget');
 $this->assign('title', I18N_PAGES);
 
-$pages = $pages->map(function ($page) {
-    return $this->Html->link($page->title, ['_name' => 'page', $page->slug]);
+$pages = $pages->map(function (Page $page) {
+    return $this->Html->link($page->get('title'), ['_name' => 'page', $page->get('slug')]);
 })->toArray();
 
 echo $this->Html->ul($pages, ['icon' => 'caret-right']);

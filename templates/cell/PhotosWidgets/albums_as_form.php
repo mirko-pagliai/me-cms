@@ -11,6 +11,9 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\PhotosAlbum;
+
 if (empty($albums) || $albums->count() < 2) {
     return;
 }
@@ -26,8 +29,8 @@ echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'send_form(this)',
-    'options' => $albums->map(function ($album) {
-        return sprintf('%s (%d)', $album->title, $album->photo_count);
+    'options' => $albums->map(function (PhotosAlbum $album) {
+        return sprintf('%s (%d)', $album->get('title'), $album->get('photo_count'));
     })->toArray(),
 ]);
 echo $this->Form->end();

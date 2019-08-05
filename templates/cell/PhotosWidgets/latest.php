@@ -19,5 +19,5 @@ $this->extend('/Common/widget');
 $this->assign('title', __dn('me_cms', 'Latest photo', 'Latest {0} photos', $photos->count(), $photos->count()));
 
 foreach ($photos as $photo) {
-    echo $this->Thumb->fit($photo->path, ['width' => 253], ['class' => 'thumbnail', 'url' => ['_name' => 'albums']]);
+    echo $this->Thumb->fit($photo->get('path'), ['width' => 253], ['class' => 'thumbnail', 'url' => ['_name' => 'albums']]);
 }
