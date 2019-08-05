@@ -92,7 +92,7 @@ class StaticPage
     {
         foreach (self::getAllPaths() as $path) {
             $finder = new Finder();
-            foreach ($finder->files()->name('/^.+\.' . self::EXTENSION . '$/')->in($path) as $file) {
+            foreach ($finder->files()->name('/^.+\.' . self::EXTENSION . '$/')->sortByName()->in($path) as $file) {
                 $pages[] = new Entity([
                     'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
                     'path' => rtr($file->getPathname()),

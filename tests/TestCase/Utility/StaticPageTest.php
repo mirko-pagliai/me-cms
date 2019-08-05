@@ -56,41 +56,41 @@ class StaticPageTest extends TestCase
         //Checks filenames
         $this->assertEquals([
             'page-from-app',
-            'cookies-policy',
             'cookies-policy-it',
-            'test-from-plugin',
-            'page_on_second_from_plugin',
+            'cookies-policy',
             'page-on-first-from-plugin',
+            'page_on_second_from_plugin',
+            'test-from-plugin',
         ], Hash::extract($pages, '{n}.filename'));
 
         //Checks paths
         $this->assertEquals([
             'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'Template' . DS . 'StaticPages' . DS . 'page-from-app.' . StaticPage::EXTENSION,
-            'src' . DS . 'Template' . DS . 'StaticPages' . DS . 'cookies-policy.' . StaticPage::EXTENSION,
             'src' . DS . 'Template' . DS . 'StaticPages' . DS . 'cookies-policy-it.' . StaticPage::EXTENSION,
-            $TestPluginPath . 'StaticPages' . DS . 'test-from-plugin.' . StaticPage::EXTENSION,
-            $TestPluginPath . 'StaticPages' . DS . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin.' . StaticPage::EXTENSION,
+            'src' . DS . 'Template' . DS . 'StaticPages' . DS . 'cookies-policy.' . StaticPage::EXTENSION,
             $TestPluginPath . 'StaticPages' . DS . 'first-folder' . DS . 'page-on-first-from-plugin.' . StaticPage::EXTENSION,
+            $TestPluginPath . 'StaticPages' . DS . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin.' . StaticPage::EXTENSION,
+            $TestPluginPath . 'StaticPages' . DS . 'test-from-plugin.' . StaticPage::EXTENSION,
         ], Hash::extract($pages, '{n}.path'));
 
         //Checks slugs
         $this->assertEquals([
             'page-from-app',
-            'cookies-policy',
             'cookies-policy-it',
-            'test-from-plugin',
-            'first-folder/second_folder/page_on_second_from_plugin',
+            'cookies-policy',
             'first-folder/page-on-first-from-plugin',
+            'first-folder/second_folder/page_on_second_from_plugin',
+            'test-from-plugin',
         ], Hash::extract($pages, '{n}.slug'));
 
         //Checks titles
         $this->assertEquals([
             'Page From App',
-            'Cookies Policy',
             'Cookies Policy It',
-            'Test From Plugin',
-            'Page On Second From Plugin',
+            'Cookies Policy',
             'Page On First From Plugin',
+            'Page On Second From Plugin',
+            'Test From Plugin',
         ], Hash::extract($pages, '{n}.title'));
     }
 
@@ -106,11 +106,11 @@ class StaticPageTest extends TestCase
         $pages = array_map([StaticPage::class, 'get'], Hash::extract(StaticPage::all(), '{n}.slug'));
         $this->assertEquals([
             DS . 'StaticPages' . DS . 'page-from-app',
-            'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy',
             'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy-it',
-            'TestPlugin.' . DS . 'StaticPages' . DS . 'test-from-plugin',
-            'TestPlugin.' . DS . 'StaticPages' . DS . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin',
+            'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy',
             'TestPlugin.' . DS . 'StaticPages' . DS . 'first-folder' . DS . 'page-on-first-from-plugin',
+            'TestPlugin.' . DS . 'StaticPages' . DS . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin',
+            'TestPlugin.' . DS . 'StaticPages' . DS . 'test-from-plugin',
         ], $pages);
 
         //Tries to get a no existing page
@@ -198,11 +198,11 @@ class StaticPageTest extends TestCase
     {
         $expected = [
             'Page From App',
-            'Cookies Policy',
             'Cookies Policy It',
-            'Test From Plugin',
+            'Cookies Policy',
             'Page On First From Plugin',
             'Page On Second From Plugin',
+            'Test From Plugin',
         ];
 
         //Gets all slugs and all paths from pages
