@@ -10,6 +10,9 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\Tag;
+
 if (empty($tags) || $tags->isEmpty()) {
     return;
 }
@@ -17,8 +20,8 @@ if (empty($tags) || $tags->isEmpty()) {
 $this->extend('/Common/widget');
 $this->assign('title', __d('me_cms', 'Popular tags'));
 
-$tags = $tags->map(function ($tag) {
-    return $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug]);
+$tags = $tags->map(function (Tag $tag) {
+    return $this->Html->link($tag->get('tag'), ['_name' => 'postsTag', $tag->get('slug')]);
 })->toArray();
 
 echo $this->Html->ul($tags, ['icon' => 'caret-right']);

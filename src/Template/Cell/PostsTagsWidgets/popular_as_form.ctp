@@ -10,6 +10,9 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\Tag;
+
 if (empty($tags) || $tags->isEmpty()) {
     return;
 }
@@ -25,8 +28,8 @@ echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'send_form(this)',
-    'options' => $tags->map(function ($tag) {
-        return sprintf('%s (%d)', $tag->tag, $tag->post_count);
+    'options' => $tags->map(function (Tag $tag) {
+        return sprintf('%s (%d)', $tag->get('tag'), $tag->get('post_count'));
     })->toArray(),
 ]);
 echo $this->Form->end();

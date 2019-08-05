@@ -10,6 +10,9 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\Post;
+
 if (empty($posts) || $posts->isEmpty()) {
     return;
 }
@@ -17,8 +20,8 @@ if (empty($posts) || $posts->isEmpty()) {
 $this->extend('/Common/widget');
 $this->assign('title', __dn('me_cms', 'Latest post', 'Latest {0} posts', $posts->count(), $posts->count()));
 
-$posts = $posts->map(function ($post) {
-    return $this->Html->link($post->title, ['_name' => 'post', $post->slug]);
+$posts = $posts->map(function (Post $post) {
+    return $this->Html->link($post->get('title'), ['_name' => 'post', $post->get('slug')]);
 })->toArray();
 
 echo $this->Html->ul($posts, ['icon' => 'caret-right']);
