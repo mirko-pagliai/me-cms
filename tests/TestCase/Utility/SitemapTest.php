@@ -303,32 +303,12 @@ class SitemapTest extends TestCase
             unset($map[$k]['lastmod']);
         }
 
-        $this->assertEquals([
-            [
-                'loc' => 'http://localhost/page/page-from-app',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/page/cookies-policy',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/page/cookies-policy-it',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/page/test-from-plugin',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/page/first-folder/second_folder/page_on_second_from_plugin',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/page/first-folder/page-on-first-from-plugin',
-                'priority' => '0.5',
-            ],
-        ], $map);
+        $this->assertContains(['loc' => 'http://localhost/page/page-from-app', 'priority' => '0.5'], $map);
+        $this->assertContains(['loc' => 'http://localhost/page/cookies-policy', 'priority' => '0.5'], $map);
+        $this->assertContains(['loc' => 'http://localhost/page/cookies-policy-it', 'priority' => '0.5'], $map);
+        $this->assertContains(['loc' => 'http://localhost/page/first-folder/page-on-first-from-plugin', 'priority' => '0.5'], $map);
+        $this->assertContains(['loc' => 'http://localhost/page/first-folder/second_folder/page_on_second_from_plugin', 'priority' => '0.5'], $map);
+        $this->assertContains(['loc' => 'http://localhost/page/test-from-plugin', 'priority' => '0.5'], $map);
     }
 
     /**

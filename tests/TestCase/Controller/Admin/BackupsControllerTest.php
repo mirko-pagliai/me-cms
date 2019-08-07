@@ -20,6 +20,7 @@ use Cake\Log\Log;
 use Cake\ORM\Entity;
 use MeCms\Form\BackupForm;
 use MeCms\TestSuite\ControllerTestCase;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * BackupsControllerTest class
@@ -34,8 +35,9 @@ class BackupsControllerTest extends ControllerTestCase
     protected function createSingleBackup(string $extension = 'sql'): ?string
     {
         $file = getConfigOrFail('DatabaseBackup.target') . DS . sprintf('backup.%s', $extension);
+        create_file($file);
 
-        return create_file($file) ? $file : null;
+        return $file;
     }
 
     /**
@@ -56,7 +58,10 @@ class BackupsControllerTest extends ControllerTestCase
         parent::tearDown();
 
         //Deletes all backups
-        @unlink_recursive(getConfigOrFail('DatabaseBackup.target'));
+        try {
+            unlink_recursive(getConfigOrFail('DatabaseBackup.target'));
+        } catch (IOException $e) {
+        }
     }
 
     /**

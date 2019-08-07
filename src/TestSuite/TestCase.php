@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use MeTools\TestSuite\TestCase as BaseTestCase;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * TestCase class
@@ -29,7 +30,10 @@ abstract class TestCase extends BaseTestCase
     {
         parent::tearDown();
 
-        @unlink_recursive(KCFINDER, 'empty');
-        @unlink_recursive(WWW_ROOT . 'vendor', 'empty');
+        try {
+            unlink_recursive(KCFINDER, 'empty');
+            unlink_recursive(WWW_ROOT . 'vendor', 'empty');
+        } catch (IOException $e) {
+        }
     }
 }

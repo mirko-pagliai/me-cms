@@ -15,6 +15,7 @@ namespace MeCms\Test\Fixture;
 
 use Cake\Datasource\ConnectionInterface;
 use Cake\TestSuite\Fixture\TestFixture;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * PhotosFixture
@@ -94,7 +95,10 @@ class PhotosFixture extends TestFixture
      */
     public function drop(ConnectionInterface $db): bool
     {
-        @unlink_recursive(PHOTOS, 'empty');
+        try {
+            unlink_recursive(PHOTOS, 'empty');
+        } catch (IOException $e) {
+        }
 
         return parent::drop($db);
     }
