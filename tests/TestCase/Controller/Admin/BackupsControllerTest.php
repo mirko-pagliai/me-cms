@@ -33,7 +33,13 @@ class BackupsControllerTest extends ControllerTestCase
     {
         $file = getConfigOrFail('DatabaseBackup.target') . DS . sprintf('backup.%s', $extension);
 
-        return create_file($file) ? $file : false;
+        try {
+            create_file($file);
+        } catch (IOException $e) {
+            $this->fail($e->getMessage());
+        }
+
+        return $file;
     }
 
     /**
