@@ -14,6 +14,7 @@ namespace MeCms\Test\Fixture;
 
 use Cake\Datasource\ConnectionInterface;
 use Cake\TestSuite\Fixture\TestFixture;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * BannersFixture
@@ -93,7 +94,10 @@ class BannersFixture extends TestFixture
     {
         parent::drop($db);
 
-        @unlink_recursive(BANNERS, 'empty');
+        try {
+            unlink_recursive(BANNERS, 'empty');
+        } catch (IOException $e) {
+        }
     }
 
     /**

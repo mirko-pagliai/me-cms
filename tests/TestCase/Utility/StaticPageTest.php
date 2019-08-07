@@ -45,7 +45,7 @@ class StaticPageTest extends TestCase
     public function testAll()
     {
         $this->loadPlugins(['TestPlugin']);
-        $TestPluginPath = rtr(array_value_first(App::path('Template', 'TestPlugin'))) . DS;
+        $TestPluginPath = rtr(array_value_first(App::path('Template', 'TestPlugin'))) . '/StaticPages/';
 
         $pages = StaticPage::all();
         $this->assertContainsOnlyInstancesOf(Entity::class, $pages);
@@ -65,12 +65,12 @@ class StaticPageTest extends TestCase
 
         //Checks paths
         $this->assertEquals([
-            'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'Template' . DS . 'StaticPages' . DS . 'page-from-app.' . StaticPage::EXTENSION,
-            'src' . DS . 'Template' . DS . 'StaticPages' . DS . 'cookies-policy-it.' . StaticPage::EXTENSION,
-            'src' . DS . 'Template' . DS . 'StaticPages' . DS . 'cookies-policy.' . StaticPage::EXTENSION,
-            $TestPluginPath . 'StaticPages' . DS . 'first-folder' . DS . 'page-on-first-from-plugin.' . StaticPage::EXTENSION,
-            $TestPluginPath . 'StaticPages' . DS . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin.' . StaticPage::EXTENSION,
-            $TestPluginPath . 'StaticPages' . DS . 'test-from-plugin.' . StaticPage::EXTENSION,
+            'tests/test_app/TestApp/Template/StaticPages/page-from-app.' . StaticPage::EXTENSION,
+            'src/Template/StaticPages/cookies-policy-it.' . StaticPage::EXTENSION,
+            'src/Template/StaticPages/cookies-policy.' . StaticPage::EXTENSION,
+            $TestPluginPath . 'first-folder/page-on-first-from-plugin.' . StaticPage::EXTENSION,
+            $TestPluginPath . 'first-folder/second_folder/page_on_second_from_plugin.' . StaticPage::EXTENSION,
+            $TestPluginPath . 'test-from-plugin.' . StaticPage::EXTENSION,
         ], Hash::extract($pages, '{n}.path'));
 
         //Checks slugs
