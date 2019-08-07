@@ -15,6 +15,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 use BadMethodCallException;
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
+use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TableTestCase;
 
 /**
@@ -64,7 +65,7 @@ class AppTableTest extends TableTestCase
         parent::setUp();
 
         foreach (['Photos', 'Posts', 'PostsCategories'] as $table) {
-            $this->$table = $this->getMockForModel('MeCms.' . $table, null);
+            $this->$table = TableRegistry::getTableLocator()->get('MeCms.' . $table);
         }
     }
 

@@ -15,6 +15,7 @@ namespace MeCms\Test\TestCase\View\Cell;
 use Cake\Cache\Cache;
 use Cake\Http\ServerRequest;
 use Cake\I18n\FrozenDate;
+use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use MeCms\TestSuite\CellTestCase;
 
@@ -24,11 +25,6 @@ use MeCms\TestSuite\CellTestCase;
 class PostsWidgetsCellTest extends CellTestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $Table;
-
-    /**
      * Fixtures
      * @var array
      */
@@ -36,17 +32,6 @@ class PostsWidgetsCellTest extends CellTestCase
         'plugin.MeCms.Posts',
         'plugin.MeCms.PostsCategories',
     ];
-
-    /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Table = $this->Table ?: $this->getMockForModel('MeCms.Posts', null);
-    }
 
     /**
      * Test for `categories()` method

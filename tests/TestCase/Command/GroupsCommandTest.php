@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Command;
 
+use Cake\ORM\TableRegistry;
 use MeCms\Model\Entity\UsersGroup;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
@@ -38,7 +39,7 @@ class GroupsCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $UsersGroups = $this->getMockForModel('MeCms.UsersGroups', null);
+        $UsersGroups = TableRegistry::getTableLocator()->get('MeCms.UsersGroups');
 
         $expectedRows = $UsersGroups->find()->map(function (UsersGroup $group) {
             return [$group->id, $group->name, $group->label, $group->user_count];

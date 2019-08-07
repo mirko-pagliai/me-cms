@@ -13,6 +13,7 @@
  */
 namespace MeCms\TestSuite;
 
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use MeCms\TestSuite\TestCase;
 
@@ -89,7 +90,7 @@ abstract class ValidationTestCase extends TestCase
             $className = sprintf('%s\\Model\Table\\%sTable', $parts[0], $alias);
 
             if (class_exists($className)) {
-                $this->Table = $this->getMockForModel($alias, null, compact('className'));
+                $this->Table = TableRegistry::getTableLocator()->get($alias, compact('className'));
             }
         }
     }

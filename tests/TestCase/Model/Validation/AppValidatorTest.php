@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Model\Validation;
 
+use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -81,7 +82,7 @@ class AppValidatorTest extends TestCase
         parent::setUp();
 
         foreach (['Banners', 'Posts', 'Users'] as $table) {
-            $this->$table = $this->getMockForModel('MeCms.' . $table, null);
+            $this->$table = TableRegistry::getTableLocator()->get('MeCms.' . $table);
         }
     }
 

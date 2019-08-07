@@ -18,6 +18,7 @@ use Cake\ORM\Association;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\BelongsToMany;
 use Cake\ORM\Association\HasMany;
+use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -113,7 +114,7 @@ abstract class TableTestCase extends TestCase
 
             if (class_exists($className)) {
                 $alias = substr(array_pop($parts), 0, -5);
-                $this->Table = $this->getMockForModel($alias, null, compact('className'));
+                $this->Table = TableRegistry::getTableLocator()->get($alias, compact('className'));
 
                 //Tries to retrieve all cache names related to this table and associated tables
                 $this->cacheToClear = $this->Table->getCacheName(true);

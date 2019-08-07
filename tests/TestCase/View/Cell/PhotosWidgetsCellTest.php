@@ -23,11 +23,6 @@ use MeCms\TestSuite\CellTestCase;
 class PhotosWidgetsCellTest extends CellTestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $Table;
-
-    /**
      * Fixtures
      * @var array
      */
@@ -35,17 +30,6 @@ class PhotosWidgetsCellTest extends CellTestCase
         'plugin.MeCms.Photos',
         'plugin.MeCms.PhotosAlbums',
     ];
-
-    /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Table = $this->Table ?: $this->getMockForModel('MeCms.Photos', null);
-    }
 
     /**
      * Test for `albums()` method

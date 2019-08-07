@@ -14,6 +14,7 @@ namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
 use Cake\Http\ServerRequest;
+use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use InvalidArgumentException;
 use MeCms\TestSuite\CellTestCase;
@@ -22,13 +23,7 @@ use MeCms\TestSuite\CellTestCase;
  * PostsTagsWidgetsCellTest class
  */
 class PostsTagsWidgetsCellTest extends CellTestCase
-{
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $Table;
-
-    /**
+{    /**
      * @var array
      */
     protected $example = [
@@ -56,20 +51,9 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      */
     public function setUp()
     {
+        $this->Table = $this->Table ?: TableRegistry::getTableLocator()->get('MeCms.Tags');
+
         parent::setUp();
-
-        $this->Table = $this->Table ?: $this->getMockForModel('MeCms.Tags', null);
-    }
-
-    /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        Cache::clearAll();
     }
 
     /**

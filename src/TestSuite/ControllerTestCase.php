@@ -14,6 +14,7 @@
 namespace MeCms\TestSuite;
 
 use Cake\Cache\Cache;
+use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\IntegrationTestTrait;
 
@@ -144,7 +145,7 @@ abstract class ControllerTestCase extends TestCase
             //Tries to retrieve the table
             $className = sprintf('%s\\Model\\Table\\%sTable', $parts[0], $alias);
             if (class_exists($className) && $alias !== 'App') {
-                $this->Table = $this->getMockForModel($alias, null, compact('className'));
+                $this->Table = TableRegistry::getTableLocator()->get($alias, compact('className'));
 
                 //Tries to retrieve all cache names related to this table and associated tables
                 $this->cacheToClear = $this->Table->getCacheName(true);

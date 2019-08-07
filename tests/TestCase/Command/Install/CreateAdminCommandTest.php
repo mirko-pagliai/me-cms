@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Command\Install;
 
+use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
@@ -38,7 +39,7 @@ class CreateAdminCommandTest extends TestCase
     public function testExecute()
     {
         $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
-        $Users = $this->getMockForModel('MeCms.Users', null);
+        $Users = TableRegistry::getTableLocator()->get('MeCms.Users');
 
         $expectedUserId = $Users->find()->extract('id')->last() + 1;
         $this->exec('me_cms.create_admin', $example);
