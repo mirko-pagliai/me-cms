@@ -13,14 +13,14 @@
 
 use MeCms\Model\Entity\Post;
 
-if (empty($months) || $months->count() < 2) {
+if (empty($posts) || $posts->count() < 2) {
     return;
 }
 
 $this->extend('/Common/widget');
 $this->assign('title', __d('me_cms', 'Posts by month'));
 
-$months = $months->map(function (Post $post) {
+$months = $posts->map(function (Post $post) {
     return $this->Html->link($post->get('month')->i18nFormat('MMMM yyyy'), [
         '_name' => 'postsByDate',
         sprintf('%s/%s', $post->get('month')->i18nFormat('yyyy'), $post->get('month')->i18nFormat('MM')),
