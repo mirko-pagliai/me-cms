@@ -110,7 +110,7 @@ class StaticPage
             }
         }
 
-        return isset($pages) ? $pages : [];
+        return $pages ?? [];
     }
 
     /**
