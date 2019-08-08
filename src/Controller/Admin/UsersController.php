@@ -252,8 +252,7 @@ class UsersController extends AppController
             $id = $this->Auth->user('id');
 
             //Deletes any picture that already exists
-            $finder = new Finder();
-            foreach ($finder->files()->name('/^' . $id . '\..+/')->in(USER_PICTURES) as $file) {
+            foreach ((new Finder())->files()->name('/^' . $id . '\..+/')->in(USER_PICTURES) as $file) {
                 @unlink($file->getPathname());
             }
 
