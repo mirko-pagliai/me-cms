@@ -38,8 +38,10 @@ abstract class CellTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
+     * @uses $Table
      * @uses $Widget
      * @uses $autoInitializeClass
+     * @uses $cacheToClear
      */
     public function setUp(): void
     {
@@ -54,5 +56,11 @@ abstract class CellTestCase extends TestCase
 
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
         $this->Widget->getView()->setRequest($request);
+
+        if (!$this->Table && $this->autoInitializeClass) {
+            $alias = substr(get_class_short_name($this), 0, strlen(get_class_short_name($this)) - 15);
+            $className = 'MeCms\\Model\\Table\\' . $alias . 'Table';
+            $this->Table = $this->getTable($alias, compact('className'));
+        }
     }
 }

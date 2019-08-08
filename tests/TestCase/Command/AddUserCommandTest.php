@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\Test\TestCase\Command;
 
+use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
@@ -38,7 +39,7 @@ class AddUserCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $Users = $this->getMockForModel('MeCms.Users', null);
+        $Users = TableRegistry::getTableLocator()->get('MeCms.Users');
         $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
 
         $expectedUserId = $Users->find()->extract('id')->last() + 1;

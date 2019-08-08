@@ -24,11 +24,6 @@ use MeCms\TestSuite\CellTestCase;
 class PagesWidgetsCellTest extends CellTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PagesTable|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $Table;
-
-    /**
      * Fixtures
      * @var array
      */
@@ -36,28 +31,6 @@ class PagesWidgetsCellTest extends CellTestCase
         'plugin.MeCms.Pages',
         'plugin.MeCms.PagesCategories',
     ];
-
-    /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->Table = $this->Table ?: $this->getMockForModel('MeCms.Pages', null);
-    }
-
-    /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        Cache::clearAll();
-    }
 
     /**
      * Test for `categories()` method

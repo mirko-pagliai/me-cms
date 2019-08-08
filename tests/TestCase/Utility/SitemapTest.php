@@ -16,6 +16,7 @@ namespace MeCms\Test\TestCase\Utility;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
+use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 use MeCms\Utility\Sitemap;
 
@@ -63,7 +64,7 @@ class SitemapTest extends TestCase
     public function testPages()
     {
         $this->loadFixtures('Pages', 'PagesCategories');
-        $table = $this->getMockForModel('MeCms.PagesCategories', null);
+        $table = TableRegistry::getTableLocator()->get('MeCms.PagesCategories');
 
         //Pages are disabled for the sitemap
         Configure::write('MeCms.sitemap.pages', false);
@@ -111,7 +112,7 @@ class SitemapTest extends TestCase
     public function testPhotos()
     {
         $this->loadFixtures('Photos', 'PhotosAlbums');
-        $table = $this->getMockForModel('MeCms.PhotosAlbums', null);
+        $table = TableRegistry::getTableLocator()->get('MeCms.PhotosAlbums');
 
         //Photos are disabled for the sitemap
         Configure::write('MeCms.sitemap.photos', false);
@@ -165,7 +166,7 @@ class SitemapTest extends TestCase
     public function testPosts()
     {
         $this->loadFixtures('Posts', 'PostsCategories');
-        $table = $this->getMockForModel('MeCms.PostsCategories', null);
+        $table = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
 
         //Posts are disabled for the sitemap
         Configure::write('MeCms.sitemap.posts', false);
@@ -242,7 +243,7 @@ class SitemapTest extends TestCase
     public function testPostsTags()
     {
         $this->loadFixtures('Posts', 'PostsTags', 'Tags');
-        $table = $this->getMockForModel('MeCms.Tags', null);
+        $table = TableRegistry::getTableLocator()->get('MeCms.Tags');
 
         //Posts tags are disabled for the sitemap
         Configure::write('MeCms.sitemap.posts_tags', false);

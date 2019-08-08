@@ -25,11 +25,6 @@ use MeCms\TestSuite\CellTestCase;
 class PostsWidgetsCellTest extends CellTestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $Table;
-
-    /**
      * Fixtures
      * @var array
      */
@@ -37,17 +32,6 @@ class PostsWidgetsCellTest extends CellTestCase
         'plugin.MeCms.Posts',
         'plugin.MeCms.PostsCategories',
     ];
-
-    /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->Table = $this->Table ?: $this->getMockForModel('MeCms.Posts', null);
-    }
 
     /**
      * Test for `categories()` method
