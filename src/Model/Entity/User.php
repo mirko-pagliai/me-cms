@@ -75,7 +75,7 @@ class User extends Entity
     {
         if ($this->has('id')) {
             $finder = new Finder();
-            $finder->files()->name('/^' . $this->_properties['id'] . '\..+/')->in(USER_PICTURES);
+            $finder->files()->name('/^' . $this->get('id') . '\..+/')->in(USER_PICTURES);
             $files = objects_map(iterator_to_array($finder), 'getFilename');
 
             if (!empty($files)) {
