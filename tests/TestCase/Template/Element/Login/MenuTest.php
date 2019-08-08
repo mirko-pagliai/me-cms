@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace MeCms\Test\TestCase\Controller\Admin;
+namespace MeCms\Test\TestCase\Template\Element\Login;
 
 use Cake\Core\Configure;
 use MeCms\TestSuite\TestCase;
