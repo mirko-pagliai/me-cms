@@ -161,7 +161,6 @@ class StaticPageTest extends TestCase
             return $this->invokeMethod(StaticPage::class, 'getSlug', func_get_args());
         };
 
-
         foreach ([
             'my-file',
             'my-file.' . StaticPage::EXTENSION,
