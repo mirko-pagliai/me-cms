@@ -67,8 +67,7 @@ class KcFinderComponent extends Component
      */
     public function getTypes(): array
     {
-        $finder = new Finder();
-        $folders = objects_map(iterator_to_array($finder->directories()->in(UPLOADED)), 'getFilename');
+        $folders = objects_map(iterator_to_array((new Finder())->directories()->in(UPLOADED)), 'getFilename');
 
         //Each folder is a file type supported by KCFinder
         //Adds the default "images" type and returns

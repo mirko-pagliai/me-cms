@@ -26,7 +26,7 @@ class LogsController extends AppController
 {
     /**
      * Internal method to get the path for a log
-     * @param string|SplFileInfo $file File as filename string or a
+     * @param string|\SplFileInfo $file File as filename string or a
      *  `SplFileInfo` instance
      * @param bool $serialized `true` for a serialized log
      * @return string
@@ -84,7 +84,7 @@ class LogsController extends AppController
             return new Entity([
                 'filename' => $log->getFilename(),
                 'hasSerialized' => is_readable($this->getPath($log, true)),
-                'size' => $log->getSize()
+                'size' => $log->getSize(),
             ]);
         }, iterator_to_array($finder));
 

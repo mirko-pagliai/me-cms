@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 use MeCms\Model\Entity\Post;
 
-if (empty($months) || $months->count() < 2) {
+if (empty($posts) || $posts->count() < 2) {
     return;
 }
 
@@ -29,7 +29,7 @@ echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'send_form(this)',
-    'options' => $months->map(function (Post $post) {
+    'options' => $posts->map(function (Post $post) {
         return sprintf('%s (%s)', $post->get('month')->i18nFormat('MMMM yyyy'), $post->get('post_count'));
     })->toArray(),
 ]);

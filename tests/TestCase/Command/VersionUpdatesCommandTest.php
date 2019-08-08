@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\Command\VersionUpdatesCommand;
 use MeCms\TestSuite\TestCase;

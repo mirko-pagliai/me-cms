@@ -96,7 +96,7 @@ class PostsWidgetsCell extends Cell
 
         $query = $this->Posts->find('active');
         $time = $query->func()->date_format(['created' => 'identifier', "'%Y/%m'" => 'literal']);
-        $months = $query->select([
+        $posts = $query->select([
                 'month' => $time,
                 'post_count' => $query->func()->count($time),
             ])
@@ -112,7 +112,7 @@ class PostsWidgetsCell extends Cell
             ->cache('widget_months', $this->Posts->getCacheName())
             ->all();
 
-        $this->set(compact('months'));
+        $this->set(compact('posts'));
     }
 
     /**

@@ -113,7 +113,7 @@ abstract class ControllerTestCase extends TestCase
         parent::setUp();
 
         $parts = explode('\\', get_class($this));
-        $isAdminController = in_array('Admin', array_slice($parts, -2, 1));
+        $isAdminController = $parts[count($parts) - 2] === 'Admin';
 
         //Tries to retrieve controller and table from the class name
         if (!$this->Controller && $this->autoInitializeClass) {
@@ -123,13 +123,10 @@ abstract class ControllerTestCase extends TestCase
             $alias = $this->getControllerAlias($className);
 
             $this->Controller = $this->getMockForController($className, null, $alias);
-
             $this->url = ['controller' => $alias, 'plugin' => $parts[0]];
-            if ($isAdminController) {
-                $this->url['prefix'] = ADMIN_PREFIX;
-            }
+            $this->url += $isAdminController ? ['prefix' => ADMIN_PREFIX] : [];
 
-            $className = sprintf('MeCms\\Model\\Table\\%sTable', $alias);
+            $className = $parts[0] . '\\Model\\Table\\' . $alias . 'Table';
             $this->Table = $this->getTable($alias, compact('className'));
         }
 
