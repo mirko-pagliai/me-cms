@@ -23,7 +23,8 @@ use MeCms\TestSuite\CellTestCase;
  * PostsTagsWidgetsCellTest class
  */
 class PostsTagsWidgetsCellTest extends CellTestCase
-{    /**
+{
+    /**
      * @var array
      */
     protected $example = [
