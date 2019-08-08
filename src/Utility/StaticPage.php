@@ -30,7 +30,7 @@ class StaticPage
     /**
      * Extension for static pages
      */
-    protected const EXTENSION = 'php';
+    public const EXTENSION = 'php';
 
     /**
      * Internal method to get all the existing paths
