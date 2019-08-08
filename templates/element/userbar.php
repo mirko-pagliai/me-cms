@@ -15,7 +15,7 @@ if (!getConfig('users.userbar') || !$this->Auth->isLogged()) {
     return;
 }
 
-$this->extend('MeCms.Common/userbar');
+$this->extend('MeCms.common/userbar');
 
 echo $this->Html->ul([
     $this->Html->link(

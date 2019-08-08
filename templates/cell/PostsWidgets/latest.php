@@ -18,7 +18,7 @@ if (empty($posts) || $posts->isEmpty()) {
     return;
 }
 
-$this->extend('/Common/widget');
+$this->extend('/common/widget');
 $this->assign('title', __dn('me_cms', 'Latest post', 'Latest {0} posts', $posts->count(), $posts->count()));
 
 $posts = $posts->map(function (Post $post) {

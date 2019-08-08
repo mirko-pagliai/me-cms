@@ -15,7 +15,7 @@ if (empty($photos) || $photos->isEmpty()) {
     return;
 }
 
-$this->extend('/Common/widget');
+$this->extend('/common/widget');
 $this->assign('title', __dn('me_cms', 'Latest photo', 'Latest {0} photos', $photos->count(), $photos->count()));
 
 foreach ($photos as $photo) {

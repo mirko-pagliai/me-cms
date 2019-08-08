@@ -18,7 +18,7 @@ if (empty($categories) || $categories->count() < 2) {
     return;
 }
 
-$this->extend('/Common/widget');
+$this->extend('/common/widget');
 $this->assign('title', I18N_POSTS_CATEGORIES);
 
 echo $this->Form->create(false, [

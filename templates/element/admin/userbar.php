@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 use MeCms\Core\Plugin;
 
-$this->extend('MeCms.Common/userbar');
+$this->extend('MeCms.common/userbar');
 
 $menus[] = $this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], [
     'class' => 'nav-link',

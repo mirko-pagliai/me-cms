@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 use MeCms\Model\Entity\Post;
 
-$this->extend('/Common/view');
+$this->extend('/common/view');
 $this->assign('title', $post->get('title'));
 
 /**

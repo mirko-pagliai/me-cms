@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 use MeCms\Model\Entity\Page;
 
-$this->extend('/Common/index');
+$this->extend('/common/index');
 $this->assign('title', $category->get('title'));
 
 /**

@@ -18,7 +18,7 @@ if (empty($tags) || $tags->isEmpty()) {
     return;
 }
 
-$this->extend('/Common/widget');
+$this->extend('/common/widget');
 $this->assign('title', __d('me_cms', 'Popular tags'));
 
 echo $this->Form->create(false, [

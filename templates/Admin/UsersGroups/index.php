@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Admin/Common/index');
+$this->extend('/Admin/common/index');
 $this->assign('title', __d('me_cms', 'Users groups'));
 $this->append('actions', $this->Html->button(
     I18N_ADD,

@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Admin/Common/view');
+$this->extend('/Admin/common/view');
 $this->assign('title', $user->full_name);
 $this->append('actions', $this->Html->button(
     I18N_EDIT,

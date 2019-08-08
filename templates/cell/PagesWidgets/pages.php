@@ -18,7 +18,7 @@ if (empty($pages) || $pages->isEmpty()) {
     return;
 }
 
-$this->extend('/Common/widget');
+$this->extend('/common/widget');
 $this->assign('title', I18N_PAGES);
 
 $pages = $pages->map(function (Page $page) {

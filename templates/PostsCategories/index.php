@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 use MeCms\Model\Entity\PostsCategory;
 
-$this->extend('/Common/index');
+$this->extend('/common/index');
 $this->assign('title', $title = I18N_POSTS_CATEGORIES);
 
 /**

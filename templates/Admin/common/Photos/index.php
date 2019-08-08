@@ -11,8 +11,8 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Admin/Common/index');
-$this->assign('title', __d('me_cms', 'Banners'));
+$this->extend('/Admin/common/index');
+$this->assign('title', I18N_PHOTOS);
 
 $this->append('actions', $this->Html->button(
     I18N_UPLOAD,
@@ -20,8 +20,8 @@ $this->append('actions', $this->Html->button(
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
 $this->append('actions', $this->Html->button(
-    __d('me_cms', 'Add position'),
-    ['controller' => 'BannersPositions', 'action' => 'add'],
+    __d('me_cms', 'Add album'),
+    ['controller' => 'PhotosAlbums', 'action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
 
@@ -47,9 +47,9 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
             'empty' => I18N_ALL_STATUS,
             'options' => [I18N_YES => I18N_ONLY_PUBLISHED, I18N_NO => I18N_ONLY_NOT_PUBLISHED],
         ]);
-        echo $this->Form->control('position', [
-            'default' => $this->getRequest()->getQuery('position'),
-            'empty' => sprintf('-- %s --', __d('me_cms', 'all positions')),
+        echo $this->Form->control('album', [
+            'default' => $this->getRequest()->getQuery('album'),
+            'empty' => sprintf('-- %s --', __d('me_cms', 'all albums')),
         ]);
         echo $this->Form->datepicker('created', [
             'data-date-format' => 'YYYY-MM',

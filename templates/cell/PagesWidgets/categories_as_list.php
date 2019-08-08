@@ -18,7 +18,7 @@ if (empty($categories) || $categories->count() < 2) {
     return;
 }
 
-$this->extend('/Common/widget');
+$this->extend('/common/widget');
 $this->assign('title', __d('me_cms', 'Pages categories'));
 
 $categories = $categories->map(function (PagesCategory $category) {
