@@ -47,18 +47,6 @@ class VersionUpdatesCommandTest extends TestCase
     ];
 
     /**
-     * Internal method to get a table
-     * @param string $name Table name
-     * @return \Cake\ORM\Table
-     */
-    protected function getTable($name)
-    {
-        TableRegistry::getTableLocator()->clear();
-
-        return TableRegistry::getTableLocator()->get('MeCms.' . $name);
-    }
-
-    /**
      * Test for `addEnableCommentsField()` method
      * @test
      */

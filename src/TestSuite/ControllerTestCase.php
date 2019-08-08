@@ -13,8 +13,6 @@
  */
 namespace MeCms\TestSuite;
 
-use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\IntegrationTestTrait;
 
@@ -32,22 +30,10 @@ abstract class ControllerTestCase extends TestCase
     protected $Controller;
 
     /**
-     * Table instance
-     * @var \Cake\ORM\Table|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $Table;
-
-    /**
      * If `true`, a mock instance of the shell will be created
      * @var bool
      */
     protected $autoInitializeClass = true;
-
-    /**
-     * Cache keys to clear for each test
-     * @var array
-     */
-    protected $cacheToClear = [];
 
     /**
      * @var array
@@ -143,19 +129,8 @@ abstract class ControllerTestCase extends TestCase
             }
 
             //Tries to retrieve the table
-            $className = sprintf('%s\\Model\\Table\\%sTable', $parts[0], $alias);
-            if (class_exists($className) && $alias !== 'App') {
-                $this->Table = TableRegistry::getTableLocator()->get($alias, compact('className'));
-
-                //Tries to retrieve all cache names related to this table and associated tables
-                $this->cacheToClear = $this->Table->getCacheName(true);
-            }
-        }
-
-        //Clears all cache keys
-        foreach ($this->cacheToClear as $cacheKey) {
-            Cache::getConfig($cacheKey) ?: $this->fail('Cache key `' . $cacheKey . '` does not exist');
-            Cache::clear(false, $cacheKey);
+            $className = sprintf('MeCms\\Model\\Table\\%sTable', $alias);
+            $this->Table = $this->getTable($alias, compact('className'));
         }
 
         if ($isAdminController) {

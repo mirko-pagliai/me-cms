@@ -13,7 +13,6 @@
  */
 namespace MeCms\TestSuite;
 
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use MeCms\TestSuite\TestCase;
 
@@ -85,13 +84,9 @@ abstract class ValidationTestCase extends TestCase
         parent::setUp();
 
         if (!$this->Table && $this->autoInitializeClass) {
-            $parts = explode('\\', get_class($this));
-            $alias = Inflector::pluralize(substr(array_pop($parts), 0, -13));
-            $className = sprintf('%s\\Model\Table\\%sTable', $parts[0], $alias);
-
-            if (class_exists($className)) {
-                $this->Table = TableRegistry::getTableLocator()->get($alias, compact('className'));
-            }
+            $alias = Inflector::pluralize(substr(get_class_short_name($this), 0, -13));
+            $className = 'MeCms\\Model\Table\\' . $alias . 'Table';
+            $this->Table = $this->getTable($alias, compact('className'));
         }
     }
 
