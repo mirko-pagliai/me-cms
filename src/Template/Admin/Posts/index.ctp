@@ -46,15 +46,15 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
             ]);
             echo $this->Form->control('user', [
                 'default' => $this->getRequest()->getQuery('user'),
-                'empty' => sprintf('-- %s --', __d('me_cms', 'all users')),
+                'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
             ]);
             echo $this->Form->control('category', [
                 'default' => $this->getRequest()->getQuery('category'),
-                'empty' => sprintf('-- %s --', __d('me_cms', 'all categories')),
+                'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
             ]);
             echo $this->Form->control('priority', [
                 'default' => $this->getRequest()->getQuery('priority'),
-                'empty' => sprintf('-- %s --', __d('me_cms', 'all priorities')),
+                'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
             ]);
             echo $this->Form->datepicker('created', [
                 'data-date-format' => 'YYYY-MM',

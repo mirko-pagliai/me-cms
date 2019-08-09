@@ -48,7 +48,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
             ]);
             echo $this->Form->control('album', [
                 'default' => $this->getRequest()->getQuery('album'),
-                'empty' => sprintf('-- %s --', __d('me_cms', 'all albums')),
+                'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
             ]);
             echo $this->Form->datepicker('created', [
                 'data-date-format' => 'YYYY-MM',
