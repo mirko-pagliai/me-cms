@@ -62,9 +62,9 @@ class LogsControllerTest extends ControllerTestCase
         $this->assertNotEmpty($this->viewVariable('logs'));
         foreach ($this->viewVariable('logs') as $log) {
             $this->assertInstanceOf(Entity::class, $log);
-            $this->assertEquals($log->filename, 'error.log');
-            $this->assertTrue($log->hasSerialized);
-            $this->assertEquals($log->size, filesize(LOGS . 'error.log'));
+            $this->assertEquals($log->get('filename'), 'error.log');
+            $this->assertTrue($log->get('hasSerialized'));
+            $this->assertEquals($log->get('size'), filesize(LOGS . 'error.log'));
         }
     }
 
