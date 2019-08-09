@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -12,7 +11,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Admin/common/index');
-$this->assign('title', __d('me_cms', 'Banners'));
+$this->assign('title', I18N_BANNERS);
 
 $this->append('actions', $this->Html->button(
     I18N_UPLOAD,
@@ -49,7 +48,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
         ]);
         echo $this->Form->control('position', [
             'default' => $this->getRequest()->getQuery('position'),
-            'empty' => sprintf('-- %s --', __d('me_cms', 'all positions')),
+            'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
         ]);
         echo $this->Form->datepicker('created', [
             'data-date-format' => 'YYYY-MM',

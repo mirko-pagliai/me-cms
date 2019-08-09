@@ -28,12 +28,12 @@
         "wyrihaximus/minify-html": "dev-master"
     },
     "require-dev": {
-        "cakephp/debug_kit": "4.x-dev",
         "cakephp/cakephp-codesniffer": "dev-next",
         "mirko-pagliai/cakephp-assets": "dev-cakephp4",
         "phpunit/phpunit": "^8.0"
     },
     "suggest": {
+        "cakephp/debug_kit": "Debug Toolbar for CakePHP applications",
         "mirko-pagliai/me-cms-instagram": "Instagram plugin for MeCms",
         "mirko-pagliai/me-cms-link-scanner": "Link scanner plugin for MeCms",
         "sunhater/kcfinder:dev-master": "To use KCFinder to browse and upload files"
