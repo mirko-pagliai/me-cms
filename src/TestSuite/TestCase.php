@@ -54,11 +54,8 @@ abstract class TestCase extends BaseTestCase
             Cache::clear(false, $cacheKey);
         }
 
-        try {
-            unlink_recursive(KCFINDER, 'empty');
-            unlink_recursive(WWW_ROOT . 'vendor', 'empty');
-        } catch (IOException $e) {
-        }
+        unlink_recursive(KCFINDER, 'empty');
+        unlink_recursive(WWW_ROOT . 'vendor', 'empty');
     }
 
     /**
