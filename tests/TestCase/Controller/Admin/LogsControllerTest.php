@@ -59,6 +59,7 @@ class LogsControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'index.ctp');
 
+        $this->assertNotEmpty($this->viewVariable('logs'));
         foreach ($this->viewVariable('logs') as $log) {
             $this->assertInstanceOf(Entity::class, $log);
             $this->assertEquals($log->filename, 'error.log');

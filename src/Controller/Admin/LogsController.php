@@ -77,7 +77,7 @@ class LogsController extends AppController
     public function index()
     {
         $finder = new Finder();
-        $finder->files()->name('(?!.*_serialized).+\.log')->in(LOGS);
+        $finder->files()->name('/^(?!.*_serialized).+\.log$/')->in(LOGS);
         $logs = array_map(function (SplFileInfo $log) {
             return new Entity([
                 'filename' => $log->getFilename(),
