@@ -16,7 +16,6 @@ namespace MeCms\TestSuite;
 use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use MeTools\TestSuite\TestCase as BaseTestCase;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * TestCase class
