@@ -10,5 +10,5 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Admin/Common/PagesAndPostsCategories/form');
+$this->extend('/Admin/PostsCategories/form');
 ?>
