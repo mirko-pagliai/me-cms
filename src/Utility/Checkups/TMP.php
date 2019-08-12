@@ -22,18 +22,21 @@ class TMP extends AbstractCheckup
 {
     /**
      * Checks if each path is writeable
+     * @param array $paths Paths to check
      * @return array Array with paths as keys and boolean as value
      * @uses isWriteable()
      */
-    public function isWriteable()
+    public function isWriteable(array $paths = [])
     {
-        return $this->isWriteable([
+        $paths = $paths ?: [
             LOGS,
             TMP,
             getConfigOrFail('Assets.target'),
             CACHE,
             LOGIN_RECORDS,
             getConfigOrFail('Thumber.target'),
-        ]);
+        ];
+
+        return parent::isWriteable($paths);
     }
 }
