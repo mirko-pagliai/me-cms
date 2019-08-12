@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -50,21 +51,21 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
     </div>
     <fieldset class="col-lg-9">
     <?php
-        echo $this->Form->control('title', [
-            'id' => 'title',
-            'label' => I18N_TITLE,
-        ]);
-        echo $this->Form->control('subtitle', [
-            'label' => I18N_SUBTITLE,
-        ]);
-        echo $this->Form->control('slug', [
-            'help' => I18N_HELP_SLUG,
-            'id' => 'slug',
-            'label' => I18N_SLUG,
-        ]);
-        echo $this->Form->ckeditor('text', [
-            'label' => I18N_TEXT,
-        ]);
+    echo $this->Form->control('title', [
+        'id' => 'title',
+        'label' => I18N_TITLE,
+    ]);
+    echo $this->Form->control('subtitle', [
+        'label' => I18N_SUBTITLE,
+    ]);
+    echo $this->Form->control('slug', [
+        'help' => I18N_HELP_SLUG,
+        'id' => 'slug',
+        'label' => I18N_SLUG,
+    ]);
+    echo $this->Form->ckeditor('text', [
+        'label' => I18N_TEXT,
+    ]);
     ?>
     <?= $this->element('admin/bbcode') ?>
     </fieldset>

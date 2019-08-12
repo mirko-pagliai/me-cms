@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -59,18 +60,18 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
     </div>
     <fieldset class="col-lg-9">
     <?php
-        echo $this->Form->control('title', [
-            'id' => 'title',
-            'label' => I18N_TITLE,
-        ]);
-        echo $this->Form->control('subtitle', [
-            'label' => I18N_SUBTITLE,
-        ]);
-        echo $this->Form->control('slug', [
-            'help' => I18N_HELP_SLUG,
-            'id' => 'slug',
-            'label' => I18N_SLUG,
-        ]);
+    echo $this->Form->control('title', [
+        'id' => 'title',
+        'label' => I18N_TITLE,
+    ]);
+    echo $this->Form->control('subtitle', [
+        'label' => I18N_SUBTITLE,
+    ]);
+    echo $this->Form->control('slug', [
+        'help' => I18N_HELP_SLUG,
+        'id' => 'slug',
+        'label' => I18N_SLUG,
+    ]);
     ?>
     <div class="form-group to-be-hidden">
         <?= $this->Form->control('tags_as_string', [
@@ -86,22 +87,22 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
             <?= $this->Form->label(sprintf('%s:', I18N_TAGS)) ?>
         </div>
         <?php
-            echo $this->Form->control('add_tags', [
-                'button' => $this->Form->button(null, [
-                    'class' => 'btn-success',
-                    'icon' => 'plus',
-                    'id' => 'tags-input-button',
-                ]),
-                'help' => __d('me_cms', 'Tags must be at least 3 chars and separated by a comma ' .
-                    'or a comma and a space. Only lowercase letters, numbers, hyphen, space'),
-                'id' => 'tags-input-text',
-                'label' => false,
-            ]);
+        echo $this->Form->control('add_tags', [
+            'button' => $this->Form->button(null, [
+                'class' => 'btn-success',
+                'icon' => 'plus',
+                'id' => 'tags-input-button',
+            ]),
+            'help' => __d('me_cms', 'Tags must be at least 3 chars and separated by a comma ' .
+                'or a comma and a space. Only lowercase letters, numbers, hyphen, space'),
+            'id' => 'tags-input-text',
+            'label' => false,
+        ]);
 
-            //Tags error
-            if ($this->Form->isFieldError('tags')) {
-                echo str_replace(PHP_EOL, '<br />', $this->Form->error('tags'));
-            }
+        //Tags error
+        if ($this->Form->isFieldError('tags')) {
+            echo str_replace(PHP_EOL, '<br />', $this->Form->error('tags'));
+        }
         ?>
     </div>
     <?= $this->Form->ckeditor('text', ['label' => I18N_TEXT, 'rows' => 10]) ?>
