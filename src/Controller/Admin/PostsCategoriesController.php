@@ -97,6 +97,8 @@ class PostsCategoriesController extends AppController
         }
 
         $this->set(compact('category'));
+        $this->set('title', __d('me_cms', 'Add posts category'));
+        $this->render('form');
     }
 
     /**
@@ -121,6 +123,8 @@ class PostsCategoriesController extends AppController
         }
 
         $this->set(compact('category'));
+        $this->set('title', __d('me_cms', 'Edit posts category'));
+        $this->render('form');
     }
 
     /**

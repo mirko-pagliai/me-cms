@@ -79,7 +79,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PagesCategories' . DS . 'add.php');
+        $this->assertTemplate('Admin' . DS . 'PagesCategories' . DS . 'form.php');
         $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid
@@ -104,7 +104,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PagesCategories' . DS . 'edit.php');
+        $this->assertTemplate('Admin' . DS . 'PagesCategories' . DS . 'form.php');
         $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid
