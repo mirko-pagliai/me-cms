@@ -11,11 +11,13 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Admin/Common/form');
-$this->assign('title', $title = __d('me_cms', 'Add post'));
 $this->Library->ckeditor();
 $this->Library->datetimepicker();
 $this->Library->slugify();
 $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
+
+$defaultCategory = $categories->count() < 2 ? $categories->first() : false;
+$emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
 ?>
 
 <?= $this->Form->create($post); ?>
@@ -32,7 +34,8 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
         }
 
         echo $this->Form->control('category_id', [
-            'default' => $categories->count() < 2 ? $categories->first() : false,
+            'default' => $defaultCategory,
+            'empty' => $emptyCategory,
             'label' => I18N_CATEGORY,
         ]);
         echo $this->Form->datetimepicker('created', [
@@ -44,7 +47,7 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
             'label' => I18N_PRIORITY,
         ]);
         echo $this->Form->control('active', [
-            'checked' => true,
+//            'default' => true,
             'help' => I18N_HELP_DRAFT,
             'label' => I18N_PUBLISHED,
         ]);

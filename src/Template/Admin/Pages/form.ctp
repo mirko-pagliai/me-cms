@@ -11,10 +11,12 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Admin/Common/form');
-$this->assign('title', $title = __d('me_cms', 'Edit page'));
 $this->Library->ckeditor();
 $this->Library->datetimepicker();
 $this->Library->slugify();
+
+$defaultCategory = $categories->count() < 2 ? $categories->first() : false;
+$emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
 ?>
 
 <?= $this->Form->create($page); ?>
@@ -23,7 +25,8 @@ $this->Library->slugify();
         <div class="float-form">
         <?php
             echo $this->Form->control('category_id', [
-                'empty' => false,
+                'default' => $defaultCategory,
+                'empty' => $emptyCategory,
                 'label' => I18N_CATEGORY,
             ]);
             echo $this->Form->datetimepicker('created', [
@@ -38,6 +41,7 @@ $this->Library->slugify();
                 'label' => I18N_PUBLISHED,
             ]);
             echo $this->Form->control('enable_comments', [
+                'default' => false,
                 'help' => I18N_HELP_ENABLE_COMMENTS,
                 'label' => I18N_ENABLE_COMMENTS,
             ]);
