@@ -85,6 +85,7 @@ class BannersController extends AppController
         }
 
         $this->set('banners', $this->paginate($this->Banners->queryFromFilter($query, $this->getRequest()->getQueryParams())));
+        $this->set('title', I18N_BANNERS);
 
         if ($render) {
             $this->response = $this->response->withCookie((new Cookie('render-banners', $render))->withNeverExpire());

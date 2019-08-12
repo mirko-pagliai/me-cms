@@ -15,7 +15,7 @@ $this->extend('/Admin/common/form');
 $this->assign('title', __d('me_cms', 'Upload banners'));
 ?>
 
-<div class="card card-body bg-light border-0">
+<div class="card card-body bg-light border-0 mb-4">
     <?= $this->Form->createInline(null, ['type' => 'get']) ?>
     <fieldset>
     <?php

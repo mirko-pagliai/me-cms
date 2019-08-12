@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Admin/common/Photos/index');
+$this->extend('/Admin/common/BannersAndPhotos/index');
 ?>
 
 <table class="table table-hover">
