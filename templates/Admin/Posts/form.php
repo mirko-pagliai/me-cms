@@ -10,7 +10,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Admin/Common/form');
+$this->extend('/Admin/common/form');
 $this->Library->ckeditor();
 $this->Library->datetimepicker();
 $this->Library->slugify();
