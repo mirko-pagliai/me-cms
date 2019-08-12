@@ -27,6 +27,12 @@ use MeCms\Utility\StaticPage;
 class StaticPageTest extends TestCase
 {
     /**
+     * Cache keys to clear for each test
+     * @var array
+     */
+    protected $cacheToClear = ['static_pages'];
+
+    /**
      * Called after every test method
      * @return void
      */
@@ -34,7 +40,6 @@ class StaticPageTest extends TestCase
     {
         parent::tearDown();
 
-        Cache::clear(false, 'static_pages');
         $this->removePlugins(['TestPlugin']);
     }
 

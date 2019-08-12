@@ -22,6 +22,12 @@ use MeCms\TestSuite\ControllerTestCase;
 class PagesControllerTest extends ControllerTestCase
 {
     /**
+     * Cache keys to clear for each test
+     * @var array
+     */
+    protected $cacheToClear = ['static_pages'];
+
+    /**
      * Fixtures
      * @var array
      */
@@ -139,7 +145,7 @@ class PagesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'add.ctp');
+        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'form.ctp');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
 
         //POST request. Data are valid
@@ -169,7 +175,7 @@ class PagesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'form.ctp');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('page')->created);
 
