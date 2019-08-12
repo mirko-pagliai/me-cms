@@ -24,27 +24,27 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
     <div class="col-lg-3 order-12">
         <div class="float-form">
         <?php
-            echo $this->Form->control('category_id', [
-                'default' => $defaultCategory,
-                'empty' => $emptyCategory,
-                'label' => I18N_CATEGORY,
-            ]);
-            echo $this->Form->datetimepicker('created', [
-                'help' => [I18N_USE_CURRENT_DATETIME, I18N_DELAY_PUBLICATION],
-                'label' => I18N_DATE,
-            ]);
-            echo $this->Form->control('priority', [
-                'label' => I18N_PRIORITY,
-            ]);
-            echo $this->Form->control('active', [
-                'help' => I18N_HELP_DRAFT,
-                'label' => I18N_PUBLISHED,
-            ]);
-            echo $this->Form->control('enable_comments', [
-                'default' => false,
-                'help' => I18N_HELP_ENABLE_COMMENTS,
-                'label' => I18N_ENABLE_COMMENTS,
-            ]);
+        echo $this->Form->control('category_id', [
+            'default' => $defaultCategory,
+            'empty' => $emptyCategory,
+            'label' => I18N_CATEGORY,
+        ]);
+        echo $this->Form->datetimepicker('created', [
+            'help' => [I18N_USE_CURRENT_DATETIME, I18N_DELAY_PUBLICATION],
+            'label' => I18N_DATE,
+        ]);
+        echo $this->Form->control('priority', [
+            'label' => I18N_PRIORITY,
+        ]);
+        echo $this->Form->control('active', [
+            'help' => I18N_HELP_DRAFT,
+            'label' => I18N_PUBLISHED,
+        ]);
+        echo $this->Form->control('enable_comments', [
+            'default' => false,
+            'help' => I18N_HELP_ENABLE_COMMENTS,
+            'label' => I18N_ENABLE_COMMENTS,
+        ]);
         ?>
         </div>
     </div>
