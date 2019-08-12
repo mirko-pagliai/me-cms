@@ -23,16 +23,19 @@ class Webroot extends AbstractCheckup
 {
     /**
      * Checks if each path is writeable
+     * @param array $paths Paths to check
      * @return array Array with paths as keys and boolean as value
-     * @uses _isWriteable()
+     * @uses isWriteable()
      */
-    public function isWriteable(): array
+    public function isWriteable(array $paths = []): array
     {
-        return $this->_isWriteable([
+        $paths = $paths ?: [
             BANNERS,
             PHOTOS,
             USER_PICTURES,
             WWW_ROOT . 'files' . DS,
-        ]);
+        ];
+
+        return parent::isWriteable($paths);
     }
 }

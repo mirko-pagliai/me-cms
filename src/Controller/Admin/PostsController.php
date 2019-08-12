@@ -43,6 +43,11 @@ class PostsController extends AppController
         if ($this->getRequest()->isAction(['add', 'edit'])) {
             $categories = $this->Posts->Categories->getTreeList();
             $users = $this->Posts->Users->getActiveList();
+
+            //Only admins and managers can add and edit posts on behalf of other users
+            if ($this->getRequest()->getData() && !$this->Auth->isGroup(['admin', 'manager'])) {
+                $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
+            }
         } else {
             $categories = $this->Posts->Categories->getList();
             $users = $this->Posts->Users->getList();
@@ -130,11 +135,6 @@ class PostsController extends AppController
         $post = $this->Posts->newEntity([]);
 
         if ($this->getRequest()->is('post')) {
-            //Only admins and managers can add posts on behalf of other users
-            if (!$this->Auth->isGroup(['admin', 'manager'])) {
-                $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
-            }
-
             $post = $this->Posts->patchEntity($post, $this->getRequest()->getData());
 
             if ($this->Posts->save($post)) {
@@ -168,11 +168,6 @@ class PostsController extends AppController
             ->firstOrFail();
 
         if ($this->getRequest()->is(['patch', 'post', 'put'])) {
-            //Only admins and managers can edit posts on behalf of other users
-            if (!$this->Auth->isGroup(['admin', 'manager'])) {
-                $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
-            }
-
             $post = $this->Posts->patchEntity($post, $this->getRequest()->getData());
 
             if ($this->Posts->save($post)) {
