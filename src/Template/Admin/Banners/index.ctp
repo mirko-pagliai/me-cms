@@ -10,7 +10,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Admin/Common/Banners/index');
+$this->extend('/Admin/Common/BannersAndPhotos/index');
 ?>
 
 <table class="table table-hover">

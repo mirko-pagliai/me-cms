@@ -11,18 +11,21 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Admin/Common/index');
-$this->assign('title', I18N_PHOTOS);
 
 $this->append('actions', $this->Html->button(
     I18N_UPLOAD,
     ['action' => 'upload'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
-$this->append('actions', $this->Html->button(
-    __d('me_cms', 'Add album'),
-    ['controller' => 'PhotosAlbums', 'action' => 'add'],
-    ['class' => 'btn-success', 'icon' => 'plus']
-));
+
+if ($this->getTemplatePath() === "Admin/Banners") {
+    $label = __d('me_cms', 'Add position');
+    $url = ['controller' => 'BannersPositions', 'action' => 'add'];
+} else {
+    $label = __d('me_cms', 'Add album');
+    $url = ['controller' => 'PhotosAlbums', 'action' => 'add'];
+}
+$this->append('actions', $this->Html->button($label, $url, ['class' => 'btn-success', 'icon' => 'plus']));
 
 $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
@@ -46,10 +49,13 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 'empty' => I18N_ALL_STATUS,
                 'options' => [I18N_YES => I18N_ONLY_PUBLISHED, I18N_NO => I18N_ONLY_NOT_PUBLISHED],
             ]);
-            echo $this->Form->control('album', [
-                'default' => $this->getRequest()->getQuery('album'),
+
+            $fieldName = $this->getTemplatePath() === "Admin/Banners" ? 'position' : 'album';
+            echo $this->Form->control($fieldName, [
+                'default' => $this->getRequest()->getQuery($fieldName),
                 'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
             ]);
+
             echo $this->Form->datepicker('created', [
                 'data-date-format' => 'YYYY-MM',
                 'default' => $this->getRequest()->getQuery('created'),
