@@ -1,8 +1,8 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.7
-* `add` and` edit` templates for `Posts` and` Pages` have been merged into the
-    `form` templates respectively;
+* `add` and` edit` template files for `Posts`, `PostsCategories`, ` Pages` and
+    `PagesCategories` have been merged into the `form` templates respectively;
 * updated for `php-tools` `1.2.8`.
 
 ### 2.26.6

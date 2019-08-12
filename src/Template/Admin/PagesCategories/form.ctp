@@ -11,7 +11,6 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Admin/Common/form');
-$this->assign('title', $title = __d('me_cms', 'Add pages category'));
 $this->Library->slugify();
 ?>
 
