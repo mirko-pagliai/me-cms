@@ -147,6 +147,8 @@ class PostsController extends AppController
         }
 
         $this->set(compact('post'));
+        $this->set('title', __d('me_cms', 'Add post'));
+        $this->render('form');
     }
 
     /**
@@ -183,6 +185,8 @@ class PostsController extends AppController
         }
 
         $this->set(compact('post'));
+        $this->set('title', __d('me_cms', 'Edit post'));
+        $this->render('form');
     }
 
     /**

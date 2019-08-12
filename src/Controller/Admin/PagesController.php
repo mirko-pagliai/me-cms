@@ -138,6 +138,8 @@ class PagesController extends AppController
         }
 
         $this->set(compact('page'));
+        $this->set('title', __d('me_cms', 'Add page'));
+        $this->render('form');
     }
 
     /**
@@ -168,6 +170,8 @@ class PagesController extends AppController
         }
 
         $this->set(compact('page'));
+        $this->set('title', __d('me_cms', 'Edit page'));
+        $this->render('form');
     }
 
     /**
