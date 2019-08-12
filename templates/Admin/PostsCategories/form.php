@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -31,19 +32,19 @@ $this->Library->slugify();
     </div>
     <fieldset class="col-lg-9">
     <?php
-        echo $this->Form->control('title', [
-            'id' => 'title',
-            'label' => I18N_TITLE,
-        ]);
-        echo $this->Form->control('slug', [
-            'help' => I18N_HELP_SLUG,
-            'id' => 'slug',
-            'label' => I18N_SLUG,
-        ]);
-        echo $this->Form->control('description', [
-            'label' => I18N_DESCRIPTION,
-            'rows' => 3,
-        ]);
+    echo $this->Form->control('title', [
+        'id' => 'title',
+        'label' => I18N_TITLE,
+    ]);
+    echo $this->Form->control('slug', [
+        'help' => I18N_HELP_SLUG,
+        'id' => 'slug',
+        'label' => I18N_SLUG,
+    ]);
+    echo $this->Form->control('description', [
+        'label' => I18N_DESCRIPTION,
+        'rows' => 3,
+    ]);
     ?>
     </fieldset>
 </div>
