@@ -66,9 +66,9 @@ class StaticPageTest extends TestCase
 
         //Checks paths
         $this->assertEquals([
-            'tests/test_app/TestApp/Template/StaticPages/page-from-app.' . StaticPage::EXTENSION,
-            'src/Template/StaticPages/cookies-policy-it.' . StaticPage::EXTENSION,
-            'src/Template/StaticPages/cookies-policy.' . StaticPage::EXTENSION,
+            'tests/test_app/TestApp/templates/StaticPages/page-from-app.' . StaticPage::EXTENSION,
+            'templates/StaticPages/cookies-policy-it.' . StaticPage::EXTENSION,
+            'templates/StaticPages/cookies-policy.' . StaticPage::EXTENSION,
             $TestPluginPath . 'first-folder/page-on-first-from-plugin.' . StaticPage::EXTENSION,
             $TestPluginPath . 'first-folder/second_folder/page_on_second_from_plugin.' . StaticPage::EXTENSION,
             $TestPluginPath . 'test-from-plugin.' . StaticPage::EXTENSION,
