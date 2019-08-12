@@ -24,11 +24,11 @@ class Backups extends AbstractCheckup
     /**
      * Checks if the path is writeable
      * @return array Array with paths as keys and boolean as value
-     * @uses _isWriteable()
+     * @uses isWriteable()
      * @uses path()
      */
     public function isWriteable()
     {
-        return $this->_isWriteable((array)(new BackupManager())->getTarget());
+        return $this->isWriteable((array)(new BackupManager())->getTarget());
     }
 }

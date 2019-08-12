@@ -23,11 +23,11 @@ class Webroot extends AbstractCheckup
     /**
      * Checks if each path is writeable
      * @return array Array with paths as keys and boolean as value
-     * @uses _isWriteable()
+     * @uses isWriteable()
      */
     public function isWriteable()
     {
-        return $this->_isWriteable([
+        return $this->isWriteable([
             BANNERS,
             PHOTOS,
             USER_PICTURES,
