@@ -47,7 +47,6 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
             'label' => I18N_PRIORITY,
         ]);
         echo $this->Form->control('active', [
-//            'default' => true,
             'help' => I18N_HELP_DRAFT,
             'label' => I18N_PUBLISHED,
         ]);
