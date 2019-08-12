@@ -3,6 +3,7 @@
 ### 2.26.7
 * `add` and` edit` template files for `Posts`, `PostsCategories`, ` Pages` and
     `PagesCategories` have been merged into the `form` templates respectively;
+* added `admin/priority-badge` template element;
 * updated for `php-tools` `1.2.8`.
 
 ### 2.26.6
