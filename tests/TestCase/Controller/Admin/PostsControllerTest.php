@@ -147,7 +147,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'add.php');
+        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'form.php');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
 
         //POST request. Data are valid
@@ -172,7 +172,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'edit.php');
+        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'form.php');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
         $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('post')->tags);
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('post')->created);
