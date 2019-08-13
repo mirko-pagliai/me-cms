@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.7
+* fixed bug for some no existing photos;
 * `add` and` edit` template files for `Posts`, `PostsCategories`, ` Pages` and
     `PagesCategories` have been merged into the `form` templates respectively;
 * added `admin/priority-badge` template element;

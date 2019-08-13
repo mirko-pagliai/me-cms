@@ -30,12 +30,11 @@ class PhotosController extends AppController
     {
         //This allows backward compatibility for URLs like `/photo/11`
         if (empty($slug)) {
-            $slug = $this->Photos->findById($id)
+            $photo = $this->Photos->findById($id)
                 ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['slug']]])
-                ->extract('album.slug')
-                ->first();
+                ->firstOrFail();
 
-            return $this->redirect(compact('id', 'slug'), 301);
+            return $this->redirect(compact('id') + ['slug' => $photo->get('album')->get('slug')], 301);
         }
 
         $photo = $this->Photos->findActiveById($id)
