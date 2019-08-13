@@ -6,4 +6,5 @@
 composer.lock
 coverage/
 plugins/
+tests/test_app/TestApp/webroot/img/**/*.*
 vendor/
