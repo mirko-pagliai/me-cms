@@ -10,14 +10,5 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Common/view'); ?>
-
-<div class="text-center">
-    <?php
-    if (getConfig('default.offline_text')) {
-        echo getConfig('default.offline_text');
-    } else {
-        echo __d('me_cms', 'The website is temporarily offline');
-    }
-    ?>
-</div>
+$this->extend('/Admin/PostsCategories/form');
+?>

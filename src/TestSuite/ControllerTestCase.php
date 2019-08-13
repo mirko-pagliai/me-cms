@@ -13,7 +13,6 @@
  */
 namespace MeCms\TestSuite;
 
-use Cake\Cache\Cache;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\IntegrationTestTrait;
 
@@ -31,22 +30,10 @@ abstract class ControllerTestCase extends TestCase
     protected $Controller;
 
     /**
-     * Table instance
-     * @var \Cake\ORM\Table|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $Table;
-
-    /**
      * If `true`, a mock instance of the shell will be created
      * @var bool
      */
     protected $autoInitializeClass = true;
-
-    /**
-     * Cache keys to clear for each test
-     * @var array
-     */
-    protected $cacheToClear = [];
 
     /**
      * @var array
@@ -125,7 +112,7 @@ abstract class ControllerTestCase extends TestCase
         parent::setUp();
 
         $parts = explode('\\', get_class($this));
-        $isAdminController = in_array('Admin', array_slice($parts, -2, 1));
+        $isAdminController = $parts[count($parts) - 2] === 'Admin';
 
         //Tries to retrieve controller and table from the class name
         if (!$this->Controller && $this->autoInitializeClass) {
@@ -135,26 +122,12 @@ abstract class ControllerTestCase extends TestCase
             $alias = $this->getControllerAlias($className);
 
             $this->Controller = $this->getMockForController($className, null, $alias);
-
             $this->url = ['controller' => $alias, 'plugin' => $parts[0]];
-            if ($isAdminController) {
-                $this->url['prefix'] = ADMIN_PREFIX;
-            }
+            $this->url += $isAdminController ? ['prefix' => ADMIN_PREFIX] : [];
 
             //Tries to retrieve the table
-            $className = sprintf('%s\\Model\\Table\\%sTable', $parts[0], $alias);
-            if (class_exists($className) && $alias !== 'App') {
-                $this->Table = $this->getMockForModel($alias, null, compact('className'));
-
-                //Tries to retrieve all cache names related to this table and associated tables
-                $this->cacheToClear = $this->Table->getCacheName(true);
-            }
-        }
-
-        //Clears all cache keys
-        foreach ($this->cacheToClear as $cacheKey) {
-            Cache::getConfig($cacheKey) ?: $this->fail('Cache key `' . $cacheKey . '` does not exist');
-            Cache::clear(false, $cacheKey);
+            $className = $parts[0] . '\\Model\\Table\\' . $alias . 'Table';
+            $this->Table = $this->getTable($alias, compact('className'));
         }
 
         if ($isAdminController) {

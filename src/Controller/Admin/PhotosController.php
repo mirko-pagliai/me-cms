@@ -85,6 +85,7 @@ class PhotosController extends AppController
         }
 
         $this->set('photos', $this->paginate($this->Photos->queryFromFilter($query, $this->getRequest()->getQueryParams())));
+        $this->set('title', I18N_PHOTOS);
 
         if ($render) {
             $this->response = $this->response->withCookie((new Cookie('render-photos', $render))->withNeverExpire());

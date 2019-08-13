@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Model\Behavior;
 
+use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -33,7 +34,7 @@ class TreeBehaviorTest extends TestCase
      */
     public function testFindTreeList()
     {
-        $PostsCategories = $this->getMockForModel('MeCms.PostsCategories', null);
+        $PostsCategories = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
 
         $expected = [
             1 => 'First post category',

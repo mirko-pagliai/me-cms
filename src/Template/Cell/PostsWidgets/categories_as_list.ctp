@@ -10,6 +10,9 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\PostsCategory;
+
 if (empty($categories) || $categories->count() < 2) {
     return;
 }
@@ -17,8 +20,8 @@ if (empty($categories) || $categories->count() < 2) {
 $this->extend('/Common/widget');
 $this->assign('title', I18N_POSTS_CATEGORIES);
 
-$categories = $categories->map(function ($category) {
-    return $this->Html->link($category->title, ['_name' => 'postsCategory', $category->slug]);
+$categories = $categories->map(function (PostsCategory $category) {
+    return $this->Html->link($category->get('title'), ['_name' => 'postsCategory', $category->get('slug')]);
 })->toArray();
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);

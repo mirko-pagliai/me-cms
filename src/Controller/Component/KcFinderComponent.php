@@ -14,9 +14,9 @@
 namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Filesystem\Folder;
 use Cake\Routing\Router;
 use MeCms\Utility\Checkup;
+use Symfony\Component\Finder\Finder;
 use Tools\Exception\NotWritableException;
 
 /**
@@ -66,8 +66,7 @@ class KcFinderComponent extends Component
      */
     public function getTypes()
     {
-        //Gets the folders list
-        list($folders) = (new Folder(UPLOADED))->read(true, true);
+        $folders = objects_map(iterator_to_array((new Finder())->directories()->in(UPLOADED)), 'getFilename');
 
         //Each folder is a file type supported by KCFinder
         //Adds the default "images" type and returns

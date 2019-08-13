@@ -11,11 +11,13 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Admin/Common/form');
-$this->assign('title', $title = __d('me_cms', 'Edit post'));
 $this->Library->ckeditor();
 $this->Library->datetimepicker();
 $this->Library->slugify();
 $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
+
+$defaultCategory = $categories->count() < 2 ? $categories->first() : false;
+$emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
 ?>
 
 <?= $this->Form->create($post); ?>
@@ -23,16 +25,17 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
     <div class="col-lg-3 order-12">
         <div class="float-form">
         <?php
-        //Only admins and managers can edit posts on behalf of other users
+        //Only admins and managers can add posts on behalf of other users
         if ($this->Auth->isGroup(['admin', 'manager'])) {
             echo $this->Form->control('user_id', [
-                'empty' => false,
+                'default' => $this->Auth->user('id'),
                 'label' => I18N_AUTHOR,
             ]);
         }
 
         echo $this->Form->control('category_id', [
-            'empty' => false,
+            'default' => $defaultCategory,
+            'empty' => $emptyCategory,
             'label' => I18N_CATEGORY,
         ]);
         echo $this->Form->datetimepicker('created', [
@@ -40,6 +43,7 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
             'label' => I18N_DATE,
         ]);
         echo $this->Form->control('priority', [
+            'default' => '3',
             'label' => I18N_PRIORITY,
         ]);
         echo $this->Form->control('active', [
@@ -71,7 +75,7 @@ $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
     <div class="form-group to-be-hidden">
         <?= $this->Form->control('tags_as_string', [
             'help' => __d('me_cms', 'Tags must be at least 3 chars and separated by a comma ' .
-                'or a comma and a space. Only  lowercase letters, numbers, hyphen, space'),
+                'or a comma and a space. Only lowercase letters, numbers, hyphen, space'),
             'id' => 'tags-output-text',
             'label' => I18N_TAGS,
             'rows' => 2,

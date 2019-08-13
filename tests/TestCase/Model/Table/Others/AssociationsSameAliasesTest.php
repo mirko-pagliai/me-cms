@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Model\Table\Others;
 
+use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TableTestCase;
 
 /**
@@ -41,17 +42,14 @@ class AssociationsSameAliasesTest extends TableTestCase
      */
     public function testAssociationsSameAliases()
     {
-        $tables['Pages'] = $this->getMockForModel('MeCms.Pages', null);
-        $tables['Posts'] = $this->getMockForModel('MeCms.Posts', null);
-
-        foreach ($tables as $table) {
+        foreach (['Pages', 'Posts'] as $name) {
+            $table = TableRegistry::getTableLocator()->get('MeCms.' . $name);
             $categories = $table->Categories;
 
             $this->assertBelongsTo($categories);
             $this->assertEquals('Categories', $categories->getName());
-            $this->assertEquals(sprintf('%s.%sCategories', 'MeCms', $table->getAlias()), $categories->getClassName());
-
-            $this->assertInstanceof(sprintf('%s\Model\Entity\%sCategory', 'MeCms', $table->getAlias()), $categories->find()->first());
+            $this->assertEquals(sprintf('%s.%sCategories', 'MeCms', $name), $categories->getClassName());
+            $this->assertInstanceof(sprintf('%s\Model\Entity\%sCategory', 'MeCms', $name), $categories->find()->first());
         }
     }
 }

@@ -27,6 +27,12 @@ use MeCms\Utility\StaticPage;
 class StaticPageTest extends TestCase
 {
     /**
+     * Cache keys to clear for each test
+     * @var array
+     */
+    protected $cacheToClear = ['static_pages'];
+
+    /**
      * Called after every test method
      * @return void
      */
@@ -34,7 +40,6 @@ class StaticPageTest extends TestCase
     {
         parent::tearDown();
 
-        Cache::clear('static_pages');
         $this->removePlugins(['TestPlugin']);
     }
 
@@ -45,7 +50,7 @@ class StaticPageTest extends TestCase
     public function testAll()
     {
         $this->loadPlugins(['TestPlugin']);
-        $TestPluginPath = rtr(array_value_first(App::path('Template', 'TestPlugin')));
+        $TestPluginPath = rtr(array_value_first(App::path('Template', 'TestPlugin'))) . '/StaticPages/';
 
         $pages = StaticPage::all();
         $this->assertContainsOnlyInstancesOf(Entity::class, $pages);
@@ -58,19 +63,19 @@ class StaticPageTest extends TestCase
             'page-from-app',
             'cookies-policy-it',
             'cookies-policy',
-            'test-from-plugin',
             'page-on-first-from-plugin',
             'page_on_second_from_plugin',
+            'test-from-plugin',
         ], Hash::extract($pages, '{n}.filename'));
 
         //Checks paths
         $this->assertEquals([
-            'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'Template' . DS . 'StaticPages' . DS . 'page-from-app.ctp',
-            'src' . DS . 'Template' . DS . 'StaticPages' . DS . 'cookies-policy-it.ctp',
-            'src' . DS . 'Template' . DS . 'StaticPages' . DS . 'cookies-policy.ctp',
-            $TestPluginPath . 'StaticPages' . DS . 'test-from-plugin.ctp',
-            $TestPluginPath . 'StaticPages' . DS . 'first-folder' . DS . 'page-on-first-from-plugin.ctp',
-            $TestPluginPath . 'StaticPages' . DS . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin.ctp',
+            'tests/test_app/TestApp/Template/StaticPages/page-from-app.' . StaticPage::EXTENSION,
+            'src/Template/StaticPages/cookies-policy-it.' . StaticPage::EXTENSION,
+            'src/Template/StaticPages/cookies-policy.' . StaticPage::EXTENSION,
+            $TestPluginPath . 'first-folder/page-on-first-from-plugin.' . StaticPage::EXTENSION,
+            $TestPluginPath . 'first-folder/second_folder/page_on_second_from_plugin.' . StaticPage::EXTENSION,
+            $TestPluginPath . 'test-from-plugin.' . StaticPage::EXTENSION,
         ], Hash::extract($pages, '{n}.path'));
 
         //Checks slugs
@@ -78,9 +83,9 @@ class StaticPageTest extends TestCase
             'page-from-app',
             'cookies-policy-it',
             'cookies-policy',
-            'test-from-plugin',
             'first-folder/page-on-first-from-plugin',
             'first-folder/second_folder/page_on_second_from_plugin',
+            'test-from-plugin',
         ], Hash::extract($pages, '{n}.slug'));
 
         //Checks titles
@@ -88,9 +93,9 @@ class StaticPageTest extends TestCase
             'Page From App',
             'Cookies Policy It',
             'Cookies Policy',
-            'Test From Plugin',
             'Page On First From Plugin',
             'Page On Second From Plugin',
+            'Test From Plugin',
         ], Hash::extract($pages, '{n}.title'));
     }
 
@@ -108,9 +113,9 @@ class StaticPageTest extends TestCase
             DS . 'StaticPages' . DS . 'page-from-app',
             'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy-it',
             'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy',
-            'TestPlugin.' . DS . 'StaticPages' . DS . 'test-from-plugin',
             'TestPlugin.' . DS . 'StaticPages' . DS . 'first-folder' . DS . 'page-on-first-from-plugin',
             'TestPlugin.' . DS . 'StaticPages' . DS . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin',
+            'TestPlugin.' . DS . 'StaticPages' . DS . 'test-from-plugin',
         ], $pages);
 
         //Tries to get a no existing page
@@ -160,13 +165,16 @@ class StaticPageTest extends TestCase
             return $this->invokeMethod(StaticPage::class, 'getSlug', func_get_args());
         };
 
-        foreach (['my-file', 'my-file.ctp', '/first/second/my-file.ctp'] as $file) {
+        foreach ([
+            'my-file', 'my-file.' . StaticPage::EXTENSION,
+            '/first/second/my-file.' . StaticPage::EXTENSION,
+        ] as $file) {
             $this->assertEquals('my-file', $getSlugMethod($file, '/first/second'));
             $this->assertEquals('my-file', $getSlugMethod($file, '/first/second/'));
         }
 
-        $this->assertEquals('first/my-file', $getSlugMethod('first/my-file.ctp', '/first/second'));
-        $this->assertEquals('third/my-file', $getSlugMethod('/first/second/third/my-file.ctp', '/first/second'));
+        $this->assertEquals('first/my-file', $getSlugMethod('first/my-file.' . StaticPage::EXTENSION, '/first/second'));
+        $this->assertEquals('third/my-file', $getSlugMethod('/first/second/third/my-file.' . StaticPage::EXTENSION, '/first/second'));
     }
 
     /**
@@ -180,11 +188,11 @@ class StaticPageTest extends TestCase
             return $this->invokeMethod(StaticPage::class, 'getSlug', func_get_args());
         };
 
-        $this->assertEquals('my-file', $getSlugMethod('\\first\\second\\my-file.ctp', '\\first\\second'));
-        $this->assertEquals('my-file', $getSlugMethod('\\first\\second\\my-file.ctp', '\\first\\second\\'));
-        $this->assertEquals('my-file', $getSlugMethod('C:\\\\first\\my-file.ctp', 'C:\\\\first'));
-        $this->assertEquals('second/my-file', $getSlugMethod('\\first\\second\\my-file.ctp', '\\first'));
-        $this->assertEquals('second/my-file', $getSlugMethod('\\first\\second\\my-file.ctp', '\\first\\'));
+        $this->assertEquals('my-file', $getSlugMethod('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\second'));
+        $this->assertEquals('my-file', $getSlugMethod('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\second\\'));
+        $this->assertEquals('my-file', $getSlugMethod('C:\\\\first\\my-file.' . StaticPage::EXTENSION, 'C:\\\\first'));
+        $this->assertEquals('second/my-file', $getSlugMethod('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first'));
+        $this->assertEquals('second/my-file', $getSlugMethod('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\'));
     }
 
     /**
@@ -197,14 +205,14 @@ class StaticPageTest extends TestCase
             'Page From App',
             'Cookies Policy It',
             'Cookies Policy',
-            'Test From Plugin',
             'Page On First From Plugin',
             'Page On Second From Plugin',
+            'Test From Plugin',
         ];
 
         //Gets all slugs and all paths from pages
-        $slugs = Hash::extract(StaticPage::all(), '{n}.slug');
-        $paths = Hash::extract(StaticPage::all(), '{n}.path');
+        $slugs = Hash::extract(StaticPage::all(), '{*}.slug');
+        $paths = Hash::extract(StaticPage::all(), '{*}.path');
 
         $count = count($slugs);
         for ($id = 0; $id < $count; $id++) {

@@ -12,7 +12,6 @@
  */
 namespace MeCms\Controller;
 
-use Cake\Filesystem\File;
 use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
@@ -119,7 +118,7 @@ class SystemsController extends AppController
         }
 
         if (empty($sitemap)) {
-            (new File(SITEMAP, true, 0777))->write(gzencode(Sitemap::generate(), 9));
+            create_file(SITEMAP, gzencode(Sitemap::generate(), 9), 0777);
         }
 
         return $this->response->withFile(SITEMAP);

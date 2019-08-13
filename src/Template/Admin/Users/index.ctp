@@ -50,7 +50,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
             ]);
             echo $this->Form->control('group', [
                 'default' => $this->getRequest()->getQuery('group'),
-                'empty' => sprintf('-- %s --', __d('me_cms', 'all groups')),
+                'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
             ]);
             echo $this->Form->datepicker('created', [
                 'data-date-format' => 'YYYY-MM',

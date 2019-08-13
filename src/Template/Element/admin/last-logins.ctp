@@ -12,7 +12,7 @@
  */
 ?>
 
-<?php if (!empty($loginLog)) : ?>
+<?php if ($loginLog) : ?>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -27,36 +27,36 @@
                 <tr>
                     <td class="text-center text-nowrap">
                         <div class="d-none d-lg-block">
-                            <?= $log->time->i18nFormat() ?>
+                            <?= $log->get('time')->i18nFormat() ?>
                         </div>
                         <div class="d-lg-none">
-                            <div><?= $log->time->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
-                            <div><?= $log->time->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
+                            <div><?= $log->get('time')->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
+                            <div><?= $log->get('time')->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                         </div>
                     </td>
                     <td class="text-center text-nowrap">
                         <?= sprintf(
                             '%s (%s | %s)',
-                            $log->ip,
+                            $log->get('ip'),
                             $this->Html->link(
                                 __d('me_cms', 'Who is'),
-                                str_replace('{IP}', $log->ip, getConfigOrFail('security.ip_whois')),
+                                str_replace('{IP}', $log->get('ip'), getConfigOrFail('security.ip_whois')),
                                 ['target' => '_blank']
                             ),
                             $this->Html->link(
                                 __d('me_cms', 'Map'),
-                                str_replace('{IP}', $log->ip, getConfigOrFail('security.ip_map')),
+                                str_replace('{IP}', $log->get('ip'), getConfigOrFail('security.ip_map')),
                                 ['target' => '_blank']
                             )
                         ) ?>
                     </td>
                     <td class="text-center">
                         <samp>
-                            <?= __d('me_cms', '{0} {1} on {2}', $log->browser, $log->version, $log->platform) ?>
+                            <?= __d('me_cms', '{0} {1} on {2}', $log->get('browser'), $log->get('version'), $log->get('platform')) ?>
                         </samp>
                     </td>
                     <td class="small">
-                        <samp><?= $log->agent ?></samp>
+                        <samp><?= $log->get('agent') ?></samp>
                     </td>
                 </tr>
             <?php endforeach; ?>

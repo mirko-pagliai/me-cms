@@ -23,11 +23,6 @@ use MeCms\TestSuite\CellTestCase;
 class PhotosWidgetsCellTest extends CellTestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $Table;
-
-    /**
      * Fixtures
      * @var array
      */
@@ -35,17 +30,6 @@ class PhotosWidgetsCellTest extends CellTestCase
         'plugin.MeCms.Photos',
         'plugin.MeCms.PhotosAlbums',
     ];
-
-    /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->Table = $this->Table ?: $this->getMockForModel('MeCms.Photos', null);
-    }
 
     /**
      * Test for `albums()` method
@@ -194,8 +178,8 @@ class PhotosWidgetsCellTest extends CellTestCase
             'Random photo',
             '/h4',
             ['div' => ['class' => 'widget-content']],
-            ['a' => ['href' => '/albums', 'class' => 'thumbnail', 'title' => '']],
-            ['img' => ['src', 'alt', 'class' => 'img-fluid']],
+            ['a' => ['href' => '/albums']],
+            ['img' => ['src', 'alt', 'class' => 'img-fluid thumbnail']],
             '/a',
             '/div',
             '/div',
@@ -209,11 +193,11 @@ class PhotosWidgetsCellTest extends CellTestCase
             'Random 2 photos',
             '/h4',
             ['div' => ['class' => 'widget-content']],
-            ['a' => ['href' => '/albums', 'class' => 'thumbnail', 'title' => '']],
-            ['img' => ['src', 'alt', 'class' => 'img-fluid']],
+            ['a' => ['href' => '/albums']],
+            ['img' => ['src', 'alt', 'class' => 'img-fluid thumbnail']],
             '/a',
-            ['a' => ['href' => '/albums', 'class' => 'thumbnail', 'title' => '']],
-            ['img' => ['src', 'alt', 'class' => 'img-fluid']],
+            ['a' => ['href' => '/albums']],
+            ['img' => ['src', 'alt', 'class' => 'img-fluid thumbnail']],
             '/a',
             '/div',
             '/div',

@@ -13,7 +13,6 @@
  */
 namespace MeCms\TestSuite;
 
-use Cake\Cache\Cache;
 use Cake\ORM\Association;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\BelongsToMany;
@@ -26,22 +25,10 @@ use MeCms\TestSuite\TestCase;
 abstract class TableTestCase extends TestCase
 {
     /**
-     * Table instance
-     * @var \Cake\ORM\Table|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $Table;
-
-    /**
      * If `true`, a mock instance of the table will be created
      * @var bool
      */
     protected $autoInitializeClass = true;
-
-    /**
-     * Cache keys to clear for each test
-     * @var array
-     */
-    protected $cacheToClear = [];
 
     /**
      * Asserts that the table has a "belogs to" association
@@ -106,24 +93,9 @@ abstract class TableTestCase extends TestCase
         }
 
         if (!$this->Table && $this->autoInitializeClass) {
-            $parts = explode('\\', get_class($this));
-            array_splice($parts, 1, 2, []);
-            $parts[] = substr(array_pop($parts), 0, -4);
-            $className = implode('\\', $parts);
-
-            if (class_exists($className)) {
-                $alias = substr(array_pop($parts), 0, -5);
-                $this->Table = $this->getMockForModel($alias, null, compact('className'));
-
-                //Tries to retrieve all cache names related to this table and associated tables
-                $this->cacheToClear = $this->Table->getCacheName(true);
-            }
-        }
-
-        //Clears all cache keys
-        foreach ($this->cacheToClear as $cacheKey) {
-            Cache::getConfig($cacheKey) ?: $this->fail('Cache key `' . $cacheKey . '` does not exist');
-            Cache::clear(false, $cacheKey);
+            $alias = substr(get_class_short_name($this), 0, -9);
+            $className = 'MeCms\\Model\\Table\\' . $alias . 'Table';
+            $this->Table = $this->getTable($alias, compact('className'));
         }
     }
 }

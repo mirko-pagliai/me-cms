@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
+use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -40,7 +41,7 @@ class IsOwnedByTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = $this->getMockForModel('MeCms.Posts', null);
+        $this->Posts = TableRegistry::getTableLocator()->get('MeCms.Posts');
     }
 
     /**

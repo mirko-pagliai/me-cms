@@ -97,6 +97,8 @@ class PagesCategoriesController extends AppController
         }
 
         $this->set(compact('category'));
+        $this->set('title', __d('me_cms', 'Add pages category'));
+        $this->render('form');
     }
 
     /**
@@ -121,6 +123,8 @@ class PagesCategoriesController extends AppController
         }
 
         $this->set(compact('category'));
+        $this->set('title', __d('me_cms', 'Edit pages category'));
+        $this->render('form');
     }
 
     /**

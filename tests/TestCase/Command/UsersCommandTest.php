@@ -12,6 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Command;
 
+use Cake\ORM\TableRegistry;
 use MeCms\Command\UsersCommand;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
@@ -39,7 +40,7 @@ class UsersCommandTest extends TestCase
     public function testExecute()
     {
         $command = new UsersCommand();
-        $command->Users = $this->getMockForModel('MeCms.Users', null);
+        $command->Users = TableRegistry::getTableLocator()->get('MeCms.Users');
         $expectedRows = $this->invokeMethod($command, 'getUsersForTable');
         array_unshift($expectedRows, ['<info>ID</info>', '<info>Username</info>', '<info>Group</info>', '<info>Name</info>', '<info>Email</info>', '<info>Posts</info>', '<info>Status</info>', '<info>Date</info>']);
 

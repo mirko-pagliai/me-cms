@@ -10,6 +10,9 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use MeCms\Model\Entity\PagesCategory;
+
 if (empty($categories) || $categories->count() < 2) {
     return;
 }
@@ -25,8 +28,8 @@ echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'send_form(this)',
-    'options' => $categories->map(function ($category) {
-        return sprintf('%s (%d)', $category->title, $category->page_count);
+    'options' => $categories->map(function (PagesCategory $category) {
+        return sprintf('%s (%d)', $category->get('title'), $category->get('page_count'));
     })->toArray(),
 ]);
 echo $this->Form->end();

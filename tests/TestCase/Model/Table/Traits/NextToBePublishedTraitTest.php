@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\I18n\Time;
+use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -42,7 +43,7 @@ class NextToBePublishedTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = $this->getMockForModel('MeCms.Posts', null);
+        $this->Posts = TableRegistry::getTableLocator()->get('MeCms.Posts');
     }
 
     /**

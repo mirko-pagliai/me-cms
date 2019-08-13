@@ -51,18 +51,16 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAddEnableCommentsField()
     {
-        $getTable = function ($name) {
-            return $this->getMockForModel('MeCms.' . $name, null);
-        };
         $this->loadFixtures('Pages', 'Posts');
 
         foreach (['Pages', 'Posts'] as $table) {
-            $getTable($table)->getConnection()->execute(sprintf('ALTER TABLE `%s` DROP `enable_comments`', $getTable($table)->getTable()));
+            $this->getTable($table)->getConnection()
+                ->execute(sprintf('ALTER TABLE `%s` DROP `enable_comments`', $this->getTable($table)->getTable()));
         }
 
         $this->Command->addEnableCommentsField();
         foreach (['Pages', 'Posts'] as $table) {
-            $this->assertTrue($getTable($table)->getSchema()->hasColumn('enable_comments'));
+            $this->assertTrue($this->getTable($table)->getSchema()->hasColumn('enable_comments'));
         }
     }
 
@@ -72,16 +70,14 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAlterTagColumnSize()
     {
-        $getTable = function () {
-            return $this->getMockForModel('MeCms.Tags', null);
-        };
         $this->loadFixtures('Tags');
 
-        $getTable()->getConnection()->execute(sprintf('ALTER TABLE %s MODIFY tag varchar(254) NOT NULL', $getTable()->getTable()));
-        $this->assertEquals(254, $getTable()->getSchema()->getColumn('tag')['length']);
+        $this->getTable('Tags')->getConnection()
+            ->execute(sprintf('ALTER TABLE %s MODIFY tag varchar(254) NOT NULL', $this->getTable('Tags')->getTable()));
+        $this->assertEquals(254, $this->getTable('Tags')->getSchema()->getColumn('tag')['length']);
 
         $this->Command->alterTagColumnSize();
-        $this->assertEquals(255, $getTable()->getSchema()->getColumn('tag')['length']);
+        $this->assertEquals(255, $this->getTable('Tags')->getSchema()->getColumn('tag')['length']);
     }
 
     /**
