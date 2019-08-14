@@ -23,7 +23,7 @@ class PHP extends AbstractCheckup
     /**
      * Extensions to check
      */
-    const EXT_TO_CHECK = ['exif', 'imagick', 'mcrypt', 'zip'];
+    const EXT_TO_CHECK = ['exif', 'imagick', 'zip'];
 
     /**
      * Checks if some extensions are loaded
