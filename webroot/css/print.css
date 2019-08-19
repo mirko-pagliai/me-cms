@@ -1,0 +1,35 @@
+/*!
+ * This file is part of me-cms.
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright   Copyright (c) Mirko Pagliai
+ * @link        https://github.com/mirko-pagliai/me-cms
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
+ */
+@page {
+    margin: 2cm;
+} 
+
+#topbar-desktop,
+#sidebar,
+article #disqus_thread,
+article .user-picture,
+#footer,
+script#__debug_kit + iframe, /* DebugKit */
+#shr-admin-badge {
+    display: none !important;
+}
+
+/* Header, logo */
+#header #logo {
+    margin: 1.5rem auto !important;
+}
+
+/* Article, links */
+article a {
+    border: 0 !important;
+    text-decoration: underline;
+}

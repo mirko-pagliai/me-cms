@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.7
+* added a basic style sheet for printing;
 * fixed bug for some no existing photos;
 * `add` and` edit` template files for `Posts`, `PostsCategories`, ` Pages` and
     `PagesCategories` have been merged into the `form` templates respectively;
