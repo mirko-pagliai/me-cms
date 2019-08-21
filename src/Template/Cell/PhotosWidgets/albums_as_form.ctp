@@ -20,7 +20,7 @@ if (empty($albums) || $albums->count() < 2) {
 $this->extend('/Common/widget');
 $this->assign('title', __d('me_cms', 'Albums'));
 
-echo $this->Form->create(false, [
+echo $this->Form->create(null, [
     'type' => 'get',
     'url' => ['_name' => 'album', 'album'],
 ]);

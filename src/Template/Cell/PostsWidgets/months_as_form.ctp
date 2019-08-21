@@ -20,7 +20,7 @@ if (empty($posts) || $posts->count() < 2) {
 $this->extend('/Common/widget');
 $this->assign('title', __d('me_cms', 'Posts by month'));
 
-echo $this->Form->create(false, [
+echo $this->Form->create(null, [
     'type' => 'get',
     'url' => ['_name' => 'postsByDate', sprintf('%s/%s', date('Y'), date('m'))],
 ]);
