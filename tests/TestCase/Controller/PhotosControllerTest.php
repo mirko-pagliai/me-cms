@@ -49,6 +49,10 @@ class PhotosControllerTest extends ControllerTestCase
         //Backward compatibility for URLs like `/photo/1`
         $this->get('/photo/1');
         $this->assertRedirect($url);
+
+        //No existing photo
+        $this->get('/photo/999');
+        $this->assertResponseError();
     }
 
     /**

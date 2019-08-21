@@ -5,10 +5,12 @@
 
 ## 2.26 branch
 ### 2.26.7
+* added a basic style sheet for printing;
+* fixed bug for some no existing photos;
 * `add` and` edit` template files for `Posts`, `PostsCategories`, ` Pages` and
     `PagesCategories` have been merged into the `form` templates respectively;
 * added `admin/priority-badge` template element;
-* updated for `php-tools` `1.2.8`.
+* updated for `php-tools` `1.2.8` and `me-tools` `2.18.11`.
 
 ### 2.26.6
 * added `AppTable::deleteAll()` method. This automatically clears the cache

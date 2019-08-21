@@ -34,6 +34,7 @@ declare(strict_types=1);
             'MeCms.layout',
             'MeCms.contents',
         ], ['block' => true]);
+        echo $this->Asset->css('MeCms.print', ['block' => true, 'media' => 'print']);
         echo $this->fetch('css');
 
         echo $this->Asset->script([
