@@ -29,12 +29,11 @@ class ContactUsForm extends Form
     use MailerAwareTrait;
 
     /**
-     * Defines the validator using the methods on Cake\Validation\Validator or
-     *  loads a pre-defined validator from a concrete class.
+     * Returns the default validator object
      * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Validation\AppValidator
+     * @return \Cake\Validation\Validator
      */
-    protected function _buildValidator(Validator $validator): AppValidator
+    public function validationDefault(Validator $validator): Validator
     {
         $validator = new AppValidator();
 
