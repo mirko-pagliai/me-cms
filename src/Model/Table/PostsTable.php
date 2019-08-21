@@ -15,6 +15,7 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Database\Expression\QueryExpression;
 use Cake\Event\Event;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query;
@@ -212,7 +213,10 @@ class PostsTable extends PostsAndPagesTables
             });
 
         if ($onlyWithImages) {
-            $query->where([sprintf('%s.preview NOT IN', $this->getAlias()) => [null, []]]);
+            $query->where(function (QueryExpression $exp, Query $q) {
+                return $exp->notEq(sprintf('%s.preview', $this->getAlias()), [])
+                    ->notEq(sprintf('%s.preview', $this->getAlias()), null);
+            });
         }
 
         return $query;
