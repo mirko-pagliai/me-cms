@@ -16,7 +16,7 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
 ?>
 
 <div class="card card-body bg-light border-0 mb-4">
-    <?= $this->Form->createInline(false, ['type' => 'get']) ?>
+    <?= $this->Form->createInline(null, ['type' => 'get']) ?>
     <fieldset>
         <?php
         echo $this->Form->label('file', __d('me_cms', 'Changelog'));
