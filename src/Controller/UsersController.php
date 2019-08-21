@@ -330,7 +330,7 @@ class UsersController extends AppController
         $tokenExists = $this->Token->check($token, ['type' => 'password_forgot', 'user_id' => $id]);
         is_true_or_fail($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
 
-        $user = $this->Users->findActiveById($id)->select(['id'])->firstOrFail();
+        $user = $this->Users->findActiveById($id)->firstOrFail();
 
         if ($this->getRequest()->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
