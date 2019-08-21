@@ -13,9 +13,9 @@ declare(strict_types=1);
  */
 namespace MeCms\Form;
 
+use Cake\Form\Form;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Validation\Validator;
-use MeCms\Form\Form;
 use MeCms\Validation\AppValidator;
 use StopSpam\SpamDetector;
 
