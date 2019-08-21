@@ -25,7 +25,7 @@ $this->append('actions', $this->Html->button(
 $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
 
-<?= $this->Form->createInline(false, ['class' => 'filter-form', 'type' => 'get']) ?>
+<?= $this->Form->createInline(null, ['class' => 'filter-form', 'type' => 'get']) ?>
     <fieldset>
         <?= $this->Html->legend(I18N_FILTER, ['icon' => 'eye']) ?>
         <?php
