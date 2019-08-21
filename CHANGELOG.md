@@ -3,6 +3,7 @@
 ### 2.26.7
 * added a basic style sheet for printing;
 * fixed bug for some no existing photos;
+* improved code for `PostsTable::queryForRelated()` method;
 * `add` and` edit` template files for `Posts`, `PostsCategories`, ` Pages` and
     `PagesCategories` have been merged into the `form` templates respectively;
 * added `admin/priority-badge` template element;

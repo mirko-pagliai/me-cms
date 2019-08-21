@@ -219,12 +219,12 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->loadFixtures();
 
         $query = $this->Table->queryForRelated(4, true);
-        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = (PostsTags.tag_id)) WHERE (Posts.active = :c1 AND Posts.created <= :c2 AND Posts.preview not in (:c3,:c4))', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = (PostsTags.tag_id)) WHERE (Posts.active = :c1 AND Posts.created <= :c2 AND (Posts.preview != :c3 AND Posts.preview != :c4))', $query->sql());
         $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertInstanceof(Time::class, $query->getValueBinder()->bindings()[':c2']['value']);
-        $this->assertEquals(null, $query->getValueBinder()->bindings()[':c3']['value']);
-        $this->assertEquals([], $query->getValueBinder()->bindings()[':c4']['value']);
+        $this->assertEquals([], $query->getValueBinder()->bindings()[':c3']['value']);
+        $this->assertEquals(null, $query->getValueBinder()->bindings()[':c4']['value']);
 
         $query = $this->Table->queryForRelated(4, false);
         $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = (PostsTags.tag_id)) WHERE (Posts.active = :c1 AND Posts.created <= :c2)', $query->sql());
