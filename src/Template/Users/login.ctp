@@ -14,7 +14,7 @@ $this->assign('title', $title = __d('me_cms', 'Login'));
 ?>
 
 <div id="login">
-    <?= $this->Form->create('User') ?>
+    <?= $this->Form->create(null) ?>
     <fieldset>
         <?php
             echo $this->Form->control('username', [

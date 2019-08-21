@@ -213,7 +213,8 @@ class PostsTable extends PostsAndPagesTables
             });
 
         if ($onlyWithImages) {
-            $query->where([sprintf('%s.preview NOT IN', $this->getAlias()) => [null, []]]);
+            $query->where([sprintf('%s.preview IS NOT', $this->getAlias()) => null])
+                ->where([sprintf('%s.preview IS NOT', $this->getAlias()) => []]);
         }
 
         return $query;
