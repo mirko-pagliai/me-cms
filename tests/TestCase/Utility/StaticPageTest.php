@@ -148,9 +148,9 @@ class StaticPageTest extends TestCase
     {
         $this->loadPlugins(['TestPlugin']);
         $result = $this->invokeMethod(StaticPage::class, 'getAllPaths');
-        $this->assertContains(APP . 'Template' . DS . 'StaticPages' . DS, $result);
-        $this->assertContains(ROOT . 'src' . DS . 'Template' . DS . 'StaticPages' . DS, $result);
-        $this->assertContains(Plugin::path('TestPlugin') . 'src' . DS . 'Template' . DS . 'StaticPages' . DS, $result);
+        $this->assertContains(APP . 'Template' . DS . 'StaticPages', $result);
+        $this->assertContains(ROOT . 'src' . DS . 'Template' . DS . 'StaticPages', $result);
+        $this->assertContains(Plugin::path('TestPlugin') . 'src' . DS . 'Template' . DS . 'StaticPages', $result);
         $this->assertEquals(Cache::read('paths', 'static_pages'), $result);
     }
 
