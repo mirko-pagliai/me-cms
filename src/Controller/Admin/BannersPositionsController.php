@@ -105,12 +105,12 @@ class BannersPositionsController extends AppController
         $position = $this->BannersPositions->get($id);
 
         //Before deleting, it checks if the position has some banners
+        list($method, $message) = ['alert', I18N_BEFORE_DELETE];
         if (!$position->get('banner_count')) {
             $this->BannersPositions->deleteOrFail($position);
-            $this->Flash->success(I18N_OPERATION_OK);
-        } else {
-            $this->Flash->alert(I18N_BEFORE_DELETE);
+            list($method, $message) = ['success', I18N_OPERATION_OK];
         }
+        call_user_func([$this->Flash, $method], $message);
 
         return $this->redirect(['action' => 'index']);
     }

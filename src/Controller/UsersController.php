@@ -371,35 +371,33 @@ class UsersController extends AppController
                 ->set('active', (bool)!getConfig('users.activation'));
 
             //Checks for reCAPTCHA, if requested
+            list($method, $message) = ['error', __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA')];
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
                 if ($this->Users->save($user)) {
                     switch (getConfig('users.activation')) {
                         //The account will be enabled by an administrator
                         case 2:
-                            $success = __d('me_cms', 'Account created, but it needs to be activated by an admin');
+                            $message = __d('me_cms', 'Account created, but it needs to be activated by an admin');
                             break;
                         //The account will be enabled by the user via email
                         //  (default)
                         case 1:
                             //Sends the activation mail
                             $this->sendActivationMail($user);
-
-                            $success = __d('me_cms', 'We send you an email to activate your account');
+                            $message = __d('me_cms', 'We send you an email to activate your account');
                             break;
                         //No activation required, the account is immediately active
                         default:
-                            $success = __d('me_cms', 'Account created. Now you can login');
+                            $message = __d('me_cms', 'Account created. Now you can login');
                             break;
                     }
-                    $this->Flash->success($success);
+                    $this->Flash->success($message);
 
                     return $this->redirect(['_name' => 'homepage']);
                 }
-
-                $this->Flash->error(__d('me_cms', 'The account has not been created'));
-            } else {
-                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
+                $message = __d('me_cms', 'The account has not been created');
             }
+            call_user_func([$this->Flash, $method], $message);
         }
 
         $this->set(compact('user'));
