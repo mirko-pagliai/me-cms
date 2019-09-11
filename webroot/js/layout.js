@@ -17,7 +17,7 @@
  */
 function setFooterClass()
 {
-    var footer = $('#footer');
+    var footer = $("#footer");
 
     if (!footer.length) {
         return;
@@ -25,29 +25,29 @@ function setFooterClass()
 
     //If there's a difference between the windows height and the body height,
     //  applies the `fixed` class
-    if ($(window).height() - $('body').height() > 0) {
-        footer.addClass('fixed');
+    if ($(window).height() - $("body").height() > 0) {
+        footer.addClass("fixed");
     } else {
-        footer.removeClass('fixed');
+        footer.removeClass("fixed");
     }
 }
 
 //On windows load and resize, it sets the footer class
-$(window).on('load resize', function () {
+$(window).on("load resize", function () {
     setFooterClass();
 });
 
 $(function () {
     //On click on the "accept" button for cookies policy
-    $('#cookies-policy-accept').click(function (event) {
+    $("#cookies-policy-accept").click(function (event) {
         event.preventDefault();
 
         //Removes the cookies policy alert
-        $('#cookies-policy').remove();
+        $("#cookies-policy").remove();
 
         //Sets the cookies
-        Cookies.set('cookies-policy', true, {
-            expires: 999, path: '/'
+        Cookies.set("cookies-policy", true, {
+            expires: 999, path: "/"
         });
     });
 });

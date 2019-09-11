@@ -11,17 +11,17 @@
  */
 $(function () {
     //On click on button to display passwords
-    $('.display-password').click(function (event) {
+    $(".display-password").click(function (event) {
         event.preventDefault();
 
         //Gets the icon
-        var icon = $(this).children('i.fas');
+        var icon = $(this).children("i.fas");
 
         //Gets the password field
-        var oldField = $(this).closest('.input').find('input');
+        var oldField = $(this).closest(".input").find("input");
 
         //Creates a replace field, setting the same value
-        var replaceField = $('<input />').val(oldField.val());
+        var replaceField = $("<input />").val(oldField.val());
 
         //Copies each attribute to the replace field
         oldField.each(function () {
@@ -33,14 +33,12 @@ $(function () {
         });
 
         //Sets the `type` for the replace field and changes the button icon
-        if (oldField.attr('type') === 'password') {
-            replaceField.attr('type', 'text');
-
-            icon.removeClass('fa-eye').addClass('fa-eye-slash');
+        if (oldField.attr("type") === "password") {
+            replaceField.attr("type", "text");
+            icon.removeClass("fa-eye").addClass("fa-eye-slash");
         } else {
-            replaceField.attr('type', 'password');
-
-            icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            replaceField.attr("type", "password");
+            icon.removeClass("fa-eye-slash").addClass("fa-eye");
         }
 
         //Inserts the replace field and removes the old field
