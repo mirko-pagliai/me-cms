@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace MeCms\Utility;
 
 use Cake\Cache\Cache;
-use Cake\Core\App;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
 use Cake\ORM\Entity;
@@ -64,12 +63,10 @@ class StaticPage
     protected static function getPaths(?string $plugin = null): array
     {
         if ($plugin) {
-            $path = Plugin::path($plugin) . 'templates' . DS . 'StaticPages' . DS;
-        } else {
-            $path = APP . 'templates' . DS . 'StaticPages' . DS;
+            return [Plugin::templatePath($plugin) . 'StaticPages' . DS];
         }
 
-        return array_merge(App::path('Template' . DS . 'StaticPages', $plugin), [$path]);
+        return [APP . 'templates' . DS . 'StaticPages' . DS];
     }
 
     /**

@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Utility;
 
 use Cake\Cache\Cache;
-use Cake\Core\App;
 use Cake\Core\Plugin;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
@@ -51,7 +50,7 @@ class StaticPageTest extends TestCase
     public function testAll()
     {
         $this->loadPlugins(['TestPlugin']);
-        $TestPluginPath = rtr(array_value_first(App::path('Template', 'TestPlugin'))) . '/StaticPages/';
+        $TestPluginPath = rtr(Plugin::templatePath('TestPlugin')) . '/StaticPages/';
 
         $pages = StaticPage::all();
         $this->assertContainsOnlyInstancesOf(Entity::class, $pages);
@@ -151,7 +150,7 @@ class StaticPageTest extends TestCase
         $result = $this->invokeMethod(StaticPage::class, 'getAllPaths');
         $this->assertContains(APP . 'templates' . DS . 'StaticPages', $result);
         $this->assertContains(ROOT . 'templates' . DS . 'StaticPages', $result);
-        $this->assertContains(Plugin::path('TestPlugin') . 'templates' . 'StaticPages' . DS, $result);
+        $this->assertContains(Plugin::templatePath('TestPlugin') . 'StaticPages', $result);
         $this->assertEquals(Cache::read('paths', 'static_pages'), $result);
     }
 
