@@ -156,7 +156,7 @@ class StaticPageTest extends TestCase
 
     /**
      * Test for `getSlug()` method
-     * @group onlyUnix
+     * @requires OS Linux
      * @test
      */
     public function testGetSlug()
@@ -179,7 +179,7 @@ class StaticPageTest extends TestCase
 
     /**
      * Test for `getSlug()` method on Windows
-     * @group onlyWindows
+     * @requires OSFAMILY Windows
      * @test
      */
     public function testGetSlugWin()

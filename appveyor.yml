@@ -40,5 +40,5 @@ install:
 
 test_script:
   - cd C:\projects\me-cms
-  - vendor\bin\phpunit.bat --exclude-group=onlyUnix
+  - vendor\bin\phpunit.bat
 
