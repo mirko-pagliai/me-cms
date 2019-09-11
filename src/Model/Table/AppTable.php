@@ -38,11 +38,10 @@ class AppTable extends Table
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
      * @uses clearCache()
      */
-    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function afterDelete(Event $event, EntityInterface $entity)
     {
         $this->clearCache();
     }
@@ -51,11 +50,10 @@ class AppTable extends Table
      * Called after an entity is saved
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
      * @uses clearCache()
      */
-    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function afterSave(Event $event, EntityInterface $entity)
     {
         $this->clearCache();
     }
@@ -111,10 +109,9 @@ class AppTable extends Table
     /**
      * "active" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query, array $options)
+    public function findActive(Query $query)
     {
         return $query->where([
             sprintf('%s.active', $this->getAlias()) => true,
@@ -125,10 +122,9 @@ class AppTable extends Table
     /**
      * "pending" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findPending(Query $query, array $options)
+    public function findPending(Query $query)
     {
         return $query->where(['OR' => [
             sprintf('%s.active', $this->getAlias()) => false,
@@ -139,10 +135,9 @@ class AppTable extends Table
     /**
      * "random" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findRandom(Query $query, array $options)
+    public function findRandom(Query $query)
     {
         $query->order('rand()');
 

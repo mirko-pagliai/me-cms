@@ -12,7 +12,6 @@
  */
 namespace MeCms\Model\Table;
 
-use ArrayObject;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
@@ -36,15 +35,14 @@ class BannersTable extends AppTable
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
      * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
-    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function afterDelete(Event $event, EntityInterface $entity)
     {
         @unlink(BANNERS . $entity->get('filename'));
 
-        parent::afterDelete($event, $entity, $options);
+        parent::afterDelete($event, $entity);
     }
 
     /**
@@ -62,10 +60,9 @@ class BannersTable extends AppTable
     /**
      * "active" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query, array $options)
+    public function findActive(Query $query)
     {
         return $query->where([sprintf('%s.active', $this->getAlias()) => true]);
     }

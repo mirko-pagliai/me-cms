@@ -70,10 +70,9 @@ class UsersTable extends AppTable
     /**
      * "active" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query, array $options)
+    public function findActive(Query $query)
     {
         return $query->where([
             sprintf('%s.active', $this->getAlias()) => true,
@@ -109,10 +108,9 @@ class UsersTable extends AppTable
     /**
      * "pending" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findPending(Query $query, array $options)
+    public function findPending(Query $query)
     {
         return $query->where([
             sprintf('%s.active', $this->getAlias()) => false,

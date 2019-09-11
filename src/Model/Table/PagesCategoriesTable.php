@@ -46,10 +46,9 @@ class PagesCategoriesTable extends AppTable
     /**
      * "active" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query, array $options)
+    public function findActive(Query $query)
     {
         return $query->matching($this->Pages->getAlias(), function (Query $q) {
             return $q->find('active');

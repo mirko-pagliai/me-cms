@@ -98,11 +98,10 @@ class PostsTable extends PostsAndPagesTables
     /**
      * `forIndex()` find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      * @since 2.22.8
      */
-    public function findForIndex(Query $query, array $options)
+    public function findForIndex(Query $query)
     {
         return $query->contain([
                 $this->Categories->getAlias() => ['fields' => ['title', 'slug']],
