@@ -125,7 +125,7 @@ $(function () {
 
         $.each(listOfTags, function (index, tag) {
             //Pushes only the tag values the new array with
-            newTags.push(tag['value']);
+            newTags.push(tag["value"]);
         });
 
         //Updats the output text
