@@ -27,7 +27,7 @@ echo $this->Form->create(null, [
 echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
-    'onchange' => 'send_form(this)',
+    'onchange' => 'sendForm(this)',
     'options' => $categories->map(function (PagesCategory $category) {
         return sprintf('%s (%d)', $category->get('title'), $category->get('page_count'));
     })->toArray(),

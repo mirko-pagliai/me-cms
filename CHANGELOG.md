@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.26 branch
+### 2.26.8
+* updated for `me-tools` `2.18.12`.
+
 ### 2.26.7
 * added a basic style sheet for printing;
 * fixed bug for some no existing photos;

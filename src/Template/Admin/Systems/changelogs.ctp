@@ -23,7 +23,7 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
                 'default' => $this->getRequest()->getQuery('file'),
                 'label' => __d('me_cms', 'Changelog'),
                 'name' => 'file',
-                'onchange' => 'send_form(this)',
+                'onchange' => 'sendForm(this)',
             ]);
             echo $this->Form->submit(I18N_SELECT);
         ?>

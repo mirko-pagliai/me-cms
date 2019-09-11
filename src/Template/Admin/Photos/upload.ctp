@@ -22,7 +22,7 @@ $this->assign('title', __d('me_cms', 'Upload photos'));
         echo $this->Form->control('album', [
             'default' => $this->getRequest()->getQuery('album'),
             'label' => __d('me_cms', 'Album to upload photos'),
-            'onchange' => 'send_form(this)',
+            'onchange' => 'sendForm(this)',
             'options' => $albums,
         ]);
         echo $this->Form->submit(I18N_SELECT);

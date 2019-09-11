@@ -27,7 +27,7 @@ echo $this->Form->create(null, [
 echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
-    'onchange' => 'send_form(this)',
+    'onchange' => 'sendForm(this)',
     'options' => $albums->map(function (PhotosAlbum $album) {
         return sprintf('%s (%d)', $album->get('title'), $album->get('photo_count'));
     })->toArray(),

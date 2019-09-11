@@ -47,7 +47,7 @@ class PagesWidgetsCellTest extends CellTestCase
             ['div' => ['class' => 'widget-content']],
             'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/pages/category/category'],
             ['div' => ['class' => 'form-group input select']],
-            'select' => ['name' => 'q', 'onchange' => 'send_form(this)', 'class' => 'form-control'],
+            'select' => ['name' => 'q', 'onchange' => 'sendForm(this)', 'class' => 'form-control'],
             ['option' => ['value' => '']],
             '/option',
             ['option' => ['value' => 'first-page-category']],

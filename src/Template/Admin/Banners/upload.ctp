@@ -22,7 +22,7 @@ $this->assign('title', __d('me_cms', 'Upload banners'));
         echo $this->Form->control('position', [
             'default' => $this->getRequest()->getQuery('position'),
             'label' => __d('me_cms', 'Position where to upload banners'),
-            'onchange' => 'send_form(this)',
+            'onchange' => 'sendForm(this)',
             'options' => $positions,
         ]);
         echo $this->Form->submit(I18N_SELECT);
