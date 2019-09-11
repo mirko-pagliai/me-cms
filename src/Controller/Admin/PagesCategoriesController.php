@@ -143,7 +143,7 @@ class PagesCategoriesController extends AppController
         if (!$category->get('page_count')) {
             $this->PagesCategories->deleteOrFail($category);
             list($method, $message) = ['success', I18N_OPERATION_OK];
-        } 
+        }
         call_user_func([$this->Flash, $method], $message);
 
         return $this->redirect(['action' => 'index']);
