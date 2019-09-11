@@ -83,11 +83,10 @@ class UsersTable extends AppTable
     /**
      * "auth" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      * @since 2.25.1
      */
-    public function findAuth(Query $query, array $options)
+    public function findAuth(Query $query)
     {
         return $query->contain('Groups', function (Query $q) {
             return $q->select(['name']);
@@ -97,10 +96,9 @@ class UsersTable extends AppTable
     /**
      * "banned" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findBanned(Query $query, array $options)
+    public function findBanned(Query $query)
     {
         return $query->where([sprintf('%s.banned', $this->getAlias()) => true]);
     }
