@@ -74,7 +74,7 @@ $(function () {
             }
 
             //Removes invalid chars
-            tag = tag.replace(/[^a-z0-9\s]/g, '')
+            tag = tag.replace(/[^a-z0-9\s]/g, "")
 
             //Pushes the tag on the list of tags
             listOfTags.push({key:counter, value:tag});
