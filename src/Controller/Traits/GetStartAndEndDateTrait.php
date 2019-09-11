@@ -44,12 +44,11 @@ trait GetStartAndEndDateTrait
         }
 
         $start = $start->setTime(0, 0, 0);
-        $end = Time::parse($start);
-
+        $end = Time::parse($start)->addYear(1);
         if (($year && $month && $day) || in_array($date, ['today', 'yesterday'])) {
-            $end = $end->addDay(1);
-        } else {
-            $end = $year && $month ? $end->addMonth(1) : $end->addYear(1);
+            $end = Time::parse($start)->addDay(1);
+        } elseif ($year && $month) {
+            $end = Time::parse($start)->addMonth(1);
         }
 
         return [$start, $end];

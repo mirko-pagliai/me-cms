@@ -28,7 +28,7 @@ echo $this->Form->create(null, [
 echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
-    'onchange' => 'send_form(this)',
+    'onchange' => 'sendForm(this)',
     'options' => $tags->map(function (Tag $tag) {
         return sprintf('%s (%d)', $tag->get('tag'), $tag->get('post_count'));
     })->toArray(),

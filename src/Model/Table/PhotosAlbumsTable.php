@@ -13,7 +13,6 @@ declare(strict_types=1);
  */
 namespace MeCms\Model\Table;
 
-use ArrayObject;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
@@ -36,28 +35,26 @@ class PhotosAlbumsTable extends AppTable
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
      */
-    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options): void
+    public function afterDelete(Event $event, EntityInterface $entity): void
     {
         @rmdir($entity->get('path'));
 
-        parent::afterDelete($event, $entity, $options);
+        parent::afterDelete($event, $entity);
     }
 
     /**
      * Called after an entity is saved
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
      */
-    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options): void
+    public function afterSave(Event $event, EntityInterface $entitys): void
     {
         @mkdir($entity->get('path'), 0777, true);
 
-        parent::afterSave($event, $entity, $options);
+        parent::afterSave($event, $entity);
     }
 
     /**
@@ -75,10 +72,9 @@ class PhotosAlbumsTable extends AppTable
     /**
      * "active" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query, array $options): Query
+    public function findActive(Query $query): Query
     {
         return $query->matching($this->Photos->getAlias(), function (Query $q) {
             return $q->find('active');

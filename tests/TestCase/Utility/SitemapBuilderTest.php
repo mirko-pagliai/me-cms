@@ -81,7 +81,7 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGetMethods()
     {
-        $extractNamesFromMethods = function ($methods) {
+        $extractName = function ($methods) {
             return collection($methods)->extract('name')->toArray();
         };
 
@@ -93,11 +93,11 @@ class SitemapBuilderTest extends TestCase
             'postsTags',
             'staticPages',
             'systems',
-        ], $extractNamesFromMethods($methods));
+        ], $extractName($methods));
 
         $this->loadPlugins(['TestPlugin']);
         $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['TestPlugin']);
-        $this->assertEquals(['urlMethod1', 'urlMethod2'], $extractNamesFromMethods($methods));
+        $this->assertEquals(['urlMethod1', 'urlMethod2'], $extractName($methods));
 
         //This plugin does not have the `Sitemap` class
         $this->loadPlugins(['TestPluginTwo']);

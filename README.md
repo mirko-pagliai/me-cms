@@ -7,19 +7,6 @@
 This repository contains only the source code of `me-cms`.  
 See [cakephp-for-mecms](https://github.com/mirko-pagliai/cakephp-for-mecms).
 
-## Tests
-Tests are divided into two groups, `onlyUnix` and `onlyWindows`. This is
-necessary because some commands to be executed in the terminal are only valid
-for an environment.
-
-By default, phpunit is executed like this:
-
-    vendor/bin/phpunit --exclude-group=onlyWindows
-
-On Windows, it must be done this way:
-
-    vendor\bin\phpunit.bat --exclude-group=onlyUnix
-
 ## How to generate POT files
 To generate POT files for this plugin, use the following command:
 ```bash

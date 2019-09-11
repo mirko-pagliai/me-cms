@@ -28,7 +28,7 @@ echo $this->Form->create(null, [
 echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
-    'onchange' => 'send_form(this)',
+    'onchange' => 'sendForm(this)',
     'options' => $posts->map(function (Post $post) {
         return sprintf('%s (%s)', $post->get('month')->i18nFormat('MMMM yyyy'), $post->get('post_count'));
     })->toArray(),

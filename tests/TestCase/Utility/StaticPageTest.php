@@ -132,13 +132,13 @@ class StaticPageTest extends TestCase
         $expected = 'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy';
         $this->assertEquals($expected, StaticPage::get('cookies-policy'));
 
-        $originalDefaultlLocale = ini_set('intl.default_locale', 'it_IT');
+        $originalValue = ini_set('intl.default_locale', 'it_IT');
         $this->assertEquals(sprintf('%s-it', $expected), StaticPage::get('cookies-policy'));
-        ini_set('intl.default_locale', $originalDefaultlLocale);
+        ini_set('intl.default_locale', $originalValue);
 
-        $originalDefaultlLocale = ini_set('intl.default_locale', 'it');
+        $originalValue = ini_set('intl.default_locale', 'it');
         $this->assertEquals(sprintf('%s-it', $expected), StaticPage::get('cookies-policy'));
-        ini_set('intl.default_locale', $originalDefaultlLocale);
+        ini_set('intl.default_locale', $originalValue);
     }
 
     /**
@@ -149,15 +149,15 @@ class StaticPageTest extends TestCase
     {
         $this->loadPlugins(['TestPlugin']);
         $result = $this->invokeMethod(StaticPage::class, 'getAllPaths');
-        $this->assertContains(APP . 'templates' . DS . 'StaticPages' . DS, $result);
-        $this->assertContains(ROOT . 'templates' . DS . 'StaticPages' . DS, $result);
-        $this->assertContains(Plugin::path('TestPlugin') . 'templates' . DS . 'StaticPages' . DS, $result);
+        $this->assertContains(APP . 'templates' . DS . 'StaticPages', $result);
+        $this->assertContains(ROOT . 'templates' . DS . 'StaticPages', $result);
+        $this->assertContains(Plugin::path('TestPlugin') . 'templates' . 'StaticPages' . DS, $result);
         $this->assertEquals(Cache::read('paths', 'static_pages'), $result);
     }
 
     /**
      * Test for `getSlug()` method
-     * @group onlyUnix
+     * @requires OS Linux
      * @test
      */
     public function testGetSlug()
@@ -181,7 +181,7 @@ class StaticPageTest extends TestCase
 
     /**
      * Test for `getSlug()` method on Windows
-     * @group onlyWindows
+     * @requires OSFAMILY Windows
      * @test
      */
     public function testGetSlugWin()

@@ -71,10 +71,9 @@ class UsersTable extends AppTable
     /**
      * "active" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query, array $options): Query
+    public function findActive(Query $query): Query
     {
         return $query->where([
             sprintf('%s.active', $this->getAlias()) => true,
@@ -85,11 +84,10 @@ class UsersTable extends AppTable
     /**
      * "auth" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      * @since 2.25.1
      */
-    public function findAuth(Query $query, array $options): Query
+    public function findAuth(Query $query): Query
     {
         return $query->contain('Groups', function (Query $q) {
             return $q->select(['name']);
@@ -99,10 +97,9 @@ class UsersTable extends AppTable
     /**
      * "banned" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findBanned(Query $query, array $options): Query
+    public function findBanned(Query $query): Query
     {
         return $query->where([sprintf('%s.banned', $this->getAlias()) => true]);
     }
@@ -110,10 +107,9 @@ class UsersTable extends AppTable
     /**
      * "pending" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findPending(Query $query, array $options): Query
+    public function findPending(Query $query): Query
     {
         return $query->where([
             sprintf('%s.active', $this->getAlias()) => false,

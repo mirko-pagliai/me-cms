@@ -47,7 +47,9 @@ class StaticPage
                 $paths = array_merge($paths, self::getPaths($plugin));
             }
 
-            return array_filter($paths, 'file_exists');
+            return array_clean(array_map(function ($path) {
+                return rtrim($path, DS);
+            }, $paths), 'file_exists');
         }, 'static_pages');
     }
 

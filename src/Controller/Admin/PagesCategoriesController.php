@@ -138,13 +138,13 @@ class PagesCategoriesController extends AppController
 
         $category = $this->PagesCategories->get($id);
 
+        list($method, $message) = ['alert', I18N_BEFORE_DELETE];
         //Before deleting, it checks if the category has some pages
         if (!$category->get('page_count')) {
             $this->PagesCategories->deleteOrFail($category);
-            $this->Flash->success(I18N_OPERATION_OK);
-        } else {
-            $this->Flash->alert(I18N_BEFORE_DELETE);
+            list($method, $message) = ['success', I18N_OPERATION_OK];
         }
+        call_user_func([$this->Flash, $method], $message);
 
         return $this->redirect(['action' => 'index']);
     }

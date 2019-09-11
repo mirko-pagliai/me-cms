@@ -140,11 +140,11 @@ class LogsController extends AppController
             $successSerialized = @unlink($serialized);
         }
 
+        list($method, $message) = ['error', I18N_OPERATION_NOT_OK];
         if ($success && $successSerialized) {
-            $this->Flash->success(I18N_OPERATION_OK);
-        } else {
-            $this->Flash->error(I18N_OPERATION_NOT_OK);
+            list($method, $message) = ['success', I18N_OPERATION_OK];
         }
+        call_user_func([$this->Flash, $method], $message);
 
         return $this->redirect(['action' => 'index']);
     }

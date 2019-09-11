@@ -57,6 +57,7 @@ class SystemsController extends AppController
 
         if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
+            list($method, $message) = ['error', __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA')];
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
                 //Sends the email
                 if ($contact->execute($this->getRequest()->getData())) {
@@ -64,11 +65,9 @@ class SystemsController extends AppController
 
                     return $this->redirect(['_name' => 'homepage']);
                 }
-
-                $this->Flash->error(I18N_OPERATION_NOT_OK);
-            } else {
-                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
+                $message = I18N_OPERATION_NOT_OK;
             }
+            call_user_func([$this->Flash, $method], $message);
         }
 
         $this->set(compact('contact'));

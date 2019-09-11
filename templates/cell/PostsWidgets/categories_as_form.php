@@ -28,7 +28,7 @@ echo $this->Form->create(null, [
 echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
-    'onchange' => 'send_form(this)',
+    'onchange' => 'sendForm(this)',
     'options' => $categories->map(function (PostsCategory $category) {
         return sprintf('%s (%d)', $category->get('title'), $category->get('post_count'));
     })->toArray(),

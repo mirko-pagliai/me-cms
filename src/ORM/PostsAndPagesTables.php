@@ -14,7 +14,6 @@ declare(strict_types=1);
  */
 namespace MeCms\ORM;
 
-use ArrayObject;
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
@@ -49,13 +48,12 @@ abstract class PostsAndPagesTables extends AppTable
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
      * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options): void
+    public function afterDelete(Event $event, EntityInterface $entity): void
     {
-        parent::afterDelete($event, $entity, $options);
+        parent::afterDelete($event, $entity);
 
         //Sets the next record to be published
         $this->setNextToBePublished();
@@ -65,13 +63,12 @@ abstract class PostsAndPagesTables extends AppTable
      * Called after an entity is saved
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
      * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options): void
+    public function afterSave(Event $event, EntityInterface $entity): void
     {
-        parent::afterSave($event, $entity, $options);
+        parent::afterSave($event, $entity);
 
         //Sets the next record to be published
         $this->setNextToBePublished();
@@ -81,12 +78,11 @@ abstract class PostsAndPagesTables extends AppTable
      * Called before each entity is saved
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
      * @since 2.17.0
      * @uses \MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreviews()
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options): void
+    public function beforeSave(Event $event, EntityInterface $entity): void
     {
         $entity->set('preview', $this->getPreviews($entity->get('text')));
     }
