@@ -33,7 +33,7 @@ $(function () {
      * @param string tag Tag value
      * @returns bool
      */
-    function tag_exist(tag)
+    function tagExists(tag)
     {
         var listOfTagsLength = listOfTags.length;
 
@@ -50,7 +50,7 @@ $(function () {
      * Adds tags
      * @param array tags Tags
      */
-    function add_tags(tags)
+    function addTags(tags)
     {
         $.each(tags, function (index, tag) {
             //Checks for length
@@ -59,7 +59,7 @@ $(function () {
             }
 
             //Returns, if the tag already exists
-            if (tag_exist(tag)) {
+            if (tagExists(tag)) {
                 return;
             }
 
@@ -88,14 +88,14 @@ $(function () {
         });
 
         //At the end, updates the output text
-        update_output_text();
+        updateOutputText();
     }
 
     /**
      * Removes a tag
      * @param string|int id Tag id
      */
-    function remove_tag(id)
+    function removeTag(id)
     {
         var listOfTagsLength = listOfTags.length;
 
@@ -112,13 +112,13 @@ $(function () {
         }
 
         //At the end, updates the output text
-        update_output_text();
+        updateOutputText();
     }
 
     /**
      * Updates the output text
      */
-    function update_output_text()
+    function updateOutputText()
     {
         //Creates a new empty array
         var newTags = [];
@@ -133,7 +133,7 @@ $(function () {
     }
 
     //On start, gets and adds tags from the output text
-    add_tags(outputText.val().split(", "));
+    addTags(outputText.val().split(", "));
 
     //On click on the input button
     inputButton.click(function () {
@@ -149,13 +149,13 @@ $(function () {
         inputText.val("");
 
         //Adds tags
-        add_tags(inputValue.split(/\s*,+\s*/));
+        addTags(inputValue.split(/\s*,+\s*/));
     });
 
     //On click on the remove link
     $(preview).on("click", ".tag-remove", function () {
         //Removes the tag
-        remove_tag($(this).attr("data-tag"));
+        removeTag($(this).attr("data-tag"));
     });
 
     //On focus on the input text

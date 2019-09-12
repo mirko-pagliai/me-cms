@@ -284,7 +284,9 @@ class UsersController extends AppController
 
         if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
+            $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+                $message = __d('me_cms', 'No account found');
                 $user = $this->Users->findActiveByEmail($this->getRequest()->getData('email'))->first();
 
                 if ($user) {
@@ -307,11 +309,8 @@ class UsersController extends AppController
                         $this->getRequest()->getData('email')
                     ), 'users');
                 }
-
-                $this->Flash->error(__d('me_cms', 'No account found'));
-            } else {
-                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
             }
+            $this->Flash->error($message);
         }
 
         $this->set('user', $entity);
