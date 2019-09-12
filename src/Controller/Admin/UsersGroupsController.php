@@ -106,10 +106,10 @@ class UsersGroupsController extends AppController
         $group = $this->UsersGroups->get($id);
 
         //Before deleting, checks if the group is a necessary group or if the group has some users
-        list($method, $message) = ['alert', I18N_BEFORE_DELETE];
+        [$method, $message] = ['alert', I18N_BEFORE_DELETE];
         if ($id > 3 && !$group->get('user_count')) {
             $this->UsersGroups->deleteOrFail($group);
-            list($method, $message) = ['success', I18N_OPERATION_OK];
+            [$method, $message] = ['success', I18N_OPERATION_OK];
         } elseif ($id <= 3) {
             $message = __d('me_cms', 'You cannot delete this users group');
         }

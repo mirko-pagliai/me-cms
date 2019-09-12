@@ -40,9 +40,9 @@ class PostsController extends AppController
     {
         parent::beforeFilter($event);
 
-        list($categoriesMethod, $usersMethod) = ['getList', 'getList'];
+        [$categoriesMethod, $usersMethod] = ['getList', 'getList'];
         if ($this->getRequest()->isAction(['add', 'edit'])) {
-            list($categoriesMethod, $usersMethod) = ['getTreeList', 'getActiveList'];
+            [$categoriesMethod, $usersMethod] = ['getTreeList', 'getActiveList'];
 
             //Only admins and managers can add and edit posts on behalf of other users
             if ($this->getRequest()->getData() && !$this->Auth->isGroup(['admin', 'manager'])) {

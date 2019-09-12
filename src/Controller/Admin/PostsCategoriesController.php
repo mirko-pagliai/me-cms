@@ -138,10 +138,10 @@ class PostsCategoriesController extends AppController
 
         //Before deleting, it checks if the category has some posts
         $category = $this->PostsCategories->get($id);
-        list($method, $message) = ['alert', I18N_BEFORE_DELETE];
+        [$method, $message] = ['alert', I18N_BEFORE_DELETE];
         if (!$category->get('post_count')) {
             $this->PostsCategories->deleteOrFail($category);
-            list($method, $message) = ['success', I18N_OPERATION_OK];
+            [$method, $message] = ['success', I18N_OPERATION_OK];
         }
         call_user_func([$this->Flash, $method], $message);
 

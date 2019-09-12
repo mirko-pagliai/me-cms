@@ -213,7 +213,7 @@ class SystemsController extends AppController
                 $success = false;
         }
 
-        list($method, $message) = $success ? ['success', I18N_OPERATION_OK] : ['error', I18N_OPERATION_NOT_OK];
+        [$method, $message] = $success ? ['success', I18N_OPERATION_OK] : ['error', I18N_OPERATION_NOT_OK];
         call_user_func([$this->Flash, $method], $message);
 
         return $this->redirect($this->referer(['action' => 'tmpViewer']));

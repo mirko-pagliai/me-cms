@@ -137,9 +137,9 @@ class UsersController extends AppController
             ->set(['active' => true])
             ->execute();
 
-        list($method, $message) = ['error', I18N_OPERATION_NOT_OK];
+        [$method, $message] = ['error', I18N_OPERATION_NOT_OK];
         if ($update->count()) {
-            list($method, $message) = ['success', I18N_OPERATION_OK];
+            [$method, $message] = ['success', I18N_OPERATION_OK];
         }
         call_user_func([$this->Flash, $method], $message);
 

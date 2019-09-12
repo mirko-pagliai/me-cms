@@ -23,6 +23,9 @@
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaMagicConstant">
         <severity>0</severity>
     </rule>
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse">
+        <exclude-pattern>/templates/*</exclude-pattern>
+    </rule>
     <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace.UseFromSameNamespace">
         <severity>0</severity>
     </rule>
