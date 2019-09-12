@@ -85,9 +85,8 @@ class AppViewTest extends TestCase
     public function testRenderLayoutFromTheme()
     {
         //Loads the `TestPlugin` and sets it as a theme
-        $theme = 'TestPlugin';
-        $this->loadPlugins([$theme]);
-        Configure::write('MeCms.default.theme', $theme);
+        $this->loadPlugins(['TestPlugin']);
+        Configure::write('MeCms.default.theme', 'TestPlugin');
 
         //Reloads the View
         $View = $this->getMockBuilder(View::class)
@@ -95,7 +94,7 @@ class AppViewTest extends TestCase
             ->getMock();
         $this->assertEquals('This is a layout from TestPlugin', $View->render(false));
         $this->assertEquals('default', $View->getLayout());
-        $this->assertEquals($theme, $View->getTheme());
+        $this->assertEquals('TestPlugin', $View->getTheme());
     }
 
     /**
@@ -105,7 +104,7 @@ class AppViewTest extends TestCase
     public function testRenderLayoutFromApp()
     {
         //Creates a new layout
-        $layoutFromApp = array_value_first(App::path('Template/Plugin/' . 'MeCms/Layout')) . 'default.ctp';
+        $layoutFromApp = array_value_first(App::path('Template/Plugin/MeCms/Layout')) . 'default.ctp';
         @create_file($layoutFromApp, 'This is a layout from app');
         $this->assertEquals('This is a layout from app', $this->View->render(false));
         $this->assertEquals('default', $this->View->getLayout());
