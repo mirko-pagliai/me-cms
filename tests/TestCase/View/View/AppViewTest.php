@@ -60,7 +60,7 @@ class AppViewTest extends TestCase
         $result = $this->View->render(false);
         $this->assertContains('<meta name="theme-color" content="#ffffff"/>', $result);
         $this->assertContains('<link href="/posts/rss" type="application/rss+xml" rel="alternate" title="Latest posts"/>', $result);
-        $this->assertContains('<meta content="' . 'MeCms" property="og:title"/>', $result);
+        $this->assertContains('<meta content="MeCms" property="og:title"/>', $result);
         $this->assertContains('<meta content="http://localhost/" property="og:url"/>', $result);
         $this->assertContains('<meta content="facebook-id" property="fb:app_id"/>', $result);
         $this->assertContains('<script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","analytics-id","auto"),ga("send","pageview");</script>', $result);
