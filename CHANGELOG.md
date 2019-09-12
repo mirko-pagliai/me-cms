@@ -3,7 +3,8 @@
 ### 2.26.8
 * javascript functions are now "camelCase": `tag_exist()` becoms `tagExists()`;
     `add_tags()` becomes `addTags()`; `remove_tag()` becomes `removeTag()`;
-    `update_output_text()` becomes `update_output_text()`;
+    `update_output_text()` becomes `updateOutputText()`;
+* many small fixes;
 * updated for `me-tools` `2.18.12`.
 
 ### 2.26.7
