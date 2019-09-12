@@ -137,11 +137,11 @@ class UsersController extends AppController
             ->set(['active' => true])
             ->execute();
 
+        list($method, $message) = ['error', I18N_OPERATION_NOT_OK];
         if ($update->count()) {
-            $this->Flash->success(I18N_OPERATION_OK);
-        } else {
-            $this->Flash->error(I18N_OPERATION_NOT_OK);
+            list($method, $message) = ['success', I18N_OPERATION_OK];
         }
+        call_user_func([$this->Flash, $method], $message);
 
         return $this->redirect(['_name' => 'login']);
     }
@@ -165,9 +165,11 @@ class UsersController extends AppController
 
         if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
+            $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
                 if (!$entity->getErrors()) {
                     $user = $this->Users->findPendingByEmail($this->getRequest()->getData('email'))->first();
+                    $message = __d('me_cms', 'No valid account was found');
 
                     if ($user && $this->sendActivationMail($user)) {
                         $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
@@ -182,12 +184,9 @@ class UsersController extends AppController
                             $this->getRequest()->getData('email')
                         ), 'users');
                     }
-
-                    $this->Flash->error(__d('me_cms', 'No valid account was found'));
                 }
-            } else {
-                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
             }
+            $this->Flash->error($message);
         }
 
         $this->set('user', $entity);
@@ -371,8 +370,10 @@ class UsersController extends AppController
                 ->set('active', (bool)!getConfig('users.activation'));
 
             //Checks for reCAPTCHA, if requested
-            list($method, $message) = ['error', __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA')];
+            $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+                $message = __d('me_cms', 'The account has not been created');
+
                 if ($this->Users->save($user)) {
                     switch (getConfig('users.activation')) {
                         //The account will be enabled by an administrator
@@ -395,9 +396,8 @@ class UsersController extends AppController
 
                     return $this->redirect(['_name' => 'homepage']);
                 }
-                $message = __d('me_cms', 'The account has not been created');
             }
-            call_user_func([$this->Flash, $method], $message);
+            $this->Flash->error($message);
         }
 
         $this->set(compact('user'));
