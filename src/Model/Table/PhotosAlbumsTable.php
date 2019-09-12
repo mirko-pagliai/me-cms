@@ -50,7 +50,7 @@ class PhotosAlbumsTable extends AppTable
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      */
-    public function afterSave(Event $event, EntityInterface $entitys): void
+    public function afterSave(Event $event, EntityInterface $entity): void
     {
         @mkdir($entity->get('path'), 0777, true);
 
