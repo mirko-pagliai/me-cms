@@ -166,7 +166,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
         }
 
         //No existing file
-        $this->assertEmpty($getPreviewsMethod('<img src=\'' . WWW_ROOT . 'img' . DS . 'noExisting.jpg' . '\' />'));
+        $this->assertEmpty($getPreviewsMethod('<img src=\'' . WWW_ROOT . 'img' . DS . 'noExisting.jpg\' />'));
 
         $result = $getPreviewsMethod('<img src=\'http://example.com/image.jpg\' />');
         $this->assertCount(1, $result);

@@ -61,7 +61,7 @@ class UserMailerTest extends TestCase
         $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getTo());
         $this->assertEquals('Activate your account', $this->Mailer->getSubject());
         $this->assertEquals('MeCms.Users/activation', $this->Mailer->viewBuilder()->getTemplate());
-        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->getViewVars());
+        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->viewBuilder()->getVars());
 
         //With some missing data
         $this->expectException(KeyNotExistsException::class);
@@ -106,7 +106,7 @@ class UserMailerTest extends TestCase
         $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getTo());
         $this->assertEquals('Your password has been changed', $this->Mailer->getSubject());
         $this->assertEquals('MeCms.Users/change_password', $this->Mailer->viewBuilder()->getTemplate());
-        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->getViewVars());
+        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->viewBuilder()->getVars());
 
         //With some missing data
         $this->expectException(KeyNotExistsException::class);
@@ -150,7 +150,7 @@ class UserMailerTest extends TestCase
         $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getTo());
         $this->assertEquals('Reset your password', $this->Mailer->getSubject());
         $this->assertEquals('MeCms.Users/password_forgot', $this->Mailer->viewBuilder()->getTemplate());
-        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->getViewVars());
+        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->viewBuilder()->getVars());
 
         //With some missing data
         $this->expectException(KeyNotExistsException::class);

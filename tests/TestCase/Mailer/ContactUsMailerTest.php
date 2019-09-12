@@ -66,7 +66,7 @@ class ContactUsMailerTest extends TestCase
             'message' => 'Example of message',
             'firstName' => 'James',
             'lastName' => 'Blue',
-        ], $this->Mailer->getViewVars());
+        ], $this->Mailer->viewBuilder()->getVars());
 
         //With some missing data
         $this->expectException(KeyNotExistsException::class);
