@@ -84,16 +84,15 @@ class AppViewTest extends TestCase
     public function testRenderLayoutFromTheme()
     {
         //Loads the `TestPlugin` and sets it as a theme
-        $theme = 'TestPlugin';
-        $this->loadPlugins([$theme]);
-        Configure::write('MeCms.default.theme', $theme);
+        $this->loadPlugins(['TestPlugin']);
+        Configure::write('MeCms.default.theme', 'TestPlugin');
 
         //Reloads the View
         $this->View = new View();
         $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
         $this->assertEquals('This is a layout from TestPlugin', $this->View->render('StaticPages/page-from-app'));
         $this->assertEquals('default', $this->View->getLayout());
-        $this->assertEquals($theme, $this->View->getTheme());
+        $this->assertEquals('TestPlugin', $this->View->getTheme());
     }
 
     /**

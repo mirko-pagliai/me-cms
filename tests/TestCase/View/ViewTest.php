@@ -49,10 +49,9 @@ class ViewTest extends TestCase
         $this->assertNull($this->View->getTheme());
 
         //Loads the `TestPlugin` and sets it as a theme
-        $theme = 'TestPlugin';
-        $this->loadPlugins([$theme]);
-        Configure::write('MeCms.default.theme', $theme);
-        $this->assertEquals($theme, (new View())->getTheme());
+        $this->loadPlugins(['TestPlugin']);
+        Configure::write('MeCms.default.theme', 'TestPlugin');
+        $this->assertEquals('TestPlugin', (new View())->getTheme());
     }
 
     /**
@@ -100,20 +99,12 @@ class ViewTest extends TestCase
      */
     public function testRenderLayout()
     {
-        //Loads some other helpers
+        //Disable widgets, sets title, creates a favicon, then renders
+        Configure::write('Widgets.general', []);
+        $this->View->set('title', 'title from controller');
+        @create_file(WWW_ROOT . 'favicon.ico');
         $this->View->loadHelper('MeCms.Auth');
         $this->View->loadHelper('MeCms.Widget');
-
-        //Disable widgets
-        Configure::write('Widgets.general', []);
-
-        //Sets a title
-        $this->View->set('title', 'title from controller');
-
-        //Creates a favicon
-        @create_file(WWW_ROOT . 'favicon.ico');
-
-        //Renders
         $result = $this->View->render('StaticPages/page-from-app', 'MeCms.default');
 
         //Checks for title and favicon
