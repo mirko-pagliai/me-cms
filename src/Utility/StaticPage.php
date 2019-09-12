@@ -66,14 +66,14 @@ class StaticPage
     }
 
     /**
-     * Internal method to get the slug.
+     * Gets the slug for a page.
      *
      * It takes the full path and removes the relative path and the extension.
      * @param string $path Path
      * @param string $relativePath Relative path
      * @return string
      */
-    protected static function getSlug($path, $relativePath)
+    public static function getSlug($path, $relativePath)
     {
         if (string_starts_with($path, $relativePath)) {
             $path = substr($path, strlen(add_slash_term($relativePath)));
