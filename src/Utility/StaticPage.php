@@ -32,27 +32,6 @@ class StaticPage
     const EXTENSION = 'ctp';
 
     /**
-     * Internal method to get all the existing paths
-     * @return array
-     * @uses MeCms\Core\Plugin::all()
-     * @uses getPaths()
-     */
-    protected static function getAllPaths()
-    {
-        return Cache::remember('paths', function () {
-            $paths = self::getPaths();
-
-            foreach (Plugin::all() as $plugin) {
-                $paths = array_merge($paths, self::getPaths($plugin));
-            }
-
-            return array_clean(array_map(function ($path) {
-                return rtrim($path, DS);
-            }, $paths), 'file_exists');
-        }, 'static_pages');
-    }
-
-    /**
      * Internal method to get paths from APP or from a plugin.
      *
      * This also returns paths that do not exist.
@@ -60,9 +39,29 @@ class StaticPage
      * @return array
      * @since 2.26.6
      */
-    protected static function getPaths($plugin = null)
+    protected static function _getPaths($plugin = null)
     {
         return App::path('Template' . DS . 'StaticPages', $plugin);
+    }
+
+    /**
+     * Internal method to get all the existing paths
+     * @return array
+     * @uses _getPaths()
+     */
+    public static function getPaths()
+    {
+        return Cache::remember('paths', function () {
+            $paths = self::_getPaths();
+
+            foreach (Plugin::all() as $plugin) {
+                $paths = array_merge($paths, self::_getPaths($plugin));
+            }
+
+            return array_clean(array_map(function ($path) {
+                return rtrim($path, DS);
+            }, $paths), 'file_exists');
+        }, 'static_pages');
     }
 
     /**
@@ -86,13 +85,13 @@ class StaticPage
     /**
      * Gets all static pages
      * @return array Static pages
-     * @uses getAllPaths()
+     * @uses getPaths()
      * @uses getSlug()
      * @uses getTitle()
      */
     public static function all()
     {
-        foreach (self::getAllPaths() as $path) {
+        foreach (self::getPaths() as $path) {
             $finder = new Finder();
             foreach ($finder->files()->name('/^.+\.' . self::EXTENSION . '$/')->sortByName()->in($path) as $file) {
                 $pages[] = new Entity([
@@ -112,8 +111,7 @@ class StaticPage
      * Gets a static page
      * @param string $slug Slug
      * @return string|bool Static page or `false`
-     * @uses \MeCms\Core\Plugin::all()
-     * @uses getPaths()
+     * @uses _getPaths()
      */
     public static function get($slug)
     {
@@ -134,7 +132,7 @@ class StaticPage
 
             //Checks if the page exists first in APP, then in each plugin
             foreach (array_merge([null], Plugin::all()) as $plugin) {
-                foreach (self::getPaths($plugin) as $path) {
+                foreach (self::_getPaths($plugin) as $path) {
                     foreach ($patterns as $pattern) {
                         if (is_readable($path . $pattern . '.' . self::EXTENSION)) {
                             $page = ($plugin ? $plugin . '.' : '') . DS . 'StaticPages' . DS . $pattern;
