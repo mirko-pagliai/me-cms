@@ -39,18 +39,17 @@ class PostsController extends AppController
     {
         parent::beforeFilter($event);
 
+        list($categoriesMethod, $usersMethod) = ['getList', 'getList'];
         if ($this->getRequest()->isAction(['add', 'edit'])) {
-            $categories = $this->Posts->Categories->getTreeList();
-            $users = $this->Posts->Users->getActiveList();
+            list($categoriesMethod, $usersMethod) = ['getTreeList', 'getActiveList'];
 
             //Only admins and managers can add and edit posts on behalf of other users
             if ($this->getRequest()->getData() && !$this->Auth->isGroup(['admin', 'manager'])) {
                 $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
             }
-        } else {
-            $categories = $this->Posts->Categories->getList();
-            $users = $this->Posts->Users->getList();
         }
+        $categories = call_user_func([$this->Posts->Categories, $categoriesMethod]);
+        $users = call_user_func([$this->Posts->Users, $usersMethod]);
 
         if ($users->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create an user'));
