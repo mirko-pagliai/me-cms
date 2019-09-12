@@ -45,7 +45,7 @@ class FixKcfinderCommandTest extends TestCase
         $this->exec('me_cms.fix_kcfinder -v');
         $this->assertExitWithSuccess();
         $this->assertOutputContains('Creating file ' . KCFINDER . '.htaccess');
-        $this->assertOutputContains('<success>Wrote</success> `' . KCFINDER . '.htaccess' . '`');
+        $this->assertOutputContains('<success>Wrote</success> `' . KCFINDER . '.htaccess`');
         $this->assertErrorEmpty();
         $this->assertStringEqualsFile(KCFINDER . '.htaccess', $expected);
     }
