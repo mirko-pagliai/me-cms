@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="cakephp-link-scanner">
+<ruleset name="me-cms">
     <arg value="p"/>
     <file>.</file>
 
