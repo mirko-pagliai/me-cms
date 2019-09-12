@@ -86,7 +86,7 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
             <?= $this->Form->label(sprintf('%s:', I18N_TAGS)) ?>
         </div>
         <?php
-            echo $this->Form->control('addTags', [
+            echo $this->Form->control('add_tags', [
                 'button' => $this->Form->button(null, [
                     'class' => 'btn-success',
                     'icon' => 'plus',
