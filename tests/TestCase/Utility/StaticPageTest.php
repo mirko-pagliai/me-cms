@@ -179,7 +179,7 @@ class StaticPageTest extends TestCase
 
     /**
      * Test for `getSlug()` method on Windows
-     * @requires OSFAMILY Windows
+     * @requires OS WIN32|WINNT
      * @test
      */
     public function testGetSlugWin()
