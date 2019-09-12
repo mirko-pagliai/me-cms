@@ -159,10 +159,7 @@ class StaticPageTest extends TestCase
      */
     public function testGetSlug()
     {
-        foreach ([
-            'my-file',
-            '/first/second/my-file',
-        ] as $file) {
+        foreach (['my-file', '/first/second/my-file'] as $file) {
             $this->assertEquals('my-file', StaticPage::getSlug($file, '/first/second'));
             $this->assertEquals('my-file', StaticPage::getSlug($file, '/first/second/'));
             $this->assertEquals('my-file', StaticPage::getSlug($file . '.' . StaticPage::EXTENSION, '/first/second'));
