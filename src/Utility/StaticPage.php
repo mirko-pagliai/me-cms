@@ -88,7 +88,7 @@ class StaticPage
      * @return array Static pages
      * @uses getAllPaths()
      * @uses getSlug()
-     * @uses title()
+     * @uses getTitle()
      */
     public static function all()
     {
@@ -99,7 +99,7 @@ class StaticPage
                     'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
                     'path' => rtr($file->getPathname()),
                     'slug' => self::getSlug($file->getPathname(), $path),
-                    'title' => self::title(pathinfo($file->getPathname(), PATHINFO_FILENAME)),
+                    'title' => self::getTitle(pathinfo($file->getPathname(), PATHINFO_FILENAME)),
                     'modified' => new FrozenTime($file->getMTime()),
                 ]);
             }
@@ -154,7 +154,7 @@ class StaticPage
      * @param string $slugOrPath Slug or path
      * @return string
      */
-    public static function title($slugOrPath)
+    public static function getTitle($slugOrPath)
     {
         //Gets only the filename (without extension), then turns dashes into
         //  underscores (because `Inflector::humanize` will remove only underscores)

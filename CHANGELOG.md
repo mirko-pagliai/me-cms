@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.8
-* `StaticPage::getSlug()` is now public;
+* `StaticPage::getSlug()` is now public and `StaticPage::title()` has been
+    renamed as `getTitle()`;
 * javascript functions are now "camelCase": `tag_exist()` becoms `tagExists()`;
     `add_tags()` becomes `addTags()`; `remove_tag()` becomes `removeTag()`;
     `update_output_text()` becomes `updateOutputText()`;

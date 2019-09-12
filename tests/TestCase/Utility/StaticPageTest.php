@@ -187,10 +187,10 @@ class StaticPageTest extends TestCase
     }
 
     /**
-     * Test for `title()` method
+     * Test for `getTitle()` method
      * @test
      */
-    public function testTitle()
+    public function testGetTitle()
     {
         $expected = [
             'Page From App',
@@ -207,8 +207,8 @@ class StaticPageTest extends TestCase
 
         $count = count($slugs);
         for ($id = 0; $id < $count; $id++) {
-            $this->assertEquals($expected[$id], StaticPage::title($slugs[$id]));
-            $this->assertEquals($expected[$id], StaticPage::title($paths[$id]));
+            $this->assertEquals($expected[$id], StaticPage::getTitle($slugs[$id]));
+            $this->assertEquals($expected[$id], StaticPage::getTitle($paths[$id]));
         }
     }
 }

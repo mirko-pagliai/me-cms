@@ -48,8 +48,7 @@ class PagesController extends AppController
      * Static pages must be located in `APP/View/StaticPages/`.
      * @param string $slug Page slug
      * @return \Cake\Network\Response|void
-     * @uses MeCms\Utility\StaticPage::get()
-     * @uses MeCms\Utility\StaticPage::title()
+     * @uses \MeCms\Utility\StaticPage
      */
     public function view($slug)
     {
@@ -59,7 +58,7 @@ class PagesController extends AppController
         if ($static) {
             $page = new Entity([
                 'category' => new Entity(['slug' => null, 'title' => null]),
-                'title' => StaticPage::title($slug),
+                'title' => StaticPage::getTitle($slug),
                 'subtitle' => null,
             ] + compact('slug'));
 
