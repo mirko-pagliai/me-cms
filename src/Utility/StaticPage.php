@@ -70,14 +70,14 @@ class StaticPage
     }
 
     /**
-     * Internal method to get the slug.
+     * Gets the slug for a page.
      *
      * It takes the full path and removes the relative path and the extension.
      * @param string $path Path
      * @param string $relativePath Relative path
      * @return string
      */
-    protected static function getSlug(string $path, string $relativePath): string
+    public static function getSlug(string $path, string $relativePath): string
     {
         if (string_starts_with($path, $relativePath)) {
             $path = substr($path, strlen(add_slash_term($relativePath)));
@@ -92,7 +92,7 @@ class StaticPage
      * @return array Static pages
      * @uses getAllPaths()
      * @uses getSlug()
-     * @uses title()
+     * @uses getTitle()
      */
     public static function all(): array
     {
@@ -103,7 +103,7 @@ class StaticPage
                     'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
                     'path' => rtr($file->getPathname()),
                     'slug' => self::getSlug($file->getPathname(), $path),
-                    'title' => self::title(pathinfo($file->getPathname(), PATHINFO_FILENAME)),
+                    'title' => self::getTitle(pathinfo($file->getPathname(), PATHINFO_FILENAME)),
                     'modified' => new FrozenTime($file->getMTime()),
                 ]);
             }
@@ -158,7 +158,7 @@ class StaticPage
      * @param string $slugOrPath Slug or path
      * @return string
      */
-    public static function title(string $slugOrPath): string
+    public static function getTitle(string $slugOrPath): string
     {
         //Gets only the filename (without extension), then turns dashes into
         //  underscores (because `Inflector::humanize` will remove only underscores)

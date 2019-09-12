@@ -54,9 +54,7 @@ class StaticPageTest extends TestCase
 
         $pages = StaticPage::all();
         $this->assertContainsOnlyInstancesOf(Entity::class, $pages);
-        foreach ($pages as $page) {
-            $this->assertInstanceOf(FrozenTime::class, $page->modified);
-        }
+        $this->assertContainsOnlyInstancesOf(FrozenTime::class, Hash::extract($pages, '{n}.modified'));
 
         //Checks filenames
         $this->assertEquals([
@@ -161,46 +159,35 @@ class StaticPageTest extends TestCase
      */
     public function testGetSlug()
     {
-        $getSlugMethod = function () {
-            return $this->invokeMethod(StaticPage::class, 'getSlug', func_get_args());
-        };
-
-        foreach ([
-            'my-file',
-            'my-file.' . StaticPage::EXTENSION,
-            '/first/second/my-file.' . StaticPage::EXTENSION,
-        ] as $file) {
-            $this->assertEquals('my-file', $getSlugMethod($file, '/first/second'));
-            $this->assertEquals('my-file', $getSlugMethod($file, '/first/second/'));
+        foreach (['my-file', '/first/second/my-file'] as $file) {
+            $this->assertEquals('my-file', StaticPage::getSlug($file, '/first/second'));
+            $this->assertEquals('my-file', StaticPage::getSlug($file, '/first/second/'));
+            $this->assertEquals('my-file', StaticPage::getSlug($file . '.' . StaticPage::EXTENSION, '/first/second'));
         }
 
-        $this->assertEquals('first/my-file', $getSlugMethod('first/my-file.' . StaticPage::EXTENSION, '/first/second'));
-        $this->assertEquals('third/my-file', $getSlugMethod('/first/second/third/my-file.' . StaticPage::EXTENSION, '/first/second'));
+        $this->assertEquals('first/my-file', StaticPage::getSlug('first/my-file.' . StaticPage::EXTENSION, '/first/second'));
+        $this->assertEquals('third/my-file', StaticPage::getSlug('/first/second/third/my-file.' . StaticPage::EXTENSION, '/first/second'));
     }
 
     /**
      * Test for `getSlug()` method on Windows
-     * @requires OSFAMILY Windows
+     * @requires OS WIN32|WINNT
      * @test
      */
     public function testGetSlugWin()
     {
-        $getSlugMethod = function () {
-            return $this->invokeMethod(StaticPage::class, 'getSlug', func_get_args());
-        };
-
-        $this->assertEquals('my-file', $getSlugMethod('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\second'));
-        $this->assertEquals('my-file', $getSlugMethod('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\second\\'));
-        $this->assertEquals('my-file', $getSlugMethod('C:\\\\first\\my-file.' . StaticPage::EXTENSION, 'C:\\\\first'));
-        $this->assertEquals('second/my-file', $getSlugMethod('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first'));
-        $this->assertEquals('second/my-file', $getSlugMethod('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\'));
+        $this->assertEquals('my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\second'));
+        $this->assertEquals('my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\second\\'));
+        $this->assertEquals('my-file', StaticPage::getSlug('C:\\\\first\\my-file.' . StaticPage::EXTENSION, 'C:\\\\first'));
+        $this->assertEquals('second/my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first'));
+        $this->assertEquals('second/my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\'));
     }
 
     /**
-     * Test for `title()` method
+     * Test for `getTitle()` method
      * @test
      */
-    public function testTitle()
+    public function testGetTitle()
     {
         $expected = [
             'Page From App',
@@ -217,8 +204,8 @@ class StaticPageTest extends TestCase
 
         $count = count($slugs);
         for ($id = 0; $id < $count; $id++) {
-            $this->assertEquals($expected[$id], StaticPage::title($slugs[$id]));
-            $this->assertEquals($expected[$id], StaticPage::title($paths[$id]));
+            $this->assertEquals($expected[$id], StaticPage::getTitle($slugs[$id]));
+            $this->assertEquals($expected[$id], StaticPage::getTitle($paths[$id]));
         }
     }
 }
