@@ -118,7 +118,7 @@ class ViewTest extends TestCase
         $result = $this->View->render(false, 'MeCms.default');
 
         //Checks for title and favicon
-        $this->assertContains('<title>title from controller - ' . 'MeCms</title>', $result);
+        $this->assertContains('<title>title from controller - MeCms</title>', $result);
         $this->assertContains('<link href="favicon.ico" type="image/x-icon" rel="icon"/><link href="favicon.ico" type="image/x-icon" rel="shortcut icon"/>', $result);
         @unlink(WWW_ROOT . 'favicon.ico');
     }
