@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.26 branch
 ### 2.26.8
+* pages and posts can display the last modified date (as default). Added entries
+    in the configuration file;
 * `StaticPage::getSlug()` is now public. `StaticPage::title()` has been
     renamed as `getTitle()`. `StaticPage::getAllPaths()` has been renamed as 
     `getPaths()` and is now public;

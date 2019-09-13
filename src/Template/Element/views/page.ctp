@@ -33,11 +33,20 @@ $isView = $this->getRequest()->isAction('view', 'Pages') && !$this->getRequest()
 
         <div class="info">
             <?php
-            if (getConfig('page.created') && $page->has('created')) {
+            $created = $page->get('created');
+            if (getConfig('page.created') && $created) {
                 echo $this->Html->time(
-                    __d('me_cms', 'Posted on {0}', $page->created->i18nFormat()),
+                    __d('me_cms', 'Posted on {0}', $created->i18nFormat()),
                     ['class' => 'date', 'icon' => 'clock']
                 );
+            }
+
+            $modified = $page->get('modified');
+            if (getConfig('page.modified') && $modified && $modified != $created) {
+                echo $this->Html->div('modified small', $this->Html->time(
+                    __d('me_cms', 'Updated on {0}', $modified->i18nFormat()),
+                    ['class' => 'date', 'icon' => 'clock']
+                ));
             }
             ?>
         </div>

@@ -108,6 +108,8 @@ return ['MeCms' => [
         //This enables or disables the comment system for pages. You will then
         //  be able to choose whether to enable comments for each page
         'enable_comments' => false,
+        //Displays the page modified datetime
+        'modified' => false,
         //Displays the Shareaholic social buttons.
         //Remember you have to set app and site IDs. See `shareaholic.app_id`
         //  and `shareaholic.site_id`
@@ -128,6 +130,8 @@ return ['MeCms' => [
         'enable_comments' => true,
         //Adds post tags as keywords meta-tag
         'keywords' => true,
+        //Displays the post modified datetime
+        'modified' => true,
         //Related posts. `false` to disable
         'related' => [
             //Limit of related posts to get for each post.
