@@ -5,8 +5,11 @@
 
 ## 2.26 branch
 ### 2.26.8
-* `StaticPage::getSlug()` is now public and `StaticPage::title()` has been
-    renamed as `getTitle()`;
+* pages and posts can display the last modified date (as default). Added entries
+    in the configuration file;
+* `StaticPage::getSlug()` is now public. `StaticPage::title()` has been
+    renamed as `getTitle()`. `StaticPage::getAllPaths()` has been renamed as 
+    `getPaths()` and is now public;
 * javascript functions are now "camelCase": `tag_exist()` becoms `tagExists()`;
     `add_tags()` becomes `addTags()`; `remove_tag()` becomes `removeTag()`;
     `update_output_text()` becomes `updateOutputText()`;

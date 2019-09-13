@@ -48,11 +48,20 @@ $isView = $this->getRequest()->isAction('view', 'Posts') && !$this->getRequest()
                     echo $this->Html->div('author', __d('me_cms', 'Posted by {0}', $post->user->full_name), ['icon' => 'user']);
                 }
 
-                if (getConfig('post.created') && $post->has('created')) {
-                    echo $this->Html->time(
-                        __d('me_cms', 'Posted on {0}', $post->created->i18nFormat()),
+                $created = $post->get('created');
+                if (getConfig('post.created') && $created) {
+                    echo $this->Html->div('created', $this->Html->time(
+                        __d('me_cms', 'Posted on {0}', $created->i18nFormat()),
                         ['class' => 'date', 'icon' => 'clock']
-                    );
+                    ));
+                }
+
+                $modified = $post->get('modified');
+                if (getConfig('post.modified') && $modified && $modified != $created) {
+                    echo $this->Html->div('modified small', $this->Html->time(
+                        __d('me_cms', 'Updated on {0}', $modified->i18nFormat()),
+                        ['class' => 'date', 'icon' => 'clock']
+                    ));
                 }
                 ?>
             </div>

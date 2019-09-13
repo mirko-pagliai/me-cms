@@ -103,12 +103,11 @@ class PostsTable extends PostsAndPagesTables
     public function findForIndex(Query $query): Query
     {
         return $query->contain([
-                $this->Categories->getAlias() => ['fields' => ['title', 'slug']],
-                $this->Tags->getAlias() => ['sort' => ['tag' => 'ASC']],
-                $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
-            ])
-            ->select(['id', 'title', 'preview', 'subtitle', 'slug', 'text', 'enable_comments', 'created'])
-            ->order([sprintf('%s.created', $this->getAlias()) => 'DESC']);
+            $this->Categories->getAlias() => ['fields' => ['title', 'slug']],
+            $this->Tags->getAlias() => ['sort' => ['tag' => 'ASC']],
+            $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
+        ])
+        ->order([sprintf('%s.created', $this->getAlias()) => 'DESC']);
     }
 
     /**

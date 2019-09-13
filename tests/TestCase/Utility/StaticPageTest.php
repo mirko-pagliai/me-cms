@@ -139,13 +139,13 @@ class StaticPageTest extends TestCase
     }
 
     /**
-     * Test for `getAllPaths()` method
+     * Test for `getPaths()` method
      * @test
      */
-    public function testGetAllPaths()
+    public function testGetPaths()
     {
         $this->loadPlugins(['TestPlugin']);
-        $result = $this->invokeMethod(StaticPage::class, 'getAllPaths');
+        $result = StaticPage::getPaths();
         $this->assertContains(APP . 'templates' . DS . 'StaticPages', $result);
         $this->assertContains(ROOT . 'templates' . DS . 'StaticPages', $result);
         $this->assertContains(Plugin::templatePath('TestPlugin') . 'StaticPages', $result);
@@ -176,9 +176,15 @@ class StaticPageTest extends TestCase
      */
     public function testGetSlugWin()
     {
-        $this->assertEquals('my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\second'));
-        $this->assertEquals('my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\second\\'));
-        $this->assertEquals('my-file', StaticPage::getSlug('C:\\\\first\\my-file.' . StaticPage::EXTENSION, 'C:\\\\first'));
+        foreach ([
+            '\\first\\second\\my-file' => '\\first\\second',
+            '\\first\\second\\my-file' => '\\first\\second\\',
+            'C:\\\\first\\my-file' => 'C:\\\\first',
+        ] as $path => $relativePath) {
+            $this->assertEquals('my-file', StaticPage::getSlug($path, $relativePath));
+            $this->assertEquals('my-file', StaticPage::getSlug($path . '.' . StaticPage::EXTENSION, $relativePath));
+        }
+
         $this->assertEquals('second/my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first'));
         $this->assertEquals('second/my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\'));
     }

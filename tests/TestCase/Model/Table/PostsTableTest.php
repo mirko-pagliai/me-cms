@@ -141,8 +141,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertEquals(['title', 'slug'], $query->getContain()['Categories']['fields']);
         $this->assertEquals(['tag' => 'ASC'], $query->getContain()['Tags']['sort']);
         $this->assertEquals(['id', 'first_name', 'last_name'], $query->getContain()['Users']['fields']);
-        $this->assertStringStartsWith('SELECT Posts.id AS `Posts__id`, Posts.title AS `Posts__title`, Posts.preview AS `Posts__preview`, Posts.subtitle AS `Posts__subtitle`, Posts.slug AS `Posts__slug`, Posts.text AS `Posts__text`, Posts.enable_comments AS `Posts__enable_comments`, Posts.created AS `Posts__created`, Categories.title AS `Categories__title`, Categories.slug AS `Categories__slug`, Users.id AS `Users__id`, Users.first_name AS `Users__first_name`, Users.last_name AS `Users__last_name`', $sql);
-        $this->assertStringEndsWith('ORDER BY Posts.created DESC', $sql);
+        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_categories Categories ON Categories.id = (Posts.category_id) INNER JOIN users Users ON Users.id = (Posts.user_id) ORDER BY Posts.created DESC', $sql);
     }
 
     /**
