@@ -3,6 +3,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 [![Build Status](https://travis-ci.org/mirko-pagliai/me-cms.svg?branch=master)](https://travis-ci.org/mirko-pagliai/me-cms)
 [![codecov](https://codecov.io/gh/mirko-pagliai/me-cms/branch/master/graph/badge.svg)](https://codecov.io/gh/mirko-pagliai/me-cms)
+[![CodeFactor](https://www.codefactor.io/repository/github/mirko-pagliai/me-cms/badge)](https://www.codefactor.io/repository/github/mirko-pagliai/me-cms)
 
 This repository contains only the source code of `me-cms`.  
 See [cakephp-for-mecms](https://github.com/mirko-pagliai/cakephp-for-mecms).
