@@ -36,7 +36,7 @@ $(window).on("load resize", function () {
 
 $(function () {
     //Adds the "data-parent" attribute to all "collapse" wrapper of the sidebar
-    $("#sidebar:visible .collapse").attr("data-parent', '#sidebar-accordion");
+    $("#sidebar:visible .collapse").attr("data-parent", "#sidebar-accordion");
 
     //Checks if there is the cookie of the last open menu
     if (Cookies.get("sidebar-lastmenu") && $("#sidebar").is(":visible")) {
