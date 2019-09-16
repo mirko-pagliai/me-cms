@@ -37,10 +37,7 @@ class UsersController extends AppController
      */
     protected function loginWithCookie()
     {
-        $username = $this->getRequest()->getCookie('login.username');
-        $password = $this->getRequest()->getCookie('login.password');
-
-        //Checks if the cookies exist
+        list($username, $password) = array_values($this->getRequest()->getCookie('login', [null, null]));
         if (!$username || !$password) {
             return null;
         }
@@ -64,10 +61,12 @@ class UsersController extends AppController
      */
     protected function buildLogout()
     {
+        $request = $this->getRequest();
+
         //Deletes some cookies and KCFinder session
-        $cookies = $this->getRequest()->getCookieCollection()->remove('login');
-        $this->setRequest($this->getRequest()->withCookieCollection($cookies));
-        $this->getRequest()->getSession()->delete('KCFINDER');
+        $request->getSession()->delete('KCFINDER');
+        $cookies = $request->getCookieCollection()->remove('login');
+        $this->setRequest($request->withCookieCollection($cookies));
 
         return $this->redirect($this->Auth->logout());
     }
@@ -231,7 +230,7 @@ class UsersController extends AppController
                         'username' => $this->getRequest()->getData('username'),
                         'password' => $this->getRequest()->getData('password'),
                     ], new DateTime('+1 year'));
-                    $this->response = $this->response->withCookie($cookie);
+                    $this->setResponse($this->getResponse()->withCookie($cookie));
                 }
 
                 return $this->redirect($this->Auth->redirectUrl());
