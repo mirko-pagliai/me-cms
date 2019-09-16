@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         MeCms\View\Helper\MenuBuilderHelper
+ * @see         \MeCms\View\Helper\MenuBuilderHelper
  */
 namespace MeCms\View\Helper;
 
@@ -30,7 +30,8 @@ use Cake\View\Helper;
  *  - the options for the menu title;
  *  - the controllers handled by this menu, as an array.
  *
- * See the `MenuBuilderHelper::generate()` method for more information.
+ * See the `\MeCms\View\Helper\MenuBuilderHelper::generate()` method for more
+ *  information.
  */
 class MenuHelper extends Helper
 {
@@ -42,7 +43,7 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "posts" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function posts(): array
     {
@@ -66,7 +67,7 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "pages" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function pages(): array
     {
@@ -90,7 +91,7 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "photos" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function photos(): array
     {
@@ -107,7 +108,7 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "banners" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function banners(): array
     {
@@ -131,7 +132,7 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "users" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function users(): array
     {
@@ -155,7 +156,7 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "backups" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function backups(): array
     {
@@ -173,7 +174,7 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "systems" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function systems(): array
     {
