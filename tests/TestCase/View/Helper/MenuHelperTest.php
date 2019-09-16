@@ -171,7 +171,8 @@ class MenuHelperTest extends HelperTestCase
 
         $this->writeAuthOnSession(['group' => ['name' => 'manager']]);
         list($links,,, $handledControllers) = $this->Helper->systems();
-        $this->assertNotEmpty($this->buildLinks($links));
+        $links = $this->buildLinks($links);
+        $this->assertNotEmpty($links);
         $this->assertTextNotContains('Log management', $links);
         $this->assertEquals(['Logs', 'Systems'], $handledControllers);
 
