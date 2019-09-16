@@ -35,24 +35,6 @@ $(window).on("load resize", function () {
 });
 
 $(function () {
-    //Adds the "data-parent" attribute to all "collapse" wrapper of the sidebar
-    $("#sidebar:visible .collapse").attr("data-parent', '#sidebar-accordion");
-
-    //Checks if there is the cookie of the last open menu
-    if (Cookies.get("sidebar-lastmenu") && $("#sidebar").is(":visible")) {
-        //Gets the element (menu) ID
-        var id = "#" + Cookies.get("sidebar-lastmenu");
-
-        //Opens the menu
-        $(id, "#sidebar").addClass("show").prev("a").removeClass("collapsed").attr("aria-expanded", "true");
-    }
-
-    //On click on a sidebar menu
-    $("#sidebar a[data-toggle=collapse]").click(function () {
-        //Saves the menu ID into a cookie
-        Cookies.set("sidebar-lastmenu", $(this).attr("aria-controls"), { path: "" });
-    });
-
     //Gets query string as objects, removing empty values and pagination values
     var queryString = $.map(document.location.search.replace(/(^\?)/, "").split("&"), function (value, key) {
         value = value.split("=");

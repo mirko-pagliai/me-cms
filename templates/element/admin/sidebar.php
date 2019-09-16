@@ -16,7 +16,7 @@ declare(strict_types=1);
 <div id="sidebar-accordion" role="tablist">
     <?php
     //Renders menus for MeCms
-    echo $this->MenuBuilder->renderAsCollapse('MeCms');
+    echo $this->MenuBuilder->renderAsCollapse('MeCms', 'sidebar-accordion');
 
     //Renders menus for each plugin
     foreach (\MeCms\Core\Plugin::all(['exclude' => ['MeCms', 'MeTools', 'Assets', 'DatabaseBackup', 'Thumber']]) as $plugin) {

@@ -26,7 +26,7 @@ class MenuHelper extends Helper
             ['Second link', '/'],
         ];
 
-        return [$links, 'First menu', ['icon' => 'home']];
+        return [$links, 'First menu', ['icon' => 'home'], ['Articles']];
     }
 
     public function other_items()
@@ -36,6 +36,6 @@ class MenuHelper extends Helper
             ['Fourth link', '/'],
         ];
 
-        return [$links, 'Second menu', ['icon' => 'flag']];
+        return [$links, 'Second menu', ['icon' => 'flag'], ['OtherItems']];
     }
 }
