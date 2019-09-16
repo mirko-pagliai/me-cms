@@ -35,7 +35,7 @@ class MenuHelperTest extends HelperTestCase
     /**
      * Internal method to build links
      * @param array $links Links
-     * @return array
+     * @return string
      */
     protected function buildLinks(array $links): string
     {
@@ -172,7 +172,8 @@ class MenuHelperTest extends HelperTestCase
 
         $this->writeAuthOnSession(['group' => ['name' => 'manager']]);
         [$links,,, $handledControllers] = $this->Helper->systems();
-        $this->assertNotEmpty($this->buildLinks($links));
+        $links = $this->buildLinks($links);
+        $this->assertNotEmpty($links);
         $this->assertTextNotContains('Log management', $links);
         $this->assertEquals(['Logs', 'Systems'], $handledControllers);
 
