@@ -73,7 +73,7 @@ class MenuBuilderHelper extends Helper
         $menus = [];
         foreach ($methods as $method) {
             $args = call_user_func([$helper, $method]);
-            if (is_null($args)) {
+            if (!$args) {
                 continue;
             }
 
