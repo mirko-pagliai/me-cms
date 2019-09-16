@@ -127,7 +127,7 @@ class MenuBuilderHelper extends Helper
             }
 
             $title = $this->Html->link($menu['title'], '#' . $collapseName, $titleOptions);
-            $links = $this->Html->div(null, $this->buildLinks($menu['links']), $divOptions);
+            $links = $this->Html->div(null, implode(PHP_EOL, $this->buildLinks($menu['links'])), $divOptions);
 
             return $this->Html->div('card', $title . PHP_EOL . $links);
         }, $this->generate($plugin)));
