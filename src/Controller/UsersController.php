@@ -64,9 +64,7 @@ class UsersController extends AppController
      */
     protected function buildLogout()
     {
-        //Deletes some cookies and KCFinder session
-        $cookies = $this->getRequest()->getCookieCollection()->remove('login')->remove('sidebar-lastmenu');
-        $this->setRequest($this->getRequest()->withCookieCollection($cookies));
+        //Deletes KCFinder session
         $this->getRequest()->getSession()->delete('KCFINDER');
 
         return $this->redirect($this->Auth->logout());
