@@ -9,7 +9,7 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         MeCms\View\Helper\MenuBuilderHelper
+ * @see         \MeCms\View\Helper\MenuBuilderHelper
  */
 namespace MeCms\View\Helper;
 
@@ -29,7 +29,8 @@ use Cake\View\Helper;
  *  - the options for the menu title;
  *  - the controllers handled by this menu, as an array.
  *
- * See the `MenuBuilderHelper::generate()` method for more information.
+ * See the `\MeCms\View\Helper\MenuBuilderHelper::generate()` method for more
+ *  information.
  */
 class MenuHelper extends Helper
 {
@@ -41,7 +42,7 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "posts" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function posts()
     {
@@ -65,7 +66,7 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "pages" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function pages()
     {
@@ -89,7 +90,7 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "photos" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function photos()
     {
@@ -106,13 +107,13 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "banners" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function banners()
     {
         //Only admins and managers can access these controllers
         if (!$this->Auth->isGroup(['admin', 'manager'])) {
-            return;
+            return [];
         }
 
         $params = ['controller' => 'Banners', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
@@ -130,13 +131,13 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "users" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function users()
     {
         //Only admins and managers can access this controller
         if (!$this->Auth->isGroup(['admin', 'manager'])) {
-            return;
+            return [];
         }
 
         $params = ['controller' => 'Users', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
@@ -154,13 +155,13 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "backups" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function backups()
     {
         //Only admins can access this controller
         if (!$this->Auth->isGroup('admin')) {
-            return;
+            return [];
         }
 
         $params = ['controller' => 'Backups', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
@@ -172,13 +173,13 @@ class MenuHelper extends Helper
 
     /**
      * Internal function to generate the menu for "systems" actions
-     * @return mixed Array with links, title, title options and handled controllers
+     * @return array Array with links, title, title options and handled controllers
      */
     public function systems()
     {
         //Only admins and managers can access this controller
         if (!$this->Auth->isGroup(['admin', 'manager'])) {
-            return;
+            return [];
         }
 
         $params = ['controller' => 'Systems', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];

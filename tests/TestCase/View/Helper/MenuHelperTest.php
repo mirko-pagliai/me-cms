@@ -153,7 +153,7 @@ class MenuHelperTest extends HelperTestCase
         $this->assertEmpty($this->Helper->backups());
 
         $this->writeAuthOnSession(['group' => ['name' => 'manager']]);
-        $this->assertNull($this->Helper->backups());
+        $this->assertEmpty($this->Helper->backups());
 
         $this->writeAuthOnSession(['group' => ['name' => 'admin']]);
         list($links,,, $handledControllers) = $this->Helper->backups();
