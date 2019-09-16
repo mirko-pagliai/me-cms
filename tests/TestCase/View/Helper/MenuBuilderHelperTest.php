@@ -12,8 +12,8 @@
  */
 namespace MeCms\Test\TestCase\View\Helper;
 
+use Cake\Http\ServerRequest;
 use MeTools\TestSuite\HelperTestCase;
-use TestPlugin\View\Helper\MenuHelper;
 
 /**
  * MenuBuilderHelperTest class
@@ -32,71 +32,19 @@ class MenuBuilderHelperTest extends HelperTestCase
     }
 
     /**
-     * Tests for `getMenuMethods()` method
-     * @test
-     */
-    public function testGetMenuMethods()
-    {
-        $getMenuMethodsMethod = function () {
-            return $this->invokeMethod($this->Helper, 'getMenuMethods', func_get_args());
-        };
-
-        $expected = [
-            'posts',
-            'pages',
-            'photos',
-            'banners',
-            'users',
-            'backups',
-            'systems',
-        ];
-        $this->assertEquals($expected, $getMenuMethodsMethod('MeCms'));
-
-        //Checks that methods exist
-        foreach (['_invalidMethod', '__otherInvalidMethod', 'articles', 'other_items'] as $method) {
-            $this->assertTrue(method_exists(MenuHelper::class, $method));
-        }
-
-        $expected = ['articles', 'other_items'];
-        $this->assertEquals($expected, $getMenuMethodsMethod('TestPlugin'));
-
-        //This plugin has no menu methods
-        $this->assertEmpty($getMenuMethodsMethod('TestPluginTwo'));
-    }
-
-    /**
      * Tests for `generate()` method
      * @test
      */
     public function testGenerate()
     {
-        //Checks array keys (menu names)
-        $result = $this->Helper->generate('MeCms');
-        $this->assertArrayKeysEqual(['MeCms.posts', 'MeCms.pages', 'MeCms.photos'], $result);
-
-        foreach ($result as $menu) {
-            //Checks array keys (menu values)
-            $this->assertArrayKeysEqual(['links', 'title', 'titleOptions'], $menu);
-
-            //Checks links
-            foreach ($menu['links'] as $link) {
-                $this->assertIsString($link[0]);
-                $this->assertNotEmpty($link[1]);
-            }
-        }
-
-        //Checks array keys (menu names)
-        $result = $this->Helper->generate('TestPlugin');
-        $this->assertArrayKeysEqual(['TestPlugin.articles', 'TestPlugin.other_items'], $result);
-
-        foreach ($result as $menu) {
-            //Checks array keys (menu values)
-            $this->assertArrayKeysEqual(['links', 'title', 'titleOptions'], $menu);
-
-            //Checks links
-            foreach ($menu['links'] as $link) {
-                $this->assertIsString($link[0]);
-                $this->assertNotEmpty($link[1]);
+        foreach([
+            'MeCms' => ['MeCms.posts', 'MeCms.pages', 'MeCms.photos'],
+            'TestPlugin' => ['TestPlugin.articles', 'TestPlugin.other_items'],
+        ] as $plugin => $keys) {
+            $result = $this->Helper->generate($plugin);
+            $this->assertArrayKeysEqual($keys, $result);
+            foreach ($result as $menu) {
+                $this->assertArrayKeysEqual(['links', 'title', 'titleOptions', 'handledControllers'], $menu);
             }
         }
 
@@ -109,7 +57,7 @@ class MenuBuilderHelperTest extends HelperTestCase
      */
     public function testRenderAsCollapse()
     {
-        $result = $this->Helper->renderAsCollapse('TestPlugin');
+        $result = $this->Helper->renderAsCollapse('TestPlugin', 'my-container');
         $expected = [
             ['div' => ['class' => 'card']],
             ['a' => [
@@ -126,7 +74,7 @@ class MenuBuilderHelperTest extends HelperTestCase
             ' ',
             'First menu',
             '/a',
-            ['div' => ['id' => 'collapse-first-menu', 'class' => 'collapse']],
+            ['div' => ['class' => 'collapse', 'data-parent' => '#my-container', 'id' => 'collapse-first-menu']],
             ['a' => ['href' => '/', 'title' => 'First link']],
             'First link',
             '/a',
@@ -150,7 +98,7 @@ class MenuBuilderHelperTest extends HelperTestCase
             ' ',
             'Second menu',
             '/a',
-            ['div' => ['id' => 'collapse-second-menu', 'class' => 'collapse']],
+            ['div' => ['class' => 'collapse', 'data-parent' => '#my-container', 'id' => 'collapse-second-menu']],
             ['a' => ['href' => '/', 'title' => 'Third link']],
             'Third link',
             '/a',
@@ -161,6 +109,13 @@ class MenuBuilderHelperTest extends HelperTestCase
             '/div',
         ];
         $this->assertHtml($expected, $result);
+
+        //Sets the same controller that is handled by the menu
+        $request = (new ServerRequest())->withParam('controller', 'Articles');
+        $this->Helper->getView()->setRequest($request);
+        $result = $this->Helper->renderAsCollapse('TestPlugin', 'my-container');
+        $this->assertTextContains('<a href="#collapse-first-menu" aria-controls="collapse-first-menu" aria-expanded="true"', $result);
+        $this->assertTextContains('<div class="collapse show"', $result);
     }
 
     /**

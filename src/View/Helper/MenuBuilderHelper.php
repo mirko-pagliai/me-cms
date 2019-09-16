@@ -12,6 +12,7 @@
  */
 namespace MeCms\View\Helper;
 
+use BadMethodCallException;
 use Cake\Utility\Text;
 use Cake\View\Helper;
 
@@ -32,58 +33,58 @@ class MenuBuilderHelper extends Helper
     ];
 
     /**
-     * Internal method to build links, converting them from array to html
+     * Internal method to build links, converting them from array of parameters
+     *  (title and url) to html string
      * @param array $links Array of links parameters
-     * @param array $linksOptions Array of options and HTML attributes
+     * @param array $options Array of options and HTML attributes. These will be
+     *  applied to all generated links
      * @return array
      */
-    protected function buildLinks($links, array $linksOptions = [])
+    protected function buildLinks($links, array $options = [])
     {
-        return array_map(function ($link) use ($linksOptions) {
-            return $this->Html->link($link[0], $link[1], $linksOptions);
+        return array_map(function ($link) use ($options) {
+            list($title, $url) = $link;
+
+            return $this->Html->link($title, $url, $options);
         }, $links);
-    }
-
-    /**
-     * Internal method to get all menu methods names from a plugin
-     * @param string $plugin Plugin name
-     * @return array
-     */
-    protected function getMenuMethods($plugin)
-    {
-        //Gets all methods from `$PLUGIN\View\Helper\MenuHelper`
-        $methods = get_child_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
-
-        //Filters invalid name methods and returns
-        return $methods ? array_values(preg_grep('/^(?!_).+$/', $methods)) : [];
     }
 
     /**
      * Generates all menus for a plugin
      * @param string $plugin Plugin name
      * @return array Menus
-     * @uses getMenuMethods()
      */
     public function generate($plugin)
     {
-        //Gets all menu name methods
-        $methods = $this->getMenuMethods($plugin);
+        //Gets all valid methods from `$PLUGIN\View\Helper\MenuHelper`
+        $methods = get_child_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
+        $methods = $methods ? array_values(array_filter($methods, function ($method) {
+            return !string_starts_with($method, '_');
+        })) : [];
 
         if (empty($methods)) {
             return [];
         }
 
-        $menus = [];
         $className = sprintf('%s.Menu', $plugin);
         $helper = $this->getView()->loadHelper($className, compact('className'));
 
         //Calls dynamically each method
+        $menus = [];
         foreach ($methods as $method) {
-            list($links, $title, $titleOptions) = call_user_func([$helper, $method]);
-
-            if (!empty($links) && !empty($title)) {
-                $menus[sprintf('%s.%s', $plugin, $method)] = compact('links', 'title', 'titleOptions');
+            $args = call_user_func([$helper, $method]);
+            if (is_null($args)) {
+                continue;
             }
+
+            is_true_or_fail(
+                count($args) >= 3,
+                __d('me_cms', 'Method `{0}::{1}()` returned only {2} values', get_class($helper), $method, count($args)),
+                BadMethodCallException::class
+            );
+
+            list($links, $title, $titleOptions, $handledControllers) = $args + [[], [], [], []];
+            $menus[sprintf('%s.%s', $plugin, $method)] = compact('links', 'title', 'titleOptions', 'handledControllers');
         }
 
         return $menus;
@@ -92,25 +93,43 @@ class MenuBuilderHelper extends Helper
     /**
      * Renders a menu as "collapse"
      * @param string $plugin Plugin name
+     * @param string|null $idContainer Container ID
      * @return string
      * @uses buildLinks()
      * @uses generate()
      */
-    public function renderAsCollapse($plugin)
+    public function renderAsCollapse($plugin, $idContainer = null)
     {
-        return implode(PHP_EOL, array_map(function ($menu) {
-            //Sets the collapse name
+        $controller = $this->getView()->getRequest()->getParam('controller');
+
+        return implode(PHP_EOL, array_map(function ($menu) use ($controller, $idContainer) {
             $collapseName = 'collapse-' . strtolower(Text::slug($menu['title']));
-            $titleOptions = optionsParser($menu['titleOptions'], [
+            $titleOptions = [
                 'aria-controls' => $collapseName,
                 'aria-expanded' => 'false',
                 'class' => 'collapsed',
                 'data-toggle' => 'collapse',
-            ]);
-            $mainLink = $this->Html->link($menu['title'], '#' . $collapseName, $titleOptions->toArray());
-            $links = $this->Html->div('collapse', $this->buildLinks($menu['links']), ['id' => $collapseName]);
+            ] + $menu['titleOptions'];
+            $divOptions = [
+                'class' => 'collapse',
+                'id' => $collapseName,
+            ];
 
-            return $this->Html->div('card', $mainLink . PHP_EOL . $links);
+            if ($idContainer) {
+                $divOptions['data-parent'] = '#' . $idContainer;
+            }
+
+            //If the current controller is handled by this menu, opens the menu
+            if (in_array($controller, $menu['handledControllers'])) {
+                $titleOptions['aria-expanded'] = 'true';
+                unset($titleOptions['class']);
+                $divOptions['class'] .= ' show';
+            }
+
+            $title = $this->Html->link($menu['title'], '#' . $collapseName, $titleOptions);
+            $links = $this->Html->div(null, $this->buildLinks($menu['links']), $divOptions);
+
+            return $this->Html->div('card', $title . PHP_EOL . $links);
         }, $this->generate($plugin)));
     }
 

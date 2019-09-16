@@ -3,6 +3,10 @@
 ### 2.26.8
 * pages and posts can display the last modified date (as default). Added entries
     in the configuration file;
+* the `MenuBuilderHelper::renderAsCollapse()` method takes the `$idContainer`
+    parameter and is now able to generate all the necessary code for menus, 
+    without javascript code. All the methods of the `MenuHelper` now return an
+    array with a fourth value, an array with the controllers hnadled by that menu;
 * `StaticPage::getSlug()` is now public. `StaticPage::title()` has been
     renamed as `getTitle()`. `StaticPage::getAllPaths()` has been renamed as 
     `getPaths()` and is now public;
