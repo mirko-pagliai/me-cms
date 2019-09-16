@@ -34,7 +34,7 @@ class MenuHelperTest extends HelperTestCase
     /**
      * Internal method to build links
      * @param array $links Links
-     * @return array
+     * @return string
      */
     protected function buildLinks($links)
     {
