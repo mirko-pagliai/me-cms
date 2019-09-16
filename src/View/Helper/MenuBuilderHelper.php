@@ -44,7 +44,7 @@ class MenuBuilderHelper extends Helper
     protected function buildLinks(array $links, array $options = []): array
     {
         return array_map(function ($link) use ($options) {
-            list($title, $url) = $link;
+            [$title, $url] = $link;
 
             return $this->Html->link($title, $url, $options);
         }, $links);
