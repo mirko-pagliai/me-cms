@@ -101,9 +101,7 @@ Cache::setConfig([
 
 // Ensure default test connection is defined
 if (!getenv('db_dsn')) {
-    putenv('db_dsn=sqlite:///' . TMP . 'example.sq3');
-//    putenv('db_dsn=postgres://postgres@localhost/travis_ci_test');
-//    putenv('db_dsn=mysql://travis@localhost/test');
+    putenv('db_dsn=mysql://travis@localhost/test');
 }
 ConnectionManager::setConfig('test', ['url' => getenv('db_dsn')]);
 
