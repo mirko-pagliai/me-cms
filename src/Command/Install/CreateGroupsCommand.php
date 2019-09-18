@@ -46,9 +46,7 @@ class CreateGroupsCommand extends Command
         $this->loadModel('MeCms.UsersGroups');
 
         if (!$this->UsersGroups->find()->isEmpty()) {
-            $io->error(__d('me_cms', 'Some user groups already exist'));
-
-            return null;
+            return $io->error(__d('me_cms', 'Some user groups already exist'));
         }
 
         //Truncates the table (this resets IDs), then saves groups

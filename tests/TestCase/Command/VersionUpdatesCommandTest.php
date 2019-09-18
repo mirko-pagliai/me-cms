@@ -13,6 +13,8 @@
 namespace MeCms\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
+use Cake\Database\Driver\Sqlite;
+use Cake\Datasource\ConnectionManager;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\Command\VersionUpdatesCommand;
 use MeCms\TestSuite\TestCase;
@@ -51,6 +53,8 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAddEnableCommentsField()
     {
+        $this->skipIf(ConnectionManager::get('default')->getDriver() instanceof Sqlite);
+
         $this->loadFixtures('Pages', 'Posts');
 
         foreach (['Pages', 'Posts'] as $table) {
@@ -70,6 +74,8 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAlterTagColumnSize()
     {
+        $this->skipIf(ConnectionManager::get('default')->getDriver() instanceof Sqlite);
+
         $this->loadFixtures('Tags');
 
         $this->getTable('Tags')->getConnection()
