@@ -7,6 +7,7 @@
     parameter and is now able to generate all the necessary code for menus, 
     without javascript code. All the methods of the `MenuHelper` now return an
     array with a fourth value, an array with the controllers hnadled by that menu;
+* fixed `CreateGroupsCommand` for `Sqlite` driver;
 * `StaticPage::getSlug()` is now public. `StaticPage::title()` has been
     renamed as `getTitle()`. `StaticPage::getAllPaths()` has been renamed as 
     `getPaths()` and is now public;

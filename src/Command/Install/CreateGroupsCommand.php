@@ -16,6 +16,7 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Database\Driver\Sqlite;
 use Cake\Datasource\ConnectionManager;
 use MeTools\Console\Command;
 
@@ -51,7 +52,9 @@ class CreateGroupsCommand extends Command
         }
 
         //Truncates the table (this resets IDs), then saves groups
-        ConnectionManager::get('default')->execute(sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->getTable()));
+        $connection = ConnectionManager::get('default');
+        $command = $connection->getDriver() instanceof Sqlite ? 'DELETE FROM "sqlite_sequence" WHERE "name"=\'%s\';' : 'TRUNCATE TABLE `%s`';
+        $connection->execute(sprintf($command, $this->UsersGroups->getTable()));
         $this->UsersGroups->saveMany($this->UsersGroups->newEntities([
             ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
             ['id' => 2, 'name' => 'manager', 'label' => 'Manager'],
