@@ -9,7 +9,7 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       2.26.8
+ * @since       2.27.0
  */
 namespace MeCms\Controller\Admin;
 

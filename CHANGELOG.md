@@ -1,6 +1,6 @@
 # 2.x branch
-## 2.26 branch
-### 2.26.8
+## 2.27 branch
+### 2.27.0
 * pages and posts can display the last modified date (as default). Added entries
     in the configuration file;
 * added `MeCms\Controller\Admin\AppController` class. Admin controllers now
@@ -22,6 +22,7 @@
 * many small fixes;
 * updated for `me-tools` `2.18.12`.
 
+## 2.26 branch
 ### 2.26.7
 * added a basic style sheet for printing;
 * fixed bug for some no existing photos;
