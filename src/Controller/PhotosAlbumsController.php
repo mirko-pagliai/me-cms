@@ -15,6 +15,7 @@ namespace MeCms\Controller;
 use Cake\Cache\Cache;
 use Cake\ORM\Query;
 use MeCms\Controller\AppController;
+use MeCms\Model\Entity\PhotosAlbum;
 
 /**
  * PhotosAlbums controller
@@ -31,9 +32,7 @@ class PhotosAlbumsController extends AppController
         $albums = $this->PhotosAlbums->find('active')
             ->select(['id', 'title', 'slug', 'photo_count', 'created'])
             ->contain($this->PhotosAlbums->Photos->getAlias(), function (Query $q) {
-                return $q->find('active')
-                    ->select(['album_id', 'filename'])
-                    ->order('rand()');
+                return $q->find('active')->select(['id', 'album_id', 'filename']);
             })
             ->order([sprintf('%s.created', $this->PhotosAlbums->getAlias()) => 'DESC'])
             ->cache('albums_index', $this->PhotosAlbums->getCacheName());
@@ -42,6 +41,14 @@ class PhotosAlbumsController extends AppController
         if ($albums->count() === 1) {
             return $this->redirect(['_name' => 'album', $albums->first()->get('slug')]);
         }
+
+        //Album photos are randomly ordered
+        $albums = $albums->all()->map(function (PhotosAlbum $album) {
+            $photos = $album->get('photos');
+            shuffle($photos);
+
+            return $album->set(compact('photos'));
+        });
 
         $this->set(compact('albums'));
     }

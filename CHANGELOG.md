@@ -7,6 +7,9 @@
     parameter and is now able to generate all the necessary code for menus, 
     without javascript code. All the methods of the `MenuHelper` now return an
     array with a fourth value, an array with the controllers hnadled by that menu;
+* fixed bug for `PhotosAlbumsController::index()`. Now the album photos are
+    randomly ordered after being retrieved from the cache and the action now 
+    works with `Sqlite` driver;
 * fixed `CreateGroupsCommand` for `Sqlite` driver;
 * `StaticPage::getSlug()` is now public. `StaticPage::title()` has been
     renamed as `getTitle()`. `StaticPage::getAllPaths()` has been renamed as 
