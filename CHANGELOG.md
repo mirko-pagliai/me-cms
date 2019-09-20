@@ -3,6 +3,8 @@
 ### 2.26.8
 * pages and posts can display the last modified date (as default). Added entries
     in the configuration file;
+* added `MeCms\Controller\Admin\AppController` class. Admin controllers now
+    extend this class;
 * the `MenuBuilderHelper::renderAsCollapse()` method takes the `$idContainer`
     parameter and is now able to generate all the necessary code for menus, 
     without javascript code. All the methods of the `MenuHelper` now return an

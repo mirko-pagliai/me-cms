@@ -14,7 +14,6 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use MeCms\Controller\AppController;
 use MeCms\TestSuite\ControllerTestCase;
 
 /**
@@ -31,7 +30,9 @@ class AppControllerTest extends ControllerTestCase
      */
     protected function getMockForController($className = null, $methods = null, $alias = 'App')
     {
-        return parent::getMockForController($className ?: AppController::class, $methods, $alias);
+        $className = $className ?: ($this->Controller ? get_class($this->Controller) : null);
+
+        return parent::getMockForController($className, $methods, $alias);
     }
 
     /**
@@ -41,7 +42,6 @@ class AppControllerTest extends ControllerTestCase
     public function testBeforeFilter()
     {
         //Sets some configuration values
-        Configure::write('MeCms.admin.records', 7);
         Configure::write('MeCms.default.records', 5);
         Configure::write('MeCms.security.recaptcha', true);
         Configure::write('MeCms.security.search_interval', 15);
@@ -54,16 +54,6 @@ class AppControllerTest extends ControllerTestCase
         $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $controller->paginate);
         $this->assertNull($controller->viewBuilder()->getLayout());
         $this->assertEquals('MeCms.View/App', $controller->viewBuilder()->getClassName());
-
-        //Admin request
-        $controller = $this->getMockForController();
-        $controller->request = $controller->getRequest()->withParam('action', 'my-action')
-            ->withQueryParams(['sort' => 'my-field'])
-            ->withParam('prefix', ADMIN_PREFIX);
-        $controller->beforeFilter(new Event('myEvent'));
-        $this->assertEmpty($controller->Auth->allowedActions);
-        $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $controller->paginate);
-        $this->assertEquals('MeCms.View/Admin', $controller->viewBuilder()->getClassName());
 
         //Ajax request
         $controller = $this->getMockForController();
@@ -90,13 +80,15 @@ class AppControllerTest extends ControllerTestCase
      */
     public function testIsAuthorized()
     {
-        parent::testIsAuthorized();
-
         //With prefixes
-        foreach ([ADMIN_PREFIX, 'otherPrefix'] as $prefix) {
-            $this->Controller->setRequest($this->Controller->getRequest()->withParam('prefix', $prefix));
-            $this->Controller->getRequest()->clearDetectorCache();
-            $this->assertFalse($this->Controller->isAuthorized());
+        foreach ([
+            null => true,
+            ADMIN_PREFIX => false,
+            'otherPrefix' => false,
+        ] as $prefix => $expected) {
+            $request = $this->Controller->getRequest()->withParam('prefix', $prefix);
+            $request->clearDetectorCache();
+            $this->assertSame($expected, $this->Controller->setRequest($request)->isAuthorized());
         }
     }
 }

@@ -15,7 +15,7 @@ namespace MeCms\Controller\Admin;
 use Cake\Event\Event;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Exception\InternalErrorException;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 
 /**
  * Photos controller

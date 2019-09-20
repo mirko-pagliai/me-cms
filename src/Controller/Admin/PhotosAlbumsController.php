@@ -12,7 +12,7 @@
  */
 namespace MeCms\Controller\Admin;
 
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 
 /**
  * PhotosAlbums controller

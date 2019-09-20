@@ -14,7 +14,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\ORM\ResultSet;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 use MeCms\Model\Entity\PagesCategory;
 
 /**

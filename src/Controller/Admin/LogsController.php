@@ -13,7 +13,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\ORM\Entity;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 

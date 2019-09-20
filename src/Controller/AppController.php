@@ -43,18 +43,9 @@ class AppController extends BaseAppController
 
         //Sets the paginate limit and the maximum paginate limit
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
-        $this->paginate['limit'] = getConfigOrFail('default.records');
+        $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('default.records');
 
-        if ($this->getRequest()->isAdmin()) {
-            $this->viewBuilder()->setClassName('MeCms.View/Admin');
-
-            $this->paginate['limit'] = getConfigOrFail('admin.records');
-        } else {
-            //Authorizes the current action
-            $this->Auth->allow();
-        }
-
-        $this->paginate['maxLimit'] = $this->paginate['limit'];
+        $this->Auth->allow();
 
         //Layout for ajax and json requests
         if ($this->getRequest()->is(['ajax', 'json'])) {
@@ -75,7 +66,6 @@ class AppController extends BaseAppController
         $this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler', ['enableBeforeRedirect' => false]);
-        $this->loadComponent('MeTools.Uploader');
         $this->loadComponent('Recaptcha.Recaptcha', [
             'sitekey' => getConfigOrFail('Recaptcha.public'),
             'secret' => getConfigOrFail('Recaptcha.private'),
@@ -95,12 +85,8 @@ class AppController extends BaseAppController
     public function isAuthorized($user = null)
     {
         //Only admin and managers can access admin actions
-        if ($this->getRequest()->isAdmin()) {
-            return $this->Auth->isGroup(['admin', 'manager']);
-        }
-
         //Any registered user can access actions without prefix. Default deny
-        return !$this->getRequest()->getParam('prefix');
+        return $this->Auth->isGroup(['admin', 'manager']) || !$this->getRequest()->getParam('prefix');
     }
 
     /**
@@ -111,22 +97,5 @@ class AppController extends BaseAppController
     protected function isSpammer()
     {
         return $this->getRequest()->isSpammer() && !$this->getRequest()->isAction('ipNotAllowed', 'Systems');
-    }
-
-    /**
-     * Internal method to set an upload error.
-     *
-     * It saves the error as view var that `JsonView` should serialize and sets
-     *  the response status code to 500.
-     * @param string $error Error message
-     * @return void
-     * @since 2.18.1
-     */
-    protected function setUploadError($error)
-    {
-        $this->response = $this->response->withStatus(500);
-
-        $this->set(compact('error'));
-        $this->set('_serialize', ['error']);
     }
 }

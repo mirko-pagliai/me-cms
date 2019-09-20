@@ -16,7 +16,7 @@ use Cake\Cache\Cache;
 use Cake\ORM\Entity;
 use DatabaseBackup\Utility\BackupImport;
 use DatabaseBackup\Utility\BackupManager;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 use MeCms\Form\BackupForm;
 
 /**
