@@ -14,6 +14,7 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use MeCms\Controller\AppController;
 use MeCms\TestSuite\ControllerTestCase;
 
 /**
@@ -22,20 +23,6 @@ use MeCms\TestSuite\ControllerTestCase;
 class AppControllerTest extends ControllerTestCase
 {
     /**
-     * Mocks a controller
-     * @param string $className Controller class name
-     * @param array|null $methods The list of methods to mock
-     * @param string $alias Controller alias
-     * @return \Cake\Controller\Controller|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function getMockForController($className = null, $methods = null, $alias = 'App')
-    {
-        $className = $className ?: ($this->Controller ? get_class($this->Controller) : null);
-
-        return parent::getMockForController($className, $methods, $alias);
-    }
-
-    /**
      * Tests for `beforeFilter()` method
      * @test
      */
@@ -43,29 +30,27 @@ class AppControllerTest extends ControllerTestCase
     {
         Configure::write('MeCms.default.records', 5);
 
-        $controller = $this->getMockForController();
-        $controller->beforeFilter(new Event('myEvent'));
-        $this->assertNotEmpty($controller->Auth->allowedActions);
-        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $controller->paginate);
-        $this->assertNull($controller->viewBuilder()->getLayout());
-        $this->assertEquals('MeCms.View/App', $controller->viewBuilder()->getClassName());
+        $this->Controller->beforeFilter(new Event('myEvent'));
+        $this->assertNotEmpty($this->Controller->Auth->allowedActions);
+        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $this->Controller->paginate);
+        $this->assertNull($this->Controller->viewBuilder()->getLayout());
+        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
 
         //Ajax request
-        $controller = $this->getMockForController();
-        $controller->setRequest($controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
-        $controller->beforeFilter(new Event('myEvent'));
-        $this->assertEquals('MeCms.ajax', $controller->viewBuilder()->getLayout());
+        $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
+        $this->Controller->beforeFilter(new Event('myEvent'));
+        $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
 
         //If the user has been reported as a spammer this makes a redirect
-        $controller = $this->getMockForController(null, ['isSpammer']);
+        $controller = $this->getMockForController(AppController::class, ['isSpammer']);
         $controller->method('isSpammer')->willReturn(true);
         $this->_response = $controller->beforeFilter(new Event('myEvent'));
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
 
         //If the site is offline this makes a redirect
         Configure::write('MeCms.default.offline', true);
-        $controller = $this->getMockForController();
-        $this->_response = $controller->beforeFilter(new Event('myEvent'));
+        $this->Controller->getRequest()->clearDetectorCache();
+        $this->_response = $this->Controller->beforeFilter(new Event('myEvent'));
         $this->assertRedirect(['_name' => 'offline']);
     }
 

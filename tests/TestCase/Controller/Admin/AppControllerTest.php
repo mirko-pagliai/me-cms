@@ -22,6 +22,17 @@ use MeCms\Test\TestCase\Controller\AppControllerTest as BaseAppControllerTest;
 class AppControllerTest extends BaseAppControllerTest
 {
     /**
+     * Called before every test method
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Controller->setRequest($this->Controller->getRequest()->withParam('prefix', ADMIN_PREFIX));
+    }
+
+    /**
      * Tests for `beforeFilter()` method
      * @test
      */
@@ -29,11 +40,10 @@ class AppControllerTest extends BaseAppControllerTest
     {
         Configure::write('MeCms.admin.records', 7);
 
-        $controller = $this->getMockForController();
-        $controller->beforeFilter(new Event('myEvent'));
-        $this->assertEmpty($controller->Auth->allowedActions);
-        $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $controller->paginate);
-        $this->assertEquals('MeCms.View/Admin', $controller->viewBuilder()->getClassName());
+        $this->Controller->beforeFilter(new Event('myEvent'));
+        $this->assertEmpty($this->Controller->Auth->allowedActions);
+        $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $this->Controller->paginate);
+        $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
     }
 
     /**
@@ -42,8 +52,6 @@ class AppControllerTest extends BaseAppControllerTest
      */
     public function testIsAuthorized()
     {
-        $this->Controller->setRequest($this->Controller->getRequest()->withParam('prefix', ADMIN_PREFIX));
-
         $this->assertGroupsAreAuthorized([
             'admin' => true,
             'manager' => true,
