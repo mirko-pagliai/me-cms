@@ -28,7 +28,7 @@ class AppController extends BaseAppController
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
 
         $this->viewBuilder()->setClassName('MeCms.View/Admin');
 
@@ -37,6 +37,8 @@ class AppController extends BaseAppController
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.records');
 
         $this->Auth->deny();
+
+        return $result;
     }
 
     /**
@@ -61,8 +63,7 @@ class AppController extends BaseAppController
      */
     protected function setUploadError($error)
     {
-        $this->response = $this->response->withStatus(500);
-
+        $this->setResponse($this->getResponse()->withStatus(500));
         $this->set(compact('error'));
         $this->set('_serialize', ['error']);
     }
