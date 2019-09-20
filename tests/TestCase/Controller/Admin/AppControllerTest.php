@@ -27,13 +27,9 @@ class AppControllerTest extends BaseAppControllerTest
      */
     public function testBeforeFilter()
     {
-        //Sets some configuration values
         Configure::write('MeCms.admin.records', 7);
 
         $controller = $this->getMockForController();
-        $controller->request = $controller->getRequest()->withParam('action', 'my-action')
-            ->withQueryParams(['sort' => 'my-field'])
-            ->withParam('prefix', ADMIN_PREFIX);
         $controller->beforeFilter(new Event('myEvent'));
         $this->assertEmpty($controller->Auth->allowedActions);
         $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $controller->paginate);

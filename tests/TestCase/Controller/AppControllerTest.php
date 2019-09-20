@@ -41,14 +41,9 @@ class AppControllerTest extends ControllerTestCase
      */
     public function testBeforeFilter()
     {
-        //Sets some configuration values
         Configure::write('MeCms.default.records', 5);
-        Configure::write('MeCms.security.recaptcha', true);
-        Configure::write('MeCms.security.search_interval', 15);
 
         $controller = $this->getMockForController();
-        $controller->request = $this->Controller->getRequest()->withParam('action', 'my-action')
-            ->withQueryParams(['sort' => 'my-field']);
         $controller->beforeFilter(new Event('myEvent'));
         $this->assertNotEmpty($controller->Auth->allowedActions);
         $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $controller->paginate);
@@ -57,7 +52,7 @@ class AppControllerTest extends ControllerTestCase
 
         //Ajax request
         $controller = $this->getMockForController();
-        $controller->request = $controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
+        $controller->setRequest($controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
         $controller->beforeFilter(new Event('myEvent'));
         $this->assertEquals('MeCms.ajax', $controller->viewBuilder()->getLayout());
 
