@@ -17,6 +17,8 @@ use Cake\Cache\Cache;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Database\Driver\Postgres;
+use Cake\Datasource\ConnectionManager;
 use MeTools\Console\Command;
 
 /**
@@ -45,15 +47,18 @@ class VersionUpdatesCommand extends Command
     public function addEnableCommentsField()
     {
         Cache::clear(false, '_cake_model_');
+        $connection = ConnectionManager::get('default');
+
+        $command = 'ALTER TABLE `%s` ADD `enable_comments` BOOLEAN NOT NULL DEFAULT TRUE';
+        if ($connection->getDriver() instanceof Postgres) {
+            $command = 'ALTER TABLE %s ADD COLUMN enable_comments BOOLEAN NOT NULL DEFAULT TRUE';
+        }
 
         foreach (['Pages', 'Posts'] as $table) {
             $Table = $this->loadModel('MeCms.' . $table);
 
             if (!$Table->getSchema()->hasColumn('enable_comments')) {
-                $Table->getConnection()->execute(sprintf(
-                    'ALTER TABLE `%s` ADD `enable_comments` BOOLEAN NOT NULL DEFAULT TRUE AFTER `preview`',
-                    $Table->getTable()
-                ));
+                $Table->getConnection()->execute(sprintf($command, $Table->getTable()));
             }
         }
     }
@@ -64,10 +69,16 @@ class VersionUpdatesCommand extends Command
      */
     public function alterTagColumnSize()
     {
-        $Tags = $this->loadModel('MeCms.Tags');
+        $connection = ConnectionManager::get('default');
+        $Table = $this->loadModel('MeCms.Tags');
 
-        if ($Tags->getSchema()->getColumn('tag')['length'] < 255) {
-            $Tags->getConnection()->execute('ALTER TABLE tags MODIFY tag varchar(255) NOT NULL');
+        $command = 'ALTER TABLE %s MODIFY tag varchar(255) NOT NULL';
+        if ($connection->getDriver() instanceof Postgres) {
+            $command = 'ALTER TABLE %s ALTER COLUMN tag TYPE varchar(255);';
+        }
+
+        if ($Table->getSchema()->getColumn('tag')['length'] < 255) {
+            $Table->getConnection()->execute(sprintf($command, $Table->getTable()));
         }
     }
 
