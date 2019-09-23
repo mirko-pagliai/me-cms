@@ -9,6 +9,7 @@
     parameter and is now able to generate all the necessary code for menus, 
     without javascript code. All the methods of the `MenuHelper` now return an
     array with a fourth value, an array with the controllers hnadled by that menu;
+* largely simplified the code for `PostsWidgetsCell::months()` method;
 * fixed bug for `PhotosAlbumsController::index()`. Now the album photos are
     randomly ordered after being retrieved from the cache and the action now 
     works with `Sqlite` driver;

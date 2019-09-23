@@ -11,9 +11,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-use MeCms\Model\Entity\Post;
-
-if (empty($posts) || $posts->count() < 2) {
+if (empty($months) || count($months) < 2) {
     return;
 }
 
@@ -28,8 +26,8 @@ echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'sendForm(this)',
-    'options' => $posts->map(function (Post $post) {
-        return sprintf('%s (%s)', $post->get('month')->i18nFormat('MMMM yyyy'), $post->get('post_count'));
-    })->toArray(),
+    'options' => $months->map(function (array $month) {
+        return sprintf('%s (%s)', $month['created']->i18nFormat('MMMM yyyy'), $month['post_count']);
+    }),
 ]);
 echo $this->Form->end();
