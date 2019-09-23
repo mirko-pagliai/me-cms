@@ -11,8 +11,9 @@ matrix:
 
   include:
     - php: 7.0
+      env: dependencies=lowest
+    - php: 7.0
       env: PHPCS=1
-
     - php: 7.0
       env: COVERAGE=1
 
@@ -23,6 +24,7 @@ install:
   - printf "\n" | pecl install imagick
   - composer self-update
   - composer install --prefer-dist --no-interaction
+  - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest -n; fi;
 
 before_script:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'

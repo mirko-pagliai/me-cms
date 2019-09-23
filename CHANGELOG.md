@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.27 branch
 ### 2.27.0
-* requires at least PHP `7.0`,  `phpunit` `6.0` and `CakePHP` `3.8`;
+* requires at least PHP `7.0`,  `phpunit` `6.0` and `CakePHP` `3.8`. Added tests
+    for lowest dependencies;
 * all the code has been made compatible with the Postgres and Sqlite drivers.
     The fixtures code has been simplified;
 * pages and posts can display the last modified date (as default). Added entries
