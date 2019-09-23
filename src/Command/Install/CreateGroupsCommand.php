@@ -16,6 +16,7 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Database\Driver\Postgres;
 use Cake\Database\Driver\Sqlite;
 use Cake\Datasource\ConnectionManager;
 use MeTools\Console\Command;
@@ -51,8 +52,14 @@ class CreateGroupsCommand extends Command
 
         //Truncates the table (this resets IDs), then saves groups
         $connection = ConnectionManager::get('default');
-        $command = $connection->getDriver() instanceof Sqlite ? 'DELETE FROM "sqlite_sequence" WHERE "name"=\'%s\';' : 'TRUNCATE TABLE `%s`';
+        $command = 'TRUNCATE TABLE `%s`';
+        if ($connection->getDriver() instanceof Sqlite) {
+            $command = 'DELETE FROM "sqlite_sequence" WHERE "name"=\'%s\';';
+        } elseif ($connection->getDriver() instanceof Postgres) {
+            $command = 'truncate %s restart identity';
+        }
         $connection->execute(sprintf($command, $this->UsersGroups->getTable()));
+
         $this->UsersGroups->saveMany($this->UsersGroups->newEntities([
             ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
             ['id' => 2, 'name' => 'manager', 'label' => 'Manager'],
