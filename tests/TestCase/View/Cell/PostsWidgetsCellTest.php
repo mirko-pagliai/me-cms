@@ -15,7 +15,6 @@ namespace MeCms\Test\TestCase\View\Cell;
 use Cake\Cache\Cache;
 use Cake\Http\ServerRequest;
 use Cake\I18n\FrozenDate;
-use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use MeCms\TestSuite\CellTestCase;
 
