@@ -52,6 +52,7 @@ class SitemapTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        Cache::clearAll();
 
         $this->loadPlugins(['TestPlugin']);
     }
