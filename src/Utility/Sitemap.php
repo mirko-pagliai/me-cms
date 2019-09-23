@@ -51,7 +51,7 @@ class Sitemap extends SitemapBuilder
                         ->select(['category_id', 'slug', 'modified'])
                         ->orderDesc('modified');
                 })
-                ->orderAsc('lft');
+                ->orderAsc(sprintf('%s.lft', $table->getAlias()));
 
             if ($categories->isEmpty()) {
                 return [];
@@ -95,12 +95,13 @@ class Sitemap extends SitemapBuilder
 
         if (!$url) {
             $albums = $table->find('active')
-                ->select(['id', 'slug'])
+                ->select(['id', 'slug', 'created'])
                 ->contain($table->Photos->getAlias(), function (Query $query) {
                     return $query->find('active')
                         ->select(['id', 'album_id', 'modified'])
                         ->orderDesc('modified');
-                });
+                })
+                ->orderDesc(sprintf('%s.created', $table->getAlias()));
 
             if ($albums->isEmpty()) {
                 return [];
@@ -157,7 +158,7 @@ class Sitemap extends SitemapBuilder
                         ->select(['category_id', 'slug', 'modified'])
                         ->orderDesc('modified');
                 })
-                ->orderAsc('lft');
+                ->orderAsc(sprintf('%s.lft', $table->getAlias()));
 
             if ($categories->isEmpty()) {
                 return [];
@@ -207,7 +208,9 @@ class Sitemap extends SitemapBuilder
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if (!$url) {
-            $tags = $table->find('active')->select(['tag', 'modified'])->orderAsc('tag');
+            $tags = $table->find('active')
+                ->select(['tag', 'modified'])
+                ->orderAsc(sprintf('%s.tag', $table->getAlias()));
 
             if ($tags->isEmpty()) {
                 return [];
