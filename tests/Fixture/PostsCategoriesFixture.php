@@ -28,16 +28,14 @@ class PostsCategoriesFixture extends TestFixture
         'parent_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'lft' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'rght' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'title' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'slug' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'description' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'title' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'slug' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'description' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'post_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-            'title' => ['type' => 'unique', 'columns' => ['title'], 'length' => []],
-            'slug' => ['type' => 'unique', 'columns' => ['slug'], 'length' => []],
         ],
     ];
 
@@ -47,7 +45,6 @@ class PostsCategoriesFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
             'parent_id' => null,
             'lft' => 1,
             'rght' => 6,
@@ -59,7 +56,6 @@ class PostsCategoriesFixture extends TestFixture
             'modified' => '2016-12-26 21:24:32',
         ],
         [
-            'id' => 2,
             'parent_id' => null,
             'lft' => 7,
             'rght' => 8,
@@ -71,7 +67,6 @@ class PostsCategoriesFixture extends TestFixture
             'modified' => '2016-12-26 21:25:32',
         ],
         [
-            'id' => 3,
             'parent_id' => 1,
             'lft' => 2,
             'rght' => 5,
@@ -83,7 +78,6 @@ class PostsCategoriesFixture extends TestFixture
             'modified' => '2016-12-26 21:26:32',
         ],
         [
-            'id' => 4,
             'parent_id' => 3,
             'lft' => 3,
             'rght' => 4,
