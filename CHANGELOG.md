@@ -17,7 +17,7 @@
 * `StaticPage::getSlug()` is now public. `StaticPage::title()` has been
     renamed as `getTitle()`. `StaticPage::getAllPaths()` has been renamed as 
     `getPaths()` and is now public;
-* javascript functions are now "camelCase": `tag_exist()` becoms `tagExists()`;
+* javascript functions are now "camelCase": `tag_exist()` becomes `tagExists()`;
     `add_tags()` becomes `addTags()`; `remove_tag()` becomes `removeTag()`;
     `update_output_text()` becomes `updateOutputText()`;
 * many small fixes;
