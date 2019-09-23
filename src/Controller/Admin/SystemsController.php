@@ -19,7 +19,7 @@ use Cake\Http\Response;
 use Cake\I18n\I18n;
 use Cake\Routing\Router;
 use League\CommonMark\CommonMarkConverter;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 use MeCms\Core\Plugin;
 use MeCms\Utility\Checkup;
 use Symfony\Component\Finder\Finder;

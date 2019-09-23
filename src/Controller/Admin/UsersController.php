@@ -16,7 +16,7 @@ namespace MeCms\Controller\Admin;
 use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\Mailer\MailerAwareTrait;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 use Symfony\Component\Finder\Finder;
 use Thumber\Utility\ThumbManager;
 

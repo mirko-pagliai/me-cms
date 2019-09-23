@@ -45,16 +45,14 @@ class Sitemap extends SitemapBuilder
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if (!$url) {
-            $alias = $table->Pages->getAlias();
-
             $categories = $table->find('active')
                 ->select(['id', 'lft', 'slug'])
-                ->contain($alias, function (Query $q) use ($alias) {
-                    return $q->find('active')
+                ->contain($table->Pages->getAlias(), function (Query $query) {
+                    return $query->find('active')
                         ->select(['category_id', 'slug', 'modified'])
-                        ->order([sprintf('%s.modified', $alias) => 'DESC']);
+                        ->orderDesc('modified');
                 })
-                ->order(['lft' => 'ASC']);
+                ->orderAsc(sprintf('%s.lft', $table->getAlias()));
 
             if ($categories->isEmpty()) {
                 return [];
@@ -64,15 +62,15 @@ class Sitemap extends SitemapBuilder
             $url[] = self::parse(['_name' => 'pagesCategories']);
 
             foreach ($categories as $category) {
-                //Adds the category
+                //Adds category
                 $url[] = self::parse(
-                    ['_name' => 'pagesCategory', $category->slug],
-                    ['lastmod' => array_value_first($category->pages)->modified]
+                    ['_name' => 'pagesCategory', $category->get('slug')],
+                    ['lastmod' => array_value_first($category->get('pages'))->get('modified')]
                 );
 
                 //Adds each page
-                foreach ($category->pages as $page) {
-                    $url[] = self::parse(['_name' => 'page', $page->slug], ['lastmod' => $page->modified]);
+                foreach ($category->get('pages') as $page) {
+                    $url[] = self::parse(['_name' => 'page', $page->get('slug')], ['lastmod' => $page->get('modified')]);
                 }
             }
 
@@ -97,40 +95,38 @@ class Sitemap extends SitemapBuilder
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if (!$url) {
-            $alias = $table->Photos->getAlias();
-
             $albums = $table->find('active')
-                ->select(['id', 'slug'])
-                ->contain($alias, function (Query $q) use ($alias) {
-                    return $q->find('active')
+                ->select(['id', 'slug', 'created'])
+                ->contain($table->Photos->getAlias(), function (Query $query) {
+                    return $query->find('active')
                         ->select(['id', 'album_id', 'modified'])
-                        ->order([sprintf('%s.modified', $alias) => 'DESC']);
-                });
+                        ->orderDesc('modified');
+                })
+                ->orderDesc(sprintf('%s.created', $table->getAlias()));
 
             if ($albums->isEmpty()) {
                 return [];
             }
 
+            //Adds albums index
             $latest = $table->Photos->find('active')
                 ->select(['modified'])
-                ->order([sprintf('%s.modified', $alias) => 'DESC'])
+                ->orderDesc('modified')
                 ->firstOrFail();
-
-            //Adds albums index
-            $url[] = self::parse(['_name' => 'albums'], ['lastmod' => $latest->modified]);
+            $url[] = self::parse(['_name' => 'albums'], ['lastmod' => $latest->get('modified')]);
 
             foreach ($albums as $album) {
-                //Adds the album
+                //Adds album
                 $url[] = self::parse(
-                    ['_name' => 'album', $album->slug],
-                    ['lastmod' => array_value_first($album->photos)->modified]
+                    ['_name' => 'album', $album->get('slug')],
+                    ['lastmod' => array_value_first($album->get('photos'))->get('modified')]
                 );
 
                 //Adds each photo
-                foreach ($album->photos as $photo) {
+                foreach ($album->get('photos') as $photo) {
                     $url[] = self::parse(
-                        ['_name' => 'photo', 'slug' => $album->slug, 'id' => (string)$photo->id],
-                        ['lastmod' => $photo->modified]
+                        ['_name' => 'photo', 'slug' => $album->get('slug'), 'id' => (string)$photo->get('id')],
+                        ['lastmod' => $photo->get('modified')]
                     );
                 }
             }
@@ -156,15 +152,14 @@ class Sitemap extends SitemapBuilder
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if (!$url) {
-            $alias = $table->Posts->getAlias();
             $categories = $table->find('active')
                 ->select(['id', 'lft', 'slug'])
-                ->contain($alias, function (Query $q) use ($alias) {
-                    return $q->find('active')
+                ->contain($table->Posts->getAlias(), function (Query $query) {
+                    return $query->find('active')
                         ->select(['category_id', 'slug', 'modified'])
-                        ->order([sprintf('%s.modified', $alias) => 'DESC']);
+                        ->orderDesc('modified');
                 })
-                ->order(['lft' => 'ASC']);
+                ->orderAsc(sprintf('%s.lft', $table->getAlias()));
 
             if ($categories->isEmpty()) {
                 return [];
@@ -172,24 +167,24 @@ class Sitemap extends SitemapBuilder
 
             $latest = $table->Posts->find('active')
                 ->select(['modified'])
-                ->order([sprintf('%s.modified', $alias) => 'DESC'])
+                ->orderDesc('modified')
                 ->firstOrFail();
 
             //Adds posts index, categories index and posts search
-            $url[] = self::parse(['_name' => 'posts'], ['lastmod' => $latest->modified]);
+            $url[] = self::parse(['_name' => 'posts'], ['lastmod' => $latest->get('modified')]);
             $url[] = self::parse(['_name' => 'postsCategories']);
             $url[] = self::parse(['_name' => 'postsSearch'], ['priority' => '0.2']);
 
             foreach ($categories as $category) {
-                //Adds the category
+                //Adds category
                 $url[] = self::parse(
-                    ['_name' => 'postsCategory', $category->slug],
-                    ['lastmod' => array_value_first($category->posts)->modified]
+                    ['_name' => 'postsCategory', $category->get('slug')],
+                    ['lastmod' => array_value_first($category->get('posts'))->get('modified')]
                 );
 
                 //Adds each post
-                foreach ($category->posts as $post) {
-                    $url[] = self::parse(['_name' => 'post', $post->slug], ['lastmod' => $post->modified]);
+                foreach ($category->get('posts') as $post) {
+                    $url[] = self::parse(['_name' => 'post', $post->get('slug')], ['lastmod' => $post->get('modified')]);
                 }
             }
 
@@ -216,23 +211,22 @@ class Sitemap extends SitemapBuilder
         if (!$url) {
             $tags = $table->find('active')
                 ->select(['tag', 'modified'])
-                ->order(['tag' => 'ASC']);
+                ->orderAsc(sprintf('%s.tag', $table->getAlias()));
 
             if ($tags->isEmpty()) {
                 return [];
             }
 
+            //Adds tags index
             $latest = $table->find()
                 ->select(['modified'])
-                ->order(['modified' => 'DESC'])
+                ->orderDesc('modified')
                 ->firstOrFail();
-
-            //Adds the tags index
-            $url[] = self::parse(['_name' => 'postsTags'], ['lastmod' => $latest->modified]);
+            $url[] = self::parse(['_name' => 'postsTags'], ['lastmod' => $latest->get('modified')]);
 
             //Adds each tag
             foreach ($tags as $tag) {
-                $url[] = self::parse(['_name' => 'postsTag', $tag->slug], ['lastmod' => $tag->modified]);
+                $url[] = self::parse(['_name' => 'postsTag', $tag->get('slug')], ['lastmod' => $tag->get('modified')]);
             }
 
             Cache::write('sitemap', $url, $table->getCacheName());
@@ -254,7 +248,7 @@ class Sitemap extends SitemapBuilder
         }
 
         return array_map(function (Entity $page) {
-            return self::parse(['_name' => 'page', $page->slug], ['lastmod' => $page->modified]);
+            return self::parse(['_name' => 'page', $page->get('slug')], ['lastmod' => $page->get('modified')]);
         }, StaticPage::all());
     }
 
@@ -269,13 +263,11 @@ class Sitemap extends SitemapBuilder
             return [];
         }
 
-        $url = [];
-
         //Contact form
         if (getConfig('default.contact_us')) {
             $url[] = self::parse(['_name' => 'contactUs']);
         }
 
-        return $url;
+        return $url ?? [];
     }
 }

@@ -17,7 +17,7 @@ use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\Http\Response;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 
 /**
  * Photos controller

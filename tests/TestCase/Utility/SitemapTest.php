@@ -53,6 +53,7 @@ class SitemapTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        Cache::clearAll();
 
         $this->loadPlugins(['TestPlugin']);
     }
@@ -126,6 +127,16 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
             [
+                'loc' => 'http://localhost/album/another-album-test',
+                'lastmod' => '2016-12-28T10:39:42+00:00',
+                'priority' => '0.5',
+            ],
+            [
+                'loc' => 'http://localhost/photo/another-album-test/2',
+                'lastmod' => '2016-12-28T10:39:42+00:00',
+                'priority' => '0.5',
+            ],
+            [
                 'loc' => 'http://localhost/album/test-album',
                 'lastmod' => '2016-12-28T10:40:42+00:00',
                 'priority' => '0.5',
@@ -138,16 +149,6 @@ class SitemapTest extends TestCase
             [
                 'loc' => 'http://localhost/photo/test-album/1',
                 'lastmod' => '2016-12-28T10:38:42+00:00',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/album/another-album-test',
-                'lastmod' => '2016-12-28T10:39:42+00:00',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/photo/another-album-test/2',
-                'lastmod' => '2016-12-28T10:39:42+00:00',
                 'priority' => '0.5',
             ],
         ];

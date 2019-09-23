@@ -15,7 +15,7 @@ namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
 use Cake\Http\ServerRequest;
-use Cake\I18n\FrozenDate;
+use Cake\I18n\Time;
 use Cake\Routing\Router;
 use MeCms\TestSuite\CellTestCase;
 
@@ -266,9 +266,10 @@ class PostsWidgetsCellTest extends CellTestCase
         //Tests cache
         $fromCache = Cache::read('widget_months', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
-        foreach ($fromCache as $key => $entity) {
-            $this->assertInstanceOf(FrozenDate::class, $entity->month);
-            $this->assertEquals($key, $entity->month->i18nFormat('yyyy/MM'));
+        foreach ($fromCache as $key => $month) {
+            $this->assertInstanceOf(Time::class, $month['created']);
+            $this->assertEquals($key, $month['created']->i18nFormat('yyyy/MM'));
+            $this->assertGreaterThanOrEqual(1, $month['post_count']);
         }
 
         //With no posts

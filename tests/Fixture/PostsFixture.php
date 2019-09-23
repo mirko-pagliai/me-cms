@@ -28,25 +28,20 @@ class PostsFixture extends TestFixture
      */
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'category_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'title' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'slug' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'subtitle' => ['type' => 'string', 'length' => 150, 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'text' => ['type' => 'text', 'length' => null, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null],
-        'preview' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null],
+        'category_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'title' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'subtitle' => ['type' => 'string', 'length' => 150, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'slug' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'text' => ['type' => 'text', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
+        'preview' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'enable_comments' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null],
         'priority' => ['type' => 'integer', 'length' => 1, 'unsigned' => false, 'null' => false, 'default' => '3', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'active' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
-        'active' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null],
-        '_indexes' => [
-            'created_at' => ['type' => 'index', 'columns' => ['created'], 'length' => []],
-            'category_id' => ['type' => 'index', 'columns' => ['category_id'], 'length' => []],
-        ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-            'slug' => ['type' => 'unique', 'columns' => ['slug'], 'length' => []],
         ],
     ];
 
@@ -56,7 +51,6 @@ class PostsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
             'category_id' => 4,
             'user_id' => 1,
             'title' => 'First post',
@@ -71,7 +65,6 @@ class PostsFixture extends TestFixture
         ],
         //See `init()` for record 2
         [
-            'id' => 3,
             'category_id' => 1,
             'user_id' => 1,
             'title' => 'Third post',
@@ -85,7 +78,6 @@ class PostsFixture extends TestFixture
             'active' => 1,
         ],
         [
-            'id' => 4,
             'category_id' => 1,
             'user_id' => 1,
             'title' => 'Fourth post',
@@ -99,7 +91,6 @@ class PostsFixture extends TestFixture
             'active' => 1,
         ],
         [
-            'id' => 5,
             'category_id' => 1,
             'user_id' => 1,
             'title' => 'Fifth post',
@@ -113,7 +104,6 @@ class PostsFixture extends TestFixture
             'active' => 1,
         ],
         [
-            'id' => 6,
             'category_id' => 1,
             'user_id' => 1,
             'title' => 'Inactive post',
@@ -127,7 +117,6 @@ class PostsFixture extends TestFixture
             'active' => 0,
         ],
         [
-            'id' => 7,
             'category_id' => 1,
             'user_id' => 1,
             'title' => 'Seventh post',
@@ -151,8 +140,7 @@ class PostsFixture extends TestFixture
     {
         //Adds a post with preview
         $preview = json_encode([new Entity(['url' => 'image.jpg', 'width' => 400, 'height' => 400])]);
-        $this->records[] = [
-            'id' => 2,
+        array_splice($this->records, 1, 0, [[
             'category_id' => 4,
             'user_id' => 4,
             'title' => 'Second post',
@@ -164,7 +152,7 @@ class PostsFixture extends TestFixture
             'created' => '2016-12-28 18:56:19',
             'modified' => '2016-12-28 18:56:19',
             'active' => 1,
-        ];
+        ]]);
 
         //Adds a future post
         $future = new Time('+999 days');

@@ -29,8 +29,8 @@ class PhotosFixture extends TestFixture
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'album_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'filename' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'description' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'filename' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'description' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'active' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
@@ -49,7 +49,6 @@ class PhotosFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
             'album_id' => 1,
             'filename' => 'photo1.jpg',
             'description' => '<b>A photo</b>',
@@ -58,7 +57,6 @@ class PhotosFixture extends TestFixture
             'modified' => '2016-12-28 10:38:42',
         ],
         [
-            'id' => 2,
             'album_id' => 2,
             'filename' => 'photoa.jpg',
             'description' => 'Another photo',
@@ -67,7 +65,6 @@ class PhotosFixture extends TestFixture
             'modified' => '2016-12-28 10:39:42',
         ],
         [
-            'id' => 3,
             'album_id' => 1,
             'filename' => 'photo3.jpg',
             'description' => 'Third photo',
@@ -76,7 +73,6 @@ class PhotosFixture extends TestFixture
             'modified' => '2016-12-28 10:40:42',
         ],
         [
-            'id' => 4,
             'album_id' => 2,
             'filename' => 'photo4.jpg',
             'description' => 'No active photo',

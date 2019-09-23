@@ -1,25 +1,33 @@
 # 2.x branch
-## 2.27 branch
-### 2.27.0
+## 2.28 branch
+### 2.28.0
 * updated for `cakephp` 4 and `phpunit` 8.
 
-## 2.26 branch
-### 2.26.8
+## 2.27 branch
+### 2.27.0
+* all the code has been made compatible with the Postgres and Sqlite drivers.
+    The fixtures code has been simplified;
 * pages and posts can display the last modified date (as default). Added entries
     in the configuration file;
+* added `\MeCms\Controller\Admin\AppController` class. Admin controllers now
+    extend this class;
 * the `MenuBuilderHelper::renderAsCollapse()` method takes the `$idContainer`
     parameter and is now able to generate all the necessary code for menus, 
     without javascript code. All the methods of the `MenuHelper` now return an
     array with a fourth value, an array with the controllers hnadled by that menu;
+* largely simplified the code for `PostsWidgetsCell::months()` method;
+* fixed bug for `PhotosAlbumsController::index()`. Now the album photos are
+    randomly ordered after being retrieved from the cache;
 * `StaticPage::getSlug()` is now public. `StaticPage::title()` has been
     renamed as `getTitle()`. `StaticPage::getAllPaths()` has been renamed as 
     `getPaths()` and is now public;
-* javascript functions are now "camelCase": `tag_exist()` becoms `tagExists()`;
+* javascript functions are now "camelCase": `tag_exist()` becomes `tagExists()`;
     `add_tags()` becomes `addTags()`; `remove_tag()` becomes `removeTag()`;
     `update_output_text()` becomes `updateOutputText()`;
 * many small fixes;
 * updated for `me-tools` `2.18.12`.
 
+## 2.26 branch
 ### 2.26.7
 * added a basic style sheet for printing;
 * fixed bug for some no existing photos;

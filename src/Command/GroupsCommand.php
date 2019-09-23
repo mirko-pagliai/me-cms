@@ -51,9 +51,7 @@ class GroupsCommand extends Command
 
         //Checks for user groups
         if (!$table) {
-            $io->error(__d('me_cms', 'There are no user groups'));
-
-            return null;
+            return $io->error(__d('me_cms', 'There are no user groups'));
         }
 
         array_unshift($table, [I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS]);

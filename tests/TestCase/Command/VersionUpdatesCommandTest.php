@@ -14,6 +14,9 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
+use Cake\Database\Driver\Postgres;
+use Cake\Database\Driver\Sqlite;
+use Cake\Datasource\ConnectionManager;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\Command\VersionUpdatesCommand;
 use MeCms\TestSuite\TestCase;
@@ -52,11 +55,18 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAddEnableCommentsField()
     {
+        $connection = ConnectionManager::get('default');
+        $this->skipIf($connection->getDriver() instanceof Sqlite);
+
         $this->loadFixtures('Pages', 'Posts');
 
+        $command = 'ALTER TABLE `%s` DROP `enable_comments`';
+        if ($connection->getDriver() instanceof Postgres) {
+            $command = 'ALTER TABLE %s DROP COLUMN enable_comments;';
+        }
+
         foreach (['Pages', 'Posts'] as $table) {
-            $this->getTable($table)->getConnection()
-                ->execute(sprintf('ALTER TABLE `%s` DROP `enable_comments`', $this->getTable($table)->getTable()));
+            $connection->execute(sprintf($command, $this->getTable($table)->getTable()));
         }
 
         $this->Command->addEnableCommentsField();
@@ -71,10 +81,17 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAlterTagColumnSize()
     {
+        $connection = ConnectionManager::get('default');
+        $this->skipIf($connection->getDriver() instanceof Sqlite);
+
         $this->loadFixtures('Tags');
 
-        $this->getTable('Tags')->getConnection()
-            ->execute(sprintf('ALTER TABLE %s MODIFY tag varchar(254) NOT NULL', $this->getTable('Tags')->getTable()));
+        $command = 'ALTER TABLE %s MODIFY tag varchar(254) NOT NULL';
+        if ($connection->getDriver() instanceof Postgres) {
+            $command = 'ALTER TABLE %s ALTER COLUMN tag TYPE varchar(254);';
+        }
+
+        $this->getTable('Tags')->getConnection()->execute(sprintf($command, $this->getTable('Tags')->getTable()));
         $this->assertEquals(254, $this->getTable('Tags')->getSchema()->getColumn('tag')['length']);
 
         $this->Command->alterTagColumnSize();

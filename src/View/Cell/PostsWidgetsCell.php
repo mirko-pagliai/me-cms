@@ -13,7 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\View\Cell;
 
-use Cake\I18n\FrozenDate;
+use Cake\I18n\Time;
 use Cake\ORM\ResultSet;
 use Cake\View\Cell;
 use MeCms\Model\Entity\Post;
@@ -94,25 +94,24 @@ class PostsWidgetsCell extends Cell
             return;
         }
 
-        $query = $this->Posts->find('active');
-        $time = $query->func()->date_format(['created' => 'identifier', "'%Y/%m'" => 'literal']);
-        $posts = $query->select([
-                'month' => $time,
-                'post_count' => $query->func()->count($time),
-            ])
-            ->distinct(['month'])
+        $months = $this->Posts->find('active')
+            ->select('created')
             ->formatResults(function (ResultSet $results) {
-                return $results->indexBy('month')->map(function (Post $post) {
-                    [$year, $month] = explode('/', $post->get('month'));
-
-                    return $post->set('month', (new FrozenDate())->day(1)->month((int)$month)->year((int)$year));
-                });
+                return $results->sortBy('created', SORT_DESC)
+                    ->countBy(function (Post $post) {
+                        return $post->get('created')->i18nFormat('yyyy/MM');
+                    })
+                    ->map(function (int $countBy, string $month) {
+                        return [
+                            'created' => Time::createFromFormat('Y/m/d H:i:s', $month . '/01 00:00:00'),
+                            'post_count' => $countBy,
+                        ];
+                    });
             })
-            ->order(['month' => 'DESC'])
             ->cache('widget_months', $this->Posts->getCacheName())
             ->all();
 
-        $this->set(compact('posts'));
+        $this->set(compact('months'));
     }
 
     /**

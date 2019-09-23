@@ -26,9 +26,9 @@ class UsersGroupsFixture extends TestFixture
      */
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'name' => ['type' => 'string', 'length' => 20, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'label' => ['type' => 'string', 'length' => 20, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'description' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'name' => ['type' => 'string', 'length' => 20, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'label' => ['type' => 'string', 'length' => 20, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'description' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'user_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
@@ -44,7 +44,6 @@ class UsersGroupsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
             'name' => 'admin',
             'label' => 'Admin',
             'description' => '',
@@ -52,7 +51,6 @@ class UsersGroupsFixture extends TestFixture
             'created' => '2016-12-24 17:00:05',
         ],
         [
-            'id' => 2,
             'name' => 'manager',
             'label' => 'Manager',
             'description' => '',
@@ -60,7 +58,6 @@ class UsersGroupsFixture extends TestFixture
             'created' => '2016-12-24 17:01:05',
         ],
         [
-            'id' => 3,
             'name' => 'user',
             'label' => 'User',
             'description' => '',
@@ -68,7 +65,6 @@ class UsersGroupsFixture extends TestFixture
             'created' => '2016-12-24 17:02:05',
         ],
         [
-            'id' => 4,
             'name' => 'fans',
             'label' => 'Fans',
             'description' => '',
@@ -76,7 +72,6 @@ class UsersGroupsFixture extends TestFixture
             'created' => '2016-12-24 17:03:05',
         ],
         [
-            'id' => 5,
             'name' => 'people',
             'label' => 'People',
             'description' => '',

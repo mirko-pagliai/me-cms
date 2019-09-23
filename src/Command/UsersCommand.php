@@ -55,12 +55,12 @@ class UsersCommand extends Command
             $group = $user->get('group')->get('label') ?: $user->get('group');
 
             return [
-                (string)$user->id,
-                $user->username,
+                (string)$user->get('id'),
+                $user->get('username'),
                 $group,
-                $user->full_name,
-                $user->email,
-                (string)$user->post_count,
+                $user->get('full_name'),
+                $user->get('email'),
+                (string)$user->get('post_count'),
                 $status,
                 $created,
             ];
@@ -80,9 +80,7 @@ class UsersCommand extends Command
 
         $table = $this->getUsersForTable();
         if (!$table) {
-            $io->error(__d('me_cms', 'There are no users'));
-
-            return null;
+            return $io->error(__d('me_cms', 'There are no users'));
         }
 
         array_unshift($table, [I18N_ID, I18N_USERNAME, I18N_GROUP, I18N_NAME, I18N_EMAIL, I18N_POSTS, I18N_STATUS, I18N_DATE]);

@@ -18,6 +18,8 @@ use Cake\Controller\Controller;
 use Cake\Event\EventInterface;
 use Cake\Log\Log;
 use Cake\ORM\Entity;
+use DatabaseBackup\Utility\BackupImport;
+use DatabaseBackup\Utility\BackupManager;
 use MeCms\Form\BackupForm;
 use MeCms\TestSuite\ControllerTestCase;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -74,22 +76,25 @@ class BackupsControllerTest extends ControllerTestCase
     {
         parent::controllerSpy($event, $controller);
 
-        //Only for the `testSend` test, mocks the `send()` method of
-        //  `BackupManager` class, so that it writes on the debug log
-        //  instead of sending a real mail
-        if ($this->getName() == 'testSend') {
-            $this->_controller->BackupManager = $this->getMockBuilder(BackupManager::class)
-                ->setMethods(['send'])
-                ->getMock();
+        $this->_controller->BackupImport = $this->getMockBuilder(BackupImport::class)
+            ->setMethods(['import'])
+            ->getMock();
 
-            $this->_controller->BackupManager->method('send')->will($this->returnCallback(function () {
-                $args = implode(', ', array_map(function ($arg) {
-                    return '`' . $arg . '`';
-                }, func_get_args()));
+        //Mocks the `BackupManager::send()` method, so that it writes on the
+        //  debug log instead of sending a real mail
+        $this->_controller->BackupManager = $this->getMockBuilder(BackupManager::class)
+            ->setMethods(['send'])
+            ->getMock();
 
-                return Log::write('debug', 'Args for `send()`: ' . $args);
-            }));
-        }
+        $this->_controller->BackupManager->method('send')->will($this->returnCallback(function () {
+            $args = implode(', ', array_map(function ($arg) {
+                return '`' . $arg . '`';
+            }, func_get_args()));
+
+            Log::write('debug', 'Args for `send()`: ' . $args);
+
+            return func_get_args();
+        }));
     }
 
     /**

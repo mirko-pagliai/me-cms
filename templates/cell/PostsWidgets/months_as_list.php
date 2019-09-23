@@ -12,19 +12,17 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-use MeCms\Model\Entity\Post;
-
-if (empty($posts) || $posts->count() < 2) {
+if (empty($months) || $months->count() < 2) {
     return;
 }
 
 $this->extend('/common/widget');
 $this->assign('title', __d('me_cms', 'Posts by month'));
 
-$months = $posts->map(function (Post $post) {
-    return $this->Html->link($post->get('month')->i18nFormat('MMMM yyyy'), [
+$months = $months->map(function (array $month) {
+    return $this->Html->link($month['created']->i18nFormat('MMMM yyyy'), [
         '_name' => 'postsByDate',
-        sprintf('%s/%s', $post->get('month')->i18nFormat('yyyy'), $post->get('month')->i18nFormat('MM')),
+        sprintf('%s/%s', $month['created']->i18nFormat('yyyy'), $month['created']->i18nFormat('MM')),
     ]);
 })->toArray();
 

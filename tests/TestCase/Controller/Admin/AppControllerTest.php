@@ -11,31 +11,41 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace MeCms\Test\TestCase\Controller;
+namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use MeCms\Controller\AppController;
-use MeCms\TestSuite\ControllerTestCase;
+use MeCms\Controller\Admin\AppController;
+use MeCms\Test\TestCase\Controller\AppControllerTest as BaseAppControllerTest;
 
 /**
  * AppControllerTest class
  */
-class AppControllerTest extends ControllerTestCase
+class AppControllerTest extends BaseAppControllerTest
 {
+    /**
+     * Called before every test method
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->Controller->setRequest($this->Controller->getRequest()->withParam('prefix', ADMIN_PREFIX));
+    }
+
     /**
      * Tests for `beforeFilter()` method
      * @test
      */
     public function testBeforeFilter()
     {
-        Configure::write('MeCms.default.records', 5);
+        Configure::write('MeCms.admin.records', 7);
 
         $this->Controller->beforeFilter(new Event('myEvent'));
-        $this->assertNotEmpty($this->Controller->Auth->allowedActions);
-        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $this->Controller->paginate);
-        $this->assertNull($this->Controller->viewBuilder()->getLayout());
-        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
+        $this->assertEmpty($this->Controller->Auth->allowedActions);
+        $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $this->Controller->paginate);
+        $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
 
         //Ajax request
         $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
@@ -49,10 +59,10 @@ class AppControllerTest extends ControllerTestCase
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
 
         //If the site is offline this makes a redirect
+        //This works anyway, because the admin interface never goes offline
         Configure::write('MeCms.default.offline', true);
         $this->Controller->getRequest()->clearDetectorCache();
-        $this->_response = $this->Controller->beforeFilter(new Event('myEvent'));
-        $this->assertRedirect(['_name' => 'offline']);
+        $this->assertNull($this->Controller->beforeFilter(new Event('myEvent')));
     }
 
     /**
@@ -61,15 +71,10 @@ class AppControllerTest extends ControllerTestCase
      */
     public function testIsAuthorized()
     {
-        //With prefixes
-        foreach ([
-            null => true,
-            ADMIN_PREFIX => false,
-            'otherPrefix' => false,
-        ] as $prefix => $expected) {
-            $request = $this->Controller->getRequest()->withParam('prefix', $prefix);
-            $request->clearDetectorCache();
-            $this->assertSame($expected, $this->Controller->setRequest($request)->isAuthorized());
-        }
+        $this->assertGroupsAreAuthorized([
+            'admin' => true,
+            'manager' => true,
+            'user' => false,
+        ]);
     }
 }

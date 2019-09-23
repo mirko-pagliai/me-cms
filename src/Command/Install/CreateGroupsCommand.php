@@ -17,6 +17,8 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Database\Driver\Postgres;
+use Cake\Database\Driver\Sqlite;
 use Cake\Datasource\ConnectionManager;
 use MeTools\Console\Command;
 
@@ -46,13 +48,19 @@ class CreateGroupsCommand extends Command
         $this->loadModel('MeCms.UsersGroups');
 
         if (!$this->UsersGroups->find()->isEmpty()) {
-            $io->error(__d('me_cms', 'Some user groups already exist'));
-
-            return null;
+            return $io->error(__d('me_cms', 'Some user groups already exist'));
         }
 
         //Truncates the table (this resets IDs), then saves groups
-        ConnectionManager::get('default')->execute(sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->getTable()));
+        $connection = ConnectionManager::get('default');
+        $command = 'TRUNCATE TABLE `%s`';
+        if ($connection->getDriver() instanceof Sqlite) {
+            $command = 'DELETE FROM "sqlite_sequence" WHERE "name"=\'%s\';';
+        } elseif ($connection->getDriver() instanceof Postgres) {
+            $command = 'truncate %s restart identity';
+        }
+        $connection->execute(sprintf($command, $this->UsersGroups->getTable()));
+
         $this->UsersGroups->saveMany($this->UsersGroups->newEntities([
             ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
             ['id' => 2, 'name' => 'manager', 'label' => 'Manager'],

@@ -45,8 +45,16 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         foreach ($this->viewVariable('albums') as $album) {
             $this->assertContainsOnlyInstancesOf(Photo::class, $album->get('photos'));
         }
+
+        //Comparison between cached variable and view variable occurs after
+        //  removing album photos, because they are randomly ordered
         $cache = Cache::read('albums_index', $this->Table->getCacheName());
-        $this->assertEquals($this->viewVariable('albums')->toArray(), $cache->toArray());
+        [$cache, $fromView] = array_map(function ($result) {
+            return $result->map(function (PhotosAlbum $album) {
+                return $album->set('photos', null);
+            });
+        }, [$cache, $this->viewVariable('albums')]);
+        $this->assertEquals($fromView->toArray(), $cache->toArray());
 
         //Deletes all albums, except the first one. Now it redirects to the first album
         $this->Table->deleteAll(['id >' => 1]);

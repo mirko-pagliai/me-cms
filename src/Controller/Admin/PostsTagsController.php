@@ -13,7 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\Controller\Admin;
 
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 
 /**
  * PostsTags controller

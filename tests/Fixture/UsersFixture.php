@@ -28,11 +28,11 @@ class UsersFixture extends TestFixture
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'group_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'username' => ['type' => 'string', 'length' => 40, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'email' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'password' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'first_name' => ['type' => 'string', 'length' => 40, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'last_name' => ['type' => 'string', 'length' => 40, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'username' => ['type' => 'string', 'length' => 40, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'email' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'password' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'first_name' => ['type' => 'string', 'length' => 40, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'last_name' => ['type' => 'string', 'length' => 40, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'active' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null],
         'banned' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null],
         'post_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -53,7 +53,6 @@ class UsersFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
             'group_id' => 1,
             'username' => 'alfa',
             'email' => 'alfa@test.com',
@@ -66,7 +65,6 @@ class UsersFixture extends TestFixture
             'created' => '2016-12-24 17:00:05',
         ],
         [
-            'id' => 2,
             'group_id' => 3,
             'username' => 'gamma',
             'email' => 'gamma@test.com',
@@ -79,7 +77,6 @@ class UsersFixture extends TestFixture
             'created' => '2016-12-24 17:01:06',
         ],
         [
-            'id' => 3,
             'group_id' => 3,
             'username' => 'ypsilon',
             'email' => 'ypsilon@test.com',
@@ -92,7 +89,6 @@ class UsersFixture extends TestFixture
             'created' => '2016-12-24 17:02:10',
         ],
         [
-            'id' => 4,
             'group_id' => 3,
             'username' => 'abc',
             'email' => 'abc@example.com',
@@ -105,7 +101,6 @@ class UsersFixture extends TestFixture
             'created' => '2016-12-24 17:03:10',
         ],
         [
-            'id' => 5,
             'group_id' => 1,
             'username' => 'delta',
             'email' => 'delta@example.com',
@@ -126,7 +121,6 @@ class UsersFixture extends TestFixture
     public function init(): void
     {
         $user = new User([
-            'id' => 6,
             'group_id' => 1,
             'username' => 'zeta',
             'email' => 'zeta@example.com',

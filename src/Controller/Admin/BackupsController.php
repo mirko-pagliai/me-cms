@@ -18,7 +18,7 @@ use Cake\Http\Response;
 use Cake\ORM\Entity;
 use DatabaseBackup\Utility\BackupImport;
 use DatabaseBackup\Utility\BackupManager;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 use MeCms\Form\BackupForm;
 
 /**
@@ -31,6 +31,11 @@ class BackupsController extends AppController
      * @var \DatabaseBackup\Utility\BackupManager
      */
     public $BackupManager;
+
+    /**
+     * @var \DatabaseBackup\Utility\BackupImport
+     */
+    public $BackupImport;
 
     /**
      * Check if the provided user is authorized for the request
@@ -53,6 +58,7 @@ class BackupsController extends AppController
         parent::initialize();
 
         $this->BackupManager = new BackupManager();
+        $this->BackupImport = new BackupImport();
     }
 
     /**
@@ -147,11 +153,12 @@ class BackupsController extends AppController
      * @param string $filename Backup filename
      * @return \Cake\Http\Response|null
      * @uses getFilename()
+     * @uses $BackupImport
      */
     public function restore(string $filename): ?Response
     {
         //Imports and clears the cache
-        (new BackupImport())->filename($this->getFilename($filename))->import();
+        $this->BackupImport->filename($this->getFilename($filename))->import();
         Cache::clearAll();
 
         $this->Flash->success(I18N_OPERATION_OK);

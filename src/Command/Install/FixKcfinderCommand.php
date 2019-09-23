@@ -46,18 +46,18 @@ class FixKcfinderCommand extends Command
         $file = add_slash_term(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
 
         if (!$this->verboseIfFileExists($io, $file)) {
-            if ((new KCFinder())->isAvailable()) {
-                $io->createFile(
-                    add_slash_term(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess',
-                    'php_value session.cache_limiter must-revalidate' . PHP_EOL .
-                    'php_value session.cookie_httponly On' . PHP_EOL .
-                    'php_value session.cookie_lifetime 14400' . PHP_EOL .
-                    'php_value session.gc_maxlifetime 14400' . PHP_EOL .
-                    'php_value session.name CAKEPHP'
-                );
-            } else {
-                $io->error(__d('me_tools', '{0} is not available', 'KCFinder'));
+            if (!(new KCFinder())->isAvailable()) {
+                return $io->error(__d('me_tools', '{0} is not available', 'KCFinder'));
             }
+
+            $io->createFile(
+                add_slash_term(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess',
+                'php_value session.cache_limiter must-revalidate' . PHP_EOL .
+                'php_value session.cookie_httponly On' . PHP_EOL .
+                'php_value session.cookie_lifetime 14400' . PHP_EOL .
+                'php_value session.gc_maxlifetime 14400' . PHP_EOL .
+                'php_value session.name CAKEPHP'
+            );
         }
 
         return null;

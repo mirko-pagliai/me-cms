@@ -51,9 +51,7 @@ class AddUserCommand extends Command
         $groups = $this->Users->Groups->find('list');
 
         if ($groups->isEmpty()) {
-            $io->error(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
-
-            return null;
+            return $io->error(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
         }
 
         $groups = $groups->toList();
@@ -83,17 +81,13 @@ class AddUserCommand extends Command
         //Checks fields
         foreach ($user as $key => $value) {
             if (empty($value)) {
-                $io->error(__d('me_cms', 'Field `{0}` is empty. Try again', $key));
-
-                return null;
+                return $io->error(__d('me_cms', 'Field `{0}` is empty. Try again', $key));
             }
         }
 
         //Checks the group IDs
         if (!array_key_exists($user['group_id'], $groups)) {
-            $io->error(__d('me_cms', 'Invalid group ID'));
-
-            return null;
+            return $io->error(__d('me_cms', 'Invalid group ID'));
         }
 
         //Saves the user
