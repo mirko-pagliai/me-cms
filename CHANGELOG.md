@@ -1,9 +1,11 @@
 # 2.x branch
 ## 2.27 branch
 ### 2.27.0
+* all the code has been made compatible with the Postgres and Sqlite drivers.
+    The fixtures code has been simplified;
 * pages and posts can display the last modified date (as default). Added entries
     in the configuration file;
-* added `MeCms\Controller\Admin\AppController` class. Admin controllers now
+* added `\MeCms\Controller\Admin\AppController` class. Admin controllers now
     extend this class;
 * the `MenuBuilderHelper::renderAsCollapse()` method takes the `$idContainer`
     parameter and is now able to generate all the necessary code for menus, 
@@ -11,9 +13,7 @@
     array with a fourth value, an array with the controllers hnadled by that menu;
 * largely simplified the code for `PostsWidgetsCell::months()` method;
 * fixed bug for `PhotosAlbumsController::index()`. Now the album photos are
-    randomly ordered after being retrieved from the cache and the action now 
-    works with `Sqlite` driver;
-* fixed `CreateGroupsCommand` for `Sqlite` driver;
+    randomly ordered after being retrieved from the cache;
 * `StaticPage::getSlug()` is now public. `StaticPage::title()` has been
     renamed as `getTitle()`. `StaticPage::getAllPaths()` has been renamed as 
     `getPaths()` and is now public;
