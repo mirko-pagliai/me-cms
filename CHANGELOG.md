@@ -23,7 +23,7 @@
     `add_tags()` becomes `addTags()`; `remove_tag()` becomes `removeTag()`;
     `update_output_text()` becomes `updateOutputText()`;
 * many small fixes;
-* updated for `me-tools` `2.18.12`.
+* updated for `me-tools` `2.18.13`.
 
 ## 2.26 branch
 ### 2.26.7
