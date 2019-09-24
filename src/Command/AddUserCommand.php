@@ -32,10 +32,7 @@ class AddUserCommand extends Command
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
         return $parser->setDescription(__d('me_cms', 'Adds an user'))
-            ->addOption('group', [
-                'short' => 'g',
-                'help' => __d('me_cms', 'Group ID'),
-            ]);
+            ->addOption('group', ['short' => 'g', 'help' => __d('me_cms', 'Group ID')]);
     }
 
     /**
@@ -49,24 +46,26 @@ class AddUserCommand extends Command
         $this->loadModel('MeCms.Users');
 
         $groups = $this->Users->Groups->find('list');
-
         if ($groups->isEmpty()) {
             return $io->error(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
         }
-
         $groups = $groups->toList();
-        $user = [];
 
         //Asks for some fields
-        $user['username'] = $io->ask(I18N_USERNAME);
-        $user['password'] = $io->ask(I18N_PASSWORD);
-        $user['password_repeat'] = $io->ask(I18N_REPEAT_PASSWORD);
-        $user['email'] = $io->ask(I18N_EMAIL);
-        $user['first_name'] = $io->ask(I18N_FIRST_NAME);
-        $user['last_name'] = $io->ask(I18N_LAST_NAME);
-        $user['group_id'] = $args->getOption('group');
+        $user = [];
+        foreach ([
+            'username' => I18N_USERNAME,
+            'password' => I18N_PASSWORD,
+            'password_repeat' => I18N_REPEAT_PASSWORD,
+            'email' => I18N_EMAIL,
+            'first_name' => I18N_FIRST_NAME,
+            'last_name' => I18N_LAST_NAME,
+        ] as $field => $question) {
+            $user[$field] = $io->ask($question);
+        }
 
         //Asks for group, if not passed as option
+        $user['group_id'] = $args->getOption('group');
         if (!$user['group_id']) {
             //Formats groups
             foreach ($groups as $id => $group) {

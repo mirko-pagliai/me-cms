@@ -5,8 +5,10 @@
 
 ## 2.27 branch
 ### 2.27.0
+* requires at least PHP `7.0`, `phpunit` `6.0` and `CakePHP` `3.8`. Added tests
+    for lowest dependencies;
 * all the code has been made compatible with the Postgres and Sqlite drivers.
-    The fixtures code has been simplified;
+    The fixtures code has been simplified. Added tests for Postgres driver.
 * pages and posts can display the last modified date (as default). Added entries
     in the configuration file;
 * added `\MeCms\Controller\Admin\AppController` class. Admin controllers now
@@ -25,7 +27,7 @@
     `add_tags()` becomes `addTags()`; `remove_tag()` becomes `removeTag()`;
     `update_output_text()` becomes `updateOutputText()`;
 * many small fixes;
-* updated for `me-tools` `2.18.12`.
+* updated for `me-tools` `2.18.13`.
 
 ## 2.26 branch
 ### 2.26.7
