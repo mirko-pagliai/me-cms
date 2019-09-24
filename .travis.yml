@@ -11,6 +11,8 @@ matrix:
 
   include:
     - php: 7.0
+      env: db_driver=postgres
+    - php: 7.0
       env: dependencies=lowest
     - php: 7.0
       env: PHPCS=1
@@ -19,6 +21,10 @@ matrix:
 
 services:
   - mysql
+  - postgresql
+
+addons:
+  postgresql: "9.4"
 
 install:
   - printf "\n" | pecl install imagick
@@ -28,6 +34,7 @@ install:
 
 before_script:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+  - psql -c 'create database travis_ci_test;' -U postgres
 
 script:
   - if [[ $PHPCS != '1' && $COVERAGE != '1' ]]; then vendor/bin/phpunit; fi

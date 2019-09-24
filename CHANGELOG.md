@@ -4,7 +4,7 @@
 * requires at least PHP `7.0`, `phpunit` `6.0` and `CakePHP` `3.8`. Added tests
     for lowest dependencies;
 * all the code has been made compatible with the Postgres and Sqlite drivers.
-    The fixtures code has been simplified;
+    The fixtures code has been simplified. Added tests for Postgres driver.
 * pages and posts can display the last modified date (as default). Added entries
     in the configuration file;
 * added `\MeCms\Controller\Admin\AppController` class. Admin controllers now
