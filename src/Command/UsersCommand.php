@@ -35,10 +35,10 @@ class UsersCommand extends Command
     }
 
     /**
-     * Internal method to get formatted users data for the table
+     * Internal method to get formatted users data rows
      * @return array
      */
-    protected function getUsersForTable()
+    protected function getUsersRows()
     {
         return $this->Users->find()->contain('Groups')->map(function (User $user) {
             $status = $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending');
@@ -71,19 +71,19 @@ class UsersCommand extends Command
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
-     * @uses getUsersForTable()
+     * @uses getUsersRows()
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
         $this->loadModel('MeCms.Users');
 
-        $table = $this->getUsersForTable();
-        if (!$table) {
+        $rows = $this->getUsersRows();
+        if (!$rows) {
             return $io->error(__d('me_cms', 'There are no users'));
         }
 
-        array_unshift($table, [I18N_ID, I18N_USERNAME, I18N_GROUP, I18N_NAME, I18N_EMAIL, I18N_POSTS, I18N_STATUS, I18N_DATE]);
-        $io->helper('table')->output($table);
+        $rows = array_merge([[I18N_ID, I18N_USERNAME, I18N_GROUP, I18N_NAME, I18N_EMAIL, I18N_POSTS, I18N_STATUS, I18N_DATE]], $rows);
+        $io->helper('table')->output($rows);
 
         return null;
     }

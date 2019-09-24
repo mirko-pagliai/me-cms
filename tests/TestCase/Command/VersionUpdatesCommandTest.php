@@ -63,7 +63,6 @@ class VersionUpdatesCommandTest extends TestCase
 
         foreach ([$Posts, $Pages] as $Table) {
             $connection = $Table->getConnection();
-
             $command = 'ALTER TABLE `' . $Table->getTable() . '` DROP `enable_comments`';
             if ($connection->getDriver() instanceof Postgres) {
                 $command = 'ALTER TABLE ' . $Table->getTable() . ' DROP COLUMN enable_comments;';
@@ -72,7 +71,6 @@ class VersionUpdatesCommandTest extends TestCase
         }
 
         $this->Command->addEnableCommentsField();
-
         foreach ($getTables() as $Table) {
             $this->assertTrue($Table->getSchema()->hasColumn('enable_comments'));
         }

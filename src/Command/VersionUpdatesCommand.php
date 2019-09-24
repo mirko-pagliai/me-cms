@@ -49,15 +49,13 @@ class VersionUpdatesCommand extends Command
 
         foreach (['Pages', 'Posts'] as $tableName) {
             $Table = $this->loadModel('MeCms.' . $tableName);
-            $connection = $Table->getConnection();
-
-            $command = 'ALTER TABLE `' . $Table->getTable() . '` ADD `enable_comments` BOOLEAN NOT NULL DEFAULT TRUE';
-            if ($connection->getDriver() instanceof Postgres) {
-                $command = 'ALTER TABLE ' . $Table->getTable() . ' ADD COLUMN enable_comments BOOLEAN NOT NULL DEFAULT TRUE';
-            }
-
             if (!$Table->getSchema()->hasColumn('enable_comments')) {
-                $connection->execute(sprintf($command, $Table->getTable()));
+                $connection = $Table->getConnection();
+                $command = 'ALTER TABLE `' . $Table->getTable() . '` ADD `enable_comments` BOOLEAN NOT NULL DEFAULT TRUE';
+                if ($connection->getDriver() instanceof Postgres) {
+                    $command = 'ALTER TABLE ' . $Table->getTable() . ' ADD COLUMN enable_comments BOOLEAN NOT NULL DEFAULT TRUE';
+                }
+                $connection->execute($command);
             }
         }
     }
@@ -71,7 +69,6 @@ class VersionUpdatesCommand extends Command
         $Table = $this->loadModel('MeCms.Tags');
         if ($Table->getSchema()->getColumn('tag')['length'] < 255) {
             $connection = $Table->getConnection();
-
             $command = 'ALTER TABLE ' . $Table->getTable() . ' MODIFY tag varchar(255) NOT NULL';
             if ($connection->getDriver() instanceof Postgres) {
                 $command = 'ALTER TABLE ' . $Table->getTable() . ' ALTER COLUMN tag TYPE varchar(255);';

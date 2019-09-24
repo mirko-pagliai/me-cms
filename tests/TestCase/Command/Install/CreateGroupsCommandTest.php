@@ -12,7 +12,7 @@
  */
 namespace MeCms\Test\TestCase\Command\Install;
 
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\ConnectionManager;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
@@ -22,6 +22,11 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 class CreateGroupsCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
+
+    /**
+     * @var bool
+     */
+    public $autoInitializeClass = true;
 
     /**
      * Fixtures
@@ -38,8 +43,6 @@ class CreateGroupsCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $UsersGroups = TableRegistry::getTableLocator()->get('MeCms.UsersGroups');
-
         //A group already exists
         $this->exec('me_cms.create_groups -v');
         $this->assertExitWithSuccess();
@@ -47,6 +50,7 @@ class CreateGroupsCommandTest extends TestCase
         $this->assertErrorContains('Some user groups already exist');
 
         //With no user groups
+        $UsersGroups = $this->getTable('MeCms.UsersGroups');
         $UsersGroups->deleteAll(['id is NOT' => null]);
         $this->exec('me_cms.create_groups -v');
         $this->assertExitWithSuccess();
@@ -55,5 +59,21 @@ class CreateGroupsCommandTest extends TestCase
 
         //Checks the user groups exist
         $this->assertEquals([1, 2, 3], $UsersGroups->find()->extract('id')->toList());
+
+        $this->skipIf(IS_WIN);
+
+        //Tests for Postgres and Sqlite
+        $backupTestConnection = ConnectionManager::getConfig('test');
+        foreach (['postgres', 'sqlite'] as $testDatabase) {
+            ConnectionManager::drop('test');
+            ConnectionManager::setConfig('test', ConnectionManager::get('test_' . $testDatabase));
+            $this->loadFixtures();
+
+            $UsersGroups->deleteAll(['id is NOT' => null]);
+            $this->exec('me_cms.create_groups -v');
+            $this->assertExitWithSuccess();
+        }
+        ConnectionManager::drop('test');
+        ConnectionManager::setConfig('test', $backupTestConnection);
     }
 }
