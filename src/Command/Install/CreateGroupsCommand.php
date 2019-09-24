@@ -27,6 +27,7 @@ class CreateGroupsCommand extends Command
 {
     /**
      * Hook method invoked by CakePHP when a command is about to be executed
+     * @return void
      */
     public function initialize()
     {

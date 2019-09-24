@@ -67,8 +67,9 @@ class CreateGroupsCommandTest extends TestCase
         $this->assertEquals([1, 2, 3], $UsersGroups->find()->extract('id')->toList());
     }
 
-    /*
+    /**
      * Provider for `testExecuteOtherDrivers()`
+     * @return array
      */
     public function driverProvider()
     {

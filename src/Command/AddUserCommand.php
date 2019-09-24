@@ -52,7 +52,7 @@ class AddUserCommand extends Command
 
         //Asks for some fields
         $user = [];
-        foreach([
+        foreach ([
             'username' => I18N_USERNAME,
             'password' => I18N_PASSWORD,
             'password_repeat' => I18N_REPEAT_PASSWORD,
