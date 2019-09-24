@@ -102,8 +102,13 @@ Cache::setConfig([
 //Ensure default test connection is defined
 if (!getenv('db_dsn')) {
     putenv('db_dsn=mysql://travis@localhost/test');
+
+    if (getenv('db_driver') == 'postgres') {
+        putenv('db_dsn=postgres://postgres@localhost/travis_ci_test');
+    }
 }
 ConnectionManager::setConfig('test', ['url' => getenv('db_dsn')]);
+echo 'Running tests for "' . ConnectionManager::getConfig('test')['scheme'] . '" driver ' . PHP_EOL;
 
 //This adds `apache_get_modules()` and `apache_get_version()` functions
 require_once VENDOR . 'mirko-pagliai' . DS . 'php-tools' . DS . 'tests' . DS . 'apache_functions.php';
