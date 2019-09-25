@@ -86,7 +86,7 @@ class AppController extends BaseAppController
     {
         //Only admin and managers can access admin actions
         //Any registered user can access actions without prefix. Default deny
-        return $this->Auth->isGroup(['admin', 'manager']) || !$this->getRequest()->getParam('prefix');
+        return !$this->getRequest()->getParam('prefix') || $this->Auth->isGroup(['admin', 'manager']);
     }
 
     /**

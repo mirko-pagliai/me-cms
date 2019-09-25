@@ -152,8 +152,6 @@ class BackupsController extends AppController
      * Restores a backup file
      * @param string $filename Backup filename
      * @return \Cake\Network\Response|null
-     * @uses \DatabaseBackup\Utility\BackupImport::filename()
-     * @uses \DatabaseBackup\Utility\BackupImport::import()
      * @uses getFilename()
      * @uses $BackupImport
      */

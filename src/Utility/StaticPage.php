@@ -45,7 +45,7 @@ class StaticPage
     }
 
     /**
-     * Internal method to get all the existing paths
+     * Gets all the existing paths
      * @return array
      * @uses _getPaths()
      */

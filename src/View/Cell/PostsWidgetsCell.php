@@ -15,6 +15,7 @@ namespace MeCms\View\Cell;
 use Cake\I18n\Time;
 use Cake\ORM\ResultSet;
 use Cake\View\Cell;
+use MeCms\Model\Entity\Post;
 
 /**
  * PostsWidgets cell
@@ -96,7 +97,7 @@ class PostsWidgetsCell extends Cell
             ->select('created')
             ->formatResults(function (ResultSet $results) {
                 return $results->sortBy('created', SORT_DESC)
-                    ->countBy(function ($post) {
+                    ->countBy(function (Post $post) {
                         return $post->get('created')->i18nFormat('yyyy/MM');
                     })
                     ->map(function ($countBy, $month) {
