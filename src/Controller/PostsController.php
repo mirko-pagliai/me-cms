@@ -153,7 +153,7 @@ class PostsController extends AppController
         $posts = $this->Posts->find('active')
             ->select(['title', 'preview', 'slug', 'text', 'created'])
             ->limit(getConfigOrFail('default.records_for_rss'))
-            ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
+            ->orderDesc('created')
             ->cache('rss', $this->Posts->getCacheName());
 
         $this->set(compact('posts'));
@@ -210,7 +210,7 @@ class PostsController extends AppController
                         'subtitle LIKE' => sprintf('%%%s%%', $pattern),
                         'text LIKE' => sprintf('%%%s%%', $pattern),
                     ]])
-                    ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
+                    ->orderDesc('created');
 
                 $posts = $this->paginate($query);
 
@@ -245,10 +245,8 @@ class PostsController extends AppController
 
         //Gets related posts
         if (getConfig('post.related')) {
-            $this->set(
-                'related',
-                $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'))
-            );
+            list($limit, $images) = array_values(getConfigOrFail('post.related'));
+            $this->set('related', $this->Posts->getRelated($post, $limit, $images));
         }
     }
 
@@ -269,10 +267,8 @@ class PostsController extends AppController
 
         //Gets related posts
         if (getConfig('post.related')) {
-            $this->set(
-                'related',
-                $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'))
-            );
+            list($limit, $images) = array_values(getConfigOrFail('post.related'));
+            $this->set('related', $this->Posts->getRelated($post, $limit, $images));
         }
 
         return $this->render('view');

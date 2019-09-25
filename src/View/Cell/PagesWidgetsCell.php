@@ -45,7 +45,7 @@ class PagesWidgetsCell extends Cell
 
         $categories = $this->Pages->Categories->find('active')
             ->select(['title', 'slug', 'page_count'])
-            ->order([sprintf('%s.title', $this->Pages->Categories->getAlias()) => 'ASC'])
+            ->orderAsc(sprintf('%s.title', $this->Pages->Categories->getAlias()))
             ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('slug');
             })
@@ -68,7 +68,7 @@ class PagesWidgetsCell extends Cell
 
         $pages = $this->Pages->find('active')
             ->select(['title', 'slug'])
-            ->order([sprintf('%s.title', $this->Pages->getAlias()) => 'ASC'])
+            ->orderAsc('title')
             ->cache(sprintf('widget_list'), $this->Pages->getCacheName())
             ->all();
 

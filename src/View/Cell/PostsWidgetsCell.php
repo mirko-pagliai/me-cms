@@ -47,7 +47,7 @@ class PostsWidgetsCell extends Cell
 
         $categories = $this->Posts->Categories->find('active')
             ->select(['title', 'slug', 'post_count'])
-            ->order([sprintf('%s.title', $this->Posts->Categories->getAlias()) => 'ASC'])
+            ->orderAsc(sprintf('%s.title', $this->Posts->Categories->getAlias()))
             ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('slug');
             })
@@ -72,7 +72,7 @@ class PostsWidgetsCell extends Cell
         $posts = $this->Posts->find('active')
             ->select(['title', 'slug'])
             ->limit($limit)
-            ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
+            ->orderDesc('created')
             ->cache(sprintf('widget_latest_%d', $limit), $this->Posts->getCacheName())
             ->all();
 

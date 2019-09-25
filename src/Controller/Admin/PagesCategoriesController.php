@@ -62,13 +62,13 @@ class PagesCategoriesController extends AppController
     {
         $categories = $this->PagesCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
-            ->order([sprintf('%s.lft', $this->PagesCategories->getAlias()) => 'ASC'])
+            ->orderAsc(sprintf('%s.lft', $this->PagesCategories->getAlias()))
             ->formatResults(function (ResultSet $results) {
                 //Gets categories as tree list
                 $treeList = $this->PagesCategories->getTreeList()->toArray();
 
                 return $results->map(function (PagesCategory $category) use ($treeList) {
-                    return $category->set('title', $treeList[$category->id]);
+                    return $category->set('title', $treeList[$category->get('id')]);
                 });
             });
 

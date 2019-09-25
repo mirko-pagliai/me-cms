@@ -44,7 +44,7 @@ class PhotosWidgetsCell extends Cell
         }
 
         $albums = $this->Photos->Albums->find('active')
-            ->order([sprintf('%s.title', $this->Photos->Albums->getAlias()) => 'ASC'])
+            ->orderAsc(sprintf('%s.title', $this->Photos->Albums->getAlias()))
             ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('slug');
             })

@@ -108,7 +108,7 @@ class PostsTable extends PostsAndPagesTables
             $this->Tags->getAlias() => ['sort' => ['tag' => 'ASC']],
             $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
         ])
-        ->order([sprintf('%s.created', $this->getAlias()) => 'DESC']);
+        ->orderDesc(sprintf('%s.created', $this->getAlias()));
     }
 
     /**

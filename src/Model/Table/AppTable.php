@@ -182,7 +182,7 @@ class AppTable extends Table
     public function getList()
     {
         return $this->find('list')
-            ->order([$this->getDisplayField() => 'ASC'])
+            ->orderAsc($this->getDisplayField())
             ->cache(sprintf('%s_list', $this->getTable()), $this->getCacheName());
     }
 
