@@ -88,8 +88,8 @@ class UsersTable extends AppTable
      */
     public function findAuth(Query $query)
     {
-        return $query->contain('Groups', function (Query $q) {
-            return $q->select(['name']);
+        return $query->contain('Groups', function (Query $query) {
+            return $query->select(['name']);
         });
     }
 
