@@ -46,8 +46,7 @@ abstract class PostsAndPagesTables extends AppTable
      * @param \Cake\Event\Event $event Event object
      * @param Cake\Datasource\EntityInterface $entity Entity object
      * @return void
-     * @uses MeCms\Model\Table\AppTable::afterDelete()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
+     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function afterDelete(Event $event, EntityInterface $entity)
     {
@@ -62,8 +61,7 @@ abstract class PostsAndPagesTables extends AppTable
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
-     * @uses MeCms\Model\Table\AppTable::afterSave()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
+     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function afterSave(Event $event, EntityInterface $entity)
     {
@@ -79,7 +77,7 @@ abstract class PostsAndPagesTables extends AppTable
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      * @since 2.17.0
-     * @uses MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreviews()
+     * @uses \MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreviews()
      */
     public function beforeSave(Event $event, EntityInterface $entity)
     {
@@ -93,8 +91,8 @@ abstract class PostsAndPagesTables extends AppTable
      * @param array|\ArrayAccess $options An array that will be passed to
      *  Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
+     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
+     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      * @uses clearCache()
      */
     public function find($type = 'all', $options = [])

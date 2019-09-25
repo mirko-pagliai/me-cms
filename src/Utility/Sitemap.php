@@ -32,7 +32,7 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns pages urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::parse()
+     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
     public static function pages()
     {
@@ -82,7 +82,7 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns photos urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::parse()
+     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
     public static function photos()
     {
@@ -139,7 +139,7 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns posts urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::parse()
+     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
     public static function posts()
     {
@@ -196,7 +196,7 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns posts tags urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::parse()
+     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
     public static function postsTags()
     {
@@ -237,8 +237,8 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns static pages urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::parse()
-     * @uses MeCms\Utility\StaticPage::all()
+     * @uses \MeCms\Utility\SitemapBuilder::parse()
+     * @uses \MeCms\Utility\StaticPage::all()
      */
     public static function staticPages()
     {
@@ -254,7 +254,7 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns systems urls
      * @return array
-     * @uses MeCms\Utility\SitemapBuilder::parse()
+     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
     public static function systems()
     {

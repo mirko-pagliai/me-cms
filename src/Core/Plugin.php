@@ -29,7 +29,7 @@ class Plugin extends BasePlugin
      *  - `order`, if `true` the plugins will be sorted.
      * @param array $options Options
      * @return array Plugins
-     * @uses MeTools\Core\Plugin::all()
+     * @uses \MeTools\Core\Plugin::all()
      */
     public static function all(array $options = [])
     {

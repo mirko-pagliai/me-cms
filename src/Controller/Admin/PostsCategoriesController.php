@@ -29,8 +29,7 @@ class PostsCategoriesController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      */
     public function beforeFilter(Event $event)
     {
@@ -46,7 +45,7 @@ class PostsCategoriesController extends AppController
      * @param array $user The user to check the authorization of. If empty
      *  the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function isAuthorized($user = null)
     {
@@ -57,7 +56,7 @@ class PostsCategoriesController extends AppController
     /**
      * Lists posts categories
      * @return void
-     * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      */
     public function index()
     {

@@ -33,7 +33,6 @@ class PostsController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return void
-     * @uses MeCms\Controller\AppController::beforeFilter()
      */
     public function beforeFilter(Event $event)
     {
@@ -233,7 +232,7 @@ class PostsController extends AppController
      * Views post
      * @param string $slug Post slug
      * @return void
-     * @uses MeCms\Model\Table\PostsTable::getRelated()
+     * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
     public function view($slug)
     {

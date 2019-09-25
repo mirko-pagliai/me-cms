@@ -29,11 +29,10 @@ class PostsController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\PostsCategoriesTable::getList()
-     * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
-     * @uses MeCms\Model\Table\UsersTable::getActiveList()
-     * @uses MeCms\Model\Table\UsersTable::getList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
+     * @uses \MeCms\Model\Table\UsersTable::getActiveList()
+     * @uses \MeCms\Model\Table\UsersTable::getList()
      */
     public function beforeFilter(Event $event)
     {
@@ -69,7 +68,6 @@ class PostsController extends AppController
     /**
      * Initialization hook method
      * @return void
-     * @uses MeCms\Controller\AppController::initialize()
      */
     public function initialize()
     {
@@ -86,8 +84,8 @@ class PostsController extends AppController
      * @param array $user The user to check the authorization of. If empty
      *  the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-     * @uses MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
      */
     public function isAuthorized($user = null)
     {
@@ -109,7 +107,7 @@ class PostsController extends AppController
     /**
      * Lists posts
      * @return void
-     * @uses MeCms\Model\Table\PostsTable::queryFromFilter()
+     * @uses \MeCms\Model\Table\PostsTable::queryFromFilter()
      */
     public function index()
     {
@@ -129,7 +127,7 @@ class PostsController extends AppController
     /**
      * Adds post
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function add()
     {
@@ -156,7 +154,7 @@ class PostsController extends AppController
      * Edits post
      * @param string $id Post ID
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function edit($id)
     {

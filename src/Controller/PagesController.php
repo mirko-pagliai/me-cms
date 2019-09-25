@@ -29,7 +29,6 @@ class PagesController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return void
-     * @uses MeCms\Controller\AppController::beforeFilter()
      */
     public function beforeFilter(Event $event)
     {

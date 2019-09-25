@@ -30,11 +30,10 @@ class PagesController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\PagesCategoriesTable::getList()
-     * @uses MeCms\Model\Table\PagesCategoriesTable::getTreeList()
-     * @uses MeCms\Model\Table\UsersTable::getActiveList()
-     * @uses MeCms\Model\Table\UsersTable::getList()
+     * @uses \MeCms\Model\Table\PagesCategoriesTable::getList()
+     * @uses \MeCms\Model\Table\PagesCategoriesTable::getTreeList()
+     * @uses \MeCms\Model\Table\UsersTable::getActiveList()
+     * @uses \MeCms\Model\Table\UsersTable::getList()
      */
     public function beforeFilter(Event $event)
     {
@@ -60,7 +59,6 @@ class PagesController extends AppController
     /**
      * Initialization hook method
      * @return void
-     * @uses MeCms\Controller\AppController::initialize()
      */
     public function initialize()
     {
@@ -77,7 +75,7 @@ class PagesController extends AppController
      * @param array $user The user to check the authorization of. If empty the
      *  user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function isAuthorized($user = null)
     {
@@ -93,7 +91,7 @@ class PagesController extends AppController
     /**
      * Lists pages
      * @return void
-     * @uses MeCms\Model\Table\PagesTable::queryFromFilter()
+     * @uses \MeCms\Model\Table\PagesTable::queryFromFilter()
      */
     public function index()
     {
@@ -111,7 +109,7 @@ class PagesController extends AppController
      *
      * Static pages must be located in `APP/View/StaticPages/`.
      * @return void
-     * @uses MeCms\Utility\StaticPage::all()
+     * @uses \MeCms\Utility\StaticPage::all()
      */
     public function indexStatics()
     {

@@ -50,7 +50,6 @@ class BackupsController extends AppController
     /**
      * Initialization hook method
      * @return void
-     * @uses \MeCms\Controller\AppController::initialize()
      */
     public function initialize()
     {
@@ -75,7 +74,7 @@ class BackupsController extends AppController
     /**
      * Lists backup files
      * @return void
-     * @uses \DatabaseBackup\Utility\BackupManager::index()
+     * @uses $BackupManager
      */
     public function index()
     {
@@ -96,7 +95,6 @@ class BackupsController extends AppController
         $backup = new BackupForm();
 
         if ($this->getRequest()->is('post')) {
-            //Creates the backup
             if ($backup->execute($this->getRequest()->getData())) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
@@ -113,8 +111,8 @@ class BackupsController extends AppController
      * Deletes a backup file
      * @param string $filename Backup filename
      * @return \Cake\Network\Response|null
-     * @uses \DatabaseBackup\Utility\BackupManager::delete()
      * @uses getFilename()
+     * @uses $BackupManager
      */
     public function delete($filename)
     {
@@ -128,7 +126,7 @@ class BackupsController extends AppController
     /**
      * Deletes all backup files
      * @return \Cake\Network\Response|null
-     * @uses \DatabaseBackup\Utility\BackupManager::deleteAll()
+     * @uses $BackupManager
      */
     public function deleteAll()
     {
@@ -175,8 +173,8 @@ class BackupsController extends AppController
      * @param string $filename Backup filename
      * @return \Cake\Network\Response|null
      * @since 2.18.3
-     * @uses \DatabaseBackup\Utility\BackupManager::send()
      * @uses getFilename()
+     * @uses $BackupManager
      */
     public function send($filename)
     {

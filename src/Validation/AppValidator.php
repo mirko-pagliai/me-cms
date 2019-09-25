@@ -24,7 +24,6 @@ class AppValidator extends Validator
 {
     /**
      * Construct
-     * @uses Cake\Validation\Validator::__construct()
      */
     public function __construct()
     {

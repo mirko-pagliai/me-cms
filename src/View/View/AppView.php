@@ -31,10 +31,10 @@ class AppView extends View
      * Internal method to set some blocks
      * @return void
      * @uses $userbar
-     * @uses MeCms\View\View::getTitleForLayout()
-     * @uses MeTools\View\Helper\HtmlHelper::meta()
-     * @uses MeTools\View\Helper\LibraryHelper::analytics()
-     * @uses MeTools\View\Helper\LibraryHelper::shareaholic()
+     * @uses \MeCms\View\View::getTitleForLayout()
+     * @uses \MeTools\View\Helper\HtmlHelper::meta()
+     * @uses \MeTools\View\Helper\LibraryHelper::analytics()
+     * @uses \MeTools\View\Helper\LibraryHelper::shareaholic()
      */
     protected function setBlocks()
     {
@@ -74,7 +74,6 @@ class AppView extends View
     /**
      * Initialization hook method
      * @return void
-     * @uses MeCms\View\View::initialize()
      */
     public function initialize()
     {
@@ -94,7 +93,6 @@ class AppView extends View
      *  surrounding layout
      * @param string|null $layout Layout name
      * @return mixed Rendered output, or false on error
-     * @uses MeCms\View\View::renderLayout()
      * @uses setBlocks()
      * @uses userbar()
      */

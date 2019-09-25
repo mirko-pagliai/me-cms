@@ -31,7 +31,6 @@ class SystemsController extends AppController
     /**
      * Initialization hook method
      * @return void
-     * @uses MeCms\Controller\AppController::initialize()
      */
     public function initialize()
     {
@@ -48,7 +47,7 @@ class SystemsController extends AppController
      * @param array $user The user to check the authorization of. If empty
      *  the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function isAuthorized($user = null)
     {
@@ -66,7 +65,7 @@ class SystemsController extends AppController
      *
      * The KCFinder component is loaded by the `initialize()` method.
      * @return void
-     * @uses MeCms\Controller\Component\KcFinderComponent::getTypes()
+     * @uses \MeCms\Controller\Component\KcFinderComponent::getTypes()
      */
     public function browser()
     {
@@ -98,8 +97,6 @@ class SystemsController extends AppController
     /**
      * Changelogs viewer
      * @return void
-     * @uses MeCms\Core\Plugin:all()
-     * @uses MeCms\Core\Plugin:path()
      */
     public function changelogs()
     {
@@ -129,7 +126,7 @@ class SystemsController extends AppController
     /**
      * System checkup
      * @return void
-     * @uses MeCms\Utility\Checkup
+     * @uses \MeCms\Utility\Checkup
      */
     public function checkup()
     {

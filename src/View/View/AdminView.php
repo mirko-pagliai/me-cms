@@ -28,7 +28,6 @@ class AdminView extends View
     /**
      * Initialization hook method
      * @return void
-     * @uses MeCms\View\View::initialize()
      */
     public function initialize()
     {

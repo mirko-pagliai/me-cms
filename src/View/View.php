@@ -93,7 +93,7 @@ class View extends AppView
      *  surrounding layout
      * @param string|null $layout Layout name
      * @return mixed Rendered output, or false on error
-     * @uses MeTools\View\Helper\HtmlHelper::meta()
+     * @uses \MeTools\View\Helper\HtmlHelper::meta()
      * @uses getTitleForLayout()
      */
     public function renderLayout($content, $layout = null)

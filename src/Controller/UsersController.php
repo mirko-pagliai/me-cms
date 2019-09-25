@@ -32,7 +32,7 @@ class UsersController extends AppController
     /**
      * Internal method to login with cookie
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
      * @uses buildLogout()
      */
     protected function loginWithCookie()
@@ -89,7 +89,6 @@ class UsersController extends AppController
     /**
      * Initialization hook method
      * @return void
-     * @uses MeCms\Controller\AppController::initialize()
      */
     public function initialize()
     {
@@ -105,7 +104,6 @@ class UsersController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\AppController::beforeFilter()
      */
     public function beforeFilter(Event $event)
     {
@@ -194,7 +192,7 @@ class UsersController extends AppController
     /**
      * Login
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
      * @uses loginWithCookie()
      */
     public function login()

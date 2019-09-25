@@ -36,7 +36,6 @@ class BannersTable extends AppTable
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
-     * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
     public function afterDelete(Event $event, EntityInterface $entity)
     {
