@@ -62,7 +62,8 @@ class UsersController extends AppController
      */
     protected function buildLogout()
     {
-        $request = $this->getRequest()->getSession()->delete('KCFINDER');
+        $request = $this->getRequest();
+        $request->getSession()->delete('KCFINDER');
         $cookies = $request->getCookieCollection()->remove('login');
         $this->setRequest($request->withCookieCollection($cookies));
 
