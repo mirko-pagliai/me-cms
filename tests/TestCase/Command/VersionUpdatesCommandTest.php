@@ -13,6 +13,8 @@
 namespace MeCms\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
+use Cake\Database\Driver\Postgres;
+use Cake\Database\Driver\Sqlite;
 use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\Command\VersionUpdatesCommand;
 use MeCms\TestSuite\TestCase;
@@ -51,16 +53,26 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAddEnableCommentsField()
     {
+        $getTables = function () {
+            return [$this->getTable('MeCms.Posts'), $this->getTable('MeCms.Pages')];
+        };
+
+        list($Posts, $Pages) = $getTables();
+        $this->skipIf($Posts->getConnection()->getDriver() instanceof Sqlite);
         $this->loadFixtures('Pages', 'Posts');
 
-        foreach (['Pages', 'Posts'] as $table) {
-            $this->getTable($table)->getConnection()
-                ->execute(sprintf('ALTER TABLE `%s` DROP `enable_comments`', $this->getTable($table)->getTable()));
+        foreach ([$Posts, $Pages] as $Table) {
+            $connection = $Table->getConnection();
+            $command = 'ALTER TABLE `' . $Table->getTable() . '` DROP `enable_comments`';
+            if ($connection->getDriver() instanceof Postgres) {
+                $command = 'ALTER TABLE ' . $Table->getTable() . ' DROP COLUMN enable_comments;';
+            }
+            $connection->execute($command);
         }
 
         $this->Command->addEnableCommentsField();
-        foreach (['Pages', 'Posts'] as $table) {
-            $this->assertTrue($this->getTable($table)->getSchema()->hasColumn('enable_comments'));
+        foreach ($getTables() as $Table) {
+            $this->assertTrue($Table->getSchema()->hasColumn('enable_comments'));
         }
     }
 
@@ -70,14 +82,20 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAlterTagColumnSize()
     {
+        $Table = $this->getTable('MeCms.Tags');
+        $connection = $Table->getConnection();
+        $this->skipIf($connection->getDriver() instanceof Sqlite);
         $this->loadFixtures('Tags');
 
-        $this->getTable('Tags')->getConnection()
-            ->execute(sprintf('ALTER TABLE %s MODIFY tag varchar(254) NOT NULL', $this->getTable('Tags')->getTable()));
-        $this->assertEquals(254, $this->getTable('Tags')->getSchema()->getColumn('tag')['length']);
+        $command = 'ALTER TABLE ' . $Table->getTable() . ' MODIFY tag varchar(254) NOT NULL';
+        if ($connection->getDriver() instanceof Postgres) {
+            $command = 'ALTER TABLE ' . $Table->getTable() . ' ALTER COLUMN tag TYPE varchar(254);';
+        }
+        $connection->execute($command);
+        $this->assertEquals(254, $Table->getSchema()->getColumn('tag')['length']);
 
         $this->Command->alterTagColumnSize();
-        $this->assertEquals(255, $this->getTable('Tags')->getSchema()->getColumn('tag')['length']);
+        $this->assertEquals(255, $this->getTable('MeCms.Tags')->getSchema()->getColumn('tag')['length']);
     }
 
     /**

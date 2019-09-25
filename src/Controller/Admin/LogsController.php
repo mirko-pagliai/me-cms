@@ -13,7 +13,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\ORM\Entity;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 
@@ -61,7 +61,7 @@ class LogsController extends AppController
      * @param array $user The user to check the authorization of. If empty
      *  the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function isAuthorized($user = null)
     {
@@ -138,11 +138,11 @@ class LogsController extends AppController
             $successSerialized = @unlink($serialized);
         }
 
+        list($method, $message) = ['error', I18N_OPERATION_NOT_OK];
         if ($success && $successSerialized) {
-            $this->Flash->success(I18N_OPERATION_OK);
-        } else {
-            $this->Flash->error(I18N_OPERATION_NOT_OK);
+            list($method, $message) = ['success', I18N_OPERATION_OK];
         }
+        call_user_func([$this->Flash, $method], $message);
 
         return $this->redirect(['action' => 'index']);
     }

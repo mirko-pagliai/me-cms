@@ -32,15 +32,12 @@ class UsersController extends AppController
     /**
      * Internal method to login with cookie
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
      * @uses buildLogout()
      */
     protected function loginWithCookie()
     {
-        $username = $this->getRequest()->getCookie('login.username');
-        $password = $this->getRequest()->getCookie('login.password');
-
-        //Checks if the cookies exist
+        list($username, $password) = array_values($this->getRequest()->getCookie('login', [null, null]));
         if (!$username || !$password) {
             return null;
         }
@@ -59,15 +56,16 @@ class UsersController extends AppController
     }
 
     /**
-     * Internal method to logout
+     * Internal method to logout.
+     * Deletes some cookies and KCFinder session.
      * @return \Cake\Network\Response|null
      */
     protected function buildLogout()
     {
-        //Deletes some cookies and KCFinder session
-        $cookies = $this->getRequest()->getCookieCollection()->remove('login')->remove('sidebar-lastmenu');
-        $this->setRequest($this->getRequest()->withCookieCollection($cookies));
-        $this->getRequest()->getSession()->delete('KCFINDER');
+        $request = $this->getRequest();
+        $request->getSession()->delete('KCFINDER');
+        $cookies = $request->getCookieCollection()->remove('login');
+        $this->setRequest($request->withCookieCollection($cookies));
 
         return $this->redirect($this->Auth->logout());
     }
@@ -90,7 +88,6 @@ class UsersController extends AppController
     /**
      * Initialization hook method
      * @return void
-     * @uses MeCms\Controller\AppController::initialize()
      */
     public function initialize()
     {
@@ -106,7 +103,6 @@ class UsersController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\AppController::beforeFilter()
      */
     public function beforeFilter(Event $event)
     {
@@ -136,11 +132,11 @@ class UsersController extends AppController
             ->set(['active' => true])
             ->execute();
 
+        list($method, $message) = ['error', I18N_OPERATION_NOT_OK];
         if ($update->count()) {
-            $this->Flash->success(I18N_OPERATION_OK);
-        } else {
-            $this->Flash->error(I18N_OPERATION_NOT_OK);
+            list($method, $message) = ['success', I18N_OPERATION_OK];
         }
+        call_user_func([$this->Flash, $method], $message);
 
         return $this->redirect(['_name' => 'login']);
     }
@@ -164,9 +160,11 @@ class UsersController extends AppController
 
         if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
+            $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
                 if (!$entity->getErrors()) {
                     $user = $this->Users->findPendingByEmail($this->getRequest()->getData('email'))->first();
+                    $message = __d('me_cms', 'No valid account was found');
 
                     if ($user && $this->sendActivationMail($user)) {
                         $this->Flash->success(__d('me_cms', 'We send you an email to activate your account'));
@@ -181,12 +179,9 @@ class UsersController extends AppController
                             $this->getRequest()->getData('email')
                         ), 'users');
                     }
-
-                    $this->Flash->error(__d('me_cms', 'No valid account was found'));
                 }
-            } else {
-                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
             }
+            $this->Flash->error($message);
         }
 
         $this->set('user', $entity);
@@ -196,7 +191,7 @@ class UsersController extends AppController
     /**
      * Login
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\LoginRecorderComponent::write()
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
      * @uses loginWithCookie()
      */
     public function login()
@@ -232,7 +227,7 @@ class UsersController extends AppController
                         'username' => $this->getRequest()->getData('username'),
                         'password' => $this->getRequest()->getData('password'),
                     ], new DateTime('+1 year'));
-                    $this->response = $this->response->withCookie($cookie);
+                    $this->setResponse($this->getResponse()->withCookie($cookie));
                 }
 
                 return $this->redirect($this->Auth->redirectUrl());
@@ -283,7 +278,9 @@ class UsersController extends AppController
 
         if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
+            $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+                $message = __d('me_cms', 'No account found');
                 $user = $this->Users->findActiveByEmail($this->getRequest()->getData('email'))->first();
 
                 if ($user) {
@@ -306,11 +303,8 @@ class UsersController extends AppController
                         $this->getRequest()->getData('email')
                     ), 'users');
                 }
-
-                $this->Flash->error(__d('me_cms', 'No account found'));
-            } else {
-                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
             }
+            $this->Flash->error($message);
         }
 
         $this->set('user', $entity);
@@ -371,35 +365,34 @@ class UsersController extends AppController
                 ->set('active', (bool)!getConfig('users.activation'));
 
             //Checks for reCAPTCHA, if requested
+            $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+                $message = __d('me_cms', 'The account has not been created');
+
                 if ($this->Users->save($user)) {
                     switch (getConfig('users.activation')) {
                         //The account will be enabled by an administrator
                         case 2:
-                            $success = __d('me_cms', 'Account created, but it needs to be activated by an admin');
+                            $message = __d('me_cms', 'Account created, but it needs to be activated by an admin');
                             break;
                         //The account will be enabled by the user via email
                         //  (default)
                         case 1:
                             //Sends the activation mail
                             $this->sendActivationMail($user);
-
-                            $success = __d('me_cms', 'We send you an email to activate your account');
+                            $message = __d('me_cms', 'We send you an email to activate your account');
                             break;
                         //No activation required, the account is immediately active
                         default:
-                            $success = __d('me_cms', 'Account created. Now you can login');
+                            $message = __d('me_cms', 'Account created. Now you can login');
                             break;
                     }
-                    $this->Flash->success($success);
+                    $this->Flash->success($message);
 
                     return $this->redirect(['_name' => 'homepage']);
                 }
-
-                $this->Flash->error(__d('me_cms', 'The account has not been created'));
-            } else {
-                $this->Flash->error(__d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA'));
             }
+            $this->Flash->error($message);
         }
 
         $this->set(compact('user'));

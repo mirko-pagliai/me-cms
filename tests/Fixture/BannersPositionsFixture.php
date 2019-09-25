@@ -25,8 +25,8 @@ class BannersPositionsFixture extends TestFixture
      */
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'title' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'description' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'title' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'description' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'banner_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
@@ -41,7 +41,6 @@ class BannersPositionsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
             'title' => 'top',
             'description' => 'Top Banners',
             'banner_count' => 2,
@@ -49,7 +48,6 @@ class BannersPositionsFixture extends TestFixture
             'modified' => '2016-12-26 16:26:20',
         ],
         [
-            'id' => 2,
             'title' => 'left',
             'description' => 'Left Banners',
             'banner_count' => 1,
@@ -57,7 +55,6 @@ class BannersPositionsFixture extends TestFixture
             'modified' => '2016-12-26 16:27:20',
         ],
         [
-            'id' => 3,
             'title' => 'bottom',
             'description' => 'Bottom Banners',
             'banner_count' => 0,

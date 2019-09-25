@@ -96,8 +96,8 @@ class PostsTagsController extends AppController
         if (empty($posts) || empty($paging)) {
             $query = $this->PostsTags->Posts->find('active')
                 ->find('forIndex')
-                ->matching($this->PostsTags->Tags->getAlias(), function (Query $q) use ($slug) {
-                    return $q->where(['tag' => $slug]);
+                ->matching($this->PostsTags->Tags->getAlias(), function (Query $query) use ($slug) {
+                    return $query->where(['tag' => $slug]);
                 });
             $posts = $this->paginate($query);
 

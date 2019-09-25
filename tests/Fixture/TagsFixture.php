@@ -25,7 +25,7 @@ class TagsFixture extends TestFixture
      */
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'tag' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'tag' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'post_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
@@ -40,28 +40,24 @@ class TagsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
             'tag' => 'cat',
             'post_count' => 4,
             'created' => '2016-12-29 11:13:31',
             'modified' => '2016-12-29 11:13:31',
         ],
         [
-            'id' => 2,
             'tag' => 'dog',
             'post_count' => 2,
             'created' => '2016-12-29 11:14:31',
             'modified' => '2016-12-29 11:14:31',
         ],
         [
-            'id' => 3,
             'tag' => 'bird',
             'post_count' => 1,
             'created' => '2016-12-29 11:15:31',
             'modified' => '2016-12-29 11:15:31',
         ],
         [
-            'id' => 4,
             'tag' => 'lion',
             'post_count' => 1,
             'created' => '2016-12-29 11:16:31',

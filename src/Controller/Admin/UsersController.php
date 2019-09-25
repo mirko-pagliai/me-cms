@@ -14,7 +14,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\Mailer\MailerAwareTrait;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 use Symfony\Component\Finder\Finder;
 use Thumber\Utility\ThumbManager;
 
@@ -32,8 +32,7 @@ class UsersController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\UsersGroupsTable::getList()
+     * @uses \MeCms\Model\Table\UsersGroupsTable::getList()
      */
     public function beforeFilter(Event $event)
     {
@@ -55,7 +54,6 @@ class UsersController extends AppController
     /**
      * Initialization hook method
      * @return void
-     * @uses MeCms\Controller\AppController::initialize()
      */
     public function initialize()
     {
@@ -218,7 +216,7 @@ class UsersController extends AppController
     /**
      * Changes the user's password
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Mailer\UserMailer::changePassword()
+     * @uses \MeCms\Mailer\UserMailer::changePassword()
      */
     public function changePassword()
     {
@@ -243,8 +241,8 @@ class UsersController extends AppController
     /**
      * Changes the user's picture
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\AppController::setUploadError()
-     * @uses MeTools\Controller\Component\UploaderComponent
+     * @uses \MeCms\Controller\Admin\AppController::setUploadError()
+     * @uses \MeTools\Controller\Component\UploaderComponent
      */
     public function changePicture()
     {
@@ -275,7 +273,7 @@ class UsersController extends AppController
     /**
      * Displays the login log
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\LoginRecorderComponent::read()
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::read()
      */
     public function lastLogin()
     {

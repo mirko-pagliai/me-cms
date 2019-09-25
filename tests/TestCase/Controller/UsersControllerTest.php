@@ -14,14 +14,12 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\TestSuite\EmailAssertTrait;
 use MeCms\Controller\Component\LoginRecorderComponent;
-use MeCms\Controller\UsersController;
-use MeCms\Mailer\UserMailer;
 use MeCms\Model\Entity\User;
 use MeCms\TestSuite\ControllerTestCase;
+use Tokens\Controller\Component\TokenComponent;
 
 /**
  * UsersControllerTest class
@@ -29,6 +27,11 @@ use MeCms\TestSuite\ControllerTestCase;
 class UsersControllerTest extends ControllerTestCase
 {
     use EmailAssertTrait;
+
+    /**
+     * @var \Cake\Controller\Component|\PHPUnit_Framework_MockObject_MockObject
+     */
+    public $Token;
 
     /**
      * Fixtures
@@ -41,40 +44,45 @@ class UsersControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Internal method to get a mock instance of `LoginRecorderComponent`
-     * @return LoginRecorderComponent
+     * Called before every test method
+     * @return void
      */
-    protected function getLoginRecorderMock()
+    public function setUp()
     {
-        $LoginRecorderComponent = $this->getMockForComponent(LoginRecorderComponent::class);
-        $LoginRecorderComponent->method('setConfig')->will($this->returnSelf());
+        parent::setUp();
 
-        return $LoginRecorderComponent;
+        $this->Token = $this->Token ?: $this->getMockForComponent(TokenComponent::class, null);
     }
 
     /**
-     * Mocks a controller
-     * @param string|null $className Controller class name
-     * @param array|null $methods The list of methods to mock
-     * @param string $alias Controller alias
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * Asserts cookie values which are encrypted by the CookieComponent
+     * @param string $expected The expected contents
+     * @param string $name The cookie name
+     * @param string|bool $encrypt Encryption mode to use
+     * @param string|null $key Encryption key used
+     * @param string $message The failure message that will be appended to the generated message
+     * @return void
      */
-    protected function getMockForController($className = null, $methods = null, $alias = 'Users')
+    public function assertCookieEncrypted($expected, $name, $encrypt = 'aes', $key = null, $message = '')
     {
-        $controller = parent::getMockForController($className ?: UsersController::class, $methods, $alias);
+        $key = $key ?: Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
-        if (in_array('getUserMailer', (array)$methods)) {
-            $userMailer = $this->getMockForMailer(UserMailer::class);
-            $controller->method('getUserMailer')->will($this->returnValue($userMailer));
-        }
+        parent::assertCookieEncrypted($expected, $name, $encrypt, $key, $message);
+    }
 
-        if (in_array('redirect', (array)$methods)) {
-            $controller->method('redirect')->will($this->returnArgument(0));
-        }
+    /**
+     * Sets a encrypted request cookie for future requests
+     * @param name $name The cookie name to use
+     * @param mixed $value The value of the cookie
+     * @param string|bool $encrypt Encryption mode to use
+     * @param string|null $key Encryption key used
+     * @return void
+     */
+    public function cookieEncrypted($name, $value, $encrypt = 'aes', $key = null)
+    {
+        $key = $key ?: Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
-        $controller->LoginRecorder = $this->getLoginRecorderMock();
-
-        return $controller;
+        parent::cookieEncrypted($name, $value, $encrypt, $key);
     }
 
     /**
@@ -87,7 +95,8 @@ class UsersControllerTest extends ControllerTestCase
     {
         parent::controllerSpy($event, $controller);
 
-        $this->_controller->LoginRecorder = $this->getLoginRecorderMock();
+        $this->_controller->LoginRecorder = $this->getMockForComponent(LoginRecorderComponent::class);
+        $this->_controller->LoginRecorder->method('setConfig')->will($this->returnSelf());
     }
 
     /**
@@ -96,72 +105,40 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testLoginWithCookie()
     {
+        $url = ['_name' => 'login'];
+
         //No user data on cookies
-        $controller = $this->getMockForController();
-        $this->assertNull($this->invokeMethod($controller, 'loginWithCookie'));
-        $this->assertNull($controller->Auth->user());
-        $this->assertEmpty($controller->getRequest()->getCookieCollection());
+        $this->get($url);
+        $this->assertResponseOkAndNotEmpty();
+        $this->assertSessionEmpty('Auth');
 
         //Writes wrong data on cookies
-        $controller->request = $controller->getRequest()->withCookieParams(['login' => ['username' => 'a', 'password' => 'b']]);
-        $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
-        $this->assertRedirect($controller->Auth->logout());
-        $this->assertNull($controller->Auth->user());
-        $this->assertEmpty($controller->getRequest()->getCookieCollection());
+        $this->cookie('login', ['username' => 'a', 'password' => 'b']);
+        $this->get($url);
+        $this->assertResponseOkAndNotEmpty();
+        $this->assertSessionEmpty('Auth');
 
         //Gets an user and sets a password, then writes right data on cookies
         $password = 'mypassword1!';
         $user = $this->Table->findByActiveAndBanned(true, false)->first();
         $this->Table->save($user->set(compact('password') + ['password_repeat' => $password]));
-        $controller = $this->getMockForController();
-        $controller->request = $controller->getRequest()->withCookieParams(['login' => ['username' => $user->username] + compact('password')]);
-        $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
-        $this->assertRedirect($controller->Auth->redirectUrl());
-        $this->assertNotEmpty($controller->Auth->user());
-        $this->assertNotEmpty($controller->getRequest()->getCookieCollection());
+        $this->cookieEncrypted('login', ['username' => $user->username] + compact('password'));
+        $this->get($url);
+        $this->assertRedirect(['_name' => 'dashboard']);
+        $this->assertSession($user->get('id'), 'Auth.User.id');
 
-        //Sets the user as "pending" user, then writes again data on cookies
-        $this->Table->save($user->set('active', false));
-        $controller = $this->getMockForController();
-        $controller->request = $controller->getRequest()->withCookieParams(['login' => ['username' => $user->username] + compact('password')]);
-        $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
-        $this->assertRedirect($controller->Auth->logout());
-        $this->assertNull($controller->Auth->user());
-        $this->assertEmpty($controller->getRequest()->getCookieCollection());
-
-        //Sets the user as "banned" user,then writes again data on cookies
-        $this->Table->save($user->set(['active' => true, 'banned' => true]));
-        $controller = $this->getMockForController();
-        $controller->request = $controller->getRequest()->withCookieParams(['login' => ['username' => $user->username] + compact('password')]);
-        $this->_response = $this->invokeMethod($controller, 'loginWithCookie');
-        $this->assertRedirect($controller->Auth->logout());
-        $this->assertNull($controller->Auth->user());
-        $this->assertEmpty($controller->getRequest()->getCookieCollection());
-    }
-
-    /**
-     * Test for `buildLogout()` method
-     * @test
-     */
-    public function testBuildLogout()
-    {
-        //Sets cookies and session values
-        $controller = $this->getMockForController();
-        $controller->request = $controller->getRequest()->withCookieParams(['login' => 'testLogin', 'sidebar-lastmenu' => 'testSidebar']);
-        $controller->getRequest()->getSession()->write('KCFINDER', 'value');
-        $this->_response = $this->invokeMethod($controller, 'buildLogout');
-        $this->assertRedirect($controller->Auth->logout());
-        $this->assertEmpty($controller->getRequest()->getCookieCollection());
-        $this->assertEmpty($controller->getRequest()->getSession()->read());
-    }
-
-    /**
-     * Test for `sendActivationMail()` method
-     * @test
-     */
-    public function testSendActivationMail()
-    {
-        $this->assertTrue($this->invokeMethod($this->Controller, 'sendActivationMail', [$this->Table->find()->first()]));
+        //"pending" and "banned" users
+        foreach ([
+            ['active' => false],
+            ['active' => true, 'banned' => true],
+        ] as $userData) {
+            $this->Table->save($user->set($userData));
+            $this->cookieEncrypted('login', ['username' => $user->username] + compact('password'));
+            $this->get($url);
+            $this->assertRedirect(['_name' => 'homepage']);
+            $this->assertSessionEmpty('Auth');
+            $this->assertCookieNotSet('login');
+        }
     }
 
     /**
@@ -171,8 +148,7 @@ class UsersControllerTest extends ControllerTestCase
     public function testBeforeFilter()
     {
         $this->setUserId(1);
-        $this->Controller->request = $this->Controller->getRequest()->withParam('action', 'my-action');
-        $this->_response = $this->Controller->beforeFilter(new Event('myEvent'));
+        $this->get(['_name' => 'login']);
         $this->assertRedirect(['_name' => 'dashboard']);
     }
 
@@ -184,30 +160,31 @@ class UsersControllerTest extends ControllerTestCase
     {
         //Creates a token for an active user
         $tokenOptions = ['type' => 'signup', 'user_id' => 1];
-        $token = $this->Controller->Token->create('alfa@test.com', $tokenOptions);
+        $token = $this->Token->create('alfa@test.com', $tokenOptions);
         $url = ['_name' => 'activation'];
 
         //GET request. This request is invalid, because the user is already active
         $this->get($url + ['id' => 1] + compact('token'));
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage(I18N_OPERATION_NOT_OK);
-        $this->assertFalse($this->Controller->Token->check($token, $tokenOptions));
+        $this->assertFalse($this->Token->check($token, $tokenOptions));
 
         //Creates a token for a pending user
         $tokenOptions = ['type' => 'signup', 'user_id' => 2];
-        $token = $this->Controller->Token->create('gamma@test.com', $tokenOptions);
+        $token = $this->Token->create('gamma@test.com', $tokenOptions);
 
         //GET request. This request is valid, because the user is pending
         $this->get($url + ['id' => 2] + compact('token'));
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertTrue($this->Table->findById(2)->extract('active')->first());
-        $this->assertFalse($this->Controller->Token->check($token, $tokenOptions));
+        $this->assertFalse($this->Token->check($token, $tokenOptions));
 
         //With an invalid token
         $this->expectException(RecordNotFoundException::class);
         $this->expectExceptionMessage('Invalid token');
-        $this->Controller->activation(1, 'invalidToken');
+        $this->disableErrorHandlerMiddleware();
+        $this->get($url + ['id' => 1] + ['token' => 'invalidToken']);
     }
 
     /**
@@ -266,7 +243,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, ['username' => 'wrong', 'password' => 'wrong']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertCookieNotSet('login');
-        $this->assertSession(null, 'Auth');
+        $this->assertSessionEmpty('Auth');
         $this->assertLogContains('Failed login with username `wrong` and password `wrong`', 'users');
 
         //POST request. Now data are valid
@@ -276,9 +253,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, ['username' => $user->username, 'remember_me' => true] + compact('password'));
         $this->assertRedirect($this->Controller->Auth->redirectUrl());
         $this->assertSession($user->id, 'Auth.User.id');
-        $this->assertCookieEncrypted([
-            'username' => $user->username,
-        ] + compact('password'), 'login', 'aes', Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', ''))));
+        $this->assertCookieEncrypted(['username' => $user->username] + compact('password'), 'login');
         $cookieExpire = Time::createFromTimestamp($this->_response->getCookie('login')['expire']);
         $this->assertTrue($cookieExpire->isWithinNext('1 year'));
 
@@ -287,7 +262,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, ['username' => $user->username, 'remember_me' => true] + compact('password'));
         $this->assertRedirect($this->Controller->Auth->logout());
         $this->assertCookieNotSet('login');
-        $this->assertSession(null, 'Auth');
+        $this->assertSessionEmpty('Auth');
         $this->assertFlashMessage('Your account has been banned by an admin');
 
         //POST request. The user is pending
@@ -295,7 +270,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, ['username' => $user->username, 'remember_me' => true] + compact('password'));
         $this->assertRedirect($this->Controller->Auth->logout());
         $this->assertCookieNotSet('login');
-        $this->assertSession(null, 'Auth');
+        $this->assertSessionEmpty('Auth');
         $this->assertFlashMessage('Your account has not been activated yet');
     }
 
@@ -305,8 +280,12 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testLogout()
     {
+        $this->cookie('login', 'value');
+        $this->session(['KCFINDER' => 'value']);
         $this->get(['_name' => 'logout']);
         $this->assertRedirect($this->Controller->Auth->logout());
+        $this->assertCookieNotSet('login');
+        $this->assertSessionEmpty('KCFINDER');
         $this->assertFlashMessage('You are successfully logged out');
     }
 
@@ -364,7 +343,7 @@ class UsersControllerTest extends ControllerTestCase
     {
         //Creates the token for an active user
         $tokenOptions = ['type' => 'password_forgot', 'user_id' => 1];
-        $token = $this->Controller->Token->create('alfa@test.com', $tokenOptions);
+        $token = $this->Token->create('alfa@test.com', $tokenOptions);
         $url = ['_name' => 'passwordReset', 'id' => 1] + compact('token');
 
         $this->get($url);
@@ -379,7 +358,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseContains('The password has not been edited');
 
         //The password has not been changed and the token still exists
-        $this->assertTrue($this->Controller->Token->check($token, $tokenOptions));
+        $this->assertTrue($this->Token->check($token, $tokenOptions));
         $this->assertEmpty($this->Table->findById(1)->extract('password')->first());
 
         //POST request again. Now data are valid
@@ -389,12 +368,13 @@ class UsersControllerTest extends ControllerTestCase
 
         //The password has changed and the token no longer exists
         $this->assertNotEmpty($this->Table->findById(1)->extract('password')->first());
-        $this->assertFalse($this->Controller->Token->check($token, $tokenOptions));
+        $this->assertFalse($this->Token->check($token, $tokenOptions));
 
         //With an invalid token
         $this->expectException(RecordNotFoundException::class);
         $this->expectExceptionMessage('Invalid token');
-        $this->Controller->passwordReset(1, 'invalidToken');
+        $this->disableErrorHandlerMiddleware();
+        $this->get($url + ['id' => 1] + ['token' => 'invalidToken']);
     }
 
     /**

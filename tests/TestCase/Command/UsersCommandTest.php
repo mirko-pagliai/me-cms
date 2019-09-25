@@ -12,8 +12,6 @@
  */
 namespace MeCms\Test\TestCase\Command;
 
-use Cake\ORM\TableRegistry;
-use MeCms\Command\UsersCommand;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
@@ -23,6 +21,11 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 class UsersCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
+
+    /**
+     * @var bool
+     */
+    public $autoInitializeClass = true;
 
     /**
      * Fixtures
@@ -39,9 +42,8 @@ class UsersCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $command = new UsersCommand();
-        $command->Users = TableRegistry::getTableLocator()->get('MeCms.Users');
-        $expectedRows = $this->invokeMethod($command, 'getUsersForTable');
+        $this->Command->Users = $this->getTable('MeCms.Users');
+        $expectedRows = $this->invokeMethod($this->Command, 'getUsersRows');
         array_unshift($expectedRows, ['<info>ID</info>', '<info>Username</info>', '<info>Group</info>', '<info>Name</info>', '<info>Email</info>', '<info>Posts</info>', '<info>Status</info>', '<info>Date</info>']);
 
         $this->exec('me_cms.users');
@@ -49,7 +51,7 @@ class UsersCommandTest extends TestCase
         array_walk($expectedRows, [$this, 'assertOutputContainsRow']);
 
         //Deletes all users
-        $command->Users->deleteAll(['id IS NOT' => null]);
+        $this->Command->Users->deleteAll(['id IS NOT' => null]);
         $this->exec('me_cms.users');
         $this->assertExitWithSuccess();
         $this->assertErrorContains('There are no users');

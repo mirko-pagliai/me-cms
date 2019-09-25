@@ -12,7 +12,6 @@
  */
 namespace MeCms\Model\Table;
 
-use ArrayObject;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
@@ -45,26 +44,23 @@ class PhotosTable extends AppTable
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
-     * @uses MeCms\Model\Table\AppTable::afterDelete()
      */
-    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function afterDelete(Event $event, EntityInterface $entity)
     {
         @unlink($entity->get('path'));
 
-        parent::afterDelete($event, $entity, $options);
+        parent::afterDelete($event, $entity);
     }
 
     /**
      * Called before each entity is saved
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
      * @since 2.17.0
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(Event $event, EntityInterface $entity)
     {
         list($width, $height) = getimagesize($entity->get('path'));
         $entity->set('size', compact('width', 'height'));
@@ -85,10 +81,9 @@ class PhotosTable extends AppTable
     /**
      * "active" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query, array $options)
+    public function findActive(Query $query)
     {
         return $query->where([sprintf('%s.active', $this->getAlias()) => true]);
     }
@@ -96,10 +91,9 @@ class PhotosTable extends AppTable
     /**
      * "pending" find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      */
-    public function findPending(Query $query, array $options)
+    public function findPending(Query $query)
     {
         return $query->where([sprintf('%s.active', $this->getAlias()) => false]);
     }

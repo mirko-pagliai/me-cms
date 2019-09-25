@@ -60,7 +60,7 @@ class AppViewTest extends TestCase
         $result = $this->View->render(false);
         $this->assertContains('<meta name="theme-color" content="#ffffff"/>', $result);
         $this->assertContains('<link href="/posts/rss" type="application/rss+xml" rel="alternate" title="Latest posts"/>', $result);
-        $this->assertContains('<meta content="' . 'MeCms" property="og:title"/>', $result);
+        $this->assertContains('<meta content="MeCms" property="og:title"/>', $result);
         $this->assertContains('<meta content="http://localhost/" property="og:url"/>', $result);
         $this->assertContains('<meta content="facebook-id" property="fb:app_id"/>', $result);
         $this->assertContains('<script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","analytics-id","auto"),ga("send","pageview");</script>', $result);
@@ -85,9 +85,8 @@ class AppViewTest extends TestCase
     public function testRenderLayoutFromTheme()
     {
         //Loads the `TestPlugin` and sets it as a theme
-        $theme = 'TestPlugin';
-        $this->loadPlugins([$theme]);
-        Configure::write('MeCms.default.theme', $theme);
+        $this->loadPlugins(['TestPlugin']);
+        Configure::write('MeCms.default.theme', 'TestPlugin');
 
         //Reloads the View
         $View = $this->getMockBuilder(View::class)
@@ -95,7 +94,7 @@ class AppViewTest extends TestCase
             ->getMock();
         $this->assertEquals('This is a layout from TestPlugin', $View->render(false));
         $this->assertEquals('default', $View->getLayout());
-        $this->assertEquals($theme, $View->getTheme());
+        $this->assertEquals('TestPlugin', $View->getTheme());
     }
 
     /**
@@ -105,7 +104,7 @@ class AppViewTest extends TestCase
     public function testRenderLayoutFromApp()
     {
         //Creates a new layout
-        $layoutFromApp = array_value_first(App::path('Template/Plugin/' . 'MeCms/Layout')) . 'default.ctp';
+        $layoutFromApp = array_value_first(App::path('Template/Plugin/MeCms/Layout')) . 'default.ctp';
         @create_file($layoutFromApp, 'This is a layout from app');
         $this->assertEquals('This is a layout from app', $this->View->render(false));
         $this->assertEquals('default', $this->View->getLayout());

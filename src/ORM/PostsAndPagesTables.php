@@ -13,7 +13,6 @@
  */
 namespace MeCms\ORM;
 
-use ArrayObject;
 use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
@@ -46,14 +45,12 @@ abstract class PostsAndPagesTables extends AppTable
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
      * @param Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
-     * @uses MeCms\Model\Table\AppTable::afterDelete()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
+     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterDelete(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function afterDelete(Event $event, EntityInterface $entity)
     {
-        parent::afterDelete($event, $entity, $options);
+        parent::afterDelete($event, $entity);
 
         //Sets the next record to be published
         $this->setNextToBePublished();
@@ -63,14 +60,12 @@ abstract class PostsAndPagesTables extends AppTable
      * Called after an entity is saved
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
-     * @uses MeCms\Model\Table\AppTable::afterSave()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
+     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function afterSave(Event $event, EntityInterface $entity)
     {
-        parent::afterSave($event, $entity, $options);
+        parent::afterSave($event, $entity);
 
         //Sets the next record to be published
         $this->setNextToBePublished();
@@ -80,12 +75,11 @@ abstract class PostsAndPagesTables extends AppTable
      * Called before each entity is saved
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
-     * @param \ArrayObject $options Options
      * @return void
      * @since 2.17.0
-     * @uses MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreviews()
+     * @uses \MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreviews()
      */
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(Event $event, EntityInterface $entity)
     {
         $entity->set('preview', $this->getPreviews($entity->get('text')));
     }
@@ -97,8 +91,8 @@ abstract class PostsAndPagesTables extends AppTable
      * @param array|\ArrayAccess $options An array that will be passed to
      *  Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
-     * @uses MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
+     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
+     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      * @uses clearCache()
      */
     public function find($type = 'all', $options = [])

@@ -69,10 +69,7 @@ class PhotosWidgetsCell extends Cell
         $photos = $this->Photos->find('active')
             ->select(['album_id', 'filename'])
             ->limit($limit)
-            ->order([
-                sprintf('%s.created', $this->Photos->getAlias()) => 'DESC',
-                sprintf('%s.id', $this->Photos->getAlias()) => 'DESC',
-            ])
+            ->order(['created' => 'DESC', 'id' => 'DESC'])
             ->cache(sprintf('widget_latest_%d', $limit), $this->Photos->getCacheName())
             ->all();
 

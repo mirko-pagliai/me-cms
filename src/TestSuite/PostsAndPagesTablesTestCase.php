@@ -95,7 +95,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
         $this->assertEmpty($entity->get('preview'));
 
         //Tries with a text with an image
-        $entity = $Table->newEntity(['text' => '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg' . '\' />'] + self::$example);
+        $entity = $Table->newEntity(['text' => '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg\' />'] + self::$example);
         $Table->beforeSave($event, $entity, $options);
         $this->assertCount(1, $entity->get('preview'));
         $this->assertInstanceOf(Entity::class, $entity->get('preview')[0]);

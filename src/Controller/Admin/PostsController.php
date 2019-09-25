@@ -14,7 +14,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\ORM\ResultSet;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 use MeCms\Model\Entity\Post;
 
 /**
@@ -29,28 +29,26 @@ class PostsController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\PostsCategoriesTable::getList()
-     * @uses MeCms\Model\Table\PostsCategoriesTable::getTreeList()
-     * @uses MeCms\Model\Table\UsersTable::getActiveList()
-     * @uses MeCms\Model\Table\UsersTable::getList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
+     * @uses \MeCms\Model\Table\UsersTable::getActiveList()
+     * @uses \MeCms\Model\Table\UsersTable::getList()
      */
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
+        list($categoriesMethod, $usersMethod) = ['getList', 'getList'];
         if ($this->getRequest()->isAction(['add', 'edit'])) {
-            $categories = $this->Posts->Categories->getTreeList();
-            $users = $this->Posts->Users->getActiveList();
+            list($categoriesMethod, $usersMethod) = ['getTreeList', 'getActiveList'];
 
             //Only admins and managers can add and edit posts on behalf of other users
             if ($this->getRequest()->getData() && !$this->Auth->isGroup(['admin', 'manager'])) {
                 $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
             }
-        } else {
-            $categories = $this->Posts->Categories->getList();
-            $users = $this->Posts->Users->getList();
         }
+        $categories = call_user_func([$this->Posts->Categories, $categoriesMethod]);
+        $users = call_user_func([$this->Posts->Users, $usersMethod]);
 
         if ($users->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create an user'));
@@ -70,7 +68,6 @@ class PostsController extends AppController
     /**
      * Initialization hook method
      * @return void
-     * @uses MeCms\Controller\AppController::initialize()
      */
     public function initialize()
     {
@@ -87,8 +84,8 @@ class PostsController extends AppController
      * @param array $user The user to check the authorization of. If empty
      *  the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
-     * @uses MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
      */
     public function isAuthorized($user = null)
     {
@@ -110,7 +107,7 @@ class PostsController extends AppController
     /**
      * Lists posts
      * @return void
-     * @uses MeCms\Model\Table\PostsTable::queryFromFilter()
+     * @uses \MeCms\Model\Table\PostsTable::queryFromFilter()
      */
     public function index()
     {
@@ -130,7 +127,7 @@ class PostsController extends AppController
     /**
      * Adds post
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function add()
     {
@@ -157,7 +154,7 @@ class PostsController extends AppController
      * Edits post
      * @param string $id Post ID
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function edit($id)
     {

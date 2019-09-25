@@ -16,7 +16,8 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\Datasource\ConnectionManager;
+use Cake\Database\Driver\Postgres;
+use Cake\Database\Driver\Sqlite;
 use MeTools\Console\Command;
 
 /**
@@ -24,6 +25,16 @@ use MeTools\Console\Command;
  */
 class CreateGroupsCommand extends Command
 {
+    /**
+     * Hook method invoked by CakePHP when a command is about to be executed
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadModel('MeCms.UsersGroups');
+    }
+
     /**
      * Hook method for defining this command's option parser
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
@@ -42,16 +53,20 @@ class CreateGroupsCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
-        $this->loadModel('MeCms.UsersGroups');
-
         if (!$this->UsersGroups->find()->isEmpty()) {
-            $io->error(__d('me_cms', 'Some user groups already exist'));
-
-            return null;
+            return $io->error(__d('me_cms', 'Some user groups already exist'));
         }
 
         //Truncates the table (this resets IDs), then saves groups
-        ConnectionManager::get('default')->execute(sprintf('TRUNCATE TABLE `%s`', $this->UsersGroups->getTable()));
+        $connection = $this->UsersGroups->getConnection();
+        $command = 'TRUNCATE TABLE `%s`';
+        if ($connection->getDriver() instanceof Sqlite) {
+            $command = 'DELETE FROM "sqlite_sequence" WHERE "name"=\'%s\';';
+        } elseif ($connection->getDriver() instanceof Postgres) {
+            $command = 'truncate %s restart identity';
+        }
+        $connection->execute(sprintf($command, $this->UsersGroups->getTable()));
+
         $this->UsersGroups->saveMany($this->UsersGroups->newEntities([
             ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
             ['id' => 2, 'name' => 'manager', 'label' => 'Manager'],

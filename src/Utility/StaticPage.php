@@ -32,18 +32,30 @@ class StaticPage
     const EXTENSION = 'ctp';
 
     /**
-     * Internal method to get all the existing paths
+     * Internal method to get paths from APP or from a plugin.
+     *
+     * This also returns paths that do not exist.
+     * @param string|null $plugin Plugin name or `null` for APP path
      * @return array
-     * @uses MeCms\Core\Plugin::all()
-     * @uses getPaths()
+     * @since 2.26.6
      */
-    protected static function getAllPaths()
+    protected static function _getPaths($plugin = null)
+    {
+        return App::path('Template' . DS . 'StaticPages', $plugin);
+    }
+
+    /**
+     * Gets all the existing paths
+     * @return array
+     * @uses _getPaths()
+     */
+    public static function getPaths()
     {
         return Cache::remember('paths', function () {
-            $paths = self::getPaths();
+            $paths = self::_getPaths();
 
             foreach (Plugin::all() as $plugin) {
-                $paths = array_merge($paths, self::getPaths($plugin));
+                $paths = array_merge($paths, self::_getPaths($plugin));
             }
 
             return array_clean(array_map(function ($path) {
@@ -53,27 +65,14 @@ class StaticPage
     }
 
     /**
-     * Internal method to get paths from APP or from a plugin.
-     *
-     * This also returns paths that do not exist.
-     * @param string|null $plugin Plugin name or `null` for APP path
-     * @return array
-     * @since 2.26.6
-     */
-    protected static function getPaths($plugin = null)
-    {
-        return App::path('Template' . DS . 'StaticPages', $plugin);
-    }
-
-    /**
-     * Internal method to get the slug.
+     * Gets the slug for a page.
      *
      * It takes the full path and removes the relative path and the extension.
      * @param string $path Path
      * @param string $relativePath Relative path
      * @return string
      */
-    protected static function getSlug($path, $relativePath)
+    public static function getSlug($path, $relativePath)
     {
         if (string_starts_with($path, $relativePath)) {
             $path = substr($path, strlen(add_slash_term($relativePath)));
@@ -86,20 +85,20 @@ class StaticPage
     /**
      * Gets all static pages
      * @return array Static pages
-     * @uses getAllPaths()
+     * @uses getPaths()
      * @uses getSlug()
-     * @uses title()
+     * @uses getTitle()
      */
     public static function all()
     {
-        foreach (self::getAllPaths() as $path) {
+        foreach (self::getPaths() as $path) {
             $finder = new Finder();
             foreach ($finder->files()->name('/^.+\.' . self::EXTENSION . '$/')->sortByName()->in($path) as $file) {
                 $pages[] = new Entity([
                     'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
                     'path' => rtr($file->getPathname()),
                     'slug' => self::getSlug($file->getPathname(), $path),
-                    'title' => self::title(pathinfo($file->getPathname(), PATHINFO_FILENAME)),
+                    'title' => self::getTitle(pathinfo($file->getPathname(), PATHINFO_FILENAME)),
                     'modified' => new FrozenTime($file->getMTime()),
                 ]);
             }
@@ -112,8 +111,7 @@ class StaticPage
      * Gets a static page
      * @param string $slug Slug
      * @return string|bool Static page or `false`
-     * @uses \MeCms\Core\Plugin::all()
-     * @uses getPaths()
+     * @uses _getPaths()
      */
     public static function get($slug)
     {
@@ -134,7 +132,7 @@ class StaticPage
 
             //Checks if the page exists first in APP, then in each plugin
             foreach (array_merge([null], Plugin::all()) as $plugin) {
-                foreach (self::getPaths($plugin) as $path) {
+                foreach (self::_getPaths($plugin) as $path) {
                     foreach ($patterns as $pattern) {
                         if (is_readable($path . $pattern . '.' . self::EXTENSION)) {
                             $page = ($plugin ? $plugin . '.' : '') . DS . 'StaticPages' . DS . $pattern;
@@ -154,7 +152,7 @@ class StaticPage
      * @param string $slugOrPath Slug or path
      * @return string
      */
-    public static function title($slugOrPath)
+    public static function getTitle($slugOrPath)
     {
         //Gets only the filename (without extension), then turns dashes into
         //  underscores (because `Inflector::humanize` will remove only underscores)

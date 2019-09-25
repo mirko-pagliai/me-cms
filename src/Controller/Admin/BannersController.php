@@ -15,7 +15,7 @@ namespace MeCms\Controller\Admin;
 use Cake\Event\Event;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Exception\InternalErrorException;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 
 /**
  * Banners controller
@@ -29,8 +29,7 @@ class BannersController extends AppController
      *   each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return \Cake\Network\Response|null|void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\BannersPositions::getList()
+     * @uses \MeCms\Model\Table\BannersPositions::getList()
      */
     public function beforeFilter(Event $event)
     {
@@ -53,7 +52,7 @@ class BannersController extends AppController
      * @param array $user The user to check the authorization of. If empty
      *   the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function isAuthorized($user = null)
     {
@@ -96,7 +95,7 @@ class BannersController extends AppController
      * Uploads banners
      * @return null
      * @throws \Cake\Http\Exception\InternalErrorException
-     * @uses \MeCms\Controller\AppController::setUploadError()
+     * @uses \MeCms\Controller\Admin\AppController::setUploadError()
      * @uses \MeTools\Controller\Component\UploaderComponent
      */
     public function upload()

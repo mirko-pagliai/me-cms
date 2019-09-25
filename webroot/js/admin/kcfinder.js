@@ -14,8 +14,8 @@
  */
 function setKcfinderHeight()
 {
-    var content = $('#content');
-    var kcfinder = $('#kcfinder');
+    var content = $("#content");
+    var kcfinder = $("#kcfinder");
 
     if (!kcfinder.length) {
         return;
@@ -32,10 +32,10 @@ function setKcfinderHeight()
         minHeight -= $(this).outerHeight(true);
     });
 
-    kcfinder.css('minHeight', minHeight - 5);
+    kcfinder.css("minHeight", minHeight - 5);
 }
 
 //On windows load and resize, it sets the minimum height for the KCFinder iframe
-$(window).on('load resize', function () {
+$(window).on("load resize", function () {
     setKcfinderHeight();
 });

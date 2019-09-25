@@ -14,7 +14,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\ORM\ResultSet;
-use MeCms\Controller\AppController;
+use MeCms\Controller\Admin\AppController;
 use MeCms\Model\Entity\PagesCategory;
 
 /**
@@ -29,8 +29,7 @@ class PagesCategoriesController extends AppController
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
      * @return void
-     * @uses MeCms\Controller\AppController::beforeFilter()
-     * @uses MeCms\Model\Table\PagesCategoriesTable::getTreeList()
+     * @uses \MeCms\Model\Table\PagesCategoriesTable::getTreeList()
      */
     public function beforeFilter(Event $event)
     {
@@ -46,7 +45,7 @@ class PagesCategoriesController extends AppController
      * @param array $user The user to check the authorization of. If empty
      *  the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses MeCms\Controller\Component\AuthComponent::isGroup()
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function isAuthorized($user = null)
     {
@@ -57,7 +56,7 @@ class PagesCategoriesController extends AppController
     /**
      * Lists pages categories
      * @return void
-     * @uses MeCms\Model\Table\PagesCategoriesTable::getTreeList()
+     * @uses \MeCms\Model\Table\PagesCategoriesTable::getTreeList()
      */
     public function index()
     {
@@ -138,13 +137,13 @@ class PagesCategoriesController extends AppController
 
         $category = $this->PagesCategories->get($id);
 
+        list($method, $message) = ['alert', I18N_BEFORE_DELETE];
         //Before deleting, it checks if the category has some pages
         if (!$category->get('page_count')) {
             $this->PagesCategories->deleteOrFail($category);
-            $this->Flash->success(I18N_OPERATION_OK);
-        } else {
-            $this->Flash->alert(I18N_BEFORE_DELETE);
+            list($method, $message) = ['success', I18N_OPERATION_OK];
         }
+        call_user_func([$this->Flash, $method], $message);
 
         return $this->redirect(['action' => 'index']);
     }

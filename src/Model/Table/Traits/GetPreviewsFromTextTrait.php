@@ -16,6 +16,7 @@ namespace MeCms\Model\Table\Traits;
 use Cake\ORM\Entity;
 use DOMDocument;
 use MeTools\Utility\Youtube;
+use Symfony\Component\Filesystem\Filesystem;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -90,7 +91,7 @@ trait GetPreviewsFromTextTrait
     {
         $images = array_map(function ($url) {
             if ($url && !is_url($url)) {
-                $url = is_absolute($url) ? $url : WWW_ROOT . 'img' . DS . $url;
+                $url = (new Filesystem())->isAbsolutePath($url) ? $url : WWW_ROOT . 'img' . DS . $url;
 
                 if (!file_exists($url)) {
                     return false;

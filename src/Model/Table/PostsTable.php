@@ -98,19 +98,17 @@ class PostsTable extends PostsAndPagesTables
     /**
      * `forIndex()` find method
      * @param \Cake\ORM\Query $query Query object
-     * @param array $options Options
      * @return \Cake\ORM\Query Query object
      * @since 2.22.8
      */
-    public function findForIndex(Query $query, array $options)
+    public function findForIndex(Query $query)
     {
         return $query->contain([
-                $this->Categories->getAlias() => ['fields' => ['title', 'slug']],
-                $this->Tags->getAlias() => ['sort' => ['tag' => 'ASC']],
-                $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
-            ])
-            ->select(['id', 'title', 'preview', 'subtitle', 'slug', 'text', 'enable_comments', 'created'])
-            ->order([sprintf('%s.created', $this->getAlias()) => 'DESC']);
+            $this->Categories->getAlias() => ['fields' => ['title', 'slug']],
+            $this->Tags->getAlias() => ['sort' => ['tag' => 'ASC']],
+            $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
+        ])
+        ->order([sprintf('%s.created', $this->getAlias()) => 'DESC']);
     }
 
     /**
@@ -208,8 +206,8 @@ class PostsTable extends PostsAndPagesTables
     {
         $query = $this->find('active')
             ->select(['id', 'title', 'preview', 'slug', 'text'])
-            ->matching('Tags', function (Query $q) use ($tagId) {
-                return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tagId]);
+            ->matching('Tags', function (Query $query) use ($tagId) {
+                return $query->where([sprintf('%s.id', $this->Tags->getAlias()) => $tagId]);
             });
 
         if ($onlyWithImages) {
@@ -233,8 +231,8 @@ class PostsTable extends PostsAndPagesTables
 
         //"Tag" field
         if (!empty($data['tag']) && strlen($data['tag']) > 2) {
-            $query->matching('Tags', function (Query $q) use ($data) {
-                return $q->where([sprintf('%s.tag', $this->Tags->getAlias()) => $data['tag']]);
+            $query->matching('Tags', function (Query $query) use ($data) {
+                return $query->where([sprintf('%s.tag', $this->Tags->getAlias()) => $data['tag']]);
             })->distinct();
         }
 

@@ -19,7 +19,7 @@
 		<whitelist>
 			<directory suffix=".php">./src/</directory>
             <exclude>
-                <file>./src/Shell/UpdateShell.php</file>
+                <file>./src/Command/VersionUpdatesCommand.php</file>
             </exclude>
 		</whitelist>
 	</filter>

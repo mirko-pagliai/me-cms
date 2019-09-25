@@ -41,9 +41,12 @@ class GroupsCommandTest extends TestCase
     {
         $UsersGroups = TableRegistry::getTableLocator()->get('MeCms.UsersGroups');
 
-        $expectedRows = $UsersGroups->find()->map(function (UsersGroup $group) {
-            return [$group->id, $group->name, $group->label, $group->user_count];
-        })->toList();
+        $expectedRows = $UsersGroups->find()
+            ->select(['id', 'name', 'label', 'user_count'])
+            ->map(function (UsersGroup $group) {
+                return $group->toArray();
+            })
+            ->toList();
         $expectedRows[] = ['<info>ID</info>', '<info>Name</info>', '<info>Label</info>', '<info>Users</info>'];
 
         $this->exec('me_cms.groups');

@@ -17,6 +17,7 @@ use Cake\Cache\Cache;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Database\Driver\Postgres;
 use MeTools\Console\Command;
 
 /**
@@ -46,14 +47,15 @@ class VersionUpdatesCommand extends Command
     {
         Cache::clear(false, '_cake_model_');
 
-        foreach (['Pages', 'Posts'] as $table) {
-            $Table = $this->loadModel('MeCms.' . $table);
-
+        foreach (['Pages', 'Posts'] as $tableName) {
+            $Table = $this->loadModel('MeCms.' . $tableName);
             if (!$Table->getSchema()->hasColumn('enable_comments')) {
-                $Table->getConnection()->execute(sprintf(
-                    'ALTER TABLE `%s` ADD `enable_comments` BOOLEAN NOT NULL DEFAULT TRUE AFTER `preview`',
-                    $Table->getTable()
-                ));
+                $connection = $Table->getConnection();
+                $command = 'ALTER TABLE `' . $Table->getTable() . '` ADD `enable_comments` BOOLEAN NOT NULL DEFAULT TRUE';
+                if ($connection->getDriver() instanceof Postgres) {
+                    $command = 'ALTER TABLE ' . $Table->getTable() . ' ADD COLUMN enable_comments BOOLEAN NOT NULL DEFAULT TRUE';
+                }
+                $connection->execute($command);
             }
         }
     }
@@ -64,10 +66,14 @@ class VersionUpdatesCommand extends Command
      */
     public function alterTagColumnSize()
     {
-        $Tags = $this->loadModel('MeCms.Tags');
-
-        if ($Tags->getSchema()->getColumn('tag')['length'] < 255) {
-            $Tags->getConnection()->execute('ALTER TABLE tags MODIFY tag varchar(255) NOT NULL');
+        $Table = $this->loadModel('MeCms.Tags');
+        if ($Table->getSchema()->getColumn('tag')['length'] < 255) {
+            $connection = $Table->getConnection();
+            $command = 'ALTER TABLE ' . $Table->getTable() . ' MODIFY tag varchar(255) NOT NULL';
+            if ($connection->getDriver() instanceof Postgres) {
+                $command = 'ALTER TABLE ' . $Table->getTable() . ' ALTER COLUMN tag TYPE varchar(255);';
+            }
+            $connection->execute($command);
         }
     }
 
