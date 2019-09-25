@@ -81,12 +81,13 @@ class AppController extends BaseAppController
      * @param array|\ArrayAccess|null $user The user to check the authorization
      *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function isAuthorized($user = null): bool
     {
         //Only admin and managers can access admin actions
         //Any registered user can access actions without prefix. Default deny
-        return $this->Auth->isGroup(['admin', 'manager']) || !$this->getRequest()->getParam('prefix');
+        return !$this->getRequest()->getParam('prefix') || $this->Auth->isGroup(['admin', 'manager']);
     }
 
     /**

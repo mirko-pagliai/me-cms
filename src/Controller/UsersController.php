@@ -60,14 +60,13 @@ class UsersController extends AppController
     }
 
     /**
-     * Internal method to logout
+     * Internal method to logout.
+     * Deletes some cookies and KCFinder session.
      * @return \Cake\Http\Response|null
      */
     protected function buildLogout(): ?Response
     {
         $request = $this->getRequest();
-
-        //Deletes some cookies and KCFinder session
         $request->getSession()->delete('KCFINDER');
         $cookies = $request->getCookieCollection()->remove('login');
         $this->setRequest($request->withCookieCollection($cookies));
@@ -106,8 +105,7 @@ class UsersController extends AppController
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
      *  each controller action
-     * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null|void
+     * @param \Cake\Event\EventInterface $event An E
      */
     public function beforeFilter(EventInterface $event)
     {

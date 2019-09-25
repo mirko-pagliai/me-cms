@@ -93,7 +93,6 @@ class AppView extends View
      *  surrounding layout
      * @param string|null $layout Layout name
      * @return string Rendered output
-     * @uses \MeCms\View\View::renderLayout()
      * @uses setBlocks()
      * @uses userbar()
      */

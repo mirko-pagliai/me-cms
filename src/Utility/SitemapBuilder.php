@@ -62,8 +62,7 @@ class SitemapBuilder
      * For each plugin, calls dynamically all methods from the `Sitemap` class.
      * Each method must be return an array or urls to add to the sitemap.
      * @return string
-     * @see MeCms\Utility\Sitemap
-     * @uses \MeCms\Core\Plugin::all()
+     * @see \MeCms\Utility\Sitemap
      * @uses getMethods()
      * @uses parse()
      */

@@ -65,8 +65,6 @@ class BackupForm extends Form
      * Used by `execute()` to execute the form's action
      * @param array $data Form data
      * @return bool
-     * @uses DatabaseBackup\Utility\BackupExport::filename()
-     * @uses DatabaseBackup\Utility\BackupExport::export()
      * @uses getBackupExportInstance()
      */
     protected function _execute(array $data): bool

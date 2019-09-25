@@ -7,24 +7,23 @@
 ### 2.27.0
 * requires at least PHP `7.0`, `phpunit` `6.0` and `CakePHP` `3.8`. Added tests
     for lowest dependencies;
-* all the code has been made compatible with the Postgres and Sqlite drivers.
+* all the code has been made compatible with Postgres and Sqlite drivers.
     The fixtures code has been simplified. Added tests for Postgres driver.
 * pages and posts can display the last modified date (as default). Added entries
     in the configuration file;
-* added `\MeCms\Controller\Admin\AppController` class. Admin controllers now
+* added `\MeCms\Controller\Admin\AppController` class. All admin controllers now
     extend this class;
 * the `MenuBuilderHelper::renderAsCollapse()` method takes the `$idContainer`
-    parameter and is now able to generate all the necessary code for menus, 
-    without javascript code. All the methods of the `MenuHelper` now return an
-    array with a fourth value, an array with the controllers hnadled by that menu;
+    parameter and is now able to generate all the necessary code without
+    javascript code. All methods from `MenuHelper` now return an array with a
+    fourth value (an array with the controllers handled by that menu);
 * largely simplified the code for `PostsWidgetsCell::months()` method;
 * fixed bug for `PhotosAlbumsController::index()`. Now the album photos are
     randomly ordered after being retrieved from the cache;
-* `StaticPage::getSlug()` is now public. `StaticPage::title()` has been
-    renamed as `getTitle()`. `StaticPage::getAllPaths()` has been renamed as 
-    `getPaths()` and is now public;
-* javascript functions are now "camelCase": `tag_exist()` becomes `tagExists()`;
-    `add_tags()` becomes `addTags()`; `remove_tag()` becomes `removeTag()`;
+* for `StaticPage` class, `getSlug()` is now public, `title()` becomes 
+    `getTitle()`, `getAllPaths()` becomes as `getPaths()` and is now public;
+* javascript functions are now "camelCase": `tag_exist()` becomes `tagExists()`,
+    `add_tags()` becomes `addTags()`, `remove_tag()` becomes `removeTag()` and
     `update_output_text()` becomes `updateOutputText()`;
 * many small fixes;
 * updated for `me-tools` `2.18.13`.

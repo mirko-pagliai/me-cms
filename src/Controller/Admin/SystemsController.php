@@ -49,6 +49,7 @@ class SystemsController extends AppController
      * @param array|\ArrayAccess|null $user The user to check the authorization
      *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function isAuthorized($user = null): bool
     {
@@ -98,8 +99,6 @@ class SystemsController extends AppController
     /**
      * Changelogs viewer
      * @return void
-     * @uses \MeCms\Core\Plugin:all()
-     * @uses \MeCms\Core\Plugin:path()
      */
     public function changelogs(): void
     {

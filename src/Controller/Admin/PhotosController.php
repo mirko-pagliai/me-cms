@@ -54,6 +54,7 @@ class PhotosController extends AppController
      * @param array|\ArrayAccess|null $user The user to check the authorization
      *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function isAuthorized($user = null): bool
     {
@@ -96,7 +97,7 @@ class PhotosController extends AppController
      * Uploads photos
      * @return void
      * @throws \Cake\Http\Exception\InternalErrorException
-     * @uses \MeCms\Controller\AppController::setUploadError()
+     * @uses \MeCms\Controller\Admin\AppController::setUploadError()
      * @uses \MeTools\Controller\Component\UploaderComponent
      */
     public function upload(): void

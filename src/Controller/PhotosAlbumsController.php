@@ -32,8 +32,8 @@ class PhotosAlbumsController extends AppController
     {
         $albums = $this->PhotosAlbums->find('active')
             ->select(['id', 'title', 'slug', 'photo_count', 'created'])
-            ->contain($this->PhotosAlbums->Photos->getAlias(), function (Query $q) {
-                return $q->find('active')->select(['id', 'album_id', 'filename']);
+            ->contain($this->PhotosAlbums->Photos->getAlias(), function (Query $query) {
+                return $query->find('active')->select(['id', 'album_id', 'filename']);
             })
             ->order([sprintf('%s.created', $this->PhotosAlbums->getAlias()) => 'DESC'])
             ->cache('albums_index', $this->PhotosAlbums->getCacheName());

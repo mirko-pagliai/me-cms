@@ -205,8 +205,8 @@ class PostsTable extends PostsAndPagesTables
     {
         $query = $this->find('active')
             ->select(['id', 'title', 'preview', 'slug', 'text'])
-            ->matching('Tags', function (Query $q) use ($tagId) {
-                return $q->where([sprintf('%s.id', $this->Tags->getAlias()) => $tagId]);
+            ->matching('Tags', function (Query $query) use ($tagId) {
+                return $query->where([sprintf('%s.id', $this->Tags->getAlias()) => $tagId]);
             });
 
         if ($onlyWithImages) {
@@ -229,8 +229,8 @@ class PostsTable extends PostsAndPagesTables
 
         //"Tag" field
         if (!empty($data['tag']) && strlen($data['tag']) > 2) {
-            $query->matching('Tags', function (Query $q) use ($data) {
-                return $q->where([sprintf('%s.tag', $this->Tags->getAlias()) => $data['tag']]);
+            $query->matching('Tags', function (Query $query) use ($data) {
+                return $query->where([sprintf('%s.tag', $this->Tags->getAlias()) => $data['tag']]);
             })->distinct();
         }
 

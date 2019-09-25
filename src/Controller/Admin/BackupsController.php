@@ -76,6 +76,7 @@ class BackupsController extends AppController
     /**
      * Lists backup files
      * @return void
+     * @uses $BackupManager
      */
     public function index(): void
     {
@@ -96,7 +97,6 @@ class BackupsController extends AppController
         $backup = new BackupForm();
 
         if ($this->getRequest()->is('post')) {
-            //Creates the backup
             if ($backup->execute($this->getRequest()->getData())) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
@@ -114,6 +114,7 @@ class BackupsController extends AppController
      * @param string $filename Backup filename
      * @return \Cake\Http\Response|null
      * @uses getFilename()
+     * @uses $BackupManager
      */
     public function delete(string $filename): ?Response
     {
@@ -127,6 +128,7 @@ class BackupsController extends AppController
     /**
      * Deletes all backup files
      * @return \Cake\Http\Response|null
+     * @uses $BackupManager
      */
     public function deleteAll(): ?Response
     {
@@ -172,6 +174,7 @@ class BackupsController extends AppController
      * @return \Cake\Http\Response|null
      * @since 2.18.3
      * @uses getFilename()
+     * @uses $BackupManager
      */
     public function send(string $filename): ?Response
     {

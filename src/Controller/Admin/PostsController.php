@@ -27,7 +27,6 @@ class PostsController extends AppController
 {
     /**
      * Called before the controller action.
-     * You can use this method to perform logic that needs to happen before
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
@@ -86,6 +85,7 @@ class PostsController extends AppController
      * @param array|\ArrayAccess|null $user The user to check the authorization
      *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      * @uses \MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
      */
     public function isAuthorized($user = null): bool
@@ -128,6 +128,7 @@ class PostsController extends AppController
     /**
      * Adds post
      * @return \Cake\Http\Response|null|void
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function add()
     {
@@ -154,6 +155,7 @@ class PostsController extends AppController
      * Edits post
      * @param string $id Post ID
      * @return \Cake\Http\Response|null|void
+     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function edit(string $id)
     {

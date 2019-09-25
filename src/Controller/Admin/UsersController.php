@@ -240,7 +240,7 @@ class UsersController extends AppController
     /**
      * Changes the user's picture
      * @return void
-     * @uses \MeCms\Controller\AppController::setUploadError()
+     * @uses \MeCms\Controller\Admin\AppController::setUploadError()
      * @uses \MeTools\Controller\Component\UploaderComponent
      */
     public function changePicture(): void

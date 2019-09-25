@@ -90,10 +90,7 @@ class PostsTagsWidgetsCell extends Cell
         $tags = $this->Tags->find()
             ->select(['tag', 'post_count'])
             ->limit($limit)
-            ->order([
-                sprintf('%s.post_count', $this->Tags->getAlias()) => 'DESC',
-                sprintf('%s.tag', $this->Tags->getAlias()) => 'ASC',
-            ])
+            ->order(['post_count' => 'DESC', 'tag' => 'ASC'])
             ->formatResults(function (ResultSet $results) use ($style, $maxFont, $minFont) {
                 $results = $results->indexBy('slug');
 
