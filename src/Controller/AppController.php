@@ -22,6 +22,27 @@ use Cake\I18n\I18n;
 class AppController extends BaseAppController
 {
     /**
+     * Magic accessor for model autoloading.
+     *
+     * In addition to the method provided by CakePHP, it can also auto-load the
+     *  associated tables.
+     * @param string $name Property name
+     * @return bool|object The model instance or false
+     * @see \Cake\Controller\Controller::__get()
+     * @since 2.27.1
+     */
+    public function __get($name)
+    {
+        list(, $class) = pluginSplit($this->modelClass, true);
+
+        if ($class !== $name && $this->{$class}->hasAssociation($name)) {
+            return $this->{$class}->getAssociation($name);
+        }
+
+        return parent::__get($name);
+    }
+
+    /**
      * Called before the controller action
      * @param \Cake\Event\Event $event An Event instance
      * @return \Cake\Network\Response|null

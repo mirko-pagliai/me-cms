@@ -19,7 +19,9 @@ use MeCms\Controller\AppController;
 
 /**
  * PostsTags controller
+ * @property \MeCms\Model\Table\PostsTable $Posts
  * @property \MeCms\Model\Table\PostsTagsTable $PostsTags
+ * @property \MeCms\Model\Table\TagsTable $Tags
  */
 class PostsTagsController extends AppController
 {
@@ -47,7 +49,7 @@ class PostsTagsController extends AppController
 
         //If the data are not available from the cache
         if (empty($tags) || empty($paging)) {
-            $query = $this->PostsTags->Tags->find('active');
+            $query = $this->Tags->find('active');
             $tags = $this->paginate($query);
 
             //Writes on cache
@@ -77,7 +79,7 @@ class PostsTagsController extends AppController
 
         $slug = Text::slug($slug, ['replacement' => ' ']);
 
-        $tag = $this->PostsTags->Tags->findActiveByTag($slug)
+        $tag = $this->Tags->findActiveByTag($slug)
             ->cache('tag_' . md5($slug))
             ->firstOrFail();
 
@@ -94,9 +96,9 @@ class PostsTagsController extends AppController
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
-            $query = $this->PostsTags->Posts->find('active')
+            $query = $this->Posts->find('active')
                 ->find('forIndex')
-                ->matching($this->PostsTags->Tags->getAlias(), function (Query $query) use ($slug) {
+                ->matching($this->Tags->getAlias(), function (Query $query) use ($slug) {
                     return $query->where(['tag' => $slug]);
                 });
             $posts = $this->paginate($query);

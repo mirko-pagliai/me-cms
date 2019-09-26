@@ -19,6 +19,7 @@ use MeCms\Controller\AppController;
 /**
  * PostsCategories controller
  * @property \MeCms\Model\Table\PostsCategoriesTable $PostsCategories
+ * @property \MeCms\Model\Table\PostsTable $Posts
  */
 class PostsCategoriesController extends AppController
 {
@@ -62,7 +63,7 @@ class PostsCategoriesController extends AppController
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
-            $query = $this->PostsCategories->Posts->find('active')
+            $query = $this->Posts->find('active')
                 ->find('forIndex')
                 ->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]);
 

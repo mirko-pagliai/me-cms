@@ -20,6 +20,7 @@ use Thumber\Utility\ThumbManager;
 
 /**
  * Users controller
+ * @property \MeCms\Model\Table\UsersGroupsTable $Groups
  * @property \MeCms\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController
@@ -39,7 +40,7 @@ class UsersController extends AppController
         parent::beforeFilter($event);
 
         if ($this->getRequest()->isAction(['index', 'add', 'edit'])) {
-            $groups = $this->Users->Groups->getList();
+            $groups = $this->Groups->getList();
 
             if ($groups->isEmpty()) {
                 $this->Flash->alert(__d('me_cms', 'You must first create an user group'));

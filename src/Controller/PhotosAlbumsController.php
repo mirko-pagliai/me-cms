@@ -20,6 +20,7 @@ use MeCms\ORM\Query;
 /**
  * PhotosAlbums controller
  * @property \MeCms\Model\Table\PhotosAlbumsTable $PhotosAlbums
+ * @property \MeCms\Model\Table\PhotosTable $Photos
  */
 class PhotosAlbumsController extends AppController
 {
@@ -31,7 +32,7 @@ class PhotosAlbumsController extends AppController
     {
         $albums = $this->PhotosAlbums->find('active')
             ->select(['id', 'title', 'slug', 'photo_count', 'created'])
-            ->contain($this->PhotosAlbums->Photos->getAlias(), function (Query $query) {
+            ->contain($this->Photos->getAlias(), function (Query $query) {
                 return $query->find('active')->select(['id', 'album_id', 'filename']);
             })
             ->orderDesc(sprintf('%s.created', $this->PhotosAlbums->getAlias()))
@@ -85,11 +86,11 @@ class PhotosAlbumsController extends AppController
 
         //If the data are not available from the cache
         if (empty($photos) || empty($paging)) {
-            $query = $this->PhotosAlbums->Photos->findActiveByAlbumId($album->id)
+            $query = $this->Photos->findActiveByAlbumId($album->id)
                 ->select(['id', 'album_id', 'filename', 'description'])
                 ->order([
-                    sprintf('%s.created', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
-                    sprintf('%s.id', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
+                    sprintf('%s.created', $this->Photos->getAlias()) => 'DESC',
+                    sprintf('%s.id', $this->Photos->getAlias()) => 'DESC',
                 ]);
 
             $photos = $this->paginate($query);

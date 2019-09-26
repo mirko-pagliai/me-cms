@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.27 branch
 ### 2.27.1
+* added `\MeCms\Controller\AppController::__get()` method. In addition to the
+    method provided by CakePHP, it can also auto-load the associated tables;
 * added `\MeCms\ORM\Query` class. The tables that extend
     `\MeCms\Model\Table\AppModel` will use this query class as default. This
     class overrides the `cache()` method and uses the `getCacheName()` table

@@ -19,6 +19,7 @@ use MeCms\Controller\Admin\AppController;
 
 /**
  * Photos controller
+ * @property \MeCms\Model\Table\PhotosAlbumsTable $Albums
  * @property \MeCms\Model\Table\PhotosTable $Photos
  */
 class PhotosController extends AppController
@@ -36,7 +37,7 @@ class PhotosController extends AppController
         parent::beforeFilter($event);
 
         //Gets albums
-        $albums = $this->Photos->Albums->getList();
+        $albums = $this->Albums->getList();
 
         if ($albums->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create an album'));
@@ -87,7 +88,8 @@ class PhotosController extends AppController
         $this->set('title', I18N_PHOTOS);
 
         if ($render) {
-            $this->response = $this->response->withCookie((new Cookie('render-photos', $render))->withNeverExpire());
+            $cookie = (new Cookie('render-photos', $render))->withNeverExpire();
+            $this->setResponse($this->getResponse()->withCookie($cookie));
         }
     }
 
@@ -166,7 +168,7 @@ class PhotosController extends AppController
      */
     public function download($id)
     {
-        return $this->response->withFile($this->Photos->get($id)->path, ['download' => true]);
+        return $this->getResponse()->withFile($this->Photos->get($id)->get('path'), ['download' => true]);
     }
 
     /**

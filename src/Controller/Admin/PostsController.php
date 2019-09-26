@@ -19,7 +19,9 @@ use MeCms\Model\Entity\Post;
 
 /**
  * Posts controller
+ * @property \MeCms\Model\Table\PostsCategoriesTable $Categories
  * @property \MeCms\Model\Table\PostsTable $Posts
+ * @property \MeCms\Model\Table\UsersTable $Users
  */
 class PostsController extends AppController
 {
@@ -47,8 +49,8 @@ class PostsController extends AppController
                 $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
             }
         }
-        $categories = call_user_func([$this->Posts->Categories, $categoriesMethod]);
-        $users = call_user_func([$this->Posts->Users, $usersMethod]);
+        $categories = call_user_func([$this->Categories, $categoriesMethod]);
+        $users = call_user_func([$this->Users, $usersMethod]);
 
         if ($users->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create an user'));
@@ -73,7 +75,6 @@ class PostsController extends AppController
     {
         parent::initialize();
 
-        //Loads KcFinderComponent
         if ($this->getRequest()->isAction(['add', 'edit'])) {
             $this->loadComponent('MeCms.KcFinder');
         }
@@ -162,7 +163,7 @@ class PostsController extends AppController
             ->contain(['Tags' => ['sort' => ['tag' => 'ASC']]])
             ->formatResults(function (ResultSet $results) {
                 return $results->map(function (Post $post) {
-                    return $post->set('created', $post->created->i18nFormat(FORMAT_FOR_MYSQL));
+                    return $post->set('created', $post->get('created')->i18nFormat(FORMAT_FOR_MYSQL));
                 });
             })
             ->firstOrFail();

@@ -18,6 +18,7 @@ use MeCms\ORM\Query;
 /**
  * PagesCategories controller
  * @property \MeCms\Model\Table\PagesCategoriesTable $PagesCategories
+ * @property \MeCms\Model\Table\PagesTable $Pages
  */
 class PagesCategoriesController extends AppController
 {
@@ -49,7 +50,7 @@ class PagesCategoriesController extends AppController
 
         $category = $this->PagesCategories->findActiveBySlug($slug)
             ->select(['id', 'title'])
-            ->contain($this->PagesCategories->Pages->getAlias(), function (Query $query) {
+            ->contain($this->Pages->getAlias(), function (Query $query) {
                 return $query->find('active')->select(['category_id', 'slug', 'title']);
             })
             ->cache('category_' . md5($slug))
