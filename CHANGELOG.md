@@ -1,5 +1,12 @@
 # 2.x branch
 ## 2.27 branch
+### 2.27.1
+* added `\MeCms\ORM\Query` class. The tables that extend
+    `\MeCms\Model\Table\AppModel` will use this query class as default. This
+    class overrides the `cache()` method and uses the `getCacheName()` table
+    method to get the default name of the cache config to use, if that method
+    exists.
+
 ### 2.27.0
 * requires at least PHP `7.0`, `phpunit` `6.0` and `CakePHP` `3.8`. Added tests
     for lowest dependencies;

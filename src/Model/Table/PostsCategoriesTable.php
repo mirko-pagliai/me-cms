@@ -12,10 +12,10 @@
  */
 namespace MeCms\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Validation\PostsCategoryValidator;
+use MeCms\ORM\Query;
 
 /**
  * PostsCategories model

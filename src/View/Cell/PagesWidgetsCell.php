@@ -49,7 +49,7 @@ class PagesWidgetsCell extends Cell
             ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_categories', $this->Pages->getCacheName())
+            ->cache('widget_categories')
             ->all();
 
         $this->set(compact('categories'));
@@ -69,7 +69,7 @@ class PagesWidgetsCell extends Cell
         $pages = $this->Pages->find('active')
             ->select(['title', 'slug'])
             ->orderAsc('title')
-            ->cache(sprintf('widget_list'), $this->Pages->getCacheName())
+            ->cache('widget_list')
             ->all();
 
         $this->set(compact('pages'));

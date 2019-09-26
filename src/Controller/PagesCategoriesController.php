@@ -12,8 +12,8 @@
  */
 namespace MeCms\Controller;
 
-use Cake\ORM\Query;
 use MeCms\Controller\AppController;
+use MeCms\ORM\Query;
 
 /**
  * PagesCategories controller
@@ -30,7 +30,7 @@ class PagesCategoriesController extends AppController
         $categories = $this->PagesCategories->find('active')
             ->select(['title', 'slug'])
             ->orderAsc(sprintf('%s.title', $this->PagesCategories->getAlias()))
-            ->cache('categories_index', $this->PagesCategories->getCacheName());
+            ->cache('categories_index');
 
         $this->set(compact('categories'));
     }
@@ -52,7 +52,7 @@ class PagesCategoriesController extends AppController
             ->contain($this->PagesCategories->Pages->getAlias(), function (Query $query) {
                 return $query->find('active')->select(['category_id', 'slug', 'title']);
             })
-            ->cache(sprintf('category_%s', md5($slug)), $this->PagesCategories->getCacheName())
+            ->cache('category_' . md5($slug))
             ->firstOrFail();
 
         $this->set(compact('category'));

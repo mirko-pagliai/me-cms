@@ -154,7 +154,7 @@ class PostsController extends AppController
             ->select(['title', 'preview', 'slug', 'text', 'created'])
             ->limit(getConfigOrFail('default.records_for_rss'))
             ->orderDesc('created')
-            ->cache('rss', $this->Posts->getCacheName());
+            ->cache('rss');
 
         $this->set(compact('posts'));
     }
@@ -238,7 +238,7 @@ class PostsController extends AppController
     {
         $post = $this->Posts->findActiveBySlug($slug)
             ->find('forIndex')
-            ->cache(sprintf('view_%s', md5($slug)), $this->Posts->getCacheName())
+            ->cache('view_' . md5($slug))
             ->firstOrFail();
 
         $this->set(compact('post'));

@@ -78,7 +78,7 @@ class PostsTagsController extends AppController
         $slug = Text::slug($slug, ['replacement' => ' ']);
 
         $tag = $this->PostsTags->Tags->findActiveByTag($slug)
-            ->cache(sprintf('tag_%s', md5($slug)), $this->PostsTags->getCacheName())
+            ->cache('tag_' . md5($slug))
             ->firstOrFail();
 
         $page = $this->getRequest()->getQuery('page', 1);

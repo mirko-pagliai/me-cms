@@ -13,9 +13,9 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
-use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 use MeCms\Model\Entity\PhotosAlbum;
+use MeCms\ORM\Query;
 
 /**
  * PhotosAlbums controller
@@ -35,7 +35,7 @@ class PhotosAlbumsController extends AppController
                 return $query->find('active')->select(['id', 'album_id', 'filename']);
             })
             ->orderDesc(sprintf('%s.created', $this->PhotosAlbums->getAlias()))
-            ->cache('albums_index', $this->PhotosAlbums->getCacheName());
+            ->cache('albums_index');
 
         //If there is only one record, redirects
         if ($albums->count() === 1) {
@@ -68,7 +68,7 @@ class PhotosAlbumsController extends AppController
         //Gets album ID and title
         $album = $this->PhotosAlbums->findActiveBySlug($slug)
             ->select(['id', 'title'])
-            ->cache(sprintf('album_%s', md5($slug)), $this->PhotosAlbums->getCacheName())
+            ->cache('album_' . md5($slug))
             ->firstOrFail();
 
         $page = $this->getRequest()->getQuery('page', 1);

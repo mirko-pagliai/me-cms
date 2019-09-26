@@ -51,7 +51,7 @@ class PostsWidgetsCell extends Cell
             ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_categories', $this->Posts->getCacheName())
+            ->cache('widget_categories')
             ->all();
 
         $this->set(compact('categories'));
@@ -73,7 +73,7 @@ class PostsWidgetsCell extends Cell
             ->select(['title', 'slug'])
             ->limit($limit)
             ->orderDesc('created')
-            ->cache(sprintf('widget_latest_%d', $limit), $this->Posts->getCacheName())
+            ->cache('widget_latest_' . $limit)
             ->all();
 
         $this->set(compact('posts'));
@@ -107,7 +107,7 @@ class PostsWidgetsCell extends Cell
                         ];
                     });
             })
-            ->cache('widget_months', $this->Posts->getCacheName())
+            ->cache('widget_months')
             ->all();
 
         $this->set(compact('months'));
