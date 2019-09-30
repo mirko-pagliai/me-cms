@@ -15,6 +15,7 @@ namespace MeCms\Test\TestCase\ORM;
 use Cake\Cache\Cache;
 use MeCms\ORM\Query;
 use MeCms\TestSuite\TestCase;
+use RuntimeException;
 
 /**
  * QueryTest class
@@ -84,5 +85,9 @@ class QueryTest extends TestCase
         $Query->cache($cacheKey, 'default');
         $Query->cache($cacheKey, 'articles');
         $Query->cache($cacheKey, $defaultEngine);
+
+        $this->expectException(RuntimeException::class);
+        $Query->update();
+        $Query->cache($cacheKey);
     }
 }

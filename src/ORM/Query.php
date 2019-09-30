@@ -16,6 +16,7 @@ namespace MeCms\ORM;
 
 use Cake\Datasource\QueryTrait;
 use Cake\ORM\Query as BaseQuery;
+use RuntimeException;
 
 /**
  * Contains the characteristics for an object that is attached to a repository and
@@ -39,6 +40,7 @@ class Query extends BaseQuery
      * @param string|\Cake\Cache\CacheEngine $config Either the name of the
      *  cache config to use, or a cache config instance
      * @return $this
+     * @throws RuntimeException
      * @uses \MeCms\Model\Table\AppModel::getCacheName()
      */
     public function cache($key, $config = '')
