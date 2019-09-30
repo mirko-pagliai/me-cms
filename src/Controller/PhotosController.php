@@ -18,6 +18,7 @@ use MeCms\Controller\AppController;
 
 /**
  * Photos controller
+ * @property \MeCms\Model\Table\PhotosAlbumsTable $Albums
  * @property \MeCms\Model\Table\PhotosTable $Photos
  */
 class PhotosController extends AppController
@@ -33,16 +34,15 @@ class PhotosController extends AppController
         //This allows backward compatibility for URLs like `/photo/11`
         if (empty($slug)) {
             $photo = $this->Photos->findById($id)
-                ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['slug']]])
+                ->contain([$this->Albums->getAlias() => ['fields' => ['slug']]])
                 ->firstOrFail();
 
             return $this->redirect(compact('id') + ['slug' => $photo->get('album')->get('slug')], 301);
         }
 
         $photo = $this->Photos->findActiveById($id)
-            ->select(['id', 'album_id', 'filename', 'active', 'modified'])
-            ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
-            ->cache(sprintf('view_%s', md5($id)), $this->Photos->getCacheName())
+            ->contain([$this->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
+            ->cache('view_' . md5($id))
             ->firstOrFail();
 
         $this->set(compact('photo'));
@@ -58,7 +58,7 @@ class PhotosController extends AppController
     {
         $photo = $this->Photos->findPendingById($id)
             ->select(['id', 'album_id', 'filename'])
-            ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
+            ->contain([$this->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
             ->firstOrFail();
 
         $this->set(compact('photo'));

@@ -58,7 +58,7 @@ class VersionUpdatesCommandTest extends TestCase
             return [$this->getTable('MeCms.Posts'), $this->getTable('MeCms.Pages')];
         };
 
-        list($Posts, $Pages) = $getTables();
+        [$Posts, $Pages] = $getTables();
         $this->skipIf($Posts->getConnection()->getDriver() instanceof Sqlite);
         $this->loadFixtures('Pages', 'Posts');
 

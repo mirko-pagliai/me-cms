@@ -110,33 +110,41 @@ class BackupsController extends AppController
     }
 
     /**
-     * Deletes a backup file
-     * @param string $filename Backup filename
+     * Internal method to delete backup files
+     * @param string|null $filename  Backup filename or `null` to delete all
      * @return \Cake\Http\Response|null
      * @uses getFilename()
      * @uses $BackupManager
      */
-    public function delete(string $filename): ?Response
+    protected function _delete(?string $filename = null): ?Response
     {
         $this->getRequest()->allowMethod(['post', 'delete']);
-        $this->BackupManager->delete($this->getFilename($filename));
+        $filename = $filename ? $this->getFilename($filename) : null;
+        call_user_func([$this->BackupManager, $filename ? 'delete' : 'deleteAll'], $filename);
         $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirect(['action' => 'index']);
     }
 
     /**
+     * Deletes a backup file
+     * @param string $filename Backup filename
+     * @return \Cake\Http\Response|null
+     * @uses _delete()
+     */
+    public function delete(string $filename): ?Response
+    {
+        return $this->_delete($filename);
+    }
+
+    /**
      * Deletes all backup files
      * @return \Cake\Http\Response|null
-     * @uses $BackupManager
+     * @uses _delete()
      */
     public function deleteAll(): ?Response
     {
-        $this->getRequest()->allowMethod(['post', 'delete']);
-        $this->BackupManager->deleteAll();
-        $this->Flash->success(I18N_OPERATION_OK);
-
-        return $this->redirect(['action' => 'index']);
+        return $this->_delete();
     }
 
     /**
@@ -147,7 +155,7 @@ class BackupsController extends AppController
      */
     public function download(string $filename): Response
     {
-        return $this->response->withFile($this->getFilename($filename), ['download' => true]);
+        return $this->getResponse()->withFile($this->getFilename($filename), ['download' => true]);
     }
 
     /**

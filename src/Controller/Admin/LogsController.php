@@ -34,10 +34,7 @@ class LogsController extends AppController
     protected function getPath($file, bool $serialized): string
     {
         $filename = $file instanceof SplFileInfo ? $file->getFilename() : $file;
-
-        if ($serialized) {
-            $filename = pathinfo($filename, PATHINFO_FILENAME) . '_serialized.log';
-        }
+        $filename = $serialized ? pathinfo($filename, PATHINFO_FILENAME) . '_serialized.log' : $filename;
 
         return LOGS . $filename;
     }
@@ -106,9 +103,8 @@ class LogsController extends AppController
             $this->viewBuilder()->setTemplate('view_as_serialized');
         }
 
-        $content = $this->read($filename, $serialized);
-
-        $this->set(compact('content', 'filename'));
+        $this->set('content', $this->read($filename, $serialized));
+        $this->set(compact('filename'));
     }
 
     /**
@@ -119,7 +115,7 @@ class LogsController extends AppController
      */
     public function download(string $filename): Response
     {
-        return $this->response->withFile($this->getPath($filename, false), ['download' => true]);
+        return $this->getResponse()->withFile($this->getPath($filename, false), ['download' => true]);
     }
 
     /**

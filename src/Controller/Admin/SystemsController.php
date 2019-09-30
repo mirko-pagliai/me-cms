@@ -84,11 +84,10 @@ class SystemsController extends AppController
         //Checks the type, then sets the KCFinder path
         if ($type && array_key_exists($type, $types)) {
             //Sets locale
-            $locale = substr(I18n::getLocale(), 0, 2);
             $this->set('kcfinder', sprintf(
                 '%s/kcfinder/browse.php?lang=%s&type=%s',
                 Router::url('/vendor', true),
-                $locale ?: 'en',
+                substr(I18n::getLocale(), 0, 2) ?: 'en',
                 $type
             ));
         }
@@ -134,18 +133,16 @@ class SystemsController extends AppController
     {
         $Checkup = new Checkup();
 
-        $results = [
-            'apache' => [
-                'modules' => $Checkup->Apache->modules(),
-                'version' => $Checkup->Apache->version(),
-            ],
+        foreach (['Apache', 'KCFinder'] as $class) {
+            foreach (get_class_methods($Checkup->{$class}) as $method) {
+                $results[strtolower($class)][$method] = call_user_func([$Checkup->{$class}, $method]);
+            }
+        }
+
+        $results += [
             'backups' => $Checkup->Backups->isWriteable(),
             'cache' => Cache::enabled(),
             'cakephp' => Configure::version(),
-            'kcfinder' => [
-                'htaccess' => $Checkup->KCFinder->htaccess(),
-                'version' => $Checkup->KCFinder->version(),
-            ],
             'phpExtensions' => $Checkup->PHP->extensions(),
             'plugins' => $Checkup->Plugin->versions(),
             'temporary' => $Checkup->TMP->isWriteable(),
@@ -186,7 +183,6 @@ class SystemsController extends AppController
 
         $assetsTarget = getConfigOrFail('Assets.target');
         $success = true;
-
         switch ($type) {
             case 'all':
                 @unlink_recursive($assetsTarget, 'empty');

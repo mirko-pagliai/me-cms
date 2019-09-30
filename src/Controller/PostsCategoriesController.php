@@ -20,6 +20,7 @@ use MeCms\Controller\AppController;
 /**
  * PostsCategories controller
  * @property \MeCms\Model\Table\PostsCategoriesTable $PostsCategories
+ * @property \MeCms\Model\Table\PostsTable $Posts
  */
 class PostsCategoriesController extends AppController
 {
@@ -31,8 +32,8 @@ class PostsCategoriesController extends AppController
     {
         $categories = $this->PostsCategories->find('active')
             ->select(['title', 'slug'])
-            ->order([sprintf('%s.title', $this->PostsCategories->getAlias()) => 'ASC'])
-            ->cache('categories_index', $this->PostsCategories->getCacheName());
+            ->orderAsc(sprintf('%s.title', $this->PostsCategories->getAlias()))
+            ->cache('categories_index');
 
         $this->set(compact('categories'));
     }
@@ -63,7 +64,7 @@ class PostsCategoriesController extends AppController
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
-            $query = $this->PostsCategories->Posts->find('active')
+            $query = $this->Posts->find('active')
                 ->find('forIndex')
                 ->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]);
 

@@ -29,7 +29,6 @@ trait CheckLastSearchTrait
     protected function checkLastSearch(?string $id = null): bool
     {
         $interval = getConfig('security.search_interval');
-
         if (!$interval) {
             return true;
         }

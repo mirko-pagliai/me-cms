@@ -33,7 +33,7 @@ class BannersController extends AppController
         $banner = $this->Banners->findActiveById($id)
             ->select(['target'])
             ->where(['target !=' => ''])
-            ->cache(sprintf('view_%s', md5($id)), $this->Banners->getCacheName())
+            ->cache('view_' . md5($id))
             ->firstOrFail();
 
         //Increases the click count

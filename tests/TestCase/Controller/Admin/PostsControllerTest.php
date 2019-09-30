@@ -46,22 +46,13 @@ class PostsControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Called before every test method
-     * @return void
+     * Tests for `beforeFilter()` method
+     * @test
      */
-    public function setUp(): void
+    public function testBeforeFilter(): void
     {
         create_kcfinder_files();
 
-        parent::setUp();
-    }
-
-    /**
-     * Tests for `beforeFilter()` method, with no categories
-     * @test
-     */
-    public function testBeforeFilterNoCategories()
-    {
         $this->Table->Categories->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
@@ -69,14 +60,7 @@ class PostsControllerTest extends ControllerTestCase
             $this->assertRedirect(['controller' => 'PostsCategories', 'action' => 'index']);
             $this->assertFlashMessage('You must first create a category');
         }
-    }
 
-    /**
-     * Tests for `beforeFilter()` method, with no users
-     * @test
-     */
-    public function testBeforeFilterNoUsers()
-    {
         $this->Table->Users->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
@@ -108,7 +92,7 @@ class PostsControllerTest extends ControllerTestCase
         }
 
         //With `edit` action and an user who owns the record
-        $this->Controller->request = $this->Controller->getRequest()->withParam('pass.0', 1);
+        $this->Controller->setRequest($this->Controller->getRequest()->withParam('pass.0', 1));
         $this->assertUsersAreAuthorized([
             1 => true,
             2 => false,
@@ -116,7 +100,7 @@ class PostsControllerTest extends ControllerTestCase
             4 => false,
         ], 'edit');
 
-        $this->Controller->request = $this->Controller->getRequest()->withParam('pass.0', 2);
+        $this->Controller->setRequest($this->Controller->getRequest()->withParam('pass.0', 2));
         $this->assertUsersAreAuthorized([
             1 => false,
             2 => false,
@@ -143,6 +127,7 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testAdd()
     {
+        create_kcfinder_files();
         $url = $this->url + ['action' => 'add'];
 
         $this->get($url);
@@ -168,14 +153,15 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testEdit()
     {
+        create_kcfinder_files();
         $url = $this->url + ['action' => 'edit', 1];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'form.php');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
-        $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('post')->tags);
-        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('post')->created);
+        $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('post')->get('tags'));
+        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('post')->get('created'));
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
@@ -207,6 +193,8 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testAdminsAndManagersCanAddAndEditAsAnotherUser()
     {
+        create_kcfinder_files();
+
         foreach (['admin', 'manager'] as $userGroup) {
             $this->setUserGroup($userGroup);
 
@@ -217,15 +205,15 @@ class PostsControllerTest extends ControllerTestCase
                 $this->assertFlashMessage(I18N_OPERATION_OK);
 
                 $post = $this->Table->find()->last();
-                $this->assertEquals($userId, $post->user_id);
+                $this->assertEquals($userId, $post->get('user_id'));
 
                 //Edits record, adding +1 to the `user_id`
-                $this->post($this->url + ['action' => 'edit', $post->id], ['user_id' => ++$userId] + self::$example);
+                $this->post($this->url + ['action' => 'edit', $post->get('id')], ['user_id' => ++$userId] + self::$example);
                 $this->assertRedirect(['action' => 'index']);
                 $this->assertFlashMessage(I18N_OPERATION_OK);
 
-                $post = $this->Table->findById($post->id)->first();
-                $this->assertEquals($userId, $post->user_id);
+                $post = $this->Table->findById($post->get('id'))->first();
+                $this->assertEquals($userId, $post->get('user_id'));
 
                 $this->Table->delete($post);
             }
@@ -238,6 +226,7 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testOtherUsersCannotAddOrEditAsAnotherUser()
     {
+        create_kcfinder_files();
         $this->setUserGroup('user');
         $this->setUserId(3);
 
@@ -248,15 +237,15 @@ class PostsControllerTest extends ControllerTestCase
             $this->assertFlashMessage(I18N_OPERATION_OK);
 
             $post = $this->Table->find()->last();
-            $this->assertEquals(3, $post->user_id);
+            $this->assertEquals(3, $post->get('user_id'));
 
             //Edits record, adding +1 to the `user_id`
-            $this->post($this->url + ['action' => 'edit', $post->id], ['user_id' => ++$userId] + self::$example);
+            $this->post($this->url + ['action' => 'edit', $post->get('id')], ['user_id' => ++$userId] + self::$example);
             $this->assertRedirect(['action' => 'index']);
             $this->assertFlashMessage(I18N_OPERATION_OK);
 
-            $post = $this->Table->findById($post->id)->first();
-            $this->assertEquals(3, $post->user_id);
+            $post = $this->Table->findById($post->get('id'))->first();
+            $this->assertEquals(3, $post->get('user_id'));
 
             $this->Table->delete($post);
         }

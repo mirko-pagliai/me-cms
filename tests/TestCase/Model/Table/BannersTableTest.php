@@ -109,8 +109,6 @@ class BannersTableTest extends TableTestCase
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM banners Banners WHERE Banners.active = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertNotEmpty($query->count());
-        array_map([$this, 'assertTrue'], $query->all()->extract('active')->toArray());
     }
 
     /**

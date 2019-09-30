@@ -38,6 +38,7 @@ class PagesControllerTest extends ControllerTestCase
     ];
 
     /**
+<<<<<<< HEAD
      * Called before every test method
      * @return void
      */
@@ -54,6 +55,8 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function testBeforeFilter()
     {
+        create_kcfinder_files();
+
         foreach (['add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [1]);
             $this->assertNotEmpty($this->viewVariable('categories'));
@@ -65,14 +68,7 @@ class PagesControllerTest extends ControllerTestCase
         //The `indexStatics` action still works
         $this->get($this->url + ['action' => 'indexStatics']);
         $this->assertEmpty($this->viewVariable('categories'));
-    }
 
-    /**
-     * Tests for `beforeFilter()` method, with no categories
-     * @test
-     */
-    public function testBeforeFilterNoCategories()
-    {
         //Deletes all categories
         $this->Table->Categories->deleteAll(['id IS NOT' => null]);
 
@@ -142,6 +138,7 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function testAdd()
     {
+        create_kcfinder_files();
         $url = $this->url + ['action' => 'add'];
 
         $this->get($url);
@@ -172,6 +169,7 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function testEdit()
     {
+        create_kcfinder_files();
         $url = $this->url + ['action' => 'edit', 1];
 
         $this->get($url);

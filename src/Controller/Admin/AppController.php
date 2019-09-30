@@ -25,11 +25,14 @@ class AppController extends BaseAppController
     /**
      * Called before the controller action
      * @param \Cake\Event\Event $event An Event instance
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
     public function beforeFilter(EventInterface $event)
     {
         $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         $this->viewBuilder()->setClassName('MeCms.View/Admin');
 
@@ -38,8 +41,6 @@ class AppController extends BaseAppController
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.records');
 
         $this->Auth->deny();
-
-        return $result;
     }
 
     /**

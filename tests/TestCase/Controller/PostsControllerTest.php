@@ -145,8 +145,7 @@ class PostsControllerTest extends ControllerTestCase
 
         //With an invalid extension
         $this->expectException(ForbiddenException::class);
-        $this->Controller->request = $this->Controller->getRequest()->withParam('_ext', 'html');
-        $this->Controller->rss();
+        $this->Controller->setRequest($this->Controller->getRequest()->withParam('_ext', 'html'))->rss();
     }
 
     /**

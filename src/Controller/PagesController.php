@@ -21,6 +21,7 @@ use MeCms\Utility\StaticPage;
 
 /**
  * Pages controller
+ * @property \MeCms\Model\Table\PagesCategoriesTable $Categories
  * @property \MeCms\Model\Table\PagesTable $Pages
  */
 class PagesController extends AppController
@@ -30,11 +31,14 @@ class PagesController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return void
+     * @return \Cake\Network\Response|null|void
      */
-    public function beforeFilter(EventInterface $event): void
+    public function beforeFilter(EventInterface $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         $this->Auth->deny('preview');
     }
@@ -70,8 +74,8 @@ class PagesController extends AppController
 
         $slug = rtrim($slug, '/');
         $page = $this->Pages->findActiveBySlug($slug)
-            ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
-            ->cache(sprintf('view_%s', md5($slug)), $this->Pages->getCacheName())
+            ->contain([$this->Categories->getAlias() => ['fields' => ['title', 'slug']]])
+            ->cache('view_' . md5($slug))
             ->firstOrFail();
 
         $this->set(compact('page'));
@@ -86,7 +90,7 @@ class PagesController extends AppController
     public function preview(string $slug): Response
     {
         $page = $this->Pages->findPendingBySlug($slug)
-            ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
+            ->contain([$this->Categories->getAlias() => ['fields' => ['title', 'slug']]])
             ->firstOrFail();
 
         $this->set(compact('page'));

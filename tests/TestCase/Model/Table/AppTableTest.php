@@ -17,6 +17,7 @@ use BadMethodCallException;
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
+use MeCms\ORM\Query;
 use MeCms\TestSuite\TableTestCase;
 
 /**
@@ -215,6 +216,15 @@ class AppTableTest extends TableTestCase
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Unknown finder method "treeList"');
         $this->Posts->getTreeList();
+    }
+
+    /**
+     * Test for `query()` method
+     * @test
+     */
+    public function testQuery()
+    {
+        $this->assertInstanceOf(Query::class, $this->Posts->query());
     }
 
     /**

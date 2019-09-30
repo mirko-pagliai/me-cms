@@ -57,7 +57,7 @@ abstract class ControllerTestCase extends TestCase
         $this->Controller->getRequest()->clearDetectorCache();
 
         if ($action) {
-            $this->Controller->request = $this->Controller->getRequest()->withParam('action', $action);
+            $this->Controller->setRequest($this->Controller->getRequest()->withParam('action', $action));
         }
 
         foreach ($values as $group => $isAllowed) {
@@ -84,7 +84,7 @@ abstract class ControllerTestCase extends TestCase
         $controller->getRequest()->clearDetectorCache();
 
         if ($action) {
-            $this->Controller->request = $this->Controller->getRequest()->withParam('action', $action);
+            $this->Controller->setRequest($this->Controller->getRequest()->withParam('action', $action));
         }
 
         foreach ($values as $id => $isAllowed) {

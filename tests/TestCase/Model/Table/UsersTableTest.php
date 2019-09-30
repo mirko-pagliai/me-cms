@@ -153,10 +153,6 @@ class UsersTableTest extends TableTestCase
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
-        $this->assertNotEmpty($query->count());
-        foreach ($query as $entity) {
-            $this->assertTrue($entity->get('active') && !$entity->get('banned'));
-        }
 
         $query = $this->Table->find('auth');
         $this->assertStringEndsWith('FROM users Users INNER JOIN users_groups Groups ON Groups.id = (Users.group_id)', $query->sql());
@@ -164,17 +160,11 @@ class UsersTableTest extends TableTestCase
         $query = $this->Table->find('banned');
         $this->assertStringEndsWith('FROM users Users WHERE Users.banned = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertNotEmpty($query->count());
-        array_map([$this, 'assertTrue'], $query->all()->extract('banned')->toArray());
 
         $query = $this->Table->find('pending');
         $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
-        $this->assertNotEmpty($query->count());
-        foreach ($query as $entity) {
-            $this->assertTrue(!$entity->get('active') && !$entity->get('banned'));
-        }
     }
 
     /**

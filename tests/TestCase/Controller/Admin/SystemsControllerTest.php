@@ -61,15 +61,15 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Called before every test method
+     * Called after the last test of this test class is run
      * @return void
      */
-    public function setUp(): void
+    public static function tearDownAfterClass(): void
     {
-        create_kcfinder_files();
-        I18n::setLocale('en_US');
+        parent::tearDownAfterClass();
 
-        parent::setUp();
+        I18n::setLocale('en_US');
+        @unlink(SITEMAP);
     }
 
     /**
@@ -79,11 +79,8 @@ class SystemsControllerTest extends ControllerTestCase
     public function tearDown(): void
     {
         Cache::clearAll();
-
-        //Deletes all temporary files
         @unlink_recursive(getConfigOrFail('Assets.target'));
         @unlink_recursive(getConfigOrFail('Thumber.target'));
-        @unlink(SITEMAP);
 
         parent::tearDown();
     }
@@ -104,7 +101,7 @@ class SystemsControllerTest extends ControllerTestCase
         ], 'tmpCleaner');
 
         foreach (['all', 'logs'] as $param) {
-            $this->Controller->request = $this->Controller->getRequest()->withParam('pass.0', $param);
+            $this->Controller->setRequest($this->Controller->getRequest()->withParam('pass.0', $param));
             $this->assertGroupsAreAuthorized([
                 'admin' => true,
                 'manager' => false,
@@ -119,6 +116,7 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function testBrowser()
     {
+        create_kcfinder_files();
         @mkdir(UPLOADED . 'docs');
 
         $url = $this->url + ['action' => 'browser'];
@@ -129,20 +127,15 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $this->viewVariable('types'));
         $this->assertEmpty($this->viewVariable('kcfinder'));
 
-        //GET request. Asks for `docs` type
-        $this->get($url + ['?' => ['type' => 'docs']]);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
-        $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $this->viewVariable('types'));
-        $this->assertStringContainsString('kcfinder/browse.php?lang=en&type=docs', $this->viewVariable('kcfinder'));
-
-        //GET request. Now with `it` locale
-        I18n::setLocale('it');
-        $this->get($url + ['?' => ['type' => 'docs']]);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
-        $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $this->viewVariable('types'));
-        $this->assertStringContainsString('kcfinder/browse.php?lang=it&type=docs', $this->viewVariable('kcfinder'));
+        //GET requests. Asks for `docs` type with different locales
+        foreach (['en', 'it'] as $locale) {
+            I18n::setLocale($locale);
+            $this->get($url + ['?' => ['type' => 'docs']]);
+            $this->assertResponseOkAndNotEmpty();
+            $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
+            $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $this->viewVariable('types'));
+            $this->assertStringContainsString('kcfinder/browse.php?lang=' . $locale . '&type=docs', $this->viewVariable('kcfinder'));
+        }
 
         //GET request. Now only the `images` type exists
         @rmdir(UPLOADED . 'docs');
@@ -197,20 +190,6 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'checkup.php');
         array_map([$this, 'assertNotEmpty'], array_map([$this, 'viewVariable'], $expectedViewVars));
-    }
-
-    /**
-     * Tests for `clearSitemap()` method
-     * @test
-     */
-    public function testClearSitemap()
-    {
-        @unlink(SITEMAP);
-        $this->assertTrue($this->invokeMethod($this->Controller, 'clearSitemap'));
-
-        $this->createSomeTemporaryData();
-        $this->assertTrue($this->invokeMethod($this->Controller, 'clearSitemap'));
-        $this->assertFileNotExists(SITEMAP);
     }
 
     /**

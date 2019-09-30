@@ -34,11 +34,14 @@ class PostsController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return void
+     * @return \Cake\Network\Response|null|void
      */
-    public function beforeFilter(EventInterface $event): void
+    public function beforeFilter(EventInterface $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         $this->Auth->deny('preview');
     }
@@ -155,8 +158,8 @@ class PostsController extends AppController
         $posts = $this->Posts->find('active')
             ->select(['title', 'preview', 'slug', 'text', 'created'])
             ->limit(getConfigOrFail('default.records_for_rss'))
-            ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
-            ->cache('rss', $this->Posts->getCacheName());
+            ->orderDesc('created')
+            ->cache('rss');
 
         $this->set(compact('posts'));
     }
@@ -212,7 +215,7 @@ class PostsController extends AppController
                         'subtitle LIKE' => sprintf('%%%s%%', $pattern),
                         'text LIKE' => sprintf('%%%s%%', $pattern),
                     ]])
-                    ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
+                    ->orderDesc('created');
 
                 $posts = $this->paginate($query);
 
@@ -240,17 +243,15 @@ class PostsController extends AppController
     {
         $post = $this->Posts->findActiveBySlug($slug)
             ->find('forIndex')
-            ->cache(sprintf('view_%s', md5($slug)), $this->Posts->getCacheName())
+            ->cache('view_' . md5($slug))
             ->firstOrFail();
 
         $this->set(compact('post'));
 
         //Gets related posts
         if (getConfig('post.related')) {
-            $this->set(
-                'related',
-                $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'))
-            );
+            [$limit, $images] = array_values(getConfigOrFail('post.related'));
+            $this->set('related', $this->Posts->getRelated($post, $limit, $images));
         }
     }
 
@@ -271,10 +272,8 @@ class PostsController extends AppController
 
         //Gets related posts
         if (getConfig('post.related')) {
-            $this->set(
-                'related',
-                $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'))
-            );
+            [$limit, $images] = array_values(getConfigOrFail('post.related'));
+            $this->set('related', $this->Posts->getRelated($post, $limit, $images));
         }
 
         return $this->render('view');
