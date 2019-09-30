@@ -25,7 +25,8 @@ use MeCms\Controller\Traits\GetStartAndEndDateTrait;
  */
 class PostsController extends AppController
 {
-    use CheckLastSearchTrait, GetStartAndEndDateTrait;
+    use CheckLastSearchTrait;
+    use GetStartAndEndDateTrait;
 
     /**
      * Called before the controller action.

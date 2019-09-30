@@ -34,13 +34,13 @@ class Query extends BaseQuery
      * Unlike the method provided by CakePHP, it uses the `getCacheName()` table
      *  method to get the default name of the cache config to use, if that method
      *  exists.
-     * @param false|string|Closure $key Either the cache key or a function to
+     * @param \Closure|string|false $key Either the cache key or a function to
      *  generate the cache key. When using a function, this query instance will
      *  be supplied as an argument
      * @param string|\Cake\Cache\CacheEngine $config Either the name of the
      *  cache config to use, or a cache config instance
      * @return $this
-     * @throws RuntimeException
+     * @throws \RuntimeException
      * @uses \MeCms\Model\Table\AppModel::getCacheName()
      */
     public function cache($key, $config = '')
