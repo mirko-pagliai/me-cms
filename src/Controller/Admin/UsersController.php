@@ -37,11 +37,13 @@ class UsersController extends AppController
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         if ($this->getRequest()->isAction(['index', 'add', 'edit'])) {
             $groups = $this->Groups->getList();
-
             if ($groups->isEmpty()) {
                 $this->Flash->alert(__d('me_cms', 'You must first create an user group'));
 

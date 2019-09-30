@@ -34,11 +34,13 @@ class BannersController extends AppController
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         //Gets positions
         $positions = $this->Positions->getList();
-
         if ($positions->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a banner position'));
 

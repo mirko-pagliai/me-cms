@@ -34,11 +34,12 @@ class PhotosController extends AppController
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
-        //Gets albums
         $albums = $this->Albums->getList();
-
         if ($albums->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create an album'));
 

@@ -106,7 +106,10 @@ class UsersController extends AppController
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         //Checks if the user is already logged in
         if (!$this->getRequest()->isAction('logout') && $this->Auth->isLogged()) {

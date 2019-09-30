@@ -32,11 +32,14 @@ class PostsController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
-     * @return void
+     * @return \Cake\Network\Response|null|void
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         $this->Auth->deny('preview');
     }

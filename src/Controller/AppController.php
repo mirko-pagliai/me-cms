@@ -73,7 +73,7 @@ class AppController extends BaseAppController
             $this->viewBuilder()->setLayout('MeCms.ajax');
         }
 
-        parent::beforeFilter($event);
+        return parent::beforeFilter($event);
     }
 
     /**

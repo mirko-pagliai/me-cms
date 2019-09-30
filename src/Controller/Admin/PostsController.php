@@ -38,7 +38,10 @@ class PostsController extends AppController
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         list($categoriesMethod, $usersMethod) = ['getList', 'getList'];
         if ($this->getRequest()->isAction(['add', 'edit'])) {
@@ -49,15 +52,14 @@ class PostsController extends AppController
                 $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
             }
         }
-        $categories = call_user_func([$this->Categories, $categoriesMethod]);
         $users = call_user_func([$this->Users, $usersMethod]);
-
         if ($users->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create an user'));
 
             return $this->redirect(['controller' => 'Users', 'action' => 'index']);
         }
 
+        $categories = call_user_func([$this->Categories, $categoriesMethod]);
         if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 

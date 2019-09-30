@@ -38,16 +38,18 @@ class PagesController extends AppController
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
-        //Returns, if it's the `indexStatics` action
+        //Returns for `indexStatics` action
         if ($this->getRequest()->isAction('indexStatics')) {
             return;
         }
 
         $methodToCall = $this->getRequest()->isAction(['add', 'edit']) ? 'getTreeList' : 'getList';
         $categories = call_user_func([$this->Categories, $methodToCall]);
-
         if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 
