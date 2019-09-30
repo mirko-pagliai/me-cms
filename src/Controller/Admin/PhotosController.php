@@ -180,7 +180,6 @@ class PhotosController extends AppController
     public function delete($id)
     {
         $this->getRequest()->allowMethod(['post', 'delete']);
-
         $photo = $this->Photos->get($id);
         $this->Photos->deleteOrFail($photo);
         $this->Flash->success(I18N_OPERATION_OK);

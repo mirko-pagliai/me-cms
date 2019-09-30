@@ -45,22 +45,13 @@ class PostsControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Called before every test method
-     * @return void
+     * Tests for `beforeFilter()` method
+     * @test
      */
-    public function setUp()
+    public function testBeforeFilter()
     {
         create_kcfinder_files();
 
-        parent::setUp();
-    }
-
-    /**
-     * Tests for `beforeFilter()` method, with no categories
-     * @test
-     */
-    public function testBeforeFilterNoCategories()
-    {
         $this->Table->Categories->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
@@ -68,14 +59,7 @@ class PostsControllerTest extends ControllerTestCase
             $this->assertRedirect(['controller' => 'PostsCategories', 'action' => 'index']);
             $this->assertFlashMessage('You must first create a category');
         }
-    }
 
-    /**
-     * Tests for `beforeFilter()` method, with no users
-     * @test
-     */
-    public function testBeforeFilterNoUsers()
-    {
         $this->Table->Users->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
@@ -142,6 +126,7 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testAdd()
     {
+        create_kcfinder_files();
         $url = $this->url + ['action' => 'add'];
 
         $this->get($url);
@@ -167,6 +152,7 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testEdit()
     {
+        create_kcfinder_files();
         $url = $this->url + ['action' => 'edit', 1];
 
         $this->get($url);
@@ -206,6 +192,8 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testAdminsAndManagersCanAddAndEditAsAnotherUser()
     {
+        create_kcfinder_files();
+
         foreach (['admin', 'manager'] as $userGroup) {
             $this->setUserGroup($userGroup);
 
@@ -237,6 +225,7 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testOtherUsersCannotAddOrEditAsAnotherUser()
     {
+        create_kcfinder_files();
         $this->setUserGroup('user');
         $this->setUserId(3);
 

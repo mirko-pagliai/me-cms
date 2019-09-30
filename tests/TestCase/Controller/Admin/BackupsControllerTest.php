@@ -33,7 +33,7 @@ class BackupsControllerTest extends ControllerTestCase
      */
     protected function createSingleBackup($extension = 'sql')
     {
-        $file = getConfigOrFail('DatabaseBackup.target') . DS . sprintf('backup.%s', $extension);
+        $file = getConfigOrFail('DatabaseBackup.target') . DS . 'backup.' . $extension;
         create_file($file);
 
         return $file;
@@ -77,18 +77,15 @@ class BackupsControllerTest extends ControllerTestCase
             ->setMethods(['import'])
             ->getMock();
 
-        //Mocks the `BackupManager::send()` method, so that it writes on the
-        //  debug log instead of sending a real mail
+        //`BackupManager::send()` writes on logs instead of sending a real mail
         $this->_controller->BackupManager = $this->getMockBuilder(BackupManager::class)
             ->setMethods(['send'])
             ->getMock();
 
         $this->_controller->BackupManager->method('send')->will($this->returnCallback(function () {
-            $args = implode(', ', array_map(function ($arg) {
+            return Log::write('debug', 'Args for `send()`: ' . implode(', ', array_map(function ($arg) {
                 return '`' . $arg . '`';
-            }, func_get_args()));
-
-            return Log::write('debug', 'Args for `send()`: ' . $args);
+            }, func_get_args())));
         }));
     }
 

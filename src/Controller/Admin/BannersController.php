@@ -39,7 +39,6 @@ class BannersController extends AppController
             return $result;
         }
 
-        //Gets positions
         $positions = $this->Positions->getList();
         if ($positions->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a banner position'));
@@ -180,9 +179,8 @@ class BannersController extends AppController
      */
     public function delete($id)
     {
-        $banner = $this->Banners->get($id);
-
         $this->getRequest()->allowMethod(['post', 'delete']);
+        $banner = $this->Banners->get($id);
         $this->Banners->deleteOrFail($banner);
         $this->Flash->success(I18N_OPERATION_OK);
 
