@@ -111,7 +111,7 @@ class PostsCategoriesTableTest extends TableTestCase
 
         foreach ($childs as $children) {
             $this->assertEquals(1, $children->get('parent_id'));
-            $childs = $this->Table->findById($children->id)->contain('Childs')->extract('childs')->first();
+            $childs = $this->Table->findById($children->get('id'))->contain('Childs')->extract('childs')->first();
             $this->assertContainsOnlyInstancesOf(PostsCategory::class, $childs);
             $this->assertEquals(3, $childs[0]->get('parent_id'));
         }
@@ -127,9 +127,5 @@ class PostsCategoriesTableTest extends TableTestCase
         $this->assertStringEndsWith('FROM posts_categories PostsCategories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND PostsCategories.id = (Posts.category_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
-        $this->assertNotEmpty($query->count());
-        foreach ($query->all()->extract('_matchingData.Posts') as $post) {
-            $this->assertTrue($post->get('active') && !$post->get('created')->isFuture());
-        }
     }
 }

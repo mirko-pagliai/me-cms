@@ -102,7 +102,7 @@ class PagesCategoriesTableTest extends TableTestCase
         $this->assertContainsOnlyInstancesOf(PagesCategory::class, $childs);
         foreach ($childs as $children) {
             $this->assertEquals(1, $children->get('parent_id'));
-            $childs = $this->Table->findById($children->id)->contain('Childs')->extract('childs')->first();
+            $childs = $this->Table->findById($children->get('id'))->contain('Childs')->extract('childs')->first();
             $this->assertContainsOnlyInstancesOf(PagesCategory::class, $childs);
             $this->assertEquals(3, $childs[0]->get('parent_id'));
         }
@@ -118,9 +118,5 @@ class PagesCategoriesTableTest extends TableTestCase
         $this->assertStringEndsWith('FROM pages_categories Categories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND Categories.id = (Pages.category_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
-        $this->assertNotEmpty($query->count());
-        foreach ($query->all()->extract('_matchingData.Pages') as $page) {
-            $this->assertTrue($page->active && !$page->created->isFuture());
-        }
     }
 }

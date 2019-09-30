@@ -128,14 +128,10 @@ class PhotosTableTest extends TableTestCase
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertNotEmpty($query->count());
-        array_map([$this, 'assertTrue'], $query->all()->extract('active')->toArray());
 
         $query = $this->Table->find('pending');
         $this->assertStringEndsWith('FROM photos Photos WHERE Photos.active = :c0', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertNotEmpty($query->count());
-        array_map([$this, 'assertFalse'], $query->all()->extract('active')->toArray());
     }
 
     /**
