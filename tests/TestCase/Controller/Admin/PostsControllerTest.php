@@ -107,7 +107,7 @@ class PostsControllerTest extends ControllerTestCase
         }
 
         //With `edit` action and an user who owns the record
-        $this->Controller->request = $this->Controller->getRequest()->withParam('pass.0', 1);
+        $this->Controller->setRequest($this->Controller->getRequest()->withParam('pass.0', 1));
         $this->assertUsersAreAuthorized([
             1 => true,
             2 => false,
@@ -115,7 +115,7 @@ class PostsControllerTest extends ControllerTestCase
             4 => false,
         ], 'edit');
 
-        $this->Controller->request = $this->Controller->getRequest()->withParam('pass.0', 2);
+        $this->Controller->setRequest($this->Controller->getRequest()->withParam('pass.0', 2));
         $this->assertUsersAreAuthorized([
             1 => false,
             2 => false,
@@ -173,8 +173,8 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'form.ctp');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
-        $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('post')->tags);
-        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('post')->created);
+        $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('post')->get('tags'));
+        $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('post')->get('created'));
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
@@ -216,15 +216,15 @@ class PostsControllerTest extends ControllerTestCase
                 $this->assertFlashMessage(I18N_OPERATION_OK);
 
                 $post = $this->Table->find()->last();
-                $this->assertEquals($userId, $post->user_id);
+                $this->assertEquals($userId, $post->get('user_id'));
 
                 //Edits record, adding +1 to the `user_id`
-                $this->post($this->url + ['action' => 'edit', $post->id], ['user_id' => ++$userId] + self::$example);
+                $this->post($this->url + ['action' => 'edit', $post->get('id')], ['user_id' => ++$userId] + self::$example);
                 $this->assertRedirect(['action' => 'index']);
                 $this->assertFlashMessage(I18N_OPERATION_OK);
 
-                $post = $this->Table->findById($post->id)->first();
-                $this->assertEquals($userId, $post->user_id);
+                $post = $this->Table->findById($post->get('id'))->first();
+                $this->assertEquals($userId, $post->get('user_id'));
 
                 $this->Table->delete($post);
             }
@@ -247,15 +247,15 @@ class PostsControllerTest extends ControllerTestCase
             $this->assertFlashMessage(I18N_OPERATION_OK);
 
             $post = $this->Table->find()->last();
-            $this->assertEquals(3, $post->user_id);
+            $this->assertEquals(3, $post->get('user_id'));
 
             //Edits record, adding +1 to the `user_id`
-            $this->post($this->url + ['action' => 'edit', $post->id], ['user_id' => ++$userId] + self::$example);
+            $this->post($this->url + ['action' => 'edit', $post->get('id')], ['user_id' => ++$userId] + self::$example);
             $this->assertRedirect(['action' => 'index']);
             $this->assertFlashMessage(I18N_OPERATION_OK);
 
-            $post = $this->Table->findById($post->id)->first();
-            $this->assertEquals(3, $post->user_id);
+            $post = $this->Table->findById($post->get('id'))->first();
+            $this->assertEquals(3, $post->get('user_id'));
 
             $this->Table->delete($post);
         }
