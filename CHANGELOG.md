@@ -1,11 +1,9 @@
 # 2.x branch
 ## 2.27 branch
-### 2.27.2
-* added `AppController::getPaging()` method.
-
 ### 2.27.1
 * fixed a serious bug for `beforeFilter()` methods. The bug prevented some
     redirects;
+* added `AppController::getPaging()` method.
 * added `\MeCms\Controller\AppController::__get()` method. In addition to the
     method provided by CakePHP, it can also auto-load the associated tables;
 * added `\MeCms\ORM\Query` class. The tables that extend

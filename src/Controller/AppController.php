@@ -79,7 +79,7 @@ class AppController extends BaseAppController
     /**
      * Quick access to the `paging` request parameter
      * @return array
-     * @since 2.27.2
+     * @since 2.27.1
      */
     public function getPaging()
     {
