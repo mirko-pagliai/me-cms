@@ -91,7 +91,7 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
     public function testBeforeFilter()
     {
         parent::testBeforeFilter();
-        
+
         $this->Table->{$this->associatedTable}->deleteAll(['id IS NOT' => null]);
         $this->get($this->url + ['action' => 'index']);
         $this->assertRedirect(['controller' => $this->parentController, 'action' => 'index']);

@@ -148,7 +148,7 @@ class UsersControllerTest extends ControllerTestCase
     public function testBeforeFilter()
     {
         parent::testBeforeFilter();
-        
+
         $this->setUserId(1);
         $this->get(['_name' => 'login']);
         $this->assertRedirect(['_name' => 'dashboard']);
