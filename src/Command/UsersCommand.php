@@ -40,30 +40,31 @@ class UsersCommand extends Command
      */
     protected function getUsersRows()
     {
-        return $this->Users->find()->contain('Groups')->map(function (User $user) {
-            $status = $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending');
-            if ($user->get('banned')) {
-                $status = __d('me_cms', 'Banned');
-            }
+        return $this->Users->find()
+            ->contain('Groups')
+            ->map(function (User $user) {
+                $status = $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending');
+                if ($user->get('banned')) {
+                    $status = __d('me_cms', 'Banned');
+                }
 
-            $created = $user->get('created');
-            if (is_object($created) && method_exists($created, 'i18nFormat')) {
-                $created = $created->i18nFormat('yyyy/MM/dd HH:mm');
-            }
+                $created = $user->get('created');
+                if (is_object($created) && method_exists($created, 'i18nFormat')) {
+                    $created = $created->i18nFormat('yyyy/MM/dd HH:mm');
+                }
 
-            $group = $user->get('group.label') ?: $user->get('group');
-
-            return [
-                $user->get('id'),
-                $user->get('username'),
-                $group,
-                $user->get('full_name'),
-                $user->get('email'),
-                $user->get('post_count'),
-                $status,
-                $created,
-            ];
-        })->toList();
+                return [
+                    $user->get('id'),
+                    $user->get('username'),
+                    $user->get('group.label') ?: $user->get('group'),
+                    $user->get('full_name'),
+                    $user->get('email'),
+                    $user->get('post_count'),
+                    $status,
+                    $created,
+                ];
+            })
+            ->toList();
     }
 
     /**

@@ -38,7 +38,7 @@ class UsersController extends AppController
     protected function loginWithCookie()
     {
         $username = $password = null;
-        extract($this->getRequest()->getCookie('login', []));
+        extract((array)$this->getRequest()->getCookie('login'));
         if (!$username || !$password) {
             return null;
         }
@@ -221,7 +221,6 @@ class UsersController extends AppController
                 }
 
                 $this->Auth->setUser($user);
-
                 $this->LoginRecorder->setConfig('user', $user['id'])->write();
 
                 //Saves the login data as cookies, if requested
