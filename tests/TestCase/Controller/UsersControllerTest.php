@@ -117,7 +117,6 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertSessionEmpty('Auth');
-        return;
 
         //Gets an user and sets a password, then writes right data on cookies
         $password = 'mypassword1!';

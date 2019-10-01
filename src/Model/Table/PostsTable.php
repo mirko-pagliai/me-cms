@@ -40,7 +40,8 @@ use MeCms\ORM\Query;
  */
 class PostsTable extends PostsAndPagesTables
 {
-    use IsOwnedByTrait, LocatorAwareTrait;
+    use IsOwnedByTrait;
+    use LocatorAwareTrait;
 
     /**
      * Cache configuration name
