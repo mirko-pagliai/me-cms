@@ -49,6 +49,8 @@ class AppControllerTest extends ControllerTestCase
      */
     public function testBeforeFilter()
     {
+        parent::testBeforeFilter();
+
         Configure::write('MeCms.default.records', 5);
 
         $this->Controller->beforeFilter(new Event('myEvent'));
@@ -61,12 +63,6 @@ class AppControllerTest extends ControllerTestCase
         $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
         $this->Controller->beforeFilter(new Event('myEvent'));
         $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
-
-        //If the user has been reported as a spammer this makes a redirect
-        $controller = $this->getMockForController(PostsController::class, ['isSpammer']);
-        $controller->method('isSpammer')->willReturn(true);
-        $this->_response = $controller->beforeFilter(new Event('myEvent'));
-        $this->assertRedirect(['_name' => 'ipNotAllowed']);
 
         //If the site is offline this makes a redirect
         Configure::write('MeCms.default.offline', true);

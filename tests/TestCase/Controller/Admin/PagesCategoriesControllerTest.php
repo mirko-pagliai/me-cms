@@ -34,6 +34,8 @@ class PagesCategoriesControllerTest extends ControllerTestCase
      */
     public function testBeforeFilter()
     {
+        parent::testBeforeFilter();
+
         foreach (['add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [1]);
             $this->assertNotEmpty($this->viewVariable('categories'));

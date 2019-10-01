@@ -14,13 +14,12 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use MeCms\Controller\Admin\AppController;
-use MeCms\Test\TestCase\Controller\AppControllerTest as BaseAppControllerTest;
+use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * AppControllerTest class
  */
-class AppControllerTest extends BaseAppControllerTest
+class AppControllerTest extends ControllerTestCase
 {
     /**
      * Called before every test method
@@ -39,6 +38,8 @@ class AppControllerTest extends BaseAppControllerTest
      */
     public function testBeforeFilter()
     {
+        parent::testBeforeFilter();
+
         Configure::write('MeCms.admin.records', 7);
 
         $this->Controller->beforeFilter(new Event('myEvent'));
@@ -50,12 +51,6 @@ class AppControllerTest extends BaseAppControllerTest
         $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
         $this->Controller->beforeFilter(new Event('myEvent'));
         $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
-
-        //If the user has been reported as a spammer this makes a redirect
-        $controller = $this->getMockForController(AppController::class, ['isSpammer']);
-        $controller->method('isSpammer')->willReturn(true);
-        $this->_response = $controller->beforeFilter(new Event('myEvent'));
-        $this->assertRedirect(['_name' => 'ipNotAllowed']);
 
         //If the site is offline this makes a redirect
         //This works anyway, because the admin interface never goes offline
