@@ -50,12 +50,12 @@ class PostsTagsController extends AppController
         //If the data are not available from the cache
         if (empty($tags) || empty($paging)) {
             $query = $this->Tags->find('active');
-            $tags = $this->paginate($query);
 
-            //Writes on cache
+            list($tags, $paging) = [$this->paginate($query), $this->getPaging()];
+
             Cache::writeMany([
                 $cache => $tags,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->PostsTags->getCacheName());
         //Else, sets the paging parameter
         } else {
@@ -101,12 +101,13 @@ class PostsTagsController extends AppController
                 ->matching($this->Tags->getAlias(), function (Query $query) use ($slug) {
                     return $query->where(['tag' => $slug]);
                 });
-            $posts = $this->paginate($query);
+
+            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->PostsTags->getCacheName());
         //Else, sets the paging parameter
         } else {

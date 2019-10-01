@@ -87,18 +87,17 @@ class PhotosAlbumsController extends AppController
 
         //If the data are not available from the cache
         if (empty($photos) || empty($paging)) {
-            $query = $this->Photos->findActiveByAlbumId($album->id)
+            $query = $this->Photos->findActiveByAlbumId($album->get('id'))
                 ->order([
                     sprintf('%s.created', $this->Photos->getAlias()) => 'DESC',
                     sprintf('%s.id', $this->Photos->getAlias()) => 'DESC',
                 ]);
 
-            $photos = $this->paginate($query);
+            list($photos, $paging) = [$this->paginate($query), $this->getPaging()];
 
-            //Writes on cache
             Cache::writeMany([
                 $cache => $photos,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->PhotosAlbums->getCacheName());
         //Else, sets the paging parameter
         } else {

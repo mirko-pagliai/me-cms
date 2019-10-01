@@ -74,7 +74,7 @@ class PostsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Posts']);
+        $this->assertNotEmpty($this->_controller->getPaging()['Posts']);
     }
 
     /**
@@ -112,7 +112,7 @@ class PostsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Posts']);
+        $this->assertNotEmpty($this->_controller->getPaging()['Posts']);
 
         //Tries with various possible dates
         foreach (['today', 'yesterday', '2016', '2016/12', '2016/12/29'] as $date) {
@@ -180,7 +180,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
-        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Posts']);
+        $this->assertNotEmpty($this->_controller->getPaging()['Posts']);
 
         $this->get($url + ['?' => ['p' => 'a']]);
         $this->assertRedirect($url);

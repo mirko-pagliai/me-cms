@@ -64,12 +64,14 @@ class PostsController extends AppController
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
-            $posts = $this->paginate($this->Posts->find('active')->find('forIndex'));
+            $query = $this->Posts->find('active')->find('forIndex');
+
+            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
@@ -129,12 +131,13 @@ class PostsController extends AppController
                     sprintf('%s.created >=', $this->Posts->getAlias()) => $start,
                     sprintf('%s.created <', $this->Posts->getAlias()) => $end,
                 ]);
-            $posts = $this->paginate($query);
+
+            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
@@ -216,12 +219,11 @@ class PostsController extends AppController
                     ]])
                     ->orderDesc('created');
 
-                $posts = $this->paginate($query);
+                list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
-                //Writes on cache
                 Cache::writeMany([
                     $cache => $posts,
-                    sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                    sprintf('%s_paging', $cache) => $paging,
                 ], $this->Posts->getCacheName());
             //Else, sets the paging parameter
             } else {

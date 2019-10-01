@@ -69,12 +69,11 @@ class PostsCategoriesController extends AppController
 
             is_true_or_fail(!$query->isEmpty(), I18N_NOT_FOUND, RecordNotFoundException::class);
 
-            $posts = $this->paginate($query);
+            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
-            //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->PostsCategories->getCacheName());
         //Else, sets the paging parameter
         } else {

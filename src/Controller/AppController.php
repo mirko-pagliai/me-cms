@@ -77,6 +77,16 @@ class AppController extends BaseAppController
     }
 
     /**
+     * Quick access to the `paging` request parameter
+     * @return array
+     * @since 2.27.2
+     */
+    public function getPaging()
+    {
+        return $this->getRequest()->getParam('paging', []);
+    }
+
+    /**
      * Initialization hook method
      * @return void
      */
