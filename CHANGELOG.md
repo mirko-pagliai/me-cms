@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.27 branch
+### 2.27.2
+* uses `dereuromark/cakephp-feed` to generate RSS.
+
 ### 2.27.1
 * fixed a serious bug for `beforeFilter()` methods. The bug prevented some
     redirects;

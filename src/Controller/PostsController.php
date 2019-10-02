@@ -15,9 +15,15 @@ namespace MeCms\Controller;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Http\Exception\ForbiddenException;
+use Cake\I18n\I18n;
+use Cake\ORM\ResultSet;
+use Cake\Routing\Router;
+use Cake\Utility\Text;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
+use MeCms\Model\Entity\Post;
+use MeTools\Utility\BBCode;
 
 /**
  * Posts controller
@@ -156,14 +162,53 @@ class PostsController extends AppController
     {
         //This method works only for RSS
         is_true_or_fail($this->RequestHandler->prefers('rss'), ForbiddenException::class);
+        $this->viewBuilder()->setClassName('Feed.Rss');
 
         $posts = $this->Posts->find('active')
             ->select(['title', 'preview', 'slug', 'text', 'created'])
             ->limit(getConfigOrFail('default.records_for_rss'))
             ->orderDesc('created')
+            ->formatResults(function (ResultSet $results) {
+                return $results->map(function (Post $post) {
+                    $link = Router::url(['_name' => 'post', $post->get('slug')], true);
+
+                    //Executes BBCode on the text
+                    $text = (new BBCode())->parser($post->get('text'));
+
+                    //Truncates the description if the "<!-- read-more -->" tag is
+                    //  present or if requested by the configuration
+                    $description = $text;
+                    $length = $options = false;
+                    $strpos = strpos($description, '<!-- read-more -->');
+                    if ($strpos) {
+                        list($length, $options) = [$strpos, ['exact' => true, 'html' => false]];
+                    } elseif (getConfig('default.truncate_to')) {
+                        list($length, $options) = [getConfig('default.truncate_to'), ['exact' => false, 'html' => true]];
+                    }
+                    $description = $length && $options ? Text::truncate($description, $length, $options) : $description;
+
+                    return [
+                        'title' => $post->get('title'),
+                        'description' => strip_tags($description),
+                        'content:encoded' => $text,
+                        'pubDate' => $post->get('created'),
+                    ] + compact('link');
+                });
+            })
             ->cache('rss');
 
-        $this->set(compact('posts'));
+        $data = [
+            'channel' => [
+                'title' => __d('me_cms', 'Latest posts'),
+                'link' => Router::url('/', true),
+                'description' => __d('me_cms', 'Latest posts'),
+                'language' => I18n::getLocale(),
+            ],
+            'items' => $posts->toArray(),
+        ];
+
+        $this->set('_serialize', 'data');
+        $this->set(compact('data'));
     }
 
     /**
