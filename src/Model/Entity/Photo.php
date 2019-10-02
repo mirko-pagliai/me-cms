@@ -52,11 +52,11 @@ class Photo extends Entity
      */
     protected function _getPath()
     {
-        if (empty($this->_properties['album_id']) || empty($this->_properties['filename'])) {
+        if (!$this->get('album_id') || !$this->get('filename')) {
             return null;
         }
 
-        return PHOTOS . $this->_properties['album_id'] . DS . $this->_properties['filename'];
+        return PHOTOS . $this->get('album_id') . DS . $this->get('filename');
     }
 
     /**
@@ -65,11 +65,11 @@ class Photo extends Entity
      */
     protected function _getPlainDescription()
     {
-        if (empty($this->_properties['description'])) {
+        if (!$this->get('description')) {
             return null;
         }
 
-        return trim(strip_tags((new BBCode())->remove($this->_properties['description'])));
+        return trim(strip_tags((new BBCode())->remove($this->get('description'))));
     }
 
     /**

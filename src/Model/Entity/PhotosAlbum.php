@@ -49,7 +49,7 @@ class PhotosAlbum extends Entity
      */
     protected function _getPath()
     {
-        return empty($this->_properties['id']) ? null : PHOTOS . $this->_properties['id'];
+        return !$this->get('id') ? null : PHOTOS . $this->get('id');
     }
 
     /**
@@ -59,10 +59,10 @@ class PhotosAlbum extends Entity
      */
     protected function _getPreview()
     {
-        if (empty($this->_properties['photos'])) {
+        if (!$this->get('photos')) {
             return null;
         }
 
-        return array_value_first($this->_properties['photos'])->get('path');
+        return array_value_first($this->get('photos'))->get('path');
     }
 }

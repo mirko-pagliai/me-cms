@@ -49,6 +49,6 @@ class Tag extends Entity
      */
     protected function _getSlug()
     {
-        return empty($this->_properties['tag']) ? null : strtolower(Text::slug($this->_properties['tag']));
+        return !$this->get('tag') ? null : strtolower(Text::slug($this->get('tag')));
     }
 }
