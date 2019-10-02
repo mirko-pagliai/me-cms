@@ -107,7 +107,7 @@ class AddUserCommand extends Command
         }
 
         $io->success(I18N_OPERATION_OK);
-        $io->success(__d('me_cms', 'The user was created with ID {0}', $user->id));
+        $io->success(__d('me_cms', 'The user was created with ID {0}', $user->get('id')));
 
         return null;
     }

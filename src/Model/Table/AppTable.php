@@ -19,9 +19,9 @@ use Cake\Event\Event;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 use Cake\ORM\Association;
-use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Exception;
+use MeCms\ORM\Query;
 
 /**
  * Application table class
@@ -177,24 +177,31 @@ class AppTable extends Table
     /**
      * Gets records as list
      * @return \Cake\ORM\Query $query Query object
-     * @uses getCacheName()
      */
     public function getList()
     {
         return $this->find('list')
-            ->order([$this->getDisplayField() => 'ASC'])
-            ->cache(sprintf('%s_list', $this->getTable()), $this->getCacheName());
+            ->orderAsc($this->getDisplayField())
+            ->cache($this->getTable() . '_list');
     }
 
     /**
      * Gets records as tree list
      * @return \Cake\ORM\Query $query Query object
-     * @uses getCacheName()
      */
     public function getTreeList()
     {
-        return $this->find('treeList')
-            ->cache(sprintf('%s_tree_list', $this->getTable()), $this->getCacheName());
+        return $this->find('treeList')->cache($this->getTable() . '_tree_list');
+    }
+
+    /**
+     * Creates a new Query instance for a table
+     * @return \MeCms\ORM\Query
+     * @since 2.27.1
+     */
+    public function query()
+    {
+        return new Query($this->getConnection(), $this);
     }
 
     /**

@@ -13,13 +13,14 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
-use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 use MeCms\Model\Entity\PhotosAlbum;
+use MeCms\ORM\Query;
 
 /**
  * PhotosAlbums controller
  * @property \MeCms\Model\Table\PhotosAlbumsTable $PhotosAlbums
+ * @property \MeCms\Model\Table\PhotosTable $Photos
  */
 class PhotosAlbumsController extends AppController
 {
@@ -30,12 +31,13 @@ class PhotosAlbumsController extends AppController
     public function index()
     {
         $albums = $this->PhotosAlbums->find('active')
-            ->select(['id', 'title', 'slug', 'photo_count', 'created'])
-            ->contain($this->PhotosAlbums->Photos->getAlias(), function (Query $query) {
+            ->select(['id'])
+            ->contain($this->Photos->getAlias(), function (Query $query) {
                 return $query->find('active')->select(['id', 'album_id', 'filename']);
             })
-            ->order([sprintf('%s.created', $this->PhotosAlbums->getAlias()) => 'DESC'])
-            ->cache('albums_index', $this->PhotosAlbums->getCacheName());
+            ->orderDesc(sprintf('%s.created', $this->PhotosAlbums->getAlias()))
+            ->enableAutoFields(true)
+            ->cache('albums_index');
 
         //If there is only one record, redirects
         if ($albums->count() === 1) {
@@ -68,7 +70,7 @@ class PhotosAlbumsController extends AppController
         //Gets album ID and title
         $album = $this->PhotosAlbums->findActiveBySlug($slug)
             ->select(['id', 'title'])
-            ->cache(sprintf('album_%s', md5($slug)), $this->PhotosAlbums->getCacheName())
+            ->cache('album_' . md5($slug))
             ->firstOrFail();
 
         $page = $this->getRequest()->getQuery('page', 1);
@@ -85,19 +87,17 @@ class PhotosAlbumsController extends AppController
 
         //If the data are not available from the cache
         if (empty($photos) || empty($paging)) {
-            $query = $this->PhotosAlbums->Photos->findActiveByAlbumId($album->id)
-                ->select(['id', 'album_id', 'filename', 'description'])
+            $query = $this->Photos->findActiveByAlbumId($album->get('id'))
                 ->order([
-                    sprintf('%s.created', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
-                    sprintf('%s.id', $this->PhotosAlbums->Photos->getAlias()) => 'DESC',
+                    sprintf('%s.created', $this->Photos->getAlias()) => 'DESC',
+                    sprintf('%s.id', $this->Photos->getAlias()) => 'DESC',
                 ]);
 
-            $photos = $this->paginate($query);
+            list($photos, $paging) = [$this->paginate($query), $this->getPaging()];
 
-            //Writes on cache
             Cache::writeMany([
                 $cache => $photos,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->PhotosAlbums->getCacheName());
         //Else, sets the paging parameter
         } else {

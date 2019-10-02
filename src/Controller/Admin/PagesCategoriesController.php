@@ -28,12 +28,15 @@ class PagesCategoriesController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
-     * @return void
+     * @return \Cake\Network\Response|null|void
      * @uses \MeCms\Model\Table\PagesCategoriesTable::getTreeList()
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         if ($this->getRequest()->isAction(['add', 'edit'])) {
             $this->set('categories', $this->PagesCategories->getTreeList());
@@ -62,13 +65,13 @@ class PagesCategoriesController extends AppController
     {
         $categories = $this->PagesCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
-            ->order([sprintf('%s.lft', $this->PagesCategories->getAlias()) => 'ASC'])
+            ->orderAsc(sprintf('%s.lft', $this->PagesCategories->getAlias()))
             ->formatResults(function (ResultSet $results) {
                 //Gets categories as tree list
                 $treeList = $this->PagesCategories->getTreeList()->toArray();
 
                 return $results->map(function (PagesCategory $category) use ($treeList) {
-                    return $category->set('title', $treeList[$category->id]);
+                    return $category->set('title', $treeList[$category->get('id')]);
                 });
             });
 

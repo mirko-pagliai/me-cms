@@ -19,6 +19,7 @@ use MeCms\Controller\Admin\AppController;
 
 /**
  * Banners controller
+ * @property \MeCms\Model\Table\BannersPositionsTable $Positions
  * @property \MeCms\Model\Table\BannersTable $Banners
  */
 class BannersController extends AppController
@@ -33,11 +34,12 @@ class BannersController extends AppController
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
-        //Gets positions
-        $positions = $this->Banners->Positions->getList();
-
+        $positions = $this->Positions->getList();
         if ($positions->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a banner position'));
 
@@ -87,7 +89,8 @@ class BannersController extends AppController
         $this->set('title', I18N_BANNERS);
 
         if ($render) {
-            $this->response = $this->response->withCookie((new Cookie('render-banners', $render))->withNeverExpire());
+            $cookie = (new Cookie('render-banners', $render))->withNeverExpire();
+            $this->setResponse($this->getResponse()->withCookie($cookie));
         }
     }
 
@@ -166,7 +169,7 @@ class BannersController extends AppController
      */
     public function download($id)
     {
-        return $this->response->withFile($this->Banners->get($id)->get('path'), ['download' => true]);
+        return $this->getResponse()->withFile($this->Banners->get($id)->get('path'), ['download' => true]);
     }
 
     /**
@@ -176,9 +179,8 @@ class BannersController extends AppController
      */
     public function delete($id)
     {
-        $banner = $this->Banners->get($id);
-
         $this->getRequest()->allowMethod(['post', 'delete']);
+        $banner = $this->Banners->get($id);
         $this->Banners->deleteOrFail($banner);
         $this->Flash->success(I18N_OPERATION_OK);
 

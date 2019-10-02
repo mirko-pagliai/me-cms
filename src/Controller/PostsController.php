@@ -25,18 +25,22 @@ use MeCms\Controller\Traits\GetStartAndEndDateTrait;
  */
 class PostsController extends AppController
 {
-    use CheckLastSearchTrait, GetStartAndEndDateTrait;
+    use CheckLastSearchTrait;
+    use GetStartAndEndDateTrait;
 
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
      *  each controller action.
      * @param \Cake\Event\Event $event An Event instance
-     * @return void
+     * @return \Cake\Network\Response|null|void
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         $this->Auth->deny('preview');
     }
@@ -60,12 +64,14 @@ class PostsController extends AppController
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
-            $posts = $this->paginate($this->Posts->find('active')->find('forIndex'));
+            $query = $this->Posts->find('active')->find('forIndex');
+
+            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
@@ -125,12 +131,13 @@ class PostsController extends AppController
                     sprintf('%s.created >=', $this->Posts->getAlias()) => $start,
                     sprintf('%s.created <', $this->Posts->getAlias()) => $end,
                 ]);
-            $posts = $this->paginate($query);
+
+            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
@@ -153,8 +160,8 @@ class PostsController extends AppController
         $posts = $this->Posts->find('active')
             ->select(['title', 'preview', 'slug', 'text', 'created'])
             ->limit(getConfigOrFail('default.records_for_rss'))
-            ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC'])
-            ->cache('rss', $this->Posts->getCacheName());
+            ->orderDesc('created')
+            ->cache('rss');
 
         $this->set(compact('posts'));
     }
@@ -210,14 +217,13 @@ class PostsController extends AppController
                         'subtitle LIKE' => sprintf('%%%s%%', $pattern),
                         'text LIKE' => sprintf('%%%s%%', $pattern),
                     ]])
-                    ->order([sprintf('%s.created', $this->Posts->getAlias()) => 'DESC']);
+                    ->orderDesc('created');
 
-                $posts = $this->paginate($query);
+                list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
-                //Writes on cache
                 Cache::writeMany([
                     $cache => $posts,
-                    sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                    sprintf('%s_paging', $cache) => $paging,
                 ], $this->Posts->getCacheName());
             //Else, sets the paging parameter
             } else {
@@ -238,17 +244,15 @@ class PostsController extends AppController
     {
         $post = $this->Posts->findActiveBySlug($slug)
             ->find('forIndex')
-            ->cache(sprintf('view_%s', md5($slug)), $this->Posts->getCacheName())
+            ->cache('view_' . md5($slug))
             ->firstOrFail();
 
         $this->set(compact('post'));
 
         //Gets related posts
         if (getConfig('post.related')) {
-            $this->set(
-                'related',
-                $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'))
-            );
+            list($limit, $images) = array_values(getConfigOrFail('post.related'));
+            $this->set('related', $this->Posts->getRelated($post, $limit, $images));
         }
     }
 
@@ -269,10 +273,8 @@ class PostsController extends AppController
 
         //Gets related posts
         if (getConfig('post.related')) {
-            $this->set(
-                'related',
-                $this->Posts->getRelated($post, getConfigOrFail('post.related.limit'), getConfig('post.related.images'))
-            );
+            list($limit, $images) = array_values(getConfigOrFail('post.related'));
+            $this->set('related', $this->Posts->getRelated($post, $limit, $images));
         }
 
         return $this->render('view');

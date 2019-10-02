@@ -20,6 +20,7 @@ use MeCms\Utility\StaticPage;
 
 /**
  * Pages controller
+ * @property \MeCms\Model\Table\PagesCategoriesTable $Categories
  * @property \MeCms\Model\Table\PagesTable $Pages
  */
 class PagesController extends AppController
@@ -37,16 +38,18 @@ class PagesController extends AppController
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
-        //Returns, if it's the `indexStatics` action
+        //Returns for `indexStatics` action
         if ($this->getRequest()->isAction('indexStatics')) {
             return;
         }
 
         $methodToCall = $this->getRequest()->isAction(['add', 'edit']) ? 'getTreeList' : 'getList';
-        $categories = call_user_func([$this->Pages->Categories, $methodToCall]);
-
+        $categories = call_user_func([$this->Categories, $methodToCall]);
         if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 
@@ -151,7 +154,7 @@ class PagesController extends AppController
         $page = $this->Pages->findById($id)
             ->formatResults(function (ResultSet $results) {
                 return $results->map(function (Page $page) {
-                    return $page->set('created', $page->created->i18nFormat(FORMAT_FOR_MYSQL));
+                    return $page->set('created', $page->get('created')->i18nFormat(FORMAT_FOR_MYSQL));
                 });
             })
             ->firstOrFail();

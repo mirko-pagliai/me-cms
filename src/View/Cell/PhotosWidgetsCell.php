@@ -44,11 +44,11 @@ class PhotosWidgetsCell extends Cell
         }
 
         $albums = $this->Photos->Albums->find('active')
-            ->order([sprintf('%s.title', $this->Photos->Albums->getAlias()) => 'ASC'])
+            ->orderAsc(sprintf('%s.title', $this->Photos->Albums->getAlias()))
             ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('slug');
             })
-            ->cache('widget_albums', $this->Photos->getCacheName())
+            ->cache('widget_albums')
             ->all();
 
         $this->set(compact('albums'));
@@ -70,7 +70,7 @@ class PhotosWidgetsCell extends Cell
             ->select(['album_id', 'filename'])
             ->limit($limit)
             ->order(['created' => 'DESC', 'id' => 'DESC'])
-            ->cache(sprintf('widget_latest_%d', $limit), $this->Photos->getCacheName())
+            ->cache('widget_latest_' . $limit)
             ->all();
 
         $this->set(compact('photos'));
@@ -90,7 +90,7 @@ class PhotosWidgetsCell extends Cell
 
         $photos = $this->Photos->find('active')
             ->select(['album_id', 'filename'])
-            ->cache(sprintf('widget_random_%d', $limit), $this->Photos->getCacheName())
+            ->cache('widget_random_' . $limit)
             ->sample($limit);
 
         $this->set(compact('photos'));

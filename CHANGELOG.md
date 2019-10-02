@@ -1,5 +1,17 @@
 # 2.x branch
 ## 2.27 branch
+### 2.27.1
+* fixed a serious bug for `beforeFilter()` methods. The bug prevented some
+    redirects;
+* added `AppController::getPaging()` method.
+* added `\MeCms\Controller\AppController::__get()` method. In addition to the
+    method provided by CakePHP, it can also auto-load the associated tables;
+* added `\MeCms\ORM\Query` class. The tables that extend
+    `\MeCms\Model\Table\AppModel` will use this query class as default. This
+    class overrides the `cache()` method and uses the `getCacheName()` table
+    method to get the default name of the cache config to use, if that method
+    exists.
+
 ### 2.27.0
 * requires at least PHP `7.0`, `phpunit` `6.0` and `CakePHP` `3.8`. Added tests
     for lowest dependencies;

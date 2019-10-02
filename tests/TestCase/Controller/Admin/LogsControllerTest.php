@@ -14,6 +14,7 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Log\Log;
 use Cake\ORM\Entity;
+use Cake\Utility\Hash;
 use MeCms\TestSuite\ControllerTestCase;
 
 /**
@@ -93,10 +94,8 @@ class LogsControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'view', 'error.log', '?' => ['as' => 'serialized']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'view_as_serialized.ctp');
-        $this->assertEquals([
-            'This is a critical message',
-            'This is an error message',
-        ], collection($this->viewVariable('content'))->extract('message')->toArray());
+        $messages = Hash::extract($this->viewVariable('content'), '{*}.message');
+        $this->assertEquals(['This is a critical message', 'This is an error message'], $messages);
         $this->assertEquals('error.log', $this->viewVariable('filename'));
     }
 

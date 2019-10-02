@@ -29,6 +29,9 @@ class AppController extends BaseAppController
     public function beforeFilter(Event $event)
     {
         $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         $this->viewBuilder()->setClassName('MeCms.View/Admin');
 
@@ -37,8 +40,6 @@ class AppController extends BaseAppController
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.records');
 
         $this->Auth->deny();
-
-        return $result;
     }
 
     /**

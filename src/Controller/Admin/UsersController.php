@@ -20,6 +20,7 @@ use Thumber\Utility\ThumbManager;
 
 /**
  * Users controller
+ * @property \MeCms\Model\Table\UsersGroupsTable $Groups
  * @property \MeCms\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController
@@ -36,11 +37,13 @@ class UsersController extends AppController
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         if ($this->getRequest()->isAction(['index', 'add', 'edit'])) {
-            $groups = $this->Users->Groups->getList();
-
+            $groups = $this->Groups->getList();
             if ($groups->isEmpty()) {
                 $this->Flash->alert(__d('me_cms', 'You must first create an user group'));
 
@@ -76,10 +79,12 @@ class UsersController extends AppController
             return true;
         }
 
-        //Only admins can activate account and delete users. Admins and managers can access other actions
-        $group = $this->getRequest()->isAction(['activate', 'delete']) ? ['admin'] : ['admin', 'manager'];
+        //Only admins can activate account and delete users
+        if ($this->getRequest()->isAction(['activate', 'delete'])) {
+            return $this->Auth->isGroup('admin');
+        }
 
-        return $this->Auth->isGroup($group);
+        return parent::isAuthorized($user);
     }
 
     /**

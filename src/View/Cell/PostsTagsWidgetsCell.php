@@ -83,7 +83,6 @@ class PostsTagsWidgetsCell extends Cell
             //Updates maximum and minimun font sizes we want to use
             list($maxFont, $minFont) = $this->getFontSizes($style);
 
-            //Updates the cache name
             $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
         }
 
@@ -109,7 +108,7 @@ class PostsTagsWidgetsCell extends Cell
                     return $tag->set('size', $size);
                 });
             })
-            ->cache($cache, $this->Tags->getCacheName())
+            ->cache($cache)
             ->all();
 
         if ($shuffle) {

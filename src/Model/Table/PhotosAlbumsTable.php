@@ -14,10 +14,10 @@ namespace MeCms\Model\Table;
 
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Validation\PhotosAlbumValidator;
+use MeCms\ORM\Query;
 
 /**
  * PhotosAlbums model

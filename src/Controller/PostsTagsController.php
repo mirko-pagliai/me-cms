@@ -19,7 +19,9 @@ use MeCms\Controller\AppController;
 
 /**
  * PostsTags controller
+ * @property \MeCms\Model\Table\PostsTable $Posts
  * @property \MeCms\Model\Table\PostsTagsTable $PostsTags
+ * @property \MeCms\Model\Table\TagsTable $Tags
  */
 class PostsTagsController extends AppController
 {
@@ -47,13 +49,13 @@ class PostsTagsController extends AppController
 
         //If the data are not available from the cache
         if (empty($tags) || empty($paging)) {
-            $query = $this->PostsTags->Tags->find('active');
-            $tags = $this->paginate($query);
+            $query = $this->Tags->find('active');
 
-            //Writes on cache
+            list($tags, $paging) = [$this->paginate($query), $this->getPaging()];
+
             Cache::writeMany([
                 $cache => $tags,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->PostsTags->getCacheName());
         //Else, sets the paging parameter
         } else {
@@ -77,8 +79,8 @@ class PostsTagsController extends AppController
 
         $slug = Text::slug($slug, ['replacement' => ' ']);
 
-        $tag = $this->PostsTags->Tags->findActiveByTag($slug)
-            ->cache(sprintf('tag_%s', md5($slug)), $this->PostsTags->getCacheName())
+        $tag = $this->Tags->findActiveByTag($slug)
+            ->cache('tag_' . md5($slug))
             ->firstOrFail();
 
         $page = $this->getRequest()->getQuery('page', 1);
@@ -94,17 +96,18 @@ class PostsTagsController extends AppController
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
-            $query = $this->PostsTags->Posts->find('active')
+            $query = $this->Posts->find('active')
                 ->find('forIndex')
-                ->matching($this->PostsTags->Tags->getAlias(), function (Query $query) use ($slug) {
+                ->matching($this->Tags->getAlias(), function (Query $query) use ($slug) {
                     return $query->where(['tag' => $slug]);
                 });
-            $posts = $this->paginate($query);
+
+            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->PostsTags->getCacheName());
         //Else, sets the paging parameter
         } else {

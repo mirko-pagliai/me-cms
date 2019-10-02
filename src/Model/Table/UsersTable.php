@@ -14,12 +14,12 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Event\Event;
-use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\User;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Validation\UserValidator;
+use MeCms\ORM\Query;
 
 /**
  * Users model
@@ -125,13 +125,13 @@ class UsersTable extends AppTable
         return $this->find()
             ->select(['id', 'first_name', 'last_name'])
             ->where([sprintf('%s.active', $this->getAlias()) => true])
-            ->order(['username' => 'ASC'])
+            ->orderAsc('username')
             ->formatResults(function (ResultSet $results) {
-                return $results->indexBy('id')->map(function (User $result) {
-                    return $result->get('first_name') . ' ' . $result->get('last_name');
+                return $results->indexBy('id')->map(function (User $user) {
+                    return $user->get('first_name') . ' ' . $user->get('last_name');
                 });
             })
-            ->cache(sprintf('active_%s_list', $this->getTable()), $this->getCacheName());
+            ->cache(sprintf('active_%s_list', $this->getTable()));
     }
 
     /**

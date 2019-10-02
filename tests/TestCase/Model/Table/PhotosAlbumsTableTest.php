@@ -107,7 +107,5 @@ class PhotosAlbumsTableTest extends TableTestCase
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM photos_albums PhotosAlbums INNER JOIN photos Photos ON (Photos.active = :c0 AND PhotosAlbums.id = (Photos.album_id))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertNotEmpty($query->count());
-        array_map([$this, 'assertTrue'], $query->all()->extract('_matchingData.Photos.active')->toArray());
     }
 }

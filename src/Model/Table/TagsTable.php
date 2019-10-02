@@ -12,10 +12,10 @@
  */
 namespace MeCms\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Validation\TagValidator;
+use MeCms\ORM\Query;
 
 /**
  * Tags model

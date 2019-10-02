@@ -16,12 +16,12 @@ use ArrayObject;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\ORM\Locator\LocatorAwareTrait;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\ORM\PostsAndPagesTables;
+use MeCms\ORM\Query;
 
 /**
  * Posts model
@@ -40,7 +40,8 @@ use MeCms\ORM\PostsAndPagesTables;
  */
 class PostsTable extends PostsAndPagesTables
 {
-    use IsOwnedByTrait, LocatorAwareTrait;
+    use IsOwnedByTrait;
+    use LocatorAwareTrait;
 
     /**
      * Cache configuration name
@@ -108,7 +109,7 @@ class PostsTable extends PostsAndPagesTables
             $this->Tags->getAlias() => ['sort' => ['tag' => 'ASC']],
             $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
         ])
-        ->order([sprintf('%s.created', $this->getAlias()) => 'DESC']);
+        ->orderDesc(sprintf('%s.created', $this->getAlias()));
     }
 
     /**

@@ -37,7 +37,8 @@ class UsersController extends AppController
      */
     protected function loginWithCookie()
     {
-        list($username, $password) = array_values($this->getRequest()->getCookie('login', [null, null]));
+        $username = $password = null;
+        extract((array)$this->getRequest()->getCookie('login'));
         if (!$username || !$password) {
             return null;
         }
@@ -106,7 +107,10 @@ class UsersController extends AppController
      */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
+        $result = parent::beforeFilter($event);
+        if ($result) {
+            return $result;
+        }
 
         //Checks if the user is already logged in
         if (!$this->getRequest()->isAction('logout') && $this->Auth->isLogged()) {
@@ -163,7 +167,8 @@ class UsersController extends AppController
             $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
                 if (!$entity->getErrors()) {
-                    $user = $this->Users->findPendingByEmail($this->getRequest()->getData('email'))->first();
+                    $email = $this->getRequest()->getData('email');
+                    $user = $this->Users->findPendingByEmail($email)->first();
                     $message = __d('me_cms', 'No valid account was found');
 
                     if ($user && $this->sendActivationMail($user)) {
@@ -172,12 +177,9 @@ class UsersController extends AppController
                         return $this->redirect(['_name' => 'login']);
                     }
 
-                    if ($this->getRequest()->getData('email')) {
-                        Log::error(sprintf(
-                            '%s - Resend activation request with invalid email `%s`',
-                            $this->getRequest()->clientIp(),
-                            $this->getRequest()->getData('email')
-                        ), 'users');
+                    if ($email) {
+                        $ip = $this->getRequest()->clientIp();
+                        Log::error(sprintf('%s - Resend activation request: invalid email `%s`', $ip, $email), 'users');
                     }
                 }
             }
@@ -203,6 +205,7 @@ class UsersController extends AppController
 
         if ($this->getRequest()->is('post')) {
             $user = $this->Auth->identify();
+            extract($this->getRequest()->getData());
 
             if ($user) {
                 //Checks if the user is banned or if is disabled (the account
@@ -218,28 +221,20 @@ class UsersController extends AppController
                 }
 
                 $this->Auth->setUser($user);
-
                 $this->LoginRecorder->setConfig('user', $user['id'])->write();
 
                 //Saves the login data as cookies, if requested
                 if ($this->getRequest()->getData('remember_me')) {
-                    $cookie = new Cookie('login', [
-                        'username' => $this->getRequest()->getData('username'),
-                        'password' => $this->getRequest()->getData('password'),
-                    ], new DateTime('+1 year'));
+                    $cookie = new Cookie('login', compact('username', 'password'), new DateTime('+1 year'));
                     $this->setResponse($this->getResponse()->withCookie($cookie));
                 }
 
                 return $this->redirect($this->Auth->redirectUrl());
             }
 
-            if ($this->getRequest()->getData('username') && $this->getRequest()->getData('password')) {
-                Log::error(sprintf(
-                    '%s - Failed login with username `%s` and password `%s`',
-                    $this->getRequest()->clientIp(),
-                    $this->getRequest()->getData('username'),
-                    $this->getRequest()->getData('password')
-                ), 'users');
+            if ($username && $password) {
+                $ip = $this->getRequest()->clientIp();
+                Log::error(sprintf('%s - Failed login: username `%s`, password `%s`', $ip, $username, $password), 'users');
             }
 
             $this->Flash->error(__d('me_cms', 'Invalid username or password'));
@@ -281,15 +276,13 @@ class UsersController extends AppController
             $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
             if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
                 $message = __d('me_cms', 'No account found');
-                $user = $this->Users->findActiveByEmail($this->getRequest()->getData('email'))->first();
+                $email = $this->getRequest()->getData('email');
+                $user = $this->Users->findActiveByEmail($email)->first();
 
                 if ($user) {
-                    $token = $this->Token->create(
-                        $user->get('email'),
-                        ['type' => 'password_forgot', 'user_id' => $user->get('id')]
-                    );
+                    $token = $this->Token->create($email, ['type' => 'password_forgot', 'user_id' => $user->get('id')]);
                     $this->getMailer('MeCms.User')
-                        ->set('url', Router::url(['_name' => 'passwordReset', $user->id, $token], true))
+                        ->set('url', Router::url(['_name' => 'passwordReset', $user->get('id'), $token], true))
                         ->send('passwordForgot', [$user]);
                     $this->Flash->success(__d('me_cms', 'We have sent you an email to reset your password'));
 
@@ -297,11 +290,8 @@ class UsersController extends AppController
                 }
 
                 if ($this->getRequest()->getData('email')) {
-                    Log::error(sprintf(
-                        '%s - Forgot password request with invalid email `%s`',
-                        $this->getRequest()->clientIp(),
-                        $this->getRequest()->getData('email')
-                    ), 'users');
+                    $ip = $this->getRequest()->clientIp();
+                    Log::error(sprintf('%s - Forgot password request: invalid email `%s`', $ip, $email), 'users');
                 }
             }
             $this->Flash->error($message);
@@ -375,8 +365,7 @@ class UsersController extends AppController
                         case 2:
                             $message = __d('me_cms', 'Account created, but it needs to be activated by an admin');
                             break;
-                        //The account will be enabled by the user via email
-                        //  (default)
+                        //The account will be enabled by the user via email (default)
                         case 1:
                             //Sends the activation mail
                             $this->sendActivationMail($user);

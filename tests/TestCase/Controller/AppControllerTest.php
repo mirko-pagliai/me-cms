@@ -14,8 +14,12 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use MeCms\Controller\AppController;
+use Cake\Http\ServerRequest;
+use Cake\ORM\Association\BelongsTo;
+use MeCms\Controller\PostsController;
+use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\ControllerTestCase;
+use PHPUnit\Framework\Error\Notice;
 
 /**
  * AppControllerTest class
@@ -23,11 +27,30 @@ use MeCms\TestSuite\ControllerTestCase;
 class AppControllerTest extends ControllerTestCase
 {
     /**
+     * Tests autoload modelClass
+     * @test
+     */
+    public function testTableAutoload()
+    {
+        $Request = new ServerRequest(['params' => ['plugin' => 'MeCms']]);
+        $PostsController = new PostsController($Request);
+        $this->assertInstanceOf(PostsTable::class, $PostsController->Posts);
+        $this->assertInstanceOf(BelongsTo::class, $PostsController->Categories);
+        $this->assertInstanceOf(BelongsTo::class, $PostsController->Users);
+
+        $this->expectException(Notice::class);
+        $this->expectExceptionMessageRegExp('/^Undefined property\: PostsController\:\:\$Foo in/');
+        $PostsController->Foo;
+    }
+
+    /**
      * Tests for `beforeFilter()` method
      * @test
      */
     public function testBeforeFilter()
     {
+        parent::testBeforeFilter();
+
         Configure::write('MeCms.default.records', 5);
 
         $this->Controller->beforeFilter(new Event('myEvent'));
@@ -40,12 +63,6 @@ class AppControllerTest extends ControllerTestCase
         $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
         $this->Controller->beforeFilter(new Event('myEvent'));
         $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
-
-        //If the user has been reported as a spammer this makes a redirect
-        $controller = $this->getMockForController(AppController::class, ['isSpammer']);
-        $controller->method('isSpammer')->willReturn(true);
-        $this->_response = $controller->beforeFilter(new Event('myEvent'));
-        $this->assertRedirect(['_name' => 'ipNotAllowed']);
 
         //If the site is offline this makes a redirect
         Configure::write('MeCms.default.offline', true);

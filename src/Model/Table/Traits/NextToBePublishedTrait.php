@@ -43,7 +43,7 @@ trait NextToBePublishedTrait
                 sprintf('%s.active', $this->getAlias()) => true,
                 sprintf('%s.created >', $this->getAlias()) => new Time(),
             ])
-            ->order([sprintf('%s.created', $this->getAlias()) => 'ASC'])
+            ->orderAsc(sprintf('%s.created', $this->getAlias()))
             ->extract('created')
             ->first();
 

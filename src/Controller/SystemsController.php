@@ -31,7 +31,8 @@ class SystemsController extends AppController
      */
     public function acceptCookies()
     {
-        $this->response = $this->response->withCookie((new Cookie('cookies-policy', true))->withNeverExpire());
+        $cookie = (new Cookie('cookies-policy', true))->withNeverExpire();
+        $this->setResponse($this->getResponse()->withCookie($cookie));
 
         return $this->redirect($this->referer(['_name' => 'homepage'], true));
     }
@@ -120,6 +121,6 @@ class SystemsController extends AppController
             create_file(SITEMAP, gzencode(Sitemap::generate(), 9), 0777);
         }
 
-        return $this->response->withFile(SITEMAP);
+        return $this->getResponse()->withFile(SITEMAP);
     }
 }

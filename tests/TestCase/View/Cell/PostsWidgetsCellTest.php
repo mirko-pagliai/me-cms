@@ -142,7 +142,7 @@ class PostsWidgetsCellTest extends CellTestCase
         $this->assertHtml($expected, $this->Widget->widget($widget, ['limit' => 1])->render());
 
         //Tries with a limit of 2
-        list($post, $otherPost) = $this->Table->find('active')->order(['created' => 'DESC'])->limit(2)->toArray();
+        list($post, $otherPost) = $this->Table->find('active')->orderDesc('created')->limit(2)->toArray();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
