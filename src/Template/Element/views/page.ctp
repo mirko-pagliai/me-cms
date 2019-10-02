@@ -54,8 +54,7 @@ $isView = $this->getRequest()->isAction('view', 'Pages') && !$this->getRequest()
 
     <main class="text-justify">
         <?php
-        //Executes BBCode on the text
-        $text = $this->BBCode->parser($page->text);
+        $text = $page->get('plain_text');
 
         //Truncates the text when necessary. The text will be truncated to the
         //  location of the `<!-- readmore -->` tag. If the tag is not present,
@@ -69,11 +68,9 @@ $isView = $this->getRequest()->isAction('view', 'Pages') && !$this->getRequest()
                 $truncatedOptions = ['html' => true];
             }
 
-            $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
-            echo $truncatedText;
-        } else {
-            echo $text;
+            $text = $this->Text->truncate($text, $strpos, $truncatedOptions);
         }
+        echo $text;
         ?>
     </main>
 

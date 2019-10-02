@@ -14,8 +14,7 @@
 namespace MeCms\ORM;
 
 use Cake\ORM\Entity;
-use Cake\View\HelperRegistry;
-use Cake\View\View;
+use MeTools\Utility\BBCode;
 
 /**
  * Abstract class for `Post` and `Page` entity classes.
@@ -41,13 +40,10 @@ abstract class PostAndPageEntity extends Entity
      */
     protected function _getPlainText()
     {
-        if (empty($this->_properties['text'])) {
+        if (empty($this->get('text'))) {
             return null;
         }
 
-        //Loads the `BBCode` helper
-        $BBCode = (new HelperRegistry(new View()))->load('MeTools.BBCode');
-
-        return trim(strip_tags($BBCode->remove($this->_properties['text'])));
+        return trim(strip_tags((new BBCode())->remove($this->get('text'))));
     }
 }

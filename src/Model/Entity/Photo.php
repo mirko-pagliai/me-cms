@@ -13,8 +13,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\View\HelperRegistry;
-use Cake\View\View;
+use MeTools\Utility\BBCode;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -70,10 +69,7 @@ class Photo extends Entity
             return null;
         }
 
-        //Loads the `BBCode` helper
-        $BBCode = (new HelperRegistry(new View()))->load('MeTools.BBCode');
-
-        return trim(strip_tags($BBCode->remove($this->_properties['description'])));
+        return trim(strip_tags((new BBCode())->remove($this->_properties['description'])));
     }
 
     /**

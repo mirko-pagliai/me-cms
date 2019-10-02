@@ -80,7 +80,6 @@ class AppView extends View
         parent::initialize();
 
         //Loads helpers
-        $this->loadHelper('MeTools.BBCode');
         $this->loadHelper('MeTools.Breadcrumbs');
         $this->loadHelper('RecaptchaMailhide.Mailhide');
         $this->loadHelper('MeCms.Widget');
