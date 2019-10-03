@@ -20,15 +20,6 @@ use MeCms\TestSuite\PostAndPageEntityTestCase;
 class PageTest extends PostAndPageEntityTestCase
 {
     /**
-     * Test for virtual fields
-     * @test
-     */
-    public function testVirtualFields()
-    {
-        $this->assertHasVirtualField(['plain_text', 'url']);
-    }
-
-    /**
      * Test for `_getUrl()` method
      * @test
      */

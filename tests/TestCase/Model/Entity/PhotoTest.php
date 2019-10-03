@@ -29,8 +29,7 @@ class PhotoTest extends EntityTestCase
     {
         parent::setUp();
 
-        $this->Entity->set('id', 1);
-        $this->Entity->set([
+        $this->Entity->set('id', 1)->set([
             'album_id' => 1,
             'filename' => 'photo.jpg',
             'description' => 'This is a [readmore /]text',
@@ -79,15 +78,6 @@ class PhotoTest extends EntityTestCase
         $this->assertSame(400, $this->Entity->get('preview')->get('width'));
         $this->assertSame(400, $this->Entity->get('preview')->get('height'));
         @unlink($this->Entity->get('path'));
-    }
-
-    /**
-     * Test for virtual fields
-     * @test
-     */
-    public function testVirtualFields()
-    {
-        $this->assertHasVirtualField(['path', 'plain_description', 'preview', 'url']);
     }
 
     /**

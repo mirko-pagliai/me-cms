@@ -20,15 +20,6 @@ use MeCms\TestSuite\EntityTestCase;
 class PostsCategoryTest extends EntityTestCase
 {
     /**
-     * Test for virtual fields
-     * @test
-     */
-    public function testVirtualFields()
-    {
-        $this->assertHasVirtualField(['url']);
-    }
-
-    /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
      * @test

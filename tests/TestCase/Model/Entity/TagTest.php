@@ -20,15 +20,6 @@ use MeCms\TestSuite\EntityTestCase;
 class TagTest extends EntityTestCase
 {
     /**
-     * Test for virtual fields
-     * @test
-     */
-    public function testVirtualFields()
-    {
-        $this->assertHasVirtualField(['slug', 'url']);
-    }
-
-    /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
      * @test

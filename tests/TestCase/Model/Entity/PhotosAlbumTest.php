@@ -42,15 +42,6 @@ class PhotosAlbumTest extends EntityTestCase
     }
 
     /**
-     * Test for virtual fields
-     * @test
-     */
-    public function testVirtualFields()
-    {
-        $this->assertHasVirtualField(['path', 'preview', 'url']);
-    }
-
-    /**
      * Test for `_getPath()` method
      * @test
      */
