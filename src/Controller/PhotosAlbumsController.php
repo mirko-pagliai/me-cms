@@ -88,6 +88,7 @@ class PhotosAlbumsController extends AppController
         //If the data are not available from the cache
         if (empty($photos) || empty($paging)) {
             $query = $this->Photos->findActiveByAlbumId($album->get('id'))
+                ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['slug']]])
                 ->order([
                     sprintf('%s.created', $this->Photos->getAlias()) => 'DESC',
                     sprintf('%s.id', $this->Photos->getAlias()) => 'DESC',
