@@ -36,7 +36,7 @@ $this->userbar($this->Form->postLink(
 $this->Breadcrumbs->add($category->get('title'), ['_name' => 'pagesCategory', $category->get('title')]);
 
 $pages = collection($category->get('pages'))->map(function (Page $page) {
-    return $this->Html->link($page->get('title'), ['_name' => 'page', $page->get('slug')]);
+    return $this->Html->link($page->get('title'), $page->get('url'));
 })->toList();
 
 echo $this->Html->ul($pages, ['icon' => 'caret-right']);

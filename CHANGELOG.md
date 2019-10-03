@@ -3,6 +3,7 @@
 ### 2.27.2
 * added `url` virtual field for `Page`, `PagesCategory`, `Photo`, `PhotosAlbum`,
     `Post`, `PostsCategory` and `Tag` entities;
+* wide simplification of many template files;
 * uses `dereuromark/cakephp-feed` to generate RSS;
 * updated for `me-tools` `2.18.14`.
 

@@ -11,22 +11,22 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Common/index');
-$this->assign('title', $title = I18N_PHOTOS);
+$this->assign('title', I18N_PHOTOS);
 
 /**
  * Breadcrumb
  */
-$this->Breadcrumbs->add($title, ['_name' => 'albums']);
+$this->Breadcrumbs->add(I18N_PHOTOS, ['_name' => 'albums']);
 ?>
 
 <div class="row">
     <?php
     foreach ($albums as $album) {
         echo $this->Html->div('col-sm-6 col-md-4 mb-4', $this->element('MeCms.views/photo-preview', [
-            'link' => ['_name' => 'album', $album->slug],
-            'path' => $album->preview,
-            'text' => __d('me_cms', '{0} photos', $album->photo_count),
-            'title' => $album->title,
+            'link' => $album->get('url'),
+            'path' => $album->get('preview'),
+            'text' => __d('me_cms', '{0} photos', $album->get('photo_count')),
+            'title' => $album->get('title'),
         ]));
     }
     ?>

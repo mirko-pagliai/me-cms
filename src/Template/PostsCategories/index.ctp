@@ -22,7 +22,7 @@ $this->assign('title', $title = I18N_POSTS_CATEGORIES);
 $this->Breadcrumbs->add($title, ['_name' => 'postsCategories']);
 
 $categories = $categories->map(function (PostsCategory $category) {
-    return $this->Html->link($category->get('title'), ['_name' => 'postsCategory', $category->get('slug')]);
+    return $this->Html->link($category->get('title'), $category->get('url'));
 })->toList();
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);

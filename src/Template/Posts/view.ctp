@@ -59,7 +59,7 @@ if ($this->getRequest()->isAction('view', 'Posts')) {
     }
 
     //Adds tags as keywords
-    if (getConfig('post.keywords') && $post->has('tags_as_string')) {
+    if (getConfig('post.keywords')) {
         $this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->get('tags_as_string')));
     }
 
@@ -72,12 +72,10 @@ if ($this->getRequest()->isAction('view', 'Posts')) {
         }
     }
 
-    if ($post->has('text')) {
-        $this->Html->meta([
-            'content' => $this->Text->truncate($post->get('plain_text'), 100, ['html' => true]),
-            'property' => 'og:description',
-        ]);
-    }
+    $this->Html->meta([
+        'content' => $this->Text->truncate($post->get('plain_text'), 100, ['html' => true]),
+        'property' => 'og:description',
+    ]);
 }
 
 echo $this->element('views/post', compact('post'));
