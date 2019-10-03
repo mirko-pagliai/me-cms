@@ -43,13 +43,6 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
     }
 
     /**
-     * Test for virtual fields
-     * @return void
-     * @test
-     */
-    abstract public function testVirtualFields();
-
-    /**
      * Test for `_getPlainText()` method
      * @return void
      * @test
