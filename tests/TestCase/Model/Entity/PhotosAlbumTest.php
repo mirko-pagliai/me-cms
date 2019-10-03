@@ -28,7 +28,7 @@ class PhotosAlbumTest extends EntityTestCase
     {
         parent::setUp();
 
-        $this->Entity->set('id', 1);
+        $this->Entity->set('id', 1)->set('slug', 'a-slug');
     }
 
     /**
@@ -47,7 +47,7 @@ class PhotosAlbumTest extends EntityTestCase
      */
     public function testVirtualFields()
     {
-        $this->assertHasVirtualField(['path', 'preview']);
+        $this->assertHasVirtualField(['path', 'preview', 'url']);
     }
 
     /**
@@ -65,13 +65,19 @@ class PhotosAlbumTest extends EntityTestCase
      */
     public function testPreviewGetMutator()
     {
-        $this->assertNull($this->Entity->get('preview'));
-
         $path = WWW_ROOT . 'img' . DS . 'photos' . DS . '1' . DS . 'photo.jpg';
         copy(WWW_ROOT . 'img' . DS . 'image.jpg', $path);
-        $this->Entity->photos = [new Photo(['album_id' => 1, 'filename' => 'photo.jpg'])];
-        $this->assertNotEmpty($this->Entity->photos[0]->path);
-        $this->assertEquals($this->Entity->preview, $this->Entity->photos[0]->path);
+        $this->Entity->set('photos', [new Photo(['album_id' => 1, 'filename' => basename($path)])]);
+        $this->assertEquals($this->Entity->get('preview'), $path);
         unlink($path);
+    }
+
+    /**
+     * Test for `_getUrl()` method
+     * @test
+     */
+    public function testUrl()
+    {
+        $this->assertStringEndsWith('/album/a-slug', $this->Entity->get('url'));
     }
 }

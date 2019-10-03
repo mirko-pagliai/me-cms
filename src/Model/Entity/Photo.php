@@ -13,6 +13,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 use MeTools\Utility\BBCode;
 use Thumber\Utility\ThumbCreator;
 
@@ -44,7 +45,7 @@ class Photo extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['path', 'plain_description', 'preview'];
+    protected $_virtual = ['path', 'plain_description', 'preview', 'url'];
 
     /**
      * Gets the photo path (virtual field)
@@ -52,7 +53,7 @@ class Photo extends Entity
      */
     protected function _getPath()
     {
-        if (!$this->get('album_id') || !$this->get('filename')) {
+        if (!$this->has('album_id') || !$this->has('filename')) {
             return null;
         }
 
@@ -65,11 +66,7 @@ class Photo extends Entity
      */
     protected function _getPlainDescription()
     {
-        if (!$this->get('description')) {
-            return null;
-        }
-
-        return trim(strip_tags((new BBCode())->remove($this->get('description'))));
+        return $this->has('description') ? trim(strip_tags((new BBCode())->remove($this->get('description')))) : null;
     }
 
     /**
@@ -92,5 +89,19 @@ class Photo extends Entity
         $thumber->resize(1200, 1200)->save(['format' => 'jpg']);
 
         return new Entity(['url' => $thumber->getUrl()] + compact('width', 'height'));
+    }
+
+    /**
+     * Gets the url (virtual field)
+     * @return string|null
+     * @since 2.27.2
+     */
+    protected function _getUrl()
+    {
+        if (!$this->has('id') || !$this->get('album')->has('slug')) {
+            return null;
+        }
+
+        return Router::url(['_name' => 'photo', 'slug' => $this->get('album')->get('slug'), 'id' => $this->get('id')], true);
     }
 }
