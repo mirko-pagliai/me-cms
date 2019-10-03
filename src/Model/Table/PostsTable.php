@@ -105,7 +105,7 @@ class PostsTable extends PostsAndPagesTables
     public function findForIndex(Query $query)
     {
         return $query->contain([
-            $this->Categories->getAlias() => ['fields' => ['title', 'slug']],
+            $this->Categories->getAlias() => ['fields' => ['id', 'title', 'slug']],
             $this->Tags->getAlias() => ['sort' => ['tag' => 'ASC']],
             $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
         ])

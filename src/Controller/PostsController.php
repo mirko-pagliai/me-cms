@@ -162,7 +162,6 @@ class PostsController extends AppController
         $this->viewBuilder()->setClassName('Feed.Rss');
 
         $posts = $this->Posts->find('active')
-            ->select(['title', 'preview', 'slug', 'text', 'created'])
             ->limit(getConfigOrFail('default.records_for_rss'))
             ->orderDesc('created')
             ->formatResults(function (ResultSet $results) {

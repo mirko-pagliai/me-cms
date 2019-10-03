@@ -136,9 +136,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     {
         $query = $this->Table->find('forIndex');
         $sql = $query->sql();
-        $this->assertEquals(['title', 'slug'], $query->getContain()['Categories']['fields']);
-        $this->assertEquals(['tag' => 'ASC'], $query->getContain()['Tags']['sort']);
-        $this->assertEquals(['id', 'first_name', 'last_name'], $query->getContain()['Users']['fields']);
+        $this->assertArrayKeysEqual(['Categories', 'Tags', 'Users'], $query->getContain());
         $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_categories Categories ON Categories.id = (Posts.category_id) INNER JOIN users Users ON Users.id = (Posts.user_id) ORDER BY Posts.created DESC', $sql);
     }
 

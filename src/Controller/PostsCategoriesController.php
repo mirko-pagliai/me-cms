@@ -65,7 +65,9 @@ class PostsCategoriesController extends AppController
         if (empty($posts) || empty($paging)) {
             $query = $this->Posts->find('active')
                 ->find('forIndex')
-                ->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]);
+                ->innerJoinWith($this->PostsCategories->getAlias(), function ($query) use ($slug) {
+                    return $query->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]);
+                });
 
             is_true_or_fail(!$query->isEmpty(), I18N_NOT_FOUND, RecordNotFoundException::class);
 

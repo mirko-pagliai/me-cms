@@ -89,10 +89,8 @@ class PhotosAlbumsController extends AppController
         if (empty($photos) || empty($paging)) {
             $query = $this->Photos->findActiveByAlbumId($album->get('id'))
                 ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['slug']]])
-                ->order([
-                    sprintf('%s.created', $this->Photos->getAlias()) => 'DESC',
-                    sprintf('%s.id', $this->Photos->getAlias()) => 'DESC',
-                ]);
+                ->orderDesc(sprintf('%s.created', $this->Photos->getAlias()))
+                ->orderDesc(sprintf('%s.id', $this->Photos->getAlias()));
 
             list($photos, $paging) = [$this->paginate($query), $this->getPaging()];
 
