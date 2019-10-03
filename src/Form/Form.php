@@ -24,7 +24,7 @@ use Cake\Form\Form as CakeForm;
  * This class only overwrites the `validate()` method with respect to the
  *  original CakePHP class, due to the issue #12024
  */
-class Form extends CakeForm
+abstract class Form extends CakeForm
 {
     /**
      * Used to check if $data passes this form's validation.

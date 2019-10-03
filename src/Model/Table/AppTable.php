@@ -26,7 +26,7 @@ use MeCms\ORM\Query;
 /**
  * Application table class
  */
-class AppTable extends Table
+abstract class AppTable extends Table
 {
     /**
      * Cache configuration name
