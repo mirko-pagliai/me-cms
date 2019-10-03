@@ -23,7 +23,6 @@ use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
 use MeCms\Model\Entity\Post;
-use MeTools\Utility\BBCode;
 
 /**
  * Posts controller
@@ -133,10 +132,8 @@ class PostsController extends AppController
         if (empty($posts) || empty($paging)) {
             $query = $this->Posts->find('active')
                 ->find('forIndex')
-                ->where([
-                    sprintf('%s.created >=', $this->Posts->getAlias()) => $start,
-                    sprintf('%s.created <', $this->Posts->getAlias()) => $end,
-                ]);
+                ->where([sprintf('%s.created >=', $this->Posts->getAlias()) => $start])
+                ->andWhere([sprintf('%s.created <', $this->Posts->getAlias()) => $end]);
 
             list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
@@ -170,14 +167,9 @@ class PostsController extends AppController
             ->orderDesc('created')
             ->formatResults(function (ResultSet $results) {
                 return $results->map(function (Post $post) {
-                    $link = Router::url(['_name' => 'post', $post->get('slug')], true);
-
-                    //Executes BBCode on the text
-                    $text = (new BBCode())->parser($post->get('text'));
-
                     //Truncates the description if the "<!-- read-more -->" tag is
                     //  present or if requested by the configuration
-                    $description = $text;
+                    $description = $text = $post->get('plain_text');
                     $length = $options = false;
                     $strpos = strpos($description, '<!-- read-more -->');
                     if ($strpos) {
@@ -189,10 +181,11 @@ class PostsController extends AppController
 
                     return [
                         'title' => $post->get('title'),
+                        'link' => $post->get('url'),
                         'description' => strip_tags($description),
                         'content:encoded' => $text,
                         'pubDate' => $post->get('created'),
-                    ] + compact('link');
+                    ];
                 });
             })
             ->cache('rss');
