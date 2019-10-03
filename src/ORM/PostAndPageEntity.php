@@ -40,10 +40,24 @@ abstract class PostAndPageEntity extends Entity
      */
     protected function _getPlainText()
     {
-        if (empty($this->get('text'))) {
-            return null;
-        }
-
-        return trim(strip_tags((new BBCode())->remove($this->get('text'))));
+        return $this->has('text') ? trim(strip_tags($this->get('text'))) : null;
     }
+
+    /**
+     * Gets text
+     * @param string $text Text
+     * @return string
+     * @since 2.27.2
+     */
+    protected function _getText($text)
+    {
+        return (new BBCode())->parser($text);
+    }
+
+    /**
+     * Gets the url (virtual field)
+     * @return string|null
+     * @since 2.27.2
+     */
+    abstract protected function _getUrl();
 }

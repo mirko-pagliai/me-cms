@@ -25,6 +25,15 @@ class PageTest extends PostAndPageEntityTestCase
      */
     public function testVirtualFields()
     {
-        $this->assertHasVirtualField('plain_text');
+        $this->assertHasVirtualField(['plain_text', 'url']);
+    }
+
+    /**
+     * Test for `_getUrl()` method
+     * @test
+     */
+    public function testUrl()
+    {
+        $this->assertStringEndsWith('/page/a-slug', $this->Entity->get('url'));
     }
 }

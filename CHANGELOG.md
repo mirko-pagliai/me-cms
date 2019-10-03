@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.27 branch
 ### 2.27.2
+* added `url` virtual field for `Page`, `PagesCategory`, `Post`, `PostsCategory`
+    and `Tag` entities;
 * uses `dereuromark/cakephp-feed` to generate RSS;
 * updated for `me-tools` `2.18.14`.
 

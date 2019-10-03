@@ -13,6 +13,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 
 /**
  * PostsCategory entity
@@ -41,4 +42,20 @@ class PostsCategory extends Entity
         'post_count' => false,
         'modified' => false,
     ];
+
+    /**
+     * Virtual fields that should be exposed
+     * @var array
+     */
+    protected $_virtual = ['url'];
+
+    /**
+     * Gets the url (virtual field)
+     * @return string|null
+     * @since 2.27.2
+     */
+    protected function _getUrl()
+    {
+        return $this->has('slug') ? Router::url(['_name' => 'postsCategory', $this->get('slug')], true) : null;
+    }
 }

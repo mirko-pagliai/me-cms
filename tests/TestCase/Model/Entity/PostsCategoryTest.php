@@ -20,6 +20,15 @@ use MeCms\TestSuite\EntityTestCase;
 class PostsCategoryTest extends EntityTestCase
 {
     /**
+     * Test for virtual fields
+     * @test
+     */
+    public function testVirtualFields()
+    {
+        $this->assertHasVirtualField(['url']);
+    }
+
+    /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
      * @test
@@ -27,5 +36,15 @@ class PostsCategoryTest extends EntityTestCase
     public function testNoAccessibleProperties()
     {
         $this->assertHasNoAccessibleProperty(['id', 'post_count', 'modified']);
+    }
+
+    /**
+     * Test for `_getUrl()` method
+     * @test
+     */
+    public function testUrl()
+    {
+        $this->Entity->set('slug', 'a-slug');
+        $this->assertStringEndsWith('/posts/category/a-slug', $this->Entity->get('url'));
     }
 }

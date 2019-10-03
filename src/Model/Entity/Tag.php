@@ -13,6 +13,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 use Cake\Utility\Text;
 
 /**
@@ -41,7 +42,7 @@ class Tag extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['slug'];
+    protected $_virtual = ['slug', 'url'];
 
     /**
      * Gets the tag slug (virtual field)
@@ -49,6 +50,16 @@ class Tag extends Entity
      */
     protected function _getSlug()
     {
-        return !$this->get('tag') ? null : strtolower(Text::slug($this->get('tag')));
+        return $this->has('tag') ? strtolower(Text::slug($this->get('tag'))) : null;
+    }
+
+    /**
+     * Gets the url (virtual field)
+     * @return string|null
+     * @since 2.27.2
+     */
+    protected function _getUrl()
+    {
+        return $this->has('slug') ? Router::url(['_name' => 'postsTag', $this->get('slug')], true) : null;
     }
 }
