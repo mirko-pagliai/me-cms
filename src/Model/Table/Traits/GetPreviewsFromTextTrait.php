@@ -81,8 +81,8 @@ trait GetPreviewsFromTextTrait
      * Gets all the available images from an html string, including the previews
      *  of Youtube videos, and returns an array of `Entity`
      * @param string $html Html string
-     * @return array Array of entities. Each `Entity` has `url`, `width` and
-     *  `height` properties
+     * @return \Cake\Collection\Collection Collection of entities. Each `Entity`
+     *  has `url`, `width` and `height` properties
      * @since 2.23.0
      * @uses extractImages()
      * @uses getPreviewSize()
@@ -107,6 +107,6 @@ trait GetPreviewsFromTextTrait
             return new Entity(compact('url', 'width', 'height'));
         }, $this->extractImages($html));
 
-        return array_filter($images);
+        return collection(array_filter($images));
     }
 }

@@ -2,6 +2,7 @@
 ## 2.27 branch
 ### 2.27.2
 * `PostsTable::getRelated()` returns a `Collection` of entities;
+* `GetPreviewsFromTextTrait::getPreviews()` returns a `Collection` of entities;
 * added `url` virtual field for `Page`, `PagesCategory`, `Photo`, `PhotosAlbum`,
     `Post`, `PostsCategory` and `Tag` entities;
 * virtual fields throw an exception if the necessary properties are missing;
