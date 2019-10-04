@@ -92,6 +92,6 @@ class PhotoTest extends EntityTestCase
     {
         $this->assertStringEndsWith('/photo/album-slug/1', $this->Entity->get('url'));
 
-        $this->assertNull($this->Entity->set('filename', null)->get('preview'));
+        $this->assertNull($this->Entity->set('slug', null)->get('preview'));
     }
 }
