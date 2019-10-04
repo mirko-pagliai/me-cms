@@ -55,13 +55,12 @@ class User extends Entity
 
     /**
      * Gets the full name (virtual field)
-     * @return string|null
+     * @return string
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getFullName()
     {
-        if (!$this->get('first_name') || !$this->get('last_name')) {
-            return null;
-        }
+        property_exists_or_fail($this, ['first_name', 'last_name']);
 
         return sprintf('%s %s', $this->get('first_name'), $this->get('last_name'));
     }

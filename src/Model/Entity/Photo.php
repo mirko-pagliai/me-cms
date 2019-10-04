@@ -49,24 +49,23 @@ class Photo extends Entity
 
     /**
      * Gets the photo path (virtual field)
-     * @return string|null
+     * @return string
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getPath()
     {
-        if (!$this->has('album_id') || !$this->has('filename')) {
-            return null;
-        }
+        property_exists_or_fail($this, ['album_id', 'filename']);
 
         return PHOTOS . $this->get('album_id') . DS . $this->get('filename');
     }
 
     /**
      * Gets description as plain text (virtual field)
-     * @return string|null
+     * @return string
      */
     protected function _getPlainDescription()
     {
-        return $this->has('description') ? trim(strip_tags((new BBCode())->remove($this->get('description')))) : null;
+        return $this->has('description') ? trim(strip_tags((new BBCode())->remove($this->get('description')))) : '';
     }
 
     /**
@@ -93,14 +92,13 @@ class Photo extends Entity
 
     /**
      * Gets the url (virtual field)
-     * @return string|null
+     * @return string
      * @since 2.27.2
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getUrl()
     {
-        if (!$this->has('id') || !$this->get('album')->has('slug')) {
-            return null;
-        }
+        property_exists_or_fail($this, ['id', 'album']);
 
         return Router::url(['_name' => 'photo', 'slug' => $this->get('album')->get('slug'), 'id' => $this->get('id')], true);
     }

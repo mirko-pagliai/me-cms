@@ -20,7 +20,7 @@ use MeCms\Model\Entity\PostsTag;
 use MeCms\Model\Entity\Tag;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\TestSuite\PostsAndPagesTablesTestCase;
-use Tools\Exception\KeyNotExistsException;
+use Tools\Exception\PropertyNotExistsException;
 
 /**
  * PostsTableTest class
@@ -191,8 +191,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertEquals([], Cache::read('related_5_posts_for_5_with_images', $this->Table->getCacheName()));
 
         //With an entity with no `tags` property
-        $this->expectException(KeyNotExistsException::class);
-        $this->expectExceptionMessage('ID or tags of the post are missing');
+        $this->expectException(PropertyNotExistsException::class);
         $this->Table->getRelated($this->Table->get(1));
     }
 

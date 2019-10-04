@@ -47,8 +47,6 @@ class UserTest extends EntityTestCase
      */
     public function testFullNameGetMutator()
     {
-        $this->assertNull($this->Entity->get('full_name'));
-
         $this->Entity->set(['first_name' => 'Alfa', 'last_name' => 'Beta']);
         $this->assertEquals('Alfa Beta', $this->Entity->get('full_name'));
     }

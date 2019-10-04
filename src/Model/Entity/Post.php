@@ -44,20 +44,23 @@ class Post extends PostAndPageEntity
 
     /**
      * Gets the url (virtual field)
-     * @return string|null
+     * @return string
      * @since 2.27.2
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getUrl()
     {
-        return $this->has('slug') ? Router::url(['_name' => 'post', $this->get('slug')], true) : null;
+        property_exists_or_fail($this, 'slug');
+
+        return Router::url(['_name' => 'post', $this->get('slug')], true);
     }
 
     /**
      * Gets tags as string, separated by a comma and a space (virtual field)
-     * @return string|null
+     * @return string
      */
     protected function _getTagsAsString()
     {
-        return $this->has('tags') ? implode(', ', Hash::extract($this->get('tags'), '{*}.tag')) : null;
+        return $this->has('tags') ? implode(', ', Hash::extract($this->get('tags'), '{*}.tag')) : '';
     }
 }

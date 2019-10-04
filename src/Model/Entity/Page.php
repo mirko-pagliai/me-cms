@@ -39,11 +39,14 @@ class Page extends PostAndPageEntity
 
     /**
      * Gets the url (virtual field)
-     * @return string|null
+     * @return string
      * @since 2.27.2
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getUrl()
     {
-        return $this->has('slug') ? Router::url(['_name' => 'page', $this->get('slug')], true) : null;
+        property_exists_or_fail($this, 'slug');
+
+        return Router::url(['_name' => 'page', $this->get('slug')], true);
     }
 }

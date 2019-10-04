@@ -36,11 +36,14 @@ abstract class PostAndPageEntity extends Entity
 
     /**
      * Gets text as plain text (virtual field)
-     * @return string|null
+     * @return string
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getPlainText()
     {
-        return $this->has('text') ? trim(strip_tags($this->get('text'))) : null;
+        property_exists_or_fail($this, 'text');
+
+        return trim(strip_tags($this->get('text')));
     }
 
     /**

@@ -46,20 +46,26 @@ class Tag extends Entity
 
     /**
      * Gets the tag slug (virtual field)
-     * @return string|null
+     * @return string
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getSlug()
     {
-        return $this->has('tag') ? strtolower(Text::slug($this->get('tag'))) : null;
+        property_exists_or_fail($this, 'tag');
+
+        return strtolower(Text::slug($this->get('tag')));
     }
 
     /**
      * Gets the url (virtual field)
-     * @return string|null
+     * @return string
      * @since 2.27.2
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getUrl()
     {
-        return $this->has('slug') ? Router::url(['_name' => 'postsTag', $this->get('slug')], true) : null;
+        property_exists_or_fail($this, 'slug');
+
+        return Router::url(['_name' => 'postsTag', $this->get('slug')], true);
     }
 }

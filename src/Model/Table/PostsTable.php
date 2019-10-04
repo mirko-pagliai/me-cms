@@ -118,14 +118,15 @@ class PostsTable extends PostsAndPagesTables
      * @param int $limit Limit of related posts
      * @param bool $images If `true`, gets only posts with images
      * @return array Array of entities
+     * @throws \Tools\Exception\PropertyNotExistsException
      * @uses queryForRelated()
      * @uses $cache
      */
     public function getRelated(Post $post, $limit = 5, $images = true)
     {
-        key_exists_or_fail(['id', 'tags'], $post->toArray(), __d('me_cms', 'ID or tags of the post are missing'));
+        property_exists_or_fail($post, ['id', 'tags']);
 
-        $cache = sprintf('related_%s_posts_for_%s', $limit, $post->id);
+        $cache = sprintf('related_%s_posts_for_%s', $limit, $post->get('id'));
         $cache = $images ? $cache . '_with_images' : $cache;
 
         return Cache::remember($cache, function () use ($images, $limit, $post) {
@@ -133,16 +134,16 @@ class PostsTable extends PostsAndPagesTables
 
             if ($post->has('tags')) {
                 //Sorts and takes tags by `post_count` field
-                $tags = collection($post->tags)->sortBy('post_count')->take($limit)->toList();
+                $tags = collection($post->get('tags'))->sortBy('post_count')->take($limit)->toList();
 
                 //This array will be contain the ID to be excluded
-                $exclude[] = $post->id;
+                $exclude[] = $post->get('id');
 
                 //For each tag, gets a related post.
                 //It reverses the tags order, because the tags less popular have
                 //  less chance to find a related post
                 foreach (array_reverse($tags) as $tag) {
-                    $post = $this->queryForRelated($tag->id, $images)
+                    $post = $this->queryForRelated($tag->get('id'), $images)
                         ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude])
                         ->first();
 
@@ -150,7 +151,7 @@ class PostsTable extends PostsAndPagesTables
                     //  IDs to be excluded for the next query
                     if ($post) {
                         $related[] = $post;
-                        $exclude[] = $post->id;
+                        $exclude[] = $post->get('id');
                     }
                 }
             }

@@ -46,30 +46,41 @@ class PhotosAlbum extends Entity
 
     /**
      * Gets the album full path (virtual field)
-     * @return string|null
+     * @return string
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getPath()
     {
-        return $this->has('id') ? PHOTOS . $this->get('id') : null;
+        property_exists_or_fail($this, 'id');
+
+        return PHOTOS . $this->get('id');
     }
 
     /**
      * Gets the album preview (virtual field)
-     * @return string|null
+     * @return string
      * @since 2.21.1
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getPreview()
     {
-        return $this->has('photos') ? array_value_first($this->get('photos'))->get('path') : null;
+        property_exists_or_fail($this, 'photos');
+        $photo = array_value_first($this->get('photos'));
+        property_exists($photo, 'path');
+
+        return $photo->get('path');
     }
 
     /**
      * Gets the url (virtual field)
-     * @return string|null
+     * @return string
      * @since 2.27.2
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getUrl()
     {
-        return $this->has('slug') ? Router::url(['_name' => 'album', $this->get('slug')], true) : null;
+        property_exists_or_fail($this, 'slug');
+
+        return Router::url(['_name' => 'album', $this->get('slug')], true);
     }
 }
