@@ -14,6 +14,7 @@ namespace MeCms\Controller;
 
 use Cake\Event\Event;
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
@@ -63,6 +64,7 @@ class PagesController extends AppController
                 'category' => new Entity(['slug' => null, 'title' => null]),
                 'title' => StaticPage::getTitle($slug),
                 'subtitle' => null,
+                'url' => Router::url(['_name' => 'page', $slug], true),
             ] + compact('slug'));
 
             $this->set(compact('page'));
