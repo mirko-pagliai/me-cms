@@ -55,6 +55,8 @@ class PhotoTest extends EntityTestCase
     {
         $expected = PHOTOS . $this->Entity->get('album_id') . DS . $this->Entity->get('filename');
         $this->assertEquals($expected, $this->Entity->get('path'));
+
+        $this->assertNull($this->Entity->set('filename', null)->get('path'));
     }
 
     /**
@@ -78,6 +80,8 @@ class PhotoTest extends EntityTestCase
         $this->assertSame(400, $this->Entity->get('preview')->get('width'));
         $this->assertSame(400, $this->Entity->get('preview')->get('height'));
         @unlink($this->Entity->get('path'));
+
+        $this->assertNull($this->Entity->set('filename', null)->get('preview'));
     }
 
     /**
@@ -87,5 +91,7 @@ class PhotoTest extends EntityTestCase
     public function testUrl()
     {
         $this->assertStringEndsWith('/photo/album-slug/1', $this->Entity->get('url'));
+
+        $this->assertNull($this->Entity->set('filename', null)->get('preview'));
     }
 }
