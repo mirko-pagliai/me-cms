@@ -63,16 +63,15 @@ class PostsTable extends PostsAndPagesTables
         parent::beforeMarshal($event, $data, $options);
 
         if (!empty($data['tags_as_string'])) {
+            $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']));
+
             //Gets existing tags
             $existingTags = $this->Tags->getList()->toArray();
-
-            $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']));
 
             //For each tag, it searches if the tag already exists.
             //If a tag exists in the database, it sets also the tag ID
             foreach ($tags as $k => $tag) {
                 $id = array_search($tag, $existingTags);
-
                 if ($id) {
                     $data['tags'][$k]['id'] = $id;
                 }
@@ -208,13 +207,13 @@ class PostsTable extends PostsAndPagesTables
     {
         $query = $this->find('active')
             ->select(['id', 'title', 'preview', 'slug', 'text'])
-            ->matching('Tags', function (Query $query) use ($tagId) {
+            ->innerJoinWith('Tags', function (Query $query) use ($tagId) {
                 return $query->where([sprintf('%s.id', $this->Tags->getAlias()) => $tagId]);
-            });
+            })->distinct();
 
         if ($onlyWithImages) {
             $query->where([sprintf('%s.preview IS NOT', $this->getAlias()) => null])
-                ->where([sprintf('%s.preview IS NOT', $this->getAlias()) => []]);
+                ->andWhere([sprintf('%s.preview IS NOT', $this->getAlias()) => []]);
         }
 
         return $query;
