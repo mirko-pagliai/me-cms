@@ -69,7 +69,7 @@ class PhotosAlbumsController extends AppController
 
         //Gets album ID and title
         $album = $this->PhotosAlbums->findActiveBySlug($slug)
-            ->select(['id', 'title'])
+            ->select(['id', 'title', 'slug'])
             ->cache('album_' . md5($slug))
             ->firstOrFail();
 
