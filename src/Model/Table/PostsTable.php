@@ -116,7 +116,7 @@ class PostsTable extends PostsAndPagesTables
      * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `id` and `Tags`
      * @param int $limit Limit of related posts
      * @param bool $images If `true`, gets only posts with images
-     * @return array Array of entities
+     * @return \Cake\Collection\Collection Collection of entities
      * @throws \Tools\Exception\PropertyNotExistsException
      * @uses queryForRelated()
      * @uses $cache
@@ -155,7 +155,7 @@ class PostsTable extends PostsAndPagesTables
                 }
             }
 
-            return $related;
+            return collection($related);
         }, $this->getCacheName());
     }
 

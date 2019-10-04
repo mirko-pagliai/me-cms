@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
+use Cake\Collection\CollectionInterface;
 use Cake\I18n\Time;
 use Cake\Utility\Hash;
 use MeCms\Model\Entity\Post;
@@ -153,26 +154,20 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $post = $this->Table->findById(1)->contain(['Tags' => ['sort' => ['post_count' => 'ASC']]])->first();
         $this->assertNotEmpty($post->get('tags'));
 
-        $relatedPosts = $this->Table->getRelated($post, 2, false);
-
-        $this->assertCount(2, $relatedPosts);
-        $this->assertEquals($relatedPosts, Cache::read('related_2_posts_for_1', $this->Table->getCacheName()));
-
-        $this->assertContainsOnlyInstancesOf(Post::class, $relatedPosts);
-        foreach ($relatedPosts as $related) {
-            $this->assertTrue($related->has(['id', 'title', 'slug', 'text']));
-        }
+        $related = $this->Table->getRelated($post, 2, false);
+        $this->assertInstanceOf(CollectionInterface::class, $related);
+        $this->assertCount(2, $related);
+        $this->assertEquals($related, Cache::read('related_2_posts_for_1', $this->Table->getCacheName()));
+        $this->assertContainsOnlyInstancesOf(Post::class, $related);
 
         //Gets related posts with image
         $related = $this->Table->getRelated($post, 2, true);
+        $this->assertInstanceOf(CollectionInterface::class, $related);
         $this->assertCount(1, $related);
         $this->assertEquals($related, Cache::read('related_2_posts_for_1_with_images', $this->Table->getCacheName()));
-        $firstRelated = array_value_first($related);
+        $firstRelated = $related->first();
         $this->assertInstanceOf(Post::class, $firstRelated);
         $this->assertEquals(2, $firstRelated->get('id'));
-        $this->assertNotEmpty($firstRelated->get('title'));
-        $this->assertNotEmpty($firstRelated->get('slug'));
-        $this->assertContains('<img src="image.jpg" />Text of the second post', $firstRelated->get('text'));
         $this->assertCount(1, $firstRelated->get('preview'));
         $this->assertEquals('image.jpg', array_value_first($firstRelated->get('preview'))->get('url'));
         $this->assertEquals(400, array_value_first($firstRelated->get('preview'))->get('width'));
@@ -180,15 +175,15 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
 
         //This post has no tags
         $post = $this->Table->findById(4)->contain('Tags')->first();
-        $this->assertEquals([], $post->get('tags'));
-        $this->assertEquals([], $this->Table->getRelated($post));
-        $this->assertEquals([], Cache::read('related_5_posts_for_4_with_images', $this->Table->getCacheName()));
+        $this->assertEmpty($post->get('tags'));
+        $this->assertTrue($this->Table->getRelated($post)->isEmpty());
+        $this->assertTrue(Cache::read('related_5_posts_for_4_with_images', $this->Table->getCacheName())->isEmpty());
 
         //This post has one tag, but this is not related to any other post
         $post = $this->Table->findById(5)->contain('Tags')->first();
         $this->assertCount(1, $post->get('tags'));
-        $this->assertEquals([], $this->Table->getRelated($post));
-        $this->assertEquals([], Cache::read('related_5_posts_for_5_with_images', $this->Table->getCacheName()));
+        $this->assertTrue($this->Table->getRelated($post)->isEmpty());
+        $this->assertTrue(Cache::read('related_5_posts_for_5_with_images', $this->Table->getCacheName())->isEmpty());
 
         //With an entity with no `tags` property
         $this->expectException(PropertyNotExistsException::class);
