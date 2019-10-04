@@ -202,7 +202,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     public function testQueryFromFilter()
     {
         $query = $this->Table->queryFromFilter($this->Table->find(), ['tag' => 'test']);
-        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
         $this->assertEquals('test', $query->getValueBinder()->bindings()[':c0']['value']);
     }
 

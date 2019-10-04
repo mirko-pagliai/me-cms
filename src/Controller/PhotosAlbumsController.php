@@ -31,12 +31,11 @@ class PhotosAlbumsController extends AppController
     public function index()
     {
         $albums = $this->PhotosAlbums->find('active')
-            ->select(['id'])
+            ->select(['id', 'slug'])
             ->contain($this->Photos->getAlias(), function (Query $query) {
                 return $query->find('active')->select(['id', 'album_id', 'filename']);
             })
             ->orderDesc(sprintf('%s.created', $this->PhotosAlbums->getAlias()))
-            ->enableAutoFields(true)
             ->cache('albums_index');
 
         //If there is only one record, redirects

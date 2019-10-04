@@ -233,9 +233,9 @@ class PostsTable extends PostsAndPagesTables
 
         //"Tag" field
         if (!empty($data['tag']) && strlen($data['tag']) > 2) {
-            $query->matching('Tags', function (Query $query) use ($data) {
-                return $query->where([sprintf('%s.tag', $this->Tags->getAlias()) => $data['tag']]);
-            })->distinct();
+            $query->innerJoinWith($this->Tags->getAlias(), function (Query $query) use ($data) {
+                return $query->where(['tag' => $data['tag']]);
+            });
         }
 
         return $query;
