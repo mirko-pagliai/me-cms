@@ -168,7 +168,7 @@ class PostsController extends AppController
                 return $results->map(function (Post $post) {
                     //Truncates the description if the "<!-- read-more -->" tag is
                     //  present or if requested by the configuration
-                    $description = $text = $post->get('plain_text');
+                    $description = $text = $post->get('text');
                     $length = $options = false;
                     $strpos = strpos($description, '<!-- read-more -->');
                     if ($strpos) {
