@@ -53,14 +53,14 @@ abstract class PostAndPageEntity extends Entity
      * @return string
      * @since 2.27.2
      */
-    protected function _getText($text): string
+    protected function _getText(string $text): string
     {
         return (new BBCode())->parser($text);
     }
 
     /**
      * Gets the url (virtual field)
-     * @return string|null
+     * @return string
      * @since 2.27.2
      */
     abstract protected function _getUrl(): string;

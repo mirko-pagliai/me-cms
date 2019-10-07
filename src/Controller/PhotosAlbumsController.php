@@ -91,7 +91,7 @@ class PhotosAlbumsController extends AppController
                 ->orderDesc(sprintf('%s.created', $this->Photos->getAlias()))
                 ->orderDesc(sprintf('%s.id', $this->Photos->getAlias()));
 
-            list($photos, $paging) = [$this->paginate($query), $this->getPaging()];
+            [$photos, $paging] = [$this->paginate($query), $this->getPaging()];
 
             Cache::writeMany([
                 $cache => $photos,

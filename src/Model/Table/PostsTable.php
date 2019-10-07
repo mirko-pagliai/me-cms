@@ -15,6 +15,7 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Collection\CollectionInterface;
 use Cake\Event\Event;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
@@ -116,12 +117,12 @@ class PostsTable extends PostsAndPagesTables
      * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `id` and `Tags`
      * @param int $limit Limit of related posts
      * @param bool $images If `true`, gets only posts with images
-     * @return \Cake\Collection\Collection Collection of entities
+     * @return \Cake\Collection\CollectionInterface Collection of entities
      * @throws \Tools\Exception\PropertyNotExistsException
      * @uses queryForRelated()
      * @uses $cache
      */
-    public function getRelated(Post $post, int $limit = 5, bool $images = true): array
+    public function getRelated(Post $post, int $limit = 5, bool $images = true): CollectionInterface
     {
         property_exists_or_fail($post, ['id', 'tags']);
 

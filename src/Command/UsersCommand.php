@@ -57,7 +57,7 @@ class UsersCommand extends Command
                 return [
                     (string)$user->get('id'),
                     $user->get('username'),
-                    $user->get('group.label') ?: $user->get('group'),
+                    $user->get('group')->get('label') ?: $user->get('group'),
                     $user->get('full_name'),
                     $user->get('email'),
                     (string)$user->get('post_count'),

@@ -60,7 +60,6 @@ class PostsControllerTest extends ControllerTestCase
     public function testIndex()
     {
         $url = ['_name' => 'posts'];
-
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Posts' . DS . 'index.php');

@@ -101,6 +101,6 @@ class Photo extends Entity
     {
         property_exists_or_fail($this, ['id', 'album']);
 
-        return Router::url(['_name' => 'photo', 'slug' => $this->get('album')->get('slug'), 'id' => $this->get('id')], true);
+        return Router::url(['_name' => 'photo', 'slug' => $this->get('album')->get('slug'), 'id' => (string)$this->get('id')], true);
     }
 }

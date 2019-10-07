@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Common/view');
+$this->extend('/common/view');
 $this->assign('title', $album->get('title'));
 
 if (getConfig('default.fancybox')) {
@@ -63,15 +63,9 @@ if (getConfig('default.fancybox')) {
         }
 
         echo $this->Html->div('col-md-4 col-lg-3 mb-4', $this->element('MeCms.views/photo-preview', [
-<<<<<<< HEAD:templates/PhotosAlbums/view.php
-            'link' => ['_name' => 'photo', 'slug' => $album->slug, 'id' => (string)$photo->id],
-            'path' => $photo->path,
-            'text' => $photo->description,
-=======
             'link' => $photo->get('url'),
             'path' => $photo->get('path'),
             'text' => $photo->get('description'),
->>>>>>> develop:src/Template/PhotosAlbums/view.ctp
         ] + compact('linkOptions')));
     }
     ?>
