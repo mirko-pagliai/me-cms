@@ -40,7 +40,7 @@ abstract class PostAndPageEntity extends Entity
      * @return string
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getPlainText(): ?string
+    protected function _getPlainText(): string
     {
         property_exists_or_fail($this, 'text');
 
@@ -49,13 +49,13 @@ abstract class PostAndPageEntity extends Entity
 
     /**
      * Gets text
-     * @param string $text Text
+     * @param string|null $text Text
      * @return string
      * @since 2.27.2
      */
-    protected function _getText(string $text): string
+    protected function _getText(?string $text): string
     {
-        return (new BBCode())->parser($text);
+        return $text ? (new BBCode())->parser($text) : '';
     }
 
     /**

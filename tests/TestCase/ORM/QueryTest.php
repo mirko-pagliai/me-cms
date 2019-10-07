@@ -40,7 +40,7 @@ class QueryTest extends TestCase
     {
         //This table HAS the `getCacheName()` method.
         //So its value will be used as default
-        $Table = $this->getMockForModel('MeCms.Posts', null);
+        $Table = $this->getMockForModel('MeCms.Posts', []);
         $expectedConfig = $Table->getCacheName();
         $cacheKey = 'aKey';
         $defaultEngine = Cache::pool('default');
@@ -66,7 +66,7 @@ class QueryTest extends TestCase
 
         //This table DOES NOT have the `getCacheName()` method.
         //So the `default` value will be used as default
-        $Table = $this->getMockForModel('Articles', null);
+        $Table = $this->getMockForModel('Articles', []);
 
         $Query = $this->getMockBuilder(Query::class)
             ->setConstructorArgs([$Table->getConnection(), $Table])

@@ -17,7 +17,7 @@ declare(strict_types=1);
     <?php
     $title = $post->get('title');
     if (!isset($truncate['title']) || $truncate['title']) {
-        $truncate['title'] = isset($truncate['title']) ? $truncate['title'] : 40;
+        $truncate['title'] = $truncate['title'] ?? 40;
         $title = $this->Text->truncate($title, $truncate['title'], ['exact' => false]);
     }
     echo $this->Html->link($title, $post->get('url'), ['class' => 'card-header card-title p-2 text-truncate']);
@@ -32,7 +32,7 @@ declare(strict_types=1);
 
     $text = $post->get('plain_text');
     if (!isset($truncate['text']) || $truncate['text']) {
-        $truncate['text'] = isset($truncate['text']) ? $truncate['text'] : 80;
+        $truncate['text'] = $truncate['text'] ?? 80;
         $text = $this->Text->truncate($text, $truncate['text'], ['exact' => false]);
     }
     echo $this->Html->div('card-body small p-2', $this->Html->para('card-text', $text));

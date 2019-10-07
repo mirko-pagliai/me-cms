@@ -52,7 +52,7 @@ class PostsTagsController extends AppController
         if (empty($tags) || empty($paging)) {
             $query = $this->Tags->find('active');
 
-            list($tags, $paging) = [$this->paginate($query), $this->getPaging()];
+            [$tags, $paging] = [$this->paginate($query), $this->getPaging()];
 
             Cache::writeMany([
                 $cache => $tags,
@@ -103,7 +103,7 @@ class PostsTagsController extends AppController
                     return $query->where(['tag' => $slug]);
                 });
 
-            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
+            [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([

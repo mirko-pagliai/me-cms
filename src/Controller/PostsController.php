@@ -73,7 +73,7 @@ class PostsController extends AppController
         if (empty($posts) || empty($paging)) {
             $query = $this->Posts->find('active')->find('forIndex');
 
-            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
+            [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([
@@ -137,7 +137,7 @@ class PostsController extends AppController
                 ->where([sprintf('%s.created >=', $this->Posts->getAlias()) => $start])
                 ->andWhere([sprintf('%s.created <', $this->Posts->getAlias()) => $end]);
 
-            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
+            [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([
@@ -258,7 +258,7 @@ class PostsController extends AppController
                     ]])
                     ->orderDesc('created');
 
-                list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
+                [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
                 Cache::writeMany([
                     $cache => $posts,
