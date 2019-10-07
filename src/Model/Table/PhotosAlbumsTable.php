@@ -76,7 +76,7 @@ class PhotosAlbumsTable extends AppTable
      */
     public function findActive(Query $query): Query
     {
-        return $query->matching($this->Photos->getAlias(), function (Query $query) {
+        return $query->innerJoinWith($this->Photos->getAlias(), function (Query $query) {
             return $query->find('active');
         })->distinct();
     }

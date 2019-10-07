@@ -20,7 +20,7 @@ use Cake\I18n\I18n;
 /**
  * Application controller class
  */
-class AppController extends BaseAppController
+abstract class AppController extends BaseAppController
 {
     /**
      * Magic accessor for model autoloading.
@@ -75,6 +75,16 @@ class AppController extends BaseAppController
         }
 
         return parent::beforeFilter($event);
+    }
+
+    /**
+     * Quick access to the `paging` request parameter
+     * @return array
+     * @since 2.27.1
+     */
+    public function getPaging()
+    {
+        return $this->getRequest()->getParam('paging', []);
     }
 
     /**

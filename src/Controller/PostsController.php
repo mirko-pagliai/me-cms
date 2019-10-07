@@ -17,9 +17,14 @@ use Cake\Cache\Cache;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Response;
+use Cake\I18n\I18n;
+use Cake\ORM\ResultSet;
+use Cake\Routing\Router;
+use Cake\Utility\Text;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
+use MeCms\Model\Entity\Post;
 
 /**
  * Posts controller
@@ -27,7 +32,8 @@ use MeCms\Controller\Traits\GetStartAndEndDateTrait;
  */
 class PostsController extends AppController
 {
-    use CheckLastSearchTrait, GetStartAndEndDateTrait;
+    use CheckLastSearchTrait;
+    use GetStartAndEndDateTrait;
 
     /**
      * Called before the controller action.
@@ -65,12 +71,14 @@ class PostsController extends AppController
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
-            $posts = $this->paginate($this->Posts->find('active')->find('forIndex'));
+            $query = $this->Posts->find('active')->find('forIndex');
+
+            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
@@ -126,16 +134,15 @@ class PostsController extends AppController
         if (empty($posts) || empty($paging)) {
             $query = $this->Posts->find('active')
                 ->find('forIndex')
-                ->where([
-                    sprintf('%s.created >=', $this->Posts->getAlias()) => $start,
-                    sprintf('%s.created <', $this->Posts->getAlias()) => $end,
-                ]);
-            $posts = $this->paginate($query);
+                ->where([sprintf('%s.created >=', $this->Posts->getAlias()) => $start])
+                ->andWhere([sprintf('%s.created <', $this->Posts->getAlias()) => $end]);
+
+            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
@@ -154,14 +161,48 @@ class PostsController extends AppController
     {
         //This method works only for RSS
         is_true_or_fail($this->RequestHandler->prefers('rss'), ForbiddenException::class);
+        $this->viewBuilder()->setClassName('Feed.Rss');
 
         $posts = $this->Posts->find('active')
-            ->select(['title', 'preview', 'slug', 'text', 'created'])
             ->limit(getConfigOrFail('default.records_for_rss'))
             ->orderDesc('created')
+            ->formatResults(function (ResultSet $results) {
+                return $results->map(function (Post $post) {
+                    //Truncates the description if the "<!-- read-more -->" tag is
+                    //  present or if requested by the configuration
+                    $description = $text = $post->get('text');
+                    $length = $options = false;
+                    $strpos = strpos($description, '<!-- read-more -->');
+                    if ($strpos) {
+                        [$length, $options] = [$strpos, ['exact' => true, 'html' => false]];
+                    } elseif (getConfig('default.truncate_to')) {
+                        [$length, $options] = [getConfig('default.truncate_to'), ['exact' => false, 'html' => true]];
+                    }
+                    $description = $length && $options ? Text::truncate($description, $length, $options) : $description;
+
+                    return [
+                        'title' => $post->get('title'),
+                        'link' => $post->get('url'),
+                        'description' => strip_tags($description),
+                        'content:encoded' => $text,
+                        'pubDate' => $post->get('created'),
+                    ];
+                });
+            })
             ->cache('rss');
 
-        $this->set(compact('posts'));
+        $data = [
+            'channel' => [
+                'title' => __d('me_cms', 'Latest posts'),
+                'link' => Router::url('/', true),
+                'description' => __d('me_cms', 'Latest posts'),
+                'language' => I18n::getLocale(),
+            ],
+            'items' => $posts->toArray(),
+        ];
+
+        $this->set('_serialize', 'data');
+        $this->set(compact('data'));
     }
 
     /**
@@ -217,12 +258,11 @@ class PostsController extends AppController
                     ]])
                     ->orderDesc('created');
 
-                $posts = $this->paginate($query);
+                list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
-                //Writes on cache
                 Cache::writeMany([
                     $cache => $posts,
-                    sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                    sprintf('%s_paging', $cache) => $paging,
                 ], $this->Posts->getCacheName());
             //Else, sets the paging parameter
             } else {

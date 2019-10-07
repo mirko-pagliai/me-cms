@@ -49,19 +49,25 @@ class Banner extends Entity
 
     /**
      * Gets the banner full path (virtual field)
-     * @return string|null
+     * @return string
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getPath(): ?string
     {
-        return $this->has('filename') ? BANNERS . $this->get('filename') : null;
+        property_exists_or_fail($this, 'filename');
+
+        return BANNERS . $this->get('filename');
     }
 
     /**
      * Gets the banner web address (virtual field)
-     * @return string|null
+     * @return string
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getWww(): ?string
     {
-        return $this->has('filename') ? BANNERS_WWW . $this->get('filename') : null;
+        property_exists_or_fail($this, 'filename');
+
+        return BANNERS_WWW . $this->get('filename');
     }
 }

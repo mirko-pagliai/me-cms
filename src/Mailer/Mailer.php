@@ -20,7 +20,7 @@ use Cake\Mailer\Mailer as CakeMailer;
 /**
  * Mailer classes let you encapsulate related Email logic into a reusable
  */
-class Mailer extends CakeMailer
+abstract class Mailer extends CakeMailer
 {
     /**
      * Constructor

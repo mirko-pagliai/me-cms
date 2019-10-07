@@ -21,11 +21,11 @@ use MeCms\TestSuite\PostAndPageEntityTestCase;
 class PageTest extends PostAndPageEntityTestCase
 {
     /**
-     * Test for virtual fields
+     * Test for `_getUrl()` method
      * @test
      */
-    public function testVirtualFields()
+    public function testUrl()
     {
-        $this->assertHasVirtualField('plain_text');
+        $this->assertStringEndsWith('/page/a-slug', $this->Entity->get('url'));
     }
 }

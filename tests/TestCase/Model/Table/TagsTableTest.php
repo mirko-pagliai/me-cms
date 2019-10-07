@@ -94,7 +94,7 @@ class TagsTableTest extends TableTestCase
     public function testQueryFromFilter()
     {
         $query = $this->Table->queryFromFilter($this->Table->find(), ['name' => 'test']);
-        $this->assertStringEndsWith('FROM tags Tags WHERE Tags.tag like :c0', $query->sql());
+        $this->assertStringEndsWith('FROM tags Tags WHERE tag like :c0', $query->sql());
         $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
     }
 }

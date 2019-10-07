@@ -20,12 +20,11 @@ if ($date === 'today') {
 } else {
     [$year, $month, $day] = array_replace([null, null, null], explode('/', $date));
 
+    $title = __dx('me_cms', 'posts of year', 'Posts of {0}', $start->i18nFormat('y'));
     if ($year && $month && $day) {
         $title = __dx('me_cms', 'posts of day', 'Posts of {0}', $start->i18nFormat(getConfigOrFail('main.date.long')));
     } elseif ($year && $month) {
         $title = __dx('me_cms', 'posts of month', 'Posts of {0}', $start->i18nFormat('MMMM y'));
-    } else {
-        $title = __dx('me_cms', 'posts of year', 'Posts of {0}', $start->i18nFormat('y'));
     }
 }
 

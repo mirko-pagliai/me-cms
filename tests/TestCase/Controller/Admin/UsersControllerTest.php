@@ -53,6 +53,8 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testBeforeFilter()
     {
+        parent::testBeforeFilter();
+
         foreach (['index', 'add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [2]);
             $this->assertNotEmpty($this->viewVariable('groups'));

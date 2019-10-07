@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 
 /**
  * PhotosAlbum entity
@@ -42,24 +43,45 @@ class PhotosAlbum extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['path', 'preview'];
+    protected $_virtual = ['path', 'preview', 'url'];
 
     /**
      * Gets the album full path (virtual field)
-     * @return string|null
+     * @return string
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getPath(): ?string
     {
-        return $this->has('id') ? PHOTOS . $this->get('id') : null;
+        property_exists_or_fail($this, 'id');
+
+        return PHOTOS . $this->get('id');
     }
 
     /**
      * Gets the album preview (virtual field)
-     * @return string|null
+     * @return string
      * @since 2.21.1
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getPreview(): ?string
     {
-        return $this->has('photos') ? array_value_first($this->get('photos'))->get('path') : null;
+        property_exists_or_fail($this, 'photos');
+        $photo = array_value_first($this->get('photos'));
+        property_exists($photo, 'path');
+
+        return $photo->get('path');
+    }
+
+    /**
+     * Gets the url (virtual field)
+     * @return string
+     * @since 2.27.2
+     * @throws \Tools\Exception\PropertyNotExistsException
+     */
+    protected function _getUrl(): string
+    {
+        property_exists_or_fail($this, 'slug');
+
+        return Router::url(['_name' => 'album', $this->get('slug')], true);
     }
 }

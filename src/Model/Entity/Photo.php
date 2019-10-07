@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\View\HelperRegistry;
-use Cake\View\View;
+use Cake\Routing\Router;
+use MeTools\Utility\BBCode;
 use Thumber\Utility\ThumbCreator;
 
 /**
@@ -46,35 +46,27 @@ class Photo extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['path', 'plain_description', 'preview'];
+    protected $_virtual = ['path', 'plain_description', 'preview', 'url'];
 
     /**
      * Gets the photo path (virtual field)
-     * @return string|null
+     * @return string
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getPath(): ?string
     {
-        if (!$this->has('album_id') || !$this->has('filename')) {
-            return null;
-        }
+        property_exists_or_fail($this, ['album_id', 'filename']);
 
         return PHOTOS . $this->get('album_id') . DS . $this->get('filename');
     }
 
     /**
      * Gets description as plain text (virtual field)
-     * @return string|null
+     * @return string
      */
     protected function _getPlainDescription(): ?string
     {
-        if (!$this->has('description')) {
-            return null;
-        }
-
-        //Loads the `BBCode` helper
-        $BBCode = (new HelperRegistry(new View()))->load('MeTools.BBCode');
-
-        return trim(strip_tags($BBCode->remove($this->get('description'))));
+        return $this->has('description') ? trim(strip_tags((new BBCode())->remove($this->get('description')))) : '';
     }
 
     /**
@@ -97,5 +89,18 @@ class Photo extends Entity
         $thumber->resize(1200, 1200)->save(['format' => 'jpg']);
 
         return new Entity(['url' => $thumber->getUrl()] + compact('width', 'height'));
+    }
+
+    /**
+     * Gets the url (virtual field)
+     * @return string
+     * @since 2.27.2
+     * @throws \Tools\Exception\PropertyNotExistsException
+     */
+    protected function _getUrl(): string
+    {
+        property_exists_or_fail($this, ['id', 'album']);
+
+        return Router::url(['_name' => 'photo', 'slug' => $this->get('album')->get('slug'), 'id' => $this->get('id')], true);
     }
 }

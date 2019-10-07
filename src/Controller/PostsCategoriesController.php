@@ -66,16 +66,17 @@ class PostsCategoriesController extends AppController
         if (empty($posts) || empty($paging)) {
             $query = $this->Posts->find('active')
                 ->find('forIndex')
-                ->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]);
+                ->innerJoinWith($this->PostsCategories->getAlias(), function ($query) use ($slug) {
+                    return $query->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]);
+                });
 
             is_true_or_fail(!$query->isEmpty(), I18N_NOT_FOUND, RecordNotFoundException::class);
 
-            $posts = $this->paginate($query);
+            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
-            //Writes on cache
             Cache::writeMany([
                 $cache => $posts,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->PostsCategories->getCacheName());
         //Else, sets the paging parameter
         } else {

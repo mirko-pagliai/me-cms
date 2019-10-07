@@ -31,15 +31,6 @@ class TagTest extends EntityTestCase
     }
 
     /**
-     * Test for virtual fields
-     * @test
-     */
-    public function testVirtualFields()
-    {
-        $this->assertHasVirtualField('slug');
-    }
-
-    /**
      * Test for `_getSlug()` method
      * @test
      */
@@ -49,7 +40,17 @@ class TagTest extends EntityTestCase
             'This is a tag' => 'this-is-a-tag',
             'MY_TAG.a!' => 'my-tag-a',
         ] as $tag => $expectedSlug) {
-            $this->assertEquals($expectedSlug, $this->Entity->set('tag', $tag)->slug);
+            $this->assertEquals($expectedSlug, $this->Entity->set('tag', $tag)->get('slug'));
         }
+    }
+
+    /**
+     * Test for `_getUrl()` method
+     * @test
+     */
+    public function testUrl()
+    {
+        $this->Entity->set('tag', 'a-tag');
+        $this->assertStringEndsWith('/posts/tag/a-tag', $this->Entity->get('url'));
     }
 }

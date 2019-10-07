@@ -57,7 +57,6 @@ class PhotosController extends AppController
     public function preview(string $id): Response
     {
         $photo = $this->Photos->findPendingById($id)
-            ->select(['id', 'album_id', 'filename'])
             ->contain([$this->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
             ->firstOrFail();
 

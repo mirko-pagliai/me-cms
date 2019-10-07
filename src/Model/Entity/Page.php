@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 namespace MeCms\Model\Entity;
 
+use Cake\Routing\Router;
 use MeCms\ORM\PostAndPageEntity;
 
 /**
@@ -35,5 +36,18 @@ class Page extends PostAndPageEntity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['plain_text'];
+    protected $_virtual = ['plain_text', 'url'];
+
+    /**
+     * Gets the url (virtual field)
+     * @return string
+     * @since 2.27.2
+     * @throws \Tools\Exception\PropertyNotExistsException
+     */
+    protected function _getUrl(): string
+    {
+        property_exists_or_fail($this, 'slug');
+
+        return Router::url(['_name' => 'page', $this->get('slug')], true);
+    }
 }

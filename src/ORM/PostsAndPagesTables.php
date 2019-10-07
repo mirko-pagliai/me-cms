@@ -29,7 +29,8 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  */
 abstract class PostsAndPagesTables extends AppTable
 {
-    use GetPreviewsFromTextTrait, NextToBePublishedTrait;
+    use GetPreviewsFromTextTrait;
+    use NextToBePublishedTrait;
 
     /**
      * Alters the schema used by this table. This function is only called after

@@ -20,7 +20,7 @@ use MeCms\Controller\AppController as BaseAppController;
 /**
  * Admin Application controller class
  */
-class AppController extends BaseAppController
+abstract class AppController extends BaseAppController
 {
     /**
      * Called before the controller action

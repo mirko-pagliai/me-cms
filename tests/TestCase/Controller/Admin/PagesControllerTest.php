@@ -55,6 +55,8 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function testBeforeFilter()
     {
+        parent::testBeforeFilter();
+
         create_kcfinder_files();
 
         foreach (['add', 'edit'] as $action) {

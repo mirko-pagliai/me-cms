@@ -12,14 +12,14 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Posts/index');
-$this->assign('title', $title = __d('me_cms', 'Tag {0}', $tag->tag));
+$this->assign('title', $title = __d('me_cms', 'Tag {0}', $tag->get('tag')));
 
 /**
  * Userbar
  */
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit tag'),
-    ['controller' => 'PostsTags', 'action' => 'edit', 'prefix' => ADMIN_PREFIX, $tag->id],
+    ['controller' => 'PostsTags', 'action' => 'edit', 'prefix' => ADMIN_PREFIX, $tag->get('id')],
     ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']
 ));
 
@@ -27,4 +27,4 @@ $this->userbar($this->Html->link(
  * Breadcrumb
  */
 $this->Breadcrumbs->add(I18N_TAGS, ['_name' => 'postsTags']);
-$this->Breadcrumbs->add($title, ['_name' => 'postsTag', $tag->slug]);
+$this->Breadcrumbs->add($title, ['_name' => 'postsTag', $tag->get('slug')]);

@@ -13,7 +13,7 @@ declare(strict_types=1);
  */
 $this->extend('/common/index');
 
-if (!empty($posts)) {
+if ($posts) {
     foreach ($posts as $post) {
         echo $this->element('views/post', compact('post'));
     }

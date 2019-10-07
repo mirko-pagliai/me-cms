@@ -13,6 +13,7 @@
         "cakephp/cakephp": "4.x-dev",
         "cakephp/chronos": "2.x-dev as 2.0.0",
         "ctlabvn/recaptcha": "dev-cake-4",
+        "dereuromark/cakephp-feed": "dev-cake4",
         "donatj/phpuseragentparser": "*",
         "enyo/dropzone": "^5.1",
         "league/commonmark": "^0.19",

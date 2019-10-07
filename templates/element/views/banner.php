@@ -11,24 +11,22 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-if ($banner->position->has('name')) {
-    $class = sprintf('banner banner-%s', $banner->position->name);
-} else {
-    $class = 'banner';
+$class = 'banner';
+if ($banner->get('position')->has('name')) {
+    $class = sprintf('banner banner-%s', $banner->get('position')->get('name'));
 }
-$image = $this->Html->img($banner->path);
 ?>
 
 <div class="<?= $class ?>">
     <?php
+    $image = $this->Html->img($banner->get('path'));
     if ($banner->has('target')) {
-        echo $this->Html->link(
+        $image = $this->Html->link(
             $image,
-            ['_name' => 'banner', $banner->id],
-            ['target' => '_blank', 'title' => $banner->description]
+            ['_name' => 'banner', $banner->get('id')],
+            ['target' => '_blank', 'title' => $banner->get('description')]
         );
-    } else {
-        echo $image;
     }
+    echo $image;
     ?>
 </div>

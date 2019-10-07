@@ -11,23 +11,23 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/common/view');
-$this->assign('title', $title = $photo->filename);
+$this->extend('/Common/view');
+$this->assign('title', $photo->get('filename'));
 
 /**
  * Userbar
  */
-if (!$photo->active) {
+if (!$photo->get('active')) {
     $this->userbar($this->Html->span(I18N_NOT_PUBLISHED, ['class' => 'badge badge-warning']));
 }
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit photo'),
-    ['action' => 'edit', $photo->id, 'prefix' => ADMIN_PREFIX],
+    ['action' => 'edit', $photo->get('id'), 'prefix' => ADMIN_PREFIX],
     ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']
 ));
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete photo'),
-    ['action' => 'delete', $photo->id, 'prefix' => ADMIN_PREFIX],
+    ['action' => 'delete', $photo->get('id'), 'prefix' => ADMIN_PREFIX],
     [
         'class' => 'nav-link text-danger',
         'icon' => 'trash-alt',
@@ -40,30 +40,28 @@ $this->userbar($this->Form->postLink(
  * Breadcrumb
  */
 $this->Breadcrumbs->add(I18N_PHOTOS, ['_name' => 'albums']);
-$this->Breadcrumbs->add($photo->album->title, ['_name' => 'album', $photo->album->slug]);
-$this->Breadcrumbs->add($title, ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id]);
+$this->Breadcrumbs->add($photo->get('album')->get('title'), $photo->get('album')->get('url'));
+$this->Breadcrumbs->add($photo->get('filename'), $photo->get('url'));
 
 /**
  * Meta tags
  */
 if ($this->getRequest()->isAction('view', 'Photos')) {
     if ($photo->has('modified')) {
-        $this->Html->meta(['content' => $photo->modified->toUnixString(), 'property' => 'og:updated_time']);
+        $this->Html->meta(['content' => $photo->get('modified')->toUnixString(), 'property' => 'og:updated_time']);
     }
 
     if ($photo->has('preview')) {
-        $this->Html->meta(['href' => $photo->preview->url, 'rel' => 'image_src']);
-        $this->Html->meta(['content' => $photo->preview->url, 'property' => 'og:image']);
-        $this->Html->meta(['content' => $photo->preview->width, 'property' => 'og:image:width']);
-        $this->Html->meta(['content' => $photo->preview->height, 'property' => 'og:image:height']);
+        $this->Html->meta(['href' => $photo->get('preview')->get('url'), 'rel' => 'image_src']);
+        $this->Html->meta(['content' => $photo->get('preview')->get('url'), 'property' => 'og:image']);
+        $this->Html->meta(['content' => $photo->get('preview')->get('width'), 'property' => 'og:image:width']);
+        $this->Html->meta(['content' => $photo->get('preview')->get('height'), 'property' => 'og:image:height']);
     }
 
-    if ($photo->has('description')) {
-        $this->Html->meta([
-            'content' => $this->Text->truncate($photo->plain_description, 100, ['html' => true]),
-            'property' => 'og:description',
-        ]);
-    }
+    $this->Html->meta([
+        'content' => $this->Text->truncate($photo->get('plain_description'), 100, ['html' => true]),
+        'property' => 'og:description',
+    ]);
 }
 
-echo $this->Thumb->resize($photo->path, ['width' => 1200]);
+echo $this->Thumb->resize($photo->get('path'), ['width' => 1200]);

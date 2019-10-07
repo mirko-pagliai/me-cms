@@ -32,11 +32,11 @@ class PhotosAlbumsController extends AppController
     public function index()
     {
         $albums = $this->PhotosAlbums->find('active')
+            ->select(['id', 'slug', 'created'])
             ->contain($this->Photos->getAlias(), function (Query $query) {
                 return $query->find('active')->select(['id', 'album_id', 'filename']);
             })
             ->orderDesc(sprintf('%s.created', $this->PhotosAlbums->getAlias()))
-            ->distinct(sprintf('%s.created', $this->PhotosAlbums->getAlias()))
             ->cache('albums_index');
 
         //If there is only one record, redirects
@@ -69,7 +69,7 @@ class PhotosAlbumsController extends AppController
 
         //Gets album ID and title
         $album = $this->PhotosAlbums->findActiveBySlug($slug)
-            ->select(['id', 'title'])
+            ->select(['id', 'title', 'slug'])
             ->cache('album_' . md5($slug))
             ->firstOrFail();
 
@@ -86,18 +86,16 @@ class PhotosAlbumsController extends AppController
 
         //If the data are not available from the cache
         if (empty($photos) || empty($paging)) {
-            $query = $this->Photos->findActiveByAlbumId($album->id)
-                ->order([
-                    sprintf('%s.created', $this->Photos->getAlias()) => 'DESC',
-                    sprintf('%s.id', $this->Photos->getAlias()) => 'DESC',
-                ]);
+            $query = $this->Photos->findActiveByAlbumId($album->get('id'))
+                ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['slug']]])
+                ->orderDesc(sprintf('%s.created', $this->Photos->getAlias()))
+                ->orderDesc(sprintf('%s.id', $this->Photos->getAlias()));
 
-            $photos = $this->paginate($query);
+            list($photos, $paging) = [$this->paginate($query), $this->getPaging()];
 
-            //Writes on cache
             Cache::writeMany([
                 $cache => $photos,
-                sprintf('%s_paging', $cache) => $this->getRequest()->getParam('paging'),
+                sprintf('%s_paging', $cache) => $paging,
             ], $this->PhotosAlbums->getCacheName());
         //Else, sets the paging parameter
         } else {

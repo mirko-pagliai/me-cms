@@ -77,7 +77,7 @@ class PostsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Posts']);
+        $this->assertNotEmpty($this->_controller->getPaging()['Posts']);
     }
 
     /**
@@ -115,7 +115,7 @@ class PostsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Posts']);
+        $this->assertNotEmpty($this->_controller->getPaging()['Posts']);
 
         //Tries with various possible dates
         foreach (['today', 'yesterday', '2016', '2016/12', '2016/12/29'] as $date) {
@@ -135,13 +135,13 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testRss()
     {
-        $expected = '/\<item\>\<description\>Text of the seventh post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/seventh\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/seventh\-post\<\/link\>\<pubDate\>Thu, 29 Dec 2016 18\:59\:19 \+0000\<\/pubDate\>\<title\>Seventh post\<\/title\>\<\/item\>\<item\>\<description\>Text of the fifth post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/fifth\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/fifth\-post\<\/link\>\<pubDate\>Wed, 28 Dec 2016 18\:59\:19 \+0000\<\/pubDate\>\<title\>Fifth post\<\/title\>\<\/item\>\<item\>\<description\>Text of the fourth post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/fourth\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/fourth\-post\<\/link\>\<pubDate\>Wed, 28 Dec 2016 18\:58\:19 \+0000\<\/pubDate\>\<title\>Fourth post\<\/title\>\<\/item\>\<item\>\<description\>Text of the third post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/third\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/third\-post\<\/link\>\<pubDate\>Wed, 28 Dec 2016 18\:57\:19 \+0000\<\/pubDate\>\<title\>Third post\<\/title\>\<\/item\>\<item\>\<description\>&lt;img src\="http\:\/\/localhost\/thumb\/[\d\w]+" alt\="[\d\w]+" class\="img\-fluid"\/&gt;&lt;br \/&gt;Text of the second post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/second\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/second\-post\<\/link\>\<pubDate\>Wed, 28 Dec 2016 18\:56\:19 \+0000\<\/pubDate\>\<title\>Second post\<\/title\>\<\/item\>\<item\>\<description\>Text of the first post\<\/description\>\<guid isPermaLink\="true"\>http\:\/\/localhost\/post\/first\-post\<\/guid\>\<link\>http\:\/\/localhost\/post\/first\-post\<\/link\>\<pubDate\>Mon, 28 Nov 2016 18\:55\:19 \+0000\<\/pubDate\>\<title\>First post\<\/title\>\<\/item\>/';
         $this->get('/posts/rss');
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseRegExp($expected);
-        $this->assertTemplate('Posts' . DS . 'rss' . DS . 'rss.php');
+        $this->assertResponseRegExp('/^\<\?xml version\="1\.0" encoding\="UTF\-8"\?\>\n\<rss xmlns\:content\="http\:\/\/purl\.org\/rss\/1\.0\/modules\/content\/" version\="2\.0"\>\n\s*\<channel\>/');
         $this->assertHeaderContains('Content-Type', 'application/rss+xml');
-        $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
+        $data = $this->viewVariable('data');
+        $this->assertArrayKeysEqual(['channel', 'items'], $data);
+        $this->assertNotEmpty($data['items'][0]);
 
         //With an invalid extension
         $this->expectException(ForbiddenException::class);
@@ -182,7 +182,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
-        $this->assertNotEmpty($this->_controller->getRequest()->getParam('paging')['Posts']);
+        $this->assertNotEmpty($this->_controller->getPaging()['Posts']);
 
         $this->get($url + ['?' => ['p' => 'a']]);
         $this->assertRedirect($url);

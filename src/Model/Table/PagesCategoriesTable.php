@@ -51,7 +51,7 @@ class PagesCategoriesTable extends AppTable
      */
     public function findActive(Query $query): Query
     {
-        return $query->matching($this->Pages->getAlias(), function (Query $query) {
+        return $query->innerJoinWith($this->Pages->getAlias(), function (Query $query) {
             return $query->find('active');
         })->distinct();
     }

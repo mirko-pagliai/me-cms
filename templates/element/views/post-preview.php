@@ -11,34 +11,30 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$link = ['_name' => 'post', $post->slug];
-$title = $post->title;
 ?>
 
 <div class="card">
     <?php
+    $title = $post->get('title');
     if (!isset($truncate['title']) || $truncate['title']) {
-        $truncate['title'] = empty($truncate['title']) ? 40 : $truncate['title'];
+        $truncate['title'] = isset($truncate['title']) ? $truncate['title'] : 40;
         $title = $this->Text->truncate($title, $truncate['title'], ['exact' => false]);
     }
-    echo $this->Html->link($title, $link, ['class' => 'card-header card-title p-2 text-truncate']);
+    echo $this->Html->link($title, $post->get('url'), ['class' => 'card-header card-title p-2 text-truncate']);
 
-    if (!empty($post->preview[0])) {
-        $thumb = $this->Thumb->fit($post->preview[0]->url, ['width' => 205], ['class' => 'card-img rounded-0']);
-        echo $this->Html->link($thumb, $link);
+    if ($post->has('preview')) {
+        echo $this->Thumb->fit(
+            $post->get('preview')[0]->get('url'),
+            ['width' => 205],
+            ['class' => 'card-img rounded-0', 'url' => $post->get('url')]
+        );
     }
-    ?>
 
-    <div class="card-body small p-2">
-        <?php
-        if ($post->has('text')) {
-            $text = strip_tags($post->text);
-            if (!isset($truncate['text']) || $truncate['text']) {
-                $truncate['text'] = empty($truncate['text']) ? 80 : $truncate['text'];
-                $text = $this->Text->truncate($text, $truncate['text'], ['exact' => false]);
-            }
-            echo $this->Html->para('card-text', $text);
-        }
-        ?>
-    </div>
+    $text = $post->get('plain_text');
+    if (!isset($truncate['text']) || $truncate['text']) {
+        $truncate['text'] = isset($truncate['text']) ? $truncate['text'] : 80;
+        $text = $this->Text->truncate($text, $truncate['text'], ['exact' => false]);
+    }
+    echo $this->Html->div('card-body small p-2', $this->Html->para('card-text', $text));
+    ?>
 </div>

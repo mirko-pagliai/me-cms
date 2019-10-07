@@ -51,6 +51,8 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testBeforeFilter(): void
     {
+        parent::testBeforeFilter();
+
         create_kcfinder_files();
 
         $this->Table->Categories->deleteAll(['id IS NOT' => null]);

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
+use Cake\Collection\CollectionInterface;
 use Cake\I18n\Time;
 use Cake\Utility\Hash;
 use MeCms\Model\Entity\Post;
@@ -21,7 +22,7 @@ use MeCms\Model\Entity\PostsTag;
 use MeCms\Model\Entity\Tag;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\TestSuite\PostsAndPagesTablesTestCase;
-use Tools\Exception\KeyNotExistsException;
+use Tools\Exception\PropertyNotExistsException;
 
 /**
  * PostsTableTest class
@@ -138,9 +139,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     {
         $query = $this->Table->find('forIndex');
         $sql = $query->sql();
-        $this->assertEquals(['title', 'slug'], $query->getContain()['Categories']['fields']);
-        $this->assertEquals(['tag' => 'ASC'], $query->getContain()['Tags']['sort']);
-        $this->assertEquals(['id', 'first_name', 'last_name'], $query->getContain()['Users']['fields']);
+        $this->assertArrayKeysEqual(['Categories', 'Tags', 'Users'], $query->getContain());
         $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_categories Categories ON Categories.id = (Posts.category_id) INNER JOIN users Users ON Users.id = (Posts.user_id) ORDER BY Posts.created DESC', $sql);
     }
 
@@ -157,26 +156,20 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $post = $this->Table->findById(1)->contain(['Tags' => ['sort' => ['post_count' => 'ASC']]])->first();
         $this->assertNotEmpty($post->get('tags'));
 
-        $relatedPosts = $this->Table->getRelated($post, 2, false);
-
-        $this->assertCount(2, $relatedPosts);
-        $this->assertEquals($relatedPosts, Cache::read('related_2_posts_for_1', $this->Table->getCacheName()));
-
-        $this->assertContainsOnlyInstancesOf(Post::class, $relatedPosts);
-        foreach ($relatedPosts as $related) {
-            $this->assertTrue($related->has(['id', 'title', 'slug', 'text']));
-        }
+        $related = $this->Table->getRelated($post, 2, false);
+        $this->assertInstanceOf(CollectionInterface::class, $related);
+        $this->assertCount(2, $related);
+        $this->assertEquals($related, Cache::read('related_2_posts_for_1', $this->Table->getCacheName()));
+        $this->assertContainsOnlyInstancesOf(Post::class, $related);
 
         //Gets related posts with image
         $related = $this->Table->getRelated($post, 2, true);
+        $this->assertInstanceOf(CollectionInterface::class, $related);
         $this->assertCount(1, $related);
         $this->assertEquals($related, Cache::read('related_2_posts_for_1_with_images', $this->Table->getCacheName()));
-        $firstRelated = array_value_first($related);
+        $firstRelated = $related->first();
         $this->assertInstanceOf(Post::class, $firstRelated);
         $this->assertEquals(2, $firstRelated->get('id'));
-        $this->assertNotEmpty($firstRelated->get('title'));
-        $this->assertNotEmpty($firstRelated->get('slug'));
-        $this->assertStringContainsString('<img src="image.jpg" />Text of the second post', $firstRelated->get('text'));
         $this->assertCount(1, $firstRelated->get('preview'));
         $this->assertEquals('image.jpg', array_value_first($firstRelated->get('preview'))->get('url'));
         $this->assertEquals(400, array_value_first($firstRelated->get('preview'))->get('width'));
@@ -184,19 +177,18 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
 
         //This post has no tags
         $post = $this->Table->findById(4)->contain('Tags')->first();
-        $this->assertEquals([], $post->get('tags'));
-        $this->assertEquals([], $this->Table->getRelated($post));
-        $this->assertEquals([], Cache::read('related_5_posts_for_4_with_images', $this->Table->getCacheName()));
+        $this->assertEmpty($post->get('tags'));
+        $this->assertTrue($this->Table->getRelated($post)->isEmpty());
+        $this->assertTrue(Cache::read('related_5_posts_for_4_with_images', $this->Table->getCacheName())->isEmpty());
 
         //This post has one tag, but this is not related to any other post
         $post = $this->Table->findById(5)->contain('Tags')->first();
         $this->assertCount(1, $post->get('tags'));
-        $this->assertEquals([], $this->Table->getRelated($post));
-        $this->assertEquals([], Cache::read('related_5_posts_for_5_with_images', $this->Table->getCacheName()));
+        $this->assertTrue($this->Table->getRelated($post)->isEmpty());
+        $this->assertTrue(Cache::read('related_5_posts_for_5_with_images', $this->Table->getCacheName())->isEmpty());
 
         //With an entity with no `tags` property
-        $this->expectException(KeyNotExistsException::class);
-        $this->expectExceptionMessage('ID or tags of the post are missing');
+        $this->expectException(PropertyNotExistsException::class);
         $this->Table->getRelated($this->Table->get(1));
     }
 
@@ -207,7 +199,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     public function testQueryFromFilter()
     {
         $query = $this->Table->queryFromFilter($this->Table->find(), ['tag' => 'test']);
-        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (Tags.tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
         $this->assertEquals('test', $query->getValueBinder()->bindings()[':c0']['value']);
     }
 
