@@ -14,6 +14,7 @@ namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\ORM\Query;
 use MeCms\Controller\AppController;
 
 /**
@@ -65,7 +66,7 @@ class PostsCategoriesController extends AppController
         if (empty($posts) || empty($paging)) {
             $query = $this->Posts->find('active')
                 ->find('forIndex')
-                ->innerJoinWith($this->PostsCategories->getAlias(), function ($query) use ($slug) {
+                ->innerJoinWith($this->PostsCategories->getAlias(), function (Query $query) use ($slug) {
                     return $query->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]);
                 });
 
