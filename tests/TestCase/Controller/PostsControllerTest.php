@@ -114,6 +114,7 @@ class PostsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
+//        dd($this->_controller->getRequest());
         $this->assertNotEmpty($this->_controller->getPaging()['Posts']);
 
         //Tries with various possible dates

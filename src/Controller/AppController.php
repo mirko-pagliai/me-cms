@@ -84,7 +84,9 @@ abstract class AppController extends BaseAppController
      */
     public function getPaging()
     {
-        return $this->getRequest()->getParam('paging', []);
+        $paging = $this->getRequest()->getAttribute('paging');
+        
+        return $paging ?? $this->getRequest()->getParam('paging', []);
     }
 
     /**
