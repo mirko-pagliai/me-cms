@@ -52,7 +52,9 @@ class SystemsController extends AppController
     public function isAuthorized($user = null)
     {
         //Only admins can clear all temporary files or logs
-        if ($this->getRequest()->isAction('tmpCleaner') && in_array($this->getRequest()->getParam('pass.0'), ['all', 'logs'])) {
+        if ($this->getRequest()->isAction('tmpCleaner')
+            && in_array($this->getRequest()->getParam('pass.0'), ['all', 'logs'])
+        ) {
             return $this->Auth->isGroup('admin');
         }
 

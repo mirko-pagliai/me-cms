@@ -92,15 +92,16 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
         //Tries with a text without images or videos
         $entity = $Table->newEntity(self::$example);
         $Table->beforeSave($event, $entity, $options);
-        $this->assertEmpty($entity->get('preview'));
+        $this->assertTrue($entity->get('preview')->isEmpty());
 
         //Tries with a text with an image
         $entity = $Table->newEntity(['text' => '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg\' />'] + self::$example);
         $Table->beforeSave($event, $entity, $options);
         $this->assertCount(1, $entity->get('preview'));
-        $this->assertInstanceOf(Entity::class, $entity->get('preview')[0]);
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $entity->get('preview')[0]->get('url'));
-        $this->assertEquals([400, 300], [$entity->get('preview')[0]->get('width'), $entity->get('preview')[0]->get('height')]);
+        $this->assertContainsOnlyInstancesOf(Entity::class, $entity->get('preview'));
+        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $entity->get('preview')->first()->get('url'));
+        $this->assertEquals(400, $entity->get('preview')->first()->get('width'));
+        $this->assertEquals(300, $entity->get('preview')->first()->get('height'));
     }
 
     /**

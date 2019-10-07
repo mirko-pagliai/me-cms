@@ -74,10 +74,7 @@ class UsersTable extends AppTable
      */
     public function findActive(Query $query)
     {
-        return $query->where([
-            sprintf('%s.active', $this->getAlias()) => true,
-            sprintf('%s.banned', $this->getAlias()) => false,
-        ]);
+        return $query->where(['active' => true, 'banned' => false]);
     }
 
     /**
@@ -88,9 +85,7 @@ class UsersTable extends AppTable
      */
     public function findAuth(Query $query)
     {
-        return $query->contain('Groups', function (Query $query) {
-            return $query->select(['name']);
-        });
+        return $query->contain([$this->Groups->getAlias() => ['fields' => ['name']]]);
     }
 
     /**
@@ -100,7 +95,7 @@ class UsersTable extends AppTable
      */
     public function findBanned(Query $query)
     {
-        return $query->where([sprintf('%s.banned', $this->getAlias()) => true]);
+        return $query->where(['banned' => true]);
     }
 
     /**
@@ -110,10 +105,7 @@ class UsersTable extends AppTable
      */
     public function findPending(Query $query)
     {
-        return $query->where([
-            sprintf('%s.active', $this->getAlias()) => false,
-            sprintf('%s.banned', $this->getAlias()) => false,
-        ]);
+        return $query->where(['active' => false, 'banned' => false]);
     }
 
     /**
@@ -124,7 +116,7 @@ class UsersTable extends AppTable
     {
         return $this->find()
             ->select(['id', 'first_name', 'last_name'])
-            ->where([sprintf('%s.active', $this->getAlias()) => true])
+            ->where(['active' => true])
             ->orderAsc('username')
             ->formatResults(function (ResultSet $results) {
                 return $results->indexBy('id')->map(function (User $user) {
@@ -176,33 +168,17 @@ class UsersTable extends AppTable
 
         //"Username" field
         if (!empty($data['username']) && strlen($data['username']) > 2) {
-            $query->where([sprintf('%s.username LIKE', $this->getAlias()) => sprintf('%%%s%%', $data['username'])]);
+            $query->where(['username LIKE' => '%' . $data['username'] . '%']);
         }
 
         //"Group" field
         if (!empty($data['group']) && is_positive($data['group'])) {
-            $query->where([sprintf('%s.group_id', $this->getAlias()) => $data['group']]);
+            $query->where(['group_id' => $data['group']]);
         }
 
         //"Status" field
-        if (!empty($data['status'])) {
-            switch ($data['status']) {
-                case 'active':
-                    $query->where([
-                        sprintf('%s.active', $this->getAlias()) => true,
-                        sprintf('%s.banned', $this->getAlias()) => false,
-                    ]);
-
-                    break;
-                case 'pending':
-                    $query->where([sprintf('%s.active', $this->getAlias()) => false]);
-
-                    break;
-                case 'banned':
-                    $query->where([sprintf('%s.banned', $this->getAlias()) => true]);
-
-                    break;
-            }
+        if (!empty($data['status']) && in_array($data['status'], ['active', 'pending', 'banned'])) {
+            $query->find($data['status']);
         }
 
         return $query;

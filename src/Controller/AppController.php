@@ -19,7 +19,7 @@ use Cake\I18n\I18n;
 /**
  * Application controller class
  */
-class AppController extends BaseAppController
+abstract class AppController extends BaseAppController
 {
     /**
      * Magic accessor for model autoloading.

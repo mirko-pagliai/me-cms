@@ -28,4 +28,14 @@ class PagesCategoryTest extends EntityTestCase
     {
         $this->assertHasNoAccessibleProperty(['id', 'page_count', 'modified']);
     }
+
+    /**
+     * Test for `_getUrl()` method
+     * @test
+     */
+    public function testUrl()
+    {
+        $this->Entity->set('slug', 'a-slug');
+        $this->assertStringEndsWith('/pages/category/a-slug', $this->Entity->get('url'));
+    }
 }

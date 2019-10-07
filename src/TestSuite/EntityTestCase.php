@@ -48,21 +48,6 @@ abstract class EntityTestCase extends TestCase
     }
 
     /**
-     * Asserts that the entity has a virtual field
-     * @param string|array $virtualField Virtual field name
-     * @return void
-     * @uses $Entity
-     */
-    public function assertHasVirtualField($virtualField)
-    {
-        $this->Entity ?: $this->fail('The property `$this->Entity` has not been set');
-
-        foreach ((array)$virtualField as $name) {
-            $this->assertContains($name, $this->Entity->getVirtual());
-        }
-    }
-
-    /**
      * Called before every test method
      * @return void
      * @uses $Entity

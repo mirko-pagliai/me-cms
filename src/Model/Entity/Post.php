@@ -12,6 +12,7 @@
  */
 namespace MeCms\Model\Entity;
 
+use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use MeCms\ORM\PostAndPageEntity;
 
@@ -39,18 +40,27 @@ class Post extends PostAndPageEntity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['plain_text', 'tags_as_string'];
+    protected $_virtual = ['plain_text', 'tags_as_string', 'url'];
+
+    /**
+     * Gets the url (virtual field)
+     * @return string
+     * @since 2.27.2
+     * @throws \Tools\Exception\PropertyNotExistsException
+     */
+    protected function _getUrl()
+    {
+        property_exists_or_fail($this, 'slug');
+
+        return Router::url(['_name' => 'post', $this->get('slug')], true);
+    }
 
     /**
      * Gets tags as string, separated by a comma and a space (virtual field)
-     * @return string|null
+     * @return string
      */
     protected function _getTagsAsString()
     {
-        if (empty($this->_properties['tags'])) {
-            return null;
-        }
-
-        return implode(', ', Hash::extract($this->_properties['tags'], '{*}.tag'));
+        return $this->has('tags') ? implode(', ', Hash::extract($this->get('tags'), '{*}.tag')) : '';
     }
 }

@@ -30,16 +30,16 @@ echo $this->Form->end();
 
 <?php if (!empty($pattern)) : ?>
     <div class="bg-info text-white mt-3 mb-3 p-2">
-        <?= __d('me_cms', 'You have searched for: {0}', $this->Html->em($pattern)) ?>
+        <em><?= __d('me_cms', 'You have searched for: {0}', $pattern) ?></em>
     </div>
 <?php endif; ?>
 
-<?php if (!empty($posts)) : ?>
+<?php if ($posts) : ?>
     <div class="as-table">
         <?php foreach ($posts as $post) : ?>
             <div class="mb-3 p-1">
                 <h6>
-                    <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
+                    <?= $this->Html->link($post->get('title'), $post->get('url')) ?>
                     <span class="small text-muted">
                         (<?= $post->created->i18nFormat(getConfigOrFail('main.datetime.short')) ?>)
                     </span>
@@ -47,9 +47,8 @@ echo $this->Form->end();
 
                 <div class="text-justify">
                 <?php
-                    //Executes BBCode on the text, strips tags, extracts
-                    //  an excerpt from `$pattern` and highlights `$pattern`
-                    $text = $this->Text->excerpt($post->plain_text, $pattern, 350);
+                    //Extracts an excerpt from `$pattern` and highlights `$pattern`
+                    $text = $this->Text->excerpt($post->get('plain_text'), $pattern, 350);
                     echo $this->Text->highlight($text, $pattern);
                 ?>
                 </div>

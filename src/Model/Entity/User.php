@@ -55,15 +55,14 @@ class User extends Entity
 
     /**
      * Gets the full name (virtual field)
-     * @return string|null
+     * @return string
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getFullName()
     {
-        if (empty($this->_properties['first_name']) || empty($this->_properties['last_name'])) {
-            return null;
-        }
+        property_exists_or_fail($this, ['first_name', 'last_name']);
 
-        return sprintf('%s %s', $this->_properties['first_name'], $this->_properties['last_name']);
+        return sprintf('%s %s', $this->get('first_name'), $this->get('last_name'));
     }
 
     /**
@@ -72,9 +71,9 @@ class User extends Entity
      */
     protected function _getPicture()
     {
-        if (!empty($this->_properties['id'])) {
+        if ($this->has('id')) {
             $finder = new Finder();
-            $finder->files()->name('/^' . $this->_properties['id'] . '\..+/')->in(USER_PICTURES);
+            $finder->files()->name('/^' . $this->get('id') . '\..+/')->in(USER_PICTURES);
             $files = objects_map(iterator_to_array($finder), 'getFilename');
 
             if (!empty($files)) {

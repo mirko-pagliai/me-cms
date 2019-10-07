@@ -98,7 +98,7 @@ class PostsTagsController extends AppController
         if (empty($posts) || empty($paging)) {
             $query = $this->Posts->find('active')
                 ->find('forIndex')
-                ->matching($this->Tags->getAlias(), function (Query $query) use ($slug) {
+                ->innerJoinWith($this->Tags->getAlias(), function (Query $query) use ($slug) {
                     return $query->where(['tag' => $slug]);
                 });
 

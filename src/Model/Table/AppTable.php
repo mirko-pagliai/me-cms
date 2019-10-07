@@ -26,7 +26,7 @@ use MeCms\ORM\Query;
 /**
  * Application table class
  */
-class AppTable extends Table
+abstract class AppTable extends Table
 {
     /**
      * Cache configuration name
@@ -69,13 +69,15 @@ class AppTable extends Table
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
         //Tries to transform the `created` string into a `Time` entity
-        if (isset($data['created']) && is_string($data['created'])) {
-            try {
-                $created = new Time($data['created']);
-            } catch (Exception $e) {
+        if (array_key_exists('created', $data)) {
+            if (is_string($data['created'])) {
+                try {
+                    $created = new Time($data['created']);
+                } catch (Exception $e) {
+                }
+            } elseif (is_null($data['created'])) {
+                $created = new Time();
             }
-        } elseif (array_key_exists('created', $data) && is_null($data['created'])) {
-            $created = new Time();
         }
         if (isset($created)) {
             $data['created'] = $created;
@@ -113,10 +115,8 @@ class AppTable extends Table
      */
     public function findActive(Query $query)
     {
-        return $query->where([
-            sprintf('%s.active', $this->getAlias()) => true,
-            sprintf('%s.created <=', $this->getAlias()) => new Time(),
-        ]);
+        return $query->where([sprintf('%s.active', $this->getAlias()) => true])
+            ->andWhere([sprintf('%s.created <=', $this->getAlias()) => new Time()]);
     }
 
     /**
@@ -220,7 +220,7 @@ class AppTable extends Table
         //"Title" field and "filename" fields
         foreach (['title', 'filename'] as $field) {
             if (!empty($data[$field]) && strlen($data[$field]) > 2) {
-                $query->where([sprintf('%s.%s LIKE', $this->getAlias(), $field) => sprintf('%%%s%%', $data[$field])]);
+                $query->where([sprintf('%s.%s LIKE', $this->getAlias(), $field) => '%' . $data[$field] . '%']);
             }
         }
 
@@ -244,10 +244,8 @@ class AppTable extends Table
         //"Created" field
         if (!empty($data['created']) && preg_match('/^[1-9]\d{3}\-[01]\d$/', $data['created'])) {
             $start = new FrozenTime(sprintf('%s-01', $data['created']));
-            $query->where([
-                sprintf('%s.created >=', $this->getAlias()) => $start,
-                sprintf('%s.created <', $this->getAlias()) => $start->addMonth(1),
-            ]);
+            $query->where([sprintf('%s.created >=', $this->getAlias()) => $start])
+                ->andWhere([sprintf('%s.created <', $this->getAlias()) => $start->addMonth(1)]);
         }
 
         return $query;

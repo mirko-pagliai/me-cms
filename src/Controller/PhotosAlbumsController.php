@@ -31,12 +31,11 @@ class PhotosAlbumsController extends AppController
     public function index()
     {
         $albums = $this->PhotosAlbums->find('active')
-            ->select(['id'])
+            ->select(['id', 'slug', 'created'])
             ->contain($this->Photos->getAlias(), function (Query $query) {
                 return $query->find('active')->select(['id', 'album_id', 'filename']);
             })
             ->orderDesc(sprintf('%s.created', $this->PhotosAlbums->getAlias()))
-            ->enableAutoFields(true)
             ->cache('albums_index');
 
         //If there is only one record, redirects
@@ -69,7 +68,7 @@ class PhotosAlbumsController extends AppController
 
         //Gets album ID and title
         $album = $this->PhotosAlbums->findActiveBySlug($slug)
-            ->select(['id', 'title'])
+            ->select(['id', 'title', 'slug'])
             ->cache('album_' . md5($slug))
             ->firstOrFail();
 
@@ -88,10 +87,9 @@ class PhotosAlbumsController extends AppController
         //If the data are not available from the cache
         if (empty($photos) || empty($paging)) {
             $query = $this->Photos->findActiveByAlbumId($album->get('id'))
-                ->order([
-                    sprintf('%s.created', $this->Photos->getAlias()) => 'DESC',
-                    sprintf('%s.id', $this->Photos->getAlias()) => 'DESC',
-                ]);
+                ->contain([$this->Photos->Albums->getAlias() => ['fields' => ['slug']]])
+                ->orderDesc(sprintf('%s.created', $this->Photos->getAlias()))
+                ->orderDesc(sprintf('%s.id', $this->Photos->getAlias()));
 
             list($photos, $paging) = [$this->paginate($query), $this->getPaging()];
 

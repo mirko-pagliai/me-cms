@@ -41,15 +41,6 @@ class BannerTest extends EntityTestCase
     }
 
     /**
-     * Test for virtual fields
-     * @test
-     */
-    public function testVirtualFields()
-    {
-        $this->assertHasVirtualField(['path', 'www']);
-    }
-
-    /**
      * Test for `_getPath()` method
      * @test
      */

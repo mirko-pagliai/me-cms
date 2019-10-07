@@ -1,5 +1,15 @@
 # 2.x branch
 ## 2.27 branch
+### 2.27.2
+* `PostsTable::getRelated()` returns a `Collection` of entities;
+* `GetPreviewsFromTextTrait::getPreviews()` returns a `Collection` of entities;
+* added `url` virtual field for `Page`, `PagesCategory`, `Photo`, `PhotosAlbum`,
+    `Post`, `PostsCategory` and `Tag` entities;
+* virtual fields throw an exception if the necessary properties are missing;
+* wide simplification of many template files;
+* uses `dereuromark/cakephp-feed` to generate RSS;
+* updated for `me-tools` `2.18.14`.
+
 ### 2.27.1
 * fixed a serious bug for `beforeFilter()` methods. The bug prevented some
     redirects;

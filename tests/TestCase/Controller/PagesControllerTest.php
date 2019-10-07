@@ -14,6 +14,7 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 use MeCms\Model\Entity\Page;
 use MeCms\TestSuite\ControllerTestCase;
 
@@ -51,18 +52,20 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function testViewWithStaticPage()
     {
-        $this->get(['_name' => 'page', 'page-from-app']);
+        $slug = 'page-from-app';
+        $url = ['_name' => 'page', $slug];
+        $this->get($url);
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page');
-        $this->assertTemplate('StaticPages' . DS . 'page-from-app.ctp');
+        $this->assertTemplate('StaticPages' . DS . $slug . '.ctp');
         $this->assertInstanceof(Entity::class, $this->viewVariable('page'));
         $this->assertInstanceof(Entity::class, $this->viewVariable('page')->get('category'));
         $this->assertEquals([
             'category' => ['slug' => null, 'title' => null],
             'title' => 'Page From App',
             'subtitle' => null,
-            'slug' => 'page-from-app',
-        ], $this->viewVariable('page')->toArray());
+            'url' => Router::url($url, true),
+        ] + compact('slug'), $this->viewVariable('page')->toArray());
     }
 
     /**

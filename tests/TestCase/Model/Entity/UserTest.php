@@ -42,24 +42,13 @@ class UserTest extends EntityTestCase
     }
 
     /**
-     * Test for virtual fields
-     * @test
-     */
-    public function testVirtualFields()
-    {
-        $this->assertHasVirtualField(['full_name', 'picture']);
-    }
-
-    /**
      * Test for `_getFullName()` method
      * @test
      */
     public function testFullNameGetMutator()
     {
-        $this->assertNull($this->Entity->full_name);
-
         $this->Entity->set(['first_name' => 'Alfa', 'last_name' => 'Beta']);
-        $this->assertEquals($this->Entity->first_name . ' ' . $this->Entity->last_name, $this->Entity->full_name);
+        $this->assertEquals('Alfa Beta', $this->Entity->get('full_name'));
     }
 
     /**
@@ -71,7 +60,7 @@ class UserTest extends EntityTestCase
         $this->assertEquals('MeCms.no-avatar.jpg', $this->Entity->set('id', 1)->get('picture'));
 
         @create_file(WWW_ROOT . 'img' . DS . 'no-avatar.jpg', null);
-        $this->assertEquals('no-avatar.jpg', $this->Entity->picture);
+        $this->assertEquals('no-avatar.jpg', $this->Entity->get('picture'));
 
         $id = 0;
         foreach (['jpg', 'jpeg', 'gif', 'png', 'JPEG'] as $extension) {

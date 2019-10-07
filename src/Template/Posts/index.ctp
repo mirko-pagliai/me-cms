@@ -12,7 +12,7 @@
  */
 $this->extend('/Common/index');
 
-if (!empty($posts)) {
+if ($posts) {
     foreach ($posts as $post) {
         echo $this->element('views/post', compact('post'));
     }

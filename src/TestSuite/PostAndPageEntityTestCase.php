@@ -21,6 +21,17 @@ use MeCms\TestSuite\EntityTestCase;
 abstract class PostAndPageEntityTestCase extends EntityTestCase
 {
     /**
+     * Called before every test method
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Entity->set(['slug' => 'a-slug', 'text' => '<b>A</b> [readmore /]text']);
+    }
+
+    /**
      * Test for fields that cannot be mass assigned using newEntity() or
      *  patchEntity()
      * @return void
@@ -32,20 +43,29 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
     }
 
     /**
-     * Test for virtual fields
-     * @return void
-     * @test
-     */
-    abstract public function testVirtualFields();
-
-    /**
      * Test for `_getPlainText()` method
      * @return void
      * @test
      */
     public function testPlainTextGetMutator()
     {
-        $this->assertNull($this->Entity->get('plain_text'));
-        $this->assertEquals('A text', $this->Entity->set('text', 'A [readmore /]text')->get('plain_text'));
+        $this->assertEquals('A text', $this->Entity->get('plain_text'));
     }
+
+    /**
+     * Test for `_getText()` method
+     * @return void
+     * @test
+     */
+    public function testTextGetMutator()
+    {
+        $this->assertEquals('<b>A</b> <!-- read-more -->text', $this->Entity->get('text'));
+    }
+
+    /**
+     * Test for `_getUrl()` method
+     * @return void
+     * @test
+     */
+    abstract public function testUrl();
 }

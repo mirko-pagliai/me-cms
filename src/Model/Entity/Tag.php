@@ -13,6 +13,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 use Cake\Utility\Text;
 
 /**
@@ -41,14 +42,30 @@ class Tag extends Entity
      * Virtual fields that should be exposed
      * @var array
      */
-    protected $_virtual = ['slug'];
+    protected $_virtual = ['slug', 'url'];
 
     /**
      * Gets the tag slug (virtual field)
-     * @return string|null
+     * @return string
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     protected function _getSlug()
     {
-        return empty($this->_properties['tag']) ? null : strtolower(Text::slug($this->_properties['tag']));
+        property_exists_or_fail($this, 'tag');
+
+        return strtolower(Text::slug($this->get('tag')));
+    }
+
+    /**
+     * Gets the url (virtual field)
+     * @return string
+     * @since 2.27.2
+     * @throws \Tools\Exception\PropertyNotExistsException
+     */
+    protected function _getUrl()
+    {
+        property_exists_or_fail($this, 'slug');
+
+        return Router::url(['_name' => 'postsTag', $this->get('slug')], true);
     }
 }

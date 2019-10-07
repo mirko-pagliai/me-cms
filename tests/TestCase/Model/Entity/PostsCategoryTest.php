@@ -28,4 +28,14 @@ class PostsCategoryTest extends EntityTestCase
     {
         $this->assertHasNoAccessibleProperty(['id', 'post_count', 'modified']);
     }
+
+    /**
+     * Test for `_getUrl()` method
+     * @test
+     */
+    public function testUrl()
+    {
+        $this->Entity->set('slug', 'a-slug');
+        $this->assertStringEndsWith('/posts/category/a-slug', $this->Entity->get('url'));
+    }
 }

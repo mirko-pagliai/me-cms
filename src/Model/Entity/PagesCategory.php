@@ -13,6 +13,7 @@
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 
 /**
  * PagesCategory entity
@@ -41,4 +42,23 @@ class PagesCategory extends Entity
         'page_count' => false,
         'modified' => false,
     ];
+
+    /**
+     * Virtual fields that should be exposed
+     * @var array
+     */
+    protected $_virtual = ['url'];
+
+    /**
+     * Gets the url (virtual field)
+     * @return string
+     * @since 2.27.2
+     * @throws \Tools\Exception\PropertyNotExistsException
+     */
+    protected function _getUrl()
+    {
+        property_exists_or_fail($this, 'slug');
+
+        return Router::url(['_name' => 'pagesCategory', $this->get('slug')], true);
+    }
 }

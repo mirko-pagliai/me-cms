@@ -11,30 +11,31 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $isView = $this->getRequest()->isAction('view', 'Pages') && !$this->getRequest()->isAjax();
+$category = $page->get('category');
 ?>
 
 <article class="clearfix mb-4">
     <header class="mb-3">
-        <?php if (getConfig('page.category') && $page->has('category') && $page->category->has(['slug', 'title'])) : ?>
+        <?php if (getConfig('page.category')) : ?>
             <h5 class="category mb-2">
-                <?= $this->Html->link($page->category->title, ['_name' => 'pagesCategory', $page->category->slug]) ?>
+                <?= $this->Html->link($category->get('title'), $category->get('url')) ?>
             </h5>
         <?php endif; ?>
 
         <h3 class="title mb-2">
-            <?= $this->Html->link($page->title, ['_name' => 'page', $page->slug]) ?>
+            <?= $this->Html->link($page->get('title'), $page->get('url')) ?>
         </h3>
 
         <?php if ($page->has('subtitle')) : ?>
             <h4 class="subtitle mb-2">
-                <?= $this->Html->link($page->subtitle, ['_name' => 'page', $page->slug]) ?>
+                <?= $this->Html->link($page->get('subtitle'), $page->get('url')) ?>
             </h4>
         <?php endif; ?>
 
         <div class="info">
             <?php
             $created = $page->get('created');
-            if (getConfig('page.created') && $created) {
+            if (getConfig('page.created')) {
                 echo $this->Html->time(
                     __d('me_cms', 'Posted on {0}', $created->i18nFormat()),
                     ['class' => 'date', 'icon' => 'clock']
@@ -42,7 +43,7 @@ $isView = $this->getRequest()->isAction('view', 'Pages') && !$this->getRequest()
             }
 
             $modified = $page->get('modified');
-            if (getConfig('page.modified') && $modified && $modified != $created) {
+            if (getConfig('page.modified') && $modified != $created) {
                 echo $this->Html->div('modified small', $this->Html->time(
                     __d('me_cms', 'Updated on {0}', $modified->i18nFormat()),
                     ['class' => 'date', 'icon' => 'clock']
@@ -54,32 +55,26 @@ $isView = $this->getRequest()->isAction('view', 'Pages') && !$this->getRequest()
 
     <main class="text-justify">
         <?php
-        //Executes BBCode on the text
-        $text = $this->BBCode->parser($page->text);
-
         //Truncates the text when necessary. The text will be truncated to the
         //  location of the `<!-- readmore -->` tag. If the tag is not present,
         //  the value in the configuration will be used
+        $text = $page->get('text');
         if (!$this->getRequest()->isAction(['view', 'preview'])) {
             $strpos = strpos($text, '<!-- read-more -->');
             $truncatedOptions = ['ellipsis' => false];
-
             if (!$strpos) {
                 $strpos = getConfigOrFail('default.truncate_to');
                 $truncatedOptions = ['html' => true];
             }
-
-            $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
-            echo $truncatedText;
-        } else {
-            echo $text;
+            $text = $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
         }
+        echo $text;
         ?>
     </main>
 
-    <?php if (!empty($truncatedText) && $truncatedText !== $page->text) : ?>
+    <?php if (isset($truncatedText) && $truncatedText !== $text) : ?>
     <div class="buttons mt-2 text-right">
-        <?= $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'page', $page->slug], ['class' => ' readmore']) ?>
+        <?= $this->Html->button(__d('me_cms', 'Read more'), $page->get('url'), ['class' => ' readmore']) ?>
     </div>
     <?php endif; ?>
 
@@ -94,8 +89,8 @@ $isView = $this->getRequest()->isAction('view', 'Pages') && !$this->getRequest()
     <script>
     /*
     var disqus_config = function () {
-    this.page.url = '<?= $this->Url->build(['_name' => 'page', $page->slug], true) ?>';
-    this.page.identifier = '<?= sprintf('page-#%s', $page->id) ?>';
+    this.page.url = '<?= $page->get('url') ?>';
+    this.page.identifier = '<?= sprintf('page-#%s', $page->get('id')) ?>';
     };
     */
     (function() {

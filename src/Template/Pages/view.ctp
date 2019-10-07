@@ -11,36 +11,36 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $this->extend('/Common/view');
-$this->assign('title', $page->title);
+$this->assign('title', $page->get('title'));
 
 /**
  * Userbar
  */
 $class = 'badge badge-warning';
-if (!$page->active) {
+if (!$page->get('active')) {
     $this->userbar($this->Html->span(I18N_DRAFT, compact('class')));
 }
-if ($page->created->isFuture()) {
+if ($page->get('created')->isFuture()) {
     $this->userbar($this->Html->span(I18N_SCHEDULED, compact('class')));
 }
 $this->userbar($this->Html->link(
     __d('me_cms', 'Edit page'),
-    ['action' => 'edit', $page->id, 'prefix' => ADMIN_PREFIX],
+    ['action' => 'edit', $page->get('id'), 'prefix' => ADMIN_PREFIX],
     ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']
 ));
 $this->userbar($this->Form->postLink(
     __d('me_cms', 'Delete page'),
-    ['action' => 'delete', $page->id, 'prefix' => ADMIN_PREFIX],
+    ['action' => 'delete', $page->get('id'), 'prefix' => ADMIN_PREFIX],
     ['class' => 'nav-link text-danger', 'icon' => 'trash-alt', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
 ));
 
 /**
  * Breadcrumb
  */
-if (getConfig('page.category') && $page->has('category') && $page->category->has(['slug', 'title'])) {
-    $this->Breadcrumbs->add($page->category->title, ['_name' => 'pagesCategory', $page->category->slug]);
+if (getConfig('page.category')) {
+    $this->Breadcrumbs->add($page->get('category')->get('title'), $page->get('category')->get('url'));
 }
-$this->Breadcrumbs->add($page->title, ['_name' => 'page', $page->slug]);
+$this->Breadcrumbs->add($page->get('title'), $page->get('url'));
 
 /**
  * Meta tags
@@ -49,24 +49,22 @@ if ($this->getRequest()->isAction('view', 'Pages')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
 
     if ($page->has('modified')) {
-        $this->Html->meta(['content' => $page->modified->toUnixString(), 'property' => 'og:updated_time']);
+        $this->Html->meta(['content' => $page->get('modified')->toUnixString(), 'property' => 'og:updated_time']);
     }
 
     if ($page->has('preview')) {
-        foreach ($page->preview as $preview) {
-            $this->Html->meta(['href' => $preview->url, 'rel' => 'image_src']);
-            $this->Html->meta(['content' => $preview->url, 'property' => 'og:image']);
-            $this->Html->meta(['content' => $preview->width, 'property' => 'og:image:width']);
-            $this->Html->meta(['content' => $preview->height, 'property' => 'og:image:height']);
+        foreach ($page->get('preview') as $preview) {
+            $this->Html->meta(['href' => $preview->get('url'), 'rel' => 'image_src']);
+            $this->Html->meta(['content' => $preview->get('url'), 'property' => 'og:image']);
+            $this->Html->meta(['content' => $preview->get('width'), 'property' => 'og:image:width']);
+            $this->Html->meta(['content' => $preview->get('height'), 'property' => 'og:image:height']);
         }
     }
 
-    if ($page->has('text')) {
-        $this->Html->meta([
-            'content' => $this->Text->truncate($page->plain_text, 100, ['html' => true]),
-            'property' => 'og:description',
-        ]);
-    }
+    $this->Html->meta([
+        'content' => $this->Text->truncate($page->get('plain_text'), 100, ['html' => true]),
+        'property' => 'og:description',
+    ]);
 }
 
 echo $this->element('views/page', compact('page'));

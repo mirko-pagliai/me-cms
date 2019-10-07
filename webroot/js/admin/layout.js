@@ -36,7 +36,7 @@ $(window).on("load resize", function () {
 
 $(function () {
     //Gets query string as objects, removing empty values and pagination values
-    var queryString = $.map(document.location.search.replace(/(^\?)/, "").split("&"), function (value, key) {
+    var queryString = $.map(document.location.search.replace(/(^\?)/, "").split("&"), function (value) {
         value = value.split("=");
 
         if (value[0] === "direction" || value[0] === "page" || value[0] === "render" || value[0] === "sort") {

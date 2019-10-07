@@ -63,16 +63,15 @@ class PostsTable extends PostsAndPagesTables
         parent::beforeMarshal($event, $data, $options);
 
         if (!empty($data['tags_as_string'])) {
+            $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']));
+
             //Gets existing tags
             $existingTags = $this->Tags->getList()->toArray();
-
-            $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']));
 
             //For each tag, it searches if the tag already exists.
             //If a tag exists in the database, it sets also the tag ID
             foreach ($tags as $k => $tag) {
                 $id = array_search($tag, $existingTags);
-
                 if ($id) {
                     $data['tags'][$k]['id'] = $id;
                 }
@@ -105,7 +104,7 @@ class PostsTable extends PostsAndPagesTables
     public function findForIndex(Query $query)
     {
         return $query->contain([
-            $this->Categories->getAlias() => ['fields' => ['title', 'slug']],
+            $this->Categories->getAlias() => ['fields' => ['id', 'title', 'slug']],
             $this->Tags->getAlias() => ['sort' => ['tag' => 'ASC']],
             $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
         ])
@@ -117,15 +116,16 @@ class PostsTable extends PostsAndPagesTables
      * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `id` and `Tags`
      * @param int $limit Limit of related posts
      * @param bool $images If `true`, gets only posts with images
-     * @return array Array of entities
+     * @return \Cake\Collection\Collection Collection of entities
+     * @throws \Tools\Exception\PropertyNotExistsException
      * @uses queryForRelated()
      * @uses $cache
      */
     public function getRelated(Post $post, $limit = 5, $images = true)
     {
-        key_exists_or_fail(['id', 'tags'], $post->toArray(), __d('me_cms', 'ID or tags of the post are missing'));
+        property_exists_or_fail($post, ['id', 'tags']);
 
-        $cache = sprintf('related_%s_posts_for_%s', $limit, $post->id);
+        $cache = sprintf('related_%s_posts_for_%s', $limit, $post->get('id'));
         $cache = $images ? $cache . '_with_images' : $cache;
 
         return Cache::remember($cache, function () use ($images, $limit, $post) {
@@ -133,16 +133,16 @@ class PostsTable extends PostsAndPagesTables
 
             if ($post->has('tags')) {
                 //Sorts and takes tags by `post_count` field
-                $tags = collection($post->tags)->sortBy('post_count')->take($limit)->toList();
+                $tags = collection($post->get('tags'))->sortBy('post_count')->take($limit)->toList();
 
                 //This array will be contain the ID to be excluded
-                $exclude[] = $post->id;
+                $exclude[] = $post->get('id');
 
                 //For each tag, gets a related post.
                 //It reverses the tags order, because the tags less popular have
                 //  less chance to find a related post
                 foreach (array_reverse($tags) as $tag) {
-                    $post = $this->queryForRelated($tag->id, $images)
+                    $post = $this->queryForRelated($tag->get('id'), $images)
                         ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude])
                         ->first();
 
@@ -150,12 +150,12 @@ class PostsTable extends PostsAndPagesTables
                     //  IDs to be excluded for the next query
                     if ($post) {
                         $related[] = $post;
-                        $exclude[] = $post->id;
+                        $exclude[] = $post->get('id');
                     }
                 }
             }
 
-            return $related;
+            return collection($related);
         }, $this->getCacheName());
     }
 
@@ -207,13 +207,13 @@ class PostsTable extends PostsAndPagesTables
     {
         $query = $this->find('active')
             ->select(['id', 'title', 'preview', 'slug', 'text'])
-            ->matching('Tags', function (Query $query) use ($tagId) {
+            ->innerJoinWith('Tags', function (Query $query) use ($tagId) {
                 return $query->where([sprintf('%s.id', $this->Tags->getAlias()) => $tagId]);
-            });
+            })->distinct();
 
         if ($onlyWithImages) {
             $query->where([sprintf('%s.preview IS NOT', $this->getAlias()) => null])
-                ->where([sprintf('%s.preview IS NOT', $this->getAlias()) => []]);
+                ->andWhere([sprintf('%s.preview IS NOT', $this->getAlias()) => []]);
         }
 
         return $query;
@@ -232,9 +232,9 @@ class PostsTable extends PostsAndPagesTables
 
         //"Tag" field
         if (!empty($data['tag']) && strlen($data['tag']) > 2) {
-            $query->matching('Tags', function (Query $query) use ($data) {
-                return $query->where([sprintf('%s.tag', $this->Tags->getAlias()) => $data['tag']]);
-            })->distinct();
+            $query->innerJoinWith($this->Tags->getAlias(), function (Query $query) use ($data) {
+                return $query->where(['tag' => $data['tag']]);
+            });
         }
 
         return $query;

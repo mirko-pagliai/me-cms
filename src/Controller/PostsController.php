@@ -15,9 +15,14 @@ namespace MeCms\Controller;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Http\Exception\ForbiddenException;
+use Cake\I18n\I18n;
+use Cake\ORM\ResultSet;
+use Cake\Routing\Router;
+use Cake\Utility\Text;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
+use MeCms\Model\Entity\Post;
 
 /**
  * Posts controller
@@ -127,10 +132,8 @@ class PostsController extends AppController
         if (empty($posts) || empty($paging)) {
             $query = $this->Posts->find('active')
                 ->find('forIndex')
-                ->where([
-                    sprintf('%s.created >=', $this->Posts->getAlias()) => $start,
-                    sprintf('%s.created <', $this->Posts->getAlias()) => $end,
-                ]);
+                ->where([sprintf('%s.created >=', $this->Posts->getAlias()) => $start])
+                ->andWhere([sprintf('%s.created <', $this->Posts->getAlias()) => $end]);
 
             list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
 
@@ -156,14 +159,48 @@ class PostsController extends AppController
     {
         //This method works only for RSS
         is_true_or_fail($this->RequestHandler->prefers('rss'), ForbiddenException::class);
+        $this->viewBuilder()->setClassName('Feed.Rss');
 
         $posts = $this->Posts->find('active')
-            ->select(['title', 'preview', 'slug', 'text', 'created'])
             ->limit(getConfigOrFail('default.records_for_rss'))
             ->orderDesc('created')
+            ->formatResults(function (ResultSet $results) {
+                return $results->map(function (Post $post) {
+                    //Truncates the description if the "<!-- read-more -->" tag is
+                    //  present or if requested by the configuration
+                    $description = $text = $post->get('text');
+                    $length = $options = false;
+                    $strpos = strpos($description, '<!-- read-more -->');
+                    if ($strpos) {
+                        list($length, $options) = [$strpos, ['exact' => true, 'html' => false]];
+                    } elseif (getConfig('default.truncate_to')) {
+                        list($length, $options) = [getConfig('default.truncate_to'), ['exact' => false, 'html' => true]];
+                    }
+                    $description = $length && $options ? Text::truncate($description, $length, $options) : $description;
+
+                    return [
+                        'title' => $post->get('title'),
+                        'link' => $post->get('url'),
+                        'description' => strip_tags($description),
+                        'content:encoded' => $text,
+                        'pubDate' => $post->get('created'),
+                    ];
+                });
+            })
             ->cache('rss');
 
-        $this->set(compact('posts'));
+        $data = [
+            'channel' => [
+                'title' => __d('me_cms', 'Latest posts'),
+                'link' => Router::url('/', true),
+                'description' => __d('me_cms', 'Latest posts'),
+                'language' => I18n::getLocale(),
+            ],
+            'items' => $posts->toArray(),
+        ];
+
+        $this->set('_serialize', 'data');
+        $this->set(compact('data'));
     }
 
     /**

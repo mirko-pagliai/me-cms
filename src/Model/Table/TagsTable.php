@@ -87,7 +87,7 @@ class TagsTable extends AppTable
 
         //"Name" field
         if (!empty($data['name']) && strlen($data['name']) > 2) {
-            $query->where([sprintf('%s.tag LIKE', $this->getAlias()) => sprintf('%%%s%%', $data['name'])]);
+            $query->where(['tag LIKE' => sprintf('%%%s%%', $data['name'])]);
         }
 
         return $query;

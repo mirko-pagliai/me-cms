@@ -11,44 +11,46 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 $isView = $this->getRequest()->isAction('view', 'Posts') && !$this->getRequest()->isAjax();
+$category = $post->get('category');
+$user = $post->get('user');
 ?>
 
 <article class="clearfix mb-4">
     <header class="mb-3 media">
         <?php
-        if (getConfig('post.author_picture') && $post->user->has('picture')) {
-            echo $this->Thumb->fit($post->user->picture, ['width' => 100], [
+        if (getConfig('post.author_picture')) {
+            echo $this->Thumb->fit($user->get('picture'), ['width' => 100], [
                 'class' => 'd-none d-sm-block mr-3 rounded-circle user-picture',
-                'title' => __d('me_cms', 'Posted by {0}', $post->user->full_name),
+                'title' => __d('me_cms', 'Posted by {0}', $user->get('full_name')),
             ]);
         }
         ?>
 
         <div class="media-body">
-            <?php if (getConfig('post.category') && $post->category->has(['slug', 'title'])) : ?>
+            <?php if (getConfig('post.category')) : ?>
                 <h5 class="category mb-2">
-                    <?= $this->Html->link($post->category->title, ['_name' => 'postsCategory', $post->category->slug]) ?>
+                    <?= $this->Html->link($category->get('title'), $category->get('url')) ?>
                 </h5>
             <?php endif; ?>
 
             <h2 class="title mb-2">
-                <?= $this->Html->link($post->title, ['_name' => 'post', $post->slug]) ?>
+                <?= $this->Html->link($post->get('title'), $post->get('url')) ?>
             </h2>
 
             <?php if ($post->has('subtitle')) : ?>
                 <h4 class="subtitle mb-2">
-                    <?= $this->Html->link($post->subtitle, ['_name' => 'post', $post->slug]) ?>
+                    <?= $this->Html->link($post->get('subtitle'), $post->get('url')) ?>
                 </h4>
             <?php endif; ?>
 
             <div class="info">
                 <?php
-                if (getConfig('post.author') && $post->user->has('full_name')) {
-                    echo $this->Html->div('author', __d('me_cms', 'Posted by {0}', $post->user->full_name), ['icon' => 'user']);
+                if (getConfig('post.author')) {
+                    echo $this->Html->div('author', __d('me_cms', 'Posted by {0}', $user->get('full_name')), ['icon' => 'user']);
                 }
 
                 $created = $post->get('created');
-                if (getConfig('post.created') && $created) {
+                if (getConfig('post.created')) {
                     echo $this->Html->div('created', $this->Html->time(
                         __d('me_cms', 'Posted on {0}', $created->i18nFormat()),
                         ['class' => 'date', 'icon' => 'clock']
@@ -56,7 +58,7 @@ $isView = $this->getRequest()->isAction('view', 'Posts') && !$this->getRequest()
                 }
 
                 $modified = $post->get('modified');
-                if (getConfig('post.modified') && $modified && $modified != $created) {
+                if (getConfig('post.modified') && $modified != $created) {
                     echo $this->Html->div('modified small', $this->Html->time(
                         __d('me_cms', 'Updated on {0}', $modified->i18nFormat()),
                         ['class' => 'date', 'icon' => 'clock']
@@ -69,40 +71,34 @@ $isView = $this->getRequest()->isAction('view', 'Posts') && !$this->getRequest()
 
     <main class="text-justify">
         <?php
-        //Executes BBCode on the text
-        $text = $this->BBCode->parser($post->text);
-
         //Truncates the text when necessary. The text will be truncated to the
         //  location of the `<!-- readmore -->` tag. If the tag is not present,
         //  the value in the configuration will be used
+        $text = $post->get('text');
         if (!$this->getRequest()->isAction(['view', 'preview'])) {
             $strpos = strpos($text, '<!-- read-more -->');
             $truncatedOptions = ['ellipsis' => false];
-
             if (!$strpos) {
                 $strpos = getConfigOrFail('default.truncate_to');
                 $truncatedOptions = ['html' => true];
             }
-
-            $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
-            echo $truncatedText;
-        } else {
-            echo $text;
+            $text = $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
         }
+        echo $text;
         ?>
     </main>
 
-    <?php if (getConfig('post.tags') && $post->has('tags')) : ?>
+    <?php if (getConfig('post.tags')) : ?>
         <div class="tags mt-2">
-            <?php foreach ($post->tags as $tag) : ?>
-                <?= $this->Html->link($tag->tag, ['_name' => 'postsTag', $tag->slug], ['icon' => 'tags']) ?>
+            <?php foreach ($post->get('tags') as $tag) : ?>
+                <?= $this->Html->link($tag->get('tag'), $tag->get('url'), ['icon' => 'tags']) ?>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
 
-    <?php if (!empty($truncatedText) && $truncatedText !== $post->text) : ?>
+    <?php if (isset($truncatedText) && $truncatedText !== $text) : ?>
     <div class="buttons mt-2 text-right">
-        <?= $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'post', $post->slug], ['class' => ' readmore']) ?>
+        <?= $this->Html->button(__d('me_cms', 'Read more'), $post->get('url'), ['class' => ' readmore']) ?>
     </div>
     <?php endif; ?>
 
@@ -117,8 +113,8 @@ $isView = $this->getRequest()->isAction('view', 'Posts') && !$this->getRequest()
     <script>
     /*
     var disqus_config = function () {
-    this.page.url = '<?= $this->Url->build(['_name' => 'post', $post->slug], true) ?>';
-    this.page.identifier = '<?= sprintf('post-#%s', $post->id) ?>';
+    this.page.url = '<?= $post->get('url') ?>';
+    this.page.identifier = '<?= sprintf('post-#%s', $post->get('id')) ?>';
     };
     */
     (function() {

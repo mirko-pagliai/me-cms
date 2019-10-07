@@ -149,7 +149,7 @@ class UsersTableTest extends TableTestCase
     public function testFindMethods()
     {
         $query = $this->Table->find('active');
-        $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
+        $this->assertStringEndsWith('FROM users Users WHERE (active = :c0 AND banned = :c1)', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
 
@@ -157,11 +157,11 @@ class UsersTableTest extends TableTestCase
         $this->assertStringEndsWith('FROM users Users INNER JOIN users_groups Groups ON Groups.id = (Users.group_id)', $query->sql());
 
         $query = $this->Table->find('banned');
-        $this->assertStringEndsWith('FROM users Users WHERE Users.banned = :c0', $query->sql());
+        $this->assertStringEndsWith('FROM users Users WHERE banned = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
 
         $query = $this->Table->find('pending');
-        $this->assertStringEndsWith('FROM users Users WHERE (Users.active = :c0 AND Users.banned = :c1)', $query->sql());
+        $this->assertStringEndsWith('FROM users Users WHERE (active = :c0 AND banned = :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
     }
@@ -174,7 +174,7 @@ class UsersTableTest extends TableTestCase
     {
         $this->loadFixtures();
         $query = $this->Table->getActiveList();
-        $this->assertContains('FROM users Users WHERE Users.active = :c0 ORDER BY username ASC', $query->sql());
+        $this->assertContains('FROM users Users WHERE active = :c0 ORDER BY username ASC', $query->sql());
         $this->assertNotEmpty($query->toArray());
         $fromCache = Cache::read('active_users_list', $this->Table->getCacheName())->toArray();
         $this->assertEquals($fromCache, $query->toArray());
@@ -193,20 +193,21 @@ class UsersTableTest extends TableTestCase
         ];
 
         $query = $this->Table->queryFromFilter($this->Table->find(), $data);
-        $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2 AND Users.banned = :c3)', $query->sql());
+        $this->assertStringEndsWith('FROM users Users WHERE (username like :c0 AND group_id = :c1 AND active = :c2 AND banned = :c3)', $query->sql());
         $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(1, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertTrue($query->getValueBinder()->bindings()[':c2']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c3']['value']);
 
         $query = $this->Table->queryFromFilter($this->Table->find(), ['status' => 'pending'] + $data);
-        $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.active = :c2)', $query->sql());
+        $this->assertStringEndsWith('FROM users Users WHERE (username like :c0 AND group_id = :c1 AND active = :c2 AND banned = :c3)', $query->sql());
         $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(1, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c2']['value']);
+        $this->assertFalse($query->getValueBinder()->bindings()[':c3']['value']);
 
         $query = $this->Table->queryFromFilter($this->Table->find(), ['status' => 'banned'] + $data);
-        $this->assertStringEndsWith('FROM users Users WHERE (Users.username like :c0 AND Users.group_id = :c1 AND Users.banned = :c2)', $query->sql());
+        $this->assertStringEndsWith('FROM users Users WHERE (username like :c0 AND group_id = :c1 AND banned = :c2)', $query->sql());
         $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(1, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertTrue($query->getValueBinder()->bindings()[':c2']['value']);

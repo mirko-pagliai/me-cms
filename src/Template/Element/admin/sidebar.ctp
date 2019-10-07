@@ -15,13 +15,10 @@ use MeCms\Core\Plugin;
 
 <div id="sidebar-accordion" role="tablist">
     <?php
-    //Renders menus for MeCms
+    //Renders menus for MeCms and for each plugin
     echo $this->MenuBuilder->renderAsCollapse('MeCms', 'sidebar-accordion');
-
-    //Renders menus for each plugin
     foreach (Plugin::all(['exclude' => ['MeCms', 'MeTools', 'Assets', 'DatabaseBackup', 'Thumber']]) as $plugin) {
         $menus = $this->MenuBuilder->renderAsCollapse($plugin);
-
         if ($menus) {
             echo $this->Html->h6($plugin);
             echo $menus;

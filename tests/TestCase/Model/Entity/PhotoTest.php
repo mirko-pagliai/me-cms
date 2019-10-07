@@ -13,6 +13,7 @@
 namespace MeCms\Test\TestCase\Model\Entity;
 
 use Cake\ORM\Entity;
+use MeCms\Model\Entity\PhotosAlbum;
 use MeCms\TestSuite\EntityTestCase;
 
 /**
@@ -21,14 +22,19 @@ use MeCms\TestSuite\EntityTestCase;
 class PhotoTest extends EntityTestCase
 {
     /**
-     * Called after every test method
+     * Called before every test method
      * @return void
      */
-    public function tearDown()
+    public function setUp()
     {
-        parent::tearDown();
+        parent::setUp();
 
-        @unlink_recursive(PHOTOS, 'empty');
+        $this->Entity->set('id', 1)->set([
+            'album_id' => 1,
+            'filename' => 'photo.jpg',
+            'description' => 'This is a [readmore /]text',
+            'album' => new PhotosAlbum(['slug' => 'album-slug']),
+        ]);
     }
 
     /**
@@ -47,10 +53,8 @@ class PhotoTest extends EntityTestCase
      */
     public function testPathGetMutator()
     {
-        $this->assertNull($this->Entity->path);
-
-        $this->Entity->set(['album_id' => 1, 'filename' => 'photo.jpg']);
-        $this->assertEquals(PHOTOS . $this->Entity->album_id . DS . $this->Entity->filename, $this->Entity->path);
+        $expected = PHOTOS . $this->Entity->get('album_id') . DS . $this->Entity->get('filename');
+        $this->assertEquals($expected, $this->Entity->get('path'));
     }
 
     /**
@@ -59,9 +63,7 @@ class PhotoTest extends EntityTestCase
      */
     public function testPlainTextGetMutator()
     {
-        $this->assertNull($this->Entity->plain_description);
-
-        $this->assertEquals('This is a text', $this->Entity->set('description', 'This is a [readmore /]text')->get('plain_description'));
+        $this->assertEquals('This is a text', $this->Entity->get('plain_description'));
     }
 
     /**
@@ -70,21 +72,20 @@ class PhotoTest extends EntityTestCase
      */
     public function testPreviewGetMutator()
     {
-        $this->assertNull($this->Entity->preview);
-
-        $this->Entity->set(['album_id' => 1, 'filename' => 'photo1.jpg']);
-        @copy(WWW_ROOT . 'img' . DS . 'image.jpg', $this->Entity->path);
-        $this->assertInstanceof(Entity::class, $this->Entity->preview);
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+/', $this->Entity->preview->url);
-        $this->assertEquals([400, 400], [$this->Entity->preview->width, $this->Entity->preview->height]);
+        @copy(WWW_ROOT . 'img' . DS . 'image.jpg', $this->Entity->get('path'));
+        $this->assertInstanceof(Entity::class, $this->Entity->get('preview'));
+        $this->assertRegExp('/\/thumb\/[\w\d]+/', $this->Entity->get('preview')->get('url'));
+        $this->assertSame(400, $this->Entity->get('preview')->get('width'));
+        $this->assertSame(400, $this->Entity->get('preview')->get('height'));
+        @unlink($this->Entity->get('path'));
     }
 
     /**
-     * Test for virtual fields
+     * Test for `_getUrl()` method
      * @test
      */
-    public function testVirtualFields()
+    public function testUrl()
     {
-        $this->assertHasVirtualField(['path', 'plain_description', 'preview']);
+        $this->assertStringEndsWith('/photo/album-slug/1', $this->Entity->get('url'));
     }
 }

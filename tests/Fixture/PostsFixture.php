@@ -82,7 +82,7 @@ class PostsFixture extends TestFixture
             'title' => 'Fourth post',
             'slug' => 'fourth-post',
             'subtitle' => 'Subtitle for fourth post',
-            'text' => 'Text of the fourth post',
+            'text' => 'Text of the fourth post<!-- read-more -->Text after "read more"',
             'preview' => null,
             'priority' => 1,
             'created' => '2016-12-28 18:58:19',
