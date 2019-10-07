@@ -61,7 +61,7 @@ $category = $page->get('category');
         $text = $page->get('text');
         if (!$this->getRequest()->isAction(['view', 'preview'])) {
             $strpos = strpos($text, '<!-- read-more -->');
-            $truncatedOptions = ['ellipsis' => false];
+            $truncatedOptions = ['ellipsis' => ''];
             if (!$strpos) {
                 $strpos = getConfigOrFail('default.truncate_to');
                 $truncatedOptions = ['html' => true];
