@@ -14,8 +14,8 @@ declare(strict_types=1);
  */
 namespace MeCms\Model\Table\Traits;
 
+use Cake\Collection\CollectionInterface;
 use Cake\ORM\Entity;
-use Cake\Collection\Collection;
 use DOMDocument;
 use MeTools\Utility\Youtube;
 use Symfony\Component\Filesystem\Filesystem;
@@ -83,13 +83,13 @@ trait GetPreviewsFromTextTrait
      * Gets all the available images from an html string, including the previews
      *  of Youtube videos, and returns an array of `Entity`
      * @param string $html Html string
-     * @return \Cake\Collection\Collection Collection of entities. Each `Entity`
-     *  has `url`, `width` and `height` properties
+     * @return \Cake\Collection\CollectionInterface Collection of entities.
+     *  Each `Entity` has `url`, `width` and `height` properties
      * @since 2.23.0
      * @uses extractImages()
      * @uses getPreviewSize()
      */
-    public function getPreviews(string $html): Collection
+    public function getPreviews(string $html): CollectionInterface
     {
         $images = array_map(function (string $url) {
             if (!is_url($url)) {
