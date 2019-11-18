@@ -118,7 +118,7 @@ class BannersTableTest extends TableTestCase
     public function testQueryFromFilter()
     {
         $query = $this->Table->queryFromFilter($this->Table->find(), ['position' => 2]);
-        $this->assertStringEndsWith('FROM banners Banners WHERE Banners.position_id = :c0', $query->sql());
+        $this->assertStringEndsWith('FROM banners Banners WHERE position_id = :c0', $query->sql());
         $this->assertEquals(2, $query->getValueBinder()->bindings()[':c0']['value']);
     }
 }

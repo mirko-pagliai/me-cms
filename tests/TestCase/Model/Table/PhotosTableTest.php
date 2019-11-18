@@ -142,7 +142,7 @@ class PhotosTableTest extends TableTestCase
     public function testQueryFromFilter()
     {
         $query = $this->Table->queryFromFilter($this->Table->find(), ['album' => 2]);
-        $this->assertStringEndsWith('FROM photos Photos WHERE Photos.album_id = :c0', $query->sql());
+        $this->assertStringEndsWith('FROM photos Photos WHERE album_id = :c0', $query->sql());
         $this->assertEquals(2, $query->getValueBinder()->bindings()[':c0']['value']);
     }
 }

@@ -88,31 +88,31 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
         <?php foreach ($posts as $post) : ?>
             <tr>
                 <td class="text-nowrap text-center">
-                    <code><?= $post->id ?></code>
+                    <code><?= $post->get('id') ?></code>
                 </td>
                 <td>
                     <strong>
-                        <?= $this->Html->link($post->title, ['action' => 'edit', $post->id]) ?>
+                        <?= $this->Html->link($post->get('title'), ['action' => 'edit', $post->get('id')]) ?>
                     </strong>
                     <?php
                     $class = 'record-badge badge badge-warning';
 
                     //If the post is not active (it's a draft)
-                    if (!$post->active) {
+                    if (!$post->get('active')) {
                         echo $this->Html->span(I18N_DRAFT, compact('class'));
                     }
 
                     //If the post is scheduled
-                    if ($post->created->isFuture()) {
+                    if ($post->get('created')->isFuture()) {
                         echo $this->Html->span(I18N_SCHEDULED, compact('class'));
                     }
                     ?>
 
-                    <?php if ($post->tags) : ?>
+                    <?php if ($post->has('tags')) : ?>
                         <div class="mt-1 small d-none d-lg-block">
                             <?php
-                            foreach ($post->tags as $tag) {
-                                echo $this->Html->link($tag->tag, ['?' => ['tag' => $tag->tag]], [
+                            foreach ($post->get('tags') as $tag) {
+                                echo $this->Html->link($tag, ['?' => compact('tag')], [
                                     'class' => 'mr-1',
                                     'icon' => 'tag',
                                     'title' => I18N_BELONG_ELEMENT,
@@ -126,13 +126,13 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     $actions = [];
 
                     //Only admins and managers can edit all posts. Users can edit only their own posts
-                    if ($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($post->user->id)) {
-                        $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $post->id], ['icon' => 'pencil-alt']);
+                    if ($this->Auth->isGroup(['admin', 'manager']) || $this->Auth->hasId($post->get('user')->get('id'))) {
+                        $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $post->get('id')], ['icon' => 'pencil-alt']);
                     }
 
                     //Only admins and managers can delete posts
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
-                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $post->id], [
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $post->get('id')], [
                             'class' => 'text-danger',
                             'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
@@ -140,16 +140,16 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     }
 
                     //If the post is active and is not scheduled
-                    if ($post->active && !$post->created->isFuture()) {
+                    if ($post->get('active') && !$post->get('created')->isFuture()) {
                         $actions[] = $this->Html->link(
                             I18N_OPEN,
-                            ['_name' => 'post', $post->slug],
+                            ['_name' => 'post', $post->get('slug')],
                             ['icon' => 'external-link-alt', 'target' => '_blank']
                         );
                     } else {
                         $actions[] = $this->Html->link(
                             I18N_PREVIEW,
-                            ['_name' => 'postsPreview', $post->slug],
+                            ['_name' => 'postsPreview', $post->get('slug')],
                             ['icon' => 'external-link-alt', 'target' => '_blank']
                         );
                     }
@@ -159,15 +159,15 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 </td>
                 <td class="text-nowrap text-center">
                     <?= $this->Html->link(
-                        $post->category->title,
-                        ['?' => ['category' => $post->category->id]],
+                        $post->get('category')->get('title'),
+                        ['?' => ['category' => $post->get('category')->get('id')]],
                         ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
                 <td class="text-nowrap text-center">
                     <?= $this->Html->link(
-                        $post->user->full_name,
-                        ['?' => ['user' => $post->user->id]],
+                        $post->get('user')->get('full_name'),
+                        ['?' => ['user' => $post->get('user')->get('id')]],
                         ['title' => I18N_BELONG_USER]
                     ) ?>
                 </td>
@@ -176,11 +176,11 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 </td>
                 <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
-                        <?= $post->created->i18nFormat() ?>
+                        <?= $post->get('created')->i18nFormat() ?>
                     </div>
                     <div class="d-lg-none">
-                        <div><?= $post->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
-                        <div><?= $post->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
+                        <div><?= $post->get('created')->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
+                        <div><?= $post->get('created')->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>
                 </td>
             </tr>
