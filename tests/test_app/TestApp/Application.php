@@ -17,7 +17,7 @@ use Cake\Http\BaseApplication;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use MeCms\Plugin as MeCms;
 use RecaptchaMailhide\Plugin as RecaptchaMailhide;
-use Thumber\Plugin as Thumber;
+use Thumber\Cake\Plugin as Thumber;
 
 /**
  * Application setup class.

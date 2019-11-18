@@ -34,7 +34,7 @@ class TMP extends AbstractCheckup
             getConfigOrFail('Assets.target'),
             CACHE,
             LOGIN_RECORDS,
-            getConfigOrFail('Thumber.target'),
+            THUMBER_TARGET,
         ];
 
         return parent::isWriteable($paths);

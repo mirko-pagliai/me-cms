@@ -114,8 +114,8 @@ echo 'Running tests for "' . ConnectionManager::getConfig('test')['scheme'] . '"
 require_once VENDOR . 'mirko-pagliai' . DS . 'php-tools' . DS . 'tests' . DS . 'apache_functions.php';
 
 Configure::write('DatabaseBackup', ['connection' => 'test', 'target' => TMP . 'backups']);
-Configure::write('Thumber', ['driver' => 'gd']);
 Configure::write('Tokens.usersClassOptions', ['foreignKey' => 'user_id', 'className' => 'Users']);
+define('THUMBER_DRIVER', 'gd');
 
 //Sets debug and serialized logs
 Log::setConfig('debug', [

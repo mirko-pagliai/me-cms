@@ -48,7 +48,7 @@ class SystemsControllerTest extends ControllerTestCase
             'assets2' => getConfigOrFail('Assets.target') . DS . 'asset_file2',
             'logs' => LOGS . 'log_file',
             'sitemap' => SITEMAP,
-            'thumbs' => getConfigOrFail('Thumber.target') . DS . md5('a') . '_' . md5('a') . '.jpg',
+            'thumbs' => add_slash_term(THUMBER_TARGET) . md5('a') . '_' . md5('a') . '.jpg',
         ];
 
         foreach ($files as $file) {
@@ -78,7 +78,7 @@ class SystemsControllerTest extends ControllerTestCase
     {
         Cache::clearAll();
         @unlink_recursive(getConfigOrFail('Assets.target'));
-        @unlink_recursive(getConfigOrFail('Thumber.target'));
+        @unlink_recursive(THUMBER_TARGET);
 
         parent::tearDown();
     }

@@ -19,7 +19,7 @@
         "mirko-pagliai/cakephp-entity-file-log": "^1.0",
         "mirko-pagliai/cakephp-recaptcha-mailhide": "^1.2.2",
         "mirko-pagliai/cakephp-stop-spam": "^1.0.2",
-        "mirko-pagliai/cakephp-thumber": "^1.7.1",
+        "mirko-pagliai/cakephp-thumber": "^1.8.0",
         "mirko-pagliai/cakephp-tokens": "^1.2",
         "mirko-pagliai/me-tools": "^2.18.14",
         "mirko-pagliai/php-tools": "^1.2.8",

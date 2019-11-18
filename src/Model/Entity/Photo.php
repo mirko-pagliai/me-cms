@@ -15,7 +15,7 @@ namespace MeCms\Model\Entity;
 use Cake\ORM\Entity;
 use Cake\Routing\Router;
 use MeTools\Utility\BBCode;
-use Thumber\Utility\ThumbCreator;
+use Thumber\Cake\Utility\ThumbCreator;
 
 /**
  * Photo entity

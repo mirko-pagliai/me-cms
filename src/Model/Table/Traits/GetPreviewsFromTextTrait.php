@@ -17,7 +17,7 @@ use Cake\ORM\Entity;
 use DOMDocument;
 use MeTools\Utility\Youtube;
 use Symfony\Component\Filesystem\Filesystem;
-use Thumber\Utility\ThumbCreator;
+use Thumber\Cake\Utility\ThumbCreator;
 
 /**
  * This trait provides a method to get the first available image or the preview
