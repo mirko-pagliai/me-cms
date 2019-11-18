@@ -23,7 +23,7 @@ use MeCms\Controller\Admin\AppController;
 use MeCms\Core\Plugin;
 use MeCms\Utility\Checkup;
 use Symfony\Component\Finder\Finder;
-use Thumber\Utility\ThumbManager;
+use Thumber\Cake\Utility\ThumbManager;
 
 /**
  * Systems controller
@@ -235,7 +235,7 @@ class SystemsController extends AppController
         $cacheSize = $getDirSize(CACHE);
         $logsSize = $getDirSize(LOGS);
         $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
-        $thumbsSize = $getDirSize(getConfigOrFail('Thumber.target'));
+        $thumbsSize = $getDirSize(THUMBER_TARGET);
 
         $this->set('cacheStatus', Cache::enabled());
         $this->set('totalSize', $assetsSize + $cacheSize + $logsSize + $sitemapSize + $thumbsSize);

@@ -5,9 +5,9 @@
     "type": "cakephp-plugin",
     "license": "MIT",
     "authors": [{
-        "name": "Mirko Pagliai",
-        "email": "mirko.pagliai@gmail.com"
-    }],
+            "name": "Mirko Pagliai",
+            "email": "mirko.pagliai@gmail.com"
+        }],
     "require": {
         "php": ">=7.2",
         "cakephp/cakephp": "4.x-dev",
@@ -24,6 +24,7 @@
         "mirko-pagliai/cakephp-thumber": "dev-cakephp4",
         "mirko-pagliai/cakephp-tokens": "dev-cakephp4",
         "mirko-pagliai/me-tools": "dev-cakephp4",
+        "mirko-pagliai/php-thumber": "dev-php7",
         "mirko-pagliai/php-tools": "dev-php7",
         "npm-asset/js-cookie": "^v2.2",
         "wyrihaximus/minify-html": "dev-master"

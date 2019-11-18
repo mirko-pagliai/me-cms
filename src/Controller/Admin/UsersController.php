@@ -18,7 +18,7 @@ use Cake\Http\Response;
 use Cake\Mailer\MailerAwareTrait;
 use MeCms\Controller\Admin\AppController;
 use Symfony\Component\Finder\Finder;
-use Thumber\Utility\ThumbManager;
+use Thumber\Cake\Utility\ThumbManager;
 
 /**
  * Users controller

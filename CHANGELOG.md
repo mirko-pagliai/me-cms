@@ -4,6 +4,9 @@
 * updated for `cakephp` 4 and `phpunit` 8.
 
 ## 2.27 branch
+### 2.27.3
+* updated for `cakephp-thumber` `1.8.0`.
+
 ### 2.27.2
 * `PostsTable::getRelated()` returns a `Collection` of entities;
 * `GetPreviewsFromTextTrait::getPreviews()` returns a `Collection` of entities;

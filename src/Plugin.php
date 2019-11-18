@@ -63,7 +63,7 @@ class Plugin extends BasePlugin
             'DatabaseBackup',
             'RecaptchaMailhide',
             'StopSpam',
-            'Thumber',
+            'Thumber\Cake',
             'Tokens',
         ];
 
@@ -164,10 +164,10 @@ class Plugin extends BasePlugin
         $dirs = array_unique(array_filter(array_merge(Configure::read('WRITABLE_DIRS', []), [
             getConfig('Assets.target'),
             getConfigOrFail('DatabaseBackup.target'),
-            getConfigOrFail('Thumber.target'),
             BANNERS,
             LOGIN_RECORDS,
             PHOTOS,
+            THUMBER_TARGET,
             USER_PICTURES,
         ])));
 
