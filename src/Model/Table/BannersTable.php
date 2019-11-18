@@ -102,7 +102,7 @@ class BannersTable extends AppTable
 
         //"Position" field
         if (!empty($data['position']) && is_positive($data['position'])) {
-            $query->where([sprintf('%s.position_id', $this->getAlias()) => $data['position']]);
+            $query->where(['position_id' => $data['position']]);
         }
 
         return $query;

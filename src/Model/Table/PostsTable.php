@@ -231,9 +231,10 @@ class PostsTable extends PostsAndPagesTables
         $query = parent::queryFromFilter($query, $data);
 
         //"Tag" field
-        if (!empty($data['tag']) && strlen($data['tag']) > 2) {
-            $query->innerJoinWith($this->Tags->getAlias(), function (Query $query) use ($data) {
-                return $query->where(['tag' => $data['tag']]);
+        $tag = !empty($data['tag']) && strlen($data['tag']) > 2 ? $data['tag'] : false;
+        if ($tag) {
+            $query->innerJoinWith($this->Tags->getAlias(), function (Query $query) use ($tag) {
+                return $query->where(compact('tag'));
             });
         }
 
