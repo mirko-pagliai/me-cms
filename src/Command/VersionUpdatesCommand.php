@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       2.26.1
  */
+
 namespace MeCms\Command;
 
 use Cake\Cache\Cache;

@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         http://api.cakephp.org/4.0/class-Cake.Mailer.Mailer.html Mailer
  */
+
 namespace MeCms\Mailer;
 
 use Cake\Mailer\Email;

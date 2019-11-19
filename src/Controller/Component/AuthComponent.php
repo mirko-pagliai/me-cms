@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         http://api.cakephp.org/3.7/class-Cake.Controller.Component.AuthComponent.html
  */
+
 namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component\AuthComponent as CakeAuthComponent;

@@ -3,18 +3,9 @@
     <arg value="p"/>
     <file>.</file>
 
-    <rule ref="./vendor/cakephp/cakephp-codesniffer/CakePHP/ruleset.xml"/>
+    <rule ref="./vendor/mirko-pagliai/php-tools/sniffer-ruleset.xml"/>
 
-    <rule ref="Generic.Commenting.Todo">
-        <severity>0</severity>
-    </rule>
-    <rule ref="Generic.Files.LineLength.TooLong">
-        <severity>0</severity>
-    </rule>
-    <rule ref="Generic.PHP.NoSilencedErrors.Discouraged">
-        <severity>0</severity>
-    </rule>
-    <rule ref="Internal.NoCodeFound">
+    <rule ref="PSR12.Properties.ConstantVisibility.NotFound">
         <severity>0</severity>
     </rule>
     <rule ref="PSR12.ControlStructures.ControlStructureSpacing.CloseParenthesisLine">
@@ -51,9 +42,5 @@
         <severity>0</severity>
     </rule>
 
-    <exclude-pattern>*.min.css</exclude-pattern>
-    <exclude-pattern>*.min.js</exclude-pattern>
     <exclude-pattern>/config/Migrations</exclude-pattern>
-    <exclude-pattern>/coverage</exclude-pattern>
-    <exclude-pattern>/vendor</exclude-pattern>
 </ruleset>

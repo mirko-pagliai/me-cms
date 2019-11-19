@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       2.22.8
  */
+
 namespace MeCms\Utility\Checkups;
 
 use MeCms\Utility\Checkups\AbstractCheckup;

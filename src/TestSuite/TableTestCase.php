@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       2.25.4
  */
+
 namespace MeCms\TestSuite;
 
 use Cake\ORM\Association;

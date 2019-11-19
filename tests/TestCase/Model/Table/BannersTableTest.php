@@ -11,6 +11,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace MeCms\Test\TestCase\Model\Table;
 
 use MeCms\Model\Entity\BannersPosition;

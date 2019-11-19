@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         \MeCms\View\Helper\MenuBuilderHelper
  */
+
 namespace MeCms\View\Helper;
 
 use Cake\View\Helper;

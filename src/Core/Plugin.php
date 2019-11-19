@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         http://api.cakephp.org/3.7/class-Cake.Core.Plugin.html
  */
+
 namespace MeCms\Core;
 
 use MeTools\Core\Plugin as BasePlugin;

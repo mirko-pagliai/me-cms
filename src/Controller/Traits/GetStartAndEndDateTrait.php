@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       2.17.5
  */
+
 namespace MeCms\Controller\Traits;
 
 use Cake\I18n\Time;

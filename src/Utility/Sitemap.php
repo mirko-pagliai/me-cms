@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         MeCms\Utility\SitemapBuilder
  */
+
 namespace MeCms\Utility;
 
 use Cake\Cache\Cache;
