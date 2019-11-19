@@ -12,7 +12,7 @@
  */
 //Sets the admin prefix
 if (!defined('ADMIN_PREFIX')) {
-    define('ADMIN_PREFIX', 'admin');
+    define('ADMIN_PREFIX', 'Admin');
 }
 
 //Sets the default banners directory

@@ -256,8 +256,8 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertRedirect($this->Controller->Auth->redirectUrl());
         $this->assertSession($user->id, 'Auth.User.id');
         $this->assertCookieEncrypted(['username' => $user->username] + compact('password'), 'login');
-        $cookieExpire = Time::createFromTimestamp($this->_response->getCookie('login')['expire']);
-        $this->assertTrue($cookieExpire->isWithinNext('1 year'));
+        $expires = Time::createFromTimestamp($this->_response->getCookie('login')['expires']);
+        $this->assertTrue($expires->isWithinNext('1 year'));
 
         //POST request. The user is banned
         $this->Table->save($user->set('banned', true));
