@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,7 +11,8 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace MeCms\Controller;
+
+namespace MeCmsController;
 
 use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Time;

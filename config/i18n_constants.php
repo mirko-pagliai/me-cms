@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,6 +11,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 define('I18N_ADD', __d('me_cms', 'Add'));
 define('I18N_ALL_STATUS', sprintf('-- %s --', __d('me_cms', 'all status')));
 define('I18N_ALL_VALUES', sprintf('-- %s --', __d('me_cms', 'all values')));

@@ -1,4 +1,5 @@
 <?php
+
 namespace TestPlugin\Utility;
 
 use MeCms\Utility\SitemapBuilder;

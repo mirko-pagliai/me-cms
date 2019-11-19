@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Utility;
 
 use Tokens\Utility\TokenTrait;

@@ -12,6 +12,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       2.27.1
  */
+
 namespace MeCms\ORM;
 
 use Cake\Datasource\QueryTrait;

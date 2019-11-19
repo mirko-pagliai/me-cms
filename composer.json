@@ -5,9 +5,9 @@
     "type": "cakephp-plugin",
     "license": "MIT",
     "authors": [{
-        "name": "Mirko Pagliai",
-        "email": "mirko.pagliai@gmail.com"
-    }],
+            "name": "Mirko Pagliai",
+            "email": "mirko.pagliai@gmail.com"
+        }],
     "require": {
         "php": ">=7.0",
         "cakephp/cakephp": "^3.8.0",
@@ -22,7 +22,7 @@
         "mirko-pagliai/cakephp-thumber": "^1.8.0",
         "mirko-pagliai/cakephp-tokens": "^1.2",
         "mirko-pagliai/me-tools": "^2.18.14",
-        "mirko-pagliai/php-tools": "^1.2.8",
+        "mirko-pagliai/php-tools": "^1.2.15",
         "npm-asset/js-cookie": "^v2.2",
         "wyrihaximus/minify-html": "^1.1"
     },

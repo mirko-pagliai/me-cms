@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -11,6 +12,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         \MeCms\View\Helper\MenuBuilderHelper
  */
+
 namespace MeCms\View\Helper;
 
 use Cake\View\Helper;
