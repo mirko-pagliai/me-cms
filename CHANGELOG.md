@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.27 branch
 ### 2.27.4
+* fixed bug for changelogs reader;
 * fixed little bug for the admin sidebar.
 
 ### 2.27.3

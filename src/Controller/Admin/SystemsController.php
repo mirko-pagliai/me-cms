@@ -22,6 +22,7 @@ use League\CommonMark\CommonMarkConverter;
 use MeCms\Controller\Admin\AppController;
 use MeCms\Core\Plugin;
 use MeCms\Utility\Checkup;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Thumber\Cake\Utility\ThumbManager;
 
@@ -113,12 +114,13 @@ class SystemsController extends AppController
 
         //If a changelog file has been specified
         if ($this->getRequest()->getQuery('file')) {
+            $file = $files[$this->getRequest()->getQuery('file')];
+            $file = (new FileSystem())->isAbsolutePath($file) ? $file : add_slash_term(ROOT) . $file;
             $converter = new CommonMarkConverter([
                 'html_input' => 'strip',
                 'allow_unsafe_links' => false,
             ]);
-            $changelog = file_get_contents(ROOT . $files[$this->getRequest()->getQuery('file')]);
-            $changelog = $converter->convertToHtml($changelog);
+            $changelog = $converter->convertToHtml(file_get_contents($file));
 
             $this->set(compact('changelog'));
         }
