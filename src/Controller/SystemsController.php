@@ -12,7 +12,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace MeCmsController;
+namespace MeCms\Controller;
 
 use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Time;

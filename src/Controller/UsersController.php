@@ -12,7 +12,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace MeCmsController;
+namespace MeCms\Controller;
 
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
