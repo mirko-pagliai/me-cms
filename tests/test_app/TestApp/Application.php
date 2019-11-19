@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -11,13 +12,14 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       2.24.0
  */
+
 namespace App;
 
 use Cake\Http\BaseApplication;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use MeCms\Plugin as MeCms;
 use RecaptchaMailhide\Plugin as RecaptchaMailhide;
-use Thumber\Plugin as Thumber;
+use Thumber\Cake\Plugin as Thumber;
 
 /**
  * Application setup class.

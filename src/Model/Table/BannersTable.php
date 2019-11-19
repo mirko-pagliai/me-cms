@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,6 +11,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace MeCms\Model\Table;
 
 use Cake\Datasource\EntityInterface;
@@ -102,7 +104,7 @@ class BannersTable extends AppTable
 
         //"Position" field
         if (!empty($data['position']) && is_positive($data['position'])) {
-            $query->where([sprintf('%s.position_id', $this->getAlias()) => $data['position']]);
+            $query->where(['position_id' => $data['position']]);
         }
 
         return $query;

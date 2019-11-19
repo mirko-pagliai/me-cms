@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,6 +11,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
@@ -48,7 +50,7 @@ class SystemsControllerTest extends ControllerTestCase
             'assets2' => getConfigOrFail('Assets.target') . DS . 'asset_file2',
             'logs' => LOGS . 'log_file',
             'sitemap' => SITEMAP,
-            'thumbs' => getConfigOrFail('Thumber.target') . DS . md5('a') . '_' . md5('a') . '.jpg',
+            'thumbs' => add_slash_term(THUMBER_TARGET) . md5('a') . '_' . md5('a') . '.jpg',
         ];
 
         foreach ($files as $file) {
@@ -78,7 +80,7 @@ class SystemsControllerTest extends ControllerTestCase
     {
         Cache::clearAll();
         @unlink_recursive(getConfigOrFail('Assets.target'));
-        @unlink_recursive(getConfigOrFail('Thumber.target'));
+        @unlink_recursive(THUMBER_TARGET);
 
         parent::tearDown();
     }

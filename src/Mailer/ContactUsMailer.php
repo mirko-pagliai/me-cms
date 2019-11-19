@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -12,6 +13,7 @@
  * @see         MeCms\Controller\SystemsController::contactUs()
  * @see         MeCms\Form\ContactUsForm
  */
+
 namespace MeCms\Mailer;
 
 use MeCms\Mailer\Mailer;

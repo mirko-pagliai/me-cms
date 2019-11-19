@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -11,6 +12,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @see         MeCms\Utility\SitemapBuilder
  */
+
 namespace MeCms\Utility;
 
 use Cake\Cache\Cache;

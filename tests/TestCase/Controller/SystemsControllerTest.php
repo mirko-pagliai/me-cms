@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,6 +11,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Chronos\Chronos;
@@ -108,7 +110,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertRedirect(['_name' => 'homepage']);
 
         //Spammer IP
-        $this->configRequest(['environment' => ['REMOTE_ADDR' => '92.61.176.106']]);
+        $this->configRequest(['environment' => ['REMOTE_ADDR' => '31.133.120.18']]);
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Systems' . DS . 'ip_not_allowed.ctp');

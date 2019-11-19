@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,6 +11,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace MeCms\Model\Table;
 
 use Cake\Datasource\EntityInterface;
@@ -134,7 +136,7 @@ class PhotosTable extends AppTable
 
         //"Album" field
         if (!empty($data['album']) && is_positive($data['album'])) {
-            $query->where([sprintf('%s.album_id', $this->getAlias()) => $data['album']]);
+            $query->where(['album_id' => $data['album']]);
         }
 
         return $query;

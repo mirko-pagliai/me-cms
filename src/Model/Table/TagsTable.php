@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,6 +11,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace MeCms\Model\Table;
 
 use Cake\ORM\RulesChecker;
@@ -87,7 +89,7 @@ class TagsTable extends AppTable
 
         //"Name" field
         if (!empty($data['name']) && strlen($data['name']) > 2) {
-            $query->where(['tag LIKE' => sprintf('%%%s%%', $data['name'])]);
+            $query->where(['tag LIKE' => '%' . $data['name'] . '%']);
         }
 
         return $query;

@@ -1,4 +1,5 @@
 <?php
+
 namespace DebugKit;
 
 use Cake\Core\BasePlugin;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,12 +11,13 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\Routing\Router;
 use MeTools\Utility\BBCode;
-use Thumber\Utility\ThumbCreator;
+use Thumber\Cake\Utility\ThumbCreator;
 
 /**
  * Photo entity

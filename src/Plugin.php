@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -11,6 +12,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       2.24.0
  */
+
 namespace MeCms;
 
 use Cake\Core\BasePlugin;
@@ -61,7 +63,7 @@ class Plugin extends BasePlugin
             'Recaptcha' => ['path' => ROOT . DS . 'vendor' . DS . 'crabstudio' . DS . 'recaptcha' . DS],
             'RecaptchaMailhide',
             'StopSpam',
-            'Thumber',
+            'Thumber\Cake',
             'Tokens',
         ];
 
@@ -162,10 +164,10 @@ class Plugin extends BasePlugin
         $dirs = array_unique(array_filter(array_merge(Configure::read('WRITABLE_DIRS', []), [
             getConfig('Assets.target'),
             getConfigOrFail('DatabaseBackup.target'),
-            getConfigOrFail('Thumber.target'),
             BANNERS,
             LOGIN_RECORDS,
             PHOTOS,
+            THUMBER_TARGET,
             USER_PICTURES,
         ])));
 

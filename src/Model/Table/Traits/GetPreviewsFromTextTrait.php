@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -11,13 +12,14 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       2.17.0
  */
+
 namespace MeCms\Model\Table\Traits;
 
 use Cake\ORM\Entity;
 use DOMDocument;
 use MeTools\Utility\Youtube;
 use Symfony\Component\Filesystem\Filesystem;
-use Thumber\Utility\ThumbCreator;
+use Thumber\Cake\Utility\ThumbCreator;
 
 /**
  * This trait provides a method to get the first available image or the preview

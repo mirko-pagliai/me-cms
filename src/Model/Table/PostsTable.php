@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,6 +11,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace MeCms\Model\Table;
 
 use ArrayObject;
@@ -231,9 +233,10 @@ class PostsTable extends PostsAndPagesTables
         $query = parent::queryFromFilter($query, $data);
 
         //"Tag" field
-        if (!empty($data['tag']) && strlen($data['tag']) > 2) {
-            $query->innerJoinWith($this->Tags->getAlias(), function (Query $query) use ($data) {
-                return $query->where(['tag' => $data['tag']]);
+        $tag = !empty($data['tag']) && strlen($data['tag']) > 2 ? $data['tag'] : false;
+        if ($tag) {
+            $query->innerJoinWith($this->Tags->getAlias(), function (Query $query) use ($tag) {
+                return $query->where(compact('tag'));
             });
         }
 

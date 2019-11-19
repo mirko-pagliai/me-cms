@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,6 +11,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace MeCms\View;
 
 use App\View\AppView;
@@ -81,7 +83,7 @@ class View extends AppView
         $this->loadHelper('MeTools.Library');
         $this->loadHelper('MeTools.Paginator');
         $this->loadHelper('Assets.Asset');
-        $this->loadHelper('Thumber.Thumb');
+        $this->loadHelper('Thumber/Cake.Thumb');
         $this->loadHelper('MeCms.Auth');
         $this->loadHelper('WyriHaximus/MinifyHtml.MinifyHtml');
     }

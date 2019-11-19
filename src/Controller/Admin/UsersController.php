@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,13 +11,14 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
 use Cake\Mailer\MailerAwareTrait;
 use MeCms\Controller\Admin\AppController;
 use Symfony\Component\Finder\Finder;
-use Thumber\Utility\ThumbManager;
+use Thumber\Cake\Utility\ThumbManager;
 
 /**
  * Users controller

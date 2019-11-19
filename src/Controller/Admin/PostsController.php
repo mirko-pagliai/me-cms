@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,6 +11,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\Event;
@@ -122,7 +124,10 @@ class PostsController extends AppController
 
         $this->paginate['order'] = ['created' => 'DESC'];
 
-        $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->getRequest()->getQueryParams()));
+        $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->getRequest()->getQueryParams()))
+            ->map(function (Post $post) {
+                return $post->set('tags', collection($post->get('tags'))->extract('tag')->toList());
+            });
 
         $this->set(compact('posts'));
     }

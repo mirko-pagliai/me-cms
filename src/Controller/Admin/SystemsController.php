@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of me-cms.
  *
@@ -10,6 +11,7 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace MeCms\Controller\Admin;
 
 use Cake\Cache\Cache;
@@ -21,7 +23,7 @@ use MeCms\Controller\Admin\AppController;
 use MeCms\Core\Plugin;
 use MeCms\Utility\Checkup;
 use Symfony\Component\Finder\Finder;
-use Thumber\Utility\ThumbManager;
+use Thumber\Cake\Utility\ThumbManager;
 
 /**
  * Systems controller
@@ -233,7 +235,7 @@ class SystemsController extends AppController
         $cacheSize = $getDirSize(CACHE);
         $logsSize = $getDirSize(LOGS);
         $sitemapSize = is_readable(SITEMAP) ? filesize(SITEMAP) : 0;
-        $thumbsSize = $getDirSize(getConfigOrFail('Thumber.target'));
+        $thumbsSize = $getDirSize(THUMBER_TARGET);
 
         $this->set('cacheStatus', Cache::enabled());
         $this->set('totalSize', $assetsSize + $cacheSize + $logsSize + $sitemapSize + $thumbsSize);
