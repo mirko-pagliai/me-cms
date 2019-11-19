@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace MeCmsController;
+namespace MeCms\Controller;
 
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Response;

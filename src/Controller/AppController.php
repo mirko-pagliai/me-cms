@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace MeCmsController;
+namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseAppController;
 use Cake\Event\EventInterface;
