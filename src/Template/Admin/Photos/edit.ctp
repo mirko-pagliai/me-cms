@@ -30,7 +30,7 @@ $this->assign('title', $title = __d('me_cms', 'Edit photo'));
             <strong><?= I18N_PREVIEW ?></strong>
         </div>
         <?php
-            echo $this->Thumb->resize($photo->path, ['width' => 1186], ['class' => 'img-thumbnail mb-3']);
+            echo $this->Thumb->resize($photo->get('path'), ['width' => 1186], ['class' => 'img-thumbnail mb-3']);
 
             echo $this->Form->control('filename', [
                 'disabled' => true,

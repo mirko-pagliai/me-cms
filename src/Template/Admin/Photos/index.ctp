@@ -32,22 +32,31 @@ $this->extend('/Admin/Common/BannersAndPhotos/index');
                 </td>
                 <td>
                     <strong>
-                        <?= $this->Html->link($photo->filename, ['action' => 'edit', $photo->id]) ?>
+                        <?= $this->Html->link($photo->get('filename'), ['action' => 'edit', $photo->id]) ?>
                     </strong>
                     <?php
                     //If the photo is not active (not published)
-                    if (!$photo->active) {
+                    if (!$photo->get('active')) {
                         echo $this->Html->span(I18N_NOT_PUBLISHED, ['class' => 'record-badge badge badge-warning']);
                     }
 
-                    $actions = [
-                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $photo->id], ['icon' => 'pencil-alt']),
-                        $this->Html->link(I18N_DOWNLOAD, ['action' => 'download', $photo->id], ['icon' => 'download']),
-                    ];
+                    $actions = [];
+
+                    //If Fancybox is enabled, adds the preview action
+                    if (getConfig('default.fancybox')) {
+                        $actions[] = $this->Html->link(I18N_PREVIEW, ['action' => 'edit', $photo->get('id')], [
+                            'class' => 'fancybox',
+                            'icon' => 'search',
+                            'data-fancybox-href' => $this->Thumb->resizeUrl($photo->get('path'), ['height' => 1280]),
+                        ]);
+                    }
+
+                    $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $photo->get('id')], ['icon' => 'pencil-alt']);
+                    $actions[] = $this->Html->link(I18N_DOWNLOAD, ['action' => 'download', $photo->get('id')], ['icon' => 'download']);
 
                     //Only admins and managers can delete photos
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
-                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $photo->id], [
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $photo->get('id')], [
                             'class' => 'text-danger',
                             'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
@@ -55,16 +64,16 @@ $this->extend('/Admin/Common/BannersAndPhotos/index');
                     }
 
                     //If the photo is active
-                    if ($photo->active) {
+                    if ($photo->get('active')) {
                         $actions[] = $this->Html->link(
                             I18N_OPEN,
-                            ['_name' => 'photo', 'slug' => $photo->album->slug, 'id' => $photo->id],
+                            ['_name' => 'photo', 'slug' => $photo->get('album')->get('slug'), 'id' => $photo->get('id')],
                             ['icon' => 'external-link-alt', 'target' => '_blank']
                         );
                     } else {
                         $actions[] = $this->Html->link(
                             I18N_PREVIEW,
-                            ['_name' => 'photosPreview', $photo->id],
+                            ['_name' => 'photosPreview', $photo->get('id')],
                             ['icon' => 'external-link-alt', 'target' => '_blank']
                         );
                     }
@@ -74,21 +83,21 @@ $this->extend('/Admin/Common/BannersAndPhotos/index');
                 </td>
                 <td class="text-center">
                     <?= $this->Html->link(
-                        $photo->album->title,
-                        ['?' => ['album' => $photo->album->id]],
+                        $photo->get('album')->get('title'),
+                        ['?' => ['album' => $photo->get('album')->get('id')]],
                         ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
                 <td class="text-center">
-                    <?= $photo->description ?>
+                    <?= $photo->get('description') ?>
                 </td>
                 <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
-                        <?= $photo->created->i18nFormat() ?>
+                        <?= $photo->get('created')->i18nFormat() ?>
                     </div>
                     <div class="d-lg-none">
-                        <div><?= $photo->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
-                        <div><?= $photo->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
+                        <div><?= $photo->get('created')->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
+                        <div><?= $photo->get('created')->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>
                 </td>
             </tr>

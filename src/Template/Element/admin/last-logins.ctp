@@ -36,20 +36,11 @@
                         </div>
                     </td>
                     <td class="text-center text-nowrap">
-                        <?= sprintf(
-                            '%s (%s | %s)',
-                            $log->get('ip'),
-                            $this->Html->link(
-                                __d('me_cms', 'Who is'),
-                                str_replace('{IP}', $log->get('ip'), getConfigOrFail('security.ip_whois')),
-                                ['target' => '_blank']
-                            ),
-                            $this->Html->link(
-                                __d('me_cms', 'Map'),
-                                str_replace('{IP}', $log->get('ip'), getConfigOrFail('security.ip_map')),
-                                ['target' => '_blank']
-                            )
-                        ) ?>
+                        <?= $log->get('ip') ?>
+                        <small>(<?= $this->Html->link(
+                            __d('me_cms', 'Who is'),
+                            str_replace('{IP}', $log->get('ip'), getConfigOrFail('security.ip_whois')),
+                            ['target' => '_blank']) ?>)</small>
                     </td>
                     <td class="text-center">
                         <samp>

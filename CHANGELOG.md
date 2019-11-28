@@ -1,5 +1,12 @@
 # 2.x branch
 ## 2.27 branch
+### 2.27.4
+* added Fancybox photo preview in the admin panel;
+* fixed bug, the album view now correctly shows the title and the number of
+    photos contained in each album;
+* fixed bug for changelogs reader;
+* fixed little bug for the admin sidebar.
+
 ### 2.27.3
 * updated for `cakephp-thumber` `1.8.0`.
 
@@ -41,7 +48,7 @@
 * largely simplified the code for `PostsWidgetsCell::months()` method;
 * fixed bug for `PhotosAlbumsController::index()`. Now the album photos are
     randomly ordered after being retrieved from the cache;
-* for `StaticPage` class, `getSlug()` is now public, `title()` becomes 
+* for `StaticPage` class, `getSlug()` is now public, `title()` becomes
     `getTitle()`, `getAllPaths()` becomes as `getPaths()` and is now public;
 * javascript functions are now "camelCase": `tag_exist()` becomes `tagExists()`,
     `add_tags()` becomes `addTags()`, `remove_tag()` becomes `removeTag()` and
