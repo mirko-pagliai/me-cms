@@ -20,32 +20,32 @@ $this->extend('/Admin/Common/BannersAndPhotos/index');
             <div class="card">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item p-1 text-truncate text-center">
-                        <?= $this->Html->link($photo->filename, ['action' => 'edit', $photo->id]) ?>
+                        <?= $this->Html->link($photo->get('filename'), ['action' => 'edit', $photo->get('id')]) ?>
                     </li>
                     <li class="list-group-item p-1 small text-center">
-                        <samp><?= I18N_ID ?> <?= $photo->id ?></samp>
+                        <samp><?= I18N_ID ?> <?= $photo->get('id') ?></samp>
                     </li>
                     <li class="list-group-item p-1 small text-center">
                         <?= __d('me_cms', 'Album') ?>:
                         <?= $this->Html->link(
-                            $photo->album->title,
-                            ['?' => ['album' => $photo->album->id]],
+                            $photo->get('album')->get('title'),
+                            ['?' => ['album' => $photo->get('album')->get('id')]],
                             ['title' => I18N_BELONG_ELEMENT]
                         ) ?>
                     </li>
                     <li class="list-group-item p-1 small text-center">
-                        (<?= $photo->created->i18nFormat() ?>)
+                        (<?= $photo->get('created')->i18nFormat() ?>)
                     </li>
                 </ul>
 
                 <?php
-                echo $this->Thumb->fit($photo->path, ['width' => 400], ['class' => 'card-img-bottom']);
+                echo $this->Thumb->fit($photo->get('path'), ['width' => 400], ['class' => 'card-img-bottom']);
 
                 $actions = [];
 
                 //If Fancybox is enabled, adds the preview action
                 if (getConfig('default.fancybox')) {
-                    $actions[] = $this->Html->button(null, ['action' => 'edit', $photo->id], [
+                    $actions[] = $this->Html->button(null, ['action' => 'edit', $photo->get('id')], [
                         'class' => 'btn-link fancybox',
                         'icon' => 'search',
                         'title' => I18N_PREVIEW,
@@ -53,12 +53,12 @@ $this->extend('/Admin/Common/BannersAndPhotos/index');
                     ]);
                 }
 
-                $actions[] = $this->Html->button(null, ['action' => 'edit', $photo->id], [
+                $actions[] = $this->Html->button(null, ['action' => 'edit', $photo->get('id')], [
                     'class' => 'btn-link',
                     'icon' => 'pencil-alt',
                     'title' => I18N_EDIT,
                 ]);
-                $actions[] = $this->Html->button(null, ['action' => 'download', $photo->id], [
+                $actions[] = $this->Html->button(null, ['action' => 'download', $photo->get('id')], [
                     'class' => 'btn-link',
                     'icon' => 'download',
                     'title' => I18N_DOWNLOAD,
@@ -66,7 +66,7 @@ $this->extend('/Admin/Common/BannersAndPhotos/index');
 
                 //Only admins and managers can delete photos
                 if ($this->Auth->isGroup(['admin', 'manager'])) {
-                    $actions[] = $this->Form->postButton(null, ['action' => 'delete', $photo->id], [
+                    $actions[] = $this->Form->postButton(null, ['action' => 'delete', $photo->get('id')], [
                         'class' => 'btn-link text-danger',
                         'icon' => 'trash-alt',
                         'title' => I18N_DELETE,
@@ -78,8 +78,8 @@ $this->extend('/Admin/Common/BannersAndPhotos/index');
                 if ($photo->active) {
                     $actions[] = $this->Html->button(null, [
                         '_name' => 'photo',
-                        'slug' => $photo->album->slug,
-                        'id' => $photo->id,
+                        'slug' => $photo->get('album')->get('slug'),
+                        'id' => $photo->get('id'),
                     ], [
                         'class' => 'btn-link',
                         'icon' => 'external-link-alt',
@@ -87,7 +87,7 @@ $this->extend('/Admin/Common/BannersAndPhotos/index');
                         'title' => I18N_OPEN,
                     ]);
                 } else {
-                    $actions[] = $this->Html->button(null, ['_name' => 'photosPreview', $photo->id], [
+                    $actions[] = $this->Html->button(null, ['_name' => 'photosPreview', $photo->get('id')], [
                         'class' => 'btn-link',
                         'icon' => 'external-link-alt',
                         'target' => '_blank',
