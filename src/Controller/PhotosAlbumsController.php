@@ -33,7 +33,7 @@ class PhotosAlbumsController extends AppController
     public function index()
     {
         $albums = $this->PhotosAlbums->find('active')
-            ->select(['id', 'slug', 'photo_count', 'created'])
+            ->select(['id', 'title', 'slug', 'photo_count', 'created'])
             ->contain($this->Photos->getAlias(), function (Query $query) {
                 return $query->find('active')->select(['id', 'album_id', 'filename']);
             })

@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.27 branch
 ### 2.27.4
-* the album view now correctly shows the number of photos contained in each album;
+* fixed bug, the album view now correctly shows the title and the number of
+    photos contained in each album;
 * fixed bug for changelogs reader;
 * fixed little bug for the admin sidebar.
 
