@@ -41,18 +41,28 @@ $this->extend('/Admin/Common/BannersAndPhotos/index');
                 <?php
                 echo $this->Thumb->fit($photo->path, ['width' => 400], ['class' => 'card-img-bottom']);
 
-                $actions = [
-                    $this->Html->button(null, ['action' => 'edit', $photo->id], [
-                        'class' => 'btn-link',
-                        'icon' => 'pencil-alt',
-                        'title' => I18N_EDIT,
-                    ]),
-                    $this->Html->button(null, ['action' => 'download', $photo->id], [
-                        'class' => 'btn-link',
-                        'icon' => 'download',
-                        'title' => I18N_DOWNLOAD,
-                    ]),
-                ];
+                $actions = [];
+
+                //If Fancybox is enabled, adds the preview action
+                if (getConfig('default.fancybox')) {
+                    $actions[] = $this->Html->button(null, ['action' => 'edit', $photo->id], [
+                        'class' => 'btn-link fancybox',
+                        'icon' => 'search',
+                        'title' => I18N_PREVIEW,
+                        'data-fancybox-href' => $this->Thumb->resizeUrl($photo->get('path'), ['height' => 1280]),
+                    ]);
+                }
+
+                $actions[] = $this->Html->button(null, ['action' => 'edit', $photo->id], [
+                    'class' => 'btn-link',
+                    'icon' => 'pencil-alt',
+                    'title' => I18N_EDIT,
+                ]);
+                $actions[] = $this->Html->button(null, ['action' => 'download', $photo->id], [
+                    'class' => 'btn-link',
+                    'icon' => 'download',
+                    'title' => I18N_DOWNLOAD,
+                ]);
 
                 //Only admins and managers can delete photos
                 if ($this->Auth->isGroup(['admin', 'manager'])) {

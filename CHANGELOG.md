@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.27 branch
 ### 2.27.4
+* added Fancybox photo preview in the admin panel;
 * fixed bug, the album view now correctly shows the title and the number of
     photos contained in each album;
 * fixed bug for changelogs reader;

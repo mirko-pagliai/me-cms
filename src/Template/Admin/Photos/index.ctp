@@ -40,10 +40,19 @@ $this->extend('/Admin/Common/BannersAndPhotos/index');
                         echo $this->Html->span(I18N_NOT_PUBLISHED, ['class' => 'record-badge badge badge-warning']);
                     }
 
-                    $actions = [
-                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $photo->id], ['icon' => 'pencil-alt']),
-                        $this->Html->link(I18N_DOWNLOAD, ['action' => 'download', $photo->id], ['icon' => 'download']),
-                    ];
+                    $actions = [];
+
+                    //If Fancybox is enabled, adds the preview action
+                    if (getConfig('default.fancybox')) {
+                        $actions[] = $this->Html->link(I18N_PREVIEW, ['action' => 'edit', $photo->id], [
+                            'class' => 'fancybox',
+                            'icon' => 'search',
+                            'data-fancybox-href' => $this->Thumb->resizeUrl($photo->get('path'), ['height' => 1280]),
+                        ]);
+                    }
+
+                    $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $photo->id], ['icon' => 'pencil-alt']);
+                    $actions[] = $this->Html->link(I18N_DOWNLOAD, ['action' => 'download', $photo->id], ['icon' => 'download']);
 
                     //Only admins and managers can delete photos
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
