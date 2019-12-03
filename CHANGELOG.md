@@ -3,7 +3,8 @@
 ### 2.27.5
 * `\MeCms\Controller\Admin\AppController::referer()`, unlike the original method,
     can return the `index` action of the same controller (if it has been
-    indicated as the `$default` parameter), preserving also the query string.
+    indicated as the `$default` parameter), preserving also the query string;
+* replaced the `Validator::allowEmpty()` method that will be deprecated.
 
 ### 2.27.4
 * added Fancybox photo preview in the admin panel;

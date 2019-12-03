@@ -212,6 +212,6 @@ class UsersTable extends AppTable
      */
     public function validationEmptyPassword(UserValidator $validator)
     {
-        return $validator->allowEmpty('password')->allowEmpty('password_repeat');
+        return $validator->allowEmptyString('password')->allowEmptyString('password_repeat');
     }
 }
