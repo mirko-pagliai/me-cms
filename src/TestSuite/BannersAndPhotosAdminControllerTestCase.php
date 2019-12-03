@@ -224,7 +224,7 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
 
         //POST request. Data are valid
         $this->post($url, ['description' => 'New description for first record']);
-        $this->assertRedirect(['action' => 'index', $this->Table->get(1)->get($this->foreignKey)]);
+        $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //POST request. Data are invalid
@@ -256,7 +256,7 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
         $record = $this->Table->get(1);
         $this->assertFileExists($record->get('path'));
         $this->post($this->url + ['action' => 'delete', 1]);
-        $this->assertRedirect(['action' => 'index', $record->get($this->foreignKey)]);
+        $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertTrue($this->Table->findById(1)->isEmpty());
         $this->skipIf(IS_WIN);

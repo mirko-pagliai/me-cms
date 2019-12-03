@@ -1,5 +1,10 @@
 # 2.x branch
 ## 2.27 branch
+### 2.27.5
+* `\MeCms\Controller\Admin\AppController::referer()`, unlike the original method,
+    can return the `index` action of the same controller (if it has been
+    indicated as the `$default` parameter), preserving also the query string.
+
 ### 2.27.4
 * added Fancybox photo preview in the admin panel;
 * fixed bug, the album view now correctly shows the title and the number of

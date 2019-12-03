@@ -61,6 +61,21 @@ class AppControllerTest extends ControllerTestCase
         $this->assertNull($this->Controller->beforeFilter(new Event('myEvent')));
     }
 
+    public function testBeforeRender()
+    {
+        $this->Controller->beforeRender(new Event('myEvent'));
+        $this->assertNull($this->Controller->getRequest()->getSession()->read('referer'));
+
+        $request = $this->Controller->getRequest()->withParam('controller', 'MyController')->withParam('action', 'edit');
+        $this->Controller->setRequest($request)->beforeRender(new Event('myEvent'));
+        $this->assertNull($this->Controller->getRequest()->getSession()->read('referer'));
+
+        $request = $this->Controller->getRequest()->withParam('action', 'index');
+        $this->Controller->setRequest($request)->beforeRender(new Event('myEvent'));
+        $result = $this->Controller->getRequest()->getSession()->read('referer');
+        $this->assertEquals(['controller' => 'MyController', 'target' => '/'], $result);
+    }
+
     /**
      * Tests for `isAuthorized()` method
      * @test
