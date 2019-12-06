@@ -138,7 +138,7 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer(['action' => 'index']));
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -160,7 +160,7 @@ class UsersController extends AppController
         if ($user->get('group_id') === 1 && !$this->Auth->isFounder()) {
             $this->Flash->alert(I18N_ONLY_ADMIN_FOUNDER);
 
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect($this->referer(['action' => 'index']));
         }
 
         $user = $this->Users->patchEntity($user, $this->getRequest()->getData(), ['validate' => 'EmptyPassword']);
@@ -169,7 +169,7 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer(['action' => 'index']));
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -202,7 +202,7 @@ class UsersController extends AppController
             $this->Flash->success(I18N_OPERATION_OK);
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer(['action' => 'index']));
     }
 
     /**
@@ -215,7 +215,7 @@ class UsersController extends AppController
         $this->Users->save($this->Users->get($id)->set('active', true));
         $this->Flash->success(I18N_OPERATION_OK);
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer(['action' => 'index']));
     }
 
     /**

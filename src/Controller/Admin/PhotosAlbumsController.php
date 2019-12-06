@@ -63,7 +63,7 @@ class PhotosAlbumsController extends AppController
             if ($this->PhotosAlbums->save($album)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer(['action' => 'index']));
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -87,7 +87,7 @@ class PhotosAlbumsController extends AppController
             if ($this->PhotosAlbums->save($album)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer(['action' => 'index']));
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -114,6 +114,6 @@ class PhotosAlbumsController extends AppController
         }
         call_user_func([$this->Flash, $method], $message);
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer(['action' => 'index']));
     }
 }

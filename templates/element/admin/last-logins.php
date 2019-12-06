@@ -38,19 +38,10 @@ declare(strict_types=1);
                     </td>
                     <td class="text-center text-nowrap">
                         <?= $log->get('ip') ?>
-                        (
-                        <?= $this->Html->link(
+                        <small>(<?= $this->Html->link(
                             __d('me_cms', 'Who is'),
                             str_replace('{IP}', $log->get('ip'), getConfigOrFail('security.ip_whois')),
-                            ['target' => '_blank']
-                        ) ?>
-                        |
-                        <?= $this->Html->link(
-                            __d('me_cms', 'Map'),
-                            str_replace('{IP}', $log->get('ip'), getConfigOrFail('security.ip_map')),
-                            ['target' => '_blank']
-                        ) ?>
-                        )
+                            ['target' => '_blank']) ?>)</small>
                     </td>
                     <td class="text-center">
                         <samp>

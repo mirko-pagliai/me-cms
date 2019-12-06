@@ -29,6 +29,9 @@ if ($this->getTemplatePath() === "Admin/Banners") {
 }
 $this->append('actions', $this->Html->button($label, $url, ['class' => 'btn-success', 'icon' => 'plus']));
 
+if (getConfig('default.fancybox')) {
+    $this->Library->fancybox();
+}
 $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
 

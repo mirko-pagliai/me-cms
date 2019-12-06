@@ -136,7 +136,7 @@ class PagesController extends AppController
             if ($this->Pages->save($page)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer(['action' => 'index']));
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -168,7 +168,7 @@ class PagesController extends AppController
             if ($this->Pages->save($page)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer(['action' => 'index']));
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -190,6 +190,6 @@ class PagesController extends AppController
         $this->Pages->deleteOrFail($this->Pages->get($id));
         $this->Flash->success(I18N_OPERATION_OK);
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer(['action' => 'index']));
     }
 }

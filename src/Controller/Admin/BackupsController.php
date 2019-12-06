@@ -101,7 +101,7 @@ class BackupsController extends AppController
             if ($backup->execute($this->getRequest()->getData())) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer(['action' => 'index']));
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -124,7 +124,7 @@ class BackupsController extends AppController
         call_user_func([$this->BackupManager, $filename ? 'delete' : 'deleteAll'], $filename);
         $this->Flash->success(I18N_OPERATION_OK);
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer(['action' => 'index']));
     }
 
     /**
@@ -174,7 +174,7 @@ class BackupsController extends AppController
 
         $this->Flash->success(I18N_OPERATION_OK);
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer(['action' => 'index']));
     }
 
     /**
@@ -190,6 +190,6 @@ class BackupsController extends AppController
         $this->BackupManager->send($this->getFilename($filename), getConfigOrFail('email.webmaster'));
         $this->Flash->success(I18N_OPERATION_OK);
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer(['action' => 'index']));
     }
 }
