@@ -74,14 +74,14 @@ class UserValidator extends AppValidator
                         preg_match('/[^A-z\d]/', $value);
                 },
             ],
-        ])->requirePresence('password', 'create');
+        ])->requirePresence('password', 'create')->notEmptyString('password');
 
         $this->add('password_repeat', [
             'compareWith' => [
                 'message' => __d('me_cms', 'Passwords don\'t match'),
                 'rule' => ['compareWith', 'password'],
             ],
-        ])->requirePresence('password_repeat', 'create');
+        ])->requirePresence('password_repeat', 'create')->notEmptyString('password_repeat');
 
         $this->add('password_old', [
             'oldPasswordIsRight' => [
@@ -108,6 +108,6 @@ class UserValidator extends AppValidator
                 'message' => I18N_SELECT_VALID_OPTION,
                 'rule' => 'boolean',
             ],
-        ])->allowEmpty('banned');
+        ])->allowEmptyString('banned');
     }
 }

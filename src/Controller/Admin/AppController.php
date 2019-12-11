@@ -25,7 +25,7 @@ abstract class AppController extends BaseAppController
 {
     /**
      * Called before the controller action
-     * @param \Cake\Event\Event $event An Event instance
+     * @param \Cake\Event\EventInterface $event An EventInterface instance
      * @return \Cake\Http\Response|null
      */
     public function beforeFilter(EventInterface $event)
@@ -46,11 +46,11 @@ abstract class AppController extends BaseAppController
 
     /**
      * Called after the controller action is run, but before the view is rendered
-     * @param \Cake\Event\Event $event An Event instance
+     * @param \Cake\Event\EventInterface $event An EventInterface instance
      * @return void
      * @since 2.27.5
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(EventInterface $event)
     {
         parent::beforeRender($event);
 

@@ -44,7 +44,7 @@ class BannerValidator extends BannerAndPhotoValidator
                 'message' => __d('me_cms', 'Must be a valid url'),
                 'rule' => ['url', true],
             ],
-        ])->allowEmpty('target');
+        ])->allowEmptyString('target');
 
         $this->add('thumbnail', [
             'boolean' => [

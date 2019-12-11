@@ -37,7 +37,7 @@ class PostValidator extends PageAndPostValidator
                 'last' => true,
                 'rule' => [$this, 'validTags'],
             ],
-        ])->allowEmpty('tags');
+        ])->allowEmptyString('tags');
     }
 
     /**
@@ -56,7 +56,7 @@ class PostValidator extends PageAndPostValidator
         $messages = [];
 
         foreach ($values as $tag) {
-            $errors = Hash::get($validator->errors($tag), 'tag') ?: [];
+            $errors = Hash::get($validator->validate($tag), 'tag') ?: [];
 
             foreach ($errors as $error) {
                 $messages[] = __d('me_cms', 'Tag "{0}": {1}', $tag['tag'], lcfirst($error));
