@@ -16,6 +16,8 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Http\ServerRequest;
+use Cake\Http\Session;
 use MeCms\TestSuite\ControllerTestCase;
 
 /**
@@ -61,6 +63,10 @@ class AppControllerTest extends ControllerTestCase
         $this->assertNull($this->Controller->beforeFilter(new Event('myEvent')));
     }
 
+    /**
+     * Tests for `beforeRender()` method
+     * @test
+     */
     public function testBeforeRender()
     {
         $this->Controller->beforeRender(new Event('myEvent'));
@@ -74,6 +80,22 @@ class AppControllerTest extends ControllerTestCase
         $this->Controller->setRequest($request)->beforeRender(new Event('myEvent'));
         $result = $this->Controller->getRequest()->getSession()->read('referer');
         $this->assertEquals(['controller' => 'MyController', 'target' => '/'], $result);
+    }
+
+    /**
+     * Tests for `referer()` method
+     * @test
+     */
+    public function testReferer()
+    {
+        $request = $this->Controller->getRequest()->withParam('controller', 'MyController')->withParam('action', 'edit');
+        $this->assertSame('/', $this->Controller->setRequest($request)->referer());
+
+        $session = new Session();
+        $session->write('referer', ['controller' => 'MyController', 'target' => '/here']);
+        $request = new ServerRequest(compact('session'));
+        $request = $request->withParam('controller', 'MyController')->withParam('action', 'edit');
+        $this->assertSame('/here', $this->Controller->setRequest($request)->referer(['action' => 'index']));
     }
 
     /**
