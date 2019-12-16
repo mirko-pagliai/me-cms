@@ -107,7 +107,7 @@ class AppValidator extends Validator
                 'message' => __d('me_cms', 'Must be between {0} and {1} chars', 3, 150),
                 'rule' => ['lengthBetween', 3, 150],
             ],
-        ])->allowEmpty('subtitle');
+        ])->allowEmptyString('subtitle');
 
         //Slug
         $this->add('slug', [
@@ -139,7 +139,7 @@ class AppValidator extends Validator
                 'message' => __d('me_cms', 'Must be at most {0} chars', 255),
                 'rule' => ['maxLength', 255],
             ],
-        ])->allowEmpty('description');
+        ])->allowEmptyString('description');
 
         //Active
         $this->add('active', [
@@ -155,7 +155,7 @@ class AppValidator extends Validator
                 'message' => I18N_ENTER_VALID_VALUE,
                 'rule' => 'datetime',
             ],
-        ])->allowEmpty('created');
+        ])->allowEmptyDateTime('created');
     }
 
     /**

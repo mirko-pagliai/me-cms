@@ -108,6 +108,6 @@ class UserValidator extends AppValidator
                 'message' => I18N_SELECT_VALID_OPTION,
                 'rule' => 'boolean',
             ],
-        ])->allowEmpty('banned');
+        ])->allowEmptyString('banned');
     }
 }

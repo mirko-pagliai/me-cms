@@ -37,7 +37,7 @@ class PostValidator extends PageAndPostValidator
                 'last' => true,
                 'rule' => [$this, 'validTags'],
             ],
-        ])->allowEmpty('tags');
+        ])->allowEmptyString('tags');
     }
 
     /**
