@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.27 branch
 ### 2.27.6
+* fixed little bug for `Icon` helper;
 * fixed little bug for static pages.
 
 ### 2.27.5
