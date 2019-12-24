@@ -5,9 +5,5 @@
 
     <rule ref="./vendor/mirko-pagliai/php-tools/sniffer-ruleset.xml"/>
 
-    <rule ref="PSR12.Properties.ConstantVisibility.NotFound">
-        <severity>0</severity>
-    </rule>
-
     <exclude-pattern>/config/Migrations</exclude-pattern>
 </ruleset>
