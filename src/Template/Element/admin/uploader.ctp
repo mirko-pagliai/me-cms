@@ -19,7 +19,7 @@ $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
     Dropzone.autoDiscover = false;
     $(function() {
         $('.dropzone').dropzone({
-            dictDefaultMessage: '<?= sprintf('%s %s', $this->Html->icon('cloud-upload'), __d('me_cms', 'Drag files here or click')) ?>',
+            dictDefaultMessage: '<?= sprintf('%s %s', $this->Icon->icon('cloud-upload'), __d('me_cms', 'Drag files here or click')) ?>',
             <?php
             if (!empty($maxFiles)) {
                 echo 'maxFiles: \'' . $maxFiles . '\',';
@@ -36,8 +36,8 @@ $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
                     '<div class="progress dz-progress mb-3">' +
                         '<div class="progress-bar bg-success dz-upload" role="progressbar" data-dz-uploadprogress></div>' +
                     '</div>' +
-                    '<div class="dz-success-mark text-center"><?= $this->Html->icon('check') ?></div>' +
-                    '<div class="dz-error-mark text-center"><?= $this->Html->icon('close') ?></div>' +
+                    '<div class="dz-success-mark text-center"><?= $this->Icon->icon('check') ?></div>' +
+                    '<div class="dz-error-mark text-center"><?= $this->Icon->icon('close') ?></div>' +
                     '<div class="dz-error-message mt-2 text-danger text-center" data-dz-errormessage></div>' +
                 '</div>' +
             '</div>',

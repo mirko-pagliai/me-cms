@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.27 branch
+### 2.27.6
+* fixed little bug for `Icon` helper;
+* fixed little bug for static pages.
+
 ### 2.27.5
 * `\MeCms\Controller\Admin\AppController::referer()`, unlike the original method,
     can return the `index` action of the same controller (if it has been
