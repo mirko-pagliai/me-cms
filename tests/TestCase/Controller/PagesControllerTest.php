@@ -61,11 +61,8 @@ class PagesControllerTest extends ControllerTestCase
         $this->assertResponseContains('This is a static page');
         $this->assertTemplate('StaticPages' . DS . $slug . '.php');
         $this->assertInstanceof(Entity::class, $this->viewVariable('page'));
-        $this->assertInstanceof(Entity::class, $this->viewVariable('page')->get('category'));
         $this->assertEquals([
-            'category' => ['slug' => null, 'title' => null],
             'title' => 'Page From App',
-            'subtitle' => null,
             'url' => Router::url($url, true),
         ] + compact('slug'), $this->viewVariable('page')->toArray());
     }

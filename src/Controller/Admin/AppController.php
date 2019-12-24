@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Controller\Admin;
 
 use Cake\Event\EventInterface;
+use Cake\Http\Response;
 use MeCms\Controller\AppController as BaseAppController;
 
 /**
@@ -28,7 +29,7 @@ abstract class AppController extends BaseAppController
      * @param \Cake\Event\EventInterface $event An EventInterface instance
      * @return \Cake\Http\Response|null
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): ?Response
     {
         $result = parent::beforeFilter($event);
         if ($result) {
@@ -50,7 +51,7 @@ abstract class AppController extends BaseAppController
      * @return void
      * @since 2.27.5
      */
-    public function beforeRender(EventInterface $event)
+    public function beforeRender(EventInterface $event): void
     {
         parent::beforeRender($event);
 

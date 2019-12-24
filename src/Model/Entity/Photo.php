@@ -79,13 +79,7 @@ class Photo extends Entity
     protected function _getPreview(): ?Entity
     {
         $path = $this->_getPath();
-
-        if (!$path) {
-            return null;
-        }
-
         [$width, $height] = getimagesize($path);
-
         $thumber = new ThumbCreator($path);
         $thumber->resize(1200, 1200)->save(['format' => 'jpg']);
 

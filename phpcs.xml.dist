@@ -5,42 +5,5 @@
 
     <rule ref="./vendor/mirko-pagliai/php-tools/sniffer-ruleset.xml"/>
 
-    <rule ref="PSR12.Properties.ConstantVisibility.NotFound">
-        <severity>0</severity>
-    </rule>
-    <rule ref="PSR12.ControlStructures.ControlStructureSpacing.CloseParenthesisLine">
-        <severity>0</severity>
-    </rule>
-    <rule ref="PSR12.ControlStructures.ControlStructureSpacing.FirstExpressionLine">
-        <severity>0</severity>
-    </rule>
-    <rule ref="PSR12.ControlStructures.ControlStructureSpacing.LineIndent">
-        <severity>0</severity>
-    </rule>
-    <rule ref="PSR12.Files.FileHeader.IncorrectOrder">
-        <severity>0</severity>
-    </rule>
-    <rule ref="PSR12.Files.FileHeader.SpacingAfterBlock">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaFunctionCall">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaMagicConstant">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse">
-        <exclude-pattern>/templates/*</exclude-pattern>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace.UseFromSameNamespace">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.UseSpacing.IncorrectLinesCountAfterLastUse">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceAfterDeclare">
-        <severity>0</severity>
-    </rule>
-
     <exclude-pattern>/config/Migrations</exclude-pattern>
 </ruleset>

@@ -18,7 +18,7 @@ $category = $page->get('category');
 
 <article class="clearfix mb-4">
     <header class="mb-3">
-        <?php if (getConfig('page.category')) : ?>
+        <?php if (getConfig('page.category') && $category) : ?>
             <h5 class="category mb-2">
                 <?= $this->Html->link($category->get('title'), $category->get('url')) ?>
             </h5>

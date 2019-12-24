@@ -64,9 +64,7 @@ class PagesController extends AppController
 
         if ($static) {
             $page = new Entity([
-                'category' => new Entity(['slug' => null, 'title' => null]),
                 'title' => StaticPage::getTitle($slug),
-                'subtitle' => null,
                 'url' => Router::url(['_name' => 'page', $slug], true),
             ] + compact('slug'));
 
