@@ -99,7 +99,6 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
         $this->Table->{$this->associatedTable}->deleteAll(['id IS NOT' => null]);
         $this->get($this->url + ['action' => 'index']);
         $this->assertRedirect(['controller' => $this->parentController, 'action' => 'index']);
-        $this->assertRegExp('/^You must first create an?/', $this->_requestSession->read('Flash.flash.0.message'));
     }
 
     /**

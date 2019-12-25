@@ -35,10 +35,10 @@ class UsersController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null|void
+     * @return \Cake\Http\Response|null
      * @uses \MeCms\Model\Table\UsersGroupsTable::getList()
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): ?Response
     {
         $result = parent::beforeFilter($event);
         if ($result) {
@@ -55,6 +55,8 @@ class UsersController extends AppController
 
             $this->set(compact('groups'));
         }
+
+        return null;
     }
 
     /**

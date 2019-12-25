@@ -31,10 +31,10 @@ class PagesCategoriesController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Network\Response|null
      * @uses \MeCms\Model\Table\PagesCategoriesTable::getTreeList()
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): ?Response
     {
         $result = parent::beforeFilter($event);
         if ($result) {
@@ -44,6 +44,8 @@ class PagesCategoriesController extends AppController
         if ($this->getRequest()->isAction(['add', 'edit'])) {
             $this->set('categories', $this->PagesCategories->getTreeList());
         }
+
+        return null;
     }
 
     /**

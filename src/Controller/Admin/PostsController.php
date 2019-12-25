@@ -32,13 +32,13 @@ class PostsController extends AppController
      * Called before the controller action.
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null|void
+     * @return \Cake\Http\Response|null
      * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
      * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      * @uses \MeCms\Model\Table\UsersTable::getActiveList()
      * @uses \MeCms\Model\Table\UsersTable::getList()
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): ?Response
     {
         $result = parent::beforeFilter($event);
         if ($result) {
@@ -69,6 +69,8 @@ class PostsController extends AppController
         }
 
         $this->set(compact('categories', 'users'));
+
+        return null;
     }
 
     /**

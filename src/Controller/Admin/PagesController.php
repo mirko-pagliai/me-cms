@@ -33,13 +33,13 @@ class PagesController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null|void
+     * @return \Cake\Http\Response|null
      * @uses \MeCms\Model\Table\PagesCategoriesTable::getList()
      * @uses \MeCms\Model\Table\PagesCategoriesTable::getTreeList()
      * @uses \MeCms\Model\Table\UsersTable::getActiveList()
      * @uses \MeCms\Model\Table\UsersTable::getList()
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): ?Response
     {
         $result = parent::beforeFilter($event);
         if ($result) {
@@ -48,7 +48,7 @@ class PagesController extends AppController
 
         //Returns for `indexStatics` action
         if ($this->getRequest()->isAction('indexStatics')) {
-            return;
+            return null;
         }
 
         $methodToCall = $this->getRequest()->isAction(['add', 'edit']) ? 'getTreeList' : 'getList';
@@ -60,6 +60,8 @@ class PagesController extends AppController
         }
 
         $this->set(compact('categories'));
+
+        return null;
     }
 
     /**

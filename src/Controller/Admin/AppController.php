@@ -43,6 +43,8 @@ abstract class AppController extends BaseAppController
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.records');
 
         $this->Auth->deny();
+
+        return null;
     }
 
     /**
