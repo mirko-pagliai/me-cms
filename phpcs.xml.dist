@@ -5,5 +5,18 @@
 
     <rule ref="./vendor/mirko-pagliai/php-tools/sniffer-ruleset.xml"/>
 
+    <rule ref="PSR2.Methods.FunctionCallSignature.CloseBracketLine">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PSR2.Methods.FunctionCallSignature.Indent">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaFunctionCall">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace.UseFromSameNamespace">
+        <severity>0</severity>
+    </rule>
+
     <exclude-pattern>/config/Migrations</exclude-pattern>
 </ruleset>

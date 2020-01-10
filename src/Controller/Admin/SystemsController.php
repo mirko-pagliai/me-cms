@@ -116,7 +116,7 @@ class SystemsController extends AppController
         //If a changelog file has been specified
         if ($this->getRequest()->getQuery('file')) {
             $file = $files[$this->getRequest()->getQuery('file')];
-            $file = (new FileSystem())->isAbsolutePath($file) ? $file : add_slash_term(ROOT) . $file;
+            $file = (new Filesystem())->isAbsolutePath($file) ? $file : add_slash_term(ROOT) . $file;
             $converter = new CommonMarkConverter([
                 'html_input' => 'strip',
                 'allow_unsafe_links' => false,
