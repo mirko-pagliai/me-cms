@@ -109,9 +109,6 @@ if (!getenv('db_dsn')) {
 ConnectionManager::setConfig('test', ['url' => getenv('db_dsn')]);
 echo 'Running tests for "' . ConnectionManager::getConfig('test')['scheme'] . '" driver ' . PHP_EOL;
 
-//This adds `apache_get_modules()` and `apache_get_version()` functions
-require_once VENDOR . 'mirko-pagliai' . DS . 'php-tools' . DS . 'tests' . DS . 'apache_functions.php';
-
 Configure::write('DatabaseBackup', ['connection' => 'test', 'target' => TMP . 'backups']);
 Configure::write('Tokens.usersClassOptions', ['foreignKey' => 'user_id', 'className' => 'Users']);
 define('THUMBER_DRIVER', 'gd');
@@ -143,6 +140,8 @@ function create_kcfinder_files($htaccess = true)
     @create_file(KCFINDER . 'browse.php', '@version 3.12');
     $htaccess ? @create_file(KCFINDER . '.htaccess') : null;
 }
+
+require_once TESTS . 'apache_functions.php';
 
 Configure::write('Assets.target', TMP . 'assets');
 Configure::write('pluginsToLoad', ['MeTools', 'MeCms']);
