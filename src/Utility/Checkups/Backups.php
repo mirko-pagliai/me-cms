@@ -15,7 +15,7 @@
 
 namespace MeCms\Utility\Checkups;
 
-use DatabaseBackup\Utility\BackupManager;
+use Cake\Core\Configure;
 use MeCms\Utility\Checkups\AbstractCheckup;
 
 /**
@@ -32,8 +32,6 @@ class Backups extends AbstractCheckup
      */
     public function isWriteable(array $paths = [])
     {
-        $paths = $paths ?: (array)(new BackupManager())->getTarget();
-
-        return parent::isWriteable($paths);
+        return parent::isWriteable($paths ?: [Configure::read('DatabaseBackup.target')]);
     }
 }
