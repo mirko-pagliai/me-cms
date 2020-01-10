@@ -90,7 +90,8 @@ class ViewTest extends TestCase
         //If this is the homepage, it only returns the main title from the
         //  configuration, even if you have set another
         $this->View = new View();
-        $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
+        $request = $this->View->getRequest()->withEnv('REQUEST_URI', '/')->withParam('controller', 'Posts')->withParam('action', 'index');
+        $this->View->setRequest($request);
         $this->assertEquals($getTitleForLayoutMethod(), $mainTitle);
     }
 
