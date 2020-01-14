@@ -34,7 +34,7 @@ class SystemsController extends AppController
      */
     public function acceptCookies(): ?Response
     {
-        $cookie = (new Cookie('cookies-policy', true))->withNeverExpire();
+        $cookie = (new Cookie('cookies-policy', '1'))->withNeverExpire();
         $this->setResponse($this->getResponse()->withCookie($cookie));
 
         return $this->redirect($this->referer(['_name' => 'homepage'], true));

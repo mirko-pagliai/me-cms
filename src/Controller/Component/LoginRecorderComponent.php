@@ -115,7 +115,7 @@ class LoginRecorderComponent extends Component
 
         //Adds the current request, takes only a specified number of records and writes
         return $this->getFileArray()->prepend(new Entity($current + ['time' => new Time()]))
-            ->take(getConfig('users.login_log'))
+            ->take((int)getConfig('users.login_log'))
             ->write();
     }
 }

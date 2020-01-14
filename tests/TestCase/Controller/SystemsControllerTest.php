@@ -53,7 +53,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->get(['_name' => 'acceptCookies']);
         $this->assertRedirect(['_name' => 'homepage']);
         $expires = Time::createFromTimestamp($this->_response->getCookie('cookies-policy')['expires']);
-        $this->assertCookie(true, 'cookies-policy');
+        $this->assertCookie('1', 'cookies-policy');
         $this->assertTrue($expires->isWithinNext(Chronos::createFromDate(2038, 1, 1)));
     }
 
