@@ -24,7 +24,7 @@ declare(strict_types=1);
 
         echo $this->Html->css([
             'https://fonts.googleapis.com/css?family=Roboto|Abel',
-            '/vendor/font-awesome/css/all',
+            '/vendor/font-awesome/css/all.min',
         ], ['block' => true]);
         echo $this->Asset->css([
             '/vendor/bootstrap/css/bootstrap.min',
