@@ -24,11 +24,6 @@ ini_set('intl.default_locale', 'en_US');
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
-if (!defined('DS')) {
-    define('DS', DIRECTORY_SEPARATOR);
-}
-
-// Path constants to a few helpful things.
 define('ROOT', dirname(__DIR__) . DS);
 define('VENDOR', ROOT . 'vendor' . DS);
 define('CORE_PATH', VENDOR . 'cakephp' . DS . 'cakephp' . DS);
@@ -46,7 +41,6 @@ define('LOGS', TMP . 'log' . DS);
 define('SESSIONS', TMP . 'sessions' . DS);
 define('UPLOADED', WWW_ROOT . 'files' . DS);
 define('LOGIN_RECORDS', TMP . 'login' . DS);
-
 @mkdir(TMP);
 @mkdir(LOGS);
 @mkdir(SESSIONS);
@@ -58,6 +52,8 @@ define('LOGIN_RECORDS', TMP . 'login' . DS);
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once CORE_PATH . 'config' . DS . 'bootstrap.php';
 require_once ROOT . 'config' . DS . 'constants.php';
+//This adds `apache_get_modules()` and `apache_get_version()` functions
+require_once VENDOR . 'mirko-pagliai' . DS . 'php-tools' . DS . 'tests' . DS . 'apache_functions.php';
 
 Configure::write('debug', true);
 Configure::write('App', [
@@ -81,6 +77,11 @@ Configure::write('App', [
     ],
 ]);
 Configure::write('Session', ['defaults' => 'php']);
+Configure::write('Assets.target', TMP . 'assets');
+Configure::write('DatabaseBackup', ['connection' => 'test', 'target' => TMP . 'backups']);
+Configure::write('Tokens.usersClassOptions', ['foreignKey' => 'user_id', 'className' => 'Users']);
+Configure::write('pluginsToLoad', ['MeTools', 'MeCms']);
+define('THUMBER_DRIVER', 'gd');
 
 Cache::setConfig([
     '_cake_core_' => [
@@ -100,25 +101,14 @@ Cache::setConfig([
     ],
 ]);
 
-//Ensure default test connection is defined
 if (!getenv('db_dsn')) {
     putenv('db_dsn=mysql://travis@localhost/test');
-
     if (getenv('db_driver') == 'postgres') {
         putenv('db_dsn=postgres://postgres@localhost/travis_ci_test');
     }
 }
 ConnectionManager::setConfig('test', ['url' => getenv('db_dsn')]);
-echo 'Running tests for "' . ConnectionManager::getConfig('test')['scheme'] . '" driver ' . PHP_EOL;
 
-//This adds `apache_get_modules()` and `apache_get_version()` functions
-require_once VENDOR . 'mirko-pagliai' . DS . 'php-tools' . DS . 'tests' . DS . 'apache_functions.php';
-
-Configure::write('DatabaseBackup', ['connection' => 'test', 'target' => TMP . 'backups']);
-Configure::write('Tokens.usersClassOptions', ['foreignKey' => 'user_id', 'className' => 'Users']);
-define('THUMBER_DRIVER', 'gd');
-
-//Sets debug and serialized logs
 Log::setConfig('debug', [
     'className' => 'File',
     'path' => LOGS,
@@ -146,7 +136,6 @@ function create_kcfinder_files($htaccess = true)
     $htaccess ? @create_file(KCFINDER . '.htaccess') : null;
 }
 
-Configure::write('Assets.target', TMP . 'assets');
-Configure::write('pluginsToLoad', ['MeTools', 'MeCms']);
-
 $_SERVER['PHP_SELF'] = '/';
+
+echo 'Running tests for "' . ConnectionManager::getConfig('test')['scheme'] . '" driver ' . PHP_EOL;
