@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -14,37 +15,13 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\View\Helper;
 
-use MeTools\TestSuite\HelperTestCase;
-use MeTools\View\Helper\HtmlHelper;
+use MeCms\TestSuite\MenuHelperTestCase;
 
 /**
  * MenuHelperTest class
  */
-class MenuHelperTest extends HelperTestCase
+class MenuHelperTest extends MenuHelperTestCase
 {
-    /**
-     * Internal method to write auth data on session
-     * @param array $data Data you want to write
-     * @return void
-     */
-    protected function writeAuthOnSession(array $data = [])
-    {
-        $this->Helper->getView()->getRequest()->getSession()->write('Auth.User', $data);
-        $this->Helper->Auth->initialize([]);
-    }
-
-    /**
-     * Internal method to build links
-     * @param array $links Links
-     * @return string
-     */
-    protected function buildLinks(array $links): string
-    {
-        return implode(PHP_EOL, array_map(function (array $link) {
-            return call_user_func_array([$this->getMockForHelper(HtmlHelper::class, null), 'link'], $link);
-        }, $links));
-    }
-
     /**
      * Tests for `posts()` method
      * @test
@@ -52,7 +29,6 @@ class MenuHelperTest extends HelperTestCase
     public function testPosts()
     {
         [$links,,, $handledControllers] = $this->Helper->posts();
-        $links = $this->buildLinks($links);
         $this->assertNotEmpty($links);
         $this->assertTextNotContains('List categories', $links);
         $this->assertTextNotContains('Add category', $links);
@@ -61,7 +37,6 @@ class MenuHelperTest extends HelperTestCase
         foreach (['manager', 'admin'] as $name) {
             $this->writeAuthOnSession(['group' => compact('name')]);
             [$links] = $this->Helper->posts();
-            $links = $this->buildLinks($links);
             $this->assertTextContains('List categories', $links);
             $this->assertTextContains('Add category', $links);
         }
@@ -74,7 +49,6 @@ class MenuHelperTest extends HelperTestCase
     public function testPages()
     {
         [$links,,, $handledControllers] = $this->Helper->pages();
-        $links = $this->buildLinks($links);
         $this->assertNotEmpty($links);
         $this->assertTextNotContains('List categories', $links);
         $this->assertTextNotContains('Add category', $links);
@@ -83,7 +57,6 @@ class MenuHelperTest extends HelperTestCase
         foreach (['manager', 'admin'] as $name) {
             $this->writeAuthOnSession(['group' => compact('name')]);
             [$links] = $this->Helper->pages();
-            $links = $this->buildLinks($links);
             $this->assertTextContains('List categories', $links);
             $this->assertTextContains('Add category', $links);
         }
@@ -96,7 +69,7 @@ class MenuHelperTest extends HelperTestCase
     public function testPhotos()
     {
         [$links,,, $handledControllers] = $this->Helper->photos();
-        $this->assertNotEmpty($this->buildLinks($links));
+        $this->assertNotEmpty($links);
         $this->assertEquals(['Photos', 'PhotosAlbums'], $handledControllers);
     }
 
@@ -110,7 +83,6 @@ class MenuHelperTest extends HelperTestCase
 
         $this->writeAuthOnSession(['group' => ['name' => 'manager']]);
         [$links,,, $handledControllers] = $this->Helper->banners();
-        $links = $this->buildLinks($links);
         $this->assertNotEmpty($links);
         $this->assertTextNotContains('List positions', $links);
         $this->assertTextNotContains('Add position', $links);
@@ -118,7 +90,6 @@ class MenuHelperTest extends HelperTestCase
 
         $this->writeAuthOnSession(['group' => ['name' => 'admin']]);
         [$links] = $this->Helper->banners();
-        $links = $this->buildLinks($links);
         $this->assertTextContains('List positions', $links);
         $this->assertTextContains('Add position', $links);
     }
@@ -133,7 +104,6 @@ class MenuHelperTest extends HelperTestCase
 
         $this->writeAuthOnSession(['group' => ['name' => 'manager']]);
         [$links,,, $handledControllers] = $this->Helper->users();
-        $links = $this->buildLinks($links);
         $this->assertNotEmpty($links);
         $this->assertTextNotContains('List groups', $links);
         $this->assertTextNotContains('Add group', $links);
@@ -141,7 +111,6 @@ class MenuHelperTest extends HelperTestCase
 
         $this->writeAuthOnSession(['group' => ['name' => 'admin']]);
         [$links] = $this->Helper->users();
-        $links = $this->buildLinks($links);
         $this->assertTextContains('List groups', $links);
         $this->assertTextContains('Add group', $links);
     }
@@ -159,7 +128,7 @@ class MenuHelperTest extends HelperTestCase
 
         $this->writeAuthOnSession(['group' => ['name' => 'admin']]);
         [$links,,, $handledControllers] = $this->Helper->backups();
-        $this->assertNotEmpty($this->buildLinks($links));
+        $this->assertNotEmpty($links);
         $this->assertEquals(['Backups'], $handledControllers);
     }
 
@@ -173,13 +142,12 @@ class MenuHelperTest extends HelperTestCase
 
         $this->writeAuthOnSession(['group' => ['name' => 'manager']]);
         [$links,,, $handledControllers] = $this->Helper->systems();
-        $links = $this->buildLinks($links);
         $this->assertNotEmpty($links);
         $this->assertTextNotContains('Log management', $links);
         $this->assertEquals(['Logs', 'Systems'], $handledControllers);
 
         $this->writeAuthOnSession(['group' => ['name' => 'admin']]);
         [$links] = $this->Helper->systems();
-        $this->assertTextContains('Log management', $this->buildLinks($links));
+        $this->assertTextContains('Log management', $links);
     }
 }
