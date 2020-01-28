@@ -31,19 +31,15 @@ class WidgetHelper extends Helper
     protected function getAll(): array
     {
         $widgets = getConfig('Widgets.general', []);
-
-        if ($this->getView()->getRequest()->isUrl(['_name' => 'homepage']) && getConfig('Widgets.homepage')) {
-            $widgets = getConfig('Widgets.homepage');
+        $widgetsHomepage = getConfig('Widgets.homepage');
+        if ($this->getView()->getRequest()->isUrl(['_name' => 'homepage']) && $widgetsHomepage) {
+            $widgets = $widgetsHomepage;
         }
 
         return $widgets ? collection($widgets)->map(function ($args, $name) {
-            if (is_string($name) && is_array($args)) {
-                return [$name => $args];
-            } elseif (is_string($args)) {
-                return [$args => []];
+            if (is_array($args) && !is_string($name)) {
+                [$name, $args] = [array_key_first($args), array_value_first($args)];
             }
-
-            [$name, $args] = [array_key_first($args), array_value_first($args)];
 
             return is_int($name) && is_string($args) ? [$args => []] : [$name => $args];
         })->toList() : [];
