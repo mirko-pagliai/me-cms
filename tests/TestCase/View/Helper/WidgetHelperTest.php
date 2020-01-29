@@ -118,24 +118,27 @@ class WidgetHelperTest extends HelperTestCase
     public function testWidget()
     {
         $cell = $this->Helper->widget('Example');
-        [$action, $args] = array_values($cell->__debugInfo());
-        $this->assertSame('display', $action);
-        $this->assertSame([], $args);
+        $this->assertSame('display', $cell->__debugInfo()['action']);
+        $this->assertSame([], $cell->__debugInfo()['args']);
+        $this->assertNull($cell->viewBuilder()->getPlugin());
         $this->assertSame('display', $cell->viewBuilder()->getTemplate());
         $this->assertInstanceOf(ExampleWidgetsCell::class, $cell);
+        $this->assertSame('An example widget', $cell->render());
 
         $cell = $this->Helper->widget('Example', ['example of value']);
-        [$action, $args] = array_values($cell->__debugInfo());
-        $this->assertSame('display', $action);
-        $this->assertSame([0 => 'example of value'], $args);
+        $this->assertSame('display', $cell->__debugInfo()['action']);
+        $this->assertSame([0 => 'example of value'], $cell->__debugInfo()['args']);
+        $this->assertNull($cell->viewBuilder()->getPlugin());
         $this->assertSame('display', $cell->viewBuilder()->getTemplate());
+        $this->assertSame('An example widget', $cell->render());
 
         //From plugin
         $cell = $this->Helper->widget('TestPlugin.PluginExample');
-        [$action, $args] = array_values($cell->__debugInfo());
-        $this->assertSame('display', $action);
-        $this->assertSame([], $args);
+        $this->assertSame('display', $cell->__debugInfo()['action']);
+        $this->assertSame([], $cell->__debugInfo()['args']);
+        $this->assertSame('TestPlugin', $cell->viewBuilder()->getPlugin());
         $this->assertSame('display', $cell->viewBuilder()->getTemplate());
         $this->assertInstanceOf(PluginExampleWidgetsCell::class, $cell);
+        $this->assertSame('An example widget from a plugin', $cell->render());
     }
 }
