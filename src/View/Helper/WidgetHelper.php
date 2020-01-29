@@ -75,7 +75,7 @@ class WidgetHelper extends Helper
     {
         $parts = explode('::', $name);
         $name = $parts[0] . 'Widgets';
-        $name = empty($parts[1]) ? $name : sprintf('%s::%s', $name, $parts[1]);
+        $name .= empty($parts[1]) ? '' : '::' . $parts[1];
 
         return $this->getView()->cell($name, $data, $options);
     }
