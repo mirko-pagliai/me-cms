@@ -29,7 +29,7 @@ $user = $post->get('user');
         ?>
 
         <div class="media-body">
-            <?php if (getConfig('post.category')) : ?>
+            <?php if (getConfig('post.category') && $category) : ?>
                 <h5 class="category mb-2">
                     <?= $this->Html->link($category->get('title'), $category->get('url')) ?>
                 </h5>

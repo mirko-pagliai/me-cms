@@ -46,7 +46,7 @@ class StaticPage
             return [Plugin::templatePath($plugin) . 'StaticPages' . DS];
         }
 
-        return [APP . 'templates' . DS . 'StaticPages' . DS];
+        return [add_slash_term(ROOT) . 'templates' . DS . 'StaticPages' . DS];
     }
 
     /**
