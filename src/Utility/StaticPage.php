@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace MeCms\Utility;
 
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
 use Cake\ORM\Entity;
@@ -46,7 +47,9 @@ class StaticPage
             return [Plugin::templatePath($plugin) . 'StaticPages' . DS];
         }
 
-        return [add_slash_term(ROOT) . 'templates' . DS . 'StaticPages' . DS];
+        return array_map(function ($path) {
+            return add_slash_term($path) . 'StaticPages' . DS;
+        }, Configure::read('App.paths.templates'));
     }
 
     /**
