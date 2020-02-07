@@ -46,7 +46,7 @@ abstract class AppController extends BaseAppController
 
     /**
      * Called before the controller action
-     * @param \Cake\Event\EventInterface $event An Event instance
+     * @param \Cake\Event\EventInterface $event EventInterface
      * @return \Cake\Http\Response|null|void
      * @uses isSpammer()
      */
