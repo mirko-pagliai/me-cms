@@ -14,7 +14,6 @@
         "dereuromark/cakephp-feed": "^1.1",
         "donatj/phpuseragentparser": "*",
         "enyo/dropzone": "^5.1",
-        "fortawesome/font-awesome": "^5.1",
         "league/commonmark": "^0.18",
         "mirko-pagliai/cakephp-assets": "~1.4.1",
         "mirko-pagliai/cakephp-database-backup": ">=2.6.1 <2.8",
@@ -25,6 +24,7 @@
         "mirko-pagliai/cakephp-tokens": "~1.2",
         "mirko-pagliai/me-tools": "~2.18.14",
         "mirko-pagliai/php-tools": "~1.2.15",
+        "npm-asset/fortawesome--fontawesome-free": "^5.1",
         "npm-asset/js-cookie": "^v2.2",
         "twbs/bootstrap": "^v4.4",
         "wyrihaximus/minify-html": "^1.1"
