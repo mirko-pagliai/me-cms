@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.27 branch
 ### 2.27.7
+* fixed title for admin pages;
 * little fixes.
 
 ### 2.27.6
