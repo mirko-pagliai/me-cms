@@ -42,7 +42,7 @@ trait CheckLastSearchTrait
             if ($id && !empty($lastSearch['id']) && $id === $lastSearch['id']) {
                 return true;
             //Checks if the interval has not yet expired
-            } elseif (($lastSearch['time'] + $interval) > time()) {
+            } elseif ($lastSearch['time'] + $interval > time()) {
                 return false;
             }
         }
