@@ -5,6 +5,10 @@
 * added `MenuHelperTestCase`.
 
 ## 2.27 branch
+### 2.27.7
+* fixed title for admin pages;
+* little fixes.
+
 ### 2.27.6
 * fixed little bug for `Icon` helper;
 * fixed little bug for static pages.
