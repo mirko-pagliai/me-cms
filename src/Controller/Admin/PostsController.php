@@ -141,7 +141,7 @@ class PostsController extends AppController
      */
     public function add()
     {
-        $post = $this->Posts->newEntity([]);
+        $post = $this->Posts->newEmptyEntity();
 
         if ($this->getRequest()->is('post')) {
             $post = $this->Posts->patchEntity($post, $this->getRequest()->getData());

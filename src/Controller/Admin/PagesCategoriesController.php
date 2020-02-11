@@ -89,7 +89,7 @@ class PagesCategoriesController extends AppController
      */
     public function add()
     {
-        $category = $this->PagesCategories->newEntity([]);
+        $category = $this->PagesCategories->newEmptyEntity();
 
         if ($this->getRequest()->is('post')) {
             $category = $this->PagesCategories->patchEntity($category, $this->getRequest()->getData());

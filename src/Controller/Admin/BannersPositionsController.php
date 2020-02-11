@@ -55,7 +55,7 @@ class BannersPositionsController extends AppController
      */
     public function add()
     {
-        $position = $this->BannersPositions->newEntity([]);
+        $position = $this->BannersPositions->newEmptyEntity();
 
         if ($this->getRequest()->is('post')) {
             $position = $this->BannersPositions->patchEntity($position, $this->getRequest()->getData());

@@ -130,7 +130,7 @@ class PagesController extends AppController
      */
     public function add()
     {
-        $page = $this->Pages->newEntity([]);
+        $page = $this->Pages->newEmptyEntity();
 
         if ($this->getRequest()->is('post')) {
             $page = $this->Pages->patchEntity($page, $this->getRequest()->getData());

@@ -34,8 +34,7 @@ class UserTest extends EntityTestCase
     }
 
     /**
-     * Test for fields that cannot be mass assigned using newEntity([]) or
-     *  patchEntity()
+     * Test for fields that cannot be mass assigned
      * @test
      */
     public function testNoAccessibleProperties()

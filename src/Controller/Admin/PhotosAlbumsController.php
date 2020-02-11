@@ -55,7 +55,7 @@ class PhotosAlbumsController extends AppController
      */
     public function add()
     {
-        $album = $this->PhotosAlbums->newEntity([]);
+        $album = $this->PhotosAlbums->newEmptyEntity();
 
         if ($this->getRequest()->is('post')) {
             $album = $this->PhotosAlbums->patchEntity($album, $this->getRequest()->getData());

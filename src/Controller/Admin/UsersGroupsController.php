@@ -55,7 +55,7 @@ class UsersGroupsController extends AppController
      */
     public function add()
     {
-        $group = $this->UsersGroups->newEntity([]);
+        $group = $this->UsersGroups->newEmptyEntity();
 
         if ($this->getRequest()->is('post')) {
             $group = $this->UsersGroups->patchEntity($group, $this->getRequest()->getData());

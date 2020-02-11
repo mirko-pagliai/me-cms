@@ -30,7 +30,7 @@ use Cake\Routing\Router;
 class PhotosAlbum extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity([]) or patchEntity()
+     * Fields that can be mass assigned
      * @var array
      */
     protected $_accessible = [

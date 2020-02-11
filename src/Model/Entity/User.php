@@ -39,7 +39,7 @@ use Symfony\Component\Finder\Finder;
 class User extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity([]) or patchEntity()
+     * Fields that can be mass assigned
      * @var array
      */
     protected $_accessible = [

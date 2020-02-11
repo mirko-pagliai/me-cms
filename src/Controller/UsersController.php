@@ -348,7 +348,7 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $user = $this->Users->newEntity([]);
+        $user = $this->Users->newEmptyEntity();
 
         if ($this->getRequest()->is('post')) {
             $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
