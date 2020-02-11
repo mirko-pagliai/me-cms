@@ -12,13 +12,11 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
-$title = $this->fetch('title') ? $this->fetch('title') : $this->get('title');
 ?>
 
 <div class="index">
     <?php
-    echo $this->Html->h2($title);
+    echo $this->Html->h2($this->fetch('title') ? $this->fetch('title') : $this->get('title'));
 
     if ($this->fetch('actions')) {
         echo $this->fetch('actions');

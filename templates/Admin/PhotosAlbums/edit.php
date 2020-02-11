@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Admin/common/form');
+$this->extend('/common/form');
 $this->assign('title', $title = __d('me_cms', 'Edit photos album'));
 $this->Library->slugify();
 ?>

@@ -12,20 +12,15 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-if (trim($this->fetch('class'))) {
-    $class = sprintf('widget %s', trim($this->fetch('class')));
-} else {
-    $class = 'widget';
-}
+
+$class = trim($this->fetch('class')) ? sprintf('widget %s', trim($this->fetch('class'))) : 'widget';
 ?>
 
 <?php if (trim($this->fetch('content'))) : ?>
 <div class="<?= $class ?> mb-4">
-    <?php
-    if (trim($this->fetch('title'))) {
-        echo $this->Html->h4(trim($this->fetch('title')), ['class' => 'widget-title']);
-    }
-    ?>
+    <?php if(trim($this->fetch('title'))): ?>
+    <h4 class="widget-title"><?= trim($this->fetch('title')) ?></h4>
+    <?php endif; ?>
 
     <div class="widget-content">
         <?= trim($this->fetch('content')) ?>
