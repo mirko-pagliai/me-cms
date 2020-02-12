@@ -18,7 +18,7 @@ $class = trim($this->fetch('class')) ? sprintf('widget %s', trim($this->fetch('c
 
 <?php if (trim($this->fetch('content'))) : ?>
 <div class="<?= $class ?> mb-4">
-    <?php if(trim($this->fetch('title'))): ?>
+    <?php if(trim($this->fetch('title'))) : ?>
     <h4 class="widget-title"><?= trim($this->fetch('title')) ?></h4>
     <?php endif; ?>
 
