@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -33,7 +33,7 @@ class Apache extends AbstractCheckup
      * @return array
      * @uses $modulesToCheck
      */
-    public function modules()
+    public function modules(): array
     {
         $modules = [];
 
@@ -48,7 +48,7 @@ class Apache extends AbstractCheckup
      * Returns the version of Apache
      * @return string
      */
-    public function version()
+    public function version(): string
     {
         $version = apache_get_version();
 

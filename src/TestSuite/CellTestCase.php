@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -44,7 +44,7 @@ abstract class CellTestCase extends TestCase
      * @uses $autoInitializeClass
      * @uses $cacheToClear
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -54,6 +54,9 @@ abstract class CellTestCase extends TestCase
                 ->setConstructorArgs([new View()])
                 ->getMock();
         }
+
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Widget->getView()->setRequest($request);
 
         if (!$this->Table && $this->autoInitializeClass) {
             $alias = substr(get_class_short_name($this), 0, strlen(get_class_short_name($this)) - 15);

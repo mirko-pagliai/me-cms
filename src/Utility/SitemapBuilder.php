@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -29,7 +29,7 @@ class SitemapBuilder
      * @param string $plugin Plugin
      * @return array Array with classes and methods names
      */
-    protected static function getMethods($plugin)
+    protected static function getMethods(string $plugin): array
     {
         //Sets the class name
         $class = App::classname($plugin . '.Sitemap', 'Utility');
@@ -47,7 +47,7 @@ class SitemapBuilder
      * @return array
      * @see Cake\Routing\Router::url()
      */
-    protected static function parse($url, array $options = [])
+    protected static function parse($url, array $options = []): array
     {
         if (!empty($options['lastmod']) && !is_string($options['lastmod'])) {
             $options['lastmod'] = $options['lastmod']->format('c');
@@ -67,7 +67,7 @@ class SitemapBuilder
      * @uses getMethods()
      * @uses parse()
      */
-    public static function generate()
+    public static function generate(): string
     {
         //Adds the homepage
         $url[] = self::parse('/');

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -31,7 +31,7 @@ class UsersCommand extends Command
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
      * @return \Cake\Console\ConsoleOptionParser
      */
-    protected function buildOptionParser(ConsoleOptionParser $parser)
+    protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
         return $parser->setDescription(__d('me_cms', 'Lists users'));
     }
@@ -40,7 +40,7 @@ class UsersCommand extends Command
      * Internal method to get formatted users data rows
      * @return array
      */
-    protected function getUsersRows()
+    protected function getUsersRows(): array
     {
         return $this->Users->find()
             ->contain('Groups')
@@ -56,12 +56,12 @@ class UsersCommand extends Command
                 }
 
                 return [
-                    $user->get('id'),
+                    (string)$user->get('id'),
                     $user->get('username'),
-                    $user->get('group.label') ?: $user->get('group'),
+                    $user->get('group')->get('label') ?: $user->get('group'),
                     $user->get('full_name'),
                     $user->get('email'),
-                    $user->get('post_count'),
+                    (string)$user->get('post_count'),
                     $status,
                     $created,
                 ];
@@ -76,7 +76,7 @@ class UsersCommand extends Command
      * @return int|null The exit code or null for success
      * @uses getUsersRows()
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $this->loadModel('MeCms.Users');
 

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -44,7 +44,7 @@ class LoginRecorderComponent extends Component
      * Internal method to get the client ip
      * @return string The client IP
      */
-    protected function getClientIp()
+    protected function getClientIp(): string
     {
         $ip = $this->getController()->getRequest()->clientIp();
 
@@ -57,7 +57,7 @@ class LoginRecorderComponent extends Component
      * @throws \InvalidArgumentException
      * @uses $FileArray
      */
-    public function getFileArray()
+    public function getFileArray(): FileArray
     {
         if (!$this->FileArray) {
             $user = $this->getConfig('user');
@@ -75,7 +75,7 @@ class LoginRecorderComponent extends Component
      * @return array
      * @see https://github.com/donatj/PhpUserAgent
      */
-    protected function getUserAgent($userAgent = null)
+    protected function getUserAgent(?string $userAgent = null): array
     {
         return parse_user_agent($userAgent);
     }
@@ -85,7 +85,7 @@ class LoginRecorderComponent extends Component
      * @return array
      * @uses getFileArray()
      */
-    public function read()
+    public function read(): array
     {
         return $this->getFileArray()->read();
     }
@@ -97,7 +97,7 @@ class LoginRecorderComponent extends Component
      * @uses getFileArray()
      * @uses getUserAgent()
      */
-    public function write()
+    public function write(): bool
     {
         $current = $this->getUserAgent() + [
             'agent' => filter_input(INPUT_SERVER, 'HTTP_USER_AGENT'),
@@ -115,7 +115,7 @@ class LoginRecorderComponent extends Component
 
         //Adds the current request, takes only a specified number of records and writes
         return $this->getFileArray()->prepend(new Entity($current + ['time' => new Time()]))
-            ->take(getConfig('users.login_log'))
+            ->take((int)getConfig('users.login_log'))
             ->write();
     }
 }

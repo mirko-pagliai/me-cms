@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -42,7 +42,7 @@ class PagesControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'page', 'first-page']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Pages' . DS . 'view.ctp');
+        $this->assertTemplate('Pages' . DS . 'view.php');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
         $cache = Cache::read('view_' . md5('first-page'), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('page'), $cache->first());
@@ -59,7 +59,7 @@ class PagesControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page');
-        $this->assertTemplate('StaticPages' . DS . $slug . '.ctp');
+        $this->assertTemplate('StaticPages' . DS . $slug . '.php');
         $this->assertInstanceof(Entity::class, $this->viewVariable('page'));
         $this->assertEquals([
             'title' => 'Page From App',
@@ -77,7 +77,7 @@ class PagesControllerTest extends ControllerTestCase
         $this->get(['_name' => 'page', 'test-from-plugin']);
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page from a plugin');
-        $this->assertTemplate('Plugin' . DS . 'TestPlugin' . DS . 'src' . DS . 'Template' . DS . 'StaticPages' . DS . 'test-from-plugin.ctp');
+        $this->assertTemplate('Plugin' . DS . 'TestPlugin' . DS . 'templates' . DS . 'StaticPages' . DS . 'test-from-plugin.php');
     }
 
     /**
@@ -89,7 +89,7 @@ class PagesControllerTest extends ControllerTestCase
         $this->setUserGroup('user');
         $this->get(['_name' => 'pagesPreview', 'disabled-page']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Pages' . DS . 'view.ctp');
+        $this->assertTemplate('Pages' . DS . 'view.php');
         $this->assertInstanceof(Page::class, $this->viewVariable('page'));
     }
 }

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -31,11 +31,10 @@ class AdminView extends View
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
-        //Loads helpers
         $this->loadHelper('MeCms.MenuBuilder');
     }
 
@@ -43,10 +42,9 @@ class AdminView extends View
      * Renders view for given template file and layout
      * @param string|null $view Name of view file to use
      * @param string|null $layout Layout to use
-     * @return string|null Rendered content or null if content already rendered
-     *  and returned earlier
+     * @return string Rendered content
      */
-    public function render($view = null, $layout = null)
+    public function render($view = null, $layout = null): string
     {
         //Sets some view vars
         $this->set('priorities', [

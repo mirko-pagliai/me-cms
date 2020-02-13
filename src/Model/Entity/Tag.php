@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -30,7 +30,7 @@ use Cake\Utility\Text;
 class Tag extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned
      * @var array
      */
     protected $_accessible = [
@@ -51,7 +51,7 @@ class Tag extends Entity
      * @return string
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getSlug()
+    protected function _getSlug(): ?string
     {
         property_exists_or_fail($this, 'tag');
 
@@ -64,7 +64,7 @@ class Tag extends Entity
      * @since 2.27.2
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getUrl()
+    protected function _getUrl(): string
     {
         property_exists_or_fail($this, 'slug');
 

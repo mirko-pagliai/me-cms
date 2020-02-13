@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -41,7 +41,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'albums']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PhotosAlbums' . DS . 'index.ctp');
+        $this->assertTemplate('PhotosAlbums' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(PhotosAlbum::class, $this->viewVariable('albums'));
         foreach ($this->viewVariable('albums') as $album) {
             $this->assertContainsOnlyInstancesOf(Photo::class, $album->get('photos'));
@@ -50,7 +50,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
         //Comparison between cached variable and view variable occurs after
         //  removing album photos, because they are randomly ordered
         $cache = Cache::read('albums_index', $this->Table->getCacheName());
-        list($cache, $fromView) = array_map(function ($result) {
+        [$cache, $fromView] = array_map(function ($result) {
             return $result->map(function (PhotosAlbum $album) {
                 return $album->set('photos', null);
             });
@@ -73,7 +73,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PhotosAlbums' . DS . 'view.ctp');
+        $this->assertTemplate('PhotosAlbums' . DS . 'view.php');
         $this->assertInstanceof(PhotosAlbum::class, $this->viewVariable('album'));
         $this->assertContainsOnlyInstancesOf(Photo::class, $this->viewVariable('photos'));
         $cache = Cache::read('album_' . md5('test-album'), $this->Table->getCacheName());
@@ -81,7 +81,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
 
         //Sets the cache name
         $cache = sprintf('album_%s_limit_%s_page_%s', md5('test-album'), getConfigOrFail('default.photos'), 1);
-        list($photosFromCache, $pagingFromCache) = array_values(Cache::readMany(
+        [$photosFromCache, $pagingFromCache] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Table->getCacheName()
         ));

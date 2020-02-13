@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -28,7 +28,7 @@ class Webroot extends AbstractCheckup
      * @return array Array with paths as keys and boolean as value
      * @uses isWriteable()
      */
-    public function isWriteable(array $paths = [])
+    public function isWriteable(array $paths = []): array
     {
         $paths = $paths ?: [
             BANNERS,

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -27,7 +27,7 @@ class PhotoTest extends EntityTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -40,8 +40,7 @@ class PhotoTest extends EntityTestCase
     }
 
     /**
-     * Test for fields that cannot be mass assigned using newEntity() or
-     *  patchEntity()
+     * Test for fields that cannot be mass assigned
      * @test
      */
     public function testNoAccessibleProperties()

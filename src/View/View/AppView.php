@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -32,13 +32,13 @@ class AppView extends View
     /**
      * Internal method to set some blocks
      * @return void
-     * @uses $userbar
      * @uses \MeCms\View\View::getTitleForLayout()
      * @uses \MeTools\View\Helper\HtmlHelper::meta()
      * @uses \MeTools\View\Helper\LibraryHelper::analytics()
      * @uses \MeTools\View\Helper\LibraryHelper::shareaholic()
+     * @uses $userbar
      */
-    protected function setBlocks()
+    protected function setBlocks(): void
     {
         //Sets the "theme color" (the toolbar color for some mobile browser)
         if (getConfig('default.toolbar_color')) {
@@ -77,11 +77,10 @@ class AppView extends View
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
-        //Loads helpers
         $this->loadHelper('MeTools.Breadcrumbs');
         $this->loadHelper('RecaptchaMailhide.Mailhide');
         $this->loadHelper('MeCms.Widget');
@@ -93,11 +92,11 @@ class AppView extends View
      * @param string $content Content to render in a view, wrapped by the
      *  surrounding layout
      * @param string|null $layout Layout name
-     * @return mixed Rendered output, or false on error
+     * @return string Rendered output
      * @uses setBlocks()
      * @uses userbar()
      */
-    public function renderLayout($content, $layout = null)
+    public function renderLayout($content, $layout = null): string
     {
         $this->plugin = 'MeCms';
 

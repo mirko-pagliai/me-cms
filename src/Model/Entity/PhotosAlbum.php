@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -30,7 +30,7 @@ use Cake\Routing\Router;
 class PhotosAlbum extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned
      * @var array
      */
     protected $_accessible = [
@@ -51,7 +51,7 @@ class PhotosAlbum extends Entity
      * @return string
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getPath()
+    protected function _getPath(): ?string
     {
         property_exists_or_fail($this, 'id');
 
@@ -64,7 +64,7 @@ class PhotosAlbum extends Entity
      * @since 2.21.1
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getPreview()
+    protected function _getPreview(): ?string
     {
         property_exists_or_fail($this, 'photos');
         $photo = array_value_first($this->get('photos'));
@@ -79,7 +79,7 @@ class PhotosAlbum extends Entity
      * @since 2.27.2
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getUrl()
+    protected function _getUrl(): string
     {
         property_exists_or_fail($this, 'slug');
 

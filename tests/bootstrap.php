@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -18,6 +18,7 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\Mailer\TransportFactory;
+use Cake\Utility\Security;
 use EntityFileLog\Log\Engine\EntityFileLog;
 
 ini_set('intl.default_locale', 'en_US');
@@ -52,8 +53,7 @@ define('LOGIN_RECORDS', TMP . 'login' . DS);
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once CORE_PATH . 'config' . DS . 'bootstrap.php';
 require_once ROOT . 'config' . DS . 'constants.php';
-//This adds `apache_get_modules()` and `apache_get_version()` functions
-require_once VENDOR . 'mirko-pagliai' . DS . 'php-tools' . DS . 'tests' . DS . 'apache_functions.php';
+require_once TESTS . 'apache_functions.php';
 
 Configure::write('debug', true);
 Configure::write('App', [
@@ -70,10 +70,7 @@ Configure::write('App', [
     'cssBaseUrl' => 'css/',
     'paths' => [
         'plugins' => [APP . 'Plugin' . DS],
-        'templates' => [
-            APP . 'Template' . DS,
-            ROOT . 'src' . DS . 'Template' . DS,
-        ],
+        'templates' => [APP . 'templates' . DS],
     ],
 ]);
 Configure::write('Session', ['defaults' => 'php']);
@@ -81,6 +78,7 @@ Configure::write('Assets.target', TMP . 'assets');
 Configure::write('DatabaseBackup', ['connection' => 'test', 'target' => TMP . 'backups']);
 Configure::write('Tokens.usersClassOptions', ['foreignKey' => 'user_id', 'className' => 'Users']);
 Configure::write('pluginsToLoad', ['MeTools', 'MeCms']);
+Security::setSalt('a-long-but-not-random-value');
 define('THUMBER_DRIVER', 'gd');
 
 Cache::setConfig([

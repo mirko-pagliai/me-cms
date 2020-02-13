@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -27,6 +27,7 @@ class Query extends BaseQuery
 {
     use QueryTrait {
         cache as protected _cache;
+        __call as private _call;
     }
 
     /**

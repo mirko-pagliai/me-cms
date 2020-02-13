@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -30,7 +30,7 @@ class PostsCategoriesController extends AppController
      * Lists posts categories
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $categories = $this->PostsCategories->find('active')
             ->select(['title', 'slug'])
@@ -43,10 +43,10 @@ class PostsCategoriesController extends AppController
     /**
      * Lists posts for a category
      * @param string $slug Category slug
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException
      */
-    public function view($slug)
+    public function view(string $slug)
     {
         //The category can be passed as query string, from a widget
         if ($this->getRequest()->getQuery('q')) {
@@ -59,7 +59,7 @@ class PostsCategoriesController extends AppController
         $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(Cache::readMany(
+        [$posts, $paging] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->PostsCategories->getCacheName()
         ));
@@ -74,7 +74,7 @@ class PostsCategoriesController extends AppController
 
             is_true_or_fail(!$query->isEmpty(), I18N_NOT_FOUND, RecordNotFoundException::class);
 
-            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
+            [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
             Cache::writeMany([
                 $cache => $posts,

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -29,13 +29,13 @@ class MailerTest extends TestCase
     public function testConstruct()
     {
         $mailer = $this->getMockBuilder(Mailer::class)
-            ->setMethods(null)
+            ->setMethods([])
             ->getMockForAbstractClass();
 
         $this->assertEquals(['MeTools.Html'], $mailer->viewBuilder()->getHelpers());
         $this->assertEquals(['email@example.com' => 'MeCms'], $mailer->getSender());
         $this->assertEquals(['email@example.com' => 'MeCms'], $mailer->getFrom());
         $this->assertEquals('html', $mailer->getEmailFormat());
-        $this->assertEquals([], $mailer->getViewVars());
+        $this->assertEquals([], $mailer->getRenderer()->viewBuilder()->getVars());
     }
 }

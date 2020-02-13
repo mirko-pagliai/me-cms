@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,6 +15,7 @@
 namespace MeCms\Controller\Admin;
 
 use Cake\Cache\Cache;
+use Cake\Http\Response;
 use Cake\ORM\Entity;
 use DatabaseBackup\Utility\BackupImport;
 use DatabaseBackup\Utility\BackupManager;
@@ -23,6 +24,7 @@ use MeCms\Form\BackupForm;
 
 /**
  * Backups controller
+ * @see \DatabaseBackup\Utility\BackupManager
  */
 class BackupsController extends AppController
 {
@@ -38,12 +40,11 @@ class BackupsController extends AppController
 
     /**
      * Check if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admins can access this controller
         return $this->Auth->isGroup('admin');
@@ -53,7 +54,7 @@ class BackupsController extends AppController
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -68,7 +69,7 @@ class BackupsController extends AppController
      * @return string
      * @since 2.18.3
      */
-    protected function getFilename($filename)
+    protected function getFilename(string $filename): string
     {
         return getConfigOrFail('DatabaseBackup.target') . DS . urldecode($filename);
     }
@@ -78,7 +79,7 @@ class BackupsController extends AppController
      * @return void
      * @uses $BackupManager
      */
-    public function index()
+    public function index(): void
     {
         $backups = $this->BackupManager->index()->map(function (Entity $backup) {
             return $backup->set('slug', urlencode($backup->get('filename')));
@@ -89,7 +90,7 @@ class BackupsController extends AppController
 
     /**
      * Adds a backup file
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      * @see \MeCms\Form\BackupForm
      */
     public function add()
@@ -112,11 +113,11 @@ class BackupsController extends AppController
     /**
      * Internal method to delete backup files
      * @param string|null $filename  Backup filename or `null` to delete all
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      * @uses getFilename()
      * @uses $BackupManager
      */
-    protected function _delete($filename = null)
+    protected function _delete(?string $filename = null): ?Response
     {
         $this->getRequest()->allowMethod(['post', 'delete']);
         $filename = $filename ? $this->getFilename($filename) : null;
@@ -129,20 +130,20 @@ class BackupsController extends AppController
     /**
      * Deletes a backup file
      * @param string $filename Backup filename
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      * @uses _delete()
      */
-    public function delete($filename)
+    public function delete(string $filename): ?Response
     {
         return $this->_delete($filename);
     }
 
     /**
      * Deletes all backup files
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      * @uses _delete()
      */
-    public function deleteAll()
+    public function deleteAll(): ?Response
     {
         return $this->_delete();
     }
@@ -150,10 +151,10 @@ class BackupsController extends AppController
     /**
      * Downloads a backup file
      * @param string $filename Backup filename
-     * @return \Cake\Network\Response
+     * @return \Cake\Http\Response
      * @uses getFilename()
      */
-    public function download($filename)
+    public function download(string $filename): Response
     {
         return $this->getResponse()->withFile($this->getFilename($filename), ['download' => true]);
     }
@@ -161,11 +162,11 @@ class BackupsController extends AppController
     /**
      * Restores a backup file
      * @param string $filename Backup filename
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      * @uses getFilename()
      * @uses $BackupImport
      */
-    public function restore($filename)
+    public function restore(string $filename): ?Response
     {
         //Imports and clears the cache
         $this->BackupImport->filename($this->getFilename($filename))->import();
@@ -179,12 +180,12 @@ class BackupsController extends AppController
     /**
      * Sends a backup file via mail
      * @param string $filename Backup filename
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      * @since 2.18.3
      * @uses getFilename()
      * @uses $BackupManager
      */
-    public function send($filename)
+    public function send(string $filename): ?Response
     {
         $this->BackupManager->send($this->getFilename($filename), getConfigOrFail('email.webmaster'));
         $this->Flash->success(I18N_OPERATION_OK);

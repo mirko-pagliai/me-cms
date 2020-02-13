@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -123,7 +123,7 @@ class AppValidator extends Validator
         ]);
 
         //Text
-        $this->notEmpty('text', __d('me_cms', 'This field can not be empty'));
+        $this->notEmptyString('text', __d('me_cms', 'This field can not be empty'));
 
         //Priority
         $this->add('priority', [
@@ -164,7 +164,7 @@ class AppValidator extends Validator
      * @param string $value Field value
      * @return bool
      */
-    public function slug($value)
+    public function slug(string $value): bool
     {
         //Lowercase letters, numbers, dash. At least three chars.
         //It must contain at least one letter and must begin and end with a letter or a number.

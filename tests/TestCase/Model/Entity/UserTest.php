@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -25,7 +25,7 @@ class UserTest extends EntityTestCase
      * Called after every test method
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -34,8 +34,7 @@ class UserTest extends EntityTestCase
     }
 
     /**
-     * Test for fields that cannot be mass assigned using newEntity() or
-     *  patchEntity()
+     * Test for fields that cannot be mass assigned
      * @test
      */
     public function testNoAccessibleProperties()

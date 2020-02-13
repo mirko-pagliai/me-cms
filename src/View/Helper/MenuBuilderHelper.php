@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -42,10 +42,10 @@ class MenuBuilderHelper extends Helper
      *  applied to all generated links
      * @return array
      */
-    protected function buildLinks($links, array $options = [])
+    protected function buildLinks(array $links, array $options = []): array
     {
         return array_map(function ($link) use ($options) {
-            list($title, $url) = $link;
+            [$title, $url] = $link;
 
             return $this->Html->link($title, $url, $options);
         }, $links);
@@ -56,7 +56,7 @@ class MenuBuilderHelper extends Helper
      * @param string $plugin Plugin name
      * @return array Menus
      */
-    public function generate($plugin)
+    public function generate(string $plugin): array
     {
         //Gets all valid methods from `$PLUGIN\View\Helper\MenuHelper`
         $methods = get_child_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
@@ -85,7 +85,7 @@ class MenuBuilderHelper extends Helper
                 BadMethodCallException::class
             );
 
-            list($links, $title, $titleOptions, $handledControllers) = $args + [[], [], [], []];
+            [$links, $title, $titleOptions, $handledControllers] = $args + [[], [], [], []];
             $menus[sprintf('%s.%s', $plugin, $method)] = compact('links', 'title', 'titleOptions', 'handledControllers');
         }
 
@@ -100,11 +100,11 @@ class MenuBuilderHelper extends Helper
      * @uses buildLinks()
      * @uses generate()
      */
-    public function renderAsCollapse($plugin, $idContainer = null)
+    public function renderAsCollapse(string $plugin, ?string $idContainer = null): string
     {
         $controller = $this->getView()->getRequest()->getParam('controller');
 
-        return implode(PHP_EOL, array_map(function ($menu) use ($controller, $idContainer) {
+        return implode(PHP_EOL, array_map(function (array $menu) use ($controller, $idContainer) {
             $collapseName = 'collapse-' . strtolower(Text::slug($menu['title']));
             $titleOptions = [
                 'aria-controls' => $collapseName,
@@ -143,9 +143,9 @@ class MenuBuilderHelper extends Helper
      * @uses buildLinks()
      * @uses generate()
      */
-    public function renderAsDropdown($plugin, array $titleOptions = [])
+    public function renderAsDropdown(string $plugin, array $titleOptions = []): array
     {
-        return array_map(function ($menu) use ($titleOptions) {
+        return array_map(function (array $menu) use ($titleOptions) {
             return $this->Dropdown->menu(
                 $menu['title'],
                 $this->buildLinks($menu['links'], ['class' => 'dropdown-item']),

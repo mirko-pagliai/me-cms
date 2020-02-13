@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -32,7 +32,7 @@ trait GetStartAndEndDateTrait
      *  `YYYY/MM` or `YYYY`
      * @return array Array with start and end date as `Time` instances
      */
-    protected function getStartAndEndDate($date)
+    protected function getStartAndEndDate(string $date): array
     {
         $year = $month = $day = null;
 
@@ -40,8 +40,8 @@ trait GetStartAndEndDateTrait
         if (in_array($date, ['today', 'yesterday'])) {
             $start = Time::parse($date);
         } else {
-            list($year, $month, $day) = array_replace([null, null, null], explode('/', $date));
-            $start = Time::now()->setDate($year, $month ?: 1, $day ?: 1);
+            [$year, $month, $day] = array_replace([null, null, null], explode('/', $date));
+            $start = Time::now()->setDate((int)$year, (int)($month ?: 1), (int)($day ?: 1));
         }
 
         $start = $start->setTime(0, 0, 0);

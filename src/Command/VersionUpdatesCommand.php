@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -32,7 +32,7 @@ class VersionUpdatesCommand extends Command
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
      * @return \Cake\Console\ConsoleOptionParser
      */
-    protected function buildOptionParser(ConsoleOptionParser $parser)
+    protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
         return $parser->setDescription(__d(
             'me_cms',
@@ -45,9 +45,9 @@ class VersionUpdatesCommand extends Command
      * @return void
      * @since 2.26.3
      */
-    public function addEnableCommentsField()
+    public function addEnableCommentsField(): void
     {
-        Cache::clear(false, '_cake_model_');
+        Cache::clear('_cake_model_');
 
         foreach (['Pages', 'Posts'] as $tableName) {
             $Table = $this->loadModel('MeCms.' . $tableName);
@@ -66,7 +66,7 @@ class VersionUpdatesCommand extends Command
      * Alter the length of the `tag` column of the `tags` table
      * @return void
      */
-    public function alterTagColumnSize()
+    public function alterTagColumnSize(): void
     {
         $Table = $this->loadModel('MeCms.Tags');
         if ($Table->getSchema()->getColumn('tag')['length'] < 255) {
@@ -84,7 +84,7 @@ class VersionUpdatesCommand extends Command
      * @return void
      * @since 2.26.2
      */
-    public function deleteOldDirectories()
+    public function deleteOldDirectories(): void
     {
         rmdir_recursive(WWW_ROOT . 'fonts');
     }
@@ -98,7 +98,7 @@ class VersionUpdatesCommand extends Command
      * @uses alterTagColumnSize()
      * @uses deleteOldDirectories()
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $this->addEnableCommentsField();
         $this->alterTagColumnSize();

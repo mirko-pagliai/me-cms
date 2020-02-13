@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -26,7 +26,7 @@ use MeTools\Utility\BBCode;
 abstract class PostAndPageEntity extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned
      * @var array
      */
     protected $_accessible = [
@@ -41,7 +41,7 @@ abstract class PostAndPageEntity extends Entity
      * @return string
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getPlainText()
+    protected function _getPlainText(): string
     {
         property_exists_or_fail($this, 'text');
 
@@ -50,13 +50,13 @@ abstract class PostAndPageEntity extends Entity
 
     /**
      * Gets text
-     * @param string $text Text
+     * @param string|null $text Text
      * @return string
      * @since 2.27.2
      */
-    protected function _getText($text)
+    protected function _getText(?string $text): string
     {
-        return (new BBCode())->parser($text);
+        return $text ? (new BBCode())->parser($text) : '';
     }
 
     /**
@@ -64,5 +64,5 @@ abstract class PostAndPageEntity extends Entity
      * @return string
      * @since 2.27.2
      */
-    abstract protected function _getUrl();
+    abstract protected function _getUrl(): string;
 }

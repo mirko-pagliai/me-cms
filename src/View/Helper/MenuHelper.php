@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -46,7 +46,7 @@ class MenuHelper extends Helper
      * Internal function to generate the menu for "posts" actions
      * @return array Array with links, title, title options and handled controllers
      */
-    public function posts()
+    public function posts(): array
     {
         $params = ['controller' => 'Posts', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
         $links[] = [__d('me_cms', 'List posts'), ['action' => 'index'] + $params];
@@ -70,7 +70,7 @@ class MenuHelper extends Helper
      * Internal function to generate the menu for "pages" actions
      * @return array Array with links, title, title options and handled controllers
      */
-    public function pages()
+    public function pages(): array
     {
         $params = ['controller' => 'Pages', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
         $links[] = [__d('me_cms', 'List pages'), ['action' => 'index'] + $params];
@@ -94,7 +94,7 @@ class MenuHelper extends Helper
      * Internal function to generate the menu for "photos" actions
      * @return array Array with links, title, title options and handled controllers
      */
-    public function photos()
+    public function photos(): array
     {
         $params = ['controller' => 'Photos', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
         $links[] = [__d('me_cms', 'List photos'), ['action' => 'index'] + $params];
@@ -111,7 +111,7 @@ class MenuHelper extends Helper
      * Internal function to generate the menu for "banners" actions
      * @return array Array with links, title, title options and handled controllers
      */
-    public function banners()
+    public function banners(): array
     {
         //Only admins and managers can access these controllers
         if (!$this->Auth->isGroup(['admin', 'manager'])) {
@@ -135,7 +135,7 @@ class MenuHelper extends Helper
      * Internal function to generate the menu for "users" actions
      * @return array Array with links, title, title options and handled controllers
      */
-    public function users()
+    public function users(): array
     {
         //Only admins and managers can access this controller
         if (!$this->Auth->isGroup(['admin', 'manager'])) {
@@ -159,7 +159,7 @@ class MenuHelper extends Helper
      * Internal function to generate the menu for "backups" actions
      * @return array Array with links, title, title options and handled controllers
      */
-    public function backups()
+    public function backups(): array
     {
         //Only admins can access this controller
         if (!$this->Auth->isGroup('admin')) {
@@ -177,7 +177,7 @@ class MenuHelper extends Helper
      * Internal function to generate the menu for "systems" actions
      * @return array Array with links, title, title options and handled controllers
      */
-    public function systems()
+    public function systems(): array
     {
         //Only admins and managers can access this controller
         if (!$this->Auth->isGroup(['admin', 'manager'])) {

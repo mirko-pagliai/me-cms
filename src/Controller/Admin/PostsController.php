@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -14,7 +14,8 @@
 
 namespace MeCms\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
+use Cake\Http\Response;
 use Cake\ORM\ResultSet;
 use MeCms\Controller\Admin\AppController;
 use MeCms\Model\Entity\Post;
@@ -29,25 +30,24 @@ class PostsController extends AppController
 {
     /**
      * Called before the controller action.
-     * You can use this method to perform logic that needs to happen before
-     *  each controller action.
-     * @param \Cake\Event\Event $event An Event instance
-     * @return \Cake\Network\Response|null|void
+     *  each controller action
+     * @param \Cake\Event\EventInterface $event An Event instance
+     * @return \Cake\Http\Response|null
      * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
      * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      * @uses \MeCms\Model\Table\UsersTable::getActiveList()
      * @uses \MeCms\Model\Table\UsersTable::getList()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event): ?Response
     {
         $result = parent::beforeFilter($event);
         if ($result) {
             return $result;
         }
 
-        list($categoriesMethod, $usersMethod) = ['getList', 'getList'];
+        [$categoriesMethod, $usersMethod] = ['getList', 'getList'];
         if ($this->getRequest()->isAction(['add', 'edit'])) {
-            list($categoriesMethod, $usersMethod) = ['getTreeList', 'getActiveList'];
+            [$categoriesMethod, $usersMethod] = ['getTreeList', 'getActiveList'];
 
             //Only admins and managers can add and edit posts on behalf of other users
             if ($this->getRequest()->getData() && !$this->Auth->isGroup(['admin', 'manager'])) {
@@ -69,13 +69,15 @@ class PostsController extends AppController
         }
 
         $this->set(compact('categories', 'users'));
+
+        return null;
     }
 
     /**
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -86,13 +88,13 @@ class PostsController extends AppController
 
     /**
      * Check if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
      * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      * @uses \MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         if ($this->Auth->isGroup(['admin', 'manager'])) {
             return true;
@@ -100,9 +102,9 @@ class PostsController extends AppController
 
         //Users can edit only their own post
         if ($this->getRequest()->isEdit()) {
-            list($postId, $userId) = [$this->getRequest()->getParam('pass.0'), $this->Auth->user('id')];
+            [$postId, $userId] = [$this->getRequest()->getParam('pass.0'), $this->Auth->user('id')];
 
-            return $postId && $userId ? $this->Posts->isOwnedBy($postId, $userId) : false;
+            return $postId && $userId ? $this->Posts->isOwnedBy((int)$postId, $userId) : false;
         }
 
         //Only admins and managers can delete posts
@@ -114,7 +116,7 @@ class PostsController extends AppController
      * @return void
      * @uses \MeCms\Model\Table\PostsTable::queryFromFilter()
      */
-    public function index()
+    public function index(): void
     {
         $query = $this->Posts->find()->contain([
             'Categories' => ['fields' => ['id', 'title']],
@@ -134,12 +136,12 @@ class PostsController extends AppController
 
     /**
      * Adds post
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function add()
     {
-        $post = $this->Posts->newEntity();
+        $post = $this->Posts->newEmptyEntity();
 
         if ($this->getRequest()->is('post')) {
             $post = $this->Posts->patchEntity($post, $this->getRequest()->getData());
@@ -161,10 +163,10 @@ class PostsController extends AppController
     /**
      * Edits post
      * @param string $id Post ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         $post = $this->Posts->findById($id)
             ->contain(['Tags' => ['sort' => ['tag' => 'ASC']]])
@@ -195,9 +197,9 @@ class PostsController extends AppController
     /**
      * Deletes post
      * @param string $id Post ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null
      */
-    public function delete($id)
+    public function delete(string $id): ?Response
     {
         $this->getRequest()->allowMethod(['post', 'delete']);
         $this->Posts->deleteOrFail($this->Posts->get($id));

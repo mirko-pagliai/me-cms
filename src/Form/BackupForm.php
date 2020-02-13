@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -10,19 +10,20 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         MeCms\Controller\Admin\BackupsController::add()
  */
 
 namespace MeCms\Form;
 
+use Cake\Form\Form;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\Validation\Validator;
 use DatabaseBackup\Utility\BackupExport;
-use MeCms\Form\Form;
 use MeCms\Validation\AppValidator;
 
 /**
  * BackupForm class
+ * @see \DatabaseBackup\Utility\BackupExport
+ * @see \MeCms\Controller\Admin\BackupsController::add()
  */
 class BackupForm extends Form
 {
@@ -32,12 +33,11 @@ class BackupForm extends Form
     protected $BackupExport;
 
     /**
-     * Defines the validator using the methods on Cake\Validation\Validator or
-     *  loads a pre-defined validator from a concrete class.
+     * Returns the default validator object
      * @param \Cake\Validation\Validator $validator Validator instance
-     * @return \MeCms\Validation\AppValidator
+     * @return \Cake\Validation\Validator
      */
-    protected function _buildValidator(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator = new AppValidator();
 
@@ -55,7 +55,7 @@ class BackupForm extends Form
      * @return \DatabaseBackup\Utility\BackupExport
      * @uses $BackupExport
      */
-    protected function getBackupExportInstance()
+    protected function getBackupExportInstance(): BackupExport
     {
         $this->BackupExport = $this->BackupExport ?: new BackupExport();
 
@@ -68,7 +68,7 @@ class BackupForm extends Form
      * @return bool
      * @uses getBackupExportInstance()
      */
-    protected function _execute(array $data)
+    protected function _execute(array $data): bool
     {
         try {
             $this->getBackupExportInstance()

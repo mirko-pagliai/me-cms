@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,6 +15,8 @@
 
 namespace MeCms\TestSuite;
 
+use Cake\Controller\Controller;
+use Cake\Event\EventInterface;
 use Cake\Utility\Inflector;
 use MeCms\TestSuite\ControllerTestCase;
 
@@ -57,7 +59,7 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -70,11 +72,11 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
 
     /**
      * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
+     * @param \Cake\Event\EventInterface $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
      * @return void
      */
-    public function controllerSpy($event, $controller = null)
+    public function controllerSpy(EventInterface $event, ?Controller $controller = null): void
     {
         parent::controllerSpy($event, $controller);
 
@@ -97,7 +99,6 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
         $this->Table->{$this->associatedTable}->deleteAll(['id IS NOT' => null]);
         $this->get($this->url + ['action' => 'index']);
         $this->assertRedirect(['controller' => $this->parentController, 'action' => 'index']);
-        $this->assertRegExp('/^You must first create an?/', $this->_requestSession->read('Flash.flash.0.message'));
     }
 
     /**
@@ -109,7 +110,7 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'index.ctp');
+        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf($this->entityClass, $this->viewVariable($this->viewVariableName));
         $this->assertCookieIsEmpty('render-' . $this->viewVariableName);
     }
@@ -123,7 +124,7 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
     {
         $this->get($this->url + ['action' => 'index', '?' => ['render' => 'grid']]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'index_as_grid.ctp');
+        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'index_as_grid.php');
         $this->assertContainsOnlyInstancesOf($this->entityClass, $this->viewVariable($this->viewVariableName));
         $this->assertCookie('grid', 'render-' . $this->viewVariableName);
 
@@ -131,7 +132,7 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
         $this->cookie('render-' . $this->viewVariableName, 'grid');
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'index_as_grid.ctp');
+        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'index_as_grid.php');
         $this->assertCookie('grid', 'render-' . $this->viewVariableName);
     }
 
@@ -146,7 +147,7 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'upload.ctp');
+        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'upload.php');
 
         //POST request. This works
         $file = $this->createImageToUpload();
@@ -192,19 +193,19 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
         $this->post($url, ['file' => $this->createImageToUpload()]);
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"' . I18N_OPERATION_NOT_OK . '"}');
-        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'json' . DS . 'upload.ctp');
+        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'json' . DS . 'upload.php');
 
         //Error during the upload
         $this->post($url, ['file' => ['error' => UPLOAD_ERR_NO_FILE] + $this->createImageToUpload()]);
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"No file was uploaded"}');
-        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'json' . DS . 'upload.ctp');
+        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'json' . DS . 'upload.php');
 
         //Error on entity
         $this->post($url, ['file' => ['name' => 'a.pdf'] + $this->createImageToUpload()]);
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"Valid extensions: gif, jpg, jpeg, png"}');
-        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'json' . DS . 'upload.ctp');
+        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'json' . DS . 'upload.php');
     }
 
     /**
@@ -219,7 +220,7 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'edit.ctp');
+        $this->assertTemplate('Admin' . DS . $this->Controller->getName() . DS . 'edit.php');
         $this->assertInstanceof($this->Table->getEntityClass(), $this->viewVariable($viewVariableName));
 
         //POST request. Data are valid

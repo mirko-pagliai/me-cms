@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -28,7 +28,7 @@ class PagesCategoriesController extends AppController
      * Lists pages categories
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $categories = $this->PagesCategories->find('active')
             ->select(['title', 'slug'])
@@ -41,9 +41,9 @@ class PagesCategoriesController extends AppController
     /**
      * Lists pages for a category
      * @param string $slug Category slug
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function view($slug)
+    public function view(string $slug)
     {
         //The category can be passed as query string, from a widget
         if ($this->getRequest()->getQuery('q')) {

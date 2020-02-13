@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,6 +15,7 @@
 namespace MeCms\Controller;
 
 use Cake\Database\Expression\QueryExpression;
+use Cake\Http\Response;
 use MeCms\Controller\AppController;
 
 /**
@@ -26,9 +27,9 @@ class BannersController extends AppController
     /**
      * Opens a banner (redirects to the banner target)
      * @param string $id Banner ID
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
-    public function open($id)
+    public function open(string $id): ?Response
     {
         $banner = $this->Banners->findActiveById($id)
             ->select(['target'])

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,6 +15,8 @@
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
+use Cake\Controller\Controller;
+use Cake\Event\EventInterface;
 use Cake\Log\Log;
 use Cake\ORM\Entity;
 use DatabaseBackup\Utility\BackupImport;
@@ -31,9 +33,9 @@ class BackupsControllerTest extends ControllerTestCase
     /**
      * Internal method to create a backup file
      * @param string $extension Extension
-     * @return string File path
+     * @return string|null File path
      */
-    protected function createSingleBackup($extension = 'sql')
+    protected function createSingleBackup(string $extension = 'sql'): ?string
     {
         $file = getConfigOrFail('DatabaseBackup.target') . DS . 'backup.' . $extension;
         create_file($file);
@@ -45,7 +47,7 @@ class BackupsControllerTest extends ControllerTestCase
      * Internal method to create some backup files
      * @return array Files paths
      */
-    protected function createSomeBackups()
+    protected function createSomeBackups(): array
     {
         return array_map([$this, 'createSingleBackup'], ['sql', 'sql.gz', 'sql.bz2']);
     }
@@ -54,7 +56,7 @@ class BackupsControllerTest extends ControllerTestCase
      * Called after every test method
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -67,11 +69,11 @@ class BackupsControllerTest extends ControllerTestCase
 
     /**
      * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
+     * @param \Cake\Event\EventInterface $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
      * @return void
      */
-    public function controllerSpy($event, $controller = null)
+    public function controllerSpy(EventInterface $event, ?Controller $controller = null): void
     {
         parent::controllerSpy($event, $controller);
 
@@ -85,9 +87,11 @@ class BackupsControllerTest extends ControllerTestCase
             ->getMock();
 
         $this->_controller->BackupManager->method('send')->will($this->returnCallback(function () {
-            return Log::write('debug', 'Args for `send()`: ' . implode(', ', array_map(function ($arg) {
+            Log::write('debug', 'Args for `send()`: ' . implode(', ', array_map(function ($arg) {
                 return '`' . $arg . '`';
             }, func_get_args())));
+
+            return func_get_args();
         }));
     }
 
@@ -113,7 +117,7 @@ class BackupsControllerTest extends ControllerTestCase
         $this->createSomeBackups();
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Backups' . DS . 'index.ctp');
+        $this->assertTemplate('Admin' . DS . 'Backups' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(Entity::class, $this->viewVariable('backups'));
     }
 
@@ -127,7 +131,7 @@ class BackupsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Backups' . DS . 'add.ctp');
+        $this->assertTemplate('Admin' . DS . 'Backups' . DS . 'add.php');
         $this->assertInstanceof(BackupForm::class, $this->viewVariable('backup'));
 
         //POST request. Data are invalid
@@ -192,7 +196,7 @@ class BackupsControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'restore', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        array_map([$this, 'assertFalse'], [Cache::read('firstKey'), Cache::read('secondKey')]);
+        array_map([$this, 'assertNull'], [Cache::read('firstKey'), Cache::read('secondKey')]);
     }
 
     /**

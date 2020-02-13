@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -50,7 +50,7 @@ class PostsControllerTest extends ControllerTestCase
      * Tests for `beforeFilter()` method
      * @test
      */
-    public function testBeforeFilter()
+    public function testBeforeFilter(): void
     {
         parent::testBeforeFilter();
 
@@ -120,7 +120,7 @@ class PostsControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'index.ctp');
+        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
     }
 
@@ -135,7 +135,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'form.ctp');
+        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'form.php');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
 
         //POST request. Data are valid
@@ -161,7 +161,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'form.ctp');
+        $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'form.php');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
         $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('post')->get('tags'));
         $this->assertRegExp('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('post')->get('created'));

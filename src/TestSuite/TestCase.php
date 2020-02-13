@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -40,7 +40,7 @@ abstract class TestCase extends BaseTestCase
      * @uses $Table
      * @uses $cacheToClear
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -51,7 +51,7 @@ abstract class TestCase extends BaseTestCase
 
         foreach ($this->cacheToClear as $cacheKey) {
             Cache::getConfig($cacheKey) ?: $this->fail('Cache key `' . $cacheKey . '` does not exist');
-            Cache::clear(false, $cacheKey);
+            Cache::clear($cacheKey);
         }
 
         unlink_recursive(KCFINDER, 'empty');

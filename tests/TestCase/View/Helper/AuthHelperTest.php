@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -26,7 +26,7 @@ class AuthHelperTest extends HelperTestCase
      * @param array $data Data you want to write
      * @return void
      */
-    protected function writeAuthOnSession(array $data = [])
+    protected function writeAuthOnSession(array $data = []): void
     {
         $this->Helper->getView()->getRequest()->getSession()->write('Auth.User', $data);
         $this->Helper->initialize([]);

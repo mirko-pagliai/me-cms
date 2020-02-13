@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -37,7 +37,7 @@ abstract class TableTestCase extends TestCase
      * @param \Cake\ORM\Association $association Association
      * @return void
      */
-    public function assertBelongsTo(Association $association)
+    public function assertBelongsTo(Association $association): void
     {
         $this->assertInstanceOf(BelongsTo::class, $association);
     }
@@ -47,7 +47,7 @@ abstract class TableTestCase extends TestCase
      * @param \Cake\ORM\Association $association Association
      * @return void
      */
-    public function assertBelongsToMany(Association $association)
+    public function assertBelongsToMany(Association $association): void
     {
         $this->assertInstanceOf(BelongsToMany::class, $association);
     }
@@ -58,7 +58,7 @@ abstract class TableTestCase extends TestCase
      * @return void
      * @uses $Table
      */
-    public function assertHasBehavior($behavior)
+    public function assertHasBehavior($behavior): void
     {
         $this->Table ?: $this->fail('The property `$this->Table` has not been set');
 
@@ -72,7 +72,7 @@ abstract class TableTestCase extends TestCase
      * @param \Cake\ORM\Association $association Association
      * @return void
      */
-    public function assertHasMany(Association $association)
+    public function assertHasMany(Association $association): void
     {
         $this->assertInstanceOf(HasMany::class, $association);
     }
@@ -84,7 +84,7 @@ abstract class TableTestCase extends TestCase
      * @uses $autoInitializeClass
      * @uses $cacheToClear
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

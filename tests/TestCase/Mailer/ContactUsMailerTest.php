@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -42,12 +42,12 @@ class ContactUsMailerTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->Mailer = new ContactUsMailer();
-        $this->Mailer->viewBuilder()->setLayout(false);
+        $this->Mailer->viewBuilder()->setLayout(null);
     }
 
     /**
@@ -67,7 +67,7 @@ class ContactUsMailerTest extends TestCase
             'message' => 'Example of message',
             'firstName' => 'James',
             'lastName' => 'Blue',
-        ], $this->Mailer->getViewVars());
+        ], $this->Mailer->viewBuilder()->getVars());
 
         //With some missing data
         $this->expectException(KeyNotExistsException::class);
@@ -90,15 +90,15 @@ class ContactUsMailerTest extends TestCase
         extract($result);
 
         //Checks headers
-        $this->assertContains('From: MeCms <email@example.com>', $headers);
-        $this->assertContains('Reply-To: James Blue <mymail@example.com>', $headers);
-        $this->assertContains('Sender: James Blue <mymail@example.com>', $headers);
-        $this->assertContains('To: email@example.com', $headers);
-        $this->assertContains('Subject: Email from MeCms', $headers);
-        $this->assertContains('Content-Type: text/html; charset=UTF-8', $headers);
+        $this->assertStringContainsString('From: MeCms <email@example.com>', $headers);
+        $this->assertStringContainsString('Reply-To: James Blue <mymail@example.com>', $headers);
+        $this->assertStringContainsString('Sender: James Blue <mymail@example.com>', $headers);
+        $this->assertStringContainsString('To: email@example.com', $headers);
+        $this->assertStringContainsString('Subject: Email from MeCms', $headers);
+        $this->assertStringContainsString('Content-Type: text/html; charset=UTF-8', $headers);
 
         //Checks message
-        $this->assertContains('Email from James Blue (mymail@example.com)', $message);
-        $this->assertContains('Example of message', $message);
+        $this->assertStringContainsString('Email from James Blue (mymail@example.com)', $message);
+        $this->assertStringContainsString('Example of message', $message);
     }
 }

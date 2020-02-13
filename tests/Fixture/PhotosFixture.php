@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -88,32 +88,33 @@ class PhotosFixture extends TestFixture
      *  the connection
      * @param ConnectionInterface $db An instance of the connection the fixture
      *  should be removed from
-     * @return void
+     * @return bool
      */
-    public function drop(ConnectionInterface $db)
+    public function drop(ConnectionInterface $db): bool
     {
-        parent::drop($db);
-
         try {
             unlink_recursive(PHOTOS, 'empty');
         } catch (IOException $e) {
         }
+
+        return parent::drop($db);
     }
 
     /**
      * Run before each test is executed
      * @param ConnectionInterface $db An instance of the connection into which
      *  the records will be inserted
-     * @return void
+     * @return \Cake\Database\StatementInterface|bool on success or if there are
+     *  no records to insert, or `false` on failure
      */
     public function insert(ConnectionInterface $db)
     {
-        parent::insert($db);
-
         foreach ($this->records as $record) {
             $file = PHOTOS . $record['album_id'] . DS . $record['filename'];
             @mkdir(dirname($file));
             @copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
         }
+
+        return parent::insert($db);
     }
 }

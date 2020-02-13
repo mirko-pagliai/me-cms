@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -119,7 +119,7 @@ class UsersFixture extends TestFixture
      * Initialize the fixture
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $user = new User([
             'group_id' => 1,

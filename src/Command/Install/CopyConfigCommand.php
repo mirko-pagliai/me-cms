@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -29,7 +29,7 @@ class CopyConfigCommand extends Command
     /**
      * Configuration files to be copied
      */
-    const CONFIG_FILES = [
+    public const CONFIG_FILES = [
         'MeCms.recaptcha',
         'MeCms.me_cms',
         'MeCms.widgets',
@@ -40,7 +40,7 @@ class CopyConfigCommand extends Command
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
      * @return \Cake\Console\ConsoleOptionParser
      */
-    protected function buildOptionParser(ConsoleOptionParser $parser)
+    protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
         return $parser->setDescription(__d('me_cms', 'Copies the configuration files'));
     }
@@ -51,11 +51,11 @@ class CopyConfigCommand extends Command
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $class = get_class($this);
         foreach ($class::CONFIG_FILES as $file) {
-            list($plugin, $file) = pluginSplit($file);
+            [$plugin, $file] = pluginSplit($file);
             $this->copyFile(
                 $io,
                 Plugin::path($plugin, 'config' . DS . $file . '.php'),

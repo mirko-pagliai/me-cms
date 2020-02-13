@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,7 +15,6 @@
 namespace MeCms\Test\TestCase\View;
 
 use Cake\Core\Configure;
-use Cake\Http\ServerRequest;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\View;
 
@@ -25,7 +24,7 @@ use MeCms\View\View;
 class ViewTest extends TestCase
 {
     /**
-     * @var \MeCms\View\View|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\View\View
      */
     protected $View;
 
@@ -33,15 +32,13 @@ class ViewTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->View = $this->View ?: $this->getMockBuilder(View::class)
-            ->setMethods(null)
-            ->setConstructorArgs([(new ServerRequest())->withEnv('REQUEST_URI', '/some-page')])
-            ->getMock();
+        $this->View = new View();
         $this->View->setPlugin('MeCms');
+        $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
     }
 
     /**
@@ -93,6 +90,8 @@ class ViewTest extends TestCase
         //If this is the homepage, it only returns the main title from the
         //  configuration, even if you have set another
         $this->View = new View();
+        $request = $this->View->getRequest()->withEnv('REQUEST_URI', '/')->withParam('controller', 'Posts')->withParam('action', 'index');
+        $this->View->setRequest($request);
         $this->assertEquals($getTitleForLayoutMethod(), $mainTitle);
     }
 
@@ -108,11 +107,11 @@ class ViewTest extends TestCase
         @create_file(WWW_ROOT . 'favicon.ico');
         $this->View->loadHelper('MeCms.Auth');
         $this->View->loadHelper('MeCms.Widget');
-        $result = $this->View->render(false, 'MeCms.default');
+        $result = $this->View->render('StaticPages/page-from-app', 'MeCms.default');
 
         //Checks for title and favicon
-        $this->assertContains('<title>title from controller - MeCms</title>', $result);
-        $this->assertContains('<link href="favicon.ico" type="image/x-icon" rel="icon"/><link href="favicon.ico" type="image/x-icon" rel="shortcut icon"/>', $result);
+        $this->assertStringContainsString('<title>title from controller - MeCms</title>', $result);
+        $this->assertStringContainsString('<link href="/favicon.ico" type="image/x-icon" rel="icon"/><link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>', $result);
         @unlink(WWW_ROOT . 'favicon.ico');
     }
 }

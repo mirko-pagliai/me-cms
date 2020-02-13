@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -46,7 +46,7 @@ class GroupsCommandTest extends TestCase
         $expectedRows = $UsersGroups->find()
             ->select(['id', 'name', 'label', 'user_count'])
             ->map(function (UsersGroup $group) {
-                return $group->toArray();
+                return array_map('strval', $group->toArray());
             })
             ->toList();
         $expectedRows[] = ['<info>ID</info>', '<info>Name</info>', '<info>Label</info>', '<info>Users</info>'];

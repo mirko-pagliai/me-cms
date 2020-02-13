@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -68,7 +68,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'index.ctp');
+        $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(PostsCategory::class, $this->viewVariable('categories'));
     }
 
@@ -82,7 +82,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'form.ctp');
+        $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'form.php');
         $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid
@@ -107,7 +107,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'form.ctp');
+        $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'form.php');
         $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid

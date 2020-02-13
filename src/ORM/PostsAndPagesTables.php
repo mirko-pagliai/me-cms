@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,9 +15,10 @@
 
 namespace MeCms\ORM;
 
-use Cake\Database\Schema\TableSchema;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
+use Cake\ORM\Query;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Table\Traits\GetPreviewsFromTextTrait;
 use MeCms\Model\Table\Traits\NextToBePublishedTrait;
@@ -35,11 +36,12 @@ abstract class PostsAndPagesTables extends AppTable
     /**
      * Alters the schema used by this table. This function is only called after
      *  fetching the schema out of the database
-     * @param \Cake\Database\Schema\TableSchema $schema TableSchema instance
-     * @return \Cake\Database\Schema\TableSchema TableSchema instance
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema The table
+     *  definition fetched from database
+     * @return \Cake\Database\Schema\TableSchemaInterface The altered schema
      * @since 2.17.0
      */
-    protected function _initializeSchema(TableSchema $schema)
+    protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
     {
         return $schema->setColumnType('preview', 'jsonEntity');
     }
@@ -47,11 +49,11 @@ abstract class PostsAndPagesTables extends AppTable
     /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
-     * @param Cake\Datasource\EntityInterface $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterDelete(Event $event, EntityInterface $entity)
+    public function afterDelete(Event $event, EntityInterface $entity): void
     {
         parent::afterDelete($event, $entity);
 
@@ -66,7 +68,7 @@ abstract class PostsAndPagesTables extends AppTable
      * @return void
      * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterSave(Event $event, EntityInterface $entity)
+    public function afterSave(Event $event, EntityInterface $entity): void
     {
         parent::afterSave($event, $entity);
 
@@ -82,7 +84,7 @@ abstract class PostsAndPagesTables extends AppTable
      * @since 2.17.0
      * @uses \MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreviews()
      */
-    public function beforeSave(Event $event, EntityInterface $entity)
+    public function beforeSave(Event $event, EntityInterface $entity): void
     {
         $entity->set('preview', $this->getPreviews($entity->get('text')));
     }
@@ -98,7 +100,7 @@ abstract class PostsAndPagesTables extends AppTable
      * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      * @uses clearCache()
      */
-    public function find($type = 'all', $options = [])
+    public function find($type = 'all', $options = []): Query
     {
         //Gets from cache the timestamp of the next record to be published
         $next = $this->getNextToBePublished();

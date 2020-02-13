@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -63,7 +63,7 @@ class AppTableTest extends TableTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -119,7 +119,7 @@ class AppTableTest extends TableTestCase
     {
         Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
         $this->assertTrue($this->Posts->clearCache());
-        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
+        $this->assertNull(Cache::read('testKey', $this->Posts->getCacheName()));
     }
 
     /**
@@ -132,7 +132,7 @@ class AppTableTest extends TableTestCase
         Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
         $this->assertGreaterThan(0, $this->Posts->deleteAll(['id IS NOT' => null]));
         $this->assertEmpty($this->Posts->find()->count());
-        $this->assertFalse(Cache::read('testKey', $this->Posts->getCacheName()));
+        $this->assertNull(Cache::read('testKey', $this->Posts->getCacheName()));
     }
 
     /**

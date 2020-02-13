@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,7 +15,7 @@
 namespace MeCms\Controller;
 
 use App\Controller\AppController as BaseAppController;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\I18n\I18n;
 
 /**
@@ -29,13 +29,13 @@ abstract class AppController extends BaseAppController
      * In addition to the method provided by CakePHP, it can also auto-load the
      *  associated tables.
      * @param string $name Property name
-     * @return bool|object The model instance or false
+     * @return \Cake\Datasource\RepositoryInterface|null The model instance or null
      * @see \Cake\Controller\Controller::__get()
      * @since 2.27.1
      */
-    public function __get($name)
+    public function __get(string $name)
     {
-        list(, $class) = pluginSplit($this->modelClass, true);
+        [, $class] = pluginSplit($this->modelClass, true);
 
         if ($class !== $name && $this->{$class}->hasAssociation($name)) {
             return $this->{$class}->getAssociation($name);
@@ -46,11 +46,11 @@ abstract class AppController extends BaseAppController
 
     /**
      * Called before the controller action
-     * @param \Cake\Event\Event $event An Event instance
-     * @return \Cake\Network\Response|null
+     * @param \Cake\Event\EventInterface $event EventInterface
+     * @return \Cake\Http\Response|null|void
      * @uses isSpammer()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         //Checks if the site is offline
         if ($this->getRequest()->isOffline()) {
@@ -65,7 +65,7 @@ abstract class AppController extends BaseAppController
         $this->viewBuilder()->setClassName('MeCms.View/App');
 
         //Sets the paginate limit and the maximum paginate limit
-        //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
+        //See http://book.cakephp.org/4.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('default.records');
 
         $this->Auth->allow();
@@ -85,14 +85,16 @@ abstract class AppController extends BaseAppController
      */
     public function getPaging()
     {
-        return $this->getRequest()->getParam('paging', []);
+        $paging = $this->getRequest()->getAttribute('paging');
+
+        return $paging ?? $this->getRequest()->getParam('paging', []);
     }
 
     /**
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         //Loads components
         //The configuration for `AuthComponent`  takes place in the same class
@@ -110,12 +112,12 @@ abstract class AppController extends BaseAppController
 
     /**
      * Checks if the user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
      * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admin and managers can access admin actions
         //Any registered user can access actions without prefix. Default deny
@@ -127,7 +129,7 @@ abstract class AppController extends BaseAppController
      * @return bool
      * @since 2.15.2
      */
-    protected function isSpammer()
+    protected function isSpammer(): bool
     {
         return $this->getRequest()->isSpammer() && !$this->getRequest()->isAction('ipNotAllowed', 'Systems');
     }

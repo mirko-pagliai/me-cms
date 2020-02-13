@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -66,7 +66,7 @@ class KcFinderComponent extends Component
      * Gets the file types supported by KCFinder
      * @return array
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         $folders = objects_map(iterator_to_array((new Finder())->directories()->in(UPLOADED)), 'getFilename');
 
@@ -80,7 +80,7 @@ class KcFinderComponent extends Component
      * @return bool
      * @since 2.22.8
      */
-    protected function kcFinderIsAvailable()
+    protected function kcFinderIsAvailable(): bool
     {
         return (new Checkup())->KCFinder->isAvailable();
     }
@@ -90,7 +90,7 @@ class KcFinderComponent extends Component
      * @return bool
      * @since 2.22.8
      */
-    protected function uploadedDirIsWriteable()
+    protected function uploadedDirIsWriteable(): bool
     {
         $result = (new Checkup())->Webroot->isWriteable();
 
@@ -107,7 +107,7 @@ class KcFinderComponent extends Component
      * @uses kcFinderIsAvailable()
      * @uses uploadedDirIsWriteable()
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         //Checks for KCFinder and for the files directory (`APP/webroot/files`)
         is_true_or_fail($this->kcFinderIsAvailable(), __d('me_tools', '{0} is not available', 'KCFinder'));

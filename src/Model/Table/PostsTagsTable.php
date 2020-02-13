@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -37,7 +37,7 @@ class PostsTagsTable extends AppTable
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         return $rules->add($rules->existsIn(['tag_id'], 'Tags', I18N_SELECT_VALID_OPTION))
             ->add($rules->existsIn(['post_id'], 'Posts', I18N_SELECT_VALID_OPTION));
@@ -48,7 +48,7 @@ class PostsTagsTable extends AppTable
      * @param array $config The configuration for the table
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 

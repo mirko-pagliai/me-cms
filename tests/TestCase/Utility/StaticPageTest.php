@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -37,7 +37,7 @@ class StaticPageTest extends TestCase
      * Called after every test method
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -51,7 +51,7 @@ class StaticPageTest extends TestCase
     public function testAll()
     {
         $this->loadPlugins(['TestPlugin']);
-        $TestPluginPath = rtr(Plugin::path('TestPlugin') . 'src' . DS . 'Template' . DS) . '/StaticPages/';
+        $TestPluginPath = rtr(Plugin::templatePath('TestPlugin')) . '/StaticPages/';
 
         $pages = StaticPage::all();
         $this->assertContainsOnlyInstancesOf(Entity::class, $pages);
@@ -69,9 +69,9 @@ class StaticPageTest extends TestCase
 
         //Checks paths
         $this->assertEquals([
-            'tests/test_app/TestApp/Template/StaticPages/page-from-app.' . StaticPage::EXTENSION,
-            'src/Template/StaticPages/cookies-policy-it.' . StaticPage::EXTENSION,
-            'src/Template/StaticPages/cookies-policy.' . StaticPage::EXTENSION,
+            'tests/test_app/TestApp/templates/StaticPages/page-from-app.' . StaticPage::EXTENSION,
+            'templates/StaticPages/cookies-policy-it.' . StaticPage::EXTENSION,
+            'templates/StaticPages/cookies-policy.' . StaticPage::EXTENSION,
             $TestPluginPath . 'first-folder/page-on-first-from-plugin.' . StaticPage::EXTENSION,
             $TestPluginPath . 'first-folder/second_folder/page_on_second_from_plugin.' . StaticPage::EXTENSION,
             $TestPluginPath . 'test-from-plugin.' . StaticPage::EXTENSION,
@@ -147,9 +147,9 @@ class StaticPageTest extends TestCase
     {
         $this->loadPlugins(['TestPlugin']);
         $result = StaticPage::getPaths();
-        $this->assertContains(APP . 'Template' . DS . 'StaticPages', $result);
-        $this->assertContains(ROOT . 'src' . DS . 'Template' . DS . 'StaticPages', $result);
-        $this->assertContains(Plugin::path('TestPlugin') . 'src' . DS . 'Template' . DS . 'StaticPages', $result);
+        $this->assertContains(APP . 'templates' . DS . 'StaticPages', $result);
+        $this->assertContains(ROOT . 'templates' . DS . 'StaticPages', $result);
+        $this->assertContains(Plugin::templatePath('TestPlugin') . 'StaticPages', $result);
         $this->assertEquals(Cache::read('paths', 'static_pages'), $result);
     }
 

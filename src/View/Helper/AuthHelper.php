@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -31,7 +31,7 @@ class AuthHelper extends Helper
      * @param array $config The configuration settings provided to this helper
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $config += ['user' => $this->getView()->getRequest()->getSession()->read('Auth.User')];
         $this->setConfig($config);
@@ -40,10 +40,10 @@ class AuthHelper extends Helper
     /**
      * Get the current user from storage
      * @param string|null $key Field to retrieve or `null`
-     * @return mixed|null Either User record or `null` if no user is logged in,
+     * @return mixed Either User record or `null` if no user is logged in,
      *  or retrieved field if key is specified
      */
-    public function user($key = null)
+    public function user(?string $key = null)
     {
         return $key ? $this->getConfig('user.' . $key) : $this->getConfig('user');
     }

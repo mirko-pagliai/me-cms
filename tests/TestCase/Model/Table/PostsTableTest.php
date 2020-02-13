@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -49,8 +49,9 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
 
     /**
      * Called once before test methods in a case are started
+     * @return void
      */
-    public static function setupBeforeClass()
+    public static function setupBeforeClass(): void
     {
         self::$example += ['user_id' => 1, 'tags_as_string' => 'first tag, second tag'];
     }

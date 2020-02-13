@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -38,7 +38,7 @@ class UserMailerTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -49,7 +49,7 @@ class UserMailerTest extends TestCase
         ]);
 
         $this->Mailer = new UserMailer();
-        $this->Mailer->viewBuilder()->setLayout(false);
+        $this->Mailer->viewBuilder()->setLayout(null);
     }
 
     /**
@@ -62,7 +62,7 @@ class UserMailerTest extends TestCase
         $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getTo());
         $this->assertEquals('Activate your account', $this->Mailer->getSubject());
         $this->assertEquals('MeCms.Users/activation', $this->Mailer->viewBuilder()->getTemplate());
-        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->getViewVars());
+        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->viewBuilder()->getVars());
 
         //With some missing data
         $this->expectException(KeyNotExistsException::class);
@@ -85,16 +85,16 @@ class UserMailerTest extends TestCase
         extract($result);
 
         //Checks headers
-        $this->assertContains('From: MeCms <email@example.com>', $headers);
-        $this->assertContains('To: James Blue <test@test.com>', $headers);
-        $this->assertContains('Subject: Activate your account', $headers);
-        $this->assertContains('Content-Type: text/html; charset=UTF-8', $headers);
+        $this->assertStringContainsString('From: MeCms <email@example.com>', $headers);
+        $this->assertStringContainsString('To: James Blue <test@test.com>', $headers);
+        $this->assertStringContainsString('Subject: Activate your account', $headers);
+        $this->assertStringContainsString('Content-Type: text/html; charset=UTF-8', $headers);
 
         //Checks message
-        $this->assertContains('Hello James Blue,', $message);
-        $this->assertContains('you have signed on the site MeCms.', $message);
-        $this->assertContains('To activate your account, click <a href="http://example/link" title="here">here</a>.', $message);
-        $this->assertContains('If you have not made this request, please contact an administrator.', $message);
+        $this->assertStringContainsString('Hello James Blue,', $message);
+        $this->assertStringContainsString('you have signed on the site MeCms.', $message);
+        $this->assertStringContainsString('To activate your account, click <a href="http://example/link" title="here">here</a>.', $message);
+        $this->assertStringContainsString('If you have not made this request, please contact an administrator.', $message);
     }
 
     /**
@@ -107,7 +107,7 @@ class UserMailerTest extends TestCase
         $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getTo());
         $this->assertEquals('Your password has been changed', $this->Mailer->getSubject());
         $this->assertEquals('MeCms.Users/change_password', $this->Mailer->viewBuilder()->getTemplate());
-        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->getViewVars());
+        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->viewBuilder()->getVars());
 
         //With some missing data
         $this->expectException(KeyNotExistsException::class);
@@ -130,15 +130,15 @@ class UserMailerTest extends TestCase
         extract($result);
 
         //Checks headers
-        $this->assertContains('From: MeCms <email@example.com>', $headers);
-        $this->assertContains('To: James Blue <test@test.com>', $headers);
-        $this->assertContains('Subject: Your password has been changed', $headers);
-        $this->assertContains('Content-Type: text/html; charset=UTF-8', $headers);
+        $this->assertStringContainsString('From: MeCms <email@example.com>', $headers);
+        $this->assertStringContainsString('To: James Blue <test@test.com>', $headers);
+        $this->assertStringContainsString('Subject: Your password has been changed', $headers);
+        $this->assertStringContainsString('Content-Type: text/html; charset=UTF-8', $headers);
 
         //Checks message
-        $this->assertContains('Hello James Blue,', $message);
-        $this->assertContains('you have recently changed your password on our site MeCms.', $message);
-        $this->assertContains('If you have not made this request, please contact an administrator.', $message);
+        $this->assertStringContainsString('Hello James Blue,', $message);
+        $this->assertStringContainsString('you have recently changed your password on our site MeCms.', $message);
+        $this->assertStringContainsString('If you have not made this request, please contact an administrator.', $message);
     }
 
     /**
@@ -151,7 +151,7 @@ class UserMailerTest extends TestCase
         $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getTo());
         $this->assertEquals('Reset your password', $this->Mailer->getSubject());
         $this->assertEquals('MeCms.Users/password_forgot', $this->Mailer->viewBuilder()->getTemplate());
-        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->getViewVars());
+        $this->assertEquals(['fullName' => 'James Blue'], $this->Mailer->viewBuilder()->getVars());
 
         //With some missing data
         $this->expectException(KeyNotExistsException::class);
@@ -174,15 +174,15 @@ class UserMailerTest extends TestCase
         extract($result);
 
         //Checks headers
-        $this->assertContains('From: MeCms <email@example.com>', $headers);
-        $this->assertContains('To: James Blue <test@test.com>', $headers);
-        $this->assertContains('Subject: Reset your password', $headers);
-        $this->assertContains('Content-Type: text/html; charset=UTF-8', $headers);
+        $this->assertStringContainsString('From: MeCms <email@example.com>', $headers);
+        $this->assertStringContainsString('To: James Blue <test@test.com>', $headers);
+        $this->assertStringContainsString('Subject: Reset your password', $headers);
+        $this->assertStringContainsString('Content-Type: text/html; charset=UTF-8', $headers);
 
         //Checks message
-        $this->assertContains('Hello James Blue,', $message);
-        $this->assertContains('you have requested to change your password on the site MeCms.', $message);
-        $this->assertContains('To reset your password, click <a href="http://example/link" title="here">here</a>.', $message);
-        $this->assertContains('If you have not made this request, please contact an administrator.', $message);
+        $this->assertStringContainsString('Hello James Blue,', $message);
+        $this->assertStringContainsString('you have requested to change your password on the site MeCms.', $message);
+        $this->assertStringContainsString('To reset your password, click <a href="http://example/link" title="here">here</a>.', $message);
+        $this->assertStringContainsString('If you have not made this request, please contact an administrator.', $message);
     }
 }

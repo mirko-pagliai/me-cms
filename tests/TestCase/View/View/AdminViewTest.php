@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -23,7 +23,7 @@ use MeCms\View\View\AdminView as View;
 class AdminViewTest extends TestCase
 {
     /**
-     * @var \MeCms\View\View\AdminView|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\View\View\AdminView
      */
     protected $View;
 
@@ -31,13 +31,12 @@ class AdminViewTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->View = $this->View ?: $this->getMockBuilder(View::class)
-            ->setMethods(null)
-            ->getMock();
+        $this->View = new View();
+        $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
     }
 
     /**
@@ -55,7 +54,7 @@ class AdminViewTest extends TestCase
      */
     public function testRender()
     {
-        $this->View->render(false);
+        $this->View->render('StaticPages/page-from-app');
         $this->assertEquals([
             1 => '1 - Very low',
             2 => '2 - Low',

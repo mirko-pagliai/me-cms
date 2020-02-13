@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -28,11 +28,14 @@ class WidgetHelperTest extends HelperTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->loadPlugins(['TestPlugin']);
+
+        $request = $this->Helper->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Helper->getView()->setRequest($request);
     }
 
     /**
@@ -46,7 +49,7 @@ class WidgetHelperTest extends HelperTestCase
         };
 
         $widgets = array_map('array_value_first', array_map('array_keys', $getAllMethod()));
-        $this->assertEquals([
+        $this->assertSame([
             'MeCms.Pages::categories',
             'MeCms.Pages::pages',
             'MeCms.Photos::albums',
@@ -68,7 +71,7 @@ class WidgetHelperTest extends HelperTestCase
             'Fourth' => ['fourth' => 'fourthValue'],
             ['Fifth'],
         ]);
-        $this->assertEquals([
+        $this->assertSame([
             ['First' => []],
             ['Second' => []],
             ['Third' => ['key' => 'value']],
@@ -80,12 +83,12 @@ class WidgetHelperTest extends HelperTestCase
         //Test empty values from widgets
         foreach ([[], null, false] as $value) {
             Configure::write('Widgets.general', $value);
-            $this->assertEquals([], $getAllMethod());
+            $this->assertSame([], $getAllMethod());
         }
 
         //Sets some widgets for the homepage
         Configure::write('Widgets.homepage', ['ExampleForHomepage']);
-        $this->assertEquals([['ExampleForHomepage' => []]], $getAllMethod());
+        $this->assertSame([['ExampleForHomepage' => []]], $getAllMethod());
 
         //Resets
         Configure::write('Widgets.homepage', []);
@@ -99,7 +102,7 @@ class WidgetHelperTest extends HelperTestCase
     {
         //Sets some widgets
         Configure::write('Widgets.general', ['Example', 'TestPlugin.PluginExample']);
-        $this->assertEquals('An example widget' . PHP_EOL . 'An example widget from a plugin', $this->Helper->all());
+        $this->assertSame('An example widget' . PHP_EOL . 'An example widget from a plugin', $this->Helper->all());
 
         //Test empty values from widgets
         foreach ([[], null, false] as $value) {
@@ -115,24 +118,27 @@ class WidgetHelperTest extends HelperTestCase
     public function testWidget()
     {
         $cell = $this->Helper->widget('Example');
-        list($action, $args) = array_values($cell->__debugInfo());
-        $this->assertEquals('display', $action);
-        $this->assertEquals([], $args);
-        $this->assertEquals('display', $cell->viewBuilder()->getTemplate());
+        $this->assertSame('display', $cell->__debugInfo()['action']);
+        $this->assertSame([], $cell->__debugInfo()['args']);
+        $this->assertNull($cell->viewBuilder()->getPlugin());
+        $this->assertSame('display', $cell->viewBuilder()->getTemplate());
         $this->assertInstanceOf(ExampleWidgetsCell::class, $cell);
+        $this->assertSame('An example widget', $cell->render());
 
         $cell = $this->Helper->widget('Example', ['example of value']);
-        list($action, $args) = array_values($cell->__debugInfo());
-        $this->assertEquals('display', $action);
-        $this->assertEquals([0 => 'example of value'], $args);
-        $this->assertEquals('display', $cell->viewBuilder()->getTemplate());
+        $this->assertSame('display', $cell->__debugInfo()['action']);
+        $this->assertSame([0 => 'example of value'], $cell->__debugInfo()['args']);
+        $this->assertNull($cell->viewBuilder()->getPlugin());
+        $this->assertSame('display', $cell->viewBuilder()->getTemplate());
+        $this->assertSame('An example widget', $cell->render());
 
         //From plugin
         $cell = $this->Helper->widget('TestPlugin.PluginExample');
-        list($action, $args) = array_values($cell->__debugInfo());
-        $this->assertEquals('display', $action);
-        $this->assertEquals([], $args);
-        $this->assertEquals('display', $cell->viewBuilder()->getTemplate());
+        $this->assertSame('display', $cell->__debugInfo()['action']);
+        $this->assertSame([], $cell->__debugInfo()['args']);
+        $this->assertSame('TestPlugin', $cell->viewBuilder()->getPlugin());
+        $this->assertSame('display', $cell->viewBuilder()->getTemplate());
         $this->assertInstanceOf(PluginExampleWidgetsCell::class, $cell);
+        $this->assertSame('An example widget from a plugin', $cell->render());
     }
 }

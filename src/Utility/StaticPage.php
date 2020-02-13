@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,7 +15,7 @@
 namespace MeCms\Utility;
 
 use Cake\Cache\Cache;
-use Cake\Core\App;
+use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
 use Cake\ORM\Entity;
@@ -31,7 +31,7 @@ class StaticPage
     /**
      * Extension for static pages
      */
-    const EXTENSION = 'ctp';
+    public const EXTENSION = 'php';
 
     /**
      * Internal method to get paths from APP or from a plugin.
@@ -41,17 +41,24 @@ class StaticPage
      * @return array
      * @since 2.26.6
      */
-    protected static function _getPaths($plugin = null)
+    protected static function _getPaths(?string $plugin = null): array
     {
-        return App::path('Template' . DS . 'StaticPages', $plugin);
+        if ($plugin) {
+            return [Plugin::templatePath($plugin) . 'StaticPages' . DS];
+        }
+
+        return array_map(function ($path) {
+            return add_slash_term($path) . 'StaticPages' . DS;
+        }, Configure::read('App.paths.templates'));
     }
 
     /**
      * Gets all the existing paths
      * @return array
+     * @uses \MeCms\Core\Plugin::all()
      * @uses _getPaths()
      */
-    public static function getPaths()
+    public static function getPaths(): array
     {
         return Cache::remember('paths', function () {
             $paths = self::_getPaths();
@@ -74,7 +81,7 @@ class StaticPage
      * @param string $relativePath Relative path
      * @return string
      */
-    public static function getSlug($path, $relativePath)
+    public static function getSlug(string $path, string $relativePath): string
     {
         if (string_starts_with($path, $relativePath)) {
             $path = substr($path, strlen(add_slash_term($relativePath)));
@@ -91,7 +98,7 @@ class StaticPage
      * @uses getSlug()
      * @uses getTitle()
      */
-    public static function all()
+    public static function all(): array
     {
         foreach (self::getPaths() as $path) {
             $finder = new Finder();
@@ -106,7 +113,7 @@ class StaticPage
             }
         }
 
-        return isset($pages) ? $pages : [];
+        return $pages ?? [];
     }
 
     /**
@@ -115,7 +122,7 @@ class StaticPage
      * @return string|bool Static page or `false`
      * @uses _getPaths()
      */
-    public static function get($slug)
+    public static function get(string $slug): ?string
     {
         $locale = I18n::getLocale();
         $slug = array_filter(explode('/', $slug));
@@ -145,7 +152,7 @@ class StaticPage
                 }
             }
 
-            return isset($page) ? $page : null;
+            return $page ?? null;
         }, 'static_pages');
     }
 
@@ -154,7 +161,7 @@ class StaticPage
      * @param string $slugOrPath Slug or path
      * @return string
      */
-    public static function getTitle($slugOrPath)
+    public static function getTitle(string $slugOrPath): string
     {
         //Gets only the filename (without extension), then turns dashes into
         //  underscores (because `Inflector::humanize` will remove only underscores)

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -27,7 +27,7 @@ class Plugin extends AbstractCheckup
      * Returns the version number for each plugin
      * @return array
      */
-    public function versions()
+    public function versions(): array
     {
         $Plugin = new BasePlugin();
 

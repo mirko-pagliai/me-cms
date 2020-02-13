@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -38,7 +38,7 @@ class PhotosAlbumsTable extends AppTable
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      */
-    public function afterDelete(Event $event, EntityInterface $entity)
+    public function afterDelete(Event $event, EntityInterface $entity): void
     {
         @rmdir($entity->get('path'));
 
@@ -51,7 +51,7 @@ class PhotosAlbumsTable extends AppTable
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      */
-    public function afterSave(Event $event, EntityInterface $entity)
+    public function afterSave(Event $event, EntityInterface $entity): void
     {
         @mkdir($entity->get('path'), 0777, true);
 
@@ -64,7 +64,7 @@ class PhotosAlbumsTable extends AppTable
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         return $rules->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED))
             ->add($rules->isUnique(['title'], I18N_VALUE_ALREADY_USED));
@@ -75,7 +75,7 @@ class PhotosAlbumsTable extends AppTable
      * @param \Cake\ORM\Query $query Query object
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query)
+    public function findActive(Query $query): Query
     {
         return $query->innerJoinWith($this->Photos->getAlias(), function (Query $query) {
             return $query->find('active');
@@ -87,7 +87,7 @@ class PhotosAlbumsTable extends AppTable
      * @param array $config The configuration for the table
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 

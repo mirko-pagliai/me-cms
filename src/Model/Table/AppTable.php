@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -21,6 +21,7 @@ use Cake\Event\Event;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 use Cake\ORM\Association;
+use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\Table;
 use Exception;
 use MeCms\ORM\Query;
@@ -43,7 +44,7 @@ abstract class AppTable extends Table
      * @return void
      * @uses clearCache()
      */
-    public function afterDelete(Event $event, EntityInterface $entity)
+    public function afterDelete(Event $event, EntityInterface $entity): void
     {
         $this->clearCache();
     }
@@ -55,7 +56,7 @@ abstract class AppTable extends Table
      * @return void
      * @uses clearCache()
      */
-    public function afterSave(Event $event, EntityInterface $entity)
+    public function afterSave(Event $event, EntityInterface $entity): void
     {
         $this->clearCache();
     }
@@ -68,7 +69,7 @@ abstract class AppTable extends Table
      * @return void
      * @since 2.26.6
      */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
     {
         //Tries to transform the `created` string into a `Time` entity
         if (array_key_exists('created', $data)) {
@@ -91,9 +92,9 @@ abstract class AppTable extends Table
      * @return bool `true` if the cache was successfully cleared, `false` otherwise
      * @uses getCacheName()
      */
-    public function clearCache()
+    public function clearCache(): bool
     {
-        return Cache::clear(false, $this->getCacheName());
+        return Cache::clear($this->getCacheName());
     }
 
     /**
@@ -103,7 +104,7 @@ abstract class AppTable extends Table
      * @return int Returns the number of affected rows
      * @uses clearCache()
      */
-    public function deleteAll($conditions)
+    public function deleteAll($conditions): int
     {
         $this->clearCache();
 
@@ -115,7 +116,7 @@ abstract class AppTable extends Table
      * @param \Cake\ORM\Query $query Query object
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query)
+    public function findActive(Query $query): Query
     {
         return $query->where([sprintf('%s.active', $this->getAlias()) => true])
             ->andWhere([sprintf('%s.created <=', $this->getAlias()) => new Time()]);
@@ -126,7 +127,7 @@ abstract class AppTable extends Table
      * @param \Cake\ORM\Query $query Query object
      * @return \Cake\ORM\Query Query object
      */
-    public function findPending(Query $query)
+    public function findPending(Query $query): Query
     {
         return $query->where(['OR' => [
             sprintf('%s.active', $this->getAlias()) => false,
@@ -139,7 +140,7 @@ abstract class AppTable extends Table
      * @param \Cake\ORM\Query $query Query object
      * @return \Cake\ORM\Query Query object
      */
-    public function findRandom(Query $query)
+    public function findRandom(Query $query): Query
     {
         $query->order('rand()');
 
@@ -158,7 +159,7 @@ abstract class AppTable extends Table
      * @since 2.26.0
      * @uses $cache
      */
-    public function getCacheName($associations = false)
+    public function getCacheName(bool $associations = false)
     {
         if (!$associations) {
             return $this->cache ?: null;
@@ -180,7 +181,7 @@ abstract class AppTable extends Table
      * Gets records as list
      * @return \Cake\ORM\Query $query Query object
      */
-    public function getList()
+    public function getList(): Query
     {
         return $this->find('list')
             ->orderAsc($this->getDisplayField())
@@ -191,7 +192,7 @@ abstract class AppTable extends Table
      * Gets records as tree list
      * @return \Cake\ORM\Query $query Query object
      */
-    public function getTreeList()
+    public function getTreeList(): Query
     {
         return $this->find('treeList')->cache($this->getTable() . '_tree_list');
     }
@@ -201,7 +202,7 @@ abstract class AppTable extends Table
      * @return \MeCms\ORM\Query
      * @since 2.27.1
      */
-    public function query()
+    public function query(): CakeQuery
     {
         return new Query($this->getConnection(), $this);
     }
@@ -212,7 +213,7 @@ abstract class AppTable extends Table
      * @param array $data Filter data ($this->getRequest()->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
      */
-    public function queryFromFilter(Query $query, array $data = [])
+    public function queryFromFilter(Query $query, array $data = []): Query
     {
         //"ID" field
         if (!empty($data['id']) && is_positive($data['id'])) {

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -35,9 +35,8 @@ class TreeBehavior extends CakeTreeBehavior
      * @param \Cake\ORM\Query $query Query
      * @param array $options Options
      * @return \Cake\ORM\Query Query
-     * @uses \Cake\ORM\Behavior\TreeBehavior::findTreeList()
      */
-    public function findTreeList(Query $query, array $options)
+    public function findTreeList(Query $query, array $options): Query
     {
         return parent::findTreeList($query, $options + ['spacer' => '—']);
     }

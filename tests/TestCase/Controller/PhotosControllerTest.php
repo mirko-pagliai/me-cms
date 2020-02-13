@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -38,11 +38,11 @@ class PhotosControllerTest extends ControllerTestCase
      */
     public function testView()
     {
-        $url = ['_name' => 'photo', 'test-album', 1];
+        $url = ['_name' => 'photo', 'test-album', '1'];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Photos' . DS . 'view.ctp');
+        $this->assertTemplate('Photos' . DS . 'view.php');
         $this->assertInstanceof(Photo::class, $this->viewVariable('photo'));
         $cache = Cache::read('view_' . md5('1'), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('photo'), $cache->first());
@@ -64,7 +64,7 @@ class PhotosControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'photosPreview', 4]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Photos' . DS . 'view.ctp');
+        $this->assertTemplate('Photos' . DS . 'view.php');
         $this->assertInstanceof(Photo::class, $this->viewVariable('photo'));
     }
 }

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -69,24 +69,24 @@ class UserValidator extends AppValidator
             ],
             'passwordIsStrong' => [
                 'message' => __d('me_cms', 'The password should contain letters, numbers and symbols'),
-                'rule' => function ($value) {
+                'rule' => function (string $value) {
                     return preg_match('/[A-z]/', $value) && preg_match('/\d/', $value) &&
                         preg_match('/[^A-z\d]/', $value);
                 },
             ],
-        ])->requirePresence('password', 'create');
+        ])->requirePresence('password', 'create')->notEmptyString('password');
 
         $this->add('password_repeat', [
             'compareWith' => [
                 'message' => __d('me_cms', 'Passwords don\'t match'),
                 'rule' => ['compareWith', 'password'],
             ],
-        ])->requirePresence('password_repeat', 'create');
+        ])->requirePresence('password_repeat', 'create')->notEmptyString('password_repeat');
 
         $this->add('password_old', [
             'oldPasswordIsRight' => [
                 'message' => __d('me_cms', 'The old password is wrong'),
-                'rule' => function ($value, $context) {
+                'rule' => function (string $value, array $context) {
                     //Gets the old password
                     $user = TableRegistry::get('Users')
                         ->findById($context['data']['id'])

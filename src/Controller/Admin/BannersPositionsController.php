@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -14,6 +14,7 @@
 
 namespace MeCms\Controller\Admin;
 
+use Cake\Http\Response;
 use MeCms\Controller\Admin\AppController;
 
 /**
@@ -24,12 +25,12 @@ class BannersPositionsController extends AppController
 {
     /**
      * Checks if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
      * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admins can access this controller
         return $this->Auth->isGroup('admin');
@@ -39,7 +40,7 @@ class BannersPositionsController extends AppController
      * Lists positions
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->paginate['order'] = ['title' => 'ASC'];
 
@@ -50,11 +51,11 @@ class BannersPositionsController extends AppController
 
     /**
      * Adds banners position
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function add()
     {
-        $position = $this->BannersPositions->newEntity();
+        $position = $this->BannersPositions->newEmptyEntity();
 
         if ($this->getRequest()->is('post')) {
             $position = $this->BannersPositions->patchEntity($position, $this->getRequest()->getData());
@@ -74,9 +75,9 @@ class BannersPositionsController extends AppController
     /**
      * Edits banners position
      * @param string $id Banners Position ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         $position = $this->BannersPositions->get($id);
 
@@ -98,19 +99,19 @@ class BannersPositionsController extends AppController
     /**
      * Deletes banners position
      * @param string $id Banners Position ID
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
-    public function delete($id)
+    public function delete(string $id): ?Response
     {
         $this->getRequest()->allowMethod(['post', 'delete']);
 
         $position = $this->BannersPositions->get($id);
 
         //Before deleting, it checks if the position has some banners
-        list($method, $message) = ['alert', I18N_BEFORE_DELETE];
+        [$method, $message] = ['alert', I18N_BEFORE_DELETE];
         if (!$position->get('banner_count')) {
             $this->BannersPositions->deleteOrFail($position);
-            list($method, $message) = ['success', I18N_OPERATION_OK];
+            [$method, $message] = ['success', I18N_OPERATION_OK];
         }
         call_user_func([$this->Flash, $method], $message);
 

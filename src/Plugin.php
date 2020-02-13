@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,10 +15,12 @@
 
 namespace MeCms;
 
+use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
+use Cake\Http\MiddlewareQueue;
 use DebugKit\Plugin as DebugKit;
 use MeCms\Command\AddUserCommand;
 use MeCms\Command\GroupsCommand;
@@ -42,7 +44,7 @@ class Plugin extends BasePlugin
      * Returns `true` if is cli.
      * @return bool
      */
-    protected function isCli()
+    protected function isCli(): bool
     {
         return PHP_SAPI === 'cli';
     }
@@ -55,12 +57,11 @@ class Plugin extends BasePlugin
      * @uses setVendorLinks()
      * @uses setWritableDirs()
      */
-    public function bootstrap(PluginApplicationInterface $app)
+    public function bootstrap(PluginApplicationInterface $app): void
     {
         $pluginsToLoad = [
             'MeTools',
             'DatabaseBackup',
-            'Recaptcha' => ['path' => ROOT . DS . 'vendor' . DS . 'crabstudio' . DS . 'recaptcha' . DS],
             'RecaptchaMailhide',
             'StopSpam',
             'Thumber\Cake',
@@ -69,7 +70,7 @@ class Plugin extends BasePlugin
 
         foreach ($pluginsToLoad as $plugin => $config) {
             if (is_int($plugin) && !is_array($config)) {
-                list($plugin, $config) = [$config, []];
+                [$plugin, $config] = [$config, []];
             }
 
             $className = sprintf('%s\Plugin', $plugin);
@@ -103,7 +104,7 @@ class Plugin extends BasePlugin
      * @uses setVendorLinks()
      * @uses setWritableDirs()
      */
-    public function console($commands)
+    public function console(CommandCollection $commands): CommandCollection
     {
         $this->setVendorLinks();
         $this->setWritableDirs();
@@ -133,7 +134,7 @@ class Plugin extends BasePlugin
      * @return \Cake\Http\MiddlewareQueue
      * @since 2.26.4
      */
-    public function middleware($middleware)
+    public function middleware(MiddlewareQueue $middleware): MiddlewareQueue
     {
         $key = Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
@@ -142,9 +143,9 @@ class Plugin extends BasePlugin
 
     /**
      * Sets symbolic links for vendor assets to be created
-     * @return array
+     * @return void
      */
-    protected function setVendorLinks()
+    protected function setVendorLinks(): void
     {
         $links = array_unique(array_merge(Configure::read('VENDOR_LINKS', []), [
             'npm-asset' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
@@ -152,14 +153,14 @@ class Plugin extends BasePlugin
             'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
         ]));
 
-        return Configure::write('VENDOR_LINKS', $links) ? $links : false;
+        Configure::write('VENDOR_LINKS', $links);
     }
 
     /**
      * Sets directories to be created and must be writable
-     * @return array
+     * @return void
      */
-    protected function setWritableDirs()
+    protected function setWritableDirs(): void
     {
         $dirs = array_unique(array_filter(array_merge(Configure::read('WRITABLE_DIRS', []), [
             getConfig('Assets.target'),
@@ -171,6 +172,6 @@ class Plugin extends BasePlugin
             USER_PICTURES,
         ])));
 
-        return Configure::write('WRITABLE_DIRS', $dirs) ? $dirs : false;
+        Configure::write('WRITABLE_DIRS', $dirs);
     }
 }
