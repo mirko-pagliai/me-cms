@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -31,7 +31,7 @@ class PostsTagsController extends AppController
      * Lists posts tags
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $page = $this->getRequest()->getQuery('page', 1);
 
@@ -44,7 +44,7 @@ class PostsTagsController extends AppController
         $cache = sprintf('tags_limit_%s_page_%s', $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($tags, $paging) = array_values(Cache::readMany(
+        [$tags, $paging] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->PostsTags->getCacheName()
         ));
@@ -53,7 +53,7 @@ class PostsTagsController extends AppController
         if (empty($tags) || empty($paging)) {
             $query = $this->Tags->find('active');
 
-            list($tags, $paging) = [$this->paginate($query), $this->getPaging()];
+            [$tags, $paging] = [$this->paginate($query), $this->getPaging()];
 
             Cache::writeMany([
                 $cache => $tags,
@@ -70,9 +70,9 @@ class PostsTagsController extends AppController
     /**
      * Lists posts for a tag
      * @param string $slug Tag slug
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function view($slug)
+    public function view(string $slug)
     {
         //Data can be passed as query string, from a widget
         if ($this->getRequest()->getQuery('q')) {
@@ -91,7 +91,7 @@ class PostsTagsController extends AppController
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(Cache::readMany(
+        [$posts, $paging] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->PostsTags->getCacheName()
         ));
@@ -104,7 +104,7 @@ class PostsTagsController extends AppController
                     return $query->where(['tag' => $slug]);
                 });
 
-            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
+            [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -31,8 +31,9 @@ class LogsControllerTest extends ControllerTestCase
 
     /**
      * Internal method to write some logs
+     * @return void
      */
-    protected function writeSomeLogs()
+    protected function writeSomeLogs(): void
     {
         Log::write('error', 'This is an error message');
         Log::write('critical', 'This is a critical message');
@@ -60,7 +61,7 @@ class LogsControllerTest extends ControllerTestCase
         $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'index.ctp');
+        $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'index.php');
 
         $this->assertNotEmpty($this->viewVariable('logs'));
         foreach ($this->viewVariable('logs') as $log) {
@@ -80,9 +81,9 @@ class LogsControllerTest extends ControllerTestCase
         $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'view', 'error.log']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'view.ctp');
-        $this->assertContains('This is an error message', $this->viewVariable('content'));
-        $this->assertContains('This is a critical message', $this->viewVariable('content'));
+        $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'view.php');
+        $this->assertStringContainsString('This is an error message', $this->viewVariable('content'));
+        $this->assertStringContainsString('This is a critical message', $this->viewVariable('content'));
         $this->assertEquals('error.log', $this->viewVariable('filename'));
     }
 
@@ -95,7 +96,7 @@ class LogsControllerTest extends ControllerTestCase
         $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'view', 'error.log', '?' => ['as' => 'serialized']]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'view_as_serialized.ctp');
+        $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'view_as_serialized.php');
         $messages = Hash::extract($this->viewVariable('content'), '{*}.message');
         $this->assertEquals(['This is a critical message', 'This is an error message'], $messages);
         $this->assertEquals('error.log', $this->viewVariable('filename'));

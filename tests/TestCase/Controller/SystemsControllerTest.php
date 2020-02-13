@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -52,9 +52,9 @@ class SystemsControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'acceptCookies']);
         $this->assertRedirect(['_name' => 'homepage']);
-        $expire = Time::createFromTimestamp($this->_response->getCookie('cookies-policy')['expire']);
-        $this->assertCookie(true, 'cookies-policy');
-        $this->assertTrue($expire->isWithinNext(Chronos::createFromDate(2038, 1, 1)));
+        $expires = Time::createFromTimestamp($this->_response->getCookie('cookies-policy')['expires']);
+        $this->assertCookie('1', 'cookies-policy');
+        $this->assertTrue($expires->isWithinNext(Chronos::createFromDate(2038, 1, 1)));
     }
 
     /**
@@ -67,7 +67,7 @@ class SystemsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Systems' . DS . 'contact_us.ctp');
+        $this->assertTemplate('Systems' . DS . 'contact_us.php');
         $this->assertInstanceof(ContactUsForm::class, $this->viewVariable('contact'));
 
         //POST request. Data are invalid
@@ -113,8 +113,8 @@ class SystemsControllerTest extends ControllerTestCase
         $this->configRequest(['environment' => ['REMOTE_ADDR' => '31.133.120.18']]);
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Systems' . DS . 'ip_not_allowed.ctp');
-        $this->assertLayout('login.ctp');
+        $this->assertTemplate('Systems' . DS . 'ip_not_allowed.php');
+        $this->assertLayout('login.php');
     }
 
     /**
@@ -130,8 +130,8 @@ class SystemsControllerTest extends ControllerTestCase
         Configure::write('MeCms.default.offline', true);
         $this->get(['_name' => 'offline']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Systems' . DS . 'offline.ctp');
-        $this->assertLayout('login.ctp');
+        $this->assertTemplate('Systems' . DS . 'offline.php');
+        $this->assertLayout('login.php');
     }
 
     /**

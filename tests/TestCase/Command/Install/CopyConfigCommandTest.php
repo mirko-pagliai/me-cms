@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -39,7 +39,6 @@ class CopyConfigCommandTest extends TestCase
     {
         $this->exec('me_cms.copy_config -v');
         $this->assertExitWithSuccess();
-
         foreach (CopyConfigCommand::CONFIG_FILES as $file) {
             $this->assertOutputContains('File or directory `' . rtr(CONFIG . pluginSplit($file)[1] . '.php') . '` already exists');
         }

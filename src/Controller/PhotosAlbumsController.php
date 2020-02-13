@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -28,7 +28,7 @@ class PhotosAlbumsController extends AppController
 {
     /**
      * Lists albums
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function index()
     {
@@ -59,9 +59,9 @@ class PhotosAlbumsController extends AppController
     /**
      * Views album
      * @param string $slug Album slug
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function view($slug)
+    public function view(string $slug)
     {
         //Data can be passed as query string, from a widget
         if ($this->getRequest()->getQuery('q')) {
@@ -79,9 +79,8 @@ class PhotosAlbumsController extends AppController
 
         //Sets the cache name
         $cache = sprintf('album_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
-
         //Tries to get data from the cache
-        list($photos, $paging) = array_values(Cache::readMany(
+        [$photos, $paging] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->PhotosAlbums->getCacheName()
         ));
@@ -93,7 +92,7 @@ class PhotosAlbumsController extends AppController
                 ->orderDesc(sprintf('%s.created', $this->Photos->getAlias()))
                 ->orderDesc(sprintf('%s.id', $this->Photos->getAlias()));
 
-            list($photos, $paging) = [$this->paginate($query), $this->getPaging()];
+            [$photos, $paging] = [$this->paginate($query), $this->getPaging()];
 
             Cache::writeMany([
                 $cache => $photos,

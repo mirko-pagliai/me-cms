@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -14,6 +14,7 @@
 
 namespace MeCms\Controller\Admin;
 
+use Cake\Http\Response;
 use MeCms\Controller\Admin\AppController;
 
 /**
@@ -24,12 +25,12 @@ class PhotosAlbumsController extends AppController
 {
     /**
      * Check if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *   the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
      * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admins and managers can delete albums
         return !$this->getRequest()->isDelete() ?: $this->Auth->isGroup(['admin', 'manager']);
@@ -39,7 +40,7 @@ class PhotosAlbumsController extends AppController
      * Lists albums
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->paginate['order'] = ['created' => 'DESC'];
 
@@ -50,11 +51,11 @@ class PhotosAlbumsController extends AppController
 
     /**
      * Adds photos album
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function add()
     {
-        $album = $this->PhotosAlbums->newEntity();
+        $album = $this->PhotosAlbums->newEmptyEntity();
 
         if ($this->getRequest()->is('post')) {
             $album = $this->PhotosAlbums->patchEntity($album, $this->getRequest()->getData());
@@ -74,9 +75,9 @@ class PhotosAlbumsController extends AppController
     /**
      * Edits photos album
      * @param string $id Photos Album ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         $album = $this->PhotosAlbums->get($id);
 
@@ -98,18 +99,18 @@ class PhotosAlbumsController extends AppController
     /**
      * Deletes photos album
      * @param string $id Photos Album ID
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
-    public function delete($id)
+    public function delete(string $id): ?Response
     {
         $this->getRequest()->allowMethod(['post', 'delete']);
 
         //Before deleting, it checks if the album has some photos
         $album = $this->PhotosAlbums->get($id);
-        list($method, $message) = ['alert', I18N_BEFORE_DELETE];
+        [$method, $message] = ['alert', I18N_BEFORE_DELETE];
         if (!$album->get('photo_count')) {
             $this->PhotosAlbums->deleteOrFail($album);
-            list($method, $message) = ['success', I18N_OPERATION_OK];
+            [$method, $message] = ['success', I18N_OPERATION_OK];
         }
         call_user_func([$this->Flash, $method], $message);
 

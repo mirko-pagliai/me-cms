@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -49,7 +49,6 @@ class AuthComponentTest extends ComponentTestCase
                 ],
             ],
             'authorize' => 'Controller',
-            'ajaxLogin' => null,
             'flash' => [
                 'element' => 'MeTools.flash',
                 'params' => ['class' => 'alert-danger'],

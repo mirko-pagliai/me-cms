@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -10,7 +10,7 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         http://api.cakephp.org/3.7/class-Cake.Mailer.Mailer.html Mailer
+ * @see         http://api.cakephp.org/4.0/class-Cake.Mailer.Mailer.html Mailer
  */
 
 namespace MeCms\Mailer;
@@ -28,12 +28,12 @@ abstract class Mailer extends CakeMailer
      * @param \Cake\Mailer\Email|null $email Email instance
      * @uses getEmailInstance()
      */
-    public function __construct(Email $email = null)
+    public function __construct(?Email $email = null)
     {
         parent::__construct($email);
 
-        $this->_email->viewBuilder()->setHelpers(['MeTools.Html'], false);
-        $this->_email->setFrom(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
+        $this->viewBuilder()->setHelpers(['MeTools.Html'], false);
+        $this->setFrom(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
             ->setSender(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
             ->setEmailFormat('html');
     }

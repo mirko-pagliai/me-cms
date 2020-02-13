@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -36,7 +36,7 @@ class Sitemap extends SitemapBuilder
      * @return array
      * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
-    public static function pages()
+    public static function pages(): array
     {
         if (!getConfig('sitemap.pages')) {
             return [];
@@ -86,7 +86,7 @@ class Sitemap extends SitemapBuilder
      * @return array
      * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
-    public static function photos()
+    public static function photos(): array
     {
         if (!getConfig('sitemap.photos')) {
             return [];
@@ -126,7 +126,7 @@ class Sitemap extends SitemapBuilder
                 //Adds each photo
                 foreach ($album->get('photos') as $photo) {
                     $url[] = self::parse(
-                        ['_name' => 'photo', 'slug' => $album->get('slug'), 'id' => $photo->get('id')],
+                        ['_name' => 'photo', 'slug' => $album->get('slug'), 'id' => (string)$photo->get('id')],
                         ['lastmod' => $photo->get('modified')]
                     );
                 }
@@ -143,7 +143,7 @@ class Sitemap extends SitemapBuilder
      * @return array
      * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
-    public static function posts()
+    public static function posts(): array
     {
         if (!getConfig('sitemap.posts')) {
             return [];
@@ -200,7 +200,7 @@ class Sitemap extends SitemapBuilder
      * @return array
      * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
-    public static function postsTags()
+    public static function postsTags(): array
     {
         if (!getConfig('sitemap.posts_tags')) {
             return [];
@@ -242,7 +242,7 @@ class Sitemap extends SitemapBuilder
      * @uses \MeCms\Utility\SitemapBuilder::parse()
      * @uses \MeCms\Utility\StaticPage::all()
      */
-    public static function staticPages()
+    public static function staticPages(): array
     {
         if (!getConfig('sitemap.static_pages')) {
             return [];
@@ -258,7 +258,7 @@ class Sitemap extends SitemapBuilder
      * @return array
      * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
-    public static function systems()
+    public static function systems(): array
     {
         if (!getConfig('sitemap.systems')) {
             return [];
@@ -269,6 +269,6 @@ class Sitemap extends SitemapBuilder
             $url[] = self::parse(['_name' => 'contactUs']);
         }
 
-        return isset($url) ? $url : [];
+        return $url ?? [];
     }
 }

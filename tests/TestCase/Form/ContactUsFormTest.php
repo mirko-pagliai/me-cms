@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -44,7 +44,7 @@ class ContactUsFormTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -110,6 +110,6 @@ class ContactUsFormTest extends TestCase
      */
     public function testExecute()
     {
-        $this->assertArrayKeysEqual(['headers', 'message'], $this->Form->execute($this->example));
+        $this->assertTrue($this->Form->execute($this->example));
     }
 }

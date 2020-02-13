@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -31,7 +31,7 @@ class GroupsCommand extends Command
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
      * @return \Cake\Console\ConsoleOptionParser
      */
-    protected function buildOptionParser(ConsoleOptionParser $parser)
+    protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
         return $parser->setDescription(__d('me_cms', 'Lists user groups'));
     }
@@ -42,7 +42,7 @@ class GroupsCommand extends Command
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $this->loadModel('MeCms.UsersGroups');
 
@@ -52,7 +52,7 @@ class GroupsCommand extends Command
         }
 
         $rows = $rows->map(function (UsersGroup $group) {
-            return $group->toArray();
+            return array_map('strval', $group->toArray());
         });
 
         $io->helper('table')->output(array_merge([[I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS]], $rows->toList()));

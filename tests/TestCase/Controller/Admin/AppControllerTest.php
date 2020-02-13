@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -29,7 +29,7 @@ class AppControllerTest extends ControllerTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -89,7 +89,7 @@ class AppControllerTest extends ControllerTestCase
     public function testReferer()
     {
         $request = $this->Controller->getRequest()->withParam('controller', 'MyController')->withParam('action', 'edit');
-        $this->assertSame('/', $this->Controller->setRequest($request)->referer());
+        $this->assertSame('http://localhost/', $this->Controller->setRequest($request)->referer());
 
         $session = new Session();
         $session->write('referer', ['controller' => 'MyController', 'target' => '/here']);

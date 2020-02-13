@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -30,7 +30,7 @@ class AddUserCommand extends Command
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
      * @return \Cake\Console\ConsoleOptionParser
      */
-    protected function buildOptionParser(ConsoleOptionParser $parser)
+    protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
         return $parser->setDescription(__d('me_cms', 'Adds an user'))
             ->addOption('group', ['short' => 'g', 'help' => __d('me_cms', 'Group ID')]);
@@ -42,7 +42,7 @@ class AddUserCommand extends Command
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $this->loadModel('MeCms.Users');
 
@@ -70,7 +70,7 @@ class AddUserCommand extends Command
         if (!$user['group_id']) {
             //Formats groups
             foreach ($groups as $id => $group) {
-                $groups[$id] = [$id, $group];
+                $groups[$id] = [(string)$id, $group];
             }
 
             //Sets headers and prints as table

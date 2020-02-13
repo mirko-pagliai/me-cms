@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -45,7 +45,7 @@ class Page extends PostAndPageEntity
      * @since 2.27.2
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getUrl()
+    protected function _getUrl(): string
     {
         property_exists_or_fail($this, 'slug');
 

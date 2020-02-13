@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -44,7 +44,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'postsCategories']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PostsCategories' . DS . 'index.ctp');
+        $this->assertTemplate('PostsCategories' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(PostsCategory::class, $this->viewVariable('categories'));
         $cache = Cache::read('categories_index', $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('categories')->toArray(), $cache->toArray());
@@ -60,12 +60,12 @@ class PostsCategoriesControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('PostsCategories' . DS . 'view.ctp');
+        $this->assertTemplate('PostsCategories' . DS . 'view.php');
         $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
 
         $cache = sprintf('category_%s_limit_%s_page_%s', md5('first-post-category'), getConfigOrFail('default.records'), 1);
-        list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
+        [$postsFromCache, $pagingFromCache] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Table->getCacheName()
         ));

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -27,7 +27,7 @@ class HtmlWidgetsCell extends Cell
      * @param string $template Template name
      * @return void
      */
-    public function display($template)
+    public function display(string $template): void
     {
         $this->viewBuilder()->setTemplate($template);
     }

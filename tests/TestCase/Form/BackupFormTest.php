@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -38,7 +38,7 @@ class BackupFormTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -125,7 +125,7 @@ class BackupFormTest extends TestCase
         $BackupForm->expects($this->at(0))
             ->method('getBackupExportInstance')
             ->will($this->returnCallback(function () {
-                $this->BackupExport->method('export')->will($this->returnValue(true));
+                $this->BackupExport->method('export')->will($this->returnValue('test.sql'));
 
                 return $this->BackupExport;
             }));

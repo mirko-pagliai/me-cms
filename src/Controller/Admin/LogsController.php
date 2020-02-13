@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -14,6 +14,7 @@
 
 namespace MeCms\Controller\Admin;
 
+use Cake\Http\Response;
 use Cake\ORM\Entity;
 use MeCms\Controller\Admin\AppController;
 use SplFileInfo;
@@ -31,7 +32,7 @@ class LogsController extends AppController
      * @param bool $serialized `true` for a serialized log
      * @return string
      */
-    protected function getPath($file, $serialized)
+    protected function getPath($file, bool $serialized): string
     {
         $filename = $file instanceof SplFileInfo ? $file->getFilename() : $file;
         $filename = $serialized ? pathinfo($filename, PATHINFO_FILENAME) . '_serialized.log' : $filename;
@@ -44,9 +45,10 @@ class LogsController extends AppController
      * @param string $filename Filename
      * @param bool $serialized `true` for a serialized log
      * @return string|array Log as array for serialized logs, otherwise a string
+     * @throws \Tools\Exception\NotReadableException
      * @uses getPath()
      */
-    protected function read($filename, $serialized)
+    protected function read(string $filename, bool $serialized)
     {
         $log = $this->getPath($filename, $serialized);
         is_readable_or_fail($log);
@@ -57,12 +59,12 @@ class LogsController extends AppController
 
     /**
      * Check if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty
-     *  the user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
      * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Only admins can access this controller
         return $this->Auth->isGroup('admin');
@@ -73,7 +75,7 @@ class LogsController extends AppController
      * @return void
      * @uses getPath()
      */
-    public function index()
+    public function index(): void
     {
         $finder = new Finder();
         $finder->files()->name('/^(?!.*_serialized).+\.log$/')->in(LOGS);
@@ -94,7 +96,7 @@ class LogsController extends AppController
      * @return void
      * @uses read()
      */
-    public function view($filename)
+    public function view(string $filename): void
     {
         $serialized = false;
         if ($this->getRequest()->getQuery('as') === 'serialized') {
@@ -109,10 +111,10 @@ class LogsController extends AppController
     /**
      * Downloads a log
      * @param string $filename Log filename
-     * @return \Cake\Network\Response
+     * @return \Cake\Http\Response
      * @uses getPath()
      */
-    public function download($filename)
+    public function download(string $filename): Response
     {
         return $this->getResponse()->withFile($this->getPath($filename, false), ['download' => true]);
     }
@@ -121,10 +123,10 @@ class LogsController extends AppController
      * Deletes a log.
      * If there's even a serialized log copy, it also deletes that.
      * @param string $filename Filename
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      * @uses getPath()
      */
-    public function delete($filename)
+    public function delete(string $filename): ?Response
     {
         $this->getRequest()->allowMethod(['post', 'delete']);
 
@@ -136,9 +138,9 @@ class LogsController extends AppController
             $successSerialized = @unlink($serialized);
         }
 
-        list($method, $message) = ['error', I18N_OPERATION_NOT_OK];
+        [$method, $message] = ['error', I18N_OPERATION_NOT_OK];
         if ($success && $successSerialized) {
-            list($method, $message) = ['success', I18N_OPERATION_OK];
+            [$method, $message] = ['success', I18N_OPERATION_OK];
         }
         call_user_func([$this->Flash, $method], $message);
 

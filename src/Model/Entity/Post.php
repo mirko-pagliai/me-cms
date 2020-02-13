@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -50,7 +50,7 @@ class Post extends PostAndPageEntity
      * @since 2.27.2
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getUrl()
+    protected function _getUrl(): string
     {
         property_exists_or_fail($this, 'slug');
 
@@ -61,7 +61,7 @@ class Post extends PostAndPageEntity
      * Gets tags as string, separated by a comma and a space (virtual field)
      * @return string
      */
-    protected function _getTagsAsString()
+    protected function _getTagsAsString(): ?string
     {
         return $this->has('tags') ? implode(', ', Hash::extract($this->get('tags'), '{*}.tag')) : '';
     }

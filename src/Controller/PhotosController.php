@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -14,6 +14,7 @@
 
 namespace MeCms\Controller;
 
+use Cake\Http\Response;
 use MeCms\Controller\AppController;
 
 /**
@@ -27,9 +28,9 @@ class PhotosController extends AppController
      * Views a photo
      * @param string $slug Album slug
      * @param string $id Photo ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function view($slug = null, $id = null)
+    public function view(string $slug, string $id)
     {
         //This allows backward compatibility for URLs like `/photo/11`
         if (empty($slug)) {
@@ -52,15 +53,16 @@ class PhotosController extends AppController
      * Preview for photos.
      * It uses the `view` template.
      * @param string $id Photo ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response
      */
-    public function preview($id)
+    public function preview(string $id): Response
     {
         $photo = $this->Photos->findPendingById($id)
             ->contain([$this->Albums->getAlias() => ['fields' => ['id', 'title', 'slug']]])
             ->firstOrFail();
 
         $this->set(compact('photo'));
-        $this->render('view');
+
+        return $this->render('view');
     }
 }

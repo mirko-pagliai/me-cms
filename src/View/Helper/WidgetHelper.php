@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -14,6 +14,7 @@
 
 namespace MeCms\View\Helper;
 
+use Cake\View\Cell;
 use Cake\View\Helper;
 
 /**
@@ -27,22 +28,18 @@ class WidgetHelper extends Helper
      * Internal method to get all widgets
      * @return array
      */
-    protected function getAll()
+    protected function getAll(): array
     {
         $widgets = getConfig('Widgets.general', []);
-
-        if ($this->getView()->getRequest()->isUrl(['_name' => 'homepage']) && getConfig('Widgets.homepage')) {
-            $widgets = getConfig('Widgets.homepage');
+        $widgetsHomepage = getConfig('Widgets.homepage');
+        if ($this->getView()->getRequest()->isUrl(['_name' => 'homepage']) && $widgetsHomepage) {
+            $widgets = $widgetsHomepage;
         }
 
         return $widgets ? collection($widgets)->map(function ($args, $name) {
-            if (is_string($name) && is_array($args)) {
-                return [$name => $args];
-            } elseif (is_string($args)) {
-                return [$args => []];
+            if (is_array($args) && !is_string($name)) {
+                [$name, $args] = [array_key_first($args), array_value_first($args)];
             }
-
-            list($name, $args) = [array_key_first($args), array_value_first($args)];
 
             return is_int($name) && is_string($args) ? [$args => []] : [$name => $args];
         })->toList() : [];
@@ -50,19 +47,21 @@ class WidgetHelper extends Helper
 
     /**
      * Renders all widgets
-     * @return string|void Html code
+     * @return string Html code
      * @uses getAll()
      * @uses widget()
      */
-    public function all()
+    public function all(): string
     {
+        $widgets = [];
+
         foreach ($this->getAll() as $widget) {
             foreach ($widget as $name => $args) {
                 $widgets[] = $this->widget($name, $args);
             }
         }
 
-        return empty($widgets) ? null : trim(implode(PHP_EOL, $widgets));
+        return $widgets ? trim(implode(PHP_EOL, $widgets)) : '';
     }
 
     /**
@@ -72,11 +71,11 @@ class WidgetHelper extends Helper
      * @param array $options Options for Cell's constructor
      * @return \Cake\View\Cell The cell instance
      */
-    public function widget($name, array $data = [], array $options = [])
+    public function widget(string $name, array $data = [], array $options = []): Cell
     {
         $parts = explode('::', $name);
         $name = $parts[0] . 'Widgets';
-        $name = empty($parts[1]) ? $name : sprintf('%s::%s', $name, $parts[1]);
+        $name .= empty($parts[1]) ? '' : '::' . $parts[1];
 
         return $this->getView()->cell($name, $data, $options);
     }

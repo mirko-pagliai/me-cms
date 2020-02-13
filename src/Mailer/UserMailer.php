@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -28,11 +28,11 @@ class UserMailer extends Mailer
      * The `$user` object must contain the `email` and `full_name` properties
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
-     * @see MeCms\Controller\Admin\UsersController::activationResend()
-     * @see MeCms\Controller\Admin\UsersController::signup()
+     * @see \MeCms\Controller\Admin\UsersController::activationResend()
+     * @see \MeCms\Controller\Admin\UsersController::signup()
      * @throws \Tools\Exception\KeyNotExistsException
      */
-    public function activation(User $user)
+    public function activation(User $user): void
     {
         key_exists_or_fail(['email', 'full_name'], $user->toArray());
 
@@ -48,10 +48,10 @@ class UserMailer extends Mailer
      * The `$user` object must contain the `email` and `full_name` properties
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
-     * @see MeCms\Controller\Admin\UsersController::changePassword()
+     * @see \MeCms\Controller\Admin\UsersController::changePassword()
      * @throws \Tools\Exception\KeyNotExistsException
      */
-    public function changePassword(User $user)
+    public function changePassword(User $user): void
     {
         key_exists_or_fail(['email', 'full_name'], $user->toArray());
 
@@ -67,10 +67,10 @@ class UserMailer extends Mailer
      * The `$user` object must contain the `email` and `full_name` properties
      * @param \MeCms\Model\Entity\User $user User data
      * @return void
-     * @see MeCms\Controller\UsersController::passwordForgot()
+     * @see \MeCms\Controller\UsersController::passwordForgot()
      * @throws \Tools\Exception\KeyNotExistsException
      */
-    public function passwordForgot(User $user)
+    public function passwordForgot(User $user): void
     {
         key_exists_or_fail(['email', 'full_name'], $user->toArray());
 

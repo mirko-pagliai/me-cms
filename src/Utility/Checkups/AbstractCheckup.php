@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -27,12 +27,12 @@ abstract class AbstractCheckup
      * @param array $paths Paths to check
      * @return array Array with paths as keys and boolean as value
      */
-    protected function isWriteable(array $paths = [])
+    protected function isWriteable(array $paths = []): array
     {
         foreach ($paths as $path) {
             $result[$path] = is_writable_resursive($path);
         }
 
-        return isset($result) ? $result : [];
+        return $result ?? [];
     }
 }

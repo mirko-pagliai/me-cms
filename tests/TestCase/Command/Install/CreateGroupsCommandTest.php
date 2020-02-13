@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -73,7 +73,7 @@ class CreateGroupsCommandTest extends TestCase
      * Provider for `testExecuteOtherDrivers()`
      * @return array
      */
-    public function driverProvider()
+    public function driverProvider(): array
     {
         return [
             'postgres' => [Postgres::class],

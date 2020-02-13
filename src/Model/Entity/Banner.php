@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -33,7 +33,7 @@ use Cake\ORM\Entity;
 class Banner extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned
      * @var array
      */
     protected $_accessible = [
@@ -53,7 +53,7 @@ class Banner extends Entity
      * @return string
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getPath()
+    protected function _getPath(): ?string
     {
         property_exists_or_fail($this, 'filename');
 
@@ -65,7 +65,7 @@ class Banner extends Entity
      * @return string
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getWww()
+    protected function _getWww(): ?string
     {
         property_exists_or_fail($this, 'filename');
 

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * Before using reCAPTCHA, you have to get keys:
  * https://www.google.com/recaptcha

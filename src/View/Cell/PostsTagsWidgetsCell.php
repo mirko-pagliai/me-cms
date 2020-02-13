@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -28,7 +28,7 @@ class PostsTagsWidgetsCell extends Cell
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadModel('MeCms.Tags');
     }
@@ -40,11 +40,10 @@ class PostsTagsWidgetsCell extends Cell
      * @return array
      * @throws \InvalidArgumentException
      */
-    protected function getFontSizes(array $style = [])
+    protected function getFontSizes(array $style = []): array
     {
         //Maximum and minimun font sizes we want to use
-        $maxFont = empty($style['maxFont']) ? 40 : $style['maxFont'];
-        $minFont = empty($style['minFont']) ? 12 : $style['minFont'];
+        [$maxFont, $minFont] = [$style['maxFont'] ?? 40, $style['minFont'] ?? 12];
         is_true_or_fail($maxFont > $minFont, __d('me_cms', 'Invalid values'), InvalidArgumentException::class);
 
         return [$maxFont, $minFont];
@@ -62,12 +61,12 @@ class PostsTagsWidgetsCell extends Cell
      * @uses getFontSizes()
      */
     public function popular(
-        $limit = 10,
-        $prefix = '#',
-        $render = 'cloud',
-        $shuffle = true,
+        int $limit = 10,
+        string $prefix = '#',
+        string $render = 'cloud',
+        bool $shuffle = true,
         $style = ['maxFont' => 40, 'minFont' => 12]
-    ) {
+    ): void {
         $this->viewBuilder()->setTemplate(sprintf('popular_as_%s', $render));
 
         //Returns on tags index
@@ -83,7 +82,7 @@ class PostsTagsWidgetsCell extends Cell
 
         if ($style && is_array($style)) {
             //Updates maximum and minimun font sizes we want to use
-            list($maxFont, $minFont) = $this->getFontSizes($style);
+            [$maxFont, $minFont] = $this->getFontSizes($style);
 
             $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
         }

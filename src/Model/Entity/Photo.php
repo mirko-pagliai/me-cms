@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -34,7 +34,7 @@ use Thumber\Cake\Utility\ThumbCreator;
 class Photo extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned
      * @var array
      */
     protected $_accessible = [
@@ -54,7 +54,7 @@ class Photo extends Entity
      * @return string
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getPath()
+    protected function _getPath(): ?string
     {
         property_exists_or_fail($this, ['album_id', 'filename']);
 
@@ -65,7 +65,7 @@ class Photo extends Entity
      * Gets description as plain text (virtual field)
      * @return string
      */
-    protected function _getPlainDescription()
+    protected function _getPlainDescription(): ?string
     {
         return $this->has('description') ? trim(strip_tags((new BBCode())->remove($this->get('description')))) : '';
     }
@@ -76,10 +76,10 @@ class Photo extends Entity
      *  properties
      * @uses _getPath()
      */
-    protected function _getPreview()
+    protected function _getPreview(): ?Entity
     {
         $path = $this->_getPath();
-        list($width, $height) = getimagesize($path);
+        [$width, $height] = getimagesize($path);
         $thumber = new ThumbCreator($path);
         $thumber->resize(1200, 1200)->save(['format' => 'jpg']);
 
@@ -92,10 +92,10 @@ class Photo extends Entity
      * @since 2.27.2
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getUrl()
+    protected function _getUrl(): string
     {
         property_exists_or_fail($this, ['id', 'album']);
 
-        return Router::url(['_name' => 'photo', 'slug' => $this->get('album')->get('slug'), 'id' => $this->get('id')], true);
+        return Router::url(['_name' => 'photo', 'slug' => $this->get('album')->get('slug'), 'id' => (string)$this->get('id')], true);
     }
 }

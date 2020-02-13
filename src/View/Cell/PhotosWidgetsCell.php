@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -26,7 +26,7 @@ class PhotosWidgetsCell extends Cell
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadModel('MeCms.Photos');
     }
@@ -36,7 +36,7 @@ class PhotosWidgetsCell extends Cell
      * @param string $render Render type (`form` or `list`)
      * @return void
      */
-    public function albums($render = 'form')
+    public function albums(string $render = 'form'): void
     {
         $this->viewBuilder()->setTemplate(sprintf('albums_as_%s', $render));
 
@@ -61,7 +61,7 @@ class PhotosWidgetsCell extends Cell
      * @param int $limit Limit
      * @return void
      */
-    public function latest($limit = 1)
+    public function latest(int $limit = 1): void
     {
         //Returns on the same controllers
         if ($this->request->isController(['Photos', 'PhotosAlbums'])) {
@@ -83,7 +83,7 @@ class PhotosWidgetsCell extends Cell
      * @param int $limit Limit
      * @return void
      */
-    public function random($limit = 1)
+    public function random(int $limit = 1): void
     {
         //Returns on the same controllers
         if ($this->request->isController(['Photos', 'PhotosAlbums'])) {

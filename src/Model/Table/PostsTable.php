@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -16,6 +16,7 @@ namespace MeCms\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Collection\CollectionInterface;
 use Cake\Event\Event;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
@@ -58,9 +59,8 @@ class PostsTable extends PostsAndPagesTables
      * @param \ArrayObject $options Options
      * @return void
      * @since 2.15.2
-     * @uses \MeCms\Model\Table\AppTable::getList()
      */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
     {
         parent::beforeMarshal($event, $data, $options);
 
@@ -89,7 +89,7 @@ class PostsTable extends PostsAndPagesTables
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         return $rules->add($rules->existsIn(['category_id'], 'Categories', I18N_SELECT_VALID_OPTION))
             ->add($rules->existsIn(['user_id'], 'Users', I18N_SELECT_VALID_OPTION))
@@ -103,7 +103,7 @@ class PostsTable extends PostsAndPagesTables
      * @return \Cake\ORM\Query Query object
      * @since 2.22.8
      */
-    public function findForIndex(Query $query)
+    public function findForIndex(Query $query): Query
     {
         return $query->contain([
             $this->Categories->getAlias() => ['fields' => ['id', 'title', 'slug']],
@@ -118,12 +118,12 @@ class PostsTable extends PostsAndPagesTables
      * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `id` and `Tags`
      * @param int $limit Limit of related posts
      * @param bool $images If `true`, gets only posts with images
-     * @return \Cake\Collection\Collection Collection of entities
+     * @return \Cake\Collection\CollectionInterface Collection of entities
      * @throws \Tools\Exception\PropertyNotExistsException
      * @uses queryForRelated()
      * @uses $cache
      */
-    public function getRelated(Post $post, $limit = 5, $images = true)
+    public function getRelated(Post $post, int $limit = 5, bool $images = true): CollectionInterface
     {
         property_exists_or_fail($post, ['id', 'tags']);
 
@@ -166,7 +166,7 @@ class PostsTable extends PostsAndPagesTables
      * @param array $config The configuration for the table
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -202,10 +202,10 @@ class PostsTable extends PostsAndPagesTables
      * Gets the query for related posts from a tag ID
      * @param int $tagId Tag ID
      * @param bool $onlyWithImages If `true`, gets only posts with images
-     * @return \Cake\ORM\Query The query builder
+     * @return \Cake\ORM\Query $query Query object
      * @since 2.23.0
      */
-    public function queryForRelated($tagId, $onlyWithImages = true)
+    public function queryForRelated(int $tagId, bool $onlyWithImages = true): Query
     {
         $query = $this->find('active')
             ->select(['id', 'title', 'preview', 'slug', 'text'])
@@ -226,9 +226,8 @@ class PostsTable extends PostsAndPagesTables
      * @param \Cake\ORM\Query $query Query object
      * @param array $data Filter data ($this->getRequest()->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
-     * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
-    public function queryFromFilter(Query $query, array $data = [])
+    public function queryFromFilter(Query $query, array $data = []): Query
     {
         $query = parent::queryFromFilter($query, $data);
 

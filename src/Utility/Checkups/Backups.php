@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -30,7 +30,7 @@ class Backups extends AbstractCheckup
      * @uses isWriteable()
      * @uses path()
      */
-    public function isWriteable(array $paths = [])
+    public function isWriteable(array $paths = []): array
     {
         return parent::isWriteable($paths ?: [Configure::read('DatabaseBackup.target')]);
     }

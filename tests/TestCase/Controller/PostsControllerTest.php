@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,6 +15,8 @@
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Controller\Controller;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\I18n\Time;
 use MeCms\Model\Entity\Post;
@@ -39,16 +41,16 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
+     * @param \Cake\Event\EventInterface $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
      * @return void
      */
-    public function controllerSpy($event, $controller = null)
+    public function controllerSpy(EventInterface $event, ?Controller $controller = null): void
     {
         parent::controllerSpy($event, $controller);
 
         if ($this->getName() === 'testRss') {
-            $this->_controller->viewBuilder()->setLayout(false);
+            $this->_controller->viewBuilder()->setLayout(null);
         }
     }
 
@@ -59,14 +61,13 @@ class PostsControllerTest extends ControllerTestCase
     public function testIndex()
     {
         $url = ['_name' => 'posts'];
-
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts' . DS . 'index.ctp');
+        $this->assertTemplate('Posts' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
 
         $cache = sprintf('index_limit_%s_page_%s', getConfigOrFail('default.records'), 1);
-        list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
+        [$postsFromCache, $pagingFromCache] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Table->getCacheName()
         ));
@@ -90,7 +91,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts' . DS . 'index_by_date.ctp');
+        $this->assertTemplate('Posts' . DS . 'index_by_date.php');
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
         $this->assertEquals($date, $this->viewVariable('date'));
 
@@ -104,7 +105,7 @@ class PostsControllerTest extends ControllerTestCase
             getConfigOrFail('default.records'),
             1
         );
-        list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
+        [$postsFromCache, $pagingFromCache] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Table->getCacheName()
         ));
@@ -114,13 +115,14 @@ class PostsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
+//        dd($this->_controller->getRequest());
         $this->assertNotEmpty($this->_controller->getPaging()['Posts']);
 
         //Tries with various possible dates
         foreach (['today', 'yesterday', '2016', '2016/12', '2016/12/29'] as $date) {
             $this->get(['_name' => 'postsByDate', $date]);
             $this->assertResponseOkAndNotEmpty();
-            $this->assertTemplate('Posts' . DS . 'index_by_date.ctp');
+            $this->assertTemplate('Posts' . DS . 'index_by_date.php');
         }
 
         //GET request with query string
@@ -158,7 +160,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts' . DS . 'search.ctp');
+        $this->assertTemplate('Posts' . DS . 'search.php');
         $this->assertEmpty($this->viewVariable('posts'));
         $this->assertEmpty($this->viewVariable('pattern'));
 
@@ -167,10 +169,10 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
         $this->assertEquals($this->viewVariable('pattern'), $pattern);
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
-        $this->assertContains($pattern, $this->viewVariable('posts')->first()->text);
+        $this->assertStringContainsString($pattern, $this->viewVariable('posts')->first()->text);
 
         $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), getConfigOrFail('default.records_for_searches'), 1);
-        list($postsFromCache, $pagingFromCache) = array_values(Cache::readMany(
+        [$postsFromCache, $pagingFromCache] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Table->getCacheName()
         ));
@@ -201,7 +203,7 @@ class PostsControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'post', 'first-post']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts' . DS . 'view.ctp');
+        $this->assertTemplate('Posts' . DS . 'view.php');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('related'));
         $cache = Cache::read('view_' . md5('first-post'), $this->Table->getCacheName());
@@ -217,7 +219,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->setUserGroup('user');
         $this->get(['_name' => 'postsPreview', 'inactive-post']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Posts' . DS . 'view.ctp');
+        $this->assertTemplate('Posts' . DS . 'view.php');
         $this->assertInstanceof(Post::class, $this->viewVariable('post'));
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('related'));
     }

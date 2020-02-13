@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -51,7 +51,7 @@ abstract class ControllerTestCase extends TestCase
      * @uses $Controller
      * @uses setUserGroup()
      */
-    public function assertGroupsAreAuthorized($values, $action = null)
+    public function assertGroupsAreAuthorized(array $values, ?string $action = null): void
     {
         $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
@@ -78,7 +78,7 @@ abstract class ControllerTestCase extends TestCase
      * @uses $Controller
      * @uses setUserId()
      */
-    public function assertUsersAreAuthorized($values, $action = null)
+    public function assertUsersAreAuthorized(array $values, ?string $action = null): void
     {
         $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
 
@@ -110,7 +110,7 @@ abstract class ControllerTestCase extends TestCase
      * @uses getMockForModel()
      * @uses setUserGroup()
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -128,7 +128,6 @@ abstract class ControllerTestCase extends TestCase
             $this->url = ['controller' => $alias, 'plugin' => $parts[0]];
             $this->url += $isAdminController ? ['prefix' => ADMIN_PREFIX] : [];
 
-            //Tries to retrieve the table
             $className = $parts[0] . '\\Model\\Table\\' . $alias . 'Table';
             $this->Table = $this->getTable($alias, compact('className'));
         }
@@ -145,7 +144,7 @@ abstract class ControllerTestCase extends TestCase
      *  a upload
      * @return array
      */
-    protected function createImageToUpload()
+    protected function createImageToUpload(): array
     {
         $file = TMP . 'file_to_upload.jpg';
         @copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
@@ -165,7 +164,7 @@ abstract class ControllerTestCase extends TestCase
      * @return void
      * @uses $Controller
      */
-    protected function setUserId($id)
+    protected function setUserId(int $id): void
     {
         if ($this->Controller) {
             $this->Controller->Auth->setUser(compact('id'));
@@ -180,7 +179,7 @@ abstract class ControllerTestCase extends TestCase
      * @return void
      * @uses $Controller
      */
-    protected function setUserGroup($name)
+    protected function setUserGroup(string $name): void
     {
         if ($this->Controller) {
             $this->Controller->Auth->setUser(['group' => compact('name')]);

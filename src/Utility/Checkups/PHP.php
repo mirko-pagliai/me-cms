@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -25,13 +25,13 @@ class PHP extends AbstractCheckup
     /**
      * Extensions to check
      */
-    const EXT_TO_CHECK = ['exif', 'imagick', 'zip'];
+    protected const EXT_TO_CHECK = ['exif', 'imagick', 'zip'];
 
     /**
      * Checks if some extensions are loaded
      * @return array Array with extension name as key and boolean as value
      */
-    public function extensions()
+    public function extensions(): array
     {
         foreach (self::EXT_TO_CHECK as $extension) {
             $extensions[$extension] = extension_loaded($extension);

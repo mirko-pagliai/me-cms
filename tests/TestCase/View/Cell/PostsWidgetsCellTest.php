@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -107,6 +107,8 @@ class PostsWidgetsCellTest extends CellTestCase
 
         //With no posts
         $this->Table->deleteAll(['id IS NOT' => null]);
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }
@@ -144,7 +146,7 @@ class PostsWidgetsCellTest extends CellTestCase
         $this->assertHtml($expected, $this->Widget->widget($widget, ['limit' => 1])->render());
 
         //Tries with a limit of 2
-        list($post, $otherPost) = $this->Table->find('active')->orderDesc('created')->limit(2)->toArray();
+        [$post, $otherPost] = $this->Table->find('active')->orderDesc('created')->limit(2)->toArray();
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -188,6 +190,8 @@ class PostsWidgetsCellTest extends CellTestCase
 
         //With no posts
         $this->Table->deleteAll(['id IS NOT' => null]);
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
     }
 
@@ -271,6 +275,8 @@ class PostsWidgetsCellTest extends CellTestCase
 
         //With no posts
         $this->Table->deleteAll(['id IS NOT' => null]);
+        $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'])->render());
     }

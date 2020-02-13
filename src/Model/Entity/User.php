@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -39,7 +39,7 @@ use Symfony\Component\Finder\Finder;
 class User extends Entity
 {
     /**
-     * Fields that can be mass assigned using newEntity() or patchEntity()
+     * Fields that can be mass assigned
      * @var array
      */
     protected $_accessible = [
@@ -60,7 +60,7 @@ class User extends Entity
      * @return string
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getFullName()
+    protected function _getFullName(): ?string
     {
         property_exists_or_fail($this, ['first_name', 'last_name']);
 
@@ -71,7 +71,7 @@ class User extends Entity
      * Gets the picture (virtual field)
      * @return string
      */
-    protected function _getPicture()
+    protected function _getPicture(): string
     {
         if ($this->has('id')) {
             $finder = new Finder();
@@ -93,7 +93,7 @@ class User extends Entity
      * @param string $password Password
      * @return string Hash
      */
-    protected function _setPassword($password)
+    protected function _setPassword(string $password): string
     {
         return (new DefaultPasswordHasher())->hash($password);
     }

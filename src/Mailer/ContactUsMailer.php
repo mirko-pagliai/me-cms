@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -10,8 +10,6 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         MeCms\Controller\SystemsController::contactUs()
- * @see         MeCms\Form\ContactUsForm
  */
 
 namespace MeCms\Mailer;
@@ -32,7 +30,7 @@ class ContactUsMailer extends Mailer
      * @return void
      * @throws \Tools\Exception\KeyNotExistsException
      */
-    public function contactUsMail($data)
+    public function contactUsMail(array $data): void
     {
         //Checks that all required data is present
         key_exists_or_fail(['email', 'first_name', 'last_name', 'message'], $data);

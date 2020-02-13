@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -38,7 +38,7 @@ class PostsCategoriesTable extends AppTable
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         return $rules->add($rules->existsIn(['parent_id'], 'Parents', I18N_SELECT_VALID_OPTION))
             ->add($rules->isUnique(['slug'], I18N_VALUE_ALREADY_USED))
@@ -50,7 +50,7 @@ class PostsCategoriesTable extends AppTable
      * @param \Cake\ORM\Query $query Query object
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query)
+    public function findActive(Query $query): Query
     {
         return $query->innerJoinWith($this->Posts->getAlias(), function (Query $query) {
             return $query->find('active');
@@ -62,7 +62,7 @@ class PostsCategoriesTable extends AppTable
      * @param array $config The configuration for the table
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 

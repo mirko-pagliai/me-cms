@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -33,7 +33,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * @param array $userAgent Data returned by the `getUserAgent()` method
      * @return \MeCms\Controller\Component\LoginRecorderComponent|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getMockForLoginRecorder($methods = ['getUserAgent'], array $userAgent = [])
+    protected function getMockForLoginRecorder(?array $methods = ['getUserAgent'], array $userAgent = [])
     {
         $component = $this->getMockForComponent(LoginRecorderComponent::class, $methods);
 
@@ -55,7 +55,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->Component = $this->getMockForLoginRecorder();
 
@@ -66,7 +66,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Called after every test method
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -89,8 +89,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $request->expects($this->once())
             ->method('clientIp')
             ->will($this->returnValue('::1'));
-
-        $this->Component->request = $request;
+        $this->Component->getController()->request = $request;
         $this->assertEquals('127.0.0.1', $this->invokeMethod($this->Component, 'getClientIp'));
     }
 

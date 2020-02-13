@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -33,7 +33,7 @@ class Plugin extends BasePlugin
      * @return array Plugins
      * @uses \MeTools\Core\Plugin::all()
      */
-    public static function all(array $options = [])
+    public static function all(array $options = []): array
     {
         $options += ['order' => true];
         $plugins = parent::all($options);

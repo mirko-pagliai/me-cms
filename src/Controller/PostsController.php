@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,8 +15,9 @@
 namespace MeCms\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
+use Cake\Http\Response;
 use Cake\I18n\I18n;
 use Cake\ORM\ResultSet;
 use Cake\Routing\Router;
@@ -38,11 +39,11 @@ class PostsController extends AppController
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
-     *  each controller action.
-     * @param \Cake\Event\Event $event An Event instance
+     *  each controller action
+     * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Network\Response|null|void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         $result = parent::beforeFilter($event);
         if ($result) {
@@ -56,7 +57,7 @@ class PostsController extends AppController
      * Lists posts
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $page = $this->getRequest()->getQuery('page', 1);
 
@@ -64,7 +65,7 @@ class PostsController extends AppController
         $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $page);
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(Cache::readMany(
+        [$posts, $paging] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Posts->getCacheName()
         ));
@@ -73,7 +74,7 @@ class PostsController extends AppController
         if (empty($posts) || empty($paging)) {
             $query = $this->Posts->find('active')->find('forIndex');
 
-            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
+            [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([
@@ -102,17 +103,17 @@ class PostsController extends AppController
      * <pre>/posts/yesterday</pre>
      * @param string $date Date as `today`, `yesterday`, `YYYY/MM/dd`,
      *  `YYYY/MM` or `YYYY`
-     * @return \Cake\Network\Response|null|void
-     * @use \MeCms\Controller\Traits\GetStartAndEndDateTrait\getStartAndEndDate()
+     * @return \Cake\Http\Response|null|void
+     * @use \MeCms\Controller\Traits\GetStartAndEndDateTrait::getStartAndEndDate()
      */
-    public function indexByDate($date)
+    public function indexByDate(string $date)
     {
         //Data can be passed as query string, from a widget
         if ($this->getRequest()->getQuery('q')) {
             return $this->redirect([$this->getRequest()->getQuery('q')]);
         }
 
-        list($start, $end) = $this->getStartAndEndDate($date);
+        [$start, $end] = $this->getStartAndEndDate($date);
 
         $page = $this->getRequest()->getQuery('page', 1);
 
@@ -125,7 +126,7 @@ class PostsController extends AppController
         );
 
         //Tries to get data from the cache
-        list($posts, $paging) = array_values(Cache::readMany(
+        [$posts, $paging] = array_values(Cache::readMany(
             [$cache, sprintf('%s_paging', $cache)],
             $this->Posts->getCacheName()
         ));
@@ -137,7 +138,7 @@ class PostsController extends AppController
                 ->where([sprintf('%s.created >=', $this->Posts->getAlias()) => $start])
                 ->andWhere([sprintf('%s.created <', $this->Posts->getAlias()) => $end]);
 
-            list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
+            [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
             //Writes on cache
             Cache::writeMany([
@@ -157,7 +158,7 @@ class PostsController extends AppController
      * @return void
      * @throws \Cake\Http\Exception\ForbiddenException
      */
-    public function rss()
+    public function rss(): void
     {
         //This method works only for RSS
         is_true_or_fail($this->RequestHandler->prefers('rss'), ForbiddenException::class);
@@ -174,9 +175,9 @@ class PostsController extends AppController
                     $length = $options = false;
                     $strpos = strpos($description, '<!-- read-more -->');
                     if ($strpos) {
-                        list($length, $options) = [$strpos, ['exact' => true, 'html' => false]];
+                        [$length, $options] = [$strpos, ['exact' => true, 'html' => false]];
                     } elseif (getConfig('default.truncate_to')) {
-                        list($length, $options) = [getConfig('default.truncate_to'), ['exact' => false, 'html' => true]];
+                        [$length, $options] = [getConfig('default.truncate_to'), ['exact' => false, 'html' => true]];
                     }
                     $description = $length && $options ? Text::truncate($description, $length, $options) : $description;
 
@@ -207,7 +208,7 @@ class PostsController extends AppController
 
     /**
      * Searches posts
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
      */
     public function search()
@@ -242,7 +243,7 @@ class PostsController extends AppController
             $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), $this->paginate['limit'], $page);
 
             //Tries to get data from the cache
-            list($posts, $paging) = array_values(Cache::readMany(
+            [$posts, $paging] = array_values(Cache::readMany(
                 [$cache, sprintf('%s_paging', $cache)],
                 $this->Posts->getCacheName()
             ));
@@ -258,7 +259,7 @@ class PostsController extends AppController
                     ]])
                     ->orderDesc('created');
 
-                list($posts, $paging) = [$this->paginate($query), $this->getPaging()];
+                [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
                 Cache::writeMany([
                     $cache => $posts,
@@ -279,7 +280,7 @@ class PostsController extends AppController
      * @return void
      * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
-    public function view($slug)
+    public function view(string $slug): void
     {
         $post = $this->Posts->findActiveBySlug($slug)
             ->find('forIndex')
@@ -290,7 +291,7 @@ class PostsController extends AppController
 
         //Gets related posts
         if (getConfig('post.related')) {
-            list($limit, $images) = array_values(getConfigOrFail('post.related'));
+            [$limit, $images] = array_values(getConfigOrFail('post.related'));
             $this->set('related', $this->Posts->getRelated($post, $limit, $images));
         }
     }
@@ -302,7 +303,7 @@ class PostsController extends AppController
      * @return \Cake\Http\Response
      * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
-    public function preview($slug)
+    public function preview(string $slug): Response
     {
         $post = $this->Posts->findPendingBySlug($slug)
             ->find('forIndex')
@@ -312,7 +313,7 @@ class PostsController extends AppController
 
         //Gets related posts
         if (getConfig('post.related')) {
-            list($limit, $images) = array_values(getConfigOrFail('post.related'));
+            [$limit, $images] = array_values(getConfigOrFail('post.related'));
             $this->set('related', $this->Posts->getRelated($post, $limit, $images));
         }
 

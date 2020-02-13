@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,6 +15,7 @@
 
 namespace MeCms\Model\Table\Traits;
 
+use Cake\Collection\CollectionInterface;
 use Cake\ORM\Entity;
 use DOMDocument;
 use MeTools\Utility\Youtube;
@@ -34,7 +35,7 @@ trait GetPreviewsFromTextTrait
      * @return array
      * @since 2.23.0
      */
-    protected function extractImages($html)
+    protected function extractImages(string $html): array
     {
         if (empty($html)) {
             return [];
@@ -74,7 +75,7 @@ trait GetPreviewsFromTextTrait
      * @param string $image Image url or path
      * @return array Array with width and height
      */
-    protected function getPreviewSize($image)
+    protected function getPreviewSize(string $image): array
     {
         return array_slice(getimagesize($image), 0, 2);
     }
@@ -83,16 +84,16 @@ trait GetPreviewsFromTextTrait
      * Gets all the available images from an html string, including the previews
      *  of Youtube videos, and returns an array of `Entity`
      * @param string $html Html string
-     * @return \Cake\Collection\Collection Collection of entities. Each `Entity`
-     *  has `url`, `width` and `height` properties
+     * @return \Cake\Collection\CollectionInterface Collection of entities.
+     *  Each `Entity` has `url`, `width` and `height` properties
      * @since 2.23.0
      * @uses extractImages()
      * @uses getPreviewSize()
      */
-    public function getPreviews($html)
+    public function getPreviews(string $html): CollectionInterface
     {
-        $images = array_map(function ($url) {
-            if ($url && !is_url($url)) {
+        $images = array_map(function (string $url) {
+            if (!is_url($url)) {
                 $url = (new Filesystem())->isAbsolutePath($url) ? $url : WWW_ROOT . 'img' . DS . $url;
 
                 if (!file_exists($url)) {
@@ -104,7 +105,7 @@ trait GetPreviewsFromTextTrait
                 $url = $thumber->getUrl();
             }
 
-            list($width, $height) = $this->getPreviewSize($url);
+            [$width, $height] = $this->getPreviewSize($url);
 
             return new Entity(compact('url', 'width', 'height'));
         }, $this->extractImages($html));

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -34,7 +34,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -52,8 +52,6 @@ class GetPreviewsFromTextTraitTest extends TestCase
         };
 
         foreach ([
-            null,
-            false,
             '',
             'Text',
             '<img src=\'\'>',
@@ -155,8 +153,6 @@ class GetPreviewsFromTextTraitTest extends TestCase
         $Posts->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         foreach ([
-            null,
-            false,
             '',
             'Text',
             '<img src=\'\'>',

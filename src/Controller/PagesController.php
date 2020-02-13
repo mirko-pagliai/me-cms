@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -14,7 +14,8 @@
 
 namespace MeCms\Controller;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
+use Cake\Http\Response;
 use Cake\ORM\Entity;
 use Cake\Routing\Router;
 use MeCms\Controller\AppController;
@@ -30,11 +31,11 @@ class PagesController extends AppController
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
-     *  each controller action.
-     * @param \Cake\Event\Event $event An Event instance
+     *  each controller action
+     * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Network\Response|null|void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         $result = parent::beforeFilter($event);
         if ($result) {
@@ -53,10 +54,10 @@ class PagesController extends AppController
      *
      * Static pages must be located in `APP/View/StaticPages/`.
      * @param string $slug Page slug
-     * @return \Cake\Network\Response|void
+     * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Utility\StaticPage
      */
-    public function view($slug)
+    public function view(string $slug)
     {
         //Checks if there exists a static page
         $static = StaticPage::get($slug);
@@ -85,15 +86,16 @@ class PagesController extends AppController
      * Preview for pages.
      * It uses the `view` template.
      * @param string $slug Page slug
-     * @return void
+     * @return \Cake\Http\Response
      */
-    public function preview($slug)
+    public function preview(string $slug): Response
     {
         $page = $this->Pages->findPendingBySlug($slug)
             ->contain([$this->Categories->getAlias() => ['fields' => ['title', 'slug']]])
             ->firstOrFail();
 
         $this->set(compact('page'));
-        $this->render('view');
+
+        return $this->render('view');
     }
 }

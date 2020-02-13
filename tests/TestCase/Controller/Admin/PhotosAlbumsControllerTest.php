@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -58,7 +58,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PhotosAlbums' . DS . 'index.ctp');
+        $this->assertTemplate('Admin' . DS . 'PhotosAlbums' . DS . 'index.php');
         $this->assertContainsOnlyInstancesOf(PhotosAlbum::class, $this->viewVariable('albums'));
     }
 
@@ -72,7 +72,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PhotosAlbums' . DS . 'add.ctp');
+        $this->assertTemplate('Admin' . DS . 'PhotosAlbums' . DS . 'add.php');
         $this->assertInstanceof(PhotosAlbum::class, $this->viewVariable('album'));
 
         //POST request. Data are valid
@@ -97,7 +97,7 @@ class PhotosAlbumsControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'PhotosAlbums' . DS . 'edit.ctp');
+        $this->assertTemplate('Admin' . DS . 'PhotosAlbums' . DS . 'edit.php');
         $this->assertInstanceof(PhotosAlbum::class, $this->viewVariable('album'));
 
         //POST request. Data are valid

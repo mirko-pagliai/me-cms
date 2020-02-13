@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -36,7 +36,7 @@ class View extends AppView
      * @return string Title
      * @uses $titleForLayout
      */
-    protected function getTitleForLayout()
+    protected function getTitleForLayout(): string
     {
         if (!empty($this->titleForLayout)) {
             return $this->titleForLayout;
@@ -67,7 +67,7 @@ class View extends AppView
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -76,7 +76,6 @@ class View extends AppView
             $this->setTheme(getConfig('default.theme'));
         }
 
-        //Loads helpers
         $this->loadHelper('Html', ['className' => 'MeTools.Html']);
         $this->loadHelper('MeTools.Dropdown');
         $this->loadHelper('MeTools.Form');
@@ -95,11 +94,11 @@ class View extends AppView
      * @param string $content Content to render in a view, wrapped by the
      *  surrounding layout
      * @param string|null $layout Layout name
-     * @return mixed Rendered output, or false on error
+     * @return string Rendered output
      * @uses \MeTools\View\Helper\HtmlHelper::meta()
      * @uses getTitleForLayout()
      */
-    public function renderLayout($content, $layout = null)
+    public function renderLayout($content, $layout = null): string
     {
         //Sets the title for layout
         $this->assign('title', $this->getTitleForLayout());

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -25,7 +25,7 @@ if (!function_exists('getConfig')) {
      * @return mixed Value stored in configure or `null`
      * @since 2.19.0
      */
-    function getConfig($var = null, $default = null)
+    function getConfig(?string $var = null, $default = null)
     {
         $value = Configure::read(sprintf('%s.%s', 'MeCms', $var));
 
@@ -45,7 +45,7 @@ if (!function_exists('getConfigOrFail')) {
      * @return mixed Value stored in configure
      * @since 2.20.0
      */
-    function getConfigOrFail($var)
+    function getConfigOrFail(string $var)
     {
         $value = Configure::read(sprintf('%s.%s', 'MeCms', $var));
 

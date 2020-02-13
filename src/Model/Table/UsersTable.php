@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -46,7 +46,7 @@ class UsersTable extends AppTable
      * @return void
      * @since 2.16.1
      */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
     {
         parent::beforeMarshal($event, $data, $options);
 
@@ -62,7 +62,7 @@ class UsersTable extends AppTable
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         return $rules->add($rules->existsIn(['group_id'], 'Groups', I18N_SELECT_VALID_OPTION))
             ->add($rules->isUnique(['email'], I18N_VALUE_ALREADY_USED))
@@ -74,7 +74,7 @@ class UsersTable extends AppTable
      * @param \Cake\ORM\Query $query Query object
      * @return \Cake\ORM\Query Query object
      */
-    public function findActive(Query $query)
+    public function findActive(Query $query): Query
     {
         return $query->where(['active' => true, 'banned' => false]);
     }
@@ -85,7 +85,7 @@ class UsersTable extends AppTable
      * @return \Cake\ORM\Query Query object
      * @since 2.25.1
      */
-    public function findAuth(Query $query)
+    public function findAuth(Query $query): Query
     {
         return $query->contain([$this->Groups->getAlias() => ['fields' => ['name']]]);
     }
@@ -95,7 +95,7 @@ class UsersTable extends AppTable
      * @param \Cake\ORM\Query $query Query object
      * @return \Cake\ORM\Query Query object
      */
-    public function findBanned(Query $query)
+    public function findBanned(Query $query): Query
     {
         return $query->where(['banned' => true]);
     }
@@ -105,7 +105,7 @@ class UsersTable extends AppTable
      * @param \Cake\ORM\Query $query Query object
      * @return \Cake\ORM\Query Query object
      */
-    public function findPending(Query $query)
+    public function findPending(Query $query): Query
     {
         return $query->where(['active' => false, 'banned' => false]);
     }
@@ -114,7 +114,7 @@ class UsersTable extends AppTable
      * Gets active users as list
      * @return \Cake\ORM\Query $query Query object
      */
-    public function getActiveList()
+    public function getActiveList(): Query
     {
         return $this->find()
             ->select(['id', 'first_name', 'last_name'])
@@ -133,7 +133,7 @@ class UsersTable extends AppTable
      * @param array $config The configuration for the table
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -162,9 +162,8 @@ class UsersTable extends AppTable
      * @param \Cake\ORM\Query $query Query object
      * @param array $data Filter data ($this->getRequest()->getQueryParams())
      * @return \Cake\ORM\Query $query Query object
-     * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
-    public function queryFromFilter(Query $query, array $data = [])
+    public function queryFromFilter(Query $query, array $data = []): Query
     {
         $query = parent::queryFromFilter($query, $data);
 
@@ -193,7 +192,7 @@ class UsersTable extends AppTable
      * @param \MeCms\Model\Validation\UserValidator $validator Validator instance
      * @return \MeCms\Model\Validation\UserValidator
      */
-    public function validationDoNotRequirePresence(UserValidator $validator)
+    public function validationDoNotRequirePresence(UserValidator $validator): UserValidator
     {
         //No field is required
         foreach (array_keys(iterator_to_array($validator->getIterator())) as $field) {
@@ -210,7 +209,7 @@ class UsersTable extends AppTable
      * @param \MeCms\Model\Validation\UserValidator $validator Validator instance
      * @return \MeCms\Model\Validation\UserValidator
      */
-    public function validationEmptyPassword(UserValidator $validator)
+    public function validationEmptyPassword(UserValidator $validator): UserValidator
     {
         return $validator->allowEmptyString('password')->allowEmptyString('password_repeat');
     }

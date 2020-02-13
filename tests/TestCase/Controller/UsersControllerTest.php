@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -14,10 +14,11 @@
 
 namespace MeCms\Test\TestCase\Controller;
 
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\EventInterface;
 use Cake\I18n\Time;
-use Cake\TestSuite\EmailAssertTrait;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Model\Entity\User;
 use MeCms\TestSuite\ControllerTestCase;
@@ -28,8 +29,6 @@ use Tokens\Controller\Component\TokenComponent;
  */
 class UsersControllerTest extends ControllerTestCase
 {
-    use EmailAssertTrait;
-
     /**
      * @var \Cake\Controller\Component|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -49,7 +48,7 @@ class UsersControllerTest extends ControllerTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -65,7 +64,7 @@ class UsersControllerTest extends ControllerTestCase
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    public function assertCookieEncrypted($expected, $name, $encrypt = 'aes', $key = null, $message = '')
+    public function assertCookieEncrypted($expected, $name, $encrypt = 'aes', $key = null, $message = ''): void
     {
         $key = $key ?: Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
@@ -80,7 +79,7 @@ class UsersControllerTest extends ControllerTestCase
      * @param string|null $key Encryption key used
      * @return void
      */
-    public function cookieEncrypted($name, $value, $encrypt = 'aes', $key = null)
+    public function cookieEncrypted(string $name, $value, $encrypt = 'aes', $key = null): void
     {
         $key = $key ?: Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
@@ -89,11 +88,11 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\Event $event A dispatcher event
+     * @param \Cake\Event\EventInterface $event A dispatcher event
      * @param \Cake\Controller\Controller|null $controller Controller instance
      * @return void
      */
-    public function controllerSpy($event, $controller = null)
+    public function controllerSpy(EventInterface $event, ?Controller $controller = null): void
     {
         parent::controllerSpy($event, $controller);
 
@@ -168,7 +167,7 @@ class UsersControllerTest extends ControllerTestCase
         $url = ['_name' => 'activation'];
 
         //GET request. This request is invalid, because the user is already active
-        $this->get($url + ['id' => 1] + compact('token'));
+        $this->get($url + ['id' => '1'] + compact('token'));
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage(I18N_OPERATION_NOT_OK);
         $this->assertFalse($this->Token->check($token, $tokenOptions));
@@ -178,7 +177,7 @@ class UsersControllerTest extends ControllerTestCase
         $token = $this->Token->create('gamma@test.com', $tokenOptions);
 
         //GET request. This request is valid, because the user is pending
-        $this->get($url + ['id' => 2] + compact('token'));
+        $this->get($url + ['id' => '2'] + compact('token'));
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertTrue($this->Table->findById(2)->extract('active')->first());
@@ -188,7 +187,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->expectException(RecordNotFoundException::class);
         $this->expectExceptionMessage('Invalid token');
         $this->disableErrorHandlerMiddleware();
-        $this->get($url + ['id' => 1] + ['token' => 'invalidToken']);
+        $this->get($url + ['id' => '1'] + ['token' => 'invalidToken']);
     }
 
     /**
@@ -201,8 +200,8 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Users' . DS . 'activation_resend.ctp');
-        $this->assertLayout('login.ctp');
+        $this->assertTemplate('Users' . DS . 'activation_resend.php');
+        $this->assertLayout('login.php');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //POST request. For now, data are invalid
@@ -240,8 +239,8 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('login.ctp');
-        $this->assertLayout('login.ctp');
+        $this->assertTemplate('login.php');
+        $this->assertLayout('login.php');
 
         //POST request with invalid data
         $this->post($url, ['username' => 'wrong', 'password' => 'wrong']);
@@ -258,8 +257,8 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertRedirect($this->Controller->Auth->redirectUrl());
         $this->assertSession($user->id, 'Auth.User.id');
         $this->assertCookieEncrypted(['username' => $user->username] + compact('password'), 'login');
-        $cookieExpire = Time::createFromTimestamp($this->_response->getCookie('login')['expire']);
-        $this->assertTrue($cookieExpire->isWithinNext('1 year'));
+        $expires = Time::createFromTimestamp($this->_response->getCookie('login')['expires']);
+        $this->assertTrue($expires->isWithinNext('1 year'));
 
         //POST request. The user is banned
         $this->Table->save($user->set('banned', true));
@@ -303,8 +302,8 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Users' . DS . 'password_forgot.ctp');
-        $this->assertLayout('login.ctp');
+        $this->assertTemplate('Users' . DS . 'password_forgot.php');
+        $this->assertLayout('login.php');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //POST request. No existing mail address and user pending email
@@ -343,12 +342,12 @@ class UsersControllerTest extends ControllerTestCase
         //Creates the token for an active user
         $tokenOptions = ['type' => 'password_forgot', 'user_id' => 1];
         $token = $this->Token->create('alfa@test.com', $tokenOptions);
-        $url = ['_name' => 'passwordReset', 'id' => 1] + compact('token');
+        $url = ['_name' => 'passwordReset', 'id' => '1'] + compact('token');
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Users' . DS . 'password_reset.ctp');
-        $this->assertLayout('login.ctp');
+        $this->assertTemplate('Users' . DS . 'password_reset.php');
+        $this->assertLayout('login.php');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //POST request. Data are invalid
@@ -373,7 +372,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->expectException(RecordNotFoundException::class);
         $this->expectExceptionMessage('Invalid token');
         $this->disableErrorHandlerMiddleware();
-        $this->get($url + ['id' => 1] + ['token' => 'invalidToken']);
+        $this->get($url + ['id' => '1'] + ['token' => 'invalidToken']);
     }
 
     /**
@@ -395,8 +394,8 @@ class UsersControllerTest extends ControllerTestCase
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Users' . DS . 'signup.ctp');
-        $this->assertLayout('login.ctp');
+        $this->assertTemplate('Users' . DS . 'signup.php');
+        $this->assertLayout('login.php');
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //POST request. For now, data are invalid

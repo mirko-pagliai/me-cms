@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -14,7 +14,8 @@
 
 namespace MeCms\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
+use Cake\Http\Response;
 use Cake\ORM\ResultSet;
 use MeCms\Controller\Admin\AppController;
 use MeCms\Model\Entity\Page;
@@ -30,15 +31,15 @@ class PagesController extends AppController
     /**
      * Called before the controller action.
      * You can use this method to perform logic that needs to happen before
-     *  each controller action.
-     * @param \Cake\Event\Event $event An Event instance
-     * @return \Cake\Network\Response|null|void
+     *  each controller action
+     * @param \Cake\Event\EventInterface $event An Event instance
+     * @return \Cake\Http\Response|null
      * @uses \MeCms\Model\Table\PagesCategoriesTable::getList()
      * @uses \MeCms\Model\Table\PagesCategoriesTable::getTreeList()
      * @uses \MeCms\Model\Table\UsersTable::getActiveList()
      * @uses \MeCms\Model\Table\UsersTable::getList()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event): ?Response
     {
         $result = parent::beforeFilter($event);
         if ($result) {
@@ -47,7 +48,7 @@ class PagesController extends AppController
 
         //Returns for `indexStatics` action
         if ($this->getRequest()->isAction('indexStatics')) {
-            return;
+            return null;
         }
 
         $methodToCall = $this->getRequest()->isAction(['add', 'edit']) ? 'getTreeList' : 'getList';
@@ -59,13 +60,15 @@ class PagesController extends AppController
         }
 
         $this->set(compact('categories'));
+
+        return null;
     }
 
     /**
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -77,12 +80,12 @@ class PagesController extends AppController
 
     /**
      * Check if the provided user is authorized for the request
-     * @param array $user The user to check the authorization of. If empty the
-     *  user in the session will be used
+     * @param array|\ArrayAccess|null $user The user to check the authorization
+     *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
      * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized($user = null): bool
     {
         //Everyone can list pages and static pages
         if ($this->getRequest()->isAction(['index', 'indexStatics'])) {
@@ -98,7 +101,7 @@ class PagesController extends AppController
      * @return void
      * @uses \MeCms\Model\Table\PagesTable::queryFromFilter()
      */
-    public function index()
+    public function index(): void
     {
         $query = $this->Pages->find()->contain(['Categories' => ['fields' => ['id', 'title']]]);
 
@@ -116,18 +119,18 @@ class PagesController extends AppController
      * @return void
      * @uses \MeCms\Utility\StaticPage::all()
      */
-    public function indexStatics()
+    public function indexStatics(): void
     {
         $this->set('pages', StaticPage::all());
     }
 
     /**
      * Adds page
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function add()
     {
-        $page = $this->Pages->newEntity();
+        $page = $this->Pages->newEmptyEntity();
 
         if ($this->getRequest()->is('post')) {
             $page = $this->Pages->patchEntity($page, $this->getRequest()->getData());
@@ -149,9 +152,9 @@ class PagesController extends AppController
     /**
      * Edits page
      * @param string $id Page ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         $page = $this->Pages->findById($id)
             ->formatResults(function (ResultSet $results) {
@@ -181,9 +184,9 @@ class PagesController extends AppController
     /**
      * Deletes page
      * @param string $id Page ID
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null
      */
-    public function delete($id)
+    public function delete(string $id): ?Response
     {
         $this->getRequest()->allowMethod(['post', 'delete']);
         $this->Pages->deleteOrFail($this->Pages->get($id));

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,13 +15,15 @@
 namespace MeCms\Controller;
 
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
+use Cake\Http\Response;
 use Cake\Log\Log;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Routing\Router;
 use DateTime;
 use MeCms\Controller\AppController;
+use MeCms\Model\Entity\User;
 
 /**
  * Users controller
@@ -33,11 +35,11 @@ class UsersController extends AppController
 
     /**
      * Internal method to login with cookie
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null
      * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
      * @uses buildLogout()
      */
-    protected function loginWithCookie()
+    protected function loginWithCookie(): ?Response
     {
         $username = $password = null;
         extract((array)$this->getRequest()->getCookie('login'));
@@ -61,9 +63,9 @@ class UsersController extends AppController
     /**
      * Internal method to logout.
      * Deletes some cookies and KCFinder session.
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
-    protected function buildLogout()
+    protected function buildLogout(): ?Response
     {
         $request = $this->getRequest();
         $request->getSession()->delete('KCFINDER');
@@ -79,12 +81,12 @@ class UsersController extends AppController
      * @return bool
      * @see \MeCms\Mailer\UserMailer::activation()
      */
-    protected function sendActivationMail($user)
+    protected function sendActivationMail(User $user): bool
     {
         $token = $this->Token->create($user->get('email'), ['type' => 'signup', 'user_id' => $user->get('id')]);
 
         return (bool)$this->getMailer('MeCms.User')
-            ->set('url', Router::url(['_name' => 'activation', $user->get('id'), $token], true))
+            ->set('url', Router::url(['_name' => 'activation', (string)$user->get('id'), $token], true))
             ->send('activation', [$user]);
     }
 
@@ -92,7 +94,7 @@ class UsersController extends AppController
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -101,13 +103,11 @@ class UsersController extends AppController
     }
 
     /**
-     * Called before the controller action.
-     * You can use this method to perform logic that needs to happen before
-     *  each controller action.
-     * @param \Cake\Event\Event $event An Event instance
-     * @return \Cake\Network\Response|null|void
+     * Called before the controller action
+     * @param \Cake\Event\EventInterface $event An Event instance
+     * @return \Cake\Http\Response|null|void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         $result = parent::beforeFilter($event);
         if ($result) {
@@ -124,10 +124,10 @@ class UsersController extends AppController
      * Activation (activates account)
      * @param string $id User ID
      * @param string $token Token
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException
      */
-    public function activation($id, $token)
+    public function activation(string $id, string $token): ?Response
     {
         $tokenExists = $this->Token->check($token, ['type' => 'signup', 'user_id' => $id]);
         is_true_or_fail($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
@@ -138,9 +138,9 @@ class UsersController extends AppController
             ->set(['active' => true])
             ->execute();
 
-        list($method, $message) = ['error', I18N_OPERATION_NOT_OK];
+        [$method, $message] = ['error', I18N_OPERATION_NOT_OK];
         if ($update->count()) {
-            list($method, $message) = ['success', I18N_OPERATION_OK];
+            [$method, $message] = ['success', I18N_OPERATION_OK];
         }
         call_user_func([$this->Flash, $method], $message);
 
@@ -149,7 +149,7 @@ class UsersController extends AppController
 
     /**
      * Activation resend (resends the activation mail)
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      * @uses sendActivationMail()
      */
     public function activationResend()
@@ -194,7 +194,7 @@ class UsersController extends AppController
 
     /**
      * Login
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
      * @uses loginWithCookie()
      */
@@ -247,19 +247,19 @@ class UsersController extends AppController
 
     /**
      * Logout
-     * @return void
+     * @return \Cake\Http\Response|null
      * @uses buildLogout()
      */
-    public function logout()
+    public function logout(): ?Response
     {
         $this->Flash->success(__d('me_cms', 'You are successfully logged out'));
 
-        $this->buildLogout();
+        return $this->buildLogout();
     }
 
     /**
      * Password forgot (requests a new password)
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Mailer\UserMailer::passwordForgot()
      */
     public function passwordForgot()
@@ -284,7 +284,7 @@ class UsersController extends AppController
                 if ($user) {
                     $token = $this->Token->create($email, ['type' => 'password_forgot', 'user_id' => $user->get('id')]);
                     $this->getMailer('MeCms.User')
-                        ->set('url', Router::url(['_name' => 'passwordReset', $user->get('id'), $token], true))
+                        ->set('url', Router::url(['_name' => 'passwordReset', (string)$user->get('id'), $token], true))
                         ->send('passwordForgot', [$user]);
                     $this->Flash->success(__d('me_cms', 'We have sent you an email to reset your password'));
 
@@ -307,10 +307,10 @@ class UsersController extends AppController
      * Password reset
      * @param string $id User ID
      * @param string $token Token
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException
      */
-    public function passwordReset($id, $token)
+    public function passwordReset(string $id, string $token)
     {
         $tokenExists = $this->Token->check($token, ['type' => 'password_forgot', 'user_id' => $id]);
         is_true_or_fail($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
@@ -336,7 +336,7 @@ class UsersController extends AppController
 
     /**
      * Sign up
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      * @uses sendActivationMail()
      */
     public function signup()
@@ -348,7 +348,7 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $user = $this->Users->newEntity();
+        $user = $this->Users->newEmptyEntity();
 
         if ($this->getRequest()->is('post')) {
             $user = $this->Users->patchEntity($user, $this->getRequest()->getData());

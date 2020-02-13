@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -81,7 +81,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      */
     public function testEventMethods()
     {
-        list($event, $entity, $options) = [new Event(null), $this->Table->newEntity([]), new ArrayObject()];
+        [$event, $entity, $options] = [new Event('myEvent'), $this->Table->newEmptyEntity(), new ArrayObject()];
 
         $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'getPreviewSize', 'setNextToBePublished']);
         $Table->expects($this->exactly(2))->method('clearCache');
@@ -130,7 +130,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     public function testFind()
     {
         //Writes `next_to_be_published` and some data on cache
-        $anHourAgo = time() - HOUR;
+        $anHourAgo = (string)(time() - HOUR);
         Cache::write('next_to_be_published', $anHourAgo, $this->Table->getCacheName());
         Cache::write('someData', 'someValue', $this->Table->getCacheName());
 

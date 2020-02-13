@@ -1,4 +1,9 @@
 # 2.x branch
+## 2.28 branch
+### 2.28.0
+* updated for `cakephp` 4 and `phpunit` 8;
+* added `MenuHelperTestCase`.
+
 ## 2.27 branch
 ### 2.27.7
 * fixed title for admin pages;

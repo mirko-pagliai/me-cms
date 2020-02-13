@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -15,7 +15,8 @@
 
 namespace MeCms\Controller\Admin;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
+use Cake\Http\Response;
 use MeCms\Controller\AppController as BaseAppController;
 
 /**
@@ -25,10 +26,10 @@ abstract class AppController extends BaseAppController
 {
     /**
      * Called before the controller action
-     * @param \Cake\Event\Event $event An Event instance
-     * @return \Cake\Network\Response|null
+     * @param \Cake\Event\EventInterface $event An EventInterface instance
+     * @return \Cake\Http\Response|null
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event): ?Response
     {
         $result = parent::beforeFilter($event);
         if ($result) {
@@ -42,15 +43,17 @@ abstract class AppController extends BaseAppController
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.records');
 
         $this->Auth->deny();
+
+        return null;
     }
 
     /**
      * Called after the controller action is run, but before the view is rendered
-     * @param \Cake\Event\Event $event An Event instance
+     * @param \Cake\Event\EventInterface $event An EventInterface instance
      * @return void
      * @since 2.27.5
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(EventInterface $event): void
     {
         parent::beforeRender($event);
 
@@ -69,7 +72,7 @@ abstract class AppController extends BaseAppController
      * Initialization hook method
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -89,7 +92,7 @@ abstract class AppController extends BaseAppController
      * @see beforeRender()
      * @since 2.27.5
      */
-    public function referer($default = null, $local = false)
+    public function referer($default = '/', bool $local = false): string
     {
         $request = $this->getRequest();
         $session = $request->getSession();
@@ -110,7 +113,7 @@ abstract class AppController extends BaseAppController
      * @return void
      * @since 2.18.1
      */
-    protected function setUploadError($error)
+    protected function setUploadError(string $error): void
     {
         $this->setResponse($this->getResponse()->withStatus(500));
         $this->set(compact('error'));

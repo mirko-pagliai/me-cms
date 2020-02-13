@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of me-cms.
  *
@@ -81,7 +81,7 @@ abstract class ValidationTestCase extends TestCase
      * @uses $Table
      * @uses $autoInitializeClass
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
