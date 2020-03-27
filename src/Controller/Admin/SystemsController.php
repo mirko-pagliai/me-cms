@@ -187,21 +187,22 @@ class SystemsController extends AppController
         $this->getRequest()->allowMethod(['post', 'delete']);
 
         $assetsTarget = getConfigOrFail('Assets.target');
+        $exceptions = ['.gitkeep', 'empty'];
         $success = true;
         switch ($type) {
             case 'all':
-                @unlink_recursive($assetsTarget, 'empty');
-                @unlink_recursive(LOGS, 'empty');
+                @unlink_recursive($assetsTarget, $exceptions);
+                @unlink_recursive(LOGS, $exceptions);
                 $success = self::clearCache() && self::clearSitemap() && (new ThumbManager())->clearAll();
                 break;
             case 'cache':
                 $success = self::clearCache();
                 break;
             case 'assets':
-                @unlink_recursive($assetsTarget, 'empty');
+                @unlink_recursive($assetsTarget, $exceptions);
                 break;
             case 'logs':
-                @unlink_recursive(LOGS, 'empty');
+                @unlink_recursive(LOGS, $exceptions);
                 break;
             case 'sitemap':
                 $success = self::clearSitemap();
