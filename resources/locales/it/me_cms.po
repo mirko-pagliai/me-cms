@@ -1172,7 +1172,7 @@ msgstr "{0} non disponibile"
 
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:132
 msgid "File or directory {0} is readable"
-msgstr "File o directory `{0}` leggibile"
+msgstr "File o directory {0} leggibile"
 
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:139
 msgid "Temporary directories"
