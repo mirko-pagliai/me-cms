@@ -60,6 +60,7 @@ class CreateGroupsCommandTest extends TestCase
         //With no user groups
         $UsersGroups = $this->getTable('MeCms.UsersGroups');
         $UsersGroups->deleteAll(['id is NOT' => null]);
+        $this->_in = $this->_err = null;
         $this->exec('me_cms.create_groups -v');
         $this->assertExitWithSuccess();
         $this->assertOutputContains('The user groups have been created');

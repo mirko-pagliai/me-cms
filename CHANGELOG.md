@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.28 branch
+### 2.28.1
+* updated `Command` tests for `cakephp` 4.0.5.
+
 ### 2.28.0
 * updated for `cakephp` 4 and `phpunit` 8;
 * added `MenuHelperTestCase`.

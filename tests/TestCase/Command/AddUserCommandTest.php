@@ -56,6 +56,7 @@ class AddUserCommandTest extends TestCase
         $Users->delete($Users->get($expectedUserId));
 
         //Tries using the `group` option
+        $this->_in = null;
         $this->exec('me_cms.add_user --group 2', $example);
         $this->assertExitWithSuccess();
         $this->assertOutputContains('<success>The operation has been performed correctly</success>');
@@ -66,16 +67,19 @@ class AddUserCommandTest extends TestCase
         $this->assertEquals(2, $Users->findById($expectedUserId)->extract('group_id')->first());
 
         //Tries with a no existing group
+        $this->_in = null;
         $this->exec('me_cms.add_user --group 123', $example);
         $this->assertExitWithSuccess();
         $this->assertErrorContains('Invalid group ID');
 
         //Tries with empty data
+        $this->_in = null;
         $this->exec('me_cms.add_user -v', ['', '', '', '', '', '', '']);
         $this->assertExitWithSuccess();
         $this->assertErrorContains('Field `username` is empty. Try again');
 
         //Tries with wrong data
+        $this->_in = null;
         $this->exec('me_cms.add_user -v', ['ab', 'password', 'password2', 'mail', 'aa', 'bb', '3']);
         $this->assertExitWithSuccess();
         $this->assertErrorContains('The operation has not been performed correctly');
@@ -92,6 +96,7 @@ class AddUserCommandTest extends TestCase
 
         //Tries with no groups
         $Users->Groups->deleteAll(['id IS NOT' => null]);
+        $this->_in = null;
         $this->exec('me_cms.add_user -v');
         $this->assertExitWithSuccess();
         $this->assertErrorContains('Before you can manage users, you have to create at least a user group');
