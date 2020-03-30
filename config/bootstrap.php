@@ -48,11 +48,6 @@ if (is_readable(CONFIG . 'me_cms.php')) {
     Configure::load('me_cms');
 }
 
-//Forces debug on localhost, if required
-if ((new ServerRequest())->is('localhost') && getConfig('main.debug_on_localhost')) {
-    Configure::write('debug', true);
-}
-
 //Loads theme plugin
 $theme = getConfig('default.theme');
 if ($theme && !Plugin::loaded($theme)) {

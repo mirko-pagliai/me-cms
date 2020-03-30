@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.28 branch
 ### 2.28.1
+* no longer forces debug for localhost. Instead, use the `app_local.php` file;
 * updated `Command` tests for `cakephp` 4.0.5.
 
 ### 2.28.0
