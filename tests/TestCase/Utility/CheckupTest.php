@@ -108,7 +108,9 @@ class CheckupTest extends TestCase
     public function testPHP()
     {
         $this->assertInstanceof(PHP::class, $this->Checkup->PHP);
-        $this->assertEquals(['extensions'], get_class_methods($this->Checkup->PHP));
+        $this->assertEquals(['extensions', 'getVersion'], get_class_methods($this->Checkup->PHP));
+        $this->assertNotEmpty($this->Checkup->PHP->extensions());
+        $this->assertRegExp('/^7\.\d+\.\d+$/', $this->Checkup->PHP->getVersion());
     }
 
     /**

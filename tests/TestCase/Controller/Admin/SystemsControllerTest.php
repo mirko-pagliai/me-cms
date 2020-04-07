@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -180,7 +181,7 @@ class SystemsControllerTest extends ControllerTestCase
             'webroot',
             'temporary',
             'plugins',
-            'phpExtensions',
+            'php',
             'kcfinder',
             'cakephp',
             'cache',
