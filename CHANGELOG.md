@@ -3,6 +3,7 @@
 ### 2.28.2
 * `Apache::version()` renamed as `Apache::getVersion()`, `Plugin::versions()`
     renamed as `Plugin::getVersions()`;
+* removed useless `AbstractCheckup` class;
 * added `PHP::getVersion()`.
 
 ### 2.28.1

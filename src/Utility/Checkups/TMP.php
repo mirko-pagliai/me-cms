@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -15,30 +16,28 @@ declare(strict_types=1);
 
 namespace MeCms\Utility\Checkups;
 
-use MeCms\Utility\Checkups\AbstractCheckup;
-
 /**
  * Checkup for temporary directories
  */
-class TMP extends AbstractCheckup
+class TMP
 {
     /**
      * Checks if each path is writeable
-     * @param array $paths Paths to check
      * @return array Array with paths as keys and boolean as value
-     * @uses isWriteable()
      */
-    public function isWriteable(array $paths = []): array
+    public function isWriteable(): array
     {
-        $paths = $paths ?: [
+        foreach ([
             LOGS,
             TMP,
             getConfigOrFail('Assets.target'),
             CACHE,
             LOGIN_RECORDS,
             THUMBER_TARGET,
-        ];
+        ] as $path) {
+            $result[$path] = is_writable_resursive($path);
+        }
 
-        return parent::isWriteable($paths);
+        return $result ?? [];
     }
 }
