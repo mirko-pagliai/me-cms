@@ -123,17 +123,6 @@ Log::setConfig('error', [
 TransportFactory::setConfig('debug', ['className' => 'Debug']);
 Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
 
-/**
- * This makes it believe that KCFinder is installed
- * @param bool $htaccess If `true`, it also creates the `.htaccess` file
- * @return void
- */
-function create_kcfinder_files($htaccess = true)
-{
-    @create_file(KCFINDER . 'browse.php', '@version 3.12');
-    $htaccess ? @create_file(KCFINDER . '.htaccess') : null;
-}
-
 $_SERVER['PHP_SELF'] = '/';
 
 echo 'Running tests for "' . ConnectionManager::getConfig('test')['scheme'] . '" driver ' . PHP_EOL;

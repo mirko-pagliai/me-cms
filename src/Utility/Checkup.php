@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -19,53 +20,28 @@ namespace MeCms\Utility;
  * Checkup utility.
  *
  * This class provides quick and logical access to all checkup classes.
+ * @property \MeCms\Utility\Checkups\Apache $Apache
+ * @property \MeCms\Utility\Checkups\Backups $Backups
+ * @property \MeCms\Utility\Checkups\ElFinder $ElFinder
+ * @property \MeCms\Utility\Checkups\PHP $PHP
+ * @property \MeCms\Utility\Checkups\Plugin $Plugin
+ * @property \MeCms\Utility\Checkups\TMP $TMP
+ * @property \MeCms\Utility\Checkups\Webroot $Webroot
  */
 class Checkup
 {
     /**
-     * @var \MeCms\Utility\Checkups\Apache
+     * Magic method that allows access to all properties
+     * @param string $name Class name
+     * @return object
      */
-    public $Apache;
-
-    /**
-     * @var \MeCms\Utility\Checkups\Backups
-     */
-    public $Backups;
-
-    /**
-     * @var \MeCms\Utility\Checkups\KCFinder
-     */
-    public $KCFinder;
-
-    /**
-     * @var \MeCms\Utility\Checkups\PHP
-     */
-    public $PHP;
-
-    /**
-     * @var \MeCms\Utility\Checkups\Plugin
-     */
-    public $Plugin;
-
-    /**
-     * @var \MeCms\Utility\Checkups\TMP
-     */
-    public $TMP;
-
-    /**
-     * @var \MeCms\Utility\Checkups\Webroot
-     */
-    public $Webroot;
-
-    /**
-     * Construct
-     */
-    public function __construct()
+    public function __get(string $name): object
     {
-        foreach (array_keys(get_object_vars($this)) as $class) {
-            $className = sprintf('\MeCms\Utility\Checkups\%s', $class);
-            class_exists($className) ?: trigger_error(sprintf('Class `%s` does not exist', $className), E_USER_ERROR);
-            $this->$class = new $className();
+        if (!isset($this->$name)) {
+            $className = sprintf('\MeCms\Utility\Checkups\%s', $name);
+            $this->$name = new $className();
         }
+
+        return $this->$name;
     }
 }

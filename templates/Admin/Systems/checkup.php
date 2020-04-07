@@ -112,27 +112,16 @@ foreach ($backups as $path => $isWriteable) {
 ?>
 </div>
 
-<?= $this->Html->h4('KCFinder') ?>
+<?= $this->Html->h4('ElFinder') ?>
 <div class="row">
 <?php
 [$class, $options] = [$warningClasses, $warningOptions];
-$text = __d('me_cms', '{0} not available', 'KCFinder');
-if ($kcfinder['version']) {
+$text = __d('me_cms', '{0} not available', 'ElFinder');
+if ($elfinder['version']) {
     [$class, $options] = [$infoClasses, []];
-    $text = __d('me_cms', '{0} version: {1}', 'KCFinder', $kcfinder['version']);
+    $text = __d('me_cms', '{0} version: {1}', 'ElFinder', $elfinder['version']);
 }
 echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
-
-if ($kcfinder['version']) {
-    $file = KCFINDER . '.htaccess';
-    [$class, $options] = [$errorClasses, $errorOptions];
-    $text = __d('me_tools', 'File or directory {0} not readable', $this->Html->code(rtr($file)));
-    if ($kcfinder['htaccess']) {
-        [$class, $options] = [$successClasses, $successOptions];
-        $text = __d('me_cms', 'File or directory {0} is readable', $this->Html->code(rtr($file)));
-    }
-    echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
-}
 ?>
 </div>
 

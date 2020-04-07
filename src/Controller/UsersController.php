@@ -62,13 +62,12 @@ class UsersController extends AppController
 
     /**
      * Internal method to logout.
-     * Deletes some cookies and KCFinder session.
+     * Deletes some cookies.
      * @return \Cake\Http\Response|null
      */
     protected function buildLogout(): ?Response
     {
         $request = $this->getRequest();
-        $request->getSession()->delete('KCFINDER');
         $cookies = $request->getCookieCollection()->remove('login');
         $this->setRequest($request->withCookieCollection($cookies));
 

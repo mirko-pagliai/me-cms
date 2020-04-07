@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -27,7 +28,7 @@ use MeCms\Command\GroupsCommand;
 use MeCms\Command\Install\CopyConfigCommand;
 use MeCms\Command\Install\CreateAdminCommand;
 use MeCms\Command\Install\CreateGroupsCommand;
-use MeCms\Command\Install\FixKcfinderCommand;
+use MeCms\Command\Install\FixElFinderCommand;
 use MeCms\Command\Install\RunAllCommand;
 use MeCms\Command\UsersCommand;
 use MeCms\Command\VersionUpdatesCommand;
@@ -117,7 +118,7 @@ class Plugin extends BasePlugin
         $commands->add('me_cms.copy_config', CopyConfigCommand::class);
         $commands->add('me_cms.create_admin', CreateAdminCommand::class);
         $commands->add('me_cms.create_groups', CreateGroupsCommand::class);
-        $commands->add('me_cms.fix_kcfinder', FixKcfinderCommand::class);
+        $commands->add('me_cms.fix_elfinder', FixElFinderCommand::class);
         $commands->add('me_cms.install', RunAllCommand::class);
 
         //Commands from MeTools
@@ -148,9 +149,9 @@ class Plugin extends BasePlugin
     protected function setVendorLinks(): void
     {
         $links = array_unique(array_merge(Configure::read('VENDOR_LINKS', []), [
-            'npm-asset' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
-            'sunhater' . DS . 'kcfinder' => 'kcfinder',
             'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
+            'npm-asset' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
+            'studio-42' . DS . 'elfinder' => 'elfinder',
         ]));
 
         Configure::write('VENDOR_LINKS', $links);
@@ -169,6 +170,8 @@ class Plugin extends BasePlugin
             LOGIN_RECORDS,
             PHOTOS,
             THUMBER_TARGET,
+            UPLOADED,
+            UPLOADED . '.trash',
             USER_PICTURES,
         ])));
 

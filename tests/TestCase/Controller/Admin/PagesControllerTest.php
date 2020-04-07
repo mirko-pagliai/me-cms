@@ -39,26 +39,12 @@ class PagesControllerTest extends ControllerTestCase
     ];
 
     /**
-<<<<<<< HEAD
-     * Called before every test method
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        create_kcfinder_files();
-    }
-
-    /**
      * Tests for `beforeFilter()` method
      * @test
      */
     public function testBeforeFilter()
     {
         parent::testBeforeFilter();
-
-        create_kcfinder_files();
 
         foreach (['add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [1]);
@@ -141,7 +127,6 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function testAdd()
     {
-        create_kcfinder_files();
         $url = $this->url + ['action' => 'add'];
 
         $this->get($url);
@@ -172,7 +157,6 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function testEdit()
     {
-        create_kcfinder_files();
         $url = $this->url + ['action' => 'edit', 1];
 
         $this->get($url);

@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -17,7 +18,6 @@ namespace MeCms\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Http\Response;
-use Cake\I18n\I18n;
 use Cake\Routing\Router;
 use League\CommonMark\CommonMarkConverter;
 use MeCms\Controller\Admin\AppController;
@@ -32,20 +32,6 @@ use Thumber\Cake\Utility\ThumbManager;
  */
 class SystemsController extends AppController
 {
-    /**
-     * Initialization hook method
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        //Loads KcFinderComponent
-        if ($this->getRequest()->isAction('browser')) {
-            $this->loadComponent('MeCms.KcFinder');
-        }
-    }
-
     /**
      * Check if the provided user is authorized for the request
      * @param array|\ArrayAccess|null $user The user to check the authorization
@@ -67,36 +53,12 @@ class SystemsController extends AppController
     }
 
     /**
-     * Media browser with KCFinder.
-     *
-     * The KCFinder component is loaded by the `initialize()` method.
+     * Media explorer, with ElFinder
      * @return void
-     * @uses \MeCms\Controller\Component\KcFinderComponent::getTypes()
      */
     public function browser(): void
     {
-        //Gets the type from the query and the supported types from configuration
-        $type = $this->getRequest()->getQuery('type');
-        $types = $this->KcFinder->getTypes();
-
-        //If there's only one type, it automatically sets the query value
-        if (!$type && count($types) < 2) {
-            $type = array_key_first($types);
-            $this->setRequest($this->getRequest()->withQueryParams(compact('type')));
-        }
-
-        //Checks the type, then sets the KCFinder path
-        if ($type && array_key_exists($type, $types)) {
-            //Sets locale
-            $this->set('kcfinder', sprintf(
-                '%s/kcfinder/browse.php?lang=%s&type=%s',
-                Router::url('/vendor', true),
-                substr(I18n::getLocale(), 0, 2) ?: 'en',
-                $type
-            ));
-        }
-
-        $this->set('types', array_combine(array_keys($types), array_keys($types)));
+        $this->set('explorer', Router::url('/vendor/elfinder/elfinder.html', true));
     }
 
     /**
@@ -138,7 +100,7 @@ class SystemsController extends AppController
     {
         $Checkup = new Checkup();
 
-        foreach (['Apache', 'KCFinder'] as $class) {
+        foreach (['Apache', 'ElFinder'] as $class) {
             foreach (get_class_methods($Checkup->{$class}) as $method) {
                 $results[strtolower($class)][$method] = call_user_func([$Checkup->{$class}, $method]);
             }

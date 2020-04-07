@@ -74,19 +74,6 @@ class PostsController extends AppController
     }
 
     /**
-     * Initialization hook method
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        if ($this->getRequest()->isAction(['add', 'edit'])) {
-            $this->loadComponent('MeCms.KcFinder');
-        }
-    }
-
-    /**
      * Check if the provided user is authorized for the request
      * @param array|\ArrayAccess|null $user The user to check the authorization
      *  of. If empty the user in the session will be used

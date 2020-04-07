@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -53,8 +54,5 @@ abstract class TestCase extends BaseTestCase
             Cache::getConfig($cacheKey) ?: $this->fail('Cache key `' . $cacheKey . '` does not exist');
             Cache::clear($cacheKey);
         }
-
-        unlink_recursive(KCFINDER, 'empty');
-        unlink_recursive(WWW_ROOT . 'vendor', 'empty');
     }
 }

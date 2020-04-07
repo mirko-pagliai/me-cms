@@ -1,4 +1,10 @@
 # 2.x branch
+## 2.29 branch
+### 2.29.0
+* `KcFinder` has been completely replaced with `ElFinder` and all its classes
+    have been removed. `\MeCms\Command\Install\FixElFinderCommand` and
+    `\MeCms\Utility\Checkups\ElFinder` classes have been added.
+
 ## 2.28 branch
 ### 2.28.1
 * no longer forces debug for localhost. Instead, use your `app_local.php` file;

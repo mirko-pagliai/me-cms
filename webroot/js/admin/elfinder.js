@@ -10,14 +10,14 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 /**
- * Sets the minimum height for the KCFinder frame.
+ * Sets the iframe minimum height.
  */
-function setKcfinderHeight()
+function setIframeHeight()
 {
     var content = $("#content");
-    var kcfinder = $("#kcfinder");
+    var iframe = $("iframe#file-explorer");
 
-    if (!kcfinder.length) {
+    if (!iframe.length) {
         return;
     }
 
@@ -28,14 +28,14 @@ function setKcfinderHeight()
     minHeight -= (content.outerHeight(true) - content.height());
 
     //Subtracts the height of each child element of content
-    kcfinder.siblings().each(function () {
+    iframe.siblings().each(function () {
         minHeight -= $(this).outerHeight(true);
     });
 
-    kcfinder.css("minHeight", minHeight - 5);
+    iframe.css("minHeight", minHeight - 5);
 }
 
-//On windows load and resize, it sets the minimum height for the KCFinder iframe
+//On windows load and resize, it sets the iframe minimum height
 $(window).on("load resize", function () {
-    setKcfinderHeight();
+    setIframeHeight();
 });

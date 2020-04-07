@@ -117,34 +117,10 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function testBrowser()
     {
-        create_kcfinder_files();
-        @mkdir(UPLOADED . 'docs');
-
-        $url = $this->url + ['action' => 'browser'];
-
-        $this->get($url);
+        $this->get($this->url + ['action' => 'browser']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
-        $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $this->viewVariable('types'));
-        $this->assertEmpty($this->viewVariable('kcfinder'));
-
-        //GET requests. Asks for `docs` type with different locales
-        foreach (['en', 'it'] as $locale) {
-            I18n::setLocale($locale);
-            $this->get($url + ['?' => ['type' => 'docs']]);
-            $this->assertResponseOkAndNotEmpty();
-            $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
-            $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $this->viewVariable('types'));
-            $this->assertStringContainsString('kcfinder/browse.php?lang=' . $locale . '&type=docs', $this->viewVariable('kcfinder'));
-        }
-
-        //GET request. Now only the `images` type exists
-        @rmdir(UPLOADED . 'docs');
-        $this->get($url);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
-        $this->assertEquals(['images' => 'images'], $this->viewVariable('types'));
-        $this->assertStringContainsString('kcfinder/browse.php?lang=it&type=images', $this->viewVariable('kcfinder'));
+        $this->assertStringEndsWith('elfinder/elfinder.html', $this->viewVariable('explorer'));
     }
 
     /**
@@ -181,7 +157,7 @@ class SystemsControllerTest extends ControllerTestCase
             'temporary',
             'plugins',
             'phpExtensions',
-            'kcfinder',
+            'elfinder',
             'cakephp',
             'cache',
             'backups',
@@ -190,7 +166,9 @@ class SystemsControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'checkup']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'checkup.php');
-        array_map([$this, 'assertNotEmpty'], array_map([$this, 'viewVariable'], $expectedViewVars));
+        foreach ($expectedViewVars as $expectedViewVar) {
+            $this->assertNotEmpty($this->viewVariable($expectedViewVar));
+        }
     }
 
     /**

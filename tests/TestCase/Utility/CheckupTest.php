@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -18,7 +19,7 @@ use MeCms\TestSuite\TestCase;
 use MeCms\Utility\Checkup;
 use MeCms\Utility\Checkups\Apache;
 use MeCms\Utility\Checkups\Backups;
-use MeCms\Utility\Checkups\KCFinder;
+use MeCms\Utility\Checkups\ElFinder;
 use MeCms\Utility\Checkups\PHP;
 use MeCms\Utility\Checkups\Plugin;
 use MeCms\Utility\Checkups\TMP;
@@ -46,17 +47,6 @@ class CheckupTest extends TestCase
     }
 
     /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        @unlink_recursive(KCFINDER, 'empty');
-    }
-
-    /**
      * Test for `$Apache` property and methods from `Apache` class
      * @test
      */
@@ -80,25 +70,15 @@ class CheckupTest extends TestCase
     }
 
     /**
-     * Test for `$KCFinder` property and methods from `KCFinder` class
+     * Test for `$ElFinder` property and methods from `ElFinder` class
      * @test
      */
-    public function testKCFinder()
+    public function testElFinder()
     {
-        create_kcfinder_files();
-        $this->assertInstanceof(KCFinder::class, $this->Checkup->KCFinder);
-        $this->assertEquals(['htaccess', 'isAvailable', 'version'], get_class_methods($this->Checkup->KCFinder));
-        $this->assertTrue($this->Checkup->KCFinder->htaccess());
-        $this->assertTrue($this->Checkup->KCFinder->isAvailable());
-        $this->assertRegExp('/[\d\.]+/', $this->Checkup->KCFinder->version());
-
-        //If the `isAvailable()` method returns `false`, the `version()` method
-        //  will also return `false`
-        $KCFinder = $this->getMockBuilder(KCFinder::class)
-            ->setMethods(['isAvailable'])
-            ->getMock();
-        $KCFinder->method('isAvailable')->will($this->returnValue(false));
-        $this->assertNull($KCFinder->version());
+        $this->assertInstanceof(ElFinder::class, $this->Checkup->ElFinder);
+        $this->assertEquals(['isAvailable', 'version'], get_class_methods($this->Checkup->ElFinder));
+        $this->assertTrue($this->Checkup->ElFinder->isAvailable());
+        $this->assertSame('2.1.55', $this->Checkup->ElFinder->version());
     }
 
     /**
