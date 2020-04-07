@@ -20,7 +20,7 @@ use MeCms\Utility\Checkups\AbstractCheckup;
 /**
  * Checkup for Apache
  */
-class Apache extends AbstractCheckup
+class Apache
 {
     /**
      * Modules to check
@@ -48,10 +48,8 @@ class Apache extends AbstractCheckup
      * Returns the version of Apache
      * @return string
      */
-    public function version(): string
+    public static function getVersion(): string
     {
-        $version = apache_get_version();
-
-        return preg_match('/Apache\/(\d+\.\d+\.\d+)/i', $version, $matches) ? $matches[1] : $version;
+        return preg_match('/^Apache\/(\d+\.\d+\.\d+)/i', apache_get_version(), $matches) ? $matches[1] : apache_get_version();
     }
 }

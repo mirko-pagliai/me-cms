@@ -39,4 +39,14 @@ class PHP extends AbstractCheckup
 
         return $extensions;
     }
+
+    /**
+     * Gets the version number
+     * @return string
+     * @since 2.28.1
+     */
+    public static function getVersion(): string
+    {
+        return preg_match('/^([\d\.]+)/', PHP_VERSION, $matches) ? $matches[1] : PHP_VERSION;
+    }
 }

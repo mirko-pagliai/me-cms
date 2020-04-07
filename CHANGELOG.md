@@ -6,6 +6,12 @@
     `\MeCms\Utility\Checkups\ElFinder` classes have been added.
 
 ## 2.28 branch
+### 2.28.2
+* `Apache::version()` renamed as `Apache::getVersion()`, `Plugin::versions()`
+    renamed as `Plugin::getVersions()`;
+* removed useless `AbstractCheckup` class;
+* added `PHP::getVersion()`.
+
 ### 2.28.1
 * no longer forces debug for localhost. Instead, use your `app_local.php` file;
 * updated `Command` tests for `cakephp` 4.0.5.

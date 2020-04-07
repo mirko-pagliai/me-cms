@@ -58,7 +58,7 @@ class RunAllCommandTest extends TestCase
                 ->getMock();
             $command->method('execute')->will($this->returnCallback(function () use ($question) {
                 //This also tests the class exists and is instantiable
-                $this->debug[] = get_class(new $question['command']);
+                $this->debug[] = get_class(new $question['command']());
             }));
             $question['command'] = $command;
 

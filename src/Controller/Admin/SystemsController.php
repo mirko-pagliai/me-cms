@@ -100,9 +100,11 @@ class SystemsController extends AppController
     {
         $Checkup = new Checkup();
 
-        foreach (['Apache', 'ElFinder'] as $class) {
+        foreach (['Apache', 'ElFinder', 'PHP'] as $class) {
             foreach (get_class_methods($Checkup->{$class}) as $method) {
-                $results[strtolower($class)][$method] = call_user_func([$Checkup->{$class}, $method]);
+                $className = strtolower($class);
+                $methodName = strtolower(string_starts_with($method, 'get') ? substr($method, 3) : $method);
+                $results[$className][$methodName] = call_user_func([$Checkup->{$class}, $method]);
             }
         }
 
@@ -110,8 +112,7 @@ class SystemsController extends AppController
             'backups' => $Checkup->Backups->isWriteable(),
             'cache' => Cache::enabled(),
             'cakephp' => Configure::version(),
-            'phpExtensions' => $Checkup->PHP->extensions(),
-            'plugins' => $Checkup->Plugin->versions(),
+            'plugins' => $Checkup->Plugin->getVersions(),
             'temporary' => $Checkup->TMP->isWriteable(),
             'webroot' => $Checkup->Webroot->isWriteable(),
         ];

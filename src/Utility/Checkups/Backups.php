@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -16,22 +17,20 @@ declare(strict_types=1);
 namespace MeCms\Utility\Checkups;
 
 use Cake\Core\Configure;
-use MeCms\Utility\Checkups\AbstractCheckup;
 
 /**
  * Checkup for backups
  */
-class Backups extends AbstractCheckup
+class Backups
 {
     /**
      * Checks if the path is writeable
-     * @param array $paths Paths to check
      * @return array Array with paths as keys and boolean as value
-     * @uses isWriteable()
-     * @uses path()
      */
-    public function isWriteable(array $paths = []): array
+    public function isWriteable(): array
     {
-        return parent::isWriteable($paths ?: [Configure::read('DatabaseBackup.target')]);
+        $path = Configure::read('DatabaseBackup.target');
+
+        return [$path => is_writable_resursive($path)];
     }
 }
