@@ -63,9 +63,9 @@ class CheckupTest extends TestCase
     public function testApache()
     {
         $this->assertInstanceof(Apache::class, $this->Checkup->Apache);
-        $this->assertEquals(['modules', 'version'], get_class_methods($this->Checkup->Apache));
+        $this->assertEquals(['modules', 'getVersion'], get_class_methods($this->Checkup->Apache));
         $this->assertArrayKeysEqual(['expires', 'rewrite'], $this->Checkup->Apache->modules());
-        $this->assertRegExp('/[\d\.]+/', $this->Checkup->Apache->version());
+        $this->assertRegExp('/^[\d\.]+$/', $this->Checkup->Apache->getVersion());
     }
 
     /**

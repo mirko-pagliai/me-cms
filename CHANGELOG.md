@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.28 branch
 ### 2.28.2
+* `Apache::version()` renamed as `Apache::getVersion()`;
 * added `PHP::getVersion()`.
 
 ### 2.28.1
