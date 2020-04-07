@@ -169,6 +169,7 @@ class Plugin extends BasePlugin
             LOGIN_RECORDS,
             PHOTOS,
             THUMBER_TARGET,
+            UPLOADED,
             USER_PICTURES,
         ])));
 
