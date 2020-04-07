@@ -15,12 +15,10 @@ declare(strict_types=1);
 
 namespace MeCms\Utility\Checkups;
 
-use MeCms\Utility\Checkups\AbstractCheckup;
-
 /**
  * Checkup for PHP
  */
-class PHP extends AbstractCheckup
+class PHP
 {
     /**
      * Extensions to check

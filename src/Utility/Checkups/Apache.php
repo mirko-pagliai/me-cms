@@ -15,12 +15,10 @@ declare(strict_types=1);
 
 namespace MeCms\Utility\Checkups;
 
-use MeCms\Utility\Checkups\AbstractCheckup;
-
 /**
  * Checkup for Apache
  */
-class Apache extends AbstractCheckup
+class Apache
 {
     /**
      * Modules to check
