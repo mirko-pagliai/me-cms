@@ -35,7 +35,7 @@ class ElFinder
      * @return string|null Version
      * @uses isAvailable()
      */
-    public static function version(): ?string
+    public static function getVersion(): ?string
     {
         return self::isAvailable() &&
             preg_match('/elFinder \(([\d\.]+)\)/', file_get_contents(ELFINDER . 'Changelog'), $matches) &&
