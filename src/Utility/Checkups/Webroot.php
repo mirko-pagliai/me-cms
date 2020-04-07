@@ -25,7 +25,7 @@ class Webroot
      * Checks if each path is writeable
      * @return array Array with paths as keys and boolean as value
      */
-    public function isWriteable(): array
+    public static function isWriteable(): array
     {
         foreach ([
             BANNERS,

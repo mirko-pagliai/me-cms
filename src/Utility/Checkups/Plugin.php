@@ -26,7 +26,7 @@ class Plugin
      * Returns the version number for each plugin
      * @return array
      */
-    public function getVersions(): array
+    public static function getVersions(): array
     {
         $Plugin = new BasePlugin();
 
