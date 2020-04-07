@@ -27,7 +27,7 @@ class Plugin extends AbstractCheckup
      * Returns the version number for each plugin
      * @return array
      */
-    public function versions(): array
+    public function getVersions(): array
     {
         $Plugin = new BasePlugin();
 

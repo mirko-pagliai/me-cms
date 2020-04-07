@@ -120,10 +120,10 @@ class CheckupTest extends TestCase
     public function testPlugin()
     {
         $this->assertInstanceof(Plugin::class, $this->Checkup->Plugin);
-        $this->assertEquals(['versions'], get_class_methods($this->Checkup->Plugin));
-        $this->assertArrayKeysEqual(['me_cms', 'others'], $this->Checkup->Plugin->versions());
-        $this->assertNotEmpty($this->Checkup->Plugin->versions()['me_cms']);
-        $this->assertNotEmpty($this->Checkup->Plugin->versions()['others']);
+        $this->assertEquals(['getVersions'], get_class_methods($this->Checkup->Plugin));
+        $this->assertArrayKeysEqual(['me_cms', 'others'], $this->Checkup->Plugin->getVersions());
+        $this->assertNotEmpty($this->Checkup->Plugin->getVersions()['me_cms']);
+        $this->assertNotEmpty($this->Checkup->Plugin->getVersions()['others']);
     }
 
     /**

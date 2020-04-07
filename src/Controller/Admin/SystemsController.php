@@ -150,7 +150,7 @@ class SystemsController extends AppController
             'backups' => $Checkup->Backups->isWriteable(),
             'cache' => Cache::enabled(),
             'cakephp' => Configure::version(),
-            'plugins' => $Checkup->Plugin->versions(),
+            'plugins' => $Checkup->Plugin->getVersions(),
             'temporary' => $Checkup->TMP->isWriteable(),
             'webroot' => $Checkup->Webroot->isWriteable(),
         ];
