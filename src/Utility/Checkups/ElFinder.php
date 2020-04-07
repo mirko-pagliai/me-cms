@@ -16,12 +16,10 @@ declare(strict_types=1);
 
 namespace MeCms\Utility\Checkups;
 
-use MeCms\Utility\Checkups\AbstractCheckup;
-
 /**
  * Checkup for ElFinder
  */
-class ElFinder extends AbstractCheckup
+class ElFinder
 {
     /**
      * Checks if ElFinder is available
