@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -43,12 +44,18 @@ class MenuHelper extends Helper
     public $helpers = ['MeCms.Auth'];
 
     /**
+     * Default parameters for routers
+     * @var array
+     */
+    protected $defaultParams = ['plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+
+    /**
      * Internal function to generate the menu for "posts" actions
      * @return array Array with links, title, title options and handled controllers
      */
     public function posts(): array
     {
-        $params = ['controller' => 'Posts', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $params = ['controller' => 'Posts'] + $this->defaultParams;
         $links[] = [__d('me_cms', 'List posts'), ['action' => 'index'] + $params];
         $links[] = [__d('me_cms', 'Add post'), ['action' => 'add'] + $params];
 
@@ -72,7 +79,7 @@ class MenuHelper extends Helper
      */
     public function pages(): array
     {
-        $params = ['controller' => 'Pages', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $params = ['controller' => 'Pages'] + $this->defaultParams;
         $links[] = [__d('me_cms', 'List pages'), ['action' => 'index'] + $params];
 
         if ($this->Auth->isGroup(['admin', 'manager'])) {
@@ -96,7 +103,7 @@ class MenuHelper extends Helper
      */
     public function photos(): array
     {
-        $params = ['controller' => 'Photos', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $params = ['controller' => 'Photos'] + $this->defaultParams;
         $links[] = [__d('me_cms', 'List photos'), ['action' => 'index'] + $params];
         $links[] = [__d('me_cms', 'Upload photos'), ['action' => 'upload'] + $params];
 
@@ -118,7 +125,7 @@ class MenuHelper extends Helper
             return [];
         }
 
-        $params = ['controller' => 'Banners', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $params = ['controller' => 'Banners'] + $this->defaultParams;
         $links[] = [__d('me_cms', 'List banners'), ['action' => 'index'] + $params];
         $links[] = [__d('me_cms', 'Upload banners'), ['action' => 'upload'] + $params];
 
@@ -142,7 +149,7 @@ class MenuHelper extends Helper
             return [];
         }
 
-        $params = ['controller' => 'Users', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $params = ['controller' => 'Users'] + $this->defaultParams;
         $links[] = [__d('me_cms', 'List users'), ['action' => 'index'] + $params];
         $links[] = [__d('me_cms', 'Add user'), ['action' => 'add'] + $params];
 
@@ -166,7 +173,7 @@ class MenuHelper extends Helper
             return [];
         }
 
-        $params = ['controller' => 'Backups', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $params = ['controller' => 'Backups'] + $this->defaultParams;
         $links[] = [__d('me_cms', 'List backups'), ['action' => 'index'] + $params];
         $links[] = [__d('me_cms', 'Add backup'), ['action' => 'add'] + $params];
 
@@ -184,7 +191,7 @@ class MenuHelper extends Helper
             return [];
         }
 
-        $params = ['controller' => 'Systems', 'plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+        $params = ['controller' => 'Systems'] + $this->defaultParams;
         $links[] = [__d('me_cms', 'Temporary files'), ['action' => 'tmpViewer'] + $params];
         $links[] = [__d('me_cms', 'System checkup'), ['action' => 'checkup'] + $params];
         $links[] = [__d('me_cms', 'Media browser'), ['action' => 'browser'] + $params];
