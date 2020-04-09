@@ -24,6 +24,7 @@ use MeCms\Controller\Admin\AppController;
  * Photos controller
  * @property \MeCms\Model\Table\PhotosAlbumsTable $Albums
  * @property \MeCms\Model\Table\PhotosTable $Photos
+ * @property \MeTools\Controller\Component\UploaderComponent $Uploader
  */
 class PhotosController extends AppController
 {
