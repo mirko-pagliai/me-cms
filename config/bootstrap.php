@@ -22,8 +22,27 @@ use MeCms\Database\Type\JsonEntityType;
 
 require_once __DIR__ . DS . 'constants.php';
 
-foreach ([BANNERS, LOGIN_RECORDS, PHOTOS, UPLOADED, USER_PICTURES] as $dir) {
-    @mkdir($dir);
+//Sets directories to be created and must be writable
+Configure::write('WRITABLE_DIRS', array_merge(Configure::read('WRITABLE_DIRS', []), [
+    getConfig('Assets.target'),
+    getConfigOrFail('DatabaseBackup.target'),
+    BANNERS,
+    LOGIN_RECORDS,
+    PHOTOS,
+    THUMBER_TARGET,
+    UPLOADED,
+    USER_PICTURES,
+]));
+
+//Sets symbolic links for vendor assets to be created
+Configure::write('VENDOR_LINKS', array_merge(Configure::read('VENDOR_LINKS', []), [
+    'npm-asset' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
+    'sunhater' . DS . 'kcfinder' => 'kcfinder',
+    'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
+]));
+
+foreach (Configure::read('WRITABLE_DIRS') as $dir) {
+    @mkdir($dir, 0777, true);
 
     if (!is_writeable($dir)) {
         trigger_error(sprintf('Directory %s not writeable', $dir), E_USER_ERROR);

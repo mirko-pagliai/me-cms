@@ -82,15 +82,4 @@ class PluginTest extends TestCase
         $this->Plugin->bootstrap($this->app);
         $this->assertEquals($expectedDiff, array_values(array_diff($getLoadedPlugins(), $loadedPlugins)));
     }
-
-    /**
-     * Tests for `setWritableDirs()` method
-     * @test
-     */
-    public function testSetWritableDirs()
-    {
-        Configure::delete('Assets.target');
-        $this->invokeMethod($this->Plugin, 'setWritableDirs');
-        $this->assertNotContains(getConfig('Assets.target'), Configure::read('WRITABLE_DIRS'));
-    }
 }

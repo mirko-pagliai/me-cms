@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -54,8 +55,6 @@ class Plugin extends BasePlugin
      * @param \Cake\Core\PluginApplicationInterface $app The host application
      * @return void
      * @uses isCli()
-     * @uses setVendorLinks()
-     * @uses setWritableDirs()
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
@@ -92,23 +91,15 @@ class Plugin extends BasePlugin
 
             $app->addPlugin('WyriHaximus/MinifyHtml', ['path' => ROOT . DS . 'vendor' . DS . 'wyrihaximus' . DS . 'minify-html' . DS]);
         }
-
-        $this->setVendorLinks();
-        $this->setWritableDirs();
     }
 
     /**
      * Add console commands for the plugin
      * @param \Cake\Console\CommandCollection $commands The command collection to update
      * @return \Cake\Console\CommandCollection
-     * @uses setVendorLinks()
-     * @uses setWritableDirs()
      */
     public function console(CommandCollection $commands): CommandCollection
     {
-        $this->setVendorLinks();
-        $this->setWritableDirs();
-
         $commands->add('me_cms.add_user', AddUserCommand::class);
         $commands->add('me_cms.groups', GroupsCommand::class);
         $commands->add('me_cms.users', UsersCommand::class);
@@ -139,40 +130,5 @@ class Plugin extends BasePlugin
         $key = Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
         return $middleware->add(new EncryptedCookieMiddleware(['login'], $key));
-    }
-
-    /**
-     * Sets symbolic links for vendor assets to be created
-     * @return void
-     */
-    protected function setVendorLinks(): void
-    {
-        $links = array_unique(array_merge(Configure::read('VENDOR_LINKS', []), [
-            'npm-asset' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
-            'sunhater' . DS . 'kcfinder' => 'kcfinder',
-            'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
-        ]));
-
-        Configure::write('VENDOR_LINKS', $links);
-    }
-
-    /**
-     * Sets directories to be created and must be writable
-     * @return void
-     */
-    protected function setWritableDirs(): void
-    {
-        $dirs = array_unique(array_filter(array_merge(Configure::read('WRITABLE_DIRS', []), [
-            getConfig('Assets.target'),
-            getConfigOrFail('DatabaseBackup.target'),
-            BANNERS,
-            LOGIN_RECORDS,
-            PHOTOS,
-            THUMBER_TARGET,
-            UPLOADED,
-            USER_PICTURES,
-        ])));
-
-        Configure::write('WRITABLE_DIRS', $dirs);
     }
 }
