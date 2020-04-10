@@ -68,21 +68,12 @@ if ($theme && !Plugin::loaded($theme)) {
     Plugin::load($theme);
 }
 
-//Loads the cache configuration and merges with the configuration from
-//  application, if exists
-Configure::load('MeCms.cache');
-if (is_readable(CONFIG . 'cache.php')) {
-    Configure::load('cache');
-}
-
 //Adds all cache configurations
+Configure::load('MeCms.cache');
 foreach (Configure::consume('Cache') as $key => $config) {
-    //Drops cache configurations that already exist
-    if (Cache::getConfig($key)) {
-        Cache::drop($key);
+    if (!Cache::getConfig($key)) {
+        Cache::setConfig($key, $config);
     }
-
-    Cache::setConfig($key, $config);
 }
 
 //Loads the widgets configuration and merges with the configuration from

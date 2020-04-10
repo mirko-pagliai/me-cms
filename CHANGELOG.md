@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.28 branch
 ### 2.28.1
+* no longer loads the cache configuration from the application. To set custom
+    cache parameters, use the application bootstrap;
 * `Apache::version()` renamed as `Apache::getVersion()`, `Plugin::versions()`
     renamed as `Plugin::getVersions()`;
 * removed useless `AbstractCheckup` class;
