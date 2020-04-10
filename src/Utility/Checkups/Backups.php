@@ -27,7 +27,7 @@ class Backups
      * Checks if the path is writeable
      * @return array Array with paths as keys and boolean as value
      */
-    public function isWriteable(): array
+    public static function isWriteable(): array
     {
         $path = Configure::read('DatabaseBackup.target');
 

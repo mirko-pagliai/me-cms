@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -24,6 +25,7 @@ use MeCms\Controller\Admin\AppController;
  * Banners controller
  * @property \MeCms\Model\Table\BannersPositionsTable $Positions
  * @property \MeCms\Model\Table\BannersTable $Banners
+ * @property \MeTools\Controller\Component\UploaderComponent $Uploader
  */
 class BannersController extends AppController
 {

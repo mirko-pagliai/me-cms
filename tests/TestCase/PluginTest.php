@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -14,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\TestCase;
 
-use Cake\Core\Configure;
 use Cake\Http\BaseApplication;
 use MeCms\Plugin as MeCms;
 use MeCms\TestSuite\TestCase;
@@ -25,31 +25,6 @@ use MeCms\TestSuite\TestCase;
 class PluginTest extends TestCase
 {
     /**
-     * @var \MeCms\Plugin|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $Plugin;
-
-    /**
-     * @var \Cake\Http\BaseApplication|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $app;
-
-    /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
-
-        $this->Plugin = $this->getMockBuilder(MeCms::class)
-            ->setMethods(['isCli'])
-            ->getMock();
-    }
-
-    /**
      * Tests for `bootstrap()` method
      * @test
      */
@@ -58,39 +33,31 @@ class PluginTest extends TestCase
         /**
          * Internal functions. Returns an array of loaded plugins
          */
-        $getLoadedPlugins = function () {
-            return array_keys(iterator_to_array($this->app->getPlugins()));
+        $getLoadedPlugins = function ($app) {
+            return array_keys(iterator_to_array($app->getPlugins()));
         };
 
-        $this->Plugin->expects($this->at(0))
+        $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
+
+        $Plugin = $this->getMockBuilder(MeCms::class)
+            ->setMethods(['isCli'])
+            ->getMock();
+
+        $Plugin->expects($this->at(0))
             ->method('isCli')
             ->will($this->returnValue(true));
-        $this->Plugin->expects($this->at(1))
+        $Plugin->expects($this->at(1))
             ->method('isCli')
             ->will($this->returnValue(false));
 
         //Now is cli
-        $this->app->getPlugins()->clear();
-        $this->Plugin->bootstrap($this->app);
-        $loadedPlugins = $getLoadedPlugins();
+        $Plugin->bootstrap($app);
+        $loadedPlugins = $getLoadedPlugins($app);
         $this->assertNotEmpty($loadedPlugins);
-        $this->assertContains(getConfig('Assets.target'), Configure::read('WRITABLE_DIRS'));
 
         //Now is not cli
         $expectedDiff = ['DebugKit', 'WyriHaximus/MinifyHtml'];
-        $this->app->getPlugins()->clear();
-        $this->Plugin->bootstrap($this->app);
-        $this->assertEquals($expectedDiff, array_values(array_diff($getLoadedPlugins(), $loadedPlugins)));
-    }
-
-    /**
-     * Tests for `setWritableDirs()` method
-     * @test
-     */
-    public function testSetWritableDirs()
-    {
-        Configure::delete('Assets.target');
-        $this->invokeMethod($this->Plugin, 'setWritableDirs');
-        $this->assertNotContains(getConfig('Assets.target'), Configure::read('WRITABLE_DIRS'));
+        $Plugin->bootstrap($app);
+        $this->assertEquals($expectedDiff, array_values(array_diff($getLoadedPlugins($app), $loadedPlugins)));
     }
 }

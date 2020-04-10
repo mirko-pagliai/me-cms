@@ -25,18 +25,18 @@ class Apache
      * Modules to check
      * @var array
      */
-    protected $modulesToCheck = ['expires', 'rewrite'];
+    protected static $modulesToCheck = ['expires', 'rewrite'];
 
     /**
      * Checks if some modules are loaded
      * @return array
      * @uses $modulesToCheck
      */
-    public function modules(): array
+    public static function modules(): array
     {
         $modules = [];
 
-        foreach ($this->modulesToCheck as $module) {
+        foreach (self::$modulesToCheck as $module) {
             $modules[$module] = in_array('mod_' . $module, apache_get_modules());
         }
 

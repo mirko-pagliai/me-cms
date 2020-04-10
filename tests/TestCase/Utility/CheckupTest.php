@@ -76,9 +76,9 @@ class CheckupTest extends TestCase
     public function testElFinder()
     {
         $this->assertInstanceof(ElFinder::class, $this->Checkup->ElFinder);
-        $this->assertEquals(['isAvailable', 'version'], get_class_methods($this->Checkup->ElFinder));
+        $this->assertEquals(['isAvailable', 'getVersion'], get_class_methods($this->Checkup->ElFinder));
         $this->assertTrue($this->Checkup->ElFinder->isAvailable());
-        $this->assertSame('2.1.55', $this->Checkup->ElFinder->getVersion());
+        $this->assertRegExp('/^[\d\.]+$/', $this->Checkup->ElFinder->getVersion());
     }
 
     /**

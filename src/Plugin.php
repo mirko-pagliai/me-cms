@@ -55,8 +55,6 @@ class Plugin extends BasePlugin
      * @param \Cake\Core\PluginApplicationInterface $app The host application
      * @return void
      * @uses isCli()
-     * @uses setVendorLinks()
-     * @uses setWritableDirs()
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
@@ -93,40 +91,29 @@ class Plugin extends BasePlugin
 
             $app->addPlugin('WyriHaximus/MinifyHtml', ['path' => ROOT . DS . 'vendor' . DS . 'wyrihaximus' . DS . 'minify-html' . DS]);
         }
-
-        $this->setVendorLinks();
-        $this->setWritableDirs();
     }
 
     /**
      * Add console commands for the plugin
      * @param \Cake\Console\CommandCollection $commands The command collection to update
      * @return \Cake\Console\CommandCollection
-     * @uses setVendorLinks()
-     * @uses setWritableDirs()
      */
     public function console(CommandCollection $commands): CommandCollection
     {
-        $this->setVendorLinks();
-        $this->setWritableDirs();
-
-        $commands->add('me_cms.add_user', AddUserCommand::class);
-        $commands->add('me_cms.groups', GroupsCommand::class);
-        $commands->add('me_cms.users', UsersCommand::class);
-        $commands->add('me_cms.version_updates', VersionUpdatesCommand::class);
-
-        $commands->add('me_cms.copy_config', CopyConfigCommand::class);
-        $commands->add('me_cms.create_admin', CreateAdminCommand::class);
-        $commands->add('me_cms.create_groups', CreateGroupsCommand::class);
-        $commands->add('me_cms.fix_elfinder', FixElFinderCommand::class);
-        $commands->add('me_cms.install', RunAllCommand::class);
+        $commands->add('me_cms.add_user', AddUserCommand::class)
+            ->add('me_cms.groups', GroupsCommand::class)
+            ->add('me_cms.users', UsersCommand::class)
+            ->add('me_cms.version_updates', VersionUpdatesCommand::class)
+            ->add('me_cms.copy_config', CopyConfigCommand::class)
+            ->add('me_cms.create_admin', CreateAdminCommand::class)
+            ->add('me_cms.create_groups', CreateGroupsCommand::class)
+            ->add('me_cms.fix_elfinder', FixElFinderCommand::class)
+            ->add('me_cms.install', RunAllCommand::class);
 
         //Commands from MeTools
-        $commands->add('me_cms.create_directories', CreateDirectoriesCommand::class);
-        $commands->add('me_cms.create_vendors_links', CreateVendorsLinksCommand::class);
-        $commands->add('me_cms.set_permissions', SetPermissionsCommand::class);
-
-        return $commands;
+        return $commands->add('me_cms.create_directories', CreateDirectoriesCommand::class)
+            ->add('me_cms.create_vendors_links', CreateVendorsLinksCommand::class)
+            ->add('me_cms.set_permissions', SetPermissionsCommand::class);
     }
 
     /**
@@ -140,41 +127,5 @@ class Plugin extends BasePlugin
         $key = Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
         return $middleware->add(new EncryptedCookieMiddleware(['login'], $key));
-    }
-
-    /**
-     * Sets symbolic links for vendor assets to be created
-     * @return void
-     */
-    protected function setVendorLinks(): void
-    {
-        $links = array_unique(array_merge(Configure::read('VENDOR_LINKS', []), [
-            'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
-            'npm-asset' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
-            'studio-42' . DS . 'elfinder' => 'elfinder',
-        ]));
-
-        Configure::write('VENDOR_LINKS', $links);
-    }
-
-    /**
-     * Sets directories to be created and must be writable
-     * @return void
-     */
-    protected function setWritableDirs(): void
-    {
-        $dirs = array_unique(array_filter(array_merge(Configure::read('WRITABLE_DIRS', []), [
-            getConfig('Assets.target'),
-            getConfigOrFail('DatabaseBackup.target'),
-            BANNERS,
-            LOGIN_RECORDS,
-            PHOTOS,
-            THUMBER_TARGET,
-            UPLOADED,
-            UPLOADED . '.trash',
-            USER_PICTURES,
-        ])));
-
-        Configure::write('WRITABLE_DIRS', $dirs);
     }
 }
