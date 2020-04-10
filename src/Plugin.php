@@ -100,23 +100,20 @@ class Plugin extends BasePlugin
      */
     public function console(CommandCollection $commands): CommandCollection
     {
-        $commands->add('me_cms.add_user', AddUserCommand::class);
-        $commands->add('me_cms.groups', GroupsCommand::class);
-        $commands->add('me_cms.users', UsersCommand::class);
-        $commands->add('me_cms.version_updates', VersionUpdatesCommand::class);
-
-        $commands->add('me_cms.copy_config', CopyConfigCommand::class);
-        $commands->add('me_cms.create_admin', CreateAdminCommand::class);
-        $commands->add('me_cms.create_groups', CreateGroupsCommand::class);
-        $commands->add('me_cms.fix_kcfinder', FixKcfinderCommand::class);
-        $commands->add('me_cms.install', RunAllCommand::class);
+        $commands->add('me_cms.add_user', AddUserCommand::class)
+            ->add('me_cms.groups', GroupsCommand::class)
+            ->add('me_cms.users', UsersCommand::class)
+            ->add('me_cms.version_updates', VersionUpdatesCommand::class)
+            ->add('me_cms.copy_config', CopyConfigCommand::class)
+            ->add('me_cms.create_admin', CreateAdminCommand::class)
+            ->add('me_cms.create_groups', CreateGroupsCommand::class)
+            ->add('me_cms.fix_kcfinder', FixKcfinderCommand::class)
+            ->add('me_cms.install', RunAllCommand::class);
 
         //Commands from MeTools
-        $commands->add('me_cms.create_directories', CreateDirectoriesCommand::class);
-        $commands->add('me_cms.create_vendors_links', CreateVendorsLinksCommand::class);
-        $commands->add('me_cms.set_permissions', SetPermissionsCommand::class);
-
-        return $commands;
+        return $commands->add('me_cms.create_directories', CreateDirectoriesCommand::class)
+            ->add('me_cms.create_vendors_links', CreateVendorsLinksCommand::class)
+            ->add('me_cms.set_permissions', SetPermissionsCommand::class);
     }
 
     /**

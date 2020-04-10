@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of me-cms.
@@ -43,7 +44,6 @@ Configure::write('VENDOR_LINKS', array_merge(Configure::read('VENDOR_LINKS', [])
 
 foreach (Configure::read('WRITABLE_DIRS') as $dir) {
     @mkdir($dir, 0777, true);
-
     if (!is_writeable($dir)) {
         trigger_error(sprintf('Directory %s not writeable', $dir), E_USER_ERROR);
     }
