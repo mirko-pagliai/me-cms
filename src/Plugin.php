@@ -76,6 +76,7 @@ class Plugin extends BasePlugin
             if (class_exists($className)) {
                 $plugin = new $className();
                 $plugin->bootstrap($app);
+                $plugin->disable('bootstrap');
             }
 
             $app->addPlugin($plugin, $config);
