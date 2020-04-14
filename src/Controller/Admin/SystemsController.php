@@ -109,12 +109,10 @@ class SystemsController extends AppController
         }
 
         $results += [
-            'backups' => $Checkup->Backups->isWriteable(),
             'cache' => Cache::enabled(),
             'cakephp' => Configure::version(),
+            'directories' => $Checkup->Directories->isWriteable(),
             'plugins' => $Checkup->Plugin->getVersions(),
-            'temporary' => $Checkup->TMP->isWriteable(),
-            'webroot' => $Checkup->Webroot->isWriteable(),
         ];
 
         array_map([$this, 'set'], array_keys($results), $results);

@@ -3,7 +3,9 @@
 ### 2.29.0
 * `KcFinder` has been completely replaced with `ElFinder` and all its classes
     have been removed. `\MeCms\Command\Install\FixElFinderCommand` and
-    `\MeCms\Utility\Checkups\ElFinder` classes have been added.
+    `\MeCms\Utility\Checkups\ElFinder` classes have been added;
+* added `\MeCms\Utility\Checkups\Directories` class. `Backups`, `TMP` and
+    `Webroot` checkups classes have been deleded.
 
 ## 2.28 branch
 ### 2.28.1

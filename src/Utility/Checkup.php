@@ -21,12 +21,10 @@ namespace MeCms\Utility;
  *
  * This class provides quick and logical access to all checkup classes.
  * @property \MeCms\Utility\Checkups\Apache $Apache
- * @property \MeCms\Utility\Checkups\Backups $Backups
+ * @property \MeCms\Utility\Checkups\Directories $Directories
  * @property \MeCms\Utility\Checkups\ElFinder $ElFinder
  * @property \MeCms\Utility\Checkups\PHP $PHP
  * @property \MeCms\Utility\Checkups\Plugin $Plugin
- * @property \MeCms\Utility\Checkups\TMP $TMP
- * @property \MeCms\Utility\Checkups\Webroot $Webroot
  */
 class Checkup
 {

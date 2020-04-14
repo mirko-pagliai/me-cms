@@ -97,21 +97,6 @@ foreach ($php['extensions'] as $extension => $isLoaded) {
 ?>
 </div>
 
-<?= $this->Html->h4(__d('me_cms', 'Backups'), ['class' => 'd-block-inline']) ?>
-<div class="row">
-<?php
-foreach ($backups as $path => $isWriteable) {
-    [$class, $options] = [$errorClasses, $errorOptions];
-    $text = __d('me_tools', 'File or directory {0} not writeable', $this->Html->code(rtr($path)));
-    if ($isWriteable) {
-        [$class, $options] = [$successClasses, $successOptions];
-        $text = __d('me_cms', 'Directory {0} is readable and writable', $this->Html->code(rtr($path)));
-    }
-    echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
-}
-?>
-</div>
-
 <?= $this->Html->h4('ElFinder') ?>
 <div class="row">
 <?php
@@ -125,27 +110,10 @@ echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
 ?>
 </div>
 
-<?= $this->Html->h4(__d('me_cms', 'Temporary directories')) ?>
+<?= $this->Html->h4(__d('me_cms', 'Writeable directories')) ?>
 <div class="row">
 <?php
-//Temporary directories
-foreach ($temporary as $path => $isWriteable) {
-    [$class, $options] = [$errorClasses, $errorOptions];
-    $text = __d('me_tools', 'File or directory {0} not writeable', $this->Html->code(rtr($path)));
-    if ($isWriteable) {
-        [$class, $options] = [$successClasses, $successOptions];
-        $text = __d('me_cms', 'Directory {0} is readable and writable', $this->Html->code(rtr($path)));
-    }
-    echo $this->Html->div('col-6', $this->Html->para($class, $text, $options));
-}
-?>
-</div>
-
-<?= $this->Html->h4(__d('me_cms', 'Webroot')) ?>
-<div class="row">
-<?php
-//Webroot directories
-foreach ($webroot as $path => $isWriteable) {
+foreach ($directories as $path => $isWriteable) {
     [$class, $options] = [$errorClasses, $errorOptions];
     $text = __d('me_tools', 'File or directory {0} not writeable', $this->Html->code(rtr($path)));
     if ($isWriteable) {
