@@ -58,27 +58,19 @@ class Plugin extends BasePlugin
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
-        $pluginsToLoad = [
+        foreach ([
             'MeTools',
             'DatabaseBackup',
             'RecaptchaMailhide',
             'StopSpam',
             'Thumber\Cake',
             'Tokens',
-        ];
-
-        foreach ($pluginsToLoad as $plugin => $config) {
-            if (is_int($plugin) && !is_array($config)) {
-                [$plugin, $config] = [$config, []];
-            }
-
+        ] as $plugin) {
             $className = sprintf('%s\Plugin', $plugin);
-            if (class_exists($className)) {
-                $plugin = new $className();
-                $plugin->bootstrap($app);
-            }
-
-            $app->addPlugin($plugin, $config);
+            $plugin = new $className();
+            $plugin->bootstrap($app);
+            $plugin->disable('bootstrap');
+            $app->addPlugin($plugin);
         }
 
         parent::bootstrap($app);

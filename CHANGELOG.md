@@ -9,6 +9,7 @@
 ### 2.28.1
 * no longer loads the cache configuration from the application. To set custom
     cache parameters, use the application bootstrap;
+* prevents the plugins bootstrap from loading multiple times;
 * `Apache::version()` renamed as `Apache::getVersion()`, `Plugin::versions()`
     renamed as `Plugin::getVersions()`;
 * removed useless `AbstractCheckup` class;
