@@ -31,6 +31,6 @@ class Backups
     {
         $path = Configure::read('DatabaseBackup.target');
 
-        return [$path => is_writable_resursive($path)];
+        return [$path => is_writable_resursive($path, true)];
     }
 }

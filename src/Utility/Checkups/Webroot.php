@@ -33,7 +33,7 @@ class Webroot
             USER_PICTURES,
             UPLOADED,
         ] as $path) {
-            $result[$path] = is_writable_resursive($path);
+            $result[$path] = is_writable_resursive($path, true);
         }
 
         return $result ?? [];

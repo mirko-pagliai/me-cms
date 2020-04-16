@@ -35,7 +35,7 @@ class TMP
             LOGIN_RECORDS,
             THUMBER_TARGET,
         ] as $path) {
-            $result[$path] = is_writable_resursive($path);
+            $result[$path] = is_writable_resursive($path, true);
         }
 
         return $result ?? [];
