@@ -140,7 +140,7 @@ class SystemsController extends AppController
 
         foreach (['Apache', 'KCFinder', 'PHP'] as $class) {
             foreach (get_class_methods($Checkup->{$class}) as $method) {
-            $className = strtolower($class);
+                $className = strtolower($class);
                 $methodName = strtolower(string_starts_with($method, 'get') ? substr($method, 3) : $method);
                 $results[$className][$methodName] = call_user_func([$Checkup->{$class}, $method]);
             }
