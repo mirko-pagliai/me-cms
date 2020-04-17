@@ -51,12 +51,22 @@ class SystemsController extends AppController
     }
 
     /**
+     * Internal method to check if ElFinder exists
+     * @return bool
+     */
+    protected function elFinderExists(): bool
+    {
+        return is_readable(ELFINDER . 'php' . DS . 'connector.minimal.php');
+    }
+
+    /**
      * Media explorer, with ElFinder
      * @return \Cake\Http\Response|null
+     * @uses elFinderExists()
      */
     public function browser(): ?Response
     {
-        if (!is_readable(ELFINDER . 'php' . DS . 'connector.minimal.php')) {
+        if (!$this->elFinderExists()) {
             $this->Flash->alert(__d('me_cms', '{0} not available', 'ElFinder'));
 
             return $this->redirect(['_name' => 'dashboard']);

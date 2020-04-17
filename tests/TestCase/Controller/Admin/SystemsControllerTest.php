@@ -122,6 +122,12 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
         $this->assertStringEndsWith('elfinder/elfinder.html', $this->viewVariable('explorer'));
+
+        $Controller = $this->getMockForController(get_class($this->Controller), ['elFinderExists']);
+        $Controller->method('elFinderExists')->willReturn(false);
+        $this->_response = $Controller->browser();
+        $this->assertRedirect(['_name' => 'dashboard']);
+        $this->assertFlashMessage('ElFinder not available');
     }
 
     /**
