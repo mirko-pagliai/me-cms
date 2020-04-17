@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-20 14:00+0100\n"
-"PO-Revision-Date: 2020-01-20 14:02+0100\n"
+"POT-Creation-Date: 2020-04-17 12:36+0200\n"
+"PO-Revision-Date: 2020-04-17 12:36+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -125,12 +125,12 @@ msgstr ""
 "Esegue alcuni aggiornamenti per il database o file necessari per"
 " l'aggiornamento di versione"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/BannersController.php:47
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/BannersController.php:49
 msgid "You must first create a banner position"
 msgstr "Devi prima creare una posizione per i banner"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/BannersController.php:121
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PhotosController.php:121
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/BannersController.php:123
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PhotosController.php:122
 msgid "Missing ID"
 msgstr "ID mancante"
 
@@ -148,7 +148,7 @@ msgid "You must first create a category"
 msgstr "Devi prima creare una categoria"
 
 #: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PagesController.php:148
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:79
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:86
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PagesCategories/index.php:24
 msgid "Add page"
 msgstr "Aggiungi pagina"
@@ -158,7 +158,7 @@ msgstr "Aggiungi pagina"
 msgid "Edit page"
 msgstr "Modifica pagina"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PhotosController.php:47
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PhotosController.php:48
 msgid "You must first create an album"
 msgstr "Devi prima creare un album"
 
@@ -175,7 +175,7 @@ msgid "You must first create an user"
 msgstr "Devi prima creare un utente"
 
 #: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PostsController.php:159
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:53
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:60
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PostsCategories/index.php:23
 msgid "Add post"
 msgstr "Aggiungi articolo"
@@ -367,7 +367,7 @@ msgstr "La vecchia password è errata"
 msgid "lowercase letters"
 msgstr "lettere minuscole"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Utility/Checkups/Plugin.php:38
+#: /home/mirko/Libs/Plugins/me-cms/src/Utility/Checkups/Plugin.php:37
 msgid "n.a."
 msgstr "n.d."
 
@@ -393,136 +393,136 @@ msgstr "Valori non validi"
 msgid "Method `{0}::{1}()` returned only {2} values"
 msgstr "Il metodo `{0}::{1}()` ha restituito solo {2} valori"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:52
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:59
 msgid "List posts"
 msgstr "Elenca articoli"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:57
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:86
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:64
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:93
 msgid "List categories"
 msgstr "Elenca categorie"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:58
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:87
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:65
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:94
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Pages/index.php:23
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Posts/index.php:23
 msgid "Add category"
 msgstr "Aggiungi categoria"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:61
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:68
 msgid "List tags"
 msgstr "Elenca tag"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:76
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:83
 msgid "List pages"
 msgstr "Elenca pagine"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:82
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:89
 msgid "List static pages"
 msgstr "Elenca pagine statiche"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:100
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:107
 msgid "List photos"
 msgstr "Elenca foto"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:101
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:108
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Photos/upload.php:16
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PhotosAlbums/index.php:23
 msgid "Upload photos"
 msgstr "Carica foto"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:104
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:111
 msgid "List albums"
 msgstr "Elenca album"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:105
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:112
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/common/BannersAndPhotos/index.php:27
 msgid "Add album"
 msgstr "Aggiungi album"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:122
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:129
 msgid "List banners"
 msgstr "Elenca banner"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:123
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:130
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Banners/upload.php:16
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/BannersPositions/index.php:24
 msgid "Upload banners"
 msgstr "Carica banner"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:127
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:134
 msgid "List positions"
 msgstr "Elenca posizioni"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:128
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:135
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/common/BannersAndPhotos/index.php:24
 msgid "Add position"
 msgstr "Aggiungi posizione"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:131
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:138
 #: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:20
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/BannersPositions/index.php:36
 msgid "Banners"
 msgstr "Banner"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:146
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:153
 msgid "List users"
 msgstr "Elenca utenti"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:147
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:154
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/add.php:15
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/UsersGroups/index.php:23
 msgid "Add user"
 msgstr "Aggiungi utente"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:151
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:158
 msgid "List groups"
 msgstr "Elenca gruppi"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:152
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:159
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/index.php:23
 msgid "Add group"
 msgstr "Aggiungi gruppo"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:170
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:177
 msgid "List backups"
 msgstr "Elenca backup"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:171
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:178
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/add.php:16
 msgid "Add backup"
 msgstr "Aggiungi backup"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:173
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:180
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:100
 msgid "Backups"
 msgstr "Backup"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:188
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:195
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:16
 msgid "Temporary files"
 msgstr "File temporanei"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:189
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:196
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:16
 msgid "System checkup"
 msgstr "Checkup del sistema"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:190
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:197
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/browser.php:16
 msgid "Media browser"
 msgstr "Browser multimediale"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:191
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:198
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/changelogs.php:16
 msgid "Changelogs"
 msgstr "Changelog"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:194
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:201
 msgid "Log management"
 msgstr "Gestione log"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:200
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:207
 msgid "System"
 msgstr "Sistema"
 
