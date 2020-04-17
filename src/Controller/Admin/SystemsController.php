@@ -16,13 +16,11 @@ declare(strict_types=1);
 namespace MeCms\Controller\Admin;
 
 use Cake\Cache\Cache;
-use Cake\Core\Configure;
 use Cake\Http\Response;
 use Cake\Routing\Router;
 use League\CommonMark\CommonMarkConverter;
 use MeCms\Controller\Admin\AppController;
 use MeCms\Core\Plugin;
-use MeCms\Utility\Checkup;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Thumber\Cake\Utility\ThumbManager;
@@ -54,11 +52,19 @@ class SystemsController extends AppController
 
     /**
      * Media explorer, with ElFinder
-     * @return void
+     * @return \Cake\Http\Response|null
      */
-    public function browser(): void
+    public function browser(): ?Response
     {
+        if (!is_readable(ELFINDER . 'php' . DS . 'connector.minimal.php')) {
+            $this->Flash->alert(__d('me_cms', '{0} not available', 'ElFinder'));
+
+            return $this->redirect(['_name' => 'dashboard']);
+        }
+
         $this->set('explorer', Router::url('/vendor/elfinder/elfinder.html', true));
+
+        return null;
     }
 
     /**
@@ -89,33 +95,6 @@ class SystemsController extends AppController
         }
 
         $this->set(compact('files'));
-    }
-
-    /**
-     * System checkup
-     * @return void
-     * @uses \MeCms\Utility\Checkup
-     */
-    public function checkup(): void
-    {
-        $Checkup = new Checkup();
-
-        foreach (['Apache', 'ElFinder', 'PHP'] as $class) {
-            foreach (get_class_methods($Checkup->{$class}) as $method) {
-            $className = strtolower($class);
-                $methodName = strtolower(string_starts_with($method, 'get') ? substr($method, 3) : $method);
-                $results[$className][$methodName] = call_user_func([$Checkup->{$class}, $method]);
-            }
-        }
-
-        $results += [
-            'cache' => Cache::enabled(),
-            'cakephp' => Configure::version(),
-            'directories' => $Checkup->Directories->isWriteable(),
-            'plugins' => $Checkup->Plugin->getVersions(),
-        ];
-
-        $this->set($results);
     }
 
     /**

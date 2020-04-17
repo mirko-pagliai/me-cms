@@ -148,31 +148,6 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `checkup()` method
-     * @test
-     */
-    public function testCheckup()
-    {
-        $expectedViewVars = [
-            'webroot',
-            'temporary',
-            'plugins',
-            'php',
-            'elfinder',
-            'cakephp',
-            'cache',
-            'backups',
-            'apache',
-        ];
-        $this->get($this->url + ['action' => 'checkup']);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'checkup.php');
-        foreach ($expectedViewVars as $expectedViewVar) {
-            $this->assertNotEmpty($this->viewVariable($expectedViewVar));
-        }
-    }
-
-    /**
      * Tests for `tmpCleaner()` method
      * @test
      */

@@ -43,14 +43,6 @@ Configure::write('VENDOR_LINKS', array_merge(Configure::read('VENDOR_LINKS', [])
     'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
 ]));
 
-foreach (Configure::read('WRITABLE_DIRS') as $dir) {
-    @mkdir($dir, 0777, true);
-
-    if (!is_writeable($dir)) {
-        trigger_error(sprintf('Directory %s not writeable', $dir), E_USER_ERROR);
-    }
-}
-
 //Sets configuration for the Tokens plugin
 Configure::write('Tokens.usersClassOptions', [
     'foreignKey' => 'user_id',
@@ -108,5 +100,6 @@ if (!Log::getConfig('users')) {
 }
 
 require_once __DIR__ . DS . 'i18n_constants.php';
+require_once __DIR__ . DS . 'requirements.php';
 
 Type::map('jsonEntity', JsonEntityType::class);

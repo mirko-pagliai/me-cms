@@ -53,7 +53,6 @@ define('LOGIN_RECORDS', TMP . 'login' . DS);
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once CORE_PATH . 'config' . DS . 'bootstrap.php';
 require_once ROOT . 'config' . DS . 'constants.php';
-require_once TESTS . 'apache_functions.php';
 
 Configure::write('debug', true);
 Configure::write('App', [
