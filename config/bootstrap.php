@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of me-cms.
@@ -16,20 +17,33 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Database\Type;
-use Cake\Http\ServerRequest;
-use Cake\I18n\Date;
-use Cake\I18n\FrozenDate;
-use Cake\I18n\FrozenTime;
-use Cake\I18n\Time;
 use Cake\Log\Log;
 use EntityFileLog\Log\Engine\EntityFileLog;
 use MeCms\Database\Type\JsonEntityType;
 
 require_once __DIR__ . DS . 'constants.php';
 
-foreach ([BANNERS, LOGIN_RECORDS, PHOTOS, UPLOADED, USER_PICTURES] as $dir) {
-    @mkdir($dir);
+//Sets directories to be created and must be writable
+Configure::write('WRITABLE_DIRS', array_merge(Configure::read('WRITABLE_DIRS', []), [
+    getConfigOrFail('Assets.target'),
+    getConfigOrFail('DatabaseBackup.target'),
+    BANNERS,
+    LOGIN_RECORDS,
+    PHOTOS,
+    THUMBER_TARGET,
+    UPLOADED,
+    USER_PICTURES,
+]));
 
+//Sets symbolic links for vendor assets to be created
+Configure::write('VENDOR_LINKS', array_merge(Configure::read('VENDOR_LINKS', []), [
+    'npm-asset' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
+    'sunhater' . DS . 'kcfinder' => 'kcfinder',
+    'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
+]));
+
+foreach (Configure::read('WRITABLE_DIRS') as $dir) {
+    @mkdir($dir, 0777, true);
     if (!is_writeable($dir)) {
         trigger_error(sprintf('Directory %s not writeable', $dir), E_USER_ERROR);
     }
@@ -48,45 +62,29 @@ if (is_readable(CONFIG . 'me_cms.php')) {
     Configure::load('me_cms');
 }
 
-//Forces debug on localhost, if required
-if ((new ServerRequest())->is('localhost') && getConfig('main.debug_on_localhost')) {
-    Configure::write('debug', true);
-}
-
 //Loads theme plugin
 $theme = getConfig('default.theme');
 if ($theme && !Plugin::loaded($theme)) {
     Plugin::load($theme);
 }
 
-//Loads the cache configuration and merges with the configuration from
-//  application, if exists
-Configure::load('MeCms.cache');
-if (is_readable(CONFIG . 'cache.php')) {
-    Configure::load('cache');
-}
-
 //Adds all cache configurations
+Configure::load('MeCms.cache');
 foreach (Configure::consume('Cache') as $key => $config) {
-    //Drops cache configurations that already exist
-    if (Cache::getConfig($key)) {
-        Cache::drop($key);
+    if (!Cache::getConfig($key)) {
+        Cache::setConfig($key, $config);
     }
-
-    Cache::setConfig($key, $config);
 }
 
 //Loads the widgets configuration and merges with the configuration from
 //  application, if exists
 Configure::load('MeCms.widgets');
-
 if (is_readable(CONFIG . 'widgets.php')) {
     Configure::load('widgets', 'default', false);
 }
 
 //Loads the reCAPTCHA configuration
 Configure::load('recaptcha');
-
 if (!getConfig('RecaptchaMailhide.encryptKey')) {
     Configure::write('RecaptchaMailhide.encryptKey', getConfigOrFail('Recaptcha.private'));
 }
@@ -106,13 +104,6 @@ if (!Log::getConfig('users')) {
         'url' => env('LOG_DEBUG_URL', null),
     ]);
 }
-
-//Sets the default format used when type converting instances of this type to string
-$format = getConfigOrFail('main.datetime.long');
-Date::setToStringFormat($format);
-FrozenDate::setToStringFormat($format);
-FrozenTime::setToStringFormat($format);
-Time::setToStringFormat($format);
 
 require_once __DIR__ . DS . 'i18n_constants.php';
 

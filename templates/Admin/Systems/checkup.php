@@ -81,11 +81,11 @@ foreach ($apache['modules'] as $module => $isLoaded) {
 <div class="row">
 <?php
 //Current version
-$text = __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), PHP_VERSION);
+$text = __d('me_cms', '{0} version: {1}', $this->Html->strong('PHP'), $php['version']);
 echo $this->Html->div('col-6', $this->Html->para($infoClasses, $text));
 
 //PHP's extensions
-foreach ($phpExtensions as $extension => $isLoaded) {
+foreach ($php['extensions'] as $extension => $isLoaded) {
     [$class, $options] = [$errorClasses, $errorOptions];
     $text = __d('me_cms', 'The {0} extension is not enabled', $this->Html->strong($extension));
     if ($isLoaded) {

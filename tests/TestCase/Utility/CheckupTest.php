@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -63,9 +64,8 @@ class CheckupTest extends TestCase
     public function testApache()
     {
         $this->assertInstanceof(Apache::class, $this->Checkup->Apache);
-        $this->assertEquals(['modules', 'version'], get_class_methods($this->Checkup->Apache));
         $this->assertArrayKeysEqual(['expires', 'rewrite'], $this->Checkup->Apache->modules());
-        $this->assertRegExp('/[\d\.]+/', $this->Checkup->Apache->version());
+        $this->assertRegExp('/^[\d\.]+$/', $this->Checkup->Apache->getVersion());
     }
 
     /**
@@ -75,7 +75,6 @@ class CheckupTest extends TestCase
     public function testBackups()
     {
         $this->assertInstanceof(Backups::class, $this->Checkup->Backups);
-        $this->assertEquals(['isWriteable'], get_class_methods($this->Checkup->Backups));
         $this->assertEquals([getConfig('DatabaseBackup.target') => true], $this->Checkup->Backups->isWriteable());
     }
 
@@ -87,7 +86,6 @@ class CheckupTest extends TestCase
     {
         create_kcfinder_files();
         $this->assertInstanceof(KCFinder::class, $this->Checkup->KCFinder);
-        $this->assertEquals(['htaccess', 'isAvailable', 'version'], get_class_methods($this->Checkup->KCFinder));
         $this->assertTrue($this->Checkup->KCFinder->htaccess());
         $this->assertTrue($this->Checkup->KCFinder->isAvailable());
         $this->assertRegExp('/[\d\.]+/', $this->Checkup->KCFinder->version());
@@ -108,7 +106,8 @@ class CheckupTest extends TestCase
     public function testPHP()
     {
         $this->assertInstanceof(PHP::class, $this->Checkup->PHP);
-        $this->assertEquals(['extensions'], get_class_methods($this->Checkup->PHP));
+        $this->assertNotEmpty($this->Checkup->PHP->extensions());
+        $this->assertRegExp('/^7\.\d+\.\d+$/', $this->Checkup->PHP->getVersion());
     }
 
     /**
@@ -118,10 +117,9 @@ class CheckupTest extends TestCase
     public function testPlugin()
     {
         $this->assertInstanceof(Plugin::class, $this->Checkup->Plugin);
-        $this->assertEquals(['versions'], get_class_methods($this->Checkup->Plugin));
-        $this->assertArrayKeysEqual(['me_cms', 'others'], $this->Checkup->Plugin->versions());
-        $this->assertNotEmpty($this->Checkup->Plugin->versions()['me_cms']);
-        $this->assertNotEmpty($this->Checkup->Plugin->versions()['others']);
+        $this->assertArrayKeysEqual(['me_cms', 'others'], $this->Checkup->Plugin->getVersions());
+        $this->assertNotEmpty($this->Checkup->Plugin->getVersions()['me_cms']);
+        $this->assertNotEmpty($this->Checkup->Plugin->getVersions()['others']);
     }
 
     /**
@@ -131,8 +129,6 @@ class CheckupTest extends TestCase
     public function testTMP()
     {
         $this->assertInstanceof(TMP::class, $this->Checkup->TMP);
-        $this->assertEquals(['isWriteable'], get_class_methods($this->Checkup->TMP));
-
         $result = $this->Checkup->TMP->isWriteable();
         $this->assertNotEmpty($result);
         foreach ($result as $path => $isWriteable) {
@@ -148,8 +144,6 @@ class CheckupTest extends TestCase
     public function testWebroot()
     {
         $this->assertInstanceof(Webroot::class, $this->Checkup->Webroot);
-        $this->assertEquals(['isWriteable'], get_class_methods($this->Checkup->Webroot));
-
         $result = $this->Checkup->Webroot->isWriteable();
         $this->assertNotEmpty($result);
         foreach ($result as $path => $isWriteable) {

@@ -1,5 +1,16 @@
 # 2.x branch
 ## 2.28 branch
+### 2.28.1
+* no longer loads the cache configuration from the application. To set custom
+    cache parameters, use the application bootstrap;
+* prevents the plugins bootstrap from loading multiple times;
+* `Apache::version()` renamed as `Apache::getVersion()`, `Plugin::versions()`
+    renamed as `Plugin::getVersions()`;
+* removed useless `AbstractCheckup` class;
+* added `PHP::getVersion()`;
+* no longer forces debug for localhost. Instead, use your `app_local.php` file;
+* updated `Command` tests for `cakephp` 4.0.5.
+
 ### 2.28.0
 * updated for `cakephp` 4 and `phpunit` 8;
 * added `MenuHelperTestCase`.

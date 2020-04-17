@@ -138,9 +138,11 @@ class SystemsController extends AppController
     {
         $Checkup = new Checkup();
 
-        foreach (['Apache', 'KCFinder'] as $class) {
+        foreach (['Apache', 'KCFinder', 'PHP'] as $class) {
             foreach (get_class_methods($Checkup->{$class}) as $method) {
-                $results[strtolower($class)][$method] = call_user_func([$Checkup->{$class}, $method]);
+                $className = strtolower($class);
+                $methodName = strtolower(string_starts_with($method, 'get') ? substr($method, 3) : $method);
+                $results[$className][$methodName] = call_user_func([$Checkup->{$class}, $method]);
             }
         }
 
@@ -148,13 +150,12 @@ class SystemsController extends AppController
             'backups' => $Checkup->Backups->isWriteable(),
             'cache' => Cache::enabled(),
             'cakephp' => Configure::version(),
-            'phpExtensions' => $Checkup->PHP->extensions(),
-            'plugins' => $Checkup->Plugin->versions(),
+            'plugins' => $Checkup->Plugin->getVersions(),
             'temporary' => $Checkup->TMP->isWriteable(),
             'webroot' => $Checkup->Webroot->isWriteable(),
         ];
 
-        array_map([$this, 'set'], array_keys($results), $results);
+        $this->set($results);
     }
 
     /**
@@ -187,21 +188,22 @@ class SystemsController extends AppController
         $this->getRequest()->allowMethod(['post', 'delete']);
 
         $assetsTarget = getConfigOrFail('Assets.target');
+        $exceptions = ['.gitkeep', 'empty'];
         $success = true;
         switch ($type) {
             case 'all':
-                @unlink_recursive($assetsTarget, 'empty');
-                @unlink_recursive(LOGS, 'empty');
+                @unlink_recursive($assetsTarget, $exceptions);
+                @unlink_recursive(LOGS, $exceptions);
                 $success = self::clearCache() && self::clearSitemap() && (new ThumbManager())->clearAll();
                 break;
             case 'cache':
                 $success = self::clearCache();
                 break;
             case 'assets':
-                @unlink_recursive($assetsTarget, 'empty');
+                @unlink_recursive($assetsTarget, $exceptions);
                 break;
             case 'logs':
-                @unlink_recursive(LOGS, 'empty');
+                @unlink_recursive(LOGS, $exceptions);
                 break;
             case 'sitemap':
                 $success = self::clearSitemap();

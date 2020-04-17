@@ -78,8 +78,6 @@ return ['MeCms' => [
             //Short format
             'short' => 'yy/MM/dd, HH:mm',
         ],
-        //Forces debug on localhost (enabled or disabled)
-        'debug_on_localhost' => true,
         //Sitemap expiration. Must be a valid strtotime string
         'sitemap_expiration' => '+24 hours',
         //Time formats

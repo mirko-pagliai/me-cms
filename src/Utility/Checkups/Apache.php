@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -15,29 +16,27 @@ declare(strict_types=1);
 
 namespace MeCms\Utility\Checkups;
 
-use MeCms\Utility\Checkups\AbstractCheckup;
-
 /**
  * Checkup for Apache
  */
-class Apache extends AbstractCheckup
+class Apache
 {
     /**
      * Modules to check
      * @var array
      */
-    protected $modulesToCheck = ['expires', 'rewrite'];
+    protected static $modulesToCheck = ['expires', 'rewrite'];
 
     /**
      * Checks if some modules are loaded
      * @return array
      * @uses $modulesToCheck
      */
-    public function modules(): array
+    public static function modules(): array
     {
         $modules = [];
 
-        foreach ($this->modulesToCheck as $module) {
+        foreach (self::$modulesToCheck as $module) {
             $modules[$module] = in_array('mod_' . $module, apache_get_modules());
         }
 
@@ -48,10 +47,8 @@ class Apache extends AbstractCheckup
      * Returns the version of Apache
      * @return string
      */
-    public function version(): string
+    public static function getVersion(): string
     {
-        $version = apache_get_version();
-
-        return preg_match('/Apache\/(\d+\.\d+\.\d+)/i', $version, $matches) ? $matches[1] : $version;
+        return preg_match('/^Apache\/(\d+\.\d+\.\d+)/i', apache_get_version(), $matches) ? $matches[1] : apache_get_version();
     }
 }

@@ -16,18 +16,17 @@ declare(strict_types=1);
 namespace MeCms\Utility\Checkups;
 
 use MeCms\Core\Plugin as BasePlugin;
-use MeCms\Utility\Checkups\AbstractCheckup;
 
 /**
  * Checkup for plugins
  */
-class Plugin extends AbstractCheckup
+class Plugin
 {
     /**
      * Returns the version number for each plugin
      * @return array
      */
-    public function versions(): array
+    public static function getVersions(): array
     {
         $Plugin = new BasePlugin();
 

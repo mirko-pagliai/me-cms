@@ -15,12 +15,10 @@ declare(strict_types=1);
 
 namespace MeCms\Utility\Checkups;
 
-use MeCms\Utility\Checkups\AbstractCheckup;
-
 /**
  * Checkup for KCFinder
  */
-class KCFinder extends AbstractCheckup
+class KCFinder
 {
     /**
      * Checks if the `.htaccess` is readable

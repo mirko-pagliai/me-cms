@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -15,28 +16,26 @@ declare(strict_types=1);
 
 namespace MeCms\Utility\Checkups;
 
-use MeCms\Utility\Checkups\AbstractCheckup;
-
 /**
  * Checkup for webroot directories
  */
-class Webroot extends AbstractCheckup
+class Webroot
 {
     /**
      * Checks if each path is writeable
-     * @param array $paths Paths to check
      * @return array Array with paths as keys and boolean as value
-     * @uses isWriteable()
      */
-    public function isWriteable(array $paths = []): array
+    public static function isWriteable(): array
     {
-        $paths = $paths ?: [
+        foreach ([
             BANNERS,
             PHOTOS,
             USER_PICTURES,
-            WWW_ROOT . 'files' . DS,
-        ];
+            UPLOADED,
+        ] as $path) {
+            $result[$path] = is_writable_resursive($path, true);
+        }
 
-        return parent::isWriteable($paths);
+        return $result ?? [];
     }
 }

@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -15,12 +16,10 @@ declare(strict_types=1);
 
 namespace MeCms\Utility\Checkups;
 
-use MeCms\Utility\Checkups\AbstractCheckup;
-
 /**
  * Checkup for PHP
  */
-class PHP extends AbstractCheckup
+class PHP
 {
     /**
      * Extensions to check
@@ -31,12 +30,22 @@ class PHP extends AbstractCheckup
      * Checks if some extensions are loaded
      * @return array Array with extension name as key and boolean as value
      */
-    public function extensions(): array
+    public static function extensions(): array
     {
         foreach (self::EXT_TO_CHECK as $extension) {
             $extensions[$extension] = extension_loaded($extension);
         }
 
         return $extensions;
+    }
+
+    /**
+     * Gets the version number
+     * @return string
+     * @since 2.28.1
+     */
+    public static function getVersion(): string
+    {
+        return preg_match('/^([\d\.]+)/', PHP_VERSION, $matches) ? $matches[1] : PHP_VERSION;
     }
 }

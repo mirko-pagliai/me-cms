@@ -16,6 +16,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use BadMethodCallException;
 use Cake\Cache\Cache;
+use Cake\I18n\I18nDateTimeInterface;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use MeCms\ORM\Query;
@@ -242,8 +243,8 @@ class AppTableTest extends TableTestCase
             4,
             true,
             3,
-            '2016/12/01, 00:00',
-            '2017/01/01, 00:00',
+            '12/1/16, 12:00 AM',
+            '1/1/17, 12:00 AM',
         ];
         $data = [
             'id' => 2,
@@ -257,7 +258,9 @@ class AppTableTest extends TableTestCase
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
         $this->assertStringEndsWith($expectedSql, $query->sql());
 
-        $params = collection($query->getValueBinder()->bindings())->extract('value')->toList();
+        $params = array_map(function ($value) {
+            return $value instanceof I18nDateTimeInterface ? $value->i18nFormat() : $value;
+        }, collection($query->getValueBinder()->bindings())->extract('value')->toList());
         $this->assertEquals($expectedParams, $params);
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['active' => I18N_NO] + $data);
