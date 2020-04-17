@@ -51,8 +51,8 @@ class FixElFinderCommand extends Command
             return null;
         }
 
-        $fileToCopy = Plugin::path('MeCms', 'config' . DS . 'elfinder' . DS . 'connector.minimal.php');
-        $content = file_get_contents($fileToCopy);
+        $origin = Plugin::path('MeCms', 'config' . DS . 'elfinder' . DS . 'connector.minimal.php');
+        $content = file_get_contents($origin);
         $content = str_replace('{{UPLOADS_PATH}}', add_slash_term(UPLOADED), $content);
         $content = str_replace('{{UPLOADS_URL}}', Router::url('/files', true), $content);
         $io->createFile($target, $content);

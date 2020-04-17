@@ -25,7 +25,7 @@ $opts = array(
         array(
             'driver' => 'LocalFileSystem',
             'path'   => '/home/mirko/Libs/Plugins/me-cms/tests/test_app/TestApp/webroot/files/',
-            'URL'    => 'http://localhost/files/',
+            'URL'    => 'http://localhost/files',
             'trashHash'     => 't1_Lw',                         // elFinder's hash of trash folder
             'winHashFix'    => DIRECTORY_SEPARATOR !== '/',     // to make hash same to Linux one on windows too
             'uploadDeny'    => array('all'),                    // All Mimetypes not allowed to upload
@@ -37,7 +37,7 @@ $opts = array(
         array(
             'id'            => '1',
             'driver'        => 'Trash',
-            'path'          => '/home/mirko/Libs/Plugins/me-cms/tests/test_app/TestApp/webroot/files/.trash/',
+            'path'          => '/home/mirko/Libs/Plugins/me-cms/tests/test_app/TestApp/webroot/files/.trash',
             'tmbURL'        => 'http://localhost/files/.trash/.tmb/',
             'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
             'uploadDeny'    => array('all'),                // Recomend the same settings as the original volume that uses the trash
