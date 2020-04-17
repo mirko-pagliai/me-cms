@@ -52,7 +52,7 @@ class FixElFinderCommand extends Command
 
         $uploads = add_slash_term(UPLOADED);
         $url = Router::url('/files', true);
-$str = <<<HEREDOC
+        $str = <<<HEREDOC
 <?php
 error_reporting(0); // Set E_ALL for debuging
 
