@@ -44,4 +44,15 @@ class FixElFinderCommandTest extends TestCase
         $this->assertOutputContains('<success>Wrote</success> `' . $expectedFile . '`');
         $this->assertErrorEmpty();
     }
+
+    /**
+     * Test for `execute()` method, file already exists
+     * @test
+     */
+    public function testExecuteFileAlreadyExists()
+    {
+        $this->exec($this->command);
+        $this->assertExitWithSuccess();
+        $this->assertOutputRegExp('/already exists$/');
+    }
 }
