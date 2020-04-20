@@ -150,9 +150,9 @@ return ['MeCms' => [
     //Security
     'security' => [
         //Link for "IP map". The `{IP}` string will be replaced
-        'ip_map' => 'http://www.traceip.net/?query={IP}',
+        'ip_map' => 'https://db-ip.com/{IP}',
         //Link for "IP who is". The `{IP}` string will be replaced
-        'ip_whois' => 'http://www.traceip.net/whois/{IP}',
+        'ip_whois' => 'https://db-ip.com/{IP}',
         //reCAPTCHA (enabled or disabled).
         //It will be used for some actions, such as signup or password reset
         'recaptcha' => false,
