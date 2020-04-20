@@ -15,7 +15,7 @@ declare(strict_types=1);
 if (is_array($link)) {
     $link = $this->Url->build($link);
 }
-$linkOptions = optionsParser(empty($linkOptions) ? [] : $linkOptions)->append('class', 'd-block');
+$linkOptions = optionsParser($linkOptions ?? [])->append('class', 'd-block');
 
 if (!$linkOptions->exists('title')) {
     if (!empty($title)) {

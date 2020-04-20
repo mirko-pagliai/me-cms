@@ -4,6 +4,8 @@
 * `KcFinder` has been completely replaced with `ElFinder` and all its classes
     have been removed. `\MeCms\Command\Install\FixElFinderCommand` and
     `\MeCms\Utility\Checkups\ElFinder` classes have been added;
+* uses and suggests `npm-asset/fancyapps-fancybox` [github](https://github.com/fancyapps/fancybox)
+    instead of `newerton/fancy-box`.
 * admin "checkup" function and all its classes have been removed.
 
 ## 2.28 branch
