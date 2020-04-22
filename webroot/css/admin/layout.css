@@ -290,7 +290,7 @@ ul.actions li:last-child {
     font-weight: bold;
     line-height: .8rem;
     margin: 0 0 .5rem .3rem;
-    padding: .3rem .3rem;
+    padding: .3rem;
 }
 
 /* Tags preview, tags, remove button */
