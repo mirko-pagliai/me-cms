@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -54,7 +55,7 @@ abstract class TestCase extends BaseTestCase
             Cache::clear($cacheKey);
         }
 
-        unlink_recursive(KCFINDER, 'empty');
-        unlink_recursive(WWW_ROOT . 'vendor', 'empty');
+        @unlink_recursive(KCFINDER, ['.gitkeep', 'empty']);
+        @unlink_recursive(WWW_ROOT . 'vendor', ['.gitkeep', 'empty']);
     }
 }
