@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -10,7 +11,7 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       2.26.0
+ * @since       2.29.0
  */
 
 namespace MeCms\Command\Install;
@@ -18,13 +19,14 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use MeCms\Utility\Checkups\KCFinder;
+use Cake\Routing\Router;
+use MeCms\Core\Plugin;
 use MeTools\Console\Command;
 
 /**
- * Fixes KCFinder
+ * Fixes ElFinder
  */
-class FixKcfinderCommand extends Command
+class FixElFinderCommand extends Command
 {
     /**
      * Hook method for defining this command's option parser
@@ -33,33 +35,27 @@ class FixKcfinderCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
-        return $parser->setDescription(__d('me_cms', 'Fixes {0}', 'KCFinder'));
+        return $parser->setDescription(__d('me_cms', 'Fixes {0}', 'ElFinder'));
     }
 
     /**
-     * Fixes KCFinder
+     * Fixes ElFinder
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $file = add_slash_term(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess';
-
-        if (!$this->verboseIfFileExists($io, $file)) {
-            if (!(new KCFinder())->isAvailable()) {
-                return $io->error(__d('me_tools', '{0} is not available', 'KCFinder'));
-            }
-
-            $io->createFile(
-                add_slash_term(WWW_ROOT) . 'vendor' . DS . 'kcfinder' . DS . '.htaccess',
-                'php_value session.cache_limiter must-revalidate' . PHP_EOL .
-                'php_value session.cookie_httponly On' . PHP_EOL .
-                'php_value session.cookie_lifetime 14400' . PHP_EOL .
-                'php_value session.gc_maxlifetime 14400' . PHP_EOL .
-                'php_value session.name CAKEPHP'
-            );
+        $target = ELFINDER . 'php' . DS . 'connector.minimal.php';
+        if ($this->verboseIfFileExists($io, $target)) {
+            return null;
         }
+
+        $origin = Plugin::path('MeCms', 'config' . DS . 'elfinder' . DS . 'connector.minimal.php');
+        $content = file_get_contents($origin);
+        $content = str_replace('{{UPLOADS_PATH}}', add_slash_term(UPLOADED), $content);
+        $content = str_replace('{{UPLOADS_URL}}', Router::url('/files', true), $content);
+        $io->createFile($target, $content);
 
         return null;
     }

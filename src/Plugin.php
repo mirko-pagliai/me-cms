@@ -28,7 +28,7 @@ use MeCms\Command\GroupsCommand;
 use MeCms\Command\Install\CopyConfigCommand;
 use MeCms\Command\Install\CreateAdminCommand;
 use MeCms\Command\Install\CreateGroupsCommand;
-use MeCms\Command\Install\FixKcfinderCommand;
+use MeCms\Command\Install\FixElFinderCommand;
 use MeCms\Command\Install\RunAllCommand;
 use MeCms\Command\UsersCommand;
 use MeCms\Command\VersionUpdatesCommand;
@@ -99,7 +99,7 @@ class Plugin extends BasePlugin
             ->add('me_cms.copy_config', CopyConfigCommand::class)
             ->add('me_cms.create_admin', CreateAdminCommand::class)
             ->add('me_cms.create_groups', CreateGroupsCommand::class)
-            ->add('me_cms.fix_kcfinder', FixKcfinderCommand::class)
+            ->add('me_cms.fix_elfinder', FixElFinderCommand::class)
             ->add('me_cms.install', RunAllCommand::class);
 
         //Commands from MeTools

@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -72,7 +73,7 @@ class RunAllCommandTest extends TestCase
             'MeTools\Command\Install\CreatePluginsLinksCommand',
             'MeTools\Command\Install\CreateVendorsLinksCommand',
             'MeCms\Command\Install\CopyConfigCommand',
-            'MeCms\Command\Install\FixKcfinderCommand',
+            'MeCms\Command\Install\FixElFinderCommand',
             'MeCms\Command\VersionUpdatesCommand',
             'MeCms\Command\Install\CreateGroupsCommand',
             'MeCms\Command\Install\CreateAdminCommand',

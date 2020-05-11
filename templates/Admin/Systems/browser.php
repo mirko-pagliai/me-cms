@@ -14,26 +14,6 @@ declare(strict_types=1);
  */
 $this->extend('/Admin/common/index');
 $this->assign('title', __d('me_cms', 'Media browser'));
+$this->Asset->script('MeCms.admin/elfinder', ['block' => 'script_bottom']);
 
-$this->Asset->script('MeCms.admin/kcfinder', ['block' => 'script_bottom']);
-?>
-
-<div class="card card-body bg-light border-0 mb-4">
-    <?= $this->Form->createInline(null, ['type' => 'get']) ?>
-    <fieldset>
-    <?php
-    echo $this->Form->label('type', __d('me_cms', 'Type'));
-    echo $this->Form->control('type', [
-        'default' => $this->getRequest()->getQuery('type'),
-        'onchange' => 'sendForm(this)',
-    ]);
-    echo $this->Form->submit(I18N_SELECT);
-    ?>
-    </fieldset>
-    <?= $this->Form->end() ?>
-</div>
-
-<?php
-if (!empty($kcfinder)) {
-    echo $this->Html->iframe($kcfinder, ['id' => 'kcfinder', 'width' => '100%']);
-}
+echo $this->Html->iframe($explorer, ['id' => 'file-explorer', 'width' => '100%']);

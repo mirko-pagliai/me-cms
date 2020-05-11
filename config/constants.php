@@ -26,14 +26,14 @@ if (!defined('BANNERS_WWW')) {
     define('BANNERS_WWW', 'banners/');
 }
 
+//Sets the default ElFinder path
+if (!defined('ELFINDER')) {
+    define('ELFINDER', WWW_ROOT . 'vendor' . DS . 'elfinder' . DS);
+}
+
 //Sets the datetime format for MySql
 if (!defined('FORMAT_FOR_MYSQL')) {
     define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
-}
-
-//Sets the default KCFinder path
-if (!defined('KCFINDER')) {
-    define('KCFINDER', WWW_ROOT . 'vendor' . DS . 'kcfinder' . DS);
 }
 
 //Sets the default login log directory

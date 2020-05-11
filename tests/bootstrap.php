@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -53,7 +54,6 @@ define('LOGIN_RECORDS', TMP . 'login' . DS);
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once CORE_PATH . 'config' . DS . 'bootstrap.php';
 require_once ROOT . 'config' . DS . 'constants.php';
-require_once TESTS . 'apache_functions.php';
 
 Configure::write('debug', true);
 Configure::write('App', [
@@ -122,17 +122,6 @@ Log::setConfig('error', [
 
 TransportFactory::setConfig('debug', ['className' => 'Debug']);
 Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
-
-/**
- * This makes it believe that KCFinder is installed
- * @param bool $htaccess If `true`, it also creates the `.htaccess` file
- * @return void
- */
-function create_kcfinder_files($htaccess = true)
-{
-    @create_file(KCFINDER . 'browse.php', '@version 3.12');
-    $htaccess ? @create_file(KCFINDER . '.htaccess') : null;
-}
 
 $_SERVER['PHP_SELF'] = '/';
 

@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -15,14 +16,11 @@ declare(strict_types=1);
 namespace MeCms\Controller\Admin;
 
 use Cake\Cache\Cache;
-use Cake\Core\Configure;
 use Cake\Http\Response;
-use Cake\I18n\I18n;
 use Cake\Routing\Router;
 use League\CommonMark\CommonMarkConverter;
 use MeCms\Controller\Admin\AppController;
 use MeCms\Core\Plugin;
-use MeCms\Utility\Checkup;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Thumber\Cake\Utility\ThumbManager;
@@ -32,20 +30,6 @@ use Thumber\Cake\Utility\ThumbManager;
  */
 class SystemsController extends AppController
 {
-    /**
-     * Initialization hook method
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        //Loads KcFinderComponent
-        if ($this->getRequest()->isAction('browser')) {
-            $this->loadComponent('MeCms.KcFinder');
-        }
-    }
-
     /**
      * Check if the provided user is authorized for the request
      * @param array|\ArrayAccess|null $user The user to check the authorization
@@ -67,36 +51,30 @@ class SystemsController extends AppController
     }
 
     /**
-     * Media browser with KCFinder.
-     *
-     * The KCFinder component is loaded by the `initialize()` method.
-     * @return void
-     * @uses \MeCms\Controller\Component\KcFinderComponent::getTypes()
+     * Internal method to check if ElFinder exists
+     * @return bool
      */
-    public function browser(): void
+    protected function elFinderExists(): bool
     {
-        //Gets the type from the query and the supported types from configuration
-        $type = $this->getRequest()->getQuery('type');
-        $types = $this->KcFinder->getTypes();
+        return is_readable(ELFINDER . 'php' . DS . 'connector.minimal.php');
+    }
 
-        //If there's only one type, it automatically sets the query value
-        if (!$type && count($types) < 2) {
-            $type = array_key_first($types);
-            $this->setRequest($this->getRequest()->withQueryParams(compact('type')));
+    /**
+     * Media explorer, with ElFinder
+     * @return \Cake\Http\Response|null
+     * @uses elFinderExists()
+     */
+    public function browser(): ?Response
+    {
+        if (!$this->elFinderExists()) {
+            $this->Flash->alert(__d('me_cms', '{0} not available', 'ElFinder'));
+
+            return $this->redirect(['_name' => 'dashboard']);
         }
 
-        //Checks the type, then sets the KCFinder path
-        if ($type && array_key_exists($type, $types)) {
-            //Sets locale
-            $this->set('kcfinder', sprintf(
-                '%s/kcfinder/browse.php?lang=%s&type=%s',
-                Router::url('/vendor', true),
-                substr(I18n::getLocale(), 0, 2) ?: 'en',
-                $type
-            ));
-        }
+        $this->set('explorer', Router::url('/vendor/elfinder/elfinder.html', true));
 
-        $this->set('types', array_combine(array_keys($types), array_keys($types)));
+        return null;
     }
 
     /**
@@ -127,35 +105,6 @@ class SystemsController extends AppController
         }
 
         $this->set(compact('files'));
-    }
-
-    /**
-     * System checkup
-     * @return void
-     * @uses \MeCms\Utility\Checkup
-     */
-    public function checkup(): void
-    {
-        $Checkup = new Checkup();
-
-        foreach (['Apache', 'KCFinder', 'PHP'] as $class) {
-            foreach (get_class_methods($Checkup->{$class}) as $method) {
-                $className = strtolower($class);
-                $methodName = strtolower(string_starts_with($method, 'get') ? substr($method, 3) : $method);
-                $results[$className][$methodName] = call_user_func([$Checkup->{$class}, $method]);
-            }
-        }
-
-        $results += [
-            'backups' => $Checkup->Backups->isWriteable(),
-            'cache' => Cache::enabled(),
-            'cakephp' => Configure::version(),
-            'plugins' => $Checkup->Plugin->getVersions(),
-            'temporary' => $Checkup->TMP->isWriteable(),
-            'webroot' => $Checkup->Webroot->isWriteable(),
-        ];
-
-        $this->set($results);
     }
 
     /**

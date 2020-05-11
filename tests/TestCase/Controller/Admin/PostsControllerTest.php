@@ -54,8 +54,6 @@ class PostsControllerTest extends ControllerTestCase
     {
         parent::testBeforeFilter();
 
-        create_kcfinder_files();
-
         $this->Table->Categories->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
@@ -130,7 +128,6 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testAdd()
     {
-        create_kcfinder_files();
         $url = $this->url + ['action' => 'add'];
 
         $this->get($url);
@@ -156,7 +153,6 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testEdit()
     {
-        create_kcfinder_files();
         $url = $this->url + ['action' => 'edit', 1];
 
         $this->get($url);
@@ -196,8 +192,6 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testAdminsAndManagersCanAddAndEditAsAnotherUser()
     {
-        create_kcfinder_files();
-
         foreach (['admin', 'manager'] as $userGroup) {
             $this->setUserGroup($userGroup);
 
@@ -229,7 +223,6 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testOtherUsersCannotAddOrEditAsAnotherUser()
     {
-        create_kcfinder_files();
         $this->setUserGroup('user');
         $this->setUserId(3);
 

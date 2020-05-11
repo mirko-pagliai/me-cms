@@ -118,34 +118,16 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function testBrowser()
     {
-        create_kcfinder_files();
-        @mkdir(UPLOADED . 'docs');
-
-        $url = $this->url + ['action' => 'browser'];
-
-        $this->get($url);
+        $this->get($this->url + ['action' => 'browser']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
-        $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $this->viewVariable('types'));
-        $this->assertEmpty($this->viewVariable('kcfinder'));
+        $this->assertStringEndsWith('elfinder/elfinder.html', $this->viewVariable('explorer'));
 
-        //GET requests. Asks for `docs` type with different locales
-        foreach (['en', 'it'] as $locale) {
-            I18n::setLocale($locale);
-            $this->get($url + ['?' => ['type' => 'docs']]);
-            $this->assertResponseOkAndNotEmpty();
-            $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
-            $this->assertEquals(['docs' => 'docs', 'images' => 'images'], $this->viewVariable('types'));
-            $this->assertStringContainsString('kcfinder/browse.php?lang=' . $locale . '&type=docs', $this->viewVariable('kcfinder'));
-        }
-
-        //GET request. Now only the `images` type exists
-        @rmdir(UPLOADED . 'docs');
-        $this->get($url);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
-        $this->assertEquals(['images' => 'images'], $this->viewVariable('types'));
-        $this->assertStringContainsString('kcfinder/browse.php?lang=it&type=images', $this->viewVariable('kcfinder'));
+        $Controller = $this->getMockForController(get_class($this->Controller), ['elFinderExists']);
+        $Controller->method('elFinderExists')->willReturn(false);
+        $this->_response = $Controller->browser();
+        $this->assertRedirect(['_name' => 'dashboard']);
+        $this->assertFlashMessage('ElFinder not available');
     }
 
     /**
@@ -169,29 +151,6 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'changelogs.php');
         $this->assertNotEmpty($this->viewVariable('changelog'));
         $this->assertTrue(is_html($this->viewVariable('changelog')));
-    }
-
-    /**
-     * Tests for `checkup()` method
-     * @test
-     */
-    public function testCheckup()
-    {
-        $expectedViewVars = [
-            'webroot',
-            'temporary',
-            'plugins',
-            'php',
-            'kcfinder',
-            'cakephp',
-            'cache',
-            'backups',
-            'apache',
-        ];
-        $this->get($this->url + ['action' => 'checkup']);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'checkup.php');
-        array_map([$this, 'assertNotEmpty'], array_map([$this, 'viewVariable'], $expectedViewVars));
     }
 
     /**

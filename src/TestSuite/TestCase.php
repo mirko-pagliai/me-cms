@@ -54,8 +54,5 @@ abstract class TestCase extends BaseTestCase
             Cache::getConfig($cacheKey) ?: $this->fail('Cache key `' . $cacheKey . '` does not exist');
             Cache::clear($cacheKey);
         }
-
-        @unlink_recursive(KCFINDER, ['.gitkeep', 'empty']);
-        @unlink_recursive(WWW_ROOT . 'vendor', ['.gitkeep', 'empty']);
     }
 }

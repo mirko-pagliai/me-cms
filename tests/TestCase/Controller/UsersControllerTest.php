@@ -284,11 +284,9 @@ class UsersControllerTest extends ControllerTestCase
     public function testLogout()
     {
         $this->cookie('login', 'value');
-        $this->session(['KCFINDER' => 'value']);
         $this->get(['_name' => 'logout']);
         $this->assertRedirect($this->Controller->Auth->logout());
         $this->assertCookieNotSet('login');
-        $this->assertSessionEmpty('KCFINDER');
         $this->assertFlashMessage('You are successfully logged out');
     }
 

@@ -47,7 +47,7 @@ $baseOptions = ['class' => 'd-block'];
 
 //If Fancybox is enabled
 if (getConfig('default.fancybox')) {
-    $baseOptions = ['class' => 'd-block fancybox', 'rel' => 'fancybox-group'];
+    $baseOptions = ['class' => 'd-block', 'data-fancybox' => 'gallery'];
 }
 ?>
 
@@ -60,7 +60,10 @@ if (getConfig('default.fancybox')) {
         }
         //If Fancybox is enabled, adds some options
         if (getConfig('default.fancybox')) {
-            $linkOptions += ['data-fancybox-href' => $this->Thumb->resizeUrl($photo->get('path'), ['height' => 1280])];
+            $linkOptions += [
+                'data-caption' => $photo->get('description'),
+                'data-src' => $this->Thumb->resizeUrl($photo->get('path'), ['height' => 1280]),
+            ];
         }
 
         echo $this->Html->div('col-md-4 col-lg-3 mb-4', $this->element('MeCms.views/photo-preview', [

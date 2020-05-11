@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -18,7 +19,7 @@ namespace MeCms\Command\Install;
 use MeCms\Command\Install\CopyConfigCommand;
 use MeCms\Command\Install\CreateAdminCommand;
 use MeCms\Command\Install\CreateGroupsCommand;
-use MeCms\Command\Install\FixKcfinderCommand;
+use MeCms\Command\Install\FixElFinderCommand;
 use MeCms\Command\VersionUpdatesCommand;
 use MeTools\Command\Install\RunAllCommand as BaseRunAllCommand;
 
@@ -42,9 +43,9 @@ class RunAllCommand extends BaseRunAllCommand
                 'command' => CopyConfigCommand::class,
             ],
             [
-                'question' => __d('me_tools', 'Fix {0}?', 'KCFinder'),
+                'question' => __d('me_tools', 'Fix {0}?', 'ElFinder'),
                 'default' => 'Y',
-                'command' => FixKcfinderCommand::class,
+                'command' => FixElFinderCommand::class,
             ],
             [
                 'question' => __d('me_cms', 'Updates to the database or files needed for versioning?'),

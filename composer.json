@@ -24,7 +24,7 @@
         "mirko-pagliai/cakephp-stop-spam": "^1.1",
         "mirko-pagliai/cakephp-thumber": "^1.9",
         "mirko-pagliai/cakephp-tokens": "^1.3",
-        "mirko-pagliai/me-tools": "^2.19.2",
+        "mirko-pagliai/me-tools": "^2.19.4",
         "mirko-pagliai/php-tools": "^1.3.3",
         "npm-asset/js-cookie": "^v2.2",
         "twbs/bootstrap": "^v4.4",
@@ -34,11 +34,16 @@
         "cakephp/cakephp-codesniffer": "^4.0",
         "phpunit/phpunit": "^8.3.1"
     },
+    "conflict": {
+        "newerton/fancy-box": "*",
+        "studio-42/elfinder": "<= 2.1.48",
+        "sunhater/kcfinder": "*"
+    },
     "suggest": {
         "cakephp/debug_kit": "Debug Toolbar for CakePHP applications",
         "mirko-pagliai/me-cms-instagram": "Instagram plugin for MeCms",
         "mirko-pagliai/me-cms-link-scanner": "Link scanner plugin for MeCms",
-        "sunhater/kcfinder:dev-master": "To use KCFinder to browse and upload files"
+        "studio-42/elfinder": "To use ElFinder to browse and upload files"
     },
     "repositories": [
         {
