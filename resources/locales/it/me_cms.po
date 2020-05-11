@@ -1,12 +1,11 @@
 # LANGUAGE translation of me-cms
 # Copyright Mirko Pagliai <mirko.pagliai@gmail.com>
 #
-# Mirko Pagliai <mirko.pagliai@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-04-17 12:36+0200\n"
-"PO-Revision-Date: 2020-04-17 12:36+0100\n"
+"POT-Creation-Date: 2020-05-11 14:57+0200\n"
+"PO-Revision-Date: 2020-05-11 14:58+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: it\n"
-"X-Generator: Lokalize 2.0\n"
 
 #: /home/mirko/Libs/Plugins/me-cms/src/Command/AddUserCommand.php:35
 msgid "Adds an user"
@@ -77,19 +75,19 @@ msgstr "Alcuni gruppi utente già esistono"
 msgid "The user groups have been created"
 msgstr "I gruppi utente sono stati creati"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/FixKcfinderCommand.php:36
+#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/FixElFinderCommand.php:38
 msgid "Fixes {0}"
 msgstr "Sistema {0}"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/RunAllCommand.php:50
+#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/RunAllCommand.php:51
 msgid "Updates to the database or files needed for versioning?"
 msgstr "Aggiornare database o file necessari per l'aggiornamento di versione?"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/RunAllCommand.php:55
+#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/RunAllCommand.php:56
 msgid "Create the user groups?"
 msgstr "Creare i gruppi utente?"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/RunAllCommand.php:60
+#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/RunAllCommand.php:61
 msgid "Create an admin user?"
 msgstr "Creare un utente amministratore?"
 
@@ -147,13 +145,13 @@ msgstr "Modifica categoria pagine"
 msgid "You must first create a category"
 msgstr "Devi prima creare una categoria"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PagesController.php:148
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PagesController.php:134
 #: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:86
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PagesCategories/index.php:24
 msgid "Add page"
 msgstr "Aggiungi pagina"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PagesController.php:180
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PagesController.php:166
 #: /home/mirko/Libs/Plugins/me-cms/templates/Pages/view.php:29
 msgid "Edit page"
 msgstr "Modifica pagina"
@@ -174,16 +172,20 @@ msgstr "Modifica categoria articoli"
 msgid "You must first create an user"
 msgstr "Devi prima creare un utente"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PostsController.php:159
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PostsController.php:146
 #: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:60
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PostsCategories/index.php:23
 msgid "Add post"
 msgstr "Aggiungi articolo"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PostsController.php:193
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PostsController.php:180
 #: /home/mirko/Libs/Plugins/me-cms/templates/Posts/view.php:32
 msgid "Edit post"
 msgstr "Modifica articolo"
+
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/SystemsController.php:70
+msgid "{0} not available"
+msgstr "{0} non disponibile"
 
 #: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/UsersController.php:51
 msgid "You must first create an user group"
@@ -220,67 +222,67 @@ msgid "You have to wait {0} seconds to perform a new search"
 msgstr "Puoi effettuare una nuova ricerca fra {0} secondi"
 
 #: /home/mirko/Libs/Plugins/me-cms/src/Controller/SystemsController.php:62
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:169
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:278
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:360
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:168
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:277
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:359
 msgid "You must fill in the {0} control correctly"
 msgstr "Devi compilare correttamente il controllo {0}"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:133
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:316
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:132
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:315
 msgid "Invalid token"
 msgstr "Token non valido"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:174
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:173
 msgid "No valid account was found"
 msgstr "Non è stato trovato un account valido"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:177
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:374
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:176
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:373
 msgid "We send you an email to activate your account"
 msgstr "Ti abbiamo inviato un'email per attivare il tuo account"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:217
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:216
 msgid "Your account has been banned by an admin"
 msgstr "Il tuo account è stato bannato da un amministratore"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:219
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:218
 msgid "Your account has not been activated yet"
 msgstr "Il tuo account non è stato ancora attivato"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:242
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:241
 msgid "Invalid username or password"
 msgstr "Username o password non validi"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:255
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:254
 msgid "You are successfully logged out"
 msgstr "Ti sei disconnesso correttamente"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:280
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:279
 msgid "No account found"
 msgstr "Nessun account trovato"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:289
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:288
 msgid "We have sent you an email to reset your password"
 msgstr "Ti abbiamo inviato un'email per reimpostare la tua password"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:325
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:324
 msgid "The password has been edited"
 msgstr "La password è stata modificata"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:330
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:329
 msgid "The password has not been edited"
 msgstr "La password non è stata modificata"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:362
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:361
 msgid "The account has not been created"
 msgstr "Il tuo account non è stato creato"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:368
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:367
 msgid "Account created, but it needs to be activated by an admin"
 msgstr "Account creato, ma è necessaria l'attivazione di un amministratore"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:378
+#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:377
 msgid "Account created. Now you can login"
 msgstr "Account creato. Puoi fare il login"
 
@@ -366,10 +368,6 @@ msgstr "La vecchia password è errata"
 #: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/UsersGroupValidator.php:37
 msgid "lowercase letters"
 msgstr "lettere minuscole"
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Utility/Checkups/Plugin.php:37
-msgid "n.a."
-msgstr "n.d."
 
 #: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:64
 #: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:81
@@ -494,7 +492,6 @@ msgid "Add backup"
 msgstr "Aggiungi backup"
 
 #: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:180
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:100
 msgid "Backups"
 msgstr "Backup"
 
@@ -504,25 +501,20 @@ msgid "Temporary files"
 msgstr "File temporanei"
 
 #: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:196
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:16
-msgid "System checkup"
-msgstr "Checkup del sistema"
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:197
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/browser.php:16
 msgid "Media browser"
 msgstr "Browser multimediale"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:198
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:197
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/changelogs.php:16
 msgid "Changelogs"
 msgstr "Changelog"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:201
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:200
 msgid "Log management"
 msgstr "Gestione log"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:207
+#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:203
 msgid "System"
 msgstr "Sistema"
 
@@ -1109,78 +1101,10 @@ msgid_plural "{0} posts"
 msgstr[0] "{0} articolo"
 msgstr[1] "{0} articoli"
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/browser.php:25
-msgid "Type"
-msgstr "Tipo"
-
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/changelogs.php:23
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/changelogs.php:26
 msgid "Changelog"
 msgstr "Changelog"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:30
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:33
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:51
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:61
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:84
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:122
-msgid "{0} version: {1}"
-msgstr "Versione di {0}: {1}"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:37
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:40
-msgid "Cache is disabled or debugging is active"
-msgstr "La cache è disabilitata o il debug è attivo"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:40
-msgid "Cache is enabled"
-msgstr "La cache è abilitata"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:46
-msgid "Plugins"
-msgstr "Plugin"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:67
-msgid "The {0} module cannot be checked"
-msgstr "Il modulo {0} non può essere verificato"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:70
-msgid "The {0} module is enabled"
-msgstr "Il modulo {0} è abilitato"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:73
-msgid "The {0} module is not enabled"
-msgstr "Il modulo {0} non è abilitato"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:90
-msgid "The {0} extension is not enabled"
-msgstr "L'estensione {0} non è abilitata"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:93
-msgid "The {0} extension is enabled"
-msgstr "L'estensione {0} è abilitata"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:108
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:148
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:164
-msgid "Directory {0} is readable and writable"
-msgstr "La directory {0} è leggibile e scrivibile"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:119
-msgid "{0} not available"
-msgstr "{0} non disponibile"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:132
-msgid "File or directory {0} is readable"
-msgstr "File o directory {0} leggibile"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:139
-msgid "Temporary directories"
-msgstr "Directory temporanee"
-
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/checkup.php:155
-msgid "Webroot"
-msgstr "Webroot"
 
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:20
 msgid "All temporary files"
@@ -1203,6 +1127,10 @@ msgstr "Cancella tutti i file temporanei"
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:37
 msgid "Cache"
 msgstr "Cache"
+
+#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:40
+msgid "Cache is disabled or debugging is active"
+msgstr "La cache è disabilitata o il debug è attivo"
 
 #: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:43
 msgid "Cache size: {0}"
