@@ -13,11 +13,10 @@
  */
 
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
+use Cake\Routing\Route\DashedRoute;
 
 /** @var \Cake\Routing\RouteBuilder $routes */
-
-Router::defaultRouteClass('DashedRoute');
+$routes->setRouteClass(DashedRoute::class);
 
 $routes->scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
     $routes->setExtensions(['rss']);
