@@ -12,6 +12,8 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
+/** @var \Cake\Routing\RouteBuilder $routes */
+
 //Accept cookies
 if (!$routes->nameExists('acceptCookies')) {
     $routes->connect(

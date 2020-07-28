@@ -12,6 +12,8 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
+/** @var \Cake\Routing\RouteBuilder $routes */
+
 //Activation
 if (!$routes->nameExists('activation')) {
     $routes->connect(
