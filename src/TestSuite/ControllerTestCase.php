@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use Cake\Event\Event;
+use MeCms\Controller\AppController;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\IntegrationTestTrait;
 
@@ -198,7 +199,8 @@ abstract class ControllerTestCase extends TestCase
     public function testBeforeFilter()
     {
         //If the user has been reported as a spammer this makes a redirect
-        $controller = $this->getMockForController(get_class($this->Controller), ['isSpammer']);
+        $this->loadPlugins(['MeCms']);
+        $controller = $this->getMockForController(AppController::class, ['isSpammer']);
         $controller->method('isSpammer')->willReturn(true);
         $this->_response = $controller->beforeFilter(new Event('myEvent'));
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
