@@ -79,15 +79,13 @@ abstract class AppController extends BaseAppController
     }
 
     /**
-     * Quick access to the `paging` request parameter
+     * Gets the the `paging` request attribute and parameter
      * @return array
      * @since 2.27.1
      */
     public function getPaging()
     {
-        $paging = $this->getRequest()->getAttribute('paging');
-
-        return $paging ?? $this->getRequest()->getParam('paging', []);
+        return $this->getRequest()->getAttribute('paging') ?? $this->getRequest()->getParam('paging', []);
     }
 
     /**
@@ -132,5 +130,18 @@ abstract class AppController extends BaseAppController
     protected function isSpammer(): bool
     {
         return $this->getRequest()->isSpammer() && !$this->getRequest()->isAction('ipNotAllowed', 'Systems');
+    }
+
+    /**
+     * Sets the `paging` request attribute and parameter
+     * @param array $paging Paging value
+     * @return $this
+     * @since 2.29.1
+     */
+    public function setPaging(array $paging)
+    {
+        $request = $this->getRequest()->withAttribute('paging', $paging)->withParam('paging', $paging);
+
+        return $this->setRequest($request);
     }
 }

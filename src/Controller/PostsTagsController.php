@@ -61,7 +61,7 @@ class PostsTagsController extends AppController
             ], $this->PostsTags->getCacheName());
         //Else, sets the paging parameter
         } else {
-            $this->setRequest($this->getRequest()->withParam('paging', $paging));
+            $this->setPaging($paging);
         }
 
         $this->set(compact('tags'));
@@ -113,7 +113,7 @@ class PostsTagsController extends AppController
             ], $this->PostsTags->getCacheName());
         //Else, sets the paging parameter
         } else {
-            $this->setRequest($this->getRequest()->withParam('paging', $paging));
+            $this->setPaging($paging);
         }
 
         $this->set(compact('posts', 'tag'));
