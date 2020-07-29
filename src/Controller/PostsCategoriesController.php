@@ -82,7 +82,7 @@ class PostsCategoriesController extends AppController
             ], $this->PostsCategories->getCacheName());
         //Else, sets the paging parameter
         } else {
-            $this->setRequest($this->getRequest()->withParam('paging', $paging));
+            $this->setPaging($paging);
         }
 
         $this->set('category', $posts->extract('category')->first());

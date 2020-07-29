@@ -12,6 +12,8 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
+/** @var \Cake\Routing\RouteBuilder $routes */
+
 //Albums
 if (!$routes->nameExists('albums')) {
     $routes->connect('/albums', ['controller' => 'PhotosAlbums', 'action' => 'index'], ['_name' => 'albums']);

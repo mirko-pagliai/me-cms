@@ -1,5 +1,10 @@
 # 2.x branch
 ## 2.29 branch
+### 2.29.1
+* added `AppController::setPaging()` method and updated controllers. This solves
+    a serious bug in pagination;
+* updated some dependencies.
+
 ### 2.29.0
 * `KcFinder` has been completely replaced with `ElFinder` and all its classes
     have been removed. `\MeCms\Command\Install\FixElFinderCommand` and

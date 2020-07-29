@@ -12,12 +12,13 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 
-Router::defaultRouteClass('DashedRoute');
+/** @var \Cake\Routing\RouteBuilder $routes */
+$routes->setRouteClass(DashedRoute::class);
 
-Router::scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
+$routes->scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
     $routes->setExtensions(['rss']);
 
     //Requires other routes
@@ -42,7 +43,7 @@ Router::scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
     });
 });
 
-Router::plugin('MeCms', ['path' => '/me-cms'], function (RouteBuilder $routes) {
+$routes->plugin('MeCms', ['path' => '/me-cms'], function (RouteBuilder $routes) {
     $routes->setExtensions(['json']);
 
     //Admin routes

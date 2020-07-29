@@ -4,7 +4,7 @@ error_reporting(0); //Set E_ALL for debuging
 session_start();
 
 if (!isset($_SESSION['Auth']['User']['id'])) {
-    header("HTTP/1.0 401 Unauthorized");
+    header('HTTP/1.0 401 Unauthorized');
     echo '{"error": "Login failed."}';
     exit;
 }

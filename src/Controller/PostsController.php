@@ -83,7 +83,7 @@ class PostsController extends AppController
             ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
-            $this->setRequest($this->getRequest()->withParam('paging', $paging));
+            $this->setPaging($paging);
         }
 
         $this->set(compact('posts'));
@@ -147,7 +147,7 @@ class PostsController extends AppController
             ], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
-            $this->setRequest($this->getRequest()->withParam('paging', $paging));
+            $this->setPaging($paging);
         }
 
         $this->set(compact('date', 'posts', 'start'));
@@ -267,7 +267,7 @@ class PostsController extends AppController
                 ], $this->Posts->getCacheName());
             //Else, sets the paging parameter
             } else {
-                $this->setRequest($this->getRequest()->withParam('paging', $paging));
+                $this->setPaging($paging);
             }
         }
 
