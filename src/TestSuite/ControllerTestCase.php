@@ -199,7 +199,6 @@ abstract class ControllerTestCase extends TestCase
     public function testBeforeFilter()
     {
         //If the user has been reported as a spammer this makes a redirect
-        $this->loadPlugins(['MeCms']);
         $controller = $this->getMockForController(AppController::class, ['isSpammer']);
         $controller->method('isSpammer')->willReturn(true);
         $this->_response = $controller->beforeFilter(new Event('myEvent'));
