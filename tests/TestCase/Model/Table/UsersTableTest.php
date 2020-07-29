@@ -18,7 +18,6 @@ use App\Utility\Token as TokenCreator;
 use Cake\Cache\Cache;
 use MeCms\Model\Validation\UserValidator;
 use MeCms\TestSuite\TableTestCase;
-use Tokens\Model\Entity\Token;
 
 /**
  * UsersTableTest class
