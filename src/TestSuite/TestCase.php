@@ -47,6 +47,7 @@ abstract class TestCase extends BaseTestCase
         try {
             parent::tearDown();
         } catch (IOException $e) {
+            //Ignores exceptions when clearing logs
         }
 
         //Clears all cache keys
