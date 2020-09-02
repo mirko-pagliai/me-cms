@@ -19,6 +19,7 @@ use Cake\ORM\Entity;
 use MeCms\Controller\Admin\AppController;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
+use Tools\Exceptionist;
 
 /**
  * Logs controller
@@ -45,13 +46,14 @@ class LogsController extends AppController
      * @param string $filename Filename
      * @param bool $serialized `true` for a serialized log
      * @return string|array Log as array for serialized logs, otherwise a string
+     * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotReadableException
      * @uses getPath()
      */
     protected function read(string $filename, bool $serialized)
     {
         $log = $this->getPath($filename, $serialized);
-        is_readable_or_fail($log);
+        Exceptionist::isReadable($log);
         $log = file_get_contents($log);
 
         return $serialized ? @unserialize($log) : trim($log);

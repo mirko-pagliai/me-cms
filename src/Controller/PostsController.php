@@ -26,6 +26,7 @@ use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
 use MeCms\Model\Entity\Post;
+use Tools\Exceptionist;
 
 /**
  * Posts controller
@@ -161,7 +162,7 @@ class PostsController extends AppController
     public function rss(): void
     {
         //This method works only for RSS
-        is_true_or_fail($this->RequestHandler->prefers('rss'), ForbiddenException::class);
+        Exceptionist::isTrue($this->RequestHandler->prefers('rss'), ForbiddenException::class);
         $this->viewBuilder()->setClassName('Feed.Rss');
 
         $posts = $this->Posts->find('active')

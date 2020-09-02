@@ -16,6 +16,7 @@ namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\Routing\Router;
+use Tools\Exceptionist;
 
 /**
  * PhotosAlbum entity
@@ -53,7 +54,7 @@ class PhotosAlbum extends Entity
      */
     protected function _getPath(): ?string
     {
-        property_exists_or_fail($this, 'id');
+        Exceptionist::objectPropertyExists($this, 'id');
 
         return PHOTOS . $this->get('id');
     }
@@ -66,7 +67,7 @@ class PhotosAlbum extends Entity
      */
     protected function _getPreview(): ?string
     {
-        property_exists_or_fail($this, 'photos');
+        Exceptionist::objectPropertyExists($this, 'photos');
         $photo = array_value_first($this->get('photos'));
         property_exists($photo, 'path');
 
@@ -81,7 +82,7 @@ class PhotosAlbum extends Entity
      */
     protected function _getUrl(): string
     {
-        property_exists_or_fail($this, 'slug');
+        Exceptionist::objectPropertyExists($this, 'slug');
 
         return Router::url(['_name' => 'album', $this->get('slug')], true);
     }

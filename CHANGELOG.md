@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.29 branch
+### 2.29.2
+* updated for `me-tools` 2.19.7 and `php-tools` 1.4.1.
+
 ### 2.29.1
 * added `AppController::setPaging()` method and updated controllers. This solves
     a serious bug in pagination;

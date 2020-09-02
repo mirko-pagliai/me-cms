@@ -18,6 +18,7 @@ use Cake\Controller\Component;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
 use InvalidArgumentException;
+use Tools\Exceptionist;
 use Tools\FileArray;
 
 /**
@@ -61,7 +62,7 @@ class LoginRecorderComponent extends Component
     {
         if (!$this->FileArray) {
             $user = $this->getConfig('user');
-            is_positive_or_fail($user, __d('me_cms', 'You have to set a valid user id'), InvalidArgumentException::class);
+            Exceptionist::isPositive([$user], __d('me_cms', 'You have to set a valid user id'), InvalidArgumentException::class);
             $this->FileArray = new FileArray(LOGIN_RECORDS . 'user_' . $user . '.log');
         }
 

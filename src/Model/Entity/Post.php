@@ -17,6 +17,7 @@ namespace MeCms\Model\Entity;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use MeCms\ORM\PostAndPageEntity;
+use Tools\Exceptionist;
 
 /**
  * Post entity
@@ -52,7 +53,7 @@ class Post extends PostAndPageEntity
      */
     protected function _getUrl(): string
     {
-        property_exists_or_fail($this, 'slug');
+        Exceptionist::objectPropertyExists($this, 'slug');
 
         return Router::url(['_name' => 'post', $this->get('slug')], true);
     }

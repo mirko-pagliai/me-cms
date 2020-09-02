@@ -17,6 +17,7 @@ namespace MeCms\View\Helper;
 use BadMethodCallException;
 use Cake\Utility\Text;
 use Cake\View\Helper;
+use Tools\Exceptionist;
 
 /**
  * MenuBuilder Helper
@@ -79,7 +80,7 @@ class MenuBuilderHelper extends Helper
                 continue;
             }
 
-            is_true_or_fail(
+            Exceptionist::isTrue(
                 count($args) >= 3,
                 __d('me_cms', 'Method `{0}::{1}()` returned only {2} values', get_class($helper), $method, count($args)),
                 BadMethodCallException::class
