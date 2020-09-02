@@ -20,7 +20,7 @@
         "fortawesome/font-awesome": "^5.1",
         "league/commonmark": "^0.19",
         "mirko-pagliai/cakephp-assets": "^1.5",
-        "mirko-pagliai/cakephp-database-backup": "^2.8",
+        "mirko-pagliai/cakephp-database-backup": "^2.8.2",
         "mirko-pagliai/cakephp-entity-file-log": "^1.1",
         "mirko-pagliai/cakephp-recaptcha-mailhide": "^1.4.3",
         "mirko-pagliai/cakephp-stop-spam": "^1.1",
