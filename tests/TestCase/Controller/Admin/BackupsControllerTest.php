@@ -38,7 +38,7 @@ class BackupsControllerTest extends ControllerTestCase
     protected function createSingleBackup(string $extension = 'sql'): ?string
     {
         $file = getConfigOrFail('DatabaseBackup.target') . DS . 'backup.' . $extension;
-        create_file($file);
+        create_file($file, null, 0777, true);
 
         return $file;
     }

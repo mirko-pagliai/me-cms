@@ -109,7 +109,7 @@ class BannersFixture extends TestFixture
     public function insert(ConnectionInterface $db)
     {
         foreach ($this->records as $record) {
-            create_file(BANNERS . $record['filename']);
+            create_file(BANNERS . $record['filename'], null, 0777, true);
         }
 
         return parent::insert($db);
