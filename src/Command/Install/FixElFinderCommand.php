@@ -22,8 +22,8 @@ use Cake\Console\ConsoleOptionParser;
 use Cake\Routing\Router;
 use MeCms\Core\Plugin;
 use MeTools\Console\Command;
-use Tools\Exceptionist;
 use Tools\Exception\NotReadableException;
+use Tools\Exceptionist;
 
 /**
  * Fixes ElFinder
