@@ -20,6 +20,7 @@ use Cake\Http\Cookie\Cookie;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\Http\Response;
 use MeCms\Controller\Admin\AppController;
+use Tools\Exceptionist;
 
 /**
  * Banners controller
@@ -120,7 +121,7 @@ class BannersController extends AppController
         }
 
         if ($this->getRequest()->getData('file')) {
-            is_true_or_fail($position, __d('me_cms', 'Missing ID'), InternalErrorException::class);
+            Exceptionist::isTrue($position, __d('me_cms', 'Missing ID'), InternalErrorException::class);
 
             $uploaded = $this->Uploader->set($this->getRequest()->getData('file'))
                 ->mimetype('image')

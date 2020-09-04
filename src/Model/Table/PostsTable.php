@@ -25,6 +25,7 @@ use MeCms\Model\Table\Traits\IsOwnedByTrait;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\ORM\PostsAndPagesTables;
 use MeCms\ORM\Query;
+use Tools\Exceptionist;
 
 /**
  * Posts model
@@ -125,7 +126,7 @@ class PostsTable extends PostsAndPagesTables
      */
     public function getRelated(Post $post, int $limit = 5, bool $images = true): CollectionInterface
     {
-        property_exists_or_fail($post, ['id', 'tags']);
+        Exceptionist::objectPropertyExists($post, ['id', 'tags']);
 
         $cache = sprintf('related_%s_posts_for_%s', $limit, $post->get('id'));
         $cache = $images ? $cache . '_with_images' : $cache;

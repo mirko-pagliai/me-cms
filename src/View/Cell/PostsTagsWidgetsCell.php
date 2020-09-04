@@ -18,6 +18,7 @@ use Cake\ORM\ResultSet;
 use Cake\View\Cell;
 use InvalidArgumentException;
 use MeCms\Model\Entity\Tag;
+use Tools\Exceptionist;
 
 /**
  * PostsTagsWidgets cell
@@ -44,7 +45,7 @@ class PostsTagsWidgetsCell extends Cell
     {
         //Maximum and minimun font sizes we want to use
         [$maxFont, $minFont] = [$style['maxFont'] ?? 40, $style['minFont'] ?? 12];
-        is_true_or_fail($maxFont > $minFont, __d('me_cms', 'Invalid values'), InvalidArgumentException::class);
+        Exceptionist::isTrue($maxFont > $minFont, __d('me_cms', 'Invalid values'), InvalidArgumentException::class);
 
         return [$maxFont, $minFont];
     }

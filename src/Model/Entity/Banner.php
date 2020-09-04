@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
+use Tools\Exceptionist;
 
 /**
  * Banner entity
@@ -55,7 +56,7 @@ class Banner extends Entity
      */
     protected function _getPath(): ?string
     {
-        property_exists_or_fail($this, 'filename');
+        Exceptionist::objectPropertyExists($this, 'filename');
 
         return BANNERS . $this->get('filename');
     }
@@ -67,7 +68,7 @@ class Banner extends Entity
      */
     protected function _getWww(): ?string
     {
-        property_exists_or_fail($this, 'filename');
+        Exceptionist::objectPropertyExists($this, 'filename');
 
         return BANNERS_WWW . $this->get('filename');
     }

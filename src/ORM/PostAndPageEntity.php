@@ -17,6 +17,7 @@ namespace MeCms\ORM;
 
 use Cake\ORM\Entity;
 use MeTools\Utility\BBCode;
+use Tools\Exceptionist;
 
 /**
  * Abstract class for `Post` and `Page` entity classes.
@@ -43,7 +44,7 @@ abstract class PostAndPageEntity extends Entity
      */
     protected function _getPlainText(): string
     {
-        property_exists_or_fail($this, 'text');
+        Exceptionist::objectPropertyExists($this, 'text');
 
         return trim(strip_tags($this->get('text')));
     }

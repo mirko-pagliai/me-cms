@@ -16,6 +16,7 @@ namespace MeCms\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\Routing\Router;
+use Tools\Exceptionist;
 
 /**
  * PagesCategory entity
@@ -59,7 +60,7 @@ class PagesCategory extends Entity
      */
     protected function _getUrl(): string
     {
-        property_exists_or_fail($this, 'slug');
+        Exceptionist::objectPropertyExists($this, 'slug');
 
         return Router::url(['_name' => 'pagesCategory', $this->get('slug')], true);
     }

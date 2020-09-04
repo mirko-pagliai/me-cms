@@ -18,6 +18,7 @@ use Cake\ORM\Entity;
 use Cake\Routing\Router;
 use MeTools\Utility\BBCode;
 use Thumber\Cake\Utility\ThumbCreator;
+use Tools\Exceptionist;
 
 /**
  * Photo entity
@@ -56,7 +57,7 @@ class Photo extends Entity
      */
     protected function _getPath(): ?string
     {
-        property_exists_or_fail($this, ['album_id', 'filename']);
+        Exceptionist::objectPropertyExists($this, ['album_id', 'filename']);
 
         return PHOTOS . $this->get('album_id') . DS . $this->get('filename');
     }
@@ -94,7 +95,7 @@ class Photo extends Entity
      */
     protected function _getUrl(): string
     {
-        property_exists_or_fail($this, ['id', 'album']);
+        Exceptionist::objectPropertyExists($this, ['id', 'album']);
 
         return Router::url(['_name' => 'photo', 'slug' => $this->get('album')->get('slug'), 'id' => (string)$this->get('id')], true);
     }

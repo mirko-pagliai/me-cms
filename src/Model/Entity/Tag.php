@@ -17,6 +17,7 @@ namespace MeCms\Model\Entity;
 use Cake\ORM\Entity;
 use Cake\Routing\Router;
 use Cake\Utility\Text;
+use Tools\Exceptionist;
 
 /**
  * Tag entity
@@ -53,7 +54,7 @@ class Tag extends Entity
      */
     protected function _getSlug(): ?string
     {
-        property_exists_or_fail($this, 'tag');
+        Exceptionist::objectPropertyExists($this, 'tag');
 
         return strtolower(Text::slug($this->get('tag')));
     }
@@ -66,7 +67,7 @@ class Tag extends Entity
      */
     protected function _getUrl(): string
     {
-        property_exists_or_fail($this, 'slug');
+        Exceptionist::objectPropertyExists($this, 'slug');
 
         return Router::url(['_name' => 'postsTag', $this->get('slug')], true);
     }

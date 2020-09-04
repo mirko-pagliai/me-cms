@@ -16,6 +16,7 @@ namespace MeCms\Mailer;
 
 use MeCms\Mailer\Mailer;
 use MeCms\Model\Entity\User;
+use Tools\Exceptionist;
 
 /**
  * UserMailer class
@@ -34,7 +35,7 @@ class UserMailer extends Mailer
      */
     public function activation(User $user): void
     {
-        key_exists_or_fail(['email', 'full_name'], $user->toArray());
+        Exceptionist::arrayKeyExists(['email', 'full_name'], $user->toArray());
 
         $this->viewBuilder()->setTemplate('MeCms.Users/activation');
         $this->setTo([$user->get('email') => $user->get('full_name')])
@@ -53,7 +54,7 @@ class UserMailer extends Mailer
      */
     public function changePassword(User $user): void
     {
-        key_exists_or_fail(['email', 'full_name'], $user->toArray());
+        Exceptionist::arrayKeyExists(['email', 'full_name'], $user->toArray());
 
         $this->viewBuilder()->setTemplate('MeCms.Users/change_password');
         $this->setTo([$user->get('email') => $user->get('full_name')])
@@ -72,7 +73,7 @@ class UserMailer extends Mailer
      */
     public function passwordForgot(User $user): void
     {
-        key_exists_or_fail(['email', 'full_name'], $user->toArray());
+        Exceptionist::arrayKeyExists(['email', 'full_name'], $user->toArray());
 
         $this->viewBuilder()->setTemplate('MeCms.Users/password_forgot');
         $this->setTo([$user->get('email') => $user->get('full_name')])

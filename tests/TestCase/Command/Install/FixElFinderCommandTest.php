@@ -15,8 +15,12 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command\Install;
 
+use Cake\Console\ConsoleIo;
+use Cake\TestSuite\Stub\ConsoleOutput;
+use MeCms\Command\Install\FixElFinderCommand;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
+use Tools\Exception\NotReadableException;
 
 /**
  * FixElFinderCommandTest class
@@ -36,12 +40,17 @@ class FixElFinderCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $expectedFile = ELFINDER . 'php' . DS . 'connector.minimal.php';
-        @unlink($expectedFile);
+        $expectedFiles = [
+            ELFINDER . 'php' . DS . 'connector.minimal.php',
+            ELFINDER . 'elfinder-cke.html',
+        ];
+        @array_map('unlink', $expectedFiles);
         $this->exec($this->command);
         $this->assertExitWithSuccess();
-        $this->assertOutputContains('Creating file ' . $expectedFile);
-        $this->assertOutputContains('<success>Wrote</success> `' . $expectedFile . '`');
+        foreach ($expectedFiles as $expectedFile) {
+            $this->assertOutputContains('Creating file ' . $expectedFile);
+            $this->assertOutputContains('<success>Wrote</success> `' . $expectedFile . '`');
+        }
         $this->assertErrorEmpty();
     }
 
@@ -54,5 +63,22 @@ class FixElFinderCommandTest extends TestCase
         $this->exec($this->command);
         $this->assertExitWithSuccess();
         $this->assertOutputRegExp('/already exists$/');
+    }
+
+    /**
+     * Test for `execute()` method, not readable file
+     * @test
+     */
+    public function testExecuteNotReadableFile()
+    {
+        $Command = $this->getMockBuilder(FixElFinderCommand::class)
+            ->setMethods(['createElfinderCke'])
+            ->getMock();
+
+        $Command->method('createElfinderCke')->will($this->throwException(new NotReadableException()));
+
+        $this->_err = new ConsoleOutput();
+        $this->assertSame(0, $Command->run([], new ConsoleIo(new ConsoleOutput(), $this->_err)));
+        $this->assertErrorContains('Filename is not readable');
     }
 }

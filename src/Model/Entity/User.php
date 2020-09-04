@@ -17,6 +17,7 @@ namespace MeCms\Model\Entity;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 use Symfony\Component\Finder\Finder;
+use Tools\Exceptionist;
 
 /**
  * User entity
@@ -62,7 +63,7 @@ class User extends Entity
      */
     protected function _getFullName(): ?string
     {
-        property_exists_or_fail($this, ['first_name', 'last_name']);
+        Exceptionist::objectPropertyExists($this, ['first_name', 'last_name']);
 
         return sprintf('%s %s', $this->get('first_name'), $this->get('last_name'));
     }

@@ -22,6 +22,8 @@ use Cake\Console\ConsoleOptionParser;
 use Cake\Routing\Router;
 use MeCms\Core\Plugin;
 use MeTools\Console\Command;
+use Tools\Exception\NotReadableException;
+use Tools\Exceptionist;
 
 /**
  * Fixes ElFinder
@@ -39,6 +41,47 @@ class FixElFinderCommand extends Command
     }
 
     /**
+     * Internal method to create the `php/connector.minimal.php` file
+     * @param \Cake\Console\ConsoleIo $io The console io
+     * @return void
+     * @since 2.29.2
+     * @throws \Tools\Exception\FileNotExistsException
+     * @throws \Tools\Exception\NotReadableException
+     */
+    protected function createConnectorMinimal(ConsoleIo $io): void
+    {
+        $target = ELFINDER . 'php' . DS . 'connector.minimal.php';
+        if ($this->verboseIfFileExists($io, $target)) {
+            return;
+        }
+
+        $origin = Plugin::path('MeCms', 'config' . DS . 'elfinder' . DS . 'connector.minimal.php');
+        Exceptionist::isReadable($origin);
+        $content = str_replace(['{{UPLOADS_PATH}}', '{{UPLOADS_URL}}'], [add_slash_term(UPLOADED), Router::url('/files', true)], file_get_contents($origin));
+        $io->createFile($target, $content);
+    }
+
+    /**
+     * Internal method to create the `elfinder-cke.html` file
+     * @param \Cake\Console\ConsoleIo $io The console io
+     * @return void
+     * @since 2.29.2
+     * @throws \Tools\Exception\FileNotExistsException
+     * @throws \Tools\Exception\NotReadableException
+     */
+    protected function createElfinderCke(ConsoleIo $io): void
+    {
+        $target = ELFINDER . 'elfinder-cke.html';
+        if ($this->verboseIfFileExists($io, $target)) {
+            return;
+        }
+
+        $origin = ELFINDER . 'elfinder.html';
+        Exceptionist::isReadable($origin);
+        $io->createFile($target, file_get_contents($origin));
+    }
+
+    /**
      * Fixes ElFinder
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
@@ -46,16 +89,12 @@ class FixElFinderCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $target = ELFINDER . 'php' . DS . 'connector.minimal.php';
-        if ($this->verboseIfFileExists($io, $target)) {
-            return null;
+        try {
+            $this->createConnectorMinimal($io);
+            $this->createElfinderCke($io);
+        } catch (NotReadableException $e) {
+            return $io->error($e->getMessage());
         }
-
-        $origin = Plugin::path('MeCms', 'config' . DS . 'elfinder' . DS . 'connector.minimal.php');
-        $content = file_get_contents($origin);
-        $content = str_replace('{{UPLOADS_PATH}}', add_slash_term(UPLOADED), $content);
-        $content = str_replace('{{UPLOADS_URL}}', Router::url('/files', true), $content);
-        $io->createFile($target, $content);
 
         return null;
     }

@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace MeCms\Mailer;
 
 use MeCms\Mailer\Mailer;
+use Tools\Exceptionist;
 
 /**
  * ContactUsMailer class
@@ -33,7 +34,7 @@ class ContactUsMailer extends Mailer
     public function contactUsMail(array $data): void
     {
         //Checks that all required data is present
-        key_exists_or_fail(['email', 'first_name', 'last_name', 'message'], $data);
+        Exceptionist::arrayKeyExists(['email', 'first_name', 'last_name', 'message'], $data);
 
         $this->viewBuilder()->setTemplate('MeCms.Systems/contact_us');
         $this->setSender($data['email'], sprintf('%s %s', $data['first_name'], $data['last_name']))

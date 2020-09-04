@@ -18,6 +18,7 @@ use Cake\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\Query;
 use MeCms\Controller\AppController;
+use Tools\Exceptionist;
 
 /**
  * PostsCategories controller
@@ -72,7 +73,7 @@ class PostsCategoriesController extends AppController
                     return $query->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]);
                 });
 
-            is_true_or_fail(!$query->isEmpty(), I18N_NOT_FOUND, RecordNotFoundException::class);
+            Exceptionist::isTrue(!$query->isEmpty(), I18N_NOT_FOUND, RecordNotFoundException::class);
 
             [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 

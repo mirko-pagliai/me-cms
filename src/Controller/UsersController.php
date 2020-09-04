@@ -24,6 +24,7 @@ use Cake\Routing\Router;
 use DateTime;
 use MeCms\Controller\AppController;
 use MeCms\Model\Entity\User;
+use Tools\Exceptionist;
 
 /**
  * Users controller
@@ -129,7 +130,7 @@ class UsersController extends AppController
     public function activation(string $id, string $token): ?Response
     {
         $tokenExists = $this->Token->check($token, ['type' => 'signup', 'user_id' => $id]);
-        is_true_or_fail($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
+        Exceptionist::isTrue($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
         $this->Token->delete($token);
 
         $update = $this->Users->findPendingById($id)
@@ -312,7 +313,7 @@ class UsersController extends AppController
     public function passwordReset(string $id, string $token)
     {
         $tokenExists = $this->Token->check($token, ['type' => 'password_forgot', 'user_id' => $id]);
-        is_true_or_fail($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
+        Exceptionist::isTrue($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
 
         $user = $this->Users->findActiveById($id)->firstOrFail();
 
