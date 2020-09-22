@@ -14,7 +14,8 @@
 /*              HTML                */
 /* -------------------------------- */
 /* Links on hover and on focus */
-a:hover, a:focus {
+a:focus,
+a:hover {
     text-decoration: none;
 }
 
@@ -156,7 +157,7 @@ form.filter-form fieldset > :not(legend) {
 form.filter-form legend {
     color: #666;
     cursor: pointer;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     font-size: .875rem;
     font-weight: bold;
     margin-bottom: 0;
@@ -260,7 +261,7 @@ ul.actions li:last-child {
 
 /* Priority badge, normal */
 .priority-normal {
-    background: #5CB85C;
+    background: #5cb85c;
 }
 
 /* Priority badge, high */
