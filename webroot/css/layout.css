@@ -21,7 +21,7 @@ html {
 @media (max-width: 575px) {
     /* Html */
     html {
-      font-size: 14px;
+        font-size: 14px;
     }
 }
 
@@ -36,7 +36,7 @@ blockquote {
 
 /* Body */
 body {
-    font-family: Roboto,sans-serif;
+    font-family: Roboto, sans-serif;
 }
 
 /* Words with highlight */
