@@ -52,6 +52,9 @@ class FixElFinderCommandTest extends TestCase
             $this->assertOutputContains('<success>Wrote</success> `' . $expectedFile . '`');
         }
         $this->assertErrorEmpty();
+
+        $this->assertStringContainsString('\'path\' => \'' . UPLOADED . '\'', file_get_contents($expectedFiles[0]));
+        $this->assertStringContainsString('getFileCallback', file_get_contents($expectedFiles[1]));
     }
 
     /**

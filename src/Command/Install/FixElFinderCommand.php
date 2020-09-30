@@ -23,7 +23,6 @@ use Cake\Routing\Router;
 use MeCms\Core\Plugin;
 use MeTools\Console\Command;
 use Tools\Exception\NotReadableException;
-use Tools\Exceptionist;
 
 /**
  * Fixes ElFinder
@@ -56,7 +55,6 @@ class FixElFinderCommand extends Command
         }
 
         $origin = Plugin::path('MeCms', 'config' . DS . 'elfinder' . DS . 'connector.minimal.php');
-        Exceptionist::isReadable($origin);
         $content = str_replace(['{{UPLOADS_PATH}}', '{{UPLOADS_URL}}'], [add_slash_term(UPLOADED), Router::url('/files', true)], file_get_contents($origin));
         $io->createFile($target, $content);
     }
@@ -76,8 +74,7 @@ class FixElFinderCommand extends Command
             return;
         }
 
-        $origin = ELFINDER . 'elfinder.html';
-        Exceptionist::isReadable($origin);
+        $origin = Plugin::path('MeCms', 'config' . DS . 'elfinder' . DS . 'elfinder-cke.html');
         $io->createFile($target, file_get_contents($origin));
     }
 

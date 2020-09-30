@@ -144,7 +144,7 @@ article .buttons a:hover {
 
 /* Buttons, "read more" button, icon */
 article .buttons .readmore:after {
-    font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 5 Free", sans-serif, Arial;
     content: "\f30b";
     display: inline-block;
     font-style: normal;
