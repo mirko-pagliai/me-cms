@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.29 branch
+### 2.29.3
+* fixed a bug for `FixElFinderCommand`. Now the `elfinder-cke.html` file works.
+
 ### 2.29.2
 * fixed a bug for `FixElFinderCommand`. Now the `elfinder-cke.html` file is also
     created;
