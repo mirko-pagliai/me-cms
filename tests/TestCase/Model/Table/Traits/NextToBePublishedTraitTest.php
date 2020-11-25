@@ -24,7 +24,7 @@ use MeCms\TestSuite\TestCase;
 class NextToBePublishedTraitTest extends TestCase
 {
     /**
-     * @var \MeCms\Model\Table\PostsTable|\PHPUnit_Framework_MockObject_MockObject
+     * @var \MeCms\Model\Table\PostsTable|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Posts;
     /**

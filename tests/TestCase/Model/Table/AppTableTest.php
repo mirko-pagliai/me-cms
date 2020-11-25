@@ -28,17 +28,17 @@ use MeCms\TestSuite\TableTestCase;
 class AppTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PhotosTable|\PHPUnit_Framework_MockObject_MockObject
+     * @var \MeCms\Model\Table\PhotosTable|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Photos;
 
     /**
-     * @var \MeCms\Model\Table\PostsTable|\PHPUnit_Framework_MockObject_MockObject
+     * @var \MeCms\Model\Table\PostsTable|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Posts;
 
     /**
-     * @var \MeCms\Model\Table\PostsCategoriesTable|\PHPUnit_Framework_MockObject_MockObject
+     * @var \MeCms\Model\Table\PostsCategoriesTable|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $PostsCategories;
 

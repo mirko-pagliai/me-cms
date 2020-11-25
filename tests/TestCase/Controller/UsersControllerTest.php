@@ -30,7 +30,7 @@ use Tokens\Controller\Component\TokenComponent;
 class UsersControllerTest extends ControllerTestCase
 {
     /**
-     * @var \Cake\Controller\Component|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\Controller\Component|\PHPUnit\Framework\MockObject\MockObject
      */
     public $Token;
 

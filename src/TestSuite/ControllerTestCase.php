@@ -29,7 +29,7 @@ abstract class ControllerTestCase extends TestCase
 
     /**
      * Controller instance
-     * @var \Cake\Controller\Controller|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\Controller\Controller|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Controller;
 
