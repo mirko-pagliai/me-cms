@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.29 branch
 ### 2.29.4
+* fixed old bug on loading theme plugins;
 * updated for `php-tools` 1.4.5;
 * added `phpstan`, so fixed some code and descriptions.
 
