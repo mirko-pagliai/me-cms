@@ -16,7 +16,7 @@ namespace MeCms\Test\Fixture;
 
 use Cake\Datasource\ConnectionInterface;
 use Cake\TestSuite\Fixture\TestFixture;
-use Symfony\Component\Filesystem\Exception\IOException;
+use Tools\Filesystem;
 
 /**
  * BannersFixture
@@ -91,10 +91,7 @@ class BannersFixture extends TestFixture
      */
     public function drop(ConnectionInterface $db): bool
     {
-        try {
-            unlink_recursive(BANNERS, 'empty');
-        } catch (IOException $e) {
-        }
+        (new Filesystem())->unlinkRecursive(BANNERS, 'empty', true);
 
         return parent::drop($db);
     }
@@ -109,7 +106,7 @@ class BannersFixture extends TestFixture
     public function insert(ConnectionInterface $db)
     {
         foreach ($this->records as $record) {
-            create_file(BANNERS . $record['filename'], null, 0777, true);
+            (new Filesystem())->createFile(BANNERS . $record['filename'], null, 0777, true);
         }
 
         return parent::insert($db);

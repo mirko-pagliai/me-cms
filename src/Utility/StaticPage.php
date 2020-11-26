@@ -22,6 +22,7 @@ use Cake\ORM\Entity;
 use Cake\Utility\Inflector;
 use MeCms\Core\Plugin;
 use Symfony\Component\Finder\Finder;
+use Tools\Filesystem;
 
 /**
  * An utility to handle static pages
@@ -48,7 +49,7 @@ class StaticPage
         }
 
         return array_map(function ($path) {
-            return add_slash_term($path) . 'StaticPages' . DS;
+            return (new Filesystem())->addSlashTerm($path) . 'StaticPages' . DS;
         }, Configure::read('App.paths.templates'));
     }
 
@@ -84,7 +85,7 @@ class StaticPage
     public static function getSlug(string $path, string $relativePath): string
     {
         if (string_starts_with($path, $relativePath)) {
-            $path = substr($path, strlen(add_slash_term($relativePath)));
+            $path = substr($path, strlen((new Filesystem())->addSlashTerm($relativePath)));
         }
         $path = preg_replace(sprintf('/\.[^\.]+$/'), null, $path);
 
@@ -105,7 +106,7 @@ class StaticPage
             foreach ($finder->files()->name('/^.+\.' . self::EXTENSION . '$/')->sortByName()->in($path) as $file) {
                 $pages[] = new Entity([
                     'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
-                    'path' => rtr($file->getPathname()),
+                    'path' => (new Filesystem())->rtr($file->getPathname()),
                     'slug' => self::getSlug($file->getPathname(), $path),
                     'title' => self::getTitle(pathinfo($file->getPathname(), PATHINFO_FILENAME)),
                     'modified' => new FrozenTime($file->getMTime()),

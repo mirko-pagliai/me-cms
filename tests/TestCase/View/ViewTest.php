@@ -17,6 +17,7 @@ namespace MeCms\Test\TestCase\View;
 use Cake\Core\Configure;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\View;
+use Tools\Filesystem;
 
 /**
  * ViewTest class
@@ -104,7 +105,7 @@ class ViewTest extends TestCase
         //Disable widgets, sets title, creates a favicon, then renders
         Configure::write('Widgets.general', []);
         $this->View->set('title', 'title from controller');
-        @create_file(WWW_ROOT . 'favicon.ico');
+        (new Filesystem())->createFile(WWW_ROOT . 'favicon.ico');
         $this->View->loadHelper('MeCms.Auth');
         $this->View->loadHelper('MeCms.Widget');
         $result = $this->View->render('StaticPages/page-from-app', 'MeCms.default');

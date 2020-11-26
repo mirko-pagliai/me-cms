@@ -22,6 +22,7 @@ use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Database\Driver\Postgres;
 use MeTools\Console\Command;
+use Tools\Filesystem;
 
 /**
  * Performs some updates to the database or files needed for versioning
@@ -87,7 +88,7 @@ class VersionUpdatesCommand extends Command
      */
     public function deleteOldDirectories(): void
     {
-        rmdir_recursive(WWW_ROOT . 'fonts');
+        (new Filesystem())->rmdirRecursive(WWW_ROOT . 'fonts');
     }
 
     /**

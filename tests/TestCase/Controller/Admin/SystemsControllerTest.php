@@ -18,6 +18,7 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\I18n\I18n;
 use MeCms\TestSuite\ControllerTestCase;
+use Tools\Filesystem;
 
 /**
  * SystemsControllerTest class
@@ -43,6 +44,8 @@ class SystemsControllerTest extends ControllerTestCase
      */
     protected function createSomeTemporaryData(): array
     {
+        $Filesystem = new Filesystem();
+
         //Writes some cache data
         Cache::write('value', 'data');
         Cache::write('valueFromGroup', 'data', 'posts');
@@ -52,11 +55,11 @@ class SystemsControllerTest extends ControllerTestCase
             'assets2' => getConfigOrFail('Assets.target') . DS . 'asset_file2',
             'logs' => LOGS . 'log_file',
             'sitemap' => SITEMAP,
-            'thumbs' => add_slash_term(THUMBER_TARGET) . md5('a') . '_' . md5('a') . '.jpg',
+            'thumbs' => $Filesystem->addSlashTerm(THUMBER_TARGET) . md5('a') . '_' . md5('a') . '.jpg',
         ];
 
         foreach ($files as $file) {
-            @create_file($file, str_repeat('a', 255));
+            $Filesystem->createFile($file, str_repeat('a', 255));
         }
 
         return $files;
@@ -81,8 +84,8 @@ class SystemsControllerTest extends ControllerTestCase
     public function tearDown(): void
     {
         Cache::clearAll();
-        @unlink_recursive(getConfigOrFail('Assets.target'));
-        @unlink_recursive(THUMBER_TARGET);
+
+        array_map([new Filesystem(), 'unlinkRecursive'], [getConfigOrFail('Assets.target'), THUMBER_TARGET]);
 
         parent::tearDown();
     }

@@ -41,7 +41,7 @@ class AppControllerTest extends ControllerTestCase
         $this->assertInstanceOf(BelongsTo::class, $PostsController->Users);
 
         $this->expectException(Notice::class);
-        $this->expectExceptionMessageRegExp('/^Undefined property\: PostsController\:\:\$Foo in/');
+        $this->expectExceptionMessageMatches('/^Undefined property\: PostsController\:\:\$Foo in/');
         $PostsController->Foo;
     }
 

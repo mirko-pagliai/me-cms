@@ -21,6 +21,7 @@ use Cake\ORM\Entity;
 use Cake\Utility\Hash;
 use MeCms\TestSuite\TestCase;
 use MeCms\Utility\StaticPage;
+use Tools\Filesystem;
 
 /**
  * StaticPageTest class
@@ -51,7 +52,7 @@ class StaticPageTest extends TestCase
     public function testAll()
     {
         $this->loadPlugins(['TestPlugin']);
-        $TestPluginPath = rtr(Plugin::templatePath('TestPlugin')) . '/StaticPages/';
+        $TestPluginPath = (new Filesystem())->rtr(Plugin::templatePath('TestPlugin')) . '/StaticPages/';
 
         $pages = StaticPage::all();
         $this->assertContainsOnlyInstancesOf(Entity::class, $pages);

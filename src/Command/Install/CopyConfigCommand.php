@@ -21,6 +21,7 @@ use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use MeCms\Core\Plugin;
 use MeTools\Console\Command;
+use Tools\Filesystem;
 
 /**
  * Copies the configuration files
@@ -54,14 +55,12 @@ class CopyConfigCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
+        $Filesystem = new Filesystem();
         $class = get_class($this);
         foreach ($class::CONFIG_FILES as $file) {
             [$plugin, $file] = pluginSplit($file);
-            $this->copyFile(
-                $io,
-                Plugin::path($plugin, 'config' . DS . $file . '.php'),
-                add_slash_term(CONFIG) . $file . '.php'
-            );
+            $file .= '.php';
+            $this->copyFile($io, Plugin::path($plugin, 'config' . DS . $file), $Filesystem->concatenate(CONFIG, $file));
         }
 
         return null;

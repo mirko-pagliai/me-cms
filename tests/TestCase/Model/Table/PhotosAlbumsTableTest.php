@@ -16,6 +16,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use MeCms\Model\Validation\PhotosAlbumValidator;
 use MeCms\TestSuite\TableTestCase;
+use Tools\Filesystem;
 
 /**
  * PhotosAlbumsTableTest class
@@ -44,7 +45,7 @@ class PhotosAlbumsTableTest extends TableTestCase
     {
         parent::tearDown();
 
-        @unlink_recursive(PHOTOS, 'empty');
+        (new Filesystem())->unlinkRecursive(PHOTOS, 'empty', true);
     }
 
     /**

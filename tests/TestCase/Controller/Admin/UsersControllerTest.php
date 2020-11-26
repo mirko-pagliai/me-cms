@@ -19,6 +19,7 @@ use Cake\ORM\Entity;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Model\Entity\User;
 use MeCms\TestSuite\ControllerTestCase;
+use Tools\Filesystem;
 
 /**
  * UsersControllerTest class
@@ -320,7 +321,7 @@ class UsersControllerTest extends ControllerTestCase
 
         //Creates some files that simulate previous user pictures. These files
         //  will be deleted before upload
-        @array_map('create_file', [$expectedPicture, USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
+        array_map([new Filesystem(), 'createFile'], [$expectedPicture, USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
 
         //POST request. This works
         $this->post($url + ['_ext' => 'json'], compact('file'));

@@ -21,6 +21,7 @@ use InvalidArgumentException;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeTools\TestSuite\ComponentTestCase;
 use Tools\FileArray;
+use Tools\Filesystem;
 
 /**
  * LoginRecorderTest class
@@ -70,8 +71,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
     {
         parent::tearDown();
 
-        //Deletes the file
-        @unlink_recursive(LOGIN_RECORDS);
+        (new Filesystem())->unlinkRecursive(LOGIN_RECORDS, false, true);
     }
 
     /**
@@ -153,7 +153,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $this->assertIsArray($result);
 
         //Creates an empty file. Now is always empty
-        @create_file(LOGIN_RECORDS . 'user_1.log');
+        (new Filesystem())->createFile(LOGIN_RECORDS . 'user_1.log');
         $result = $this->getMockForLoginRecorder()->read();
         $this->assertEmpty($result);
         $this->assertIsArray($result);
