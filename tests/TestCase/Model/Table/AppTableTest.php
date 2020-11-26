@@ -95,12 +95,6 @@ class AppTableTest extends TableTestCase
         $this->assertNotEmpty($entity->get('created'));
         $Table->delete($entity);
 
-        foreach ([null, ''] as $created) {
-            $entity = $Table->save($Table->newEntity(compact('created') + $example));
-            $this->assertNotEmpty($entity->get('created'));
-            $Table->delete($entity);
-        }
-
         $now = new Time();
         $entity = $Table->save($Table->newEntity(['created' => $now] + $example));
         $this->assertEquals($now, $entity->get('created'));
