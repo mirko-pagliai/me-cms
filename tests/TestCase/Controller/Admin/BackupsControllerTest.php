@@ -24,7 +24,6 @@ use DatabaseBackup\Utility\BackupImport;
 use DatabaseBackup\Utility\BackupManager;
 use MeCms\Form\BackupForm;
 use MeCms\TestSuite\ControllerTestCase;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Tools\Filesystem;
 
 /**

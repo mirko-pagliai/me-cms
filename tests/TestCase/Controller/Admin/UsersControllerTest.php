@@ -283,7 +283,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //The password has changed
-        $this->assertNotEquals($user->password, $this->Table->findById(1)->extract('password')->first());
+        $this->assertNotEquals($user->get('password'), $this->Table->findById(1)->extract('password')->first());
 
         //Saves the password for the first user
         $user = $this->Table->get(1);
@@ -300,7 +300,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //The password has not changed
-        $this->assertEquals($user->password, $this->Table->findById(1)->extract('password')->first());
+        $this->assertEquals($user->get('password'), $this->Table->findById(1)->extract('password')->first());
     }
 
     /**

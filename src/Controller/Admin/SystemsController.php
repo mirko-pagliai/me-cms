@@ -84,6 +84,7 @@ class SystemsController extends AppController
     public function changelogs(): void
     {
         $Filesystem = new Filesystem();
+        $files = [];
 
         foreach (Plugin::all() as $plugin) {
             $file = Plugin::path($plugin, 'CHANGELOG.md', false);
@@ -94,7 +95,7 @@ class SystemsController extends AppController
         }
 
         //If a changelog file has been specified
-        if ($this->getRequest()->getQuery('file')) {
+        if ($this->getRequest()->getQuery('file') && $files) {
             $file = $Filesystem->makePathAbsolute($files[$this->getRequest()->getQuery('file')], ROOT);
             $converter = new CommonMarkConverter([
                 'html_input' => 'strip',

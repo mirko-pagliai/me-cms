@@ -90,7 +90,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $request->expects($this->once())
             ->method('clientIp')
             ->will($this->returnValue('::1'));
-        $this->Component->getController()->request = $request;
+        $this->Component->getController()->setRequest($request);
         $this->assertEquals('127.0.0.1', $this->invokeMethod($this->Component, 'getClientIp'));
     }
 

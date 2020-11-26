@@ -72,6 +72,8 @@ abstract class AppTable extends Table
      */
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
     {
+        $data = $data->getArrayCopy();
+
         //Tries to transform the `created` string into a `Time` entity
         if (array_key_exists('created', $data)) {
             if (is_string($data['created'])) {
@@ -114,8 +116,8 @@ abstract class AppTable extends Table
 
     /**
      * "active" find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function findActive(Query $query): Query
     {
@@ -125,8 +127,8 @@ abstract class AppTable extends Table
 
     /**
      * "pending" find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function findPending(Query $query): Query
     {
@@ -138,8 +140,8 @@ abstract class AppTable extends Table
 
     /**
      * "random" find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function findRandom(Query $query): Query
     {
@@ -180,7 +182,7 @@ abstract class AppTable extends Table
 
     /**
      * Gets records as list
-     * @return \Cake\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function getList(): Query
     {
@@ -191,7 +193,7 @@ abstract class AppTable extends Table
 
     /**
      * Gets records as tree list
-     * @return \Cake\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function getTreeList(): Query
     {
@@ -210,9 +212,9 @@ abstract class AppTable extends Table
 
     /**
      * Build query from filter data
-     * @param \Cake\ORM\Query $query Query object
-     * @param array $data Filter data ($this->getRequest()->getQueryParams())
-     * @return \Cake\ORM\Query $query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @param array $data Filter data (`$this->getRequest()->getQueryParams()`)
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = []): Query
     {

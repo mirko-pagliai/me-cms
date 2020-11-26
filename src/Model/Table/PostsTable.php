@@ -101,8 +101,8 @@ class PostsTable extends PostsAndPagesTables
 
     /**
      * `forIndex()` find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      * @since 2.22.8
      */
     public function findForIndex(Query $query): Query
@@ -204,7 +204,7 @@ class PostsTable extends PostsAndPagesTables
      * Gets the query for related posts from a tag ID
      * @param int $tagId Tag ID
      * @param bool $onlyWithImages If `true`, gets only posts with images
-     * @return \Cake\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      * @since 2.23.0
      */
     public function queryForRelated(int $tagId, bool $onlyWithImages = true): Query
@@ -225,9 +225,9 @@ class PostsTable extends PostsAndPagesTables
 
     /**
      * Build query from filter data
-     * @param \Cake\ORM\Query $query Query object
-     * @param array $data Filter data ($this->getRequest()->getQueryParams())
-     * @return \Cake\ORM\Query $query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @param array $data Filter data (`$this->getRequest()->getQueryParams()`)
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = []): Query
     {

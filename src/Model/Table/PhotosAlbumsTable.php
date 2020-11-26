@@ -73,8 +73,8 @@ class PhotosAlbumsTable extends AppTable
 
     /**
      * "active" find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function findActive(Query $query): Query
     {

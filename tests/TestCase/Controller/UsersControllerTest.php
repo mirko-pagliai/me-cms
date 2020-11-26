@@ -58,7 +58,7 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Asserts cookie values which are encrypted by the CookieComponent
-     * @param string $expected The expected contents
+     * @param mixed $expected The expected contents
      * @param string $name The cookie name
      * @param string|bool $encrypt Encryption mode to use
      * @param string|null $key Encryption key used
@@ -74,9 +74,9 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Sets a encrypted request cookie for future requests
-     * @param name $name The cookie name to use
+     * @param string $name The cookie name to use
      * @param mixed $value The value of the cookie
-     * @param string|bool $encrypt Encryption mode to use
+     * @param string|false $encrypt Encryption mode to use
      * @param string|null $key Encryption key used
      * @return void
      */
@@ -254,16 +254,16 @@ class UsersControllerTest extends ControllerTestCase
         $password = 'newPassword1!';
         $user = $this->Table->get(1);
         $this->Table->save($user->set('password', $password));
-        $this->post($url, ['username' => $user->username, 'remember_me' => true] + compact('password'));
+        $this->post($url, ['username' => $user->get('username'), 'remember_me' => true] + compact('password'));
         $this->assertRedirect($this->Controller->Auth->redirectUrl());
-        $this->assertSession($user->id, 'Auth.User.id');
-        $this->assertCookieEncrypted(['username' => $user->username] + compact('password'), 'login');
+        $this->assertSession($user->get('id'), 'Auth.User.id');
+        $this->assertCookieEncrypted(['username' => $user->get('username')] + compact('password'), 'login');
         $expires = Time::createFromTimestamp($this->_response->getCookie('login')['expires']);
         $this->assertTrue($expires->isWithinNext('1 year'));
 
         //POST request. The user is banned
         $this->Table->save($user->set('banned', true));
-        $this->post($url, ['username' => $user->username, 'remember_me' => true] + compact('password'));
+        $this->post($url, ['username' => $user->get('username'), 'remember_me' => true] + compact('password'));
         $this->assertRedirect($this->Controller->Auth->logout());
         $this->assertCookieNotSet('login');
         $this->assertSessionEmpty('Auth');
@@ -271,7 +271,7 @@ class UsersControllerTest extends ControllerTestCase
 
         //POST request. The user is pending
         $this->Table->save($user->set(['active' => false, 'banned' => false]));
-        $this->post($url, ['username' => $user->username, 'remember_me' => true] + compact('password'));
+        $this->post($url, ['username' => $user->get('username'), 'remember_me' => true] + compact('password'));
         $this->assertRedirect($this->Controller->Auth->logout());
         $this->assertCookieNotSet('login');
         $this->assertSessionEmpty('Auth');

@@ -116,6 +116,6 @@ class CreateGroupsCommandTest extends TestCase
                 ->getMock();
         }));
 
-        $this->assertNull($this->Command->execute(new Arguments([], [], [], []), new ConsoleIo()));
+        $this->assertNull($this->Command->execute(new Arguments([], [], []), new ConsoleIo()));
     }
 }

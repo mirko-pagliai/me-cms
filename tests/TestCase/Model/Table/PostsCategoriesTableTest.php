@@ -116,7 +116,7 @@ class PostsCategoriesTableTest extends TableTestCase
             $this->assertEquals(1, $children->get('parent_id'));
             $childs = $this->Table->findById($children->get('id'))->contain('Childs')->extract('childs')->first();
             $this->assertContainsOnlyInstancesOf(PostsCategory::class, $childs);
-            $this->assertEquals(3, $childs[0]->get('parent_id'));
+            $this->assertEquals(3, array_value_first($childs)->get('parent_id'));
         }
     }
 

@@ -58,7 +58,7 @@ if (is_readable(CONFIG . 'me_cms.php')) {
 
 //Loads theme plugin
 $theme = getConfig('default.theme');
-if ($theme && !Plugin::loaded($theme)) {
+if ($theme && !Plugin::isLoaded($theme)) {
     Plugin::load($theme);
 }
 

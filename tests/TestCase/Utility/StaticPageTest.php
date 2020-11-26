@@ -180,12 +180,12 @@ class StaticPageTest extends TestCase
     public function testGetSlugWin()
     {
         foreach ([
-            '\\first\\second\\my-file' => '\\first\\second',
-            '\\first\\second\\my-file' => '\\first\\second\\',
-            'C:\\\\first\\my-file' => 'C:\\\\first',
-        ] as $path => $relativePath) {
-            $this->assertEquals('my-file', StaticPage::getSlug($path, $relativePath));
-            $this->assertEquals('my-file', StaticPage::getSlug($path . '.' . StaticPage::EXTENSION, $relativePath));
+            '\\first\\second' => '\\first\\second\\my-file',
+            '\\first\\second\\' => '\\first\\second\\my-file',
+            'C:\\\\first' => 'C:\\\\first\\my-file',
+        ] as $relativePath => $absolutePath) {
+            $this->assertEquals('my-file', StaticPage::getSlug($absolutePath, $relativePath));
+            $this->assertEquals('my-file', StaticPage::getSlug($absolutePath . '.' . StaticPage::EXTENSION, $relativePath));
         }
 
         $this->assertEquals('second/my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first'));

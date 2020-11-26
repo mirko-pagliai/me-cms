@@ -45,8 +45,8 @@ class TagsTable extends AppTable
 
     /**
      * "active" find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function findActive(Query $query): Query
     {
@@ -80,9 +80,9 @@ class TagsTable extends AppTable
 
     /**
      * Build query from filter data
-     * @param \Cake\ORM\Query $query Query object
-     * @param array $data Filter data ($this->getRequest()->getQueryParams())
-     * @return \Cake\ORM\Query $query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @param array $data Filter data (`$this->getRequest()->getQueryParams()`)
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = []): Query
     {

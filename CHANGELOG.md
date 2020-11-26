@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.29 branch
 ### 2.29.4
-* updated for `php-tools` 1.4.5.
+* updated for `php-tools` 1.4.5;
+* added `phpstan`, so fixed some code and descriptions.
 
 ### 2.29.3
 * fixed a bug for `FixElFinderCommand`. Now the `elfinder-cke.html` file works.

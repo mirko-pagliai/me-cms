@@ -137,6 +137,7 @@ class LogsController extends AppController
         $serialized = $this->getPath($filename, true);
 
         //Deletes the serialized log copy, if it exists
+        $successSerialized = true;
         if (file_exists($serialized)) {
             $successSerialized = @unlink($serialized);
         }

@@ -48,8 +48,8 @@ class GetPreviewsFromTextTraitTest extends TestCase
      */
     public function testExtractImages()
     {
-        $extractImagesMethod = function () {
-            return $this->invokeMethod($this->Posts, 'extractImages', func_get_args());
+        $extractImagesMethod = function (string $value) {
+            return $this->invokeMethod($this->Posts, 'extractImages', [$value]);
         };
 
         foreach ([

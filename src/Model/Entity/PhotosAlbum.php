@@ -70,7 +70,6 @@ class PhotosAlbum extends Entity
     {
         Exceptionist::objectPropertyExists($this, 'photos');
         $photo = array_value_first($this->get('photos'));
-        property_exists($photo, 'path');
 
         return $photo->get('path');
     }

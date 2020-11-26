@@ -88,7 +88,7 @@ class StaticPage
         if (string_starts_with($path, $relativePath)) {
             $path = substr($path, strlen((new Filesystem())->addSlashTerm($relativePath)));
         }
-        $path = preg_replace(sprintf('/\.[^\.]+$/'), null, $path);
+        $path = preg_replace(sprintf('/\.[^\.]+$/'), '', $path);
 
         return IS_WIN ? str_replace(DS, '/', $path) : $path;
     }
@@ -121,7 +121,7 @@ class StaticPage
     /**
      * Gets a static page
      * @param string $slug Slug
-     * @return string|bool Static page or `false`
+     * @return string|null Static page or `false`
      * @uses _getPaths()
      */
     public static function get(string $slug): ?string
