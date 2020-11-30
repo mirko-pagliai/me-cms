@@ -3,6 +3,7 @@
 ### 2.29.4
 * fixed old bug on loading theme plugins;
 * updated for `php-tools` 1.4.5;
+* removed redundant code in routes;
 * added `phpstan`, so fixed some code and descriptions.
 
 ### 2.29.3
