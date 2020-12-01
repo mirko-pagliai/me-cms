@@ -79,6 +79,7 @@ abstract class ValidationTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
+     * @throw \PHPUnit\Framework\AssertionFailedError
      * @uses $Table
      * @uses $autoInitializeClass
      */
@@ -88,7 +89,7 @@ abstract class ValidationTestCase extends TestCase
 
         if (!$this->Table && $this->autoInitializeClass) {
             $alias = Inflector::pluralize($this->getAlias($this));
-            $className = str_replace('/', '\\', $this->getPluginName($this)) . '\\Model\Table\\' . $alias . 'Table';
+            $className = $this->getTableClassNameFromAlias($alias);
             $this->_classExistsOrFail($className);
             $this->Table = $this->getTable($alias, compact('className'));
         }

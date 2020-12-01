@@ -123,7 +123,7 @@ abstract class ControllerTestCase extends TestCase
             $this->Controller = $this->getMockForController($originClassName, null, $alias);
             $this->url = ['controller' => $alias, 'prefix' => $isAdminController ? ADMIN_PREFIX : null] + compact('plugin');
 
-            $className = str_replace('/', '\\', $plugin) . '\\Model\\Table\\' . $alias . 'Table';
+            $className = $this->getTableClassNameFromAlias($alias, $plugin);
             if (class_exists($className)) {
                 $this->Table = $this->getTable($alias, compact('className'));
             }

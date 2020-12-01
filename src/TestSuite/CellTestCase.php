@@ -61,7 +61,7 @@ abstract class CellTestCase extends TestCase
 
         if (!$this->Table && $this->autoInitializeClass) {
             $alias = substr($this->getAlias($this), 0, -7);
-            $className = str_replace('/', '\\', $this->getPluginName($this)) . '\\Model\\Table\\' . $alias . 'Table';
+            $className = $this->getTableClassNameFromAlias($alias);
             if (class_exists($className)) {
                 $this->Table = $this->getTable($alias, compact('className'));
             }
