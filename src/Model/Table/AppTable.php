@@ -72,21 +72,16 @@ abstract class AppTable extends Table
      */
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
     {
-        $data = $data->getArrayCopy();
-
         //Tries to transform the `created` string into a `Time` entity
         if (array_key_exists('created', $data)) {
             if (is_string($data['created'])) {
                 try {
-                    $created = new Time($data['created']);
+                    $data['created'] = new Time($data['created']);
                 } catch (Exception $e) {
                 }
             } elseif (is_null($data['created'])) {
-                $created = new Time();
+                $data['created'] = new Time();
             }
-        }
-        if (isset($created)) {
-            $data['created'] = $created;
         }
     }
 
