@@ -87,8 +87,9 @@ abstract class ValidationTestCase extends TestCase
         parent::setUp();
 
         if (!$this->Table && $this->autoInitializeClass) {
-            $alias = Inflector::pluralize(substr(get_class_short_name($this), 0, -13));
+            $alias = Inflector::pluralize($this->getAlias($this));
             $className = str_replace('/', '\\', $this->getPluginName($this)) . '\\Model\Table\\' . $alias . 'Table';
+            $this->_classExistsOrFail($className);
             $this->Table = $this->getTable($alias, compact('className'));
         }
     }

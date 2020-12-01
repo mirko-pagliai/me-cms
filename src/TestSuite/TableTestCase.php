@@ -96,8 +96,7 @@ abstract class TableTestCase extends TestCase
         }
 
         if (!$this->Table && $this->autoInitializeClass) {
-            $alias = substr(get_class_short_name($this), 0, -9);
-            $this->Table = $this->getTable($alias, ['className' => $this->getOriginClassNameOrFail($this)]);
+            $this->Table = $this->getTable($this->getAlias($this), ['className' => $this->getOriginClassNameOrFail($this)]);
         }
     }
 }

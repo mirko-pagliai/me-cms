@@ -117,13 +117,16 @@ abstract class ControllerTestCase extends TestCase
         //Tries to retrieve controller and table from the class name
         if (!$this->Controller && $this->autoInitializeClass) {
             $originClassName = $this->getOriginClassNameOrFail($this);
-            $alias = $this->getControllerAlias($originClassName);
+            $alias = $this->getAlias($originClassName);
             $plugin = $this->getPluginName($this);
 
             $this->Controller = $this->getMockForController($originClassName, null, $alias);
             $this->url = ['controller' => $alias, 'prefix' => $isAdminController ? ADMIN_PREFIX : null] + compact('plugin');
 
-            $this->Table = $this->getTable($alias, ['className' => str_replace('/', '\\', $plugin) . '\\Model\\Table\\' . $alias . 'Table']);
+            $className = str_replace('/', '\\', $plugin) . '\\Model\\Table\\' . $alias . 'Table';
+            if (class_exists($className)) {
+                $this->Table = $this->getTable($alias, compact('className'));
+            }
         }
 
         if ($isAdminController) {

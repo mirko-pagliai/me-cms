@@ -60,8 +60,8 @@ abstract class CellTestCase extends TestCase
         $this->Widget->getView()->setRequest($request);
 
         if (!$this->Table && $this->autoInitializeClass) {
-            $alias = substr(get_class_short_name($this), 0, strlen(get_class_short_name($this)) - 15);
-            $className = 'MeCms\\Model\\Table\\' . $alias . 'Table';
+            $alias = substr($this->getAlias($this), 0, -7);
+            $className = str_replace('/', '\\', $this->getPluginName($this)) . '\\Model\\Table\\' . $alias . 'Table';
             if (class_exists($className)) {
                 $this->Table = $this->getTable($alias, compact('className'));
             }
