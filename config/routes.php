@@ -34,6 +34,8 @@ $routes->scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
     }
 
     $routes->connect('/homepage', ['controller' => 'Posts', 'action' => 'index']);
+
+    $routes->fallbacks('DashedRoute');
 });
 
 $routes->plugin('MeCms', ['path' => '/me-cms'], function (RouteBuilder $routes) {
@@ -46,7 +48,6 @@ $routes->plugin('MeCms', ['path' => '/me-cms'], function (RouteBuilder $routes) 
             $routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'dashboard']);
         }
 
-        //All others admin routes
         $routes->fallbacks('DashedRoute');
     });
 });
