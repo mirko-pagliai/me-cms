@@ -18,7 +18,6 @@ namespace MeCms\TestSuite;
 
 use Cake\Cache\Cache;
 use MeTools\TestSuite\TestCase as BaseTestCase;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * TestCase class
@@ -44,11 +43,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function tearDown(): void
     {
-        try {
-            parent::tearDown();
-        } catch (IOException $e) {
-            //Ignores exceptions when clearing logs
-        }
+        parent::tearDown();
 
         //Clears all cache keys
         if ($this->Table && method_exists($this->Table, 'getCacheName')) {

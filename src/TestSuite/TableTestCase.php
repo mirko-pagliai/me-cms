@@ -97,8 +97,7 @@ abstract class TableTestCase extends TestCase
 
         if (!$this->Table && $this->autoInitializeClass) {
             $alias = substr(get_class_short_name($this), 0, -9);
-            $className = 'MeCms\\Model\\Table\\' . $alias . 'Table';
-            $this->Table = $this->getTable($alias, compact('className'));
+            $this->Table = $this->getTable($alias, ['className' => $this->getOriginClassNameOrFail($this)]);
         }
     }
 }

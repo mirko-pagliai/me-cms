@@ -61,12 +61,7 @@ abstract class EntityTestCase extends TestCase
         parent::setUp();
 
         if (!$this->Entity && $this->autoInitializeClass) {
-            $parts = explode('\\', get_class($this));
-            array_splice($parts, 1, 2, []);
-            $parts[count($parts) - 1] = substr($parts[count($parts) - 1], 0, -4);
-            $className = implode('\\', $parts);
-
-            $this->Entity = $this->getMockBuilder($className)
+            $this->Entity = $this->getMockBuilder($this->getOriginClassNameOrFail($this))
                 ->setMethods(null)
                 ->getMock();
         }

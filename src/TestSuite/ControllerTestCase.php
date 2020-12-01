@@ -102,36 +102,28 @@ abstract class ControllerTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
-     * @uses $Controller
-     * @uses $Table
-     * @uses $autoInitializeClass
-     * @uses $cacheToClear
-     * @uses $url
      * @uses getControllerAlias()
      * @uses getMockForController()
-     * @uses getMockForModel()
+     * @uses getOriginClassNameOrFail()
+     * @uses getPluginName()
      * @uses setUserGroup()
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        $parts = explode('\\', get_class($this));
-        $isAdminController = $parts[count($parts) - 2] === 'Admin';
+        $isAdminController = string_contains(get_class($this), 'Controller\\Admin');
 
         //Tries to retrieve controller and table from the class name
         if (!$this->Controller && $this->autoInitializeClass) {
-            array_splice($parts, 1, 2, []);
-            $parts[count($parts) - 1] = substr($parts[count($parts) - 1], 0, -4);
-            $className = implode('\\', $parts);
-            $alias = $this->getControllerAlias($className);
+            $originClassName = $this->getOriginClassNameOrFail($this);
+            $alias = $this->getControllerAlias($originClassName);
+            $plugin = $this->getPluginName($this);
 
-            $this->Controller = $this->getMockForController($className, null, $alias);
-            $this->url = ['controller' => $alias, 'plugin' => $parts[0]];
-            $this->url += $isAdminController ? ['prefix' => ADMIN_PREFIX] : [];
+            $this->Controller = $this->getMockForController($originClassName, null, $alias);
+            $this->url = ['controller' => $alias, 'prefix' => $isAdminController ? ADMIN_PREFIX : null] + compact('plugin');
 
-            $className = $parts[0] . '\\Model\\Table\\' . $alias . 'Table';
-            $this->Table = $this->getTable($alias, compact('className'));
+            $this->Table = $this->getTable($alias, ['className' => str_replace('/', '\\', $plugin) . '\\Model\\Table\\' . $alias . 'Table']);
         }
 
         if ($isAdminController) {

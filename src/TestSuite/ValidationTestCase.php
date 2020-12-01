@@ -26,7 +26,7 @@ abstract class ValidationTestCase extends TestCase
 {
     /**
      * Table instance
-     * @var \Cake\ORM\Table|\PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Cake\ORM\Table
      */
     protected $Table;
 
@@ -88,7 +88,7 @@ abstract class ValidationTestCase extends TestCase
 
         if (!$this->Table && $this->autoInitializeClass) {
             $alias = Inflector::pluralize(substr(get_class_short_name($this), 0, -13));
-            $className = 'MeCms\\Model\Table\\' . $alias . 'Table';
+            $className = str_replace('/', '\\', $this->getPluginName($this)) . '\\Model\Table\\' . $alias . 'Table';
             $this->Table = $this->getTable($alias, compact('className'));
         }
     }

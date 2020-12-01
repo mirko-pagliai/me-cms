@@ -84,7 +84,8 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
         //Only for the `testUploadErrors()` method, it mocks the table
         if ($this->getName() == 'testUploadErrors') {
             $alias = $this->Table->getRegistryAlias();
-            $this->_controller->$alias = $this->getMockForModel('MeCms.' . $alias, ['save']);
+            $plugin = $this->getPluginName($this);
+            $this->_controller->$alias = $this->getMockForModel($plugin . '.' . $alias, ['save']);
         }
     }
 

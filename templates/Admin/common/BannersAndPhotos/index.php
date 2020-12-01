@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Admin/common/index');
+$this->extend('MeCms./Admin/common/index');
 
 $this->append('actions', $this->Html->button(
     I18N_UPLOAD,
@@ -72,7 +72,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
     </fieldset>
 <?= $this->Form->end() ?>
 
-<?= $this->element('admin/list-grid-buttons') ?>
+<?= $this->element('MeCms.admin/list-grid-buttons') ?>
 <?= $this->fetch('content') ?>
 
 <?= $this->element('MeTools.paginator') ?>

@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.29 branch
 ### 2.29.4
+* fixed `TestSuite` classes, improved to use with other plugins;
 * fixed old bug on loading theme plugins;
 * updated for `php-tools` 1.4.5;
 * removed redundant code in routes;
