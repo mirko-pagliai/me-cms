@@ -87,6 +87,10 @@ parameters:
             path: tests/TestCase/Controller/AppControllerTest.php
 
         -
+            message: '#^Parameter \#1 \$className of method MeTools\\TestSuite\\TestCase::getMockForController\(\) expects string, false given\.$#'
+            path: tests/TestCase/Controller/Admin/SystemsControllerTest.php
+
+        -
             message: '#^Parameter \#2 \$haystack of method PHPUnit\\Framework\\Assert::assertStringContainsString\(\) expects string, null given\.#'
             path: tests/TestCase/Mailer
 
