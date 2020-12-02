@@ -41,7 +41,7 @@ class MenuBuilderHelperTest extends HelperTestCase
     public function testGenerate()
     {
         foreach ([
-            'MeCms' => ['MeCms.posts', 'MeCms.pages', 'MeCms.photos'],
+            'MeCms' => ['MeCms.posts', 'MeCms.pages'],
             'TestPlugin' => ['TestPlugin.articles', 'TestPlugin.other_items'],
         ] as $plugin => $keys) {
             $result = $this->Helper->generate($plugin);

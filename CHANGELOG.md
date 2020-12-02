@@ -1,9 +1,9 @@
 # 2.x branch
 ## 2.29 branch
 ### 2.29.4
-* fixed `TestSuite` classes, improved to use with other plugins;
+* fixed `TestSuite` classes, `MenuBuilderHelper` and some template files, improved
+    to use with other plugins;
 * fixed old bug on loading theme plugins;
-* fixed some template files, improved to use with other plugins;
 * fixed little bug for the `description` field for `Banner` and `Photo` entities;
 * updated for `php-tools` 1.4.5;
 * removed redundant code in routes;

@@ -35,19 +35,19 @@ $routes->scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
 
     $routes->connect('/homepage', ['controller' => 'Posts', 'action' => 'index']);
 
+    //Admin home page
+    if (!$routes->nameExists('dashboard')) {
+        $routes->connect('/admin', ['controller' => 'Posts', 'action' => 'index', 'prefix' => ADMIN_PREFIX], ['_name' => 'dashboard']);
+    }
+
     $routes->fallbacks('DashedRoute');
 });
 
-$routes->plugin('MeCms', ['path' => '/me-cms'], function (RouteBuilder $routes) {
+$routes->plugin('MeCms', function (RouteBuilder $routes) {
     $routes->setExtensions(['json']);
 
     //Admin routes
     $routes->prefix(ADMIN_PREFIX, function (RouteBuilder $routes) {
-        //Admin home page
-        if (!$routes->nameExists('dashboard')) {
-            $routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'dashboard']);
-        }
-
         $routes->fallbacks('DashedRoute');
     });
 });
