@@ -43,7 +43,7 @@ $routes->scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
     $routes->fallbacks('DashedRoute');
 });
 
-$routes->plugin('MeCms', ['path' => '/me-cms'], function (RouteBuilder $routes) {
+$routes->plugin('MeCms', function (RouteBuilder $routes) {
     $routes->setExtensions(['json']);
 
     //Admin routes
