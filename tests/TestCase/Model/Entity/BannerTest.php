@@ -52,6 +52,16 @@ class BannerTest extends EntityTestCase
     }
 
     /**
+     * Test for `_getDescription()` method
+     * @test
+     */
+    public function testDescriptionAccessors()
+    {
+        $this->assertNotNull($this->Entity->get('description'));
+        $this->assertSame('', $this->Entity->set('description', null)->get('description'));
+    }
+
+    /**
      * Test for `_getWww()` method
      * @test
      */

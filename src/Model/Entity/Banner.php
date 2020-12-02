@@ -63,6 +63,16 @@ class Banner extends Entity
     }
 
     /**
+     * Gets description as string
+     * @param string|null $description Description
+     * @return string
+     */
+    protected function _getDescription(?string $description): string
+    {
+        return (string)$description;
+    }
+
+    /**
      * Gets the banner web address (virtual field)
      * @return string
      * @throws \Tools\Exception\PropertyNotExistsException

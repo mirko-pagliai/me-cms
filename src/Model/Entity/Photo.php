@@ -64,6 +64,16 @@ class Photo extends Entity
     }
 
     /**
+     * Gets description as string
+     * @param string|null $description Description
+     * @return string
+     */
+    protected function _getDescription(?string $description): string
+    {
+        return (string)$description;
+    }
+
+    /**
      * Gets description as plain text (virtual field)
      * @return string
      */
