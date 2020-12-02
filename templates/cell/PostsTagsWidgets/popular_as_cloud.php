@@ -16,7 +16,7 @@ if (empty($tags) || $tags->isEmpty()) {
     return;
 }
 
-$this->extend('/common/widget');
+$this->extend('MeCms./common/widget');
 $this->assign('title', __d('me_cms', 'Popular tags'));
 
 foreach ($tags as $tag) {

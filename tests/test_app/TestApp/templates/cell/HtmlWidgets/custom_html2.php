@@ -1,4 +1,4 @@
 <?php
-$this->extend('/common/widget');
+$this->extend('MeCms./common/widget');
 
 echo 'A custom widget';

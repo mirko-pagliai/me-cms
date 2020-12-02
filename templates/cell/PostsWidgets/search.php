@@ -17,7 +17,7 @@ if ($this->getRequest()->isUrl(['_name' => 'postsSearch'])) {
     return;
 }
 
-$this->extend('/common/widget');
+$this->extend('MeCms./common/widget');
 $this->assign('title', __d('me_cms', 'Search posts'));
 
 echo $this->Form->createInline(null, [
