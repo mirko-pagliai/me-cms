@@ -19,6 +19,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\BannersPositionsTable;
 use MeCms\Model\Validation\BannerValidator;
 use MeCms\ORM\Query;
 
@@ -82,7 +83,7 @@ class BannersTable extends AppTable
         $this->setDisplayField('filename');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Positions', ['className' => 'MeCms.BannersPositions'])
+        $this->belongsTo('Positions', ['className' => BannersPositionsTable::class])
             ->setForeignKey('position_id')
             ->setJoinType('INNER');
 

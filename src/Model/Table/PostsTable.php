@@ -22,7 +22,11 @@ use Cake\Event\Event;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
+use MeCms\Model\Table\PostsCategoriesTable;
+use MeCms\Model\Table\PostsTagsTable;
+use MeCms\Model\Table\TagsTable;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
+use MeCms\Model\Table\UsersTable;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\ORM\PostsAndPagesTables;
 use MeCms\ORM\Query;
@@ -130,7 +134,7 @@ class PostsTable extends PostsAndPagesTables
         Exceptionist::objectPropertyExists($post, ['id', 'tags']);
 
         $cache = sprintf('related_%s_posts_for_%s', $limit, $post->get('id'));
-        $cache = $images ? $cache . '_with_images' : $cache;
+        $cache .= $images ? '_with_images' : '';
 
         return Cache::remember($cache, function () use ($images, $limit, $post) {
             $related = [];
@@ -176,20 +180,20 @@ class PostsTable extends PostsAndPagesTables
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', ['className' => 'MeCms.PostsCategories'])
+        $this->belongsTo('Categories', ['className' => PostsCategoriesTable::class])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
             ->setTarget($this->getTableLocator()->get('MeCms.PostsCategories'))
             ->setAlias('Categories');
 
-        $this->belongsTo('Users', ['className' => 'MeCms.Users'])
+        $this->belongsTo('Users', ['className' => UsersTable::class])
             ->setForeignKey('user_id')
             ->setJoinType('INNER');
 
-        $this->belongsToMany('Tags', ['className' => 'MeCms.Tags', 'joinTable' => 'posts_tags'])
+        $this->belongsToMany('Tags', ['className' => TagsTable::class, 'joinTable' => 'posts_tags'])
             ->setForeignKey('post_id')
             ->setTargetForeignKey('tag_id')
-            ->setThrough('MeCms.PostsTags');
+            ->setThrough(PostsTagsTable::class);
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', [

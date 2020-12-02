@@ -17,6 +17,7 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\UsersTable;
 use MeCms\Model\Validation\UsersGroupValidator;
 
 /**
@@ -55,8 +56,7 @@ class UsersGroupsTable extends AppTable
         $this->setDisplayField('label');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Users', ['className' => 'MeCms.Users'])
-            ->setForeignKey('group_id');
+        $this->hasMany('Users', ['className' => UsersTable::class])->setForeignKey('group_id');
 
         $this->addBehavior('Timestamp');
 

@@ -118,7 +118,6 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
         $this->assertEquals('id', $this->Table->getPrimaryKey());
 
         $this->assertEquals('Categories', $this->Table->Categories->getAlias());
-        $this->assertEquals(sprintf('MeCms.%sCategories', $this->Table->getAlias()), $this->Table->Categories->getClassName());
 
         $this->assertHasBehavior(['Timestamp', 'CounterCache']);
     }

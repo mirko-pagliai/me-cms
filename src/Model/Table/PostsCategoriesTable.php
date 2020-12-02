@@ -17,6 +17,7 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\PostsTable;
 use MeCms\Model\Validation\PostsCategoryValidator;
 use MeCms\ORM\Query;
 
@@ -71,14 +72,9 @@ class PostsCategoriesTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Parents', ['className' => 'MeCms.PostsCategories'])
-            ->setForeignKey('parent_id');
-
-        $this->hasMany('Childs', ['className' => 'MeCms.PostsCategories'])
-            ->setForeignKey('parent_id');
-
-        $this->hasMany('Posts', ['className' => 'MeCms.Posts'])
-            ->setForeignKey('category_id');
+        $this->belongsTo('Parents', ['className' => __CLASS__])->setForeignKey('parent_id');
+        $this->hasMany('Childs', ['className' => __CLASS__])->setForeignKey('parent_id');
+        $this->hasMany('Posts', ['className' => PostsTable::class])->setForeignKey('category_id');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('MeCms.Tree');

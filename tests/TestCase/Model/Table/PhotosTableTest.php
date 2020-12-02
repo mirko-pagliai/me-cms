@@ -116,7 +116,6 @@ class PhotosTableTest extends TableTestCase
         $this->assertBelongsTo($this->Table->Albums);
         $this->assertEquals('album_id', $this->Table->Albums->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Albums->getJoinType());
-        $this->assertEquals('MeCms.PhotosAlbums', $this->Table->Albums->getClassName());
 
         $this->assertHasBehavior(['Timestamp', 'CounterCache']);
 

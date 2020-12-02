@@ -17,6 +17,7 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
+use MeCms\Model\Table\PagesCategoriesTable;
 use MeCms\Model\Validation\PageValidator;
 use MeCms\ORM\PostsAndPagesTables;
 
@@ -68,7 +69,7 @@ class PagesTable extends PostsAndPagesTables
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', ['className' => 'MeCms.PagesCategories'])
+        $this->belongsTo('Categories', ['className' => PagesCategoriesTable::class])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
             ->setTarget($this->getTableLocator()->get('MeCms.PagesCategories'))

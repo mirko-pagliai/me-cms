@@ -19,6 +19,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\PhotosTable;
 use MeCms\Model\Validation\PhotosAlbumValidator;
 use MeCms\ORM\Query;
 
@@ -96,8 +97,7 @@ class PhotosAlbumsTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Photos', ['className' => 'MeCms.Photos'])
-            ->setForeignKey('album_id');
+        $this->hasMany('Photos', ['className' => PhotosTable::class])->setForeignKey('album_id');
 
         $this->addBehavior('Timestamp');
 

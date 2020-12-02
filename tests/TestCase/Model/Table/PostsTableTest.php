@@ -107,14 +107,11 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertBelongsTo($this->Table->Users);
         $this->assertEquals('user_id', $this->Table->Users->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Users->getJoinType());
-        $this->assertEquals('MeCms.Users', $this->Table->Users->getClassName());
 
         $this->assertBelongsToMany($this->Table->Tags);
         $this->assertEquals('post_id', $this->Table->Tags->getForeignKey());
         $this->assertEquals('tag_id', $this->Table->Tags->getTargetForeignKey());
         $this->assertEquals('posts_tags', $this->Table->Tags->junction()->getTable());
-        $this->assertEquals('MeCms.Tags', $this->Table->Tags->getClassName());
-        $this->assertEquals('MeCms.PostsTags', $this->Table->Tags->getThrough());
 
         $this->assertInstanceOf(PostValidator::class, $this->Table->getValidator());
     }

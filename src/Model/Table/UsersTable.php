@@ -21,6 +21,9 @@ use Cake\ORM\ResultSet;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\User;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\PostsTable;
+use MeCms\Model\Table\TokensTable;
+use MeCms\Model\Table\UsersGroupsTable;
 use MeCms\Model\Validation\UserValidator;
 use MeCms\ORM\Query;
 
@@ -142,15 +145,12 @@ class UsersTable extends AppTable
         $this->setDisplayField('username');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Groups', ['className' => 'MeCms.UsersGroups'])
+        $this->belongsTo('Groups', ['className' => UsersGroupsTable::class])
             ->setForeignKey('group_id')
             ->setJoinType('INNER');
 
-        $this->hasMany('Posts', ['className' => 'MeCms.Posts'])
-            ->setForeignKey('user_id');
-
-        $this->hasMany('Tokens', ['className' => 'Tokens.Tokens'])
-            ->setForeignKey('user_id');
+        $this->hasMany('Posts', ['className' => PostsTable::class])->setForeignKey('user_id');
+        $this->hasMany('Tokens', ['className' => TokensTable::class])->setForeignKey('user_id');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);

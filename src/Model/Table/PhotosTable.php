@@ -19,6 +19,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\PhotosAlbumsTable;
 use MeCms\Model\Validation\PhotoValidator;
 use MeCms\ORM\Query;
 
@@ -114,7 +115,7 @@ class PhotosTable extends AppTable
         $this->setDisplayField('filename');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Albums', ['className' => 'MeCms.PhotosAlbums'])
+        $this->belongsTo('Albums', ['className' => PhotosAlbumsTable::class])
             ->setForeignKey('album_id')
             ->setJoinType('INNER');
 

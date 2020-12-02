@@ -17,6 +17,8 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\PostsTable;
+use MeCms\Model\Table\PostsTagsTable;
 use MeCms\Model\Validation\TagValidator;
 use MeCms\ORM\Query;
 
@@ -68,10 +70,10 @@ class TagsTable extends AppTable
         $this->setDisplayField('tag');
         $this->setPrimaryKey('id');
 
-        $this->belongsToMany('Posts', ['className' => 'MeCms.Posts', 'joinTable' => 'posts_tags'])
+        $this->belongsToMany('Posts', ['className' => PostsTable::class, 'joinTable' => 'posts_tags'])
             ->setForeignKey('tag_id')
             ->setTargetForeignKey('post_id')
-            ->setThrough('MeCms.PostsTags');
+            ->setThrough(PostsTagsTable::class);
 
         $this->addBehavior('Timestamp');
 

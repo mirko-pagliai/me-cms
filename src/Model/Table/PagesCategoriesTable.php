@@ -17,6 +17,7 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\PagesTable;
 use MeCms\Model\Validation\PagesCategoryValidator;
 use MeCms\ORM\Query;
 
@@ -72,14 +73,9 @@ class PagesCategoriesTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Parents', ['className' => 'MeCms.PagesCategories'])
-            ->setForeignKey('parent_id');
-
-        $this->hasMany('Childs', ['className' => 'MeCms.PagesCategories'])
-            ->setForeignKey('parent_id');
-
-        $this->hasMany('Pages', ['className' => 'MeCms.Pages'])
-            ->setForeignKey('category_id');
+        $this->belongsTo('Parents', ['className' => __CLASS__])->setForeignKey('parent_id');
+        $this->hasMany('Childs', ['className' => __CLASS__])->setForeignKey('parent_id');
+        $this->hasMany('Pages', ['className' => PagesTable::class])->setForeignKey('category_id');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('MeCms.Tree');

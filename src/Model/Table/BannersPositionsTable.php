@@ -17,6 +17,7 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\BannersTable;
 use MeCms\Model\Validation\BannersPositionValidator;
 
 /**
@@ -54,8 +55,7 @@ class BannersPositionsTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Banners', ['className' => 'MeCms.Banners'])
-            ->setForeignKey('position_id');
+        $this->hasMany('Banners', ['className' => BannersTable::class])->setForeignKey('position_id');
 
         $this->addBehavior('Timestamp');
 

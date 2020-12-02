@@ -79,15 +79,12 @@ class PostsCategoriesTableTest extends TableTestCase
 
         $this->assertBelongsTo($this->Table->Parents);
         $this->assertEquals('parent_id', $this->Table->Parents->getForeignKey());
-        $this->assertEquals('MeCms.PostsCategories', $this->Table->Parents->getClassName());
 
         $this->assertHasMany($this->Table->Childs);
         $this->assertEquals('parent_id', $this->Table->Childs->getForeignKey());
-        $this->assertEquals('MeCms.PostsCategories', $this->Table->Childs->getClassName());
 
         $this->assertHasMany($this->Table->Posts);
         $this->assertEquals('category_id', $this->Table->Posts->getForeignKey());
-        $this->assertEquals('MeCms.Posts', $this->Table->Posts->getClassName());
 
         $this->assertHasBehavior(['Timestamp', 'Tree']);
 

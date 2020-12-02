@@ -69,7 +69,6 @@ class UsersGroupsTableTest extends TableTestCase
 
         $this->assertHasMany($this->Table->Users);
         $this->assertEquals('group_id', $this->Table->Users->getForeignKey());
-        $this->assertEquals('MeCms.Users', $this->Table->Users->getClassName());
 
         $this->assertHasBehavior('Timestamp');
 
