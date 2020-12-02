@@ -109,8 +109,10 @@ class PhotosFixture extends TestFixture
     {
         foreach ($this->records as $record) {
             $file = PHOTOS . $record['album_id'] . DS . $record['filename'];
-            @mkdir(dirname($file));
-            @copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
+            if (!file_exists($file)) {
+                @mkdir(dirname($file));
+                copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
+            }
         }
 
         return parent::insert($db);
