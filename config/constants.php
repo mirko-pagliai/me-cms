@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of me-cms.
@@ -39,11 +40,6 @@ if (!defined('FORMAT_FOR_MYSQL')) {
 //Sets the default login log directory
 if (!defined('LOGIN_RECORDS')) {
     define('LOGIN_RECORDS', TMP . 'login' . DS);
-}
-
-//Sets the default photos directory
-if (!defined('PHOTOS')) {
-    define('PHOTOS', WWW_ROOT . 'img' . DS . 'photos' . DS);
 }
 
 //Sets the default sitemap path

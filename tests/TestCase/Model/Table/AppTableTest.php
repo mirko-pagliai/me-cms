@@ -29,11 +29,6 @@ use MeCms\TestSuite\TableTestCase;
 class AppTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PhotosTable|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $Photos;
-
-    /**
      * @var \MeCms\Model\Table\PostsTable|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Posts;
@@ -54,7 +49,6 @@ class AppTableTest extends TableTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.MeCms.Photos',
         'plugin.MeCms.Posts',
         'plugin.MeCms.PostsCategories',
         'plugin.MeCms.PostsTags',
@@ -69,9 +63,8 @@ class AppTableTest extends TableTestCase
     {
         parent::setUp();
 
-        foreach (['Photos', 'Posts', 'PostsCategories'] as $table) {
-            $this->$table = TableRegistry::getTableLocator()->get('MeCms.' . $table);
-        }
+        $this->Posts = TableRegistry::getTableLocator()->get('MeCms.Posts');
+        $this->PostsCategories = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
     }
 
     /**
@@ -178,16 +171,10 @@ class AppTableTest extends TableTestCase
      */
     public function testGetList()
     {
-        $expected = [
-            1 => 'photo1.jpg',
-            3 => 'photo3.jpg',
-            4 => 'photo4.jpg',
-            2 => 'photoa.jpg',
-        ];
-        $query = $this->Photos->getList();
-        $this->assertStringEndsWith('ORDER BY ' . $this->Photos->getDisplayField() . ' ASC', $query->sql());
-        $this->assertEquals($expected, $query->toArray());
-        $fromCache = Cache::read('photos_list', $this->Photos->getCacheName())->toArray();
+        $query = $this->Posts->getList();
+        $this->assertStringEndsWith('ORDER BY ' . $this->Posts->getDisplayField() . ' ASC', $query->sql());
+        $this->assertNotEmpty($query->toArray());
+        $fromCache = Cache::read('posts_list', $this->Posts->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
     }
 
@@ -262,15 +249,8 @@ class AppTableTest extends TableTestCase
         $this->assertStringEndsWith($expectedSql, $query->sql());
         $this->assertEquals(false, $query->getValueBinder()->bindings()[':c4']['value']);
 
-        $query = $this->Photos->queryFromFilter($this->Photos->find(), ['filename' => 'image.jpg']);
-        $this->assertStringEndsWith('FROM photos Photos WHERE Photos.filename like :c0', $query->sql());
-        $this->assertEquals('%image.jpg%', $query->getValueBinder()->bindings()[':c0']['value']);
-
         //With some invalid datas
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['title' => 'ab', 'priority' => 6, 'created' => '2016-12-30']);
-        $this->assertEmpty($query->getValueBinder()->bindings());
-
-        $query = $this->Photos->queryFromFilter($this->Photos->find(), ['filename' => 'ab']);
         $this->assertEmpty($query->getValueBinder()->bindings());
     }
 }

@@ -28,7 +28,6 @@ Configure::write('WRITABLE_DIRS', array_merge(Configure::read('WRITABLE_DIRS', [
     getConfigOrFail('DatabaseBackup.target'),
     BANNERS,
     LOGIN_RECORDS,
-    PHOTOS,
     THUMBER_TARGET,
     UPLOADED,
     UPLOADED . '.trash',

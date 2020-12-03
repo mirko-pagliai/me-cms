@@ -40,8 +40,6 @@ class SitemapTest extends TestCase
     public $fixtures = [
         'plugin.MeCms.Pages',
         'plugin.MeCms.PagesCategories',
-        'plugin.MeCms.Photos',
-        'plugin.MeCms.PhotosAlbums',
         'plugin.MeCms.Posts',
         'plugin.MeCms.PostsCategories',
         'plugin.MeCms.PostsTags',
@@ -55,6 +53,7 @@ class SitemapTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
         Cache::clearAll();
 
         $this->loadPlugins(['TestPlugin']);
@@ -106,60 +105,6 @@ class SitemapTest extends TestCase
         //Deletes all records
         $table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty(Sitemap::pages());
-    }
-
-    /**
-     * Test for `photos()` method
-     * @test
-     */
-    public function testPhotos()
-    {
-        $this->loadFixtures('Photos', 'PhotosAlbums');
-        $table = TableRegistry::getTableLocator()->get('MeCms.PhotosAlbums');
-
-        //Photos are disabled for the sitemap
-        Configure::write('MeCms.sitemap.photos', false);
-        $this->assertEmpty(Sitemap::photos());
-        Configure::write('MeCms.sitemap.photos', true);
-
-        $expected = [
-            [
-                'loc' => 'http://localhost/albums',
-                'lastmod' => '2016-12-28T10:40:42+00:00',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/album/another-album-test',
-                'lastmod' => '2016-12-28T10:39:42+00:00',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/photo/another-album-test/2',
-                'lastmod' => '2016-12-28T10:39:42+00:00',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/album/test-album',
-                'lastmod' => '2016-12-28T10:40:42+00:00',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/photo/test-album/3',
-                'lastmod' => '2016-12-28T10:40:42+00:00',
-                'priority' => '0.5',
-            ],
-            [
-                'loc' => 'http://localhost/photo/test-album/1',
-                'lastmod' => '2016-12-28T10:38:42+00:00',
-                'priority' => '0.5',
-            ],
-        ];
-        $this->assertEquals($expected, Sitemap::photos());
-        $this->assertEquals($expected, Cache::read('sitemap', $table->getCacheName()));
-
-        //Deletes all records
-        $table->deleteAll(['id IS NOT' => null]);
-        $this->assertEmpty(Sitemap::photos());
     }
 
     /**

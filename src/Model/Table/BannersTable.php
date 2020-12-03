@@ -108,6 +108,11 @@ class BannersTable extends AppTable
             $query->where(['position_id' => $data['position']]);
         }
 
+        //"Filename" field
+        if (!empty($data['filename']) && strlen($data['filename']) > 2) {
+            $query->where([sprintf('%s.%s LIKE', $this->getAlias(), 'filename') => '%' . $data['filename'] . '%']);
+        }
+
         return $query;
     }
 }

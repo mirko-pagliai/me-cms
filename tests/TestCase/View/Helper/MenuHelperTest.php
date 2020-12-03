@@ -63,17 +63,6 @@ class MenuHelperTest extends MenuHelperTestCase
     }
 
     /**
-     * Tests for `photos()` method
-     * @test
-     */
-    public function testPhotos()
-    {
-        [$links,,, $handledControllers] = $this->Helper->photos();
-        $this->assertNotEmpty($links);
-        $this->assertEquals(['Photos', 'PhotosAlbums'], $handledControllers);
-    }
-
-    /**
      * Tests for `banners()` method
      * @test
      */

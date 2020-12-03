@@ -48,8 +48,6 @@ class SitemapBuilderTest extends TestCase
     public $fixtures = [
         'plugin.MeCms.Pages',
         'plugin.MeCms.PagesCategories',
-        'plugin.MeCms.Photos',
-        'plugin.MeCms.PhotosAlbums',
         'plugin.MeCms.Posts',
         'plugin.MeCms.PostsCategories',
         'plugin.MeCms.Tags',
@@ -90,7 +88,6 @@ class SitemapBuilderTest extends TestCase
         $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['MeCms']);
         $this->assertEquals([
             'pages',
-            'photos',
             'posts',
             'postsTags',
             'staticPages',

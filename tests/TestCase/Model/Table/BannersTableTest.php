@@ -121,5 +121,13 @@ class BannersTableTest extends TableTestCase
         $query = $this->Table->queryFromFilter($this->Table->find(), ['position' => 2]);
         $this->assertStringEndsWith('FROM banners Banners WHERE position_id = :c0', $query->sql());
         $this->assertEquals(2, $query->getValueBinder()->bindings()[':c0']['value']);
+
+        $query = $this->Table->queryFromFilter($this->Table->find(), ['filename' => 'image.jpg']);
+        $this->assertStringEndsWith('FROM banners Banners WHERE Banners.filename like :c0', $query->sql());
+        $this->assertEquals('%image.jpg%', $query->getValueBinder()->bindings()[':c0']['value']);
+
+        //With some invalid datas
+        $query = $this->Table->queryFromFilter($this->Table->find(), ['filename' => 'ab']);
+        $this->assertEmpty($query->getValueBinder()->bindings());
     }
 }

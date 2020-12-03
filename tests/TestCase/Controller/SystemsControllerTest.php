@@ -39,8 +39,6 @@ class SystemsControllerTest extends ControllerTestCase
     public $fixtures = [
         'plugin.MeCms.Pages',
         'plugin.MeCms.PagesCategories',
-        'plugin.MeCms.Photos',
-        'plugin.MeCms.PhotosAlbums',
         'plugin.MeCms.Posts',
         'plugin.MeCms.PostsCategories',
     ];

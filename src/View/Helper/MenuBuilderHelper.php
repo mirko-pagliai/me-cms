@@ -60,18 +60,21 @@ class MenuBuilderHelper extends Helper
      */
     public function generate(string $plugin): array
     {
-        //Gets all valid methods from `$PLUGIN\View\Helper\MenuHelper`
-        $methods = get_child_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
-        $methods = $methods ? array_values(array_filter($methods, function ($method) {
-            return !string_starts_with($method, '_');
-        })) : [];
+        $methods = [];
+
+        //Gets all valid methods from `$PLUGIN\View\Helper\MenuHelper` class
+        $className = sprintf('\%s\View\Helper\MenuHelper', str_replace('/', '\\', $plugin));
+        if (class_exists($className)) {
+            $methods = array_values(array_filter(get_child_methods($className), function ($method) {
+                return !string_starts_with($method, '_');
+            }));
+        }
 
         if (empty($methods)) {
             return [];
         }
 
-        $className = sprintf('%s.Menu', $plugin);
-        $helper = $this->getView()->loadHelper($className, compact('className'));
+        $helper = $this->getView()->loadHelper($plugin . '.Menu', ['className' => $plugin . '.Menu']);
 
         //Calls dynamically each method
         $menus = [];

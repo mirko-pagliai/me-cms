@@ -83,63 +83,6 @@ class Sitemap extends SitemapBuilder
     }
 
     /**
-     * Returns photos urls
-     * @return array
-     * @uses \MeCms\Utility\SitemapBuilder::parse()
-     */
-    public static function photos(): array
-    {
-        if (!getConfig('sitemap.photos')) {
-            return [];
-        }
-
-        $table = TableRegistry::get('MeCms.PhotosAlbums');
-        $url = Cache::read('sitemap', $table->getCacheName());
-
-        if (!$url) {
-            $albums = $table->find('active')
-                ->select(['id', 'slug', 'created'])
-                ->contain($table->Photos->getAlias(), function (Query $query) {
-                    return $query->find('active')
-                        ->select(['id', 'album_id', 'modified'])
-                        ->orderDesc('modified');
-                })
-                ->orderDesc(sprintf('%s.created', $table->getAlias()));
-
-            if ($albums->isEmpty()) {
-                return [];
-            }
-
-            //Adds albums index
-            $latest = $table->Photos->find('active')
-                ->select(['modified'])
-                ->orderDesc('modified')
-                ->firstOrFail();
-            $url[] = self::parse(['_name' => 'albums'], ['lastmod' => $latest->get('modified')]);
-
-            foreach ($albums as $album) {
-                //Adds album
-                $url[] = self::parse(
-                    ['_name' => 'album', $album->get('slug')],
-                    ['lastmod' => array_value_first($album->get('photos'))->get('modified')]
-                );
-
-                //Adds each photo
-                foreach ($album->get('photos') as $photo) {
-                    $url[] = self::parse(
-                        ['_name' => 'photo', 'slug' => $album->get('slug'), 'id' => (string)$photo->get('id')],
-                        ['lastmod' => $photo->get('modified')]
-                    );
-                }
-            }
-
-            Cache::write('sitemap', $url, $table->getCacheName());
-        }
-
-        return $url;
-    }
-
-    /**
      * Returns posts urls
      * @return array
      * @uses \MeCms\Utility\SitemapBuilder::parse()
