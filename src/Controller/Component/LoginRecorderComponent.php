@@ -109,7 +109,8 @@ class LoginRecorderComponent extends Component
 
         //Removes the first record (last in order of time), if it has been saved
         //  less than an hour ago and if the user agent data are the same
-        if ($last && (new Time($last->get('time')))->modify('+1 hour')->isFuture()
+        if ($last
+            && (new Time($last->get('time')))->modify('+1 hour')->isFuture()
             && $last->extract(['agent', 'browser', 'ip', 'platform', 'version']) == $current
         ) {
             $this->getFileArray()->delete(0);
