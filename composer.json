@@ -79,6 +79,7 @@
             "MeCms\\Test\\": "tests",
             "App\\": "tests/test_app/TestApp/",
             "DebugKit\\": "tests/test_app/TestApp/Plugin/DebugKit/src",
+            "MyTheme\\": "tests/test_app/TestApp/Plugin/MyTheme",
             "TestPlugin\\": "tests/test_app/TestApp/Plugin/TestPlugin/src",
             "TestPluginTwo\\": "tests/test_app/TestApp/Plugin/TestPluginTwo/src"
         }
