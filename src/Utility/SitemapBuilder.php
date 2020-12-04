@@ -42,7 +42,7 @@ class SitemapBuilder
     }
 
     /**
-     * Internal method to parse each  url
+     * Internal method to parse each url
      * @param string|array|null $url Url
      * @param array $options Options, for example `lastmod` or `priority`
      * @return array
@@ -52,9 +52,8 @@ class SitemapBuilder
         if (!empty($options['lastmod']) && !is_string($options['lastmod'])) {
             $options['lastmod'] = $options['lastmod']->format('c');
         }
-        $options += ['priority' => '0.5'];
 
-        return array_merge(['loc' => Router::url($url, true)], $options);
+        return ['loc' => Router::url($url, true)] + $options + ['priority' => '0.5'];
     }
 
     /**
