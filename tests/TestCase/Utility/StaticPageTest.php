@@ -71,11 +71,11 @@ class StaticPageTest extends TestCase
 
         //Checks paths
         $this->assertEquals([
-            'tests/test_app/TestApp/templates/StaticPages/page-from-app.' . StaticPage::EXTENSION,
-            'templates/StaticPages/cookies-policy-it.' . StaticPage::EXTENSION,
-            'templates/StaticPages/cookies-policy.' . StaticPage::EXTENSION,
-            $TestPluginPath . 'first-folder/page-on-first-from-plugin.' . StaticPage::EXTENSION,
-            $TestPluginPath . 'first-folder/second_folder/page_on_second_from_plugin.' . StaticPage::EXTENSION,
+            'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'templates' . DS . 'StaticPages' . DS . 'page-from-app.' . StaticPage::EXTENSION,
+            'templates' . DS . 'StaticPages' . DS . 'cookies-policy-it.' . StaticPage::EXTENSION,
+            'templates' . DS . 'StaticPages' . DS . 'cookies-policy.' . StaticPage::EXTENSION,
+            $TestPluginPath . 'first-folder' . DS . 'page-on-first-from-plugin.' . StaticPage::EXTENSION,
+            $TestPluginPath . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin.' . StaticPage::EXTENSION,
             $TestPluginPath . 'test-from-plugin.' . StaticPage::EXTENSION,
         ], Hash::extract($pages, '{n}.path'));
 
@@ -84,8 +84,8 @@ class StaticPageTest extends TestCase
             'page-from-app',
             'cookies-policy-it',
             'cookies-policy',
-            'first-folder/page-on-first-from-plugin',
-            'first-folder/second_folder/page_on_second_from_plugin',
+            'first-folder' . DS . 'page-on-first-from-plugin',
+            'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin',
             'test-from-plugin',
         ], Hash::extract($pages, '{n}.slug'));
 
