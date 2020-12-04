@@ -13,14 +13,14 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace MeCms\Test\TestCase\Utility;
+namespace MeCms\Test\TestCase\Utility\Sitemap;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
-use MeCms\Utility\Sitemap;
+use MeCms\Utility\Sitemap\Sitemap;
 
 /**
  * SitemapTest class

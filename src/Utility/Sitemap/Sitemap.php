@@ -11,16 +11,15 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         MeCms\Utility\SitemapBuilder
  */
 
-namespace MeCms\Utility;
+namespace MeCms\Utility\Sitemap;
 
 use Cake\Cache\Cache;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
-use MeCms\Utility\SitemapBuilder;
+use MeCms\Utility\Sitemap\SitemapBuilder;
 use MeCms\Utility\StaticPage;
 
 /**

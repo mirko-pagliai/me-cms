@@ -13,10 +13,9 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace MeCms\Utility;
+namespace MeCms\Utility\Sitemap;
 
 use Cake\Collection\Collection;
-use Cake\Core\App;
 use Cake\Routing\Router;
 use Cake\Utility\Xml;
 use MeCms\Core\Plugin;
@@ -33,10 +32,9 @@ class SitemapBuilder
      */
     public static function getMethods(string $plugin): Collection
     {
-        $class = App::classname($plugin . '.Sitemap', 'Utility');
-        $methods = $class ? get_child_methods($class) : [];
+        $class = $plugin . '\Utility\Sitemap\Sitemap';
 
-        return collection($methods)->map(function (string $name) use ($class) {
+        return collection(get_child_methods($class) ?: [])->map(function (string $name) use ($class) {
             return compact('class', 'name');
         });
     }

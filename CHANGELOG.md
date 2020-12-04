@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.30 branch
+### 2.30.0
+* the sitemap classes have been moved into the `MeCms\Utility\Sitemap` namespace.
+
 ## 2.29 branch
 ### 2.29.4
 * `SitemapBuilder::getMethods()` returns a collection and it's now public;

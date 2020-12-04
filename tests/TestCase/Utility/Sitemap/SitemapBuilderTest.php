@@ -13,14 +13,14 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace MeCms\Test\TestCase\Utility;
+namespace MeCms\Test\TestCase\Utility\Sitemap;
 
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\Utility\Hash;
 use Cake\Utility\Xml;
 use MeCms\TestSuite\TestCase;
-use MeCms\Utility\SitemapBuilder;
+use MeCms\Utility\Sitemap\SitemapBuilder;
 use MeTools\TestSuite\IntegrationTestTrait;
 
 /**
@@ -31,7 +31,7 @@ class SitemapBuilderTest extends TestCase
     use IntegrationTestTrait;
 
     /**
-     * @var \MeCms\Utility\SitemapBuilder
+     * @var \MeCms\Utility\Sitemap\SitemapBuilder
      */
     protected $SitemapBuilder;
 

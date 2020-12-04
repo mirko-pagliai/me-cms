@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
-namespace TestPlugin\Utility;
 
-use MeCms\Utility\SitemapBuilder;
+namespace TestPlugin\Utility\Sitemap;
+
+use MeCms\Utility\Sitemap\SitemapBuilder;
 
 class Sitemap extends SitemapBuilder
 {
