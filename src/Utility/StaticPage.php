@@ -46,11 +46,11 @@ class StaticPage
     protected static function _getPaths(?string $plugin = null): array
     {
         if ($plugin) {
-            return [Plugin::templatePath($plugin) . 'StaticPages' . DS];
+            return [Plugin::templatePath($plugin) . 'StaticPages'];
         }
 
         return array_map(function ($path) {
-            return (new Filesystem())->addSlashTerm($path) . 'StaticPages' . DS;
+            return (new Filesystem())->concatenate($path, 'StaticPages');
         }, Configure::read('App.paths.templates'));
     }
 
@@ -69,9 +69,7 @@ class StaticPage
                 $paths = array_merge($paths, self::_getPaths($plugin));
             }
 
-            return array_clean(array_map(function ($path) {
-                return rtrim($path, DS);
-            }, $paths), 'file_exists');
+            return array_clean($paths, 'file_exists');
         }, 'static_pages');
     }
 
@@ -145,7 +143,8 @@ class StaticPage
             foreach (array_merge([null], Plugin::all()) as $plugin) {
                 foreach (self::_getPaths($plugin) as $path) {
                     foreach ($patterns as $pattern) {
-                        if (is_readable($path . $pattern . '.' . self::EXTENSION)) {
+                        $file = (new Filesystem())->concatenate($path, $pattern . '.' . self::EXTENSION);
+                        if (is_readable($file)) {
                             $page = ($plugin ? $plugin . '.' : '') . DS . 'StaticPages' . DS . $pattern;
 
                             break 3;
