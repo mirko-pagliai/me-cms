@@ -5,9 +5,11 @@ return ['Widgets' => [
     'general' => [
         'MeCms.Pages::categories' => ['render' => 'form'],
         'MeCms.Pages::pages',
-        'MeCms.Photos::albums' => ['render' => 'form'],
-        'MeCms.Photos::latest' => ['limit' => 1],
-        'MeCms.Photos::random' => ['limit' => 1],
+        //With `me-cms-photos` plugin:
+        //
+        //'MeCms/Photos.Photos::albums' => ['render' => 'form'],
+        //'MeCms/Photos.Photos::latest' => ['limit' => 1],
+        //'MeCms/Photos.Photos::random' => ['limit' => 1],
         'MeCms.Posts::categories' => ['render' => 'form'],
         'MeCms.Posts::latest' => ['limit' => 10],
         'MeCms.Posts::months' => ['render' => 'form'],
