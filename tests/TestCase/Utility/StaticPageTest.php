@@ -53,7 +53,7 @@ class StaticPageTest extends TestCase
     public function testAll()
     {
         $this->loadPlugins(['TestPlugin']);
-        $TestPluginPath = (new Filesystem())->rtr(Plugin::templatePath('TestPlugin')) . '/StaticPages/';
+        $TestPluginPath = (new Filesystem())->rtr(Plugin::templatePath('TestPlugin')) . DS . 'StaticPages' . DS;
 
         $pages = StaticPage::all();
         $this->assertContainsOnlyInstancesOf(Entity::class, $pages);

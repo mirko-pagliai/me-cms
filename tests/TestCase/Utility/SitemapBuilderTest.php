@@ -61,7 +61,7 @@ class SitemapBuilderTest extends TestCase
     {
         parent::setUp();
 
-        $this->SitemapBuilder = new SitemapBuilder();
+        $this->SitemapBuilder = $this->SitemapBuilder ?: new SitemapBuilder();
     }
 
     /**
@@ -81,27 +81,23 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGetMethods()
     {
-        $extractNames = function ($methods) {
-            return collection($methods)->extract('name')->toArray();
-        };
-
-        $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['MeCms']);
+        $methods = $this->SitemapBuilder->getMethods('MeCms');
         $this->assertEquals([
             'pages',
             'posts',
             'postsTags',
             'staticPages',
             'systems',
-        ], $extractNames($methods));
+        ], $methods->extract('name')->toArray());
 
         $this->loadPlugins(['TestPlugin']);
-        $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['TestPlugin']);
-        $this->assertEquals(['urlMethod1', 'urlMethod2'], $extractNames($methods));
+        $methods = $this->SitemapBuilder->getMethods('TestPlugin');
+        $this->assertEquals(['urlMethod1', 'urlMethod2'], $methods->extract('name')->toArray());
 
         //This plugin does not have the `Sitemap` class
         $this->loadPlugins(['TestPluginTwo']);
-        $methods = $this->invokeMethod($this->SitemapBuilder, 'getMethods', ['TestPluginTwo']);
-        $this->assertEquals([], $methods);
+        $methods = $this->SitemapBuilder->getMethods('TestPluginTwo');
+        $this->assertCount(0, $methods);
     }
 
     /**
