@@ -40,21 +40,6 @@ class SitemapBuilder
     }
 
     /**
-     * Internal method to parse each url
-     * @param string|array|null $url Url
-     * @param array $options Options, for example `lastmod` or `priority`
-     * @return array
-     */
-    protected static function parse($url, array $options = []): array
-    {
-        if (!empty($options['lastmod']) && !is_string($options['lastmod'])) {
-            $options['lastmod'] = $options['lastmod']->format('c');
-        }
-
-        return ['loc' => Router::url($url, true)] + $options + ['priority' => '0.5'];
-    }
-
-    /**
      * Generate the sitemap.
      *
      * For each plugin, calls dynamically all executable methods for the
@@ -67,7 +52,7 @@ class SitemapBuilder
     public static function generate(): string
     {
         //Adds the homepage
-        $url[] = self::parse('/');
+        $url[] = ['loc' => Router::url('/', true), 'priority' => '0.5'];
 
         foreach (Plugin::all() as $plugin) {
             //Calls all executable methods for the `Sitemap` class of a plugin

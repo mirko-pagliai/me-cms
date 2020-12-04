@@ -2,6 +2,8 @@
 ## 2.30 branch
 ### 2.30.0
 * the sitemap classes have been moved into the `MeCms\Utility\Sitemap` namespace.
+    Added the `SitemapBase` abstract class, that provides the `parse()` method
+    and which now needs to be extended by the `Sitemap` class.
 
 ## 2.29 branch
 ### 2.29.4

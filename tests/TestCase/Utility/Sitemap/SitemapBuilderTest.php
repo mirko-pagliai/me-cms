@@ -101,38 +101,6 @@ class SitemapBuilderTest extends TestCase
     }
 
     /**
-     * Test for `parse()` method
-     * @test
-     */
-    public function testParse()
-    {
-        $parseMethod = function ($url, array $options = []) {
-            return $this->invokeMethod($this->SitemapBuilder, 'parse', [$url, $options]);
-        };
-
-        $expected = ['loc' => 'http://localhost/', 'priority' => '0.5'];
-        $this->assertEquals($expected, $parseMethod(['_name' => 'homepage']));
-        $this->assertEquals($expected, $parseMethod('/'));
-
-        $expected = [
-            'loc' => 'http://localhost/',
-            'lastmod' => '2014-01-10T11:11:00+00:00',
-            'priority' => '0.5',
-        ];
-        $result = $parseMethod('/', ['lastmod' => new Time('2014-01-10 11:11')]);
-        $this->assertEquals($expected, $result);
-
-        $result = $parseMethod('/', ['lastmod' => new Time('2014-01-10T11:11:00+00:00')]);
-        $this->assertEquals($expected, $result);
-
-        $result = $parseMethod('/', ['lastmod' => '2014-01-10T11:11:00+00:00']);
-        $this->assertEquals($expected, $result);
-
-        $result = $parseMethod('/', ['priority' => '0.4']);
-        $this->assertEquals(['loc' => 'http://localhost/', 'priority' => '0.4'], $result);
-    }
-
-    /**
      * Test for `generate()` method
      * @test
      */
@@ -141,6 +109,7 @@ class SitemapBuilderTest extends TestCase
         $this->loadFixtures();
         $map = Xml::toArray(Xml::build($this->SitemapBuilder->generate()))['urlset']['url'];
         $this->assertNotEmpty($map);
+        $this->assertSame(['loc' => 'http://localhost/', 'priority' => '0.5'], array_value_first($map));
         $this->assertNotEmpty(Hash::extract($map, '{n}.loc'));
         $this->assertNotEmpty(Hash::extract($map, '{n}.priority'));
     }

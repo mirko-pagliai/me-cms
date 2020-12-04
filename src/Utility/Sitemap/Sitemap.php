@@ -19,7 +19,7 @@ use Cake\Cache\Cache;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
-use MeCms\Utility\Sitemap\SitemapBuilder;
+use MeCms\Utility\Sitemap\SitemapBase;
 use MeCms\Utility\StaticPage;
 
 /**
@@ -29,7 +29,7 @@ use MeCms\Utility\StaticPage;
  * This class contains methods that will be called automatically.
  * You do not need to call these methods manually.
  */
-class Sitemap extends SitemapBuilder
+class Sitemap extends SitemapBase
 {
     /**
      * Returns pages urls
