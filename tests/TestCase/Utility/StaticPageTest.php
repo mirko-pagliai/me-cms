@@ -84,8 +84,8 @@ class StaticPageTest extends TestCase
             'page-from-app',
             'cookies-policy-it',
             'cookies-policy',
-            'first-folder' . DS . 'page-on-first-from-plugin',
-            'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin',
+            'first-folder/page-on-first-from-plugin',
+            'first-folder/second_folder/page_on_second_from_plugin',
             'test-from-plugin',
         ], Hash::extract($pages, '{n}.slug'));
 
