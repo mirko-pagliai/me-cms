@@ -68,11 +68,6 @@ class SitemapTest extends TestCase
         $this->loadFixtures('Pages', 'PagesCategories');
         $table = TableRegistry::getTableLocator()->get('MeCms.PagesCategories');
 
-        //Pages are disabled for the sitemap
-        Configure::write('MeCms.sitemap.pages', false);
-        $this->assertEmpty(Sitemap::pages());
-        Configure::write('MeCms.sitemap.pages', true);
-
         $expected = [
             [
                 'loc' => 'http://localhost/pages/categories',
@@ -102,7 +97,11 @@ class SitemapTest extends TestCase
         $this->assertEquals($expected, Sitemap::pages());
         $this->assertEquals($expected, Cache::read('sitemap', $table->getCacheName()));
 
+        Configure::write('MeCms.sitemap.pages', false);
+        $this->assertEmpty(Sitemap::pages());
+
         //Deletes all records
+        Configure::write('MeCms.sitemap.pages', true);
         $table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty(Sitemap::pages());
     }
@@ -115,11 +114,6 @@ class SitemapTest extends TestCase
     {
         $this->loadFixtures('Posts', 'PostsCategories');
         $table = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
-
-        //Posts are disabled for the sitemap
-        Configure::write('MeCms.sitemap.posts', false);
-        $this->assertEmpty(Sitemap::posts());
-        Configure::write('MeCms.sitemap.posts', true);
 
         $expected = [
             [
@@ -179,7 +173,11 @@ class SitemapTest extends TestCase
         $this->assertEquals($expected, Sitemap::posts());
         $this->assertEquals($expected, Cache::read('sitemap', $table->getCacheName()));
 
+        Configure::write('MeCms.sitemap.posts', false);
+        $this->assertEmpty(Sitemap::posts());
+
         //Deletes all records
+        Configure::write('MeCms.sitemap.posts', true);
         $table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty(Sitemap::posts());
     }
@@ -192,11 +190,6 @@ class SitemapTest extends TestCase
     {
         $this->loadFixtures('Posts', 'PostsTags', 'Tags');
         $table = TableRegistry::getTableLocator()->get('MeCms.Tags');
-
-        //Posts tags are disabled for the sitemap
-        Configure::write('MeCms.sitemap.posts_tags', false);
-        $this->assertEmpty(Sitemap::postsTags());
-        Configure::write('MeCms.sitemap.posts_tags', true);
 
         $expected = [
             [
@@ -228,7 +221,11 @@ class SitemapTest extends TestCase
         $this->assertEquals($expected, Sitemap::postsTags());
         $this->assertEquals($expected, Cache::read('sitemap', $table->getCacheName()));
 
+        Configure::write('MeCms.sitemap.posts_tags', false);
+        $this->assertEmpty(Sitemap::postsTags());
+
         //Deletes all records
+        Configure::write('MeCms.sitemap.posts_tags', true);
         $table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty(Sitemap::postsTags());
     }
@@ -239,11 +236,6 @@ class SitemapTest extends TestCase
      */
     public function testStaticPages()
     {
-        //Static pages are disabled for the sitemap
-        Configure::write('MeCms.sitemap.static_pages', false);
-        $this->assertEmpty(Sitemap::staticPages());
-        Configure::write('MeCms.sitemap.static_pages', true);
-
         $map = Sitemap::staticPages();
 
         //It checks here the `lastmod` value and removes it from the array
@@ -258,6 +250,10 @@ class SitemapTest extends TestCase
         $this->assertContains(['loc' => 'http://localhost/page/first-folder/page-on-first-from-plugin', 'priority' => '0.5'], $map);
         $this->assertContains(['loc' => 'http://localhost/page/first-folder/second_folder/page_on_second_from_plugin', 'priority' => '0.5'], $map);
         $this->assertContains(['loc' => 'http://localhost/page/test-from-plugin', 'priority' => '0.5'], $map);
+
+        Configure::write('MeCms.sitemap.static_pages', false);
+        $this->assertEmpty(Sitemap::staticPages());
+        Configure::write('MeCms.sitemap.static_pages', true);
     }
 
     /**
@@ -266,19 +262,17 @@ class SitemapTest extends TestCase
      */
     public function testSystems()
     {
-        //System pages are disabled for the sitemap
-        Configure::write('MeCms.sitemap.systems', false);
-        $this->assertEmpty(Sitemap::systems());
-        Configure::write('MeCms.sitemap.systems', true);
-
         $this->assertEquals([[
             'loc' => 'http://localhost/contact/us',
             'priority' => '0.5',
         ]], Sitemap::systems());
 
-        //Disabled contact form
-        Configure::write('MeCms.default.contact_us', false);
+        Configure::write('MeCms.sitemap.systems', false);
+        $this->assertEmpty(Sitemap::systems());
 
+        //Disabled contact form
+        Configure::write('MeCms.sitemap.systems', true);
+        Configure::write('MeCms.default.contact_us', false);
         $this->assertEmpty(Sitemap::systems());
     }
 }
