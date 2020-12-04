@@ -20,7 +20,7 @@ use Cake\Http\Response;
 use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 use MeCms\Form\ContactUsForm;
-use MeCms\Utility\Sitemap;
+use MeCms\Utility\Sitemap\Sitemap;
 use Tools\Filesystem;
 
 /**

@@ -47,7 +47,7 @@ class SitemapBuilder
      *
      * Each method must return an array of url which will be added to the sitemap.
      * @return string
-     * @see \MeCms\Utility\Sitemap
+     * @see \MeCms\Utility\Sitemap\Sitemap
      */
     public static function generate(): string
     {
