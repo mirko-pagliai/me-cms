@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Utility;
 
+use Cake\Collection\Collection;
 use Cake\Core\App;
 use Cake\Routing\Router;
 use Cake\Utility\Xml;
@@ -26,19 +27,18 @@ use MeCms\Core\Plugin;
 class SitemapBuilder
 {
     /**
-     * Internal method to get methods from `Sitemap` classes
+     * Gets all executable methods for the `Sitemap` class of a plugin
      * @param string $plugin Plugin
-     * @return array Array with classes and methods names
+     * @return \Cake\Collection\Collection Collection of classes and methods names
      */
-    protected static function getMethods(string $plugin): array
+    public static function getMethods(string $plugin): Collection
     {
-        //Sets the class name
         $class = App::classname($plugin . '.Sitemap', 'Utility');
+        $methods = $class ? get_child_methods($class) : [];
 
-        //Gets all methods from the `Sitemap` class of the plugin
-        return $class ? array_map(function ($name) use ($class) {
+        return collection($methods)->map(function (string $name) use ($class) {
             return compact('class', 'name');
-        }, get_child_methods($class)) : [];
+        });
     }
 
     /**
@@ -74,11 +74,8 @@ class SitemapBuilder
         $url[] = self::parse('/');
 
         foreach (Plugin::all() as $plugin) {
-            //Gets all methods from `Sitemap` class of the plugin
-            $methods = self::getMethods($plugin);
-
-            //Calls each method
-            foreach ($methods as $method) {
+            //Calls all executable methods for the `Sitemap` class of a plugin
+            foreach (self::getMethods($plugin) as $method) {
                 $url = array_merge($url, (array)call_user_func([$method['class'], $method['name']]));
             }
         }

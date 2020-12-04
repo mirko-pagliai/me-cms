@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.29 branch
 ### 2.29.4
+* `SitemapBuilder::getMethods()` returns a collection and it's now public;
 * fixed `TestSuite` classes, `MenuBuilderHelper` and some template files, improved
     to use with other plugins;
 * fixed old bug on loading theme plugins;
