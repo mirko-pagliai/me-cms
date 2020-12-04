@@ -42,11 +42,10 @@ class SitemapBuilder
     }
 
     /**
-     * Parses url
+     * Internal method to parse each  url
      * @param string|array|null $url Url
      * @param array $options Options, for example `lastmod` or `priority`
      * @return array
-     * @see Cake\Routing\Router::url()
      */
     protected static function parse($url, array $options = []): array
     {
@@ -61,12 +60,12 @@ class SitemapBuilder
     /**
      * Generate the sitemap.
      *
-     * For each plugin, calls dynamically all methods from the `Sitemap` class.
-     * Each method must be return an array or urls to add to the sitemap.
+     * For each plugin, calls dynamically all executable methods for the
+     *  `Sitemap` class, if that exists.
+     *
+     * Each method must return an array of url which will be added to the sitemap.
      * @return string
      * @see \MeCms\Utility\Sitemap
-     * @uses getMethods()
-     * @uses parse()
      */
     public static function generate(): string
     {
