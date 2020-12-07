@@ -249,9 +249,9 @@ class Sitemap extends SitemapBuilder
             return [];
         }
 
-        return array_map(function (Entity $page) {
+        return StaticPage::all()->map(function (Entity $page) {
             return self::parse(['_name' => 'page', $page->get('slug')], ['lastmod' => $page->get('modified')]);
-        }, StaticPage::all());
+        })->toArray();
     }
 
     /**
