@@ -19,7 +19,6 @@ use Cake\Cache\Cache;
 use Cake\Core\Plugin;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
-use Cake\Utility\Hash;
 use MeCms\TestSuite\TestCase;
 use MeCms\Utility\StaticPage;
 use Tools\Filesystem;
