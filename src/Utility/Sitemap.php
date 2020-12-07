@@ -35,7 +35,6 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns pages urls
      * @return array
-     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
     public static function pages(): array
     {
@@ -85,7 +84,6 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns photos urls
      * @return array
-     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
     public static function photos(): array
     {
@@ -142,7 +140,6 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns posts urls
      * @return array
-     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
     public static function posts(): array
     {
@@ -199,7 +196,6 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns posts tags urls
      * @return array
-     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
     public static function postsTags(): array
     {
@@ -240,7 +236,6 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns static pages urls
      * @return array
-     * @uses \MeCms\Utility\SitemapBuilder::parse()
      * @uses \MeCms\Utility\StaticPage::all()
      */
     public static function staticPages(): array
@@ -257,19 +252,13 @@ class Sitemap extends SitemapBuilder
     /**
      * Returns systems urls
      * @return array
-     * @uses \MeCms\Utility\SitemapBuilder::parse()
      */
     public static function systems(): array
     {
-        if (!getConfig('sitemap.systems')) {
+        if (!getConfig('sitemap.systems') || !getConfig('default.contact_us')) {
             return [];
         }
 
-        //Contact form
-        if (getConfig('default.contact_us')) {
-            $url[] = self::parse(['_name' => 'contactUs']);
-        }
-
-        return $url ?? [];
+        return [self::parse(['_name' => 'contactUs'])];
     }
 }
