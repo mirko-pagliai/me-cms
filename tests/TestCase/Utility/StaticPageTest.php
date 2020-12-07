@@ -57,7 +57,7 @@ class StaticPageTest extends TestCase
 
         $pages = StaticPage::all();
         $this->assertContainsOnlyInstancesOf(Entity::class, $pages);
-        $this->assertContainsOnlyInstancesOf(FrozenTime::class, Hash::extract($pages, '{n}.modified'));
+        $this->assertContainsOnlyInstancesOf(FrozenTime::class, $pages->extract('modified'));
 
         //Checks filenames
         $this->assertEquals([
@@ -67,7 +67,7 @@ class StaticPageTest extends TestCase
             'page-on-first-from-plugin',
             'page_on_second_from_plugin',
             'test-from-plugin',
-        ], Hash::extract($pages, '{n}.filename'));
+        ], $pages->extract('filename')->toArray());
 
         //Checks paths
         $this->assertEquals([
@@ -77,7 +77,7 @@ class StaticPageTest extends TestCase
             $TestPluginPath . 'first-folder' . DS . 'page-on-first-from-plugin.' . StaticPage::EXTENSION,
             $TestPluginPath . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin.' . StaticPage::EXTENSION,
             $TestPluginPath . 'test-from-plugin.' . StaticPage::EXTENSION,
-        ], Hash::extract($pages, '{n}.path'));
+        ], $pages->extract('path')->toArray());
 
         //Checks slugs
         $this->assertEquals([
@@ -87,7 +87,7 @@ class StaticPageTest extends TestCase
             'first-folder/page-on-first-from-plugin',
             'first-folder/second_folder/page_on_second_from_plugin',
             'test-from-plugin',
-        ], Hash::extract($pages, '{n}.slug'));
+        ], $pages->extract('slug')->toArray());
 
         //Checks titles
         $this->assertEquals([
@@ -97,7 +97,7 @@ class StaticPageTest extends TestCase
             'Page On First From Plugin',
             'Page On Second From Plugin',
             'Test From Plugin',
-        ], Hash::extract($pages, '{n}.title'));
+        ], $pages->extract('title')->toArray());
     }
 
     /**
@@ -109,7 +109,7 @@ class StaticPageTest extends TestCase
         $this->loadPlugins(['TestPlugin']);
 
         //Gets all pages from slugs
-        $pages = array_map([StaticPage::class, 'get'], Hash::extract(StaticPage::all(), '{n}.slug'));
+        $pages = array_map([StaticPage::class, 'get'], StaticPage::all()->extract('slug')->toArray());
         $this->assertEquals([
             DS . 'StaticPages' . DS . 'page-from-app',
             'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy-it',
@@ -207,14 +207,14 @@ class StaticPageTest extends TestCase
             'Test From Plugin',
         ];
 
-        //Gets all slugs and all paths from pages
-        $slugs = Hash::extract(StaticPage::all(), '{*}.slug');
-        $paths = Hash::extract(StaticPage::all(), '{*}.path');
+        $getTitles = function (array $pathsOrSlugs) {
+            return array_map(function (string $pathOrSlug) {
+                return StaticPage::getTitle($pathOrSlug);
+            }, $pathsOrSlugs);
+        };
 
-        $count = count($slugs);
-        for ($id = 0; $id < $count; $id++) {
-            $this->assertEquals($expected[$id], StaticPage::getTitle($slugs[$id]));
-            $this->assertEquals($expected[$id], StaticPage::getTitle($paths[$id]));
-        }
+        $this->loadPlugins(['TestPlugin']);
+        $this->assertSame($expected, $getTitles(StaticPage::all()->extract('path')->toArray()));
+        $this->assertSame($expected, $getTitles(StaticPage::all()->extract('slug')->toArray()));
     }
 }
