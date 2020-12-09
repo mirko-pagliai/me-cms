@@ -187,9 +187,9 @@ class Sitemap extends SitemapBase
             return [];
         }
 
-        return array_map(function (Entity $page) {
+        return StaticPage::all()->map(function (Entity $page) {
             return self::parse(['_name' => 'page', $page->get('slug')], ['lastmod' => $page->get('modified')]);
-        }, StaticPage::all());
+        })->toArray();
     }
 
     /**
@@ -198,15 +198,10 @@ class Sitemap extends SitemapBase
      */
     public static function systems(): array
     {
-        if (!getConfig('sitemap.systems')) {
+        if (!getConfig('sitemap.systems') || !getConfig('default.contact_us')) {
             return [];
         }
 
-        //Contact form
-        if (getConfig('default.contact_us')) {
-            $url[] = self::parse(['_name' => 'contactUs']);
-        }
-
-        return $url ?? [];
+        return [self::parse(['_name' => 'contactUs'])];
     }
 }

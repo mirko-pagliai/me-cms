@@ -30,7 +30,7 @@ declare(strict_types=1);
             $this->Html->link(__d('me_cms', 'Home'), ['_name' => 'homepage'], ['class' => 'nav-link', 'icon' => 'home']),
             $this->Html->link(__d('me_cms', 'Categories'), ['_name' => 'postsCategories'], ['class' => 'nav-link']),
             $this->Html->link(I18N_PAGES, ['_name' => 'pagesCategories'], ['class' => 'nav-link']),
-            $this->Html->link(I18N_PHOTOS, ['_name' => 'albums'], ['class' => 'nav-link']),
+//            $this->Html->link(I18N_PHOTOS, ['_name' => 'albums'], ['class' => 'nav-link']),
         ];
 
         echo $this->Html->ul($links, ['class' => 'container navbar-nav mr-auto'], ['class' => 'nav-item']);

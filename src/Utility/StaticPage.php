@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Utility;
 
 use Cake\Cache\Cache;
+use Cake\Collection\CollectionInterface;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
@@ -39,19 +40,19 @@ class StaticPage
      * Internal method to get paths from APP or from a plugin.
      *
      * This also returns paths that do not exist.
-     * @param string|null $plugin Plugin name or `null` for APP path
+     * @param string $plugin Plugin name or `App` for APP path
      * @return array
      * @since 2.26.6
      */
-    protected static function _getPaths(?string $plugin = null): array
+    protected static function _getPaths(string $plugin = 'App'): array
     {
-        if ($plugin) {
-            return [Plugin::templatePath($plugin) . 'StaticPages' . DS];
+        if ($plugin == 'App') {
+            return array_map(function (string $path) {
+                return (new Filesystem())->concatenate($path, 'StaticPages');
+            }, Configure::read('App.paths.templates'));
         }
 
-        return array_map(function ($path) {
-            return (new Filesystem())->addSlashTerm($path) . 'StaticPages' . DS;
-        }, Configure::read('App.paths.templates'));
+        return [Plugin::templatePath($plugin) . 'StaticPages'];
     }
 
     /**
@@ -69,9 +70,7 @@ class StaticPage
                 $paths = array_merge($paths, self::_getPaths($plugin));
             }
 
-            return array_clean(array_map(function ($path) {
-                return rtrim($path, DS);
-            }, $paths), 'file_exists');
+            return array_clean($paths, 'file_exists');
         }, 'static_pages');
     }
 
@@ -95,12 +94,12 @@ class StaticPage
 
     /**
      * Gets all static pages
-     * @return array Static pages
+     * @return \Cake\Collection\CollectionInterface Collection of static pages
      * @uses getPaths()
      * @uses getSlug()
      * @uses getTitle()
      */
-    public static function all(): array
+    public static function all(): CollectionInterface
     {
         foreach (self::getPaths() as $path) {
             $finder = new Finder();
@@ -115,7 +114,7 @@ class StaticPage
             }
         }
 
-        return $pages ?? [];
+        return collection($pages ?? []);
     }
 
     /**
@@ -142,11 +141,12 @@ class StaticPage
             $patterns[] = $filename;
 
             //Checks if the page exists first in APP, then in each plugin
-            foreach (array_merge([null], Plugin::all()) as $plugin) {
+            foreach (array_merge(['App'], Plugin::all()) as $plugin) {
                 foreach (self::_getPaths($plugin) as $path) {
                     foreach ($patterns as $pattern) {
-                        if (is_readable($path . $pattern . '.' . self::EXTENSION)) {
-                            $page = ($plugin ? $plugin . '.' : '') . DS . 'StaticPages' . DS . $pattern;
+                        $file = (new Filesystem())->concatenate($path, $pattern . '.' . self::EXTENSION);
+                        if (is_readable($file)) {
+                            $page = ($plugin != 'App' ? $plugin . '.' : '') . DS . 'StaticPages' . DS . $pattern;
 
                             break 3;
                         }
