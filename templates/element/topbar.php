@@ -12,6 +12,15 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use Cake\Core\App;
+use MeCms\Core\Plugin;
+
+/**
+ * The topbar element will use the `TopbarHelper` from APP to build links, if
+ *  that helper exists. Otherwise it will use the helper provided by MeCms, with
+ *  the helper of any other plugin.
+ */
 ?>
 
 <nav id="topbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,12 +35,23 @@ declare(strict_types=1);
 
     <div class="collapse navbar-collapse" id="topbarNav">
         <?php
-        $links = [
-            $this->Html->link(__d('me_cms', 'Home'), ['_name' => 'homepage'], ['class' => 'nav-link', 'icon' => 'home']),
-            $this->Html->link(__d('me_cms', 'Categories'), ['_name' => 'postsCategories'], ['class' => 'nav-link']),
-            $this->Html->link(I18N_PAGES, ['_name' => 'pagesCategories'], ['class' => 'nav-link']),
-            $this->Html->link(I18N_PHOTOS, ['_name' => 'albums'], ['class' => 'nav-link']),
-        ];
+        if (App::className('TopbarHelper', 'View/Helper')) {
+            //Builds links with the APP helper
+            $links = $this->loadHelper('Topbar')->build();
+            $this->helpers()->unload('Topbar');
+        } else {
+            //Builds links with the MeCms helper
+            $links = $this->loadHelper('MeCms.Topbar')->build();
+            $this->helpers()->unload('Topbar');
+
+            //Builds links with any other plugin helper
+            foreach (Plugin::all(['core' => false, 'exclude' => ['MeCms']]) as $plugin) {
+                if (App::className($plugin . '.TopbarHelper', 'View/Helper')) {
+                    $links = array_merge($links, $this->loadHelper($plugin . '.Topbar')->build());
+                    $this->helpers()->unload('Topbar');
+                }
+            }
+        }
 
         echo $this->Html->ul($links, ['class' => 'container navbar-nav mr-auto'], ['class' => 'nav-item']);
         ?>
