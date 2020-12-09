@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Utility\Sitemap;
 
 use Cake\Cache\Cache;
-use Cake\I18n\Time;
 use Cake\Utility\Hash;
 use Cake\Utility\Xml;
 use MeCms\TestSuite\TestCase;
