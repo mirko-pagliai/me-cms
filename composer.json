@@ -34,7 +34,9 @@
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^4.0",
-        "phpunit/phpunit": "^8.3.1"
+        "phpunit/phpunit": "^8.3.1",
+        "phpstan/phpstan": "^0.12",
+        "psalm/phar": "^3.18"
     },
     "conflict": {
         "newerton/fancy-box": "*",
@@ -85,6 +87,7 @@
         }
     },
     "scripts": {
+        "i18n-extract": "bin/cake i18n extract --paths config,src,templates --relative-paths --overwrite -q",
         "check": [
             "@cs-check",
             "@update-lowest",
