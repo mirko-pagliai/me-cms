@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-11 14:57+0200\n"
+"POT-Creation-Date: 2020-12-09 15:09+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,1618 +14,1618 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/AddUserCommand.php:35
-msgid "Adds an user"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/AddUserCommand.php:36
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/AddUserCommand.php:78
-msgid "Group ID"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/AddUserCommand.php:51
-msgid "Before you can manage users, you have to create at least a user group"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/AddUserCommand.php:84
-msgid "Field `{0}` is empty. Try again"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/AddUserCommand.php:90
-msgid "Invalid group ID"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/AddUserCommand.php:97
-msgid "The user could not be saved"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/AddUserCommand.php:103
-msgid "Field `{0}`: {1}"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/AddUserCommand.php:112
-msgid "The user was created with ID {0}"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/GroupsCommand.php:36
-msgid "Lists user groups"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/GroupsCommand.php:51
-msgid "There are no user groups"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/CopyConfigCommand.php:45
-msgid "Copies the configuration files"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/CreateAdminCommand.php:36
-msgid "Creates an admin user"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/CreateGroupsCommand.php:47
-msgid "Creates the user groups"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/CreateGroupsCommand.php:59
-msgid "Some user groups already exist"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/CreateGroupsCommand.php:77
-msgid "The user groups have been created"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/FixElFinderCommand.php:38
-msgid "Fixes {0}"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/RunAllCommand.php:51
-msgid "Updates to the database or files needed for versioning?"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/RunAllCommand.php:56
-msgid "Create the user groups?"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/Install/RunAllCommand.php:61
-msgid "Create an admin user?"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/UsersCommand.php:36
-msgid "Lists users"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/UsersCommand.php:48
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/add.php:30
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/view.php:66
-msgid "Active"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/UsersCommand.php:48
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/index.php:98
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/view.php:72
-msgid "Pending"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/UsersCommand.php:50
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/index.php:95
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/view.php:69
-msgid "Banned"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/UsersCommand.php:85
-msgid "There are no users"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Command/VersionUpdatesCommand.php:37
-msgid "Performs some updates to the database or files needed for versioning"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/BannersController.php:49
-msgid "You must first create a banner position"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/BannersController.php:123
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PhotosController.php:122
-msgid "Missing ID"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PagesCategoriesController.php:107
-msgid "Add pages category"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PagesCategoriesController.php:133
-msgid "Edit pages category"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PagesController.php:57
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PostsController.php:66
-msgid "You must first create a category"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PagesController.php:134
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:86
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PagesCategories/index.php:24
-msgid "Add page"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PagesController.php:166
-#: /home/mirko/Libs/Plugins/me-cms/templates/Pages/view.php:29
-msgid "Edit page"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PhotosController.php:48
-msgid "You must first create an album"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PostsCategoriesController.php:107
-msgid "Add posts category"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PostsCategoriesController.php:133
-msgid "Edit posts category"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PostsController.php:59
-msgid "You must first create an user"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PostsController.php:146
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:60
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PostsCategories/index.php:23
-msgid "Add post"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/PostsController.php:180
-#: /home/mirko/Libs/Plugins/me-cms/templates/Posts/view.php:32
-msgid "Edit post"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/SystemsController.php:70
-msgid "{0} not available"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/UsersController.php:51
-msgid "You must first create an user group"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/UsersController.php:196
-msgid "You cannot delete the admin founder"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Admin/UsersGroupsController.php:116
-msgid "You cannot delete this users group"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Component/AuthComponent.php:58
-msgid "You are not authorized for this action"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/Component/LoginRecorderComponent.php:64
-msgid "You have to set a valid user id"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/PostsController.php:197
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/PostsController.php:199
-#: /home/mirko/Libs/Plugins/me-cms/src/View/View/AppView.php:50
-msgid "Latest posts"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/PostsController.php:221
-msgid "You have to search at least a word of {0} characters"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/PostsController.php:228
-msgid "You have to wait {0} seconds to perform a new search"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/SystemsController.php:62
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:168
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:277
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:359
-msgid "You must fill in the {0} control correctly"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:132
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:315
-msgid "Invalid token"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:173
-msgid "No valid account was found"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:176
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:373
-msgid "We send you an email to activate your account"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:216
-msgid "Your account has been banned by an admin"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:218
-msgid "Your account has not been activated yet"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:241
-msgid "Invalid username or password"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:254
-msgid "You are successfully logged out"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:279
-msgid "No account found"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:288
-msgid "We have sent you an email to reset your password"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:324
-msgid "The password has been edited"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:329
-msgid "The password has not been edited"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:361
-msgid "The account has not been created"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:367
-msgid "Account created, but it needs to be activated by an admin"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Controller/UsersController.php:377
-msgid "Account created. Now you can login"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Form/BackupForm.php:46
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/BannerAndPhotoValidator.php:41
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/add.php:23
-msgid "Valid extensions: {0}"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Form/ContactUsForm.php:50
-msgid "This email address has been reported as a spammer"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Form/ContactUsForm.php:60
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/TagValidator.php:33
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/UserValidator.php:42
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/UsersGroupValidator.php:33
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/UsersGroupValidator.php:44
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:57
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:74
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:91
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:107
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:116
-msgid "Must be between {0} and {1} chars"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Mailer/ContactUsMailer.php:42
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Systems/contact_us.php:15
-msgid "Email from {0}"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Mailer/UserMailer.php:41
-msgid "Activate your account"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Mailer/UserMailer.php:60
-msgid "Your password has been changed"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Mailer/UserMailer.php:79
-msgid "Reset your password"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/BannerValidator.php:40
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:49
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:99
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:139
-msgid "Must be at most {0} chars"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/BannerValidator.php:44
-msgid "Must be a valid url"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/PostValidator.php:62
-msgid "Tag \"{0}\": {1}"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/UserValidator.php:50
-msgid "This value contains a reserved word"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/UserValidator.php:59
-msgid "Email addresses don't match"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/UserValidator.php:67
-msgid "Must be at least {0} chars"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/UserValidator.php:71
-msgid "The password should contain letters, numbers and symbols"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/UserValidator.php:81
-msgid "Passwords don't match"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/UserValidator.php:88
-msgid "The old password is wrong"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Model/Validation/UsersGroupValidator.php:37
-msgid "lowercase letters"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:64
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:81
-msgid "letters, apostrophe, space"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:65
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:82
-msgid "Has to begin with a capital letter"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/Validation/AppValidator.php:126
-msgid "This field can not be empty"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Cell/PostsTagsWidgetsCell.php:47
-msgid "Invalid values"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuBuilderHelper.php:84
-msgid "Method `{0}::{1}()` returned only {2} values"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:59
-msgid "List posts"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:64
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:93
-msgid "List categories"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:65
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:94
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Pages/index.php:23
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Posts/index.php:23
-msgid "Add category"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:68
-msgid "List tags"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:83
-msgid "List pages"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:89
-msgid "List static pages"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:107
-msgid "List photos"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:108
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Photos/upload.php:16
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PhotosAlbums/index.php:23
-msgid "Upload photos"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:111
-msgid "List albums"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:112
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/common/BannersAndPhotos/index.php:27
-msgid "Add album"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:129
-msgid "List banners"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:130
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Banners/upload.php:16
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/BannersPositions/index.php:24
-msgid "Upload banners"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:134
-msgid "List positions"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:135
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/common/BannersAndPhotos/index.php:24
-msgid "Add position"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:138
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:20
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/BannersPositions/index.php:36
-msgid "Banners"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:153
-msgid "List users"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:154
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/add.php:15
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/UsersGroups/index.php:23
-msgid "Add user"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:158
-msgid "List groups"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:159
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/index.php:23
-msgid "Add group"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:177
-msgid "List backups"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:178
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/add.php:16
-msgid "Add backup"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:180
-msgid "Backups"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:195
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:16
-msgid "Temporary files"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:196
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/browser.php:16
-msgid "Media browser"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:197
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/changelogs.php:16
-msgid "Changelogs"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:200
-msgid "Log management"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/Helper/MenuHelper.php:203
-msgid "System"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/View/AdminView.php:51
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/priority-badge.php:18
-msgid "Very low"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/View/AdminView.php:52
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/priority-badge.php:21
-msgid "Low"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/View/AdminView.php:53
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/priority-badge.php:30
-msgid "Normal"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/View/AdminView.php:54
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/priority-badge.php:24
-msgid "High"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/src/View/View/AdminView.php:55
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/priority-badge.php:27
-msgid "Very high"
-msgstr ""
-
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:15
+#: ./i18n_constants.php:15
 msgid "Add"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:16
+#: ./i18n_constants.php:16
 msgid "all status"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:17
+#: ./i18n_constants.php:17
 msgid "all values"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:18
+#: ./i18n_constants.php:18
 msgid "Allowed chars"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:19
+#: ./i18n_constants.php:19
 msgid "Author"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:21
+#: ./i18n_constants.php:20
+#: ./View/Helper/MenuHelper.php:138
+#: ./Admin/BannersPositions/index.php:36
+msgid "Banners"
+msgstr ""
+
+#: ./i18n_constants.php:21
 msgid "You must first delete or reassign all items that belong to this element"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:22
+#: ./i18n_constants.php:22
 msgid "View items that belong to this element"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:23
+#: ./i18n_constants.php:23
 msgid "View items that belong to this user"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:24
+#: ./i18n_constants.php:24
 msgid "Leave blank to create a parent category"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:25
+#: ./i18n_constants.php:25
 msgid "Category"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:26
+#: ./i18n_constants.php:26
 msgid "Date"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:27
+#: ./i18n_constants.php:27
 msgid "You can delay the publication by entering a future date"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:28
+#: ./i18n_constants.php:28
 msgid "Delete"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:29
+#: ./i18n_constants.php:29
 msgid "Disabled"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:30
+#: ./i18n_constants.php:30
 msgid "Draft"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:31
+#: ./i18n_constants.php:31
 msgid "Description"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:32
+#: ./i18n_constants.php:32
 msgid "Download"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:33
+#: ./i18n_constants.php:33
 msgid "Edit"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:34
+#: ./i18n_constants.php:34
 msgid "Enable comments"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:35
+#: ./i18n_constants.php:35
 msgid "Email"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:36
+#: ./i18n_constants.php:36
 msgid "You have to enter a valid value"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:37
+#: ./i18n_constants.php:37
 msgid "Enter your email"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:38
+#: ./i18n_constants.php:38
 msgid "Filename"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:39
+#: ./i18n_constants.php:39
 msgid "Filter"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:40
+#: ./i18n_constants.php:40
 msgid "First name"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:41
+#: ./i18n_constants.php:41
 msgid "Group"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:42
+#: ./i18n_constants.php:42
 msgid "Disable this option to save as a draft"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:43
+#: ./i18n_constants.php:43
 msgid "Enable comments, according to the general settings"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:44
+#: ./i18n_constants.php:44
 msgid "The slug is a string identifying a resource. If you do nothave special needs, let it be generated automatically"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:46
+#: ./i18n_constants.php:46
 msgid "ID"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:47
+#: ./i18n_constants.php:47
 msgid "Label"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:48
+#: ./i18n_constants.php:48
 msgid "Last login"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:49
+#: ./i18n_constants.php:49
 msgid "Last name"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:50
+#: ./i18n_constants.php:50
 msgid "lowercase letters, numbers, dash"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:51
+#: ./i18n_constants.php:51
 msgid "lowercase letters, numbers, space"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:52
+#: ./i18n_constants.php:52
 msgid "Name"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:53
+#: ./i18n_constants.php:53
 msgid "no"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:54
+#: ./i18n_constants.php:54
 msgid "Record not found"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:55
+#: ./i18n_constants.php:55
 msgid "Not published"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:56
+#: ./i18n_constants.php:56
 msgid "Only the admin founder can do this"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:57
+#: ./i18n_constants.php:57
 msgid "Only not published"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:58
+#: ./i18n_constants.php:58
 msgid "Only published"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:59
+#: ./i18n_constants.php:59
 msgid "Open"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:60
+#: ./i18n_constants.php:60
 msgid "The operation has not been performed correctly"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:61
+#: ./i18n_constants.php:61
 msgid "The operation has been performed correctly"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:62
+#: ./i18n_constants.php:62
 msgid "Pages"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:63
+#: ./i18n_constants.php:63
 msgid "Parent category"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:64
+#: ./i18n_constants.php:64
 msgid "Password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:65
+#: ./i18n_constants.php:65
 msgid "Photos"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:66
+#: ./i18n_constants.php:66
 msgid "Position"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:67
+#: ./i18n_constants.php:67
 msgid "Posts"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:68
+#: ./i18n_constants.php:68
 msgid "Posts categories"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:69
+#: ./i18n_constants.php:69
 msgid "Preview"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:70
+#: ./i18n_constants.php:70
 msgid "Priority"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:71
+#: ./i18n_constants.php:71
 msgid "Published"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:72
+#: ./i18n_constants.php:72
 msgid "Repeat email"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:73
+#: ./i18n_constants.php:73
 msgid "Repeat password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:74
+#: ./i18n_constants.php:74
 msgid "Scheduled"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:75
+#: ./i18n_constants.php:75
 msgid "Select"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:76
+#: ./i18n_constants.php:76
 msgid "You have to select a valid option"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:77
+#: ./i18n_constants.php:77
 msgid "Show/hide password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:78
+#: ./i18n_constants.php:78
 msgid "Slug"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:79
+#: ./i18n_constants.php:79
 msgid "Status"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:80
+#: ./i18n_constants.php:80
 msgid "Subtitle"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:81
+#: ./i18n_constants.php:81
 msgid "Tags"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:82
+#: ./i18n_constants.php:82
 msgid "Text"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:83
+#: ./i18n_constants.php:83
 msgid "Are you sure you want to delete this?"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:84
+#: ./i18n_constants.php:84
 msgid "Title"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:85
+#: ./i18n_constants.php:85
 msgid "Upload"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:86
+#: ./i18n_constants.php:86
 msgid "If blank, the current date and time will be used"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:87
+#: ./i18n_constants.php:87
 msgid "Username"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:88
+#: ./i18n_constants.php:88
 msgid "Users"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:89
+#: ./i18n_constants.php:89
 msgid "This value is already used"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/config/i18n_constants.php:90
+#: ./i18n_constants.php:90
 msgid "yes"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/add.php:33
+#: ./Command/AddUserCommand.php:36
+msgid "Adds an user"
+msgstr ""
+
+#: ./Command/AddUserCommand.php:37
+#: ./Command/AddUserCommand.php:79
+msgid "Group ID"
+msgstr ""
+
+#: ./Command/AddUserCommand.php:52
+msgid "Before you can manage users, you have to create at least a user group"
+msgstr ""
+
+#: ./Command/AddUserCommand.php:85
+msgid "Field `{0}` is empty. Try again"
+msgstr ""
+
+#: ./Command/AddUserCommand.php:91
+msgid "Invalid group ID"
+msgstr ""
+
+#: ./Command/AddUserCommand.php:98
+msgid "The user could not be saved"
+msgstr ""
+
+#: ./Command/AddUserCommand.php:104
+msgid "Field `{0}`: {1}"
+msgstr ""
+
+#: ./Command/AddUserCommand.php:113
+msgid "The user was created with ID {0}"
+msgstr ""
+
+#: ./Command/GroupsCommand.php:37
+msgid "Lists user groups"
+msgstr ""
+
+#: ./Command/GroupsCommand.php:52
+msgid "There are no user groups"
+msgstr ""
+
+#: ./Command/Install/CopyConfigCommand.php:47
+msgid "Copies the configuration files"
+msgstr ""
+
+#: ./Command/Install/CreateAdminCommand.php:37
+msgid "Creates an admin user"
+msgstr ""
+
+#: ./Command/Install/CreateGroupsCommand.php:48
+msgid "Creates the user groups"
+msgstr ""
+
+#: ./Command/Install/CreateGroupsCommand.php:60
+msgid "Some user groups already exist"
+msgstr ""
+
+#: ./Command/Install/CreateGroupsCommand.php:78
+msgid "The user groups have been created"
+msgstr ""
+
+#: ./Command/Install/FixElFinderCommand.php:40
+msgid "Fixes {0}"
+msgstr ""
+
+#: ./Command/Install/RunAllCommand.php:51
+msgid "Updates to the database or files needed for versioning?"
+msgstr ""
+
+#: ./Command/Install/RunAllCommand.php:56
+msgid "Create the user groups?"
+msgstr ""
+
+#: ./Command/Install/RunAllCommand.php:61
+msgid "Create an admin user?"
+msgstr ""
+
+#: ./Command/UsersCommand.php:37
+msgid "Lists users"
+msgstr ""
+
+#: ./Command/UsersCommand.php:49
+#: ./Admin/Users/add.php:31
+#: ./Admin/Users/view.php:66
+msgid "Active"
+msgstr ""
+
+#: ./Command/UsersCommand.php:49
+#: ./Admin/Users/index.php:98
+#: ./Admin/Users/view.php:72
+msgid "Pending"
+msgstr ""
+
+#: ./Command/UsersCommand.php:51
+#: ./Admin/Users/index.php:95
+#: ./Admin/Users/view.php:69
+msgid "Banned"
+msgstr ""
+
+#: ./Command/UsersCommand.php:86
+msgid "There are no users"
+msgstr ""
+
+#: ./Command/VersionUpdatesCommand.php:39
+msgid "Performs some updates to the database or files needed for versioning"
+msgstr ""
+
+#: ./Controller/Admin/BannersController.php:50
+msgid "You must first create a banner position"
+msgstr ""
+
+#: ./Controller/Admin/BannersController.php:124
+#: ./Controller/Admin/PhotosController.php:124
+msgid "Missing ID"
+msgstr ""
+
+#: ./Controller/Admin/PagesCategoriesController.php:108
+msgid "Add pages category"
+msgstr ""
+
+#: ./Controller/Admin/PagesCategoriesController.php:134
+msgid "Edit pages category"
+msgstr ""
+
+#: ./Controller/Admin/PagesController.php:58
+#: ./Controller/Admin/PostsController.php:67
+msgid "You must first create a category"
+msgstr ""
+
+#: ./Controller/Admin/PagesController.php:135
+#: ./View/Helper/MenuHelper.php:86
+#: ./Admin/PagesCategories/index.php:24
+msgid "Add page"
+msgstr ""
+
+#: ./Controller/Admin/PagesController.php:167
+#: ./Pages/view.php:29
+msgid "Edit page"
+msgstr ""
+
+#: ./Controller/Admin/PhotosController.php:50
+msgid "You must first create an album"
+msgstr ""
+
+#: ./Controller/Admin/PostsCategoriesController.php:108
+msgid "Add posts category"
+msgstr ""
+
+#: ./Controller/Admin/PostsCategoriesController.php:134
+msgid "Edit posts category"
+msgstr ""
+
+#: ./Controller/Admin/PostsController.php:60
+msgid "You must first create an user"
+msgstr ""
+
+#: ./Controller/Admin/PostsController.php:147
+#: ./View/Helper/MenuHelper.php:60
+#: ./Admin/PostsCategories/index.php:23
+msgid "Add post"
+msgstr ""
+
+#: ./Controller/Admin/PostsController.php:181
+#: ./Posts/view.php:32
+msgid "Edit post"
+msgstr ""
+
+#: ./Controller/Admin/SystemsController.php:70
+msgid "{0} not available"
+msgstr ""
+
+#: ./Controller/Admin/UsersController.php:52
+msgid "You must first create an user group"
+msgstr ""
+
+#: ./Controller/Admin/UsersController.php:197
+msgid "You cannot delete the admin founder"
+msgstr ""
+
+#: ./Controller/Admin/UsersGroupsController.php:117
+msgid "You cannot delete this users group"
+msgstr ""
+
+#: ./Controller/Component/AuthComponent.php:59
+msgid "You are not authorized for this action"
+msgstr ""
+
+#: ./Controller/Component/LoginRecorderComponent.php:66
+msgid "You have to set a valid user id"
+msgstr ""
+
+#: ./Controller/PostsController.php:199
+#: ./Controller/PostsController.php:201
+#: ./View/View/AppView.php:46
+msgid "Latest posts"
+msgstr ""
+
+#: ./Controller/PostsController.php:223
+msgid "You have to search at least a word of {0} characters"
+msgstr ""
+
+#: ./Controller/PostsController.php:230
+msgid "You have to wait {0} seconds to perform a new search"
+msgstr ""
+
+#: ./Controller/SystemsController.php:64
+#: ./Controller/UsersController.php:170
+#: ./Controller/UsersController.php:280
+#: ./Controller/UsersController.php:362
+msgid "You must fill in the {0} control correctly"
+msgstr ""
+
+#: ./Controller/UsersController.php:134
+#: ./Controller/UsersController.php:318
+msgid "Invalid token"
+msgstr ""
+
+#: ./Controller/UsersController.php:175
+msgid "No valid account was found"
+msgstr ""
+
+#: ./Controller/UsersController.php:178
+#: ./Controller/UsersController.php:376
+msgid "We send you an email to activate your account"
+msgstr ""
+
+#: ./Controller/UsersController.php:219
+msgid "Your account has been banned by an admin"
+msgstr ""
+
+#: ./Controller/UsersController.php:221
+msgid "Your account has not been activated yet"
+msgstr ""
+
+#: ./Controller/UsersController.php:244
+msgid "Invalid username or password"
+msgstr ""
+
+#: ./Controller/UsersController.php:257
+msgid "You are successfully logged out"
+msgstr ""
+
+#: ./Controller/UsersController.php:282
+msgid "No account found"
+msgstr ""
+
+#: ./Controller/UsersController.php:291
+msgid "We have sent you an email to reset your password"
+msgstr ""
+
+#: ./Controller/UsersController.php:327
+msgid "The password has been edited"
+msgstr ""
+
+#: ./Controller/UsersController.php:332
+msgid "The password has not been edited"
+msgstr ""
+
+#: ./Controller/UsersController.php:364
+msgid "The account has not been created"
+msgstr ""
+
+#: ./Controller/UsersController.php:370
+msgid "Account created, but it needs to be activated by an admin"
+msgstr ""
+
+#: ./Controller/UsersController.php:380
+msgid "Account created. Now you can login"
+msgstr ""
+
+#: ./Form/BackupForm.php:47
+#: ./Validation/BannerAndPhotoValidator.php:42
+#: ./Admin/Backups/add.php:23
+msgid "Valid extensions: {0}"
+msgstr ""
+
+#: ./Form/ContactUsForm.php:51
+msgid "This email address has been reported as a spammer"
+msgstr ""
+
+#: ./Form/ContactUsForm.php:61
+#: ./Model/Validation/TagValidator.php:34
+#: ./Model/Validation/UserValidator.php:43
+#: ./Model/Validation/UsersGroupValidator.php:34
+#: ./Model/Validation/UsersGroupValidator.php:45
+#: ./Validation/AppValidator.php:58
+#: ./Validation/AppValidator.php:75
+#: ./Validation/AppValidator.php:92
+#: ./Validation/AppValidator.php:108
+#: ./Validation/AppValidator.php:117
+msgid "Must be between {0} and {1} chars"
+msgstr ""
+
+#: ./Mailer/ContactUsMailer.php:44
+#: ./email/html/Systems/contact_us.php:15
+msgid "Email from {0}"
+msgstr ""
+
+#: ./Mailer/UserMailer.php:43
+msgid "Activate your account"
+msgstr ""
+
+#: ./Mailer/UserMailer.php:62
+msgid "Your password has been changed"
+msgstr ""
+
+#: ./Mailer/UserMailer.php:81
+msgid "Reset your password"
+msgstr ""
+
+#: ./Model/Validation/BannerValidator.php:41
+#: ./Validation/AppValidator.php:50
+#: ./Validation/AppValidator.php:100
+#: ./Validation/AppValidator.php:140
+msgid "Must be at most {0} chars"
+msgstr ""
+
+#: ./Model/Validation/BannerValidator.php:45
+msgid "Must be a valid url"
+msgstr ""
+
+#: ./Model/Validation/PostValidator.php:63
+msgid "Tag \"{0}\": {1}"
+msgstr ""
+
+#: ./Model/Validation/UserValidator.php:51
+msgid "This value contains a reserved word"
+msgstr ""
+
+#: ./Model/Validation/UserValidator.php:60
+msgid "Email addresses don't match"
+msgstr ""
+
+#: ./Model/Validation/UserValidator.php:68
+msgid "Must be at least {0} chars"
+msgstr ""
+
+#: ./Model/Validation/UserValidator.php:72
+msgid "The password should contain letters, numbers and symbols"
+msgstr ""
+
+#: ./Model/Validation/UserValidator.php:82
+msgid "Passwords don't match"
+msgstr ""
+
+#: ./Model/Validation/UserValidator.php:89
+msgid "The old password is wrong"
+msgstr ""
+
+#: ./Model/Validation/UsersGroupValidator.php:38
+msgid "lowercase letters"
+msgstr ""
+
+#: ./Validation/AppValidator.php:65
+#: ./Validation/AppValidator.php:82
+msgid "letters, apostrophe, space"
+msgstr ""
+
+#: ./Validation/AppValidator.php:66
+#: ./Validation/AppValidator.php:83
+msgid "Has to begin with a capital letter"
+msgstr ""
+
+#: ./Validation/AppValidator.php:127
+msgid "This field can not be empty"
+msgstr ""
+
+#: ./View/Cell/PostsTagsWidgetsCell.php:49
+msgid "Invalid values"
+msgstr ""
+
+#: ./View/Helper/MenuBuilderHelper.php:86
+msgid "Method `{0}::{1}()` returned only {2} values"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:59
+msgid "List posts"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:64
+#: ./View/Helper/MenuHelper.php:93
+msgid "List categories"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:65
+#: ./View/Helper/MenuHelper.php:94
+#: ./Admin/Pages/index.php:23
+#: ./Admin/Posts/index.php:23
+msgid "Add category"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:68
+msgid "List tags"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:83
+msgid "List pages"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:89
+msgid "List static pages"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:107
+msgid "List photos"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:108
+#: ./Admin/Photos/upload.php:16
+#: ./Admin/PhotosAlbums/index.php:23
+msgid "Upload photos"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:111
+msgid "List albums"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:112
+#: ./Admin/common/BannersAndPhotos/index.php:27
+msgid "Add album"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:129
+msgid "List banners"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:130
+#: ./Admin/Banners/upload.php:16
+#: ./Admin/BannersPositions/index.php:24
+msgid "Upload banners"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:134
+msgid "List positions"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:135
+#: ./Admin/common/BannersAndPhotos/index.php:24
+msgid "Add position"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:153
+msgid "List users"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:154
+#: ./Admin/Users/add.php:16
+#: ./Admin/UsersGroups/index.php:23
+msgid "Add user"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:158
+msgid "List groups"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:159
+#: ./Admin/Users/index.php:23
+msgid "Add group"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:177
+msgid "List backups"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:178
+#: ./Admin/Backups/add.php:16
+msgid "Add backup"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:180
+msgid "Backups"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:195
+#: ./Admin/Systems/tmp_viewer.php:16
+msgid "Temporary files"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:196
+#: ./Admin/Systems/browser.php:16
+msgid "Media browser"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:197
+#: ./Admin/Systems/changelogs.php:16
+msgid "Changelogs"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:200
+msgid "Log management"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:203
+msgid "System"
+msgstr ""
+
+#: ./View/View/AdminView.php:52
+#: ./element/admin/priority-badge.php:18
+msgid "Very low"
+msgstr ""
+
+#: ./View/View/AdminView.php:53
+#: ./element/admin/priority-badge.php:21
+msgid "Low"
+msgstr ""
+
+#: ./View/View/AdminView.php:54
+#: ./element/admin/priority-badge.php:30
+msgid "Normal"
+msgstr ""
+
+#: ./View/View/AdminView.php:55
+#: ./element/admin/priority-badge.php:24
+msgid "High"
+msgstr ""
+
+#: ./View/View/AdminView.php:56
+#: ./element/admin/priority-badge.php:27
+msgid "Very high"
+msgstr ""
+
+#: ./Admin/Backups/add.php:33
 msgid "Pattern"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/add.php:40
+#: ./Admin/Backups/add.php:40
 msgid "Database name"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/add.php:45
+#: ./Admin/Backups/add.php:45
 msgid "Datetime. This is the equivalent of {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/add.php:50
+#: ./Admin/Backups/add.php:50
 msgid "Database hostname"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/add.php:55
+#: ./Admin/Backups/add.php:55
 msgid "Timestamp. This is the equivalent of {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/index.php:16
+#: ./Admin/Backups/index.php:16
 msgid "Database backups"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/index.php:24
+#: ./Admin/Backups/index.php:24
 msgid "Delete all"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/index.php:34
+#: ./Admin/Backups/index.php:34
 msgid "Extension"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/index.php:35
+#: ./Admin/Backups/index.php:35
 msgid "Compression"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/index.php:36
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/index.php:29
+#: ./Admin/Backups/index.php:36
+#: ./Admin/Logs/index.php:29
 msgid "Size"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/index.php:54
+#: ./Admin/Backups/index.php:54
 msgid "Restore"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/index.php:56
+#: ./Admin/Backups/index.php:56
 msgid "This will overwrite the current database and some data may be lost. Are you sure?"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/index.php:59
-#: /home/mirko/Libs/Plugins/me-cms/templates/Systems/contact_us.php:43
+#: ./Admin/Backups/index.php:59
+#: ./Systems/contact_us.php:44
 msgid "Send"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Backups/index.php:61
+#: ./Admin/Backups/index.php:61
 msgid "The backup file will be sent by mail. Are you sure?"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Banners/edit.php:16
+#: ./Admin/Banners/edit.php:16
 msgid "Edit banner"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Banners/edit.php:31
+#: ./Admin/Banners/edit.php:31
 msgid "The banner is displayed as a  thumbnail. You should disable this, if the banner is an animated gif"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Banners/edit.php:33
+#: ./Admin/Banners/edit.php:33
 msgid "Thumbnail"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Banners/edit.php:55
+#: ./Admin/Banners/edit.php:55
 msgid "The address should begin with {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Banners/edit.php:56
+#: ./Admin/Banners/edit.php:56
 msgid "Web address"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Banners/index.php:24
+#: ./Admin/Banners/index.php:24
 msgid "Url"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Banners/index.php:26
+#: ./Admin/Banners/index.php:26
 msgid "Click"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Banners/index.php:51
+#: ./Admin/Banners/index.php:51
 msgid "No thumbnail"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Banners/upload.php:23
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Banners/upload.php:26
+#: ./Admin/Banners/upload.php:23
+#: ./Admin/Banners/upload.php:26
 msgid "Position where to upload banners"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/BannersPositions/add.php:16
+#: ./Admin/BannersPositions/add.php:16
 msgid "Add banners position"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/BannersPositions/edit.php:16
+#: ./Admin/BannersPositions/edit.php:16
 msgid "Edit banners position"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/BannersPositions/index.php:16
+#: ./Admin/BannersPositions/index.php:16
 msgid "Banners positions"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/index.php:16
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:70
+#: ./Admin/Logs/index.php:16
+#: ./Admin/Systems/tmp_viewer.php:70
 msgid "Logs"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/index.php:19
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:75
+#: ./Admin/Logs/index.php:19
+#: ./Admin/Systems/tmp_viewer.php:75
 msgid "Clear all logs"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/index.php:41
+#: ./Admin/Logs/index.php:41
 msgid "Basic view"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/index.php:46
+#: ./Admin/Logs/index.php:46
 msgid "Advanced view"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/view.php:16
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/view_as_serialized.php:16
+#: ./Admin/Logs/view.php:16
+#: ./Admin/Logs/view_as_serialized.php:16
 msgid "Log {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/view_as_serialized.php:51
+#: ./Admin/Logs/view_as_serialized.php:51
 msgid "Request URL"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/view_as_serialized.php:62
+#: ./Admin/Logs/view_as_serialized.php:62
 msgid "Referer URL"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/view_as_serialized.php:71
+#: ./Admin/Logs/view_as_serialized.php:71
 msgid "Client IP"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/view_as_serialized.php:74
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/last-logins.php:42
+#: ./Admin/Logs/view_as_serialized.php:74
+#: ./element/admin/last-logins.php:42
 msgid "Who is"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/view_as_serialized.php:79
+#: ./Admin/Logs/view_as_serialized.php:79
 msgid "Map"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/view_as_serialized.php:93
+#: ./Admin/Logs/view_as_serialized.php:93
 msgid "Exception attributes"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/view_as_serialized.php:106
+#: ./Admin/Logs/view_as_serialized.php:106
 msgid "Trace"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Logs/view_as_serialized.php:118
+#: ./Admin/Logs/view_as_serialized.php:118
 msgid "Full log"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Pages/index.php:60
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Posts/index.php:64
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/index.php:60
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/common/BannersAndPhotos/index.php:67
+#: ./Admin/Pages/index.php:60
+#: ./Admin/Posts/index.php:64
+#: ./Admin/Users/index.php:60
+#: ./Admin/common/BannersAndPhotos/index.php:67
 msgid "month"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Pages/index_statics.php:16
+#: ./Admin/Pages/index_statics.php:16
 msgid "Static pages"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Pages/index_statics.php:24
+#: ./Admin/Pages/index_statics.php:24
 msgid "Path"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PagesCategories/index.php:16
-#: /home/mirko/Libs/Plugins/me-cms/templates/PagesCategories/index.php:19
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PagesWidgets/categories_as_form.php:23
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PagesWidgets/categories_as_list.php:23
+#: ./Admin/PagesCategories/index.php:16
+#: ./PagesCategories/index.php:19
+#: ./cell/PagesWidgets/categories_as_form.php:23
+#: ./cell/PagesWidgets/categories_as_list.php:23
 msgid "Pages categories"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PagesCategories/index.php:35
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PostsCategories/index.php:34
+#: ./Admin/PagesCategories/index.php:35
+#: ./Admin/PostsCategories/index.php:34
 msgid "Parent"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Photos/edit.php:16
-#: /home/mirko/Libs/Plugins/me-cms/templates/Photos/view.php:25
+#: ./Admin/Photos/edit.php:16
+#: ./Photos/view.php:25
 msgid "Edit photo"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Photos/edit.php:24
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Photos/index.php:23
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Photos/index_as_grid.php:30
+#: ./Admin/Photos/edit.php:24
+#: ./Admin/Photos/index.php:23
+#: ./Admin/Photos/index_as_grid.php:30
 msgid "Album"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Photos/upload.php:23
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Photos/upload.php:26
+#: ./Admin/Photos/upload.php:23
+#: ./Admin/Photos/upload.php:26
 msgid "Album to upload photos"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PhotosAlbums/add.php:16
+#: ./Admin/PhotosAlbums/add.php:16
 msgid "Add photos album"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PhotosAlbums/edit.php:16
+#: ./Admin/PhotosAlbums/edit.php:16
 msgid "Edit photos album"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PhotosAlbums/index.php:16
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PhotosWidgets/albums_as_form.php:23
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PhotosWidgets/albums_as_list.php:23
+#: ./Admin/PhotosAlbums/index.php:16
+#: ./cell/PhotosWidgets/albums_as_form.php:23
+#: ./cell/PhotosWidgets/albums_as_list.php:23
 msgid "Albums"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Posts/form.php:79
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Posts/form.php:97
+#: ./Admin/Posts/form.php:79
+#: ./Admin/Posts/form.php:97
 msgid "Tags must be at least 3 chars and separated by a comma or a comma and a space. Only lowercase letters, numbers, hyphen, space"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Posts/index.php:69
+#: ./Admin/Posts/index.php:69
 msgid "tag"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PostsTags/edit.php:16
-#: /home/mirko/Libs/Plugins/me-cms/templates/PostsTags/view.php:22
+#: ./Admin/PostsTags/edit.php:16
+#: ./PostsTags/view.php:22
 msgid "Edit tag"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PostsTags/edit.php:21
+#: ./Admin/PostsTags/edit.php:21
 msgid "Tag"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/PostsTags/index.php:58
+#: ./Admin/PostsTags/index.php:58
 msgid "{0} post"
 msgid_plural "{0} posts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/changelogs.php:23
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/changelogs.php:26
+#: ./Admin/Systems/changelogs.php:23
+#: ./Admin/Systems/changelogs.php:26
 msgid "Changelog"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:20
+#: ./Admin/Systems/tmp_viewer.php:20
 msgid "All temporary files"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:21
+#: ./Admin/Systems/tmp_viewer.php:21
 msgid "All temporary files size: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:24
+#: ./Admin/Systems/tmp_viewer.php:24
 msgid "This command clear all temporary files: cache, assets, logs and thumbnails"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:27
+#: ./Admin/Systems/tmp_viewer.php:27
 msgid "Clear all temporary files"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:37
+#: ./Admin/Systems/tmp_viewer.php:37
 msgid "Cache"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:40
+#: ./Admin/Systems/tmp_viewer.php:40
 msgid "Cache is disabled or debugging is active"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:43
+#: ./Admin/Systems/tmp_viewer.php:43
 msgid "Cache size: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:45
+#: ./Admin/Systems/tmp_viewer.php:45
 msgid "Note: you should not need to clear the cache, unless you have not edited the configuration or after an upgrade"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:50
+#: ./Admin/Systems/tmp_viewer.php:50
 msgid "Clear cache"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:57
+#: ./Admin/Systems/tmp_viewer.php:57
 msgid "Assets"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:58
+#: ./Admin/Systems/tmp_viewer.php:58
 msgid "Assets size: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:62
+#: ./Admin/Systems/tmp_viewer.php:62
 msgid "Clear all assets"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:71
+#: ./Admin/Systems/tmp_viewer.php:71
 msgid "Logs size: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:83
+#: ./Admin/Systems/tmp_viewer.php:83
 msgid "Sitemap"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:84
+#: ./Admin/Systems/tmp_viewer.php:84
 msgid "Sitemap size: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:87
+#: ./Admin/Systems/tmp_viewer.php:87
 msgid "Note: you should not need to clear the sitemap, unless you have recently changed many records"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:90
+#: ./Admin/Systems/tmp_viewer.php:90
 msgid "Clear sitemap"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:98
+#: ./Admin/Systems/tmp_viewer.php:98
 msgid "Thumbnails"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:99
+#: ./Admin/Systems/tmp_viewer.php:99
 msgid "Thumbnails size: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:103
+#: ./Admin/Systems/tmp_viewer.php:103
 msgid "Note: you should not need to clear the thumbnails and that this will slow down the images loading the first time that are displayed. You should clear thumbnails only when they have reached a large size or when many images are no longer used"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Systems/tmp_viewer.php:109
+#: ./Admin/Systems/tmp_viewer.php:109
 msgid "Clear all thumbnails"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/add.php:25
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/edit.php:22
+#: ./Admin/Users/add.php:26
+#: ./Admin/Users/edit.php:23
 msgid "User group"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/add.php:29
+#: ./Admin/Users/add.php:30
 msgid "If is not active, the user won't be able to login"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/change_password.php:15
+#: ./Admin/Users/change_password.php:16
 msgid "Change your password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/change_password.php:28
+#: ./Admin/Users/change_password.php:29
 msgid "Enter your old password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/change_password.php:29
+#: ./Admin/Users/change_password.php:30
 msgid "Old password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/change_password.php:40
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/password_reset.php:28
+#: ./Admin/Users/change_password.php:41
+#: ./Users/password_reset.php:29
 msgid "Enter your new password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/change_password.php:51
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/password_reset.php:38
+#: ./Admin/Users/change_password.php:52
+#: ./Users/password_reset.php:39
 msgid "Repeat your new password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/change_picture.php:16
+#: ./Admin/Users/change_picture.php:16
 msgid "Change your picture"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/edit.php:15
+#: ./Admin/Users/edit.php:16
 msgid "Edit user"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/edit.php:42
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/edit.php:55
+#: ./Admin/Users/edit.php:43
+#: ./Admin/Users/edit.php:56
 msgid "If you want to change the password just type a new one. Otherwise, leave the field empty"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/index.php:41
+#: ./Admin/Users/index.php:41
 msgid "username"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/index.php:48
+#: ./Admin/Users/index.php:48
 msgid "Only active"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/index.php:49
+#: ./Admin/Users/index.php:49
 msgid "Only pending"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/index.php:50
+#: ./Admin/Users/index.php:50
 msgid "Only banned"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/index.php:102
+#: ./Admin/Users/index.php:102
 msgid "View"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/index.php:110
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/view.php:28
+#: ./Admin/Users/index.php:110
+#: ./Admin/Users/view.php:28
 msgid "Activate"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/index.php:112
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/view.php:33
+#: ./Admin/Users/index.php:112
+#: ./Admin/Users/view.php:33
 msgid "Are you sure you want to activate this account?"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/Users/view.php:90
+#: ./Admin/Users/view.php:90
 msgid "Created"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/UsersGroups/add.php:16
+#: ./Admin/UsersGroups/add.php:16
 msgid "Add users group"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/UsersGroups/edit.php:16
+#: ./Admin/UsersGroups/edit.php:16
 msgid "Edit users group"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Admin/UsersGroups/index.php:16
+#: ./Admin/UsersGroups/index.php:16
 msgid "Users groups"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Pages/view.php:34
+#: ./Pages/view.php:34
 msgid "Delete page"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/PagesCategories/view.php:25
-#: /home/mirko/Libs/Plugins/me-cms/templates/PostsCategories/view.php:22
+#: ./PagesCategories/view.php:25
+#: ./PostsCategories/view.php:22
 msgid "Edit category"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/PagesCategories/view.php:30
-#: /home/mirko/Libs/Plugins/me-cms/templates/PostsCategories/view.php:27
+#: ./PagesCategories/view.php:30
+#: ./PostsCategories/view.php:27
 msgid "Delete category"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Photos/view.php:30
+#: ./Photos/view.php:30
 msgid "Delete photo"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/PhotosAlbums/index.php:30
+#: ./PhotosAlbums/index.php:30
 msgid "{0} photos"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/PhotosAlbums/view.php:29
+#: ./PhotosAlbums/view.php:29
 msgid "Edit album"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/PhotosAlbums/view.php:34
+#: ./PhotosAlbums/view.php:34
 msgid "Delete album"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Posts/index_by_date.php:18
+#: ./Posts/index_by_date.php:18
 msgid "Posts of today"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Posts/index_by_date.php:20
+#: ./Posts/index_by_date.php:20
 msgid "Posts of yesterday"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Posts/index_by_date.php:24
+#: ./Posts/index_by_date.php:24
 msgctxt "posts of year"
 msgid "Posts of {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Posts/index_by_date.php:26
+#: ./Posts/index_by_date.php:26
 msgctxt "posts of day"
 msgid "Posts of {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Posts/index_by_date.php:28
+#: ./Posts/index_by_date.php:28
 msgctxt "posts of month"
 msgid "Posts of {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Posts/search.php:16
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PostsWidgets/search.php:21
+#: ./Posts/search.php:16
+#: ./cell/PostsWidgets/search.php:21
 msgid "Search posts"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Posts/search.php:25
-#: /home/mirko/Libs/Plugins/me-cms/templates/Posts/search.php:28
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PostsWidgets/search.php:31
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/footer.php:19
+#: ./Posts/search.php:25
+#: ./Posts/search.php:28
+#: ./cell/PostsWidgets/search.php:31
+#: ./element/footer.php:19
 msgid "Search"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Posts/search.php:35
+#: ./Posts/search.php:35
 msgid "You have searched for: {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Posts/view.php:37
+#: ./Posts/view.php:37
 msgid "Delete post"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Posts/view.php:93
+#: ./Posts/view.php:93
 msgid "Related posts"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/PostsTags/index.php:19
+#: ./PostsTags/index.php:19
 msgid "Posts tags"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/PostsTags/view.php:16
+#: ./PostsTags/view.php:16
 msgid "Tag {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Systems/contact_us.php:15
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/footer.php:25
+#: ./Systems/contact_us.php:16
+#: ./element/footer.php:25
 msgid "Contact us"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Systems/contact_us.php:33
+#: ./Systems/contact_us.php:34
 msgid "Message"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Systems/ip_not_allowed.php:19
+#: ./Systems/ip_not_allowed.php:19
 msgid "Your IP address is not allowed"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Systems/ip_not_allowed.php:22
+#: ./Systems/ip_not_allowed.php:22
 msgid "You can send us an email to {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Systems/offline.php:22
+#: ./Systems/offline.php:22
 msgid "The website is temporarily offline"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/activation_resend.php:16
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/login/menu.php:33
+#: ./Users/activation_resend.php:16
+#: ./element/login/menu.php:33
 msgid "Resend activation email"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/activation_resend.php:29
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/password_forgot.php:29
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/signup.php:32
+#: ./Users/activation_resend.php:29
+#: ./Users/password_forgot.php:29
+#: ./Users/signup.php:33
 msgid "Repeat your email"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/login.php:14
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/login/menu.php:19
+#: ./Users/login.php:15
+#: ./element/login/menu.php:19
 msgid "Login"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/login.php:36
+#: ./Users/login.php:37
 msgid "Don't use on public computers"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/login.php:37
+#: ./Users/login.php:38
 msgid "Remember me"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/password_forgot.php:16
+#: ./Users/password_forgot.php:16
 msgid "Request new password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/password_reset.php:15
+#: ./Users/password_reset.php:16
 msgid "Reset password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/signup.php:15
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/login/menu.php:26
+#: ./Users/signup.php:16
+#: ./element/login/menu.php:26
 msgid "Sign up"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/signup.php:42
+#: ./Users/signup.php:43
 msgid "Enter your password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/Users/signup.php:52
+#: ./Users/signup.php:53
 msgid "Repeat your password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PhotosWidgets/latest.php:20
+#: ./cell/PhotosWidgets/latest.php:20
 msgid "Latest photo"
 msgid_plural "Latest {0} photos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PhotosWidgets/random.php:20
+#: ./cell/PhotosWidgets/random.php:20
 msgid "Random photo"
 msgid_plural "Random {0} photos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PostsTagsWidgets/popular_as_cloud.php:20
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PostsTagsWidgets/popular_as_form.php:23
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PostsTagsWidgets/popular_as_list.php:23
+#: ./cell/PostsTagsWidgets/popular_as_cloud.php:20
+#: ./cell/PostsTagsWidgets/popular_as_form.php:23
+#: ./cell/PostsTagsWidgets/popular_as_list.php:23
 msgid "Popular tags"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PostsWidgets/latest.php:23
+#: ./cell/PostsWidgets/latest.php:23
 msgid "Latest post"
 msgid_plural "Latest {0} posts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PostsWidgets/months_as_form.php:21
-#: /home/mirko/Libs/Plugins/me-cms/templates/cell/PostsWidgets/months_as_list.php:21
+#: ./cell/PostsWidgets/months_as_form.php:21
+#: ./cell/PostsWidgets/months_as_list.php:21
 msgid "Posts by month"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/bbcode.php:18
+#: ./element/admin/bbcode.php:18
 msgid "BBCode"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/bbcode.php:32
+#: ./element/admin/bbcode.php:32
 msgid "Manually indicates where to cut the text and show the \"Read more\" button"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/bbcode.php:33
+#: ./element/admin/bbcode.php:33
 msgid "If this is not present, the system can still cut the text, for example after a certain number of characters"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/bbcode.php:42
+#: ./element/admin/bbcode.php:42
 msgid "Adds an image"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/bbcode.php:50
+#: ./element/admin/bbcode.php:50
 msgid "Adds a link"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/bbcode.php:59
+#: ./element/admin/bbcode.php:59
 msgid "Adds a {0} video. You may indicate the ID or the url of the video"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/last-logins.php:21
+#: ./element/admin/last-logins.php:21
 msgid "Time"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/last-logins.php:22
+#: ./element/admin/last-logins.php:22
 msgid "IP"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/last-logins.php:23
+#: ./element/admin/last-logins.php:23
 msgid "Browser"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/last-logins.php:24
+#: ./element/admin/last-logins.php:24
 msgid "Client"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/last-logins.php:48
+#: ./element/admin/last-logins.php:48
 msgid "{0} {1} on {2}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/list-grid-buttons.php:21
+#: ./element/admin/list-grid-buttons.php:21
 msgid "Show as list"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/list-grid-buttons.php:26
+#: ./element/admin/list-grid-buttons.php:26
 msgid "Show as grid"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/uploader.php:23
+#: ./element/admin/uploader.php:23
 msgid "Drag files here or click"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/admin/userbar.php:20
-#: /home/mirko/Libs/Plugins/me-cms/templates/layout/default.php:64
+#: ./element/admin/userbar.php:20
+#: ./layout/default.php:64
 msgid "Homepage"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/common/userbar.php:23
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/topbar.php:24
+#: ./element/common/userbar.php:24
+#: ./element/topbar.php:24
 msgid "Toggle navigation"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/common/userbar.php:48
+#: ./element/common/userbar.php:49
 msgid "Change picture"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/common/userbar.php:53
+#: ./element/common/userbar.php:54
 msgid "Change password"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/common/userbar.php:57
+#: ./element/common/userbar.php:58
 msgid "Logout"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/cookies_policy.php:29
+#: ./element/cookies_policy.php:29
 msgid "If you continue, you agree to the use of cookies, ok?"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/cookies_policy.php:31
+#: ./element/cookies_policy.php:31
 msgid "Ok"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/cookies_policy.php:36
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/views/page.php:79
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/views/post.php:103
+#: ./element/cookies_policy.php:36
+#: ./element/views/page.php:79
+#: ./element/views/post.php:103
 msgid "Read more"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/footer.php:20
+#: ./element/footer.php:20
 msgid "Cookies policy"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/footer.php:21
+#: ./element/footer.php:21
 msgid "Feed RSS"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/footer.php:31
+#: ./element/footer.php:31
 msgid "Powered by {0}. Copyright {1}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/footer.php:33
+#: ./element/footer.php:33
 msgid "Developed by {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/login/menu.php:40
+#: ./element/login/menu.php:40
 msgid "Forgot your password?"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/topbar.php:30
-#: /home/mirko/Libs/Plugins/me-cms/templates/layout/default.php:76
+#: ./element/topbar.php:30
+#: ./layout/default.php:76
 msgid "Home"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/topbar.php:31
+#: ./element/topbar.php:31
 msgid "Categories"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/userbar.php:23
+#: ./element/userbar.php:23
 msgid "Dashboard"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/views/page.php:42
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/views/post.php:57
+#: ./element/views/page.php:42
+#: ./element/views/post.php:57
 msgid "Posted on {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/views/page.php:50
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/views/post.php:65
+#: ./element/views/page.php:50
+#: ./element/views/post.php:65
 msgid "Updated on {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/views/post.php:26
-#: /home/mirko/Libs/Plugins/me-cms/templates/element/views/post.php:51
+#: ./element/views/post.php:26
+#: ./element/views/post.php:51
 msgid "Posted by {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/activation.php:17
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/change_password.php:17
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/password_forgot.php:17
+#: ./email/html/Users/activation.php:17
+#: ./email/html/Users/change_password.php:17
+#: ./email/html/Users/password_forgot.php:17
 msgid "Hello {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/activation.php:19
+#: ./email/html/Users/activation.php:19
 msgid "you have signed on the site {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/activation.php:21
+#: ./email/html/Users/activation.php:21
 msgid "To activate your account, click {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/activation.php:21
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/password_forgot.php:21
+#: ./email/html/Users/activation.php:21
+#: ./email/html/Users/password_forgot.php:21
 msgid "here"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/activation.php:23
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/change_password.php:21
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/password_forgot.php:23
+#: ./email/html/Users/activation.php:23
+#: ./email/html/Users/change_password.php:21
+#: ./email/html/Users/password_forgot.php:23
 msgid "If you have not made this request, please contact an administrator"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/change_password.php:19
+#: ./email/html/Users/change_password.php:19
 msgid "you have recently changed your password on our site {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/password_forgot.php:19
+#: ./email/html/Users/password_forgot.php:19
 msgid "you have requested to change your password on the site {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/email/html/Users/password_forgot.php:21
+#: ./email/html/Users/password_forgot.php:21
 msgid "To reset your password, click {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/layout/email/html/default.php:30
+#: ./layout/email/html/default.php:30
 msgid "This email was sent automatically from {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/layout/email/html/default.php:38
+#: ./layout/email/html/default.php:38
 msgid "The request has been sent from the IP {0}"
 msgstr ""
 
-#: /home/mirko/Libs/Plugins/me-cms/templates/layout/email/html/default.php:43
+#: ./layout/email/html/default.php:43
 msgid "Please, don't reply to this email"
 msgstr ""
 

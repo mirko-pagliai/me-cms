@@ -9,10 +9,10 @@
 This repository contains only the source code of `me-cms`.
 See [cakephp-for-mecms](https://github.com/mirko-pagliai/cakephp-for-mecms).
 
-## How to generate POT files
-To generate POT files for this plugin, use the following command:
+## How to extract POT files
+To extract POT files for this plugin, use the following command:
 ```bash
-$ bin/cake i18n extract --plugin MeCms --paths vendor/mirko-pagliai/me-cms/src,vendor/mirko-pagliai/me-cms/config,vendor/mirko-pagliai/me-cms/templates --output vendor/mirko-pagliai/me-cms/resources/locales
+$ composer run-script i18n-extract
 ```
 
 ## Versioning

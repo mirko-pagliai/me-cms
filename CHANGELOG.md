@@ -12,10 +12,12 @@
 ### 2.29.4
 * `SitemapBuilder::getMethods()` returns a collection and it's now public;
 * `StaticPage::all()` returns a collection;
+* `AppView::userbar()` always returns the userbar as array;
 * fixed `TestSuite` classes, `MenuBuilderHelper` and some template files, improved
     to use with other plugins;
 * fixed old bug on loading theme plugins;
 * fixed little bug for the `description` field for `Banner` and `Photo` entities;
+* added `cake` binaries and fixed composer script to extract POT files;
 * updated for `php-tools` 1.4.5;
 * removed redundant code in routes;
 * added `phpstan`, so fixed some code and descriptions.
