@@ -3,6 +3,7 @@
 ### 2.29.4
 * `SitemapBuilder::getMethods()` returns a collection and it's now public;
 * `StaticPage::all()` returns a collection;
+* `AppView::userbar()` always returns the userbar as array;
 * fixed `TestSuite` classes, `MenuBuilderHelper` and some template files, improved
     to use with other plugins;
 * fixed old bug on loading theme plugins;
