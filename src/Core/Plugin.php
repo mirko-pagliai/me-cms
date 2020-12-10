@@ -27,8 +27,9 @@ class Plugin extends BasePlugin
      * Gets all loaded plugins.
      *
      * Available options are:
-     *  - `core`, if `false` exclude the core plugins;
-     *  - `exclude`, a plugin as string or an array of plugins to be excluded;
+     *  - `core`, if `false` excludes the core plugins;
+     *  - `exclude`, a plugin or array of plugins to be excluded;
+     *  - `mecms_core`, if `false` excludes plugins automatically requested by MeCms;
      *  - `order`, if `true` the plugins will be sorted.
      * @param array $options Options
      * @return array Plugins
@@ -36,7 +37,12 @@ class Plugin extends BasePlugin
      */
     public static function all(array $options = []): array
     {
-        $options += ['order' => true];
+        $options += ['exclude' => [], 'order' => true, 'mecms_core' => true];
+
+        if (!$options['mecms_core']) {
+            $options['exclude'] = array_merge((array)$options['exclude'], ['MeTools', 'Assets', 'DatabaseBackup', 'Recaptcha', 'RecaptchaMailhide', 'StopSpam', 'Thumber/Cake', 'Tokens']);
+        }
+
         $plugins = parent::all($options);
 
         if ($options['order']) {
