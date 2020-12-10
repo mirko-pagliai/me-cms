@@ -17,7 +17,7 @@ namespace MeCms\Utility;
 
 use Cake\Cache\Cache;
 use Cake\Collection\CollectionInterface;
-use Cake\Core\Configure;
+use Cake\Core\App;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
 use Cake\ORM\Entity;
@@ -37,37 +37,17 @@ class StaticPage
     public const EXTENSION = 'php';
 
     /**
-     * Internal method to get paths from APP or from a plugin.
-     *
-     * This also returns paths that do not exist.
-     * @param string $plugin Plugin name or `App` for APP path
-     * @return array
-     * @since 2.26.6
-     */
-    protected static function _getPaths(string $plugin = 'App'): array
-    {
-        if ($plugin == 'App') {
-            return array_map(function (string $path) {
-                return (new Filesystem())->concatenate($path, 'StaticPages');
-            }, Configure::read('App.paths.templates'));
-        }
-
-        return [Plugin::templatePath($plugin) . 'StaticPages'];
-    }
-
-    /**
      * Gets all the existing paths
      * @return array
      * @uses \MeCms\Core\Plugin::all()
-     * @uses _getPaths()
      */
     public static function getPaths(): array
     {
-        return Cache::remember('paths', function () {
-            $paths = self::_getPaths();
+        return Cache::remember('paths', function (): array {
+            $paths['App'] = array_value_first(App::classPath('templates')) . 'StaticPages';
 
-            foreach (Plugin::all() as $plugin) {
-                $paths = array_merge($paths, self::_getPaths($plugin));
+            foreach (Plugin::all(['mecms_core' => false]) as $plugin) {
+                $paths[$plugin] = Plugin::templatePath($plugin) . 'StaticPages';
             }
 
             return array_clean($paths, 'file_exists');
@@ -77,7 +57,7 @@ class StaticPage
     /**
      * Gets the slug for a page.
      *
-     * It takes the full path and removes the relative path and the extension.
+     * It takes the full path and removes relative path and extension.
      * @param string $path Path
      * @param string $relativePath Relative path
      * @return string
@@ -120,8 +100,7 @@ class StaticPage
     /**
      * Gets a static page
      * @param string $slug Slug
-     * @return string|null Static page or `false`
-     * @uses _getPaths()
+     * @return string|null Static page or `null`
      */
     public static function get(string $slug): ?string
     {
@@ -129,32 +108,25 @@ class StaticPage
         $slug = array_filter(explode('/', $slug));
         $cache = sprintf('page_%s_locale_%s', md5(serialize($slug)), $locale);
 
-        return Cache::remember($cache, function () use ($locale, $slug) {
-            //Sets the (partial) filename
+        return Cache::remember($cache, function () use ($locale, $slug): ?string {
+            //Sets the valid filename patterns
             $filename = implode(DS, $slug);
-
-            //Sets the filename patterns
             $patterns = [$filename . '-' . $locale];
             if (preg_match('/^(\w+)_\w+$/', $locale, $matches)) {
                 $patterns[] = $filename . '-' . $matches[1];
             }
             $patterns[] = $filename;
 
-            //Checks if the page exists first in APP, then in each plugin
-            foreach (array_merge(['App'], Plugin::all()) as $plugin) {
-                foreach (self::_getPaths($plugin) as $path) {
-                    foreach ($patterns as $pattern) {
-                        $file = (new Filesystem())->concatenate($path, $pattern . '.' . self::EXTENSION);
-                        if (is_readable($file)) {
-                            $page = ($plugin != 'App' ? $plugin . '.' : '') . DS . 'StaticPages' . DS . $pattern;
-
-                            break 3;
-                        }
+            foreach (self::getPaths() as $plugin => $path) {
+                foreach ($patterns as $pattern) {
+                    $file = (new Filesystem())->concatenate($path, $pattern . '.' . self::EXTENSION);
+                    if (is_readable($file)) {
+                        return ($plugin != 'App' ? $plugin . '.' : '') . DS . 'StaticPages' . DS . $pattern;
                     }
                 }
             }
 
-            return $page ?? null;
+            return null;
         }, 'static_pages');
     }
 
