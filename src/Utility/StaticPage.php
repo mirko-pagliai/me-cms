@@ -66,7 +66,7 @@ class StaticPage
         return Cache::remember('paths', function () {
             $paths = self::_getPaths();
 
-            foreach (Plugin::all() as $plugin) {
+            foreach (Plugin::all(['mecms_core' => false]) as $plugin) {
                 $paths = array_merge($paths, self::_getPaths($plugin));
             }
 
@@ -141,7 +141,7 @@ class StaticPage
             $patterns[] = $filename;
 
             //Checks if the page exists first in APP, then in each plugin
-            foreach (array_merge(['App'], Plugin::all()) as $plugin) {
+            foreach (array_merge(['App'], Plugin::all(['mecms_core' => false])) as $plugin) {
                 foreach (self::_getPaths($plugin) as $path) {
                     foreach ($patterns as $pattern) {
                         $file = (new Filesystem())->concatenate($path, $pattern . '.' . self::EXTENSION);

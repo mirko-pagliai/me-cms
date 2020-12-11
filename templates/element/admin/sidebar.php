@@ -21,7 +21,7 @@ use MeTools\Core\Plugin;
     //Renders menus for MeCms and for each plugin
     echo $this->MenuBuilder->renderAsCollapse('MeCms', 'sidebar-accordion');
 
-    foreach (Plugin::all(['exclude' => ['MeCms', 'MeTools', 'Assets', 'DatabaseBackup', 'Thumber']]) as $plugin) {
+    foreach (Plugin::all(['exclude' => 'MeCms', 'mecms_core' => false]) as $plugin) {
         $menus = $this->MenuBuilder->renderAsCollapse($plugin, 'sidebar-accordion');
         if ($menus) {
             echo $this->Html->h6($plugin);
