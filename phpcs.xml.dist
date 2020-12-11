@@ -18,5 +18,6 @@
         <severity>0</severity>
     </rule>
 
+    <exclude-pattern>/bin</exclude-pattern>
     <exclude-pattern>/config/Migrations</exclude-pattern>
 </ruleset>
