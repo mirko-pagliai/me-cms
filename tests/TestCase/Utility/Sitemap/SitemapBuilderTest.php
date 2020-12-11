@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Utility\Sitemap;
 
-use Cake\Cache\Cache;
 use Cake\Utility\Hash;
 use Cake\Utility\Xml;
 use MeCms\TestSuite\TestCase;
@@ -61,17 +60,6 @@ class SitemapBuilderTest extends TestCase
         parent::setUp();
 
         $this->SitemapBuilder = $this->SitemapBuilder ?: new SitemapBuilder();
-    }
-
-    /**
-     * Called after every test method
-     * @return void
-     */
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        Cache::clearAll();
     }
 
     /**

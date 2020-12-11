@@ -54,7 +54,7 @@ class SitemapBuilder
         //Adds the homepage
         $url[] = ['loc' => Router::url('/', true), 'priority' => '0.5'];
 
-        foreach (Plugin::all() as $plugin) {
+        foreach (Plugin::all(['mecms_core' => false]) as $plugin) {
             //Calls all executable methods for the `Sitemap` class of a plugin
             foreach (self::getMethods($plugin) as $method) {
                 $url = array_merge($url, (array)call_user_func([$method['class'], $method['name']]));
