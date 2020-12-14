@@ -21,7 +21,6 @@ use Tools\Filesystem;
 
 /**
  * TopbarTest class
- * @runTestsInSeparateProcesses
  */
 class TopbarTest extends TestCase
 {
@@ -65,6 +64,7 @@ class TopbarHelper extends Helper
 HEREDOC;
         $file = TEST_APP . 'TestApp' . DS . 'View' . DS . 'Helper' . DS . 'TopbarHelper.php';
         (new Filesystem())->createFile($file, $content);
+        require_once $file;
         $result = (new AppView())->element('MeCms.topbar');
         unlink($file);
         $this->assertStringContainsString('<a href="http://localhost" title="A link from APP">A link from APP</a>', $result);
