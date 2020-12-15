@@ -35,23 +35,39 @@ class MenuBuilderHelperTest extends HelperTestCase
     }
 
     /**
+     * Tests for `getMethods()` method
+     * @test
+     */
+    public function testGetMethods()
+    {
+        $this->assertEquals([
+            'posts',
+            'pages',
+            'banners',
+            'users',
+            'backups',
+            'systems',
+        ], $this->Helper->getMethods('MeCms'));
+        $this->assertEquals(['articles', 'other_items'], $this->Helper->getMethods('TestPlugin'));
+        $this->assertEquals([], $this->Helper->getMethods('TestPluginTwo'));
+    }
+
+    /**
      * Tests for `generate()` method
      * @test
      */
     public function testGenerate()
     {
-        foreach ([
-            'MeCms' => ['MeCms.posts', 'MeCms.pages'],
-            'TestPlugin' => ['TestPlugin.articles', 'TestPlugin.other_items'],
-        ] as $plugin => $keys) {
+        foreach (['MeCms', 'TestPlugin'] as $plugin) {
             $result = $this->Helper->generate($plugin);
-            $this->assertArrayKeysEqual($keys, $result);
+            $this->assertNotEmpty($result);
             foreach ($result as $menu) {
                 $this->assertArrayKeysEqual(['links', 'title', 'titleOptions', 'handledControllers'], $menu);
+                $this->assertIsArrayNotEmpty($menu['links']);
             }
         }
 
-        $this->assertEmpty($this->Helper->generate('TestPluginTwo'));
+        $this->assertSame([], $this->Helper->generate('TestPluginTwo'));
     }
 
     /**
@@ -60,7 +76,6 @@ class MenuBuilderHelperTest extends HelperTestCase
      */
     public function testRenderAsCollapse()
     {
-        $result = $this->Helper->renderAsCollapse('TestPlugin', 'my-container');
         $expected = [
             ['div' => ['class' => 'card']],
             ['a' => [
@@ -111,6 +126,7 @@ class MenuBuilderHelperTest extends HelperTestCase
             '/div',
             '/div',
         ];
+        $result = $this->Helper->renderAsCollapse('TestPlugin', 'my-container');
         $this->assertHtml($expected, $result);
 
         //Sets the same controller that is handled by the menu
@@ -127,11 +143,6 @@ class MenuBuilderHelperTest extends HelperTestCase
      */
     public function testRenderAsDropdown()
     {
-        $result = $this->Helper->renderAsDropdown('TestPlugin');
-
-        //Checks array keys (menu names)
-        $this->assertArrayKeysEqual(['TestPlugin.articles', 'TestPlugin.other_items'], $result);
-
         $expected = [
             ['a' => [
                 'href' => '#',
@@ -178,6 +189,7 @@ class MenuBuilderHelperTest extends HelperTestCase
             '/a',
             '/div',
         ];
+        $result = $this->Helper->renderAsDropdown('TestPlugin');
         $this->assertHtml($expected, implode(PHP_EOL, $result));
     }
 }
