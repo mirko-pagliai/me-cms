@@ -74,12 +74,24 @@
             </errorLevel>
         </MethodSignatureMismatch>
 
+        <MissingFile>
+            <errorLevel type="suppress">
+                <file name="tests/TestCase/Template/Element/TopbarTest.php" />
+            </errorLevel>
+        </MissingFile>
+
         <NoInterfaceProperties>
             <errorLevel type="suppress">
                 <directory name="src/TestSuite" />
                 <directory name="tests/TestCase" />
             </errorLevel>
         </NoInterfaceProperties>
+
+        <NullableReturnStatement>
+            <errorLevel type="suppress">
+                <file name="src/View/Helper/MenuBuilderHelper.php" />
+            </errorLevel>
+        </NullableReturnStatement>
 
         <RedundantCondition>
             <errorLevel type="suppress">

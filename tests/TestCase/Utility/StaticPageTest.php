@@ -209,7 +209,7 @@ class StaticPageTest extends TestCase
         ];
 
         $getTitles = function (array $pathsOrSlugs): array {
-            return array_map(function (string $pathOrSlug): ?string {
+            return array_map(function (string $pathOrSlug): string {
                 return StaticPage::getTitle($pathOrSlug);
             }, $pathsOrSlugs);
         };
