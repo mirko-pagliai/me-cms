@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-09 15:09+0000\n"
-"PO-Revision-Date: 2020-12-09 16:13+0100\n"
+"POT-Creation-Date: 2020-12-15 14:55+0000\n"
+"PO-Revision-Date: 2020-12-15 16:01+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgid "Author"
 msgstr "Autore"
 
 #: ./i18n_constants.php:20
-#: ./View/Helper/MenuHelper.php:138
+#: ./View/Helper/MenuHelper.php:121
 #: ./Admin/BannersPositions/index.php:36
 msgid "Banners"
 msgstr "Banner"
@@ -436,7 +436,6 @@ msgid "You must first create a banner position"
 msgstr "Devi prima creare una posizione per i banner"
 
 #: ./Controller/Admin/BannersController.php:124
-#: ./Controller/Admin/PhotosController.php:124
 msgid "Missing ID"
 msgstr "ID mancante"
 
@@ -463,10 +462,6 @@ msgstr "Aggiungi pagina"
 #: ./Pages/view.php:29
 msgid "Edit page"
 msgstr "Modifica pagina"
-
-#: ./Controller/Admin/PhotosController.php:50
-msgid "You must first create an album"
-msgstr "Devi prima creare un album"
 
 #: ./Controller/Admin/PostsCategoriesController.php:108
 msgid "Add posts category"
@@ -695,7 +690,7 @@ msgstr "Questo campo non può rimanere vuoto"
 msgid "Invalid values"
 msgstr "Valori non validi"
 
-#: ./View/Helper/MenuBuilderHelper.php:86
+#: ./View/Helper/MenuBuilderHelper.php:95
 msgid "Method `{0}::{1}()` returned only {2} values"
 msgstr "Il metodo `{0}::{1}()` ha restituito solo {2} valori"
 
@@ -727,98 +722,88 @@ msgstr "Elenca pagine"
 msgid "List static pages"
 msgstr "Elenca pagine statiche"
 
-#: ./View/Helper/MenuHelper.php:107
-msgid "List photos"
-msgstr "Elenca foto"
-
-#: ./View/Helper/MenuHelper.php:108
-#: ./Admin/Photos/upload.php:16
-#: ./Admin/PhotosAlbums/index.php:23
-msgid "Upload photos"
-msgstr "Carica foto"
-
-#: ./View/Helper/MenuHelper.php:111
-msgid "List albums"
-msgstr "Elenca album"
-
 #: ./View/Helper/MenuHelper.php:112
-#: ./Admin/common/BannersAndPhotos/index.php:27
-msgid "Add album"
-msgstr "Aggiungi album"
-
-#: ./View/Helper/MenuHelper.php:129
 msgid "List banners"
 msgstr "Elenca banner"
 
-#: ./View/Helper/MenuHelper.php:130
+#: ./View/Helper/MenuHelper.php:113
 #: ./Admin/Banners/upload.php:16
 #: ./Admin/BannersPositions/index.php:24
 msgid "Upload banners"
 msgstr "Carica banner"
 
-#: ./View/Helper/MenuHelper.php:134
+#: ./View/Helper/MenuHelper.php:117
 msgid "List positions"
 msgstr "Elenca posizioni"
 
-#: ./View/Helper/MenuHelper.php:135
+#: ./View/Helper/MenuHelper.php:118
 #: ./Admin/common/BannersAndPhotos/index.php:24
 msgid "Add position"
 msgstr "Aggiungi posizione"
 
-#: ./View/Helper/MenuHelper.php:153
+#: ./View/Helper/MenuHelper.php:136
 msgid "List users"
 msgstr "Elenca utenti"
 
-#: ./View/Helper/MenuHelper.php:154
+#: ./View/Helper/MenuHelper.php:137
 #: ./Admin/Users/add.php:16
 #: ./Admin/UsersGroups/index.php:23
 msgid "Add user"
 msgstr "Aggiungi utente"
 
-#: ./View/Helper/MenuHelper.php:158
+#: ./View/Helper/MenuHelper.php:141
 msgid "List groups"
 msgstr "Elenca gruppi"
 
-#: ./View/Helper/MenuHelper.php:159
+#: ./View/Helper/MenuHelper.php:142
 #: ./Admin/Users/index.php:23
 msgid "Add group"
 msgstr "Aggiungi gruppo"
 
-#: ./View/Helper/MenuHelper.php:177
+#: ./View/Helper/MenuHelper.php:160
 msgid "List backups"
 msgstr "Elenca backup"
 
-#: ./View/Helper/MenuHelper.php:178
+#: ./View/Helper/MenuHelper.php:161
 #: ./Admin/Backups/add.php:16
 msgid "Add backup"
 msgstr "Aggiungi backup"
 
-#: ./View/Helper/MenuHelper.php:180
+#: ./View/Helper/MenuHelper.php:163
 msgid "Backups"
 msgstr "Backup"
 
-#: ./View/Helper/MenuHelper.php:195
+#: ./View/Helper/MenuHelper.php:178
 #: ./Admin/Systems/tmp_viewer.php:16
 msgid "Temporary files"
 msgstr "File temporanei"
 
-#: ./View/Helper/MenuHelper.php:196
+#: ./View/Helper/MenuHelper.php:179
 #: ./Admin/Systems/browser.php:16
 msgid "Media browser"
 msgstr "Browser multimediale"
 
-#: ./View/Helper/MenuHelper.php:197
+#: ./View/Helper/MenuHelper.php:180
 #: ./Admin/Systems/changelogs.php:16
 msgid "Changelogs"
 msgstr "Changelog"
 
-#: ./View/Helper/MenuHelper.php:200
+#: ./View/Helper/MenuHelper.php:183
 msgid "Log management"
 msgstr "Gestione log"
 
-#: ./View/Helper/MenuHelper.php:203
+#: ./View/Helper/MenuHelper.php:186
 msgid "System"
 msgstr "Sistema"
+
+#: ./View/Helper/TopbarHelper.php:35
+#: ./layout/default.php:76
+msgid "Home"
+msgstr "Home"
+
+#: ./View/Helper/TopbarHelper.php:36
+msgid "Categories"
+msgstr "Categorie"
 
 #: ./View/View/AdminView.php:52
 #: ./element/admin/priority-badge.php:18
@@ -1042,36 +1027,6 @@ msgstr "Categorie pagine"
 #: ./Admin/PostsCategories/index.php:34
 msgid "Parent"
 msgstr "Genitore"
-
-#: ./Admin/Photos/edit.php:16
-#: ./Photos/view.php:25
-msgid "Edit photo"
-msgstr "Modifica foto"
-
-#: ./Admin/Photos/edit.php:24
-#: ./Admin/Photos/index.php:23
-#: ./Admin/Photos/index_as_grid.php:30
-msgid "Album"
-msgstr "Album"
-
-#: ./Admin/Photos/upload.php:23
-#: ./Admin/Photos/upload.php:26
-msgid "Album to upload photos"
-msgstr "Album dove caricare le foto"
-
-#: ./Admin/PhotosAlbums/add.php:16
-msgid "Add photos album"
-msgstr "Aggiungi album"
-
-#: ./Admin/PhotosAlbums/edit.php:16
-msgid "Edit photos album"
-msgstr "Modifica album"
-
-#: ./Admin/PhotosAlbums/index.php:16
-#: ./cell/PhotosWidgets/albums_as_form.php:23
-#: ./cell/PhotosWidgets/albums_as_list.php:23
-msgid "Albums"
-msgstr "Album"
 
 #: ./Admin/Posts/form.php:79
 #: ./Admin/Posts/form.php:97
@@ -1302,6 +1257,10 @@ msgstr "Modifica gruppo utenti"
 msgid "Users groups"
 msgstr "Gruppi utente"
 
+#: ./Admin/common/BannersAndPhotos/index.php:27
+msgid "Add album"
+msgstr "Aggiungi album"
+
 #: ./Pages/view.php:34
 msgid "Delete page"
 msgstr "Cancella pagina"
@@ -1315,22 +1274,6 @@ msgstr "Modifica categoria"
 #: ./PostsCategories/view.php:27
 msgid "Delete category"
 msgstr "Cancella categoria"
-
-#: ./Photos/view.php:30
-msgid "Delete photo"
-msgstr "Cancella foto"
-
-#: ./PhotosAlbums/index.php:30
-msgid "{0} photos"
-msgstr "{0} foto"
-
-#: ./PhotosAlbums/view.php:29
-msgid "Edit album"
-msgstr "Modifica album"
-
-#: ./PhotosAlbums/view.php:34
-msgid "Delete album"
-msgstr "Cancella album"
 
 #: ./Posts/index_by_date.php:18
 msgid "Posts of today"
@@ -1453,18 +1396,6 @@ msgstr "Inserisci la tua password"
 msgid "Repeat your password"
 msgstr "Ripeti la tua password"
 
-#: ./cell/PhotosWidgets/latest.php:20
-msgid "Latest photo"
-msgid_plural "Latest {0} photos"
-msgstr[0] "Ultima foto"
-msgstr[1] "Ultime {0} foto"
-
-#: ./cell/PhotosWidgets/random.php:20
-msgid "Random photo"
-msgid_plural "Random {0} photos"
-msgstr[0] "Foto casuale"
-msgstr[1] "{0} foto casuali"
-
 #: ./cell/PostsTagsWidgets/popular_as_cloud.php:20
 #: ./cell/PostsTagsWidgets/popular_as_form.php:23
 #: ./cell/PostsTagsWidgets/popular_as_list.php:23
@@ -1551,7 +1482,7 @@ msgid "Homepage"
 msgstr "Homepage"
 
 #: ./element/common/userbar.php:24
-#: ./element/topbar.php:24
+#: ./element/topbar.php:33
 msgid "Toggle navigation"
 msgstr "Cambia navigazione"
 
@@ -1600,15 +1531,6 @@ msgstr "Sviluppato da {0}"
 #: ./element/login/menu.php:40
 msgid "Forgot your password?"
 msgstr "Password dimenticata?"
-
-#: ./element/topbar.php:30
-#: ./layout/default.php:76
-msgid "Home"
-msgstr "Home"
-
-#: ./element/topbar.php:31
-msgid "Categories"
-msgstr "Categorie"
 
 #: ./element/userbar.php:23
 msgid "Dashboard"

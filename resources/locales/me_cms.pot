@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-09 15:09+0000\n"
+"POT-Creation-Date: 2020-12-15 14:55+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -35,7 +35,7 @@ msgid "Author"
 msgstr ""
 
 #: ./i18n_constants.php:20
-#: ./View/Helper/MenuHelper.php:138
+#: ./View/Helper/MenuHelper.php:121
 #: ./Admin/BannersPositions/index.php:36
 msgid "Banners"
 msgstr ""
@@ -428,7 +428,6 @@ msgid "You must first create a banner position"
 msgstr ""
 
 #: ./Controller/Admin/BannersController.php:124
-#: ./Controller/Admin/PhotosController.php:124
 msgid "Missing ID"
 msgstr ""
 
@@ -454,10 +453,6 @@ msgstr ""
 #: ./Controller/Admin/PagesController.php:167
 #: ./Pages/view.php:29
 msgid "Edit page"
-msgstr ""
-
-#: ./Controller/Admin/PhotosController.php:50
-msgid "You must first create an album"
 msgstr ""
 
 #: ./Controller/Admin/PostsCategoriesController.php:108
@@ -687,7 +682,7 @@ msgstr ""
 msgid "Invalid values"
 msgstr ""
 
-#: ./View/Helper/MenuBuilderHelper.php:86
+#: ./View/Helper/MenuBuilderHelper.php:95
 msgid "Method `{0}::{1}()` returned only {2} values"
 msgstr ""
 
@@ -719,97 +714,87 @@ msgstr ""
 msgid "List static pages"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:107
-msgid "List photos"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:108
-#: ./Admin/Photos/upload.php:16
-#: ./Admin/PhotosAlbums/index.php:23
-msgid "Upload photos"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:111
-msgid "List albums"
-msgstr ""
-
 #: ./View/Helper/MenuHelper.php:112
-#: ./Admin/common/BannersAndPhotos/index.php:27
-msgid "Add album"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:129
 msgid "List banners"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:130
+#: ./View/Helper/MenuHelper.php:113
 #: ./Admin/Banners/upload.php:16
 #: ./Admin/BannersPositions/index.php:24
 msgid "Upload banners"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:134
+#: ./View/Helper/MenuHelper.php:117
 msgid "List positions"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:135
+#: ./View/Helper/MenuHelper.php:118
 #: ./Admin/common/BannersAndPhotos/index.php:24
 msgid "Add position"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:153
+#: ./View/Helper/MenuHelper.php:136
 msgid "List users"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:154
+#: ./View/Helper/MenuHelper.php:137
 #: ./Admin/Users/add.php:16
 #: ./Admin/UsersGroups/index.php:23
 msgid "Add user"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:158
+#: ./View/Helper/MenuHelper.php:141
 msgid "List groups"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:159
+#: ./View/Helper/MenuHelper.php:142
 #: ./Admin/Users/index.php:23
 msgid "Add group"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:177
+#: ./View/Helper/MenuHelper.php:160
 msgid "List backups"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:178
+#: ./View/Helper/MenuHelper.php:161
 #: ./Admin/Backups/add.php:16
 msgid "Add backup"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:180
+#: ./View/Helper/MenuHelper.php:163
 msgid "Backups"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:195
+#: ./View/Helper/MenuHelper.php:178
 #: ./Admin/Systems/tmp_viewer.php:16
 msgid "Temporary files"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:196
+#: ./View/Helper/MenuHelper.php:179
 #: ./Admin/Systems/browser.php:16
 msgid "Media browser"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:197
+#: ./View/Helper/MenuHelper.php:180
 #: ./Admin/Systems/changelogs.php:16
 msgid "Changelogs"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:200
+#: ./View/Helper/MenuHelper.php:183
 msgid "Log management"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:203
+#: ./View/Helper/MenuHelper.php:186
 msgid "System"
+msgstr ""
+
+#: ./View/Helper/TopbarHelper.php:35
+#: ./layout/default.php:76
+msgid "Home"
+msgstr ""
+
+#: ./View/Helper/TopbarHelper.php:36
+msgid "Categories"
 msgstr ""
 
 #: ./View/View/AdminView.php:52
@@ -1027,36 +1012,6 @@ msgstr ""
 msgid "Parent"
 msgstr ""
 
-#: ./Admin/Photos/edit.php:16
-#: ./Photos/view.php:25
-msgid "Edit photo"
-msgstr ""
-
-#: ./Admin/Photos/edit.php:24
-#: ./Admin/Photos/index.php:23
-#: ./Admin/Photos/index_as_grid.php:30
-msgid "Album"
-msgstr ""
-
-#: ./Admin/Photos/upload.php:23
-#: ./Admin/Photos/upload.php:26
-msgid "Album to upload photos"
-msgstr ""
-
-#: ./Admin/PhotosAlbums/add.php:16
-msgid "Add photos album"
-msgstr ""
-
-#: ./Admin/PhotosAlbums/edit.php:16
-msgid "Edit photos album"
-msgstr ""
-
-#: ./Admin/PhotosAlbums/index.php:16
-#: ./cell/PhotosWidgets/albums_as_form.php:23
-#: ./cell/PhotosWidgets/albums_as_list.php:23
-msgid "Albums"
-msgstr ""
-
 #: ./Admin/Posts/form.php:79
 #: ./Admin/Posts/form.php:97
 msgid "Tags must be at least 3 chars and separated by a comma or a comma and a space. Only lowercase letters, numbers, hyphen, space"
@@ -1260,6 +1215,10 @@ msgstr ""
 msgid "Users groups"
 msgstr ""
 
+#: ./Admin/common/BannersAndPhotos/index.php:27
+msgid "Add album"
+msgstr ""
+
 #: ./Pages/view.php:34
 msgid "Delete page"
 msgstr ""
@@ -1272,22 +1231,6 @@ msgstr ""
 #: ./PagesCategories/view.php:30
 #: ./PostsCategories/view.php:27
 msgid "Delete category"
-msgstr ""
-
-#: ./Photos/view.php:30
-msgid "Delete photo"
-msgstr ""
-
-#: ./PhotosAlbums/index.php:30
-msgid "{0} photos"
-msgstr ""
-
-#: ./PhotosAlbums/view.php:29
-msgid "Edit album"
-msgstr ""
-
-#: ./PhotosAlbums/view.php:34
-msgid "Delete album"
 msgstr ""
 
 #: ./Posts/index_by_date.php:18
@@ -1411,18 +1354,6 @@ msgstr ""
 msgid "Repeat your password"
 msgstr ""
 
-#: ./cell/PhotosWidgets/latest.php:20
-msgid "Latest photo"
-msgid_plural "Latest {0} photos"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ./cell/PhotosWidgets/random.php:20
-msgid "Random photo"
-msgid_plural "Random {0} photos"
-msgstr[0] ""
-msgstr[1] ""
-
 #: ./cell/PostsTagsWidgets/popular_as_cloud.php:20
 #: ./cell/PostsTagsWidgets/popular_as_form.php:23
 #: ./cell/PostsTagsWidgets/popular_as_list.php:23
@@ -1502,7 +1433,7 @@ msgid "Homepage"
 msgstr ""
 
 #: ./element/common/userbar.php:24
-#: ./element/topbar.php:24
+#: ./element/topbar.php:33
 msgid "Toggle navigation"
 msgstr ""
 
@@ -1550,15 +1481,6 @@ msgstr ""
 
 #: ./element/login/menu.php:40
 msgid "Forgot your password?"
-msgstr ""
-
-#: ./element/topbar.php:30
-#: ./layout/default.php:76
-msgid "Home"
-msgstr ""
-
-#: ./element/topbar.php:31
-msgid "Categories"
 msgstr ""
 
 #: ./element/userbar.php:23
