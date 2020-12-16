@@ -62,7 +62,6 @@ define('I18N_OPERATION_OK', __d('me_cms', 'The operation has been performed corr
 define('I18N_PAGES', __d('me_cms', 'Pages'));
 define('I18N_PARENT_CATEGORY', __d('me_cms', 'Parent category'));
 define('I18N_PASSWORD', __d('me_cms', 'Password'));
-define('I18N_PHOTOS', __d('me_cms', 'Photos'));
 define('I18N_POSITION', __d('me_cms', 'Position'));
 define('I18N_POSTS', __d('me_cms', 'Posts'));
 define('I18N_POSTS_CATEGORIES', __d('me_cms', 'Posts categories'));
