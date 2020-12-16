@@ -88,6 +88,7 @@
     },
     "scripts": {
         "i18n-extract": "bin/cake i18n extract --paths config,src,templates --relative-paths --overwrite -q",
+        "migrations": "bin/cake bake migration_snapshot Initial --require-table --plugin MeCms",
         "check": [
             "@cs-check",
             "@update-lowest",
