@@ -1,15 +1,23 @@
 <?php
+declare(strict_types=1);
+
 use Migrations\AbstractMigration;
 
-class Update extends AbstractMigration
+class Initial extends AbstractMigration
 {
+    /**
+     * Up Method.
+     *
+     * More information on this method is available here:
+     * https://book.cakephp.org/phinx/0/en/migrations.html#the-up-method
+     * @return void
+     */
     public function up()
     {
-
         $this->table('banners')
             ->addColumn('position_id', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('filename', 'string', [
@@ -39,7 +47,7 @@ class Update extends AbstractMigration
             ])
             ->addColumn('click_count', 'integer', [
                 'default' => '0',
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('created', 'datetime', [
@@ -72,7 +80,7 @@ class Update extends AbstractMigration
             ])
             ->addColumn('banner_count', 'integer', [
                 'default' => '0',
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('created', 'datetime', [
@@ -90,7 +98,7 @@ class Update extends AbstractMigration
         $this->table('pages')
             ->addColumn('category_id', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('title', 'string', [
@@ -125,7 +133,7 @@ class Update extends AbstractMigration
             ])
             ->addColumn('priority', 'integer', [
                 'default' => '3',
-                'limit' => 1,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('active', 'boolean', [
@@ -148,17 +156,17 @@ class Update extends AbstractMigration
         $this->table('pages_categories')
             ->addColumn('parent_id', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => true,
             ])
             ->addColumn('lft', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => true,
             ])
             ->addColumn('rght', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => true,
             ])
             ->addColumn('title', 'string', [
@@ -178,7 +186,7 @@ class Update extends AbstractMigration
             ])
             ->addColumn('page_count', 'integer', [
                 'default' => '0',
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('created', 'datetime', [
@@ -191,106 +199,29 @@ class Update extends AbstractMigration
                 'limit' => null,
                 'null' => true,
             ])
-            ->addIndex(
-                [
-                    'slug',
-                ],
-                ['unique' => true]
-            )
             ->addIndex(
                 [
                     'title',
                 ],
                 ['unique' => true]
             )
-            ->create();
-
-        $this->table('photos')
-            ->addColumn('album_id', 'integer', [
-                'default' => null,
-                'limit' => 11,
-                'null' => false,
-            ])
-            ->addColumn('filename', 'string', [
-                'default' => null,
-                'limit' => 255,
-                'null' => false,
-            ])
-            ->addColumn('description', 'string', [
-                'default' => null,
-                'limit' => 255,
-                'null' => true,
-            ])
-            ->addColumn('active', 'boolean', [
-                'default' => true,
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => false,
-            ])
-            ->addColumn('modified', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => true,
-            ])
             ->addIndex(
                 [
-                    'filename',
+                    'slug',
                 ],
                 ['unique' => true]
             )
-            ->addIndex(
-                [
-                    'album_id',
-                ]
-            )
-            ->create();
-
-        $this->table('photos_albums')
-            ->addColumn('title', 'string', [
-                'default' => null,
-                'limit' => 100,
-                'null' => false,
-            ])
-            ->addColumn('slug', 'string', [
-                'default' => null,
-                'limit' => 100,
-                'null' => false,
-            ])
-            ->addColumn('description', 'string', [
-                'default' => null,
-                'limit' => 255,
-                'null' => true,
-            ])
-            ->addColumn('photo_count', 'integer', [
-                'default' => '0',
-                'limit' => 11,
-                'null' => false,
-            ])
-            ->addColumn('created', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => true,
-            ])
-            ->addColumn('modified', 'datetime', [
-                'default' => null,
-                'limit' => null,
-                'null' => true,
-            ])
             ->create();
 
         $this->table('posts')
             ->addColumn('category_id', 'integer', [
                 'default' => '1',
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('user_id', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('title', 'string', [
@@ -325,7 +256,7 @@ class Update extends AbstractMigration
             ])
             ->addColumn('priority', 'integer', [
                 'default' => '3',
-                'limit' => 1,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('created', 'datetime', [
@@ -364,17 +295,17 @@ class Update extends AbstractMigration
         $this->table('posts_categories')
             ->addColumn('parent_id', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => true,
             ])
             ->addColumn('lft', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => true,
             ])
             ->addColumn('rght', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => true,
             ])
             ->addColumn('title', 'string', [
@@ -394,7 +325,7 @@ class Update extends AbstractMigration
             ])
             ->addColumn('post_count', 'integer', [
                 'default' => '0',
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('created', 'datetime', [
@@ -409,13 +340,13 @@ class Update extends AbstractMigration
             ])
             ->addIndex(
                 [
-                    'slug',
+                    'title',
                 ],
                 ['unique' => true]
             )
             ->addIndex(
                 [
-                    'title',
+                    'slug',
                 ],
                 ['unique' => true]
             )
@@ -424,12 +355,12 @@ class Update extends AbstractMigration
         $this->table('posts_tags')
             ->addColumn('tag_id', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('post_id', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addIndex(
@@ -447,12 +378,12 @@ class Update extends AbstractMigration
         $this->table('tags')
             ->addColumn('tag', 'string', [
                 'default' => null,
-                'limit' => 30,
+                'limit' => 255,
                 'null' => false,
             ])
             ->addColumn('post_count', 'integer', [
                 'default' => '0',
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('created', 'datetime', [
@@ -470,7 +401,7 @@ class Update extends AbstractMigration
         $this->table('tokens')
             ->addColumn('user_id', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => true,
             ])
             ->addColumn('type', 'string', [
@@ -498,7 +429,7 @@ class Update extends AbstractMigration
         $this->table('users')
             ->addColumn('group_id', 'integer', [
                 'default' => null,
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('username', 'string', [
@@ -538,7 +469,7 @@ class Update extends AbstractMigration
             ])
             ->addColumn('post_count', 'integer', [
                 'default' => '0',
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('created', 'datetime', [
@@ -583,7 +514,7 @@ class Update extends AbstractMigration
             ])
             ->addColumn('user_count', 'integer', [
                 'default' => '0',
-                'limit' => 11,
+                'limit' => null,
                 'null' => false,
             ])
             ->addColumn('created', 'datetime', [
@@ -606,14 +537,19 @@ class Update extends AbstractMigration
             ->create();
     }
 
+    /**
+     * Down Method.
+     *
+     * More information on this method is available here:
+     * https://book.cakephp.org/phinx/0/en/migrations.html#the-down-method
+     * @return void
+     */
     public function down()
     {
         $this->table('banners')->drop()->save();
         $this->table('banners_positions')->drop()->save();
         $this->table('pages')->drop()->save();
         $this->table('pages_categories')->drop()->save();
-        $this->table('photos')->drop()->save();
-        $this->table('photos_albums')->drop()->save();
         $this->table('posts')->drop()->save();
         $this->table('posts_categories')->drop()->save();
         $this->table('posts_tags')->drop()->save();
