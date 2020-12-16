@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-15 14:55+0000\n"
-"PO-Revision-Date: 2020-12-15 16:01+0100\n"
+"POT-Creation-Date: 2020-12-16 13:30+0000\n"
+"PO-Revision-Date: 2020-12-16 16:19+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -219,106 +219,102 @@ msgid "Password"
 msgstr "Password"
 
 #: ./i18n_constants.php:65
-msgid "Photos"
-msgstr "Foto"
-
-#: ./i18n_constants.php:66
 msgid "Position"
 msgstr "Posizione"
 
-#: ./i18n_constants.php:67
+#: ./i18n_constants.php:66
 msgid "Posts"
 msgstr "Articoli"
 
-#: ./i18n_constants.php:68
+#: ./i18n_constants.php:67
 msgid "Posts categories"
 msgstr "Categorie articoli"
 
-#: ./i18n_constants.php:69
+#: ./i18n_constants.php:68
 msgid "Preview"
 msgstr "Anteprima"
 
-#: ./i18n_constants.php:70
+#: ./i18n_constants.php:69
 msgid "Priority"
 msgstr "Priorità"
 
-#: ./i18n_constants.php:71
+#: ./i18n_constants.php:70
 msgid "Published"
 msgstr "Pubblicato"
 
-#: ./i18n_constants.php:72
+#: ./i18n_constants.php:71
 msgid "Repeat email"
 msgstr "Ripeti email"
 
-#: ./i18n_constants.php:73
+#: ./i18n_constants.php:72
 msgid "Repeat password"
 msgstr "Ripeti password"
 
-#: ./i18n_constants.php:74
+#: ./i18n_constants.php:73
 msgid "Scheduled"
 msgstr "Programmato"
 
-#: ./i18n_constants.php:75
+#: ./i18n_constants.php:74
 msgid "Select"
 msgstr "Seleziona"
 
-#: ./i18n_constants.php:76
+#: ./i18n_constants.php:75
 msgid "You have to select a valid option"
 msgstr "Devi selezionare un'opzione valida"
 
-#: ./i18n_constants.php:77
+#: ./i18n_constants.php:76
 msgid "Show/hide password"
 msgstr "Mostra/nascondi password"
 
-#: ./i18n_constants.php:78
+#: ./i18n_constants.php:77
 msgid "Slug"
 msgstr "Slug"
 
-#: ./i18n_constants.php:79
+#: ./i18n_constants.php:78
 msgid "Status"
 msgstr "Stato"
 
-#: ./i18n_constants.php:80
+#: ./i18n_constants.php:79
 msgid "Subtitle"
 msgstr "Sottotitolo"
 
-#: ./i18n_constants.php:81
+#: ./i18n_constants.php:80
 msgid "Tags"
 msgstr "Tag"
 
-#: ./i18n_constants.php:82
+#: ./i18n_constants.php:81
 msgid "Text"
 msgstr "Testo"
 
-#: ./i18n_constants.php:83
+#: ./i18n_constants.php:82
 msgid "Are you sure you want to delete this?"
 msgstr "Sei sicuro di volerlo cancellare?"
 
-#: ./i18n_constants.php:84
+#: ./i18n_constants.php:83
 msgid "Title"
 msgstr "Titolo"
 
-#: ./i18n_constants.php:85
+#: ./i18n_constants.php:84
 msgid "Upload"
 msgstr "Carica"
 
-#: ./i18n_constants.php:86
+#: ./i18n_constants.php:85
 msgid "If blank, the current date and time will be used"
 msgstr "Se vuoto, saranno usate data e orario correnti"
 
-#: ./i18n_constants.php:87
+#: ./i18n_constants.php:86
 msgid "Username"
 msgstr "Username"
 
-#: ./i18n_constants.php:88
+#: ./i18n_constants.php:87
 msgid "Users"
 msgstr "Utenti"
 
-#: ./i18n_constants.php:89
+#: ./i18n_constants.php:88
 msgid "This value is already used"
 msgstr "Questo valore è già in uso"
 
-#: ./i18n_constants.php:90
+#: ./i18n_constants.php:89
 msgid "yes"
 msgstr "sì"
 
@@ -590,7 +586,7 @@ msgid "Account created. Now you can login"
 msgstr "Account creato. Puoi fare il login"
 
 #: ./Form/BackupForm.php:47
-#: ./Validation/BannerAndPhotoValidator.php:42
+#: ./Model/Validation/BannerValidator.php:46
 #: ./Admin/Backups/add.php:23
 msgid "Valid extensions: {0}"
 msgstr "Estensioni valide: {0}"
@@ -629,14 +625,14 @@ msgstr "La tua password è stata modificata"
 msgid "Reset your password"
 msgstr "Reimposta la tua password"
 
-#: ./Model/Validation/BannerValidator.php:41
+#: ./Model/Validation/BannerValidator.php:53
 #: ./Validation/AppValidator.php:50
 #: ./Validation/AppValidator.php:100
 #: ./Validation/AppValidator.php:140
 msgid "Must be at most {0} chars"
 msgstr "Deve essere lungo al massimo {0} caratteri"
 
-#: ./Model/Validation/BannerValidator.php:45
+#: ./Model/Validation/BannerValidator.php:57
 msgid "Must be a valid url"
 msgstr "Deve essere un url valido"
 
@@ -737,7 +733,7 @@ msgid "List positions"
 msgstr "Elenca posizioni"
 
 #: ./View/Helper/MenuHelper.php:118
-#: ./Admin/common/BannersAndPhotos/index.php:24
+#: ./Admin/common/Banners/index.php:24
 msgid "Add position"
 msgstr "Aggiungi posizione"
 
@@ -1004,7 +1000,7 @@ msgstr "Log completo"
 #: ./Admin/Pages/index.php:60
 #: ./Admin/Posts/index.php:64
 #: ./Admin/Users/index.php:60
-#: ./Admin/common/BannersAndPhotos/index.php:67
+#: ./Admin/common/Banners/index.php:63
 msgid "month"
 msgstr "mese"
 
@@ -1256,10 +1252,6 @@ msgstr "Modifica gruppo utenti"
 #: ./Admin/UsersGroups/index.php:16
 msgid "Users groups"
 msgstr "Gruppi utente"
-
-#: ./Admin/common/BannersAndPhotos/index.php:27
-msgid "Add album"
-msgstr "Aggiungi album"
 
 #: ./Pages/view.php:34
 msgid "Delete page"
