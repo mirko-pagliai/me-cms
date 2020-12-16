@@ -20,14 +20,11 @@ $this->append('actions', $this->Html->button(
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
 
-if ($this->getTemplatePath() === 'Admin/Banners') {
-    $label = __d('me_cms', 'Add position');
-    $url = ['controller' => 'BannersPositions', 'action' => 'add'];
-} else {
-    $label = __d('me_cms', 'Add album');
-    $url = ['controller' => 'PhotosAlbums', 'action' => 'add'];
-}
-$this->append('actions', $this->Html->button($label, $url, ['class' => 'btn-success', 'icon' => 'plus']));
+$this->append('actions', $this->Html->button(
+    __d('me_cms', 'Add position'),
+    ['controller' => 'BannersPositions', 'action' => 'add'],
+    ['class' => 'btn-success', 'icon' => 'plus']
+));
 
 if (getConfig('default.fancybox')) {
     $this->Library->fancybox();
@@ -55,9 +52,8 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
             'options' => [I18N_YES => I18N_ONLY_PUBLISHED, I18N_NO => I18N_ONLY_NOT_PUBLISHED],
         ]);
 
-        $fieldName = $this->getTemplatePath() === 'Admin/Banners' ? 'position' : 'album';
-        echo $this->Form->control($fieldName, [
-            'default' => $this->getRequest()->getQuery($fieldName),
+        echo $this->Form->control('position', [
+            'default' => $this->getRequest()->getQuery('position'),
             'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
         ]);
 
