@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -16,6 +17,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use MeCms\Model\Validation\PhotosAlbumValidator;
 use MeCms\TestSuite\TableTestCase;
+use Tools\Filesystem;
 
 /**
  * PhotosAlbumsTableTest class
@@ -44,7 +46,7 @@ class PhotosAlbumsTableTest extends TableTestCase
     {
         parent::tearDown();
 
-        @unlink_recursive(PHOTOS, 'empty');
+        (new Filesystem())->unlinkRecursive(PHOTOS, 'empty', true);
     }
 
     /**
@@ -93,7 +95,6 @@ class PhotosAlbumsTableTest extends TableTestCase
 
         $this->assertHasMany($this->Table->Photos);
         $this->assertEquals('album_id', $this->Table->Photos->getForeignKey());
-        $this->assertEquals('MeCms.Photos', $this->Table->Photos->getClassName());
 
         $this->assertHasBehavior('Timestamp');
 

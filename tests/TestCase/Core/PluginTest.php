@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -41,11 +42,19 @@ class PluginTest extends TestCase
         $this->assertEquals('MeTools', $result[1]);
         $this->assertContains('TestPlugin', $result);
 
+        $this->assertSame($result, Plugin::all(['mecms_core' => true]));
+
         $result = Plugin::all(['order' => false]);
         $this->assertNotEquals('MeCms', $result[0]);
         $this->assertNotEquals('MeTools', $result[1]);
         $this->assertContains('MeCms', $result);
         $this->assertContains('MeTools', $result);
         $this->assertContains('TestPlugin', $result);
+
+        $result = Plugin::all(['mecms_core' => false]);
+        $this->assertSame($result, ['MeCms', 'TestPlugin']);
+
+        $result = Plugin::all(['exclude' => 'TestPlugin', 'mecms_core' => false]);
+        $this->assertSame($result, ['MeCms']);
     }
 }

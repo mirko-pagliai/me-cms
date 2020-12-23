@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -42,7 +43,7 @@ class PostsController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Network\Response|null|void
+     * @return \Cake\Http\Response|null|void
      */
     public function beforeFilter(EventInterface $event)
     {

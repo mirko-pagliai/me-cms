@@ -73,6 +73,12 @@ class Plugin extends BasePlugin
             $app->addPlugin($plugin);
         }
 
+        //Loads theme plugin
+        $theme = getConfig('default.theme');
+        if ($theme && !$app->getPlugins()->has($theme)) {
+            $app->addPlugin($theme);
+        }
+
         parent::bootstrap($app);
 
         if (!$this->isCli()) {

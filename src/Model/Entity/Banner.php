@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -59,6 +60,16 @@ class Banner extends Entity
         Exceptionist::objectPropertyExists($this, 'filename');
 
         return BANNERS . $this->get('filename');
+    }
+
+    /**
+     * Gets description as string
+     * @param string|null $description Description
+     * @return string
+     */
+    protected function _getDescription(?string $description): string
+    {
+        return (string)$description;
     }
 
     /**

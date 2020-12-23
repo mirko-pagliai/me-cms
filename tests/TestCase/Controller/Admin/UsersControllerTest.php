@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -19,6 +20,7 @@ use Cake\ORM\Entity;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Model\Entity\User;
 use MeCms\TestSuite\ControllerTestCase;
+use Tools\Filesystem;
 
 /**
  * UsersControllerTest class
@@ -281,7 +283,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //The password has changed
-        $this->assertNotEquals($user->password, $this->Table->findById(1)->extract('password')->first());
+        $this->assertNotEquals($user->get('password'), $this->Table->findById(1)->extract('password')->first());
 
         //Saves the password for the first user
         $user = $this->Table->get(1);
@@ -298,7 +300,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //The password has not changed
-        $this->assertEquals($user->password, $this->Table->findById(1)->extract('password')->first());
+        $this->assertEquals($user->get('password'), $this->Table->findById(1)->extract('password')->first());
     }
 
     /**
@@ -320,7 +322,7 @@ class UsersControllerTest extends ControllerTestCase
 
         //Creates some files that simulate previous user pictures. These files
         //  will be deleted before upload
-        @array_map('create_file', [$expectedPicture, USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
+        array_map([new Filesystem(), 'createFile'], [$expectedPicture, USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
 
         //POST request. This works
         $this->post($url + ['_ext' => 'json'], compact('file'));

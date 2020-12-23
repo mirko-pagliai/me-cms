@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -92,9 +93,9 @@ class User extends Entity
     /**
      * Sets the password
      * @param string $password Password
-     * @return string Hash
+     * @return string|false Password hash or false on failure
      */
-    protected function _setPassword(string $password): string
+    protected function _setPassword(string $password)
     {
         return (new DefaultPasswordHasher())->hash($password);
     }

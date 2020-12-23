@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -83,7 +84,6 @@ class BannersTableTest extends TableTestCase
         $this->assertBelongsTo($this->Table->Positions);
         $this->assertEquals('position_id', $this->Table->Positions->getForeignKey());
         $this->assertEquals('INNER', $this->Table->Positions->getJoinType());
-        $this->assertEquals('MeCms.BannersPositions', $this->Table->Positions->getClassName());
 
         $this->assertHasBehavior(['Timestamp', 'CounterCache']);
 

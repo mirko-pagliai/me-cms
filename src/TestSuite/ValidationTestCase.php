@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -25,7 +26,7 @@ abstract class ValidationTestCase extends TestCase
 {
     /**
      * Table instance
-     * @var \Cake\ORM\Table|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Cake\ORM\Table
      */
     protected $Table;
 
@@ -78,6 +79,7 @@ abstract class ValidationTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
+     * @throw \PHPUnit\Framework\AssertionFailedError
      * @uses $Table
      * @uses $autoInitializeClass
      */
@@ -86,8 +88,9 @@ abstract class ValidationTestCase extends TestCase
         parent::setUp();
 
         if (!$this->Table && $this->autoInitializeClass) {
-            $alias = Inflector::pluralize(substr(get_class_short_name($this), 0, -13));
-            $className = 'MeCms\\Model\Table\\' . $alias . 'Table';
+            $alias = Inflector::pluralize($this->getAlias($this));
+            $className = $this->getTableClassNameFromAlias($alias);
+            $this->_classExistsOrFail($className);
             $this->Table = $this->getTable($alias, compact('className'));
         }
     }

@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -20,6 +21,9 @@ use Cake\ORM\ResultSet;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\User;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\PostsTable;
+use MeCms\Model\Table\TokensTable;
+use MeCms\Model\Table\UsersGroupsTable;
 use MeCms\Model\Validation\UserValidator;
 use MeCms\ORM\Query;
 
@@ -71,8 +75,8 @@ class UsersTable extends AppTable
 
     /**
      * "active" find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function findActive(Query $query): Query
     {
@@ -81,8 +85,8 @@ class UsersTable extends AppTable
 
     /**
      * "auth" find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      * @since 2.25.1
      */
     public function findAuth(Query $query): Query
@@ -92,8 +96,8 @@ class UsersTable extends AppTable
 
     /**
      * "banned" find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function findBanned(Query $query): Query
     {
@@ -102,8 +106,8 @@ class UsersTable extends AppTable
 
     /**
      * "pending" find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function findPending(Query $query): Query
     {
@@ -112,7 +116,7 @@ class UsersTable extends AppTable
 
     /**
      * Gets active users as list
-     * @return \Cake\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function getActiveList(): Query
     {
@@ -141,15 +145,12 @@ class UsersTable extends AppTable
         $this->setDisplayField('username');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Groups', ['className' => 'MeCms.UsersGroups'])
+        $this->belongsTo('Groups', ['className' => UsersGroupsTable::class])
             ->setForeignKey('group_id')
             ->setJoinType('INNER');
 
-        $this->hasMany('Posts', ['className' => 'MeCms.Posts'])
-            ->setForeignKey('user_id');
-
-        $this->hasMany('Tokens', ['className' => 'Tokens.Tokens'])
-            ->setForeignKey('user_id');
+        $this->hasMany('Posts', ['className' => PostsTable::class])->setForeignKey('user_id');
+        $this->hasMany('Tokens', ['className' => TokensTable::class])->setForeignKey('user_id');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
@@ -159,9 +160,9 @@ class UsersTable extends AppTable
 
     /**
      * Build query from filter data
-     * @param \Cake\ORM\Query $query Query object
-     * @param array $data Filter data ($this->getRequest()->getQueryParams())
-     * @return \Cake\ORM\Query $query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @param array $data Filter data (`$this->getRequest()->getQueryParams()`)
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = []): Query
     {

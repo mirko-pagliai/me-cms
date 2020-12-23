@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -26,7 +27,7 @@ abstract class CellTestCase extends TestCase
 {
     /**
      * Entity instance
-     * @var \MeCms\View\Helper\WidgetHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var \MeCms\View\Helper\WidgetHelper|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Widget;
 
@@ -59,9 +60,11 @@ abstract class CellTestCase extends TestCase
         $this->Widget->getView()->setRequest($request);
 
         if (!$this->Table && $this->autoInitializeClass) {
-            $alias = substr(get_class_short_name($this), 0, strlen(get_class_short_name($this)) - 15);
-            $className = 'MeCms\\Model\\Table\\' . $alias . 'Table';
-            $this->Table = $this->getTable($alias, compact('className'));
+            $alias = substr($this->getAlias($this), 0, -7);
+            $className = $this->getTableClassNameFromAlias($alias);
+            if (class_exists($className)) {
+                $this->Table = $this->getTable($alias, compact('className'));
+            }
         }
     }
 }

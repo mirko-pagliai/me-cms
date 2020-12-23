@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -23,7 +24,7 @@ use DatabaseBackup\Utility\BackupImport;
 use DatabaseBackup\Utility\BackupManager;
 use MeCms\Form\BackupForm;
 use MeCms\TestSuite\ControllerTestCase;
-use Symfony\Component\Filesystem\Exception\IOException;
+use Tools\Filesystem;
 
 /**
  * BackupsControllerTest class
@@ -38,7 +39,7 @@ class BackupsControllerTest extends ControllerTestCase
     protected function createSingleBackup(string $extension = 'sql'): ?string
     {
         $file = getConfigOrFail('DatabaseBackup.target') . DS . 'backup.' . $extension;
-        create_file($file, null, 0777, true);
+        (new Filesystem())->createFile($file, null, 0777, true);
 
         return $file;
     }
@@ -60,11 +61,7 @@ class BackupsControllerTest extends ControllerTestCase
     {
         parent::tearDown();
 
-        //Deletes all backups
-        try {
-            unlink_recursive(getConfigOrFail('DatabaseBackup.target'));
-        } catch (IOException $e) {
-        }
+        (new Filesystem())->unlinkRecursive(getConfigOrFail('DatabaseBackup.target'), false, true);
     }
 
     /**

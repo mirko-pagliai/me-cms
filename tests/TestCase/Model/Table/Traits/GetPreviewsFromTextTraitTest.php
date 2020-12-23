@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -26,7 +27,7 @@ use MeTools\Utility\Youtube;
 class GetPreviewsFromTextTraitTest extends TestCase
 {
     /**
-     * @var \MeCms\Model\Table\PostsTable|\PHPUnit_Framework_MockObject_MockObject
+     * @var \MeCms\Model\Table\PostsTable|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Posts;
 
@@ -47,8 +48,8 @@ class GetPreviewsFromTextTraitTest extends TestCase
      */
     public function testExtractImages()
     {
-        $extractImagesMethod = function () {
-            return $this->invokeMethod($this->Posts, 'extractImages', func_get_args());
+        $extractImagesMethod = function (string $value) {
+            return $this->invokeMethod($this->Posts, 'extractImages', [$value]);
         };
 
         foreach ([

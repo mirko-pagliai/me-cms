@@ -17,7 +17,7 @@ if (empty($months) || $months->count() < 2) {
     return;
 }
 
-$this->extend('/common/widget');
+$this->extend('MeCms./common/widget');
 $this->assign('title', __d('me_cms', 'Posts by month'));
 
 $months = $months->map(function (array $month) {

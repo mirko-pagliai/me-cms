@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -95,9 +96,7 @@ abstract class TableTestCase extends TestCase
         }
 
         if (!$this->Table && $this->autoInitializeClass) {
-            $alias = substr(get_class_short_name($this), 0, -9);
-            $className = 'MeCms\\Model\\Table\\' . $alias . 'Table';
-            $this->Table = $this->getTable($alias, compact('className'));
+            $this->Table = $this->getTable($this->getAlias($this), ['className' => $this->getOriginClassNameOrFail($this)]);
         }
     }
 }

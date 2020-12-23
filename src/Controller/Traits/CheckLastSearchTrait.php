@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -42,7 +43,7 @@ trait CheckLastSearchTrait
             if ($id && !empty($lastSearch['id']) && $id === $lastSearch['id']) {
                 return true;
             //Checks if the interval has not yet expired
-            } elseif ($lastSearch['time'] + $interval > time()) {
+            } elseif ($lastSearch['time'] + (int)$interval > time()) {
                 return false;
             }
         }

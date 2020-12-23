@@ -1,0 +1,99 @@
+parameters:
+    level: 6
+
+    paths:
+        - config
+        - src
+        - templates
+        - tests
+
+    bootstrapFiles:
+        - tests/bootstrap.php
+
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
+    treatPhpDocTypesAsCertain: false
+
+    excludes_analyse:
+        - config/Migrations/
+        - config/elfinder/
+        - tests/test_app/
+
+    ignoreErrors:
+        - '#^Call to an undefined method Psr\\Http\\Message\\ResponseInterface#'
+        - '#^Call to an undefined method Cake\\(Controller\\(Controller|Component\\(Auth|Flash)Component)|Datasource\\RepositoryInterface|Core\\PluginApplicationInterface|Http\\ServerRequest|ORM\\Association\\BelongsToMany)#'
+        - '#^Constant [\w\_]+ not found\.$#'
+        - '#^Static call to instance method Tools\\Exceptionist#'
+        - '#^(Negated boolean expression|(Ternary operator|If) condition|Result of (\|\||\&\&)|(Right|Left) side of &&) is always (false|true)\.$#'
+        - '#expects MeCms\\ORM\\Query, Cake\\ORM\\Query given\.$#'
+        - '#^PHPDoc tag @use has invalid value \([\w\\]+GetStartAndEndDateTrait\:\:getStartAndEndDate\(\)\)#'
+        - '#^Parameter \#1 \$var_array of function extract is passed by reference, so it expects variables only\.$#'
+        - '#^Unable to resolve the template type (RealInstanceType|ExpectedType) in call to method#'
+        - '#^(Access|Call) to an undefined (method|property) ([\w\\]+\|)?PHPUnit\\Framework\\MockObject\\MockObject#'
+        - '#^(Access|Call) to an undefined (method|property) (Cake\\ORM\\|MeCms\\Model\\Table\\\w+)Table#'
+
+        -
+            message: '#^Access to an undefined property MeCms\\Command\\(Install\\)?(AddUser|Groups|Users|CreateGroups)Command\:\:\$Users(Groups)?\.$#'
+            path: src/Command
+
+        -
+            message: '#^Access to an undefined property MeCms\\Controller\\(Admin\\)?\w+Controller\:\:\$\w+\.$#'
+            path: src/Controller
+
+        -
+            message: '#expects MeCms\\Model\\Entity\\User, Cake\\Datasource\\EntityInterface given\.$#'
+            path: src/Controller
+
+        -
+            message: '#^Unreachable statement \- code above always terminates\.$#'
+            count: 1
+            path: src/Controller/UsersController.php
+
+        -
+            message: '#should return MeCms\\ORM\\Query but returns Cake\\ORM\\Query\.$#'
+            path: src/Model/Table
+
+        -
+            message: '#^(Access|Call) to an undefined (property|method) (MeCms|Cake)\\View\\(Cell|Helper|View)\\\w+(Cell|Helper|View)#'
+            path: src/View
+
+        -
+            message: "#^Cannot unset offset 'class' on array\\('aria\\-expanded' \\=\\> 'true'\\)\\.$#"
+            count: 1
+            path: src/View/Helper/MenuBuilderHelper.php
+
+        -
+            message: '#^(Undefined variable: \$this|Variable \$\w+ might not be defined\.)$#'
+            path: templates
+
+        -
+            message: '#^Call to function compact\(\) contains possibly undefined variable \$\w+\.$#'
+            path: templates
+
+        -
+            message: '#no (return )?typehint specified\.$#'
+            path: tests/TestCase
+
+        -
+            message: '#^Property [\w\\]+\:\:\$_(in|err) \([\w\\]+\) does not accept null\.$#'
+            path: tests/TestCase/Command
+
+        -
+            message: '#^Access to an undefined property (Cake|MeCms)\\Controller\\\w*Controller#'
+            path: tests/TestCase/Controller
+
+        -
+            message: '#^Expression \"\$PostsController->Foo\" on a separate line does not do anything\.#'
+            path: tests/TestCase/Controller/AppControllerTest.php
+
+        -
+            message: '#^Parameter \#1 \$className of method MeTools\\TestSuite\\TestCase::getMockForController\(\) expects string, false given\.$#'
+            path: tests/TestCase/Controller/Admin/SystemsControllerTest.php
+
+        -
+            message: '#^Parameter \#2 \$haystack of method PHPUnit\\Framework\\Assert::assertStringContainsString\(\) expects string, null given\.#'
+            path: tests/TestCase/Mailer
+
+        -
+            message: '#^Property [\w\\]+::\$Posts \(MeCms\\Model\\Table\\PostsTable\|PHPUnit\\Framework\\MockObject\\MockObject\) does not accept Cake\\ORM\\Table\.#'
+            path: tests/TestCase/Model/Table/Traits

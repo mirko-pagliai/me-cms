@@ -1,5 +1,20 @@
 # 2.x branch
 ## 2.29 branch
+### 2.29.4
+* `SitemapBuilder::getMethods()` returns a collection and it's now public;
+* `StaticPage::all()` returns a collection;
+* `AppView::userbar()` always returns the userbar as array;
+* `Plugin::all()` method now takes the `mecms_core` option, which excludes
+    plugins automatically requested by MeCms;
+* fixed `TestSuite` classes, `MenuBuilderHelper` and some template files, improved
+    to use with other plugins;
+* fixed old bug on loading theme plugins;
+* fixed little bug for the `description` field for `Banner` and `Photo` entities;
+* added `cake` binaries and fixed composer script to extract POT files;
+* updated for `php-tools` 1.4.5;
+* removed redundant code in routes;
+* added `phpstan`, so fixed some code and descriptions.
+
 ### 2.29.3
 * fixed a bug for `FixElFinderCommand`. Now the `elfinder-cke.html` file works.
 

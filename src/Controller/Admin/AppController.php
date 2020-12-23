@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -95,10 +96,9 @@ abstract class AppController extends BaseAppController
     public function referer($default = '/', bool $local = false): string
     {
         $request = $this->getRequest();
-        $session = $request->getSession();
-        if ($default == ['action' => 'index'] &&
-            $session->read('referer.controller') == $request->getParam('controller')) {
-            return $session->read('referer.target');
+        $referer = (array)$request->getSession()->read('referer') + ['controller' => '', 'target' => ''];
+        if ($default == ['action' => 'index'] && $referer['controller'] == $request->getParam('controller')) {
+            return $referer['target'];
         }
 
         return parent::referer($default, $local);

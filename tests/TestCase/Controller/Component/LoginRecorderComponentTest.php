@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -21,6 +22,7 @@ use InvalidArgumentException;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeTools\TestSuite\ComponentTestCase;
 use Tools\FileArray;
+use Tools\Filesystem;
 
 /**
  * LoginRecorderTest class
@@ -31,7 +33,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Internal method to get a `LoginRecorder` instance
      * @param array|null $methods Methods you want to mock
      * @param array $userAgent Data returned by the `getUserAgent()` method
-     * @return \MeCms\Controller\Component\LoginRecorderComponent|\PHPUnit_Framework_MockObject_MockObject
+     * @return \MeCms\Controller\Component\LoginRecorderComponent|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockForLoginRecorder(?array $methods = ['getUserAgent'], array $userAgent = [])
     {
@@ -70,8 +72,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
     {
         parent::tearDown();
 
-        //Deletes the file
-        @unlink_recursive(LOGIN_RECORDS);
+        (new Filesystem())->unlinkRecursive(LOGIN_RECORDS, false, true);
     }
 
     /**
@@ -89,7 +90,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $request->expects($this->once())
             ->method('clientIp')
             ->will($this->returnValue('::1'));
-        $this->Component->getController()->request = $request;
+        $this->Component->getController()->setRequest($request);
         $this->assertEquals('127.0.0.1', $this->invokeMethod($this->Component, 'getClientIp'));
     }
 
@@ -153,7 +154,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $this->assertIsArray($result);
 
         //Creates an empty file. Now is always empty
-        @create_file(LOGIN_RECORDS . 'user_1.log');
+        (new Filesystem())->createFile(LOGIN_RECORDS . 'user_1.log');
         $result = $this->getMockForLoginRecorder()->read();
         $this->assertEmpty($result);
         $this->assertIsArray($result);

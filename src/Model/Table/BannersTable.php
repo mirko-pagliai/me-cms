@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -18,6 +19,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\BannersPositionsTable;
 use MeCms\Model\Validation\BannerValidator;
 use MeCms\ORM\Query;
 
@@ -60,8 +62,8 @@ class BannersTable extends AppTable
 
     /**
      * "active" find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function findActive(Query $query): Query
     {
@@ -81,7 +83,7 @@ class BannersTable extends AppTable
         $this->setDisplayField('filename');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Positions', ['className' => 'MeCms.BannersPositions'])
+        $this->belongsTo('Positions', ['className' => BannersPositionsTable::class])
             ->setForeignKey('position_id')
             ->setJoinType('INNER');
 
@@ -93,9 +95,9 @@ class BannersTable extends AppTable
 
     /**
      * Build query from filter data
-     * @param \Cake\ORM\Query $query Query object
-     * @param array $data Filter data ($this->getRequest()->getQueryParams())
-     * @return \Cake\ORM\Query $query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @param array $data Filter data (`$this->getRequest()->getQueryParams()`)
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = []): Query
     {

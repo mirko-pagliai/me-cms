@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -14,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Utility;
 
+use Cake\Collection\CollectionInterface;
 use Cake\Core\App;
 use Cake\Routing\Router;
 use Cake\Utility\Xml;
@@ -25,59 +27,53 @@ use MeCms\Core\Plugin;
 class SitemapBuilder
 {
     /**
-     * Internal method to get methods from `Sitemap` classes
+     * Gets all executable methods for the `Sitemap` class of a plugin
      * @param string $plugin Plugin
-     * @return array Array with classes and methods names
+     * @return \Cake\Collection\CollectionInterface Collection of classes and methods names
      */
-    protected static function getMethods(string $plugin): array
+    public static function getMethods(string $plugin): CollectionInterface
     {
-        //Sets the class name
         $class = App::classname($plugin . '.Sitemap', 'Utility');
+        $methods = $class ? get_child_methods($class) : [];
 
-        //Gets all methods from the `Sitemap` class of the plugin
-        return $class ? array_map(function ($name) use ($class) {
+        return collection($methods)->map(function (string $name) use ($class) {
             return compact('class', 'name');
-        }, get_child_methods($class)) : [];
+        });
     }
 
     /**
-     * Parses url
+     * Internal method to parse each url
      * @param string|array|null $url Url
      * @param array $options Options, for example `lastmod` or `priority`
      * @return array
-     * @see Cake\Routing\Router::url()
      */
     protected static function parse($url, array $options = []): array
     {
         if (!empty($options['lastmod']) && !is_string($options['lastmod'])) {
             $options['lastmod'] = $options['lastmod']->format('c');
         }
-        $options += ['priority' => '0.5'];
 
-        return array_merge(['loc' => Router::url($url, true)], $options);
+        return ['loc' => Router::url($url, true)] + $options + ['priority' => '0.5'];
     }
 
     /**
      * Generate the sitemap.
      *
-     * For each plugin, calls dynamically all methods from the `Sitemap` class.
-     * Each method must be return an array or urls to add to the sitemap.
+     * For each plugin, calls dynamically all executable methods for the
+     *  `Sitemap` class, if that exists.
+     *
+     * Each method must return an array of url which will be added to the sitemap.
      * @return string
      * @see \MeCms\Utility\Sitemap
-     * @uses getMethods()
-     * @uses parse()
      */
     public static function generate(): string
     {
         //Adds the homepage
         $url[] = self::parse('/');
 
-        foreach (Plugin::all() as $plugin) {
-            //Gets all methods from `Sitemap` class of the plugin
-            $methods = self::getMethods($plugin);
-
-            //Calls each method
-            foreach ($methods as $method) {
+        foreach (Plugin::all(['mecms_core' => false]) as $plugin) {
+            //Calls all executable methods for the `Sitemap` class of a plugin
+            foreach (self::getMethods($plugin) as $method) {
                 $url = array_merge($url, (array)call_user_func([$method['class'], $method['name']]));
             }
         }

@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -136,6 +137,7 @@ class LogsController extends AppController
         $serialized = $this->getPath($filename, true);
 
         //Deletes the serialized log copy, if it exists
+        $successSerialized = true;
         if (file_exists($serialized)) {
             $successSerialized = @unlink($serialized);
         }

@@ -21,9 +21,9 @@ use Cake\Routing\Router;
 use League\CommonMark\CommonMarkConverter;
 use MeCms\Controller\Admin\AppController;
 use MeCms\Core\Plugin;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Thumber\Cake\Utility\ThumbManager;
+use Tools\Filesystem;
 
 /**
  * Systems controller
@@ -83,18 +83,20 @@ class SystemsController extends AppController
      */
     public function changelogs(): void
     {
+        $Filesystem = new Filesystem();
+        $files = [];
+
         foreach (Plugin::all() as $plugin) {
             $file = Plugin::path($plugin, 'CHANGELOG.md', false);
 
             if (is_readable($file)) {
-                $files[strtolower($plugin)] = rtr($file);
+                $files[strtolower($plugin)] = $Filesystem->rtr($file);
             }
         }
 
         //If a changelog file has been specified
-        if ($this->getRequest()->getQuery('file')) {
-            $file = $files[$this->getRequest()->getQuery('file')];
-            $file = (new Filesystem())->isAbsolutePath($file) ? $file : add_slash_term(ROOT) . $file;
+        if ($this->getRequest()->getQuery('file') && $files) {
+            $file = $Filesystem->makePathAbsolute($files[$this->getRequest()->getQuery('file')], ROOT);
             $converter = new CommonMarkConverter([
                 'html_input' => 'strip',
                 'allow_unsafe_links' => false,
@@ -136,13 +138,14 @@ class SystemsController extends AppController
     {
         $this->getRequest()->allowMethod(['post', 'delete']);
 
+        $Filesystem = new Filesystem();
         $assetsTarget = getConfigOrFail('Assets.target');
         $exceptions = ['.gitkeep', 'empty'];
         $success = true;
         switch ($type) {
             case 'all':
-                @unlink_recursive($assetsTarget, $exceptions);
-                @unlink_recursive(LOGS, $exceptions);
+                $Filesystem->unlinkRecursive($assetsTarget, $exceptions);
+                $Filesystem->unlinkRecursive(LOGS, $exceptions);
                 $success = self::clearCache() && self::clearSitemap() && (new ThumbManager())->clearAll();
                 break;
             case 'cache':

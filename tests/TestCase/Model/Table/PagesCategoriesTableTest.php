@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -79,15 +80,12 @@ class PagesCategoriesTableTest extends TableTestCase
 
         $this->assertBelongsTo($this->Table->Parents);
         $this->assertEquals('parent_id', $this->Table->Parents->getForeignKey());
-        $this->assertEquals('MeCms.PagesCategories', $this->Table->Parents->getClassName());
 
         $this->assertHasMany($this->Table->Childs);
         $this->assertEquals('parent_id', $this->Table->Childs->getForeignKey());
-        $this->assertEquals('MeCms.PagesCategories', $this->Table->Childs->getClassName());
 
         $this->assertHasMany($this->Table->Pages);
         $this->assertEquals('category_id', $this->Table->Pages->getForeignKey());
-        $this->assertEquals('MeCms.Pages', $this->Table->Pages->getClassName());
 
         $this->assertHasBehavior(['Timestamp', 'Tree']);
 
@@ -106,7 +104,7 @@ class PagesCategoriesTableTest extends TableTestCase
             $this->assertEquals(1, $children->get('parent_id'));
             $childs = $this->Table->findById($children->get('id'))->contain('Childs')->extract('childs')->first();
             $this->assertContainsOnlyInstancesOf(PagesCategory::class, $childs);
-            $this->assertEquals(3, $childs[0]->get('parent_id'));
+            $this->assertEquals(3, array_value_first($childs)->get('parent_id'));
         }
     }
 

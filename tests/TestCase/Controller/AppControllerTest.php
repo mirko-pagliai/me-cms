@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -41,7 +42,7 @@ class AppControllerTest extends ControllerTestCase
         $this->assertInstanceOf(BelongsTo::class, $PostsController->Users);
 
         $this->expectException(Notice::class);
-        $this->expectExceptionMessageRegExp('/^Undefined property\: PostsController\:\:\$Foo in/');
+        $this->expectExceptionMessageMatches('/^Undefined property\: PostsController\:\:\$Foo in/');
         $PostsController->Foo;
     }
 

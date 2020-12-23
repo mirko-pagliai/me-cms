@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -115,6 +116,6 @@ class CreateGroupsCommandTest extends TestCase
                 ->getMock();
         }));
 
-        $this->assertNull($this->Command->execute(new Arguments([], [], [], []), new ConsoleIo()));
+        $this->assertNull($this->Command->execute(new Arguments([], [], []), new ConsoleIo()));
     }
 }

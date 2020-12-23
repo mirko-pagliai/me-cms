@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -22,7 +23,7 @@ use Cake\Http\ServerRequest;
  */
 foreach (['add', 'delete', 'edit', 'index', 'view'] as $action) {
     ServerRequest::addDetector($action, function (ServerRequest $request) use ($action) {
-        return $request->is('action', $action);
+        return $request->isAction($action);
     });
 }
 
@@ -61,7 +62,7 @@ ServerRequest::addDetector('offline', function (ServerRequest $request) {
     }
 
     //Always online for some actions
-    if ($request->is('action', ['offline', 'login', 'logout'])) {
+    if ($request->isAction(['offline', 'login', 'logout'])) {
         return false;
     }
 

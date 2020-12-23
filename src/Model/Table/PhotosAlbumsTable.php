@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -18,6 +19,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\PhotosTable;
 use MeCms\Model\Validation\PhotosAlbumValidator;
 use MeCms\ORM\Query;
 
@@ -72,8 +74,8 @@ class PhotosAlbumsTable extends AppTable
 
     /**
      * "active" find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function findActive(Query $query): Query
     {
@@ -95,8 +97,7 @@ class PhotosAlbumsTable extends AppTable
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Photos', ['className' => 'MeCms.Photos'])
-            ->setForeignKey('album_id');
+        $this->hasMany('Photos', ['className' => PhotosTable::class])->setForeignKey('album_id');
 
         $this->addBehavior('Timestamp');
 

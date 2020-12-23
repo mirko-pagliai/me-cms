@@ -17,7 +17,7 @@ if (empty($months) || count($months) < 2) {
     return;
 }
 
-$this->extend('/common/widget');
+$this->extend('MeCms./common/widget');
 $this->assign('title', __d('me_cms', 'Posts by month'));
 
 echo $this->Form->create(null, [

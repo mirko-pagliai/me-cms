@@ -16,7 +16,7 @@ if (empty($photos) || $photos->isEmpty()) {
     return;
 }
 
-$this->extend('/common/widget');
+$this->extend('MeCms./common/widget');
 $this->assign('title', __dn('me_cms', 'Random photo', 'Random {0} photos', $photos->count(), $photos->count()));
 
 foreach ($photos as $photo) {

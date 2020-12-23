@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="4"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    autoloader="tests/bootstrap.php"
+>
+    <projectFiles>
+        <directory name="config" />
+        <directory name="src" />
+        <directory name="templates" />
+        <directory name="tests" />
+        <ignoreFiles>
+            <directory name="config/elfinder" />
+            <directory name="config/Migrations" />
+            <directory name="tests/test_app" />
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <ImplementedReturnTypeMismatch>
+            <errorLevel type="suppress">
+                <directory name="src/Model/Table" />
+            </errorLevel>
+        </ImplementedReturnTypeMismatch>
+
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <directory name="src/TestSuite" />
+                <directory name="tests/TestCase" />
+            </errorLevel>
+        </InternalMethod>
+
+        <InvalidArgument>
+            <errorLevel type="suppress">
+                <directory name="src/Controller" />
+                <directory name="tests/TestCase/Controller" />
+                <directory name="tests/TestCase/Model/Table" />
+            </errorLevel>
+        </InvalidArgument>
+
+        <InvalidScalarArgument>
+            <errorLevel type="suppress">
+                <file name="src/Command/AddUserCommand.php" />
+            </errorLevel>
+        </InvalidScalarArgument>
+
+        <InvalidScope>
+            <errorLevel type="suppress">
+                <directory name="templates" />
+            </errorLevel>
+        </InvalidScope>
+
+        <InvalidArgument>
+            <errorLevel type="suppress">
+                <directory name="src/Controller" />
+                <directory name="tests/TestCase/Controller" />
+                <directory name="tests/TestCase/Model/Table" />
+            </errorLevel>
+        </InvalidArgument>
+
+        <LessSpecificImplementedReturnType>
+            <errorLevel type="suppress">
+                <file name="src/Database/Type/JsonEntityType.php" />
+            </errorLevel>
+        </LessSpecificImplementedReturnType>
+
+        <MethodSignatureMismatch>
+            <errorLevel type="suppress">
+                <file name="src/Model/Table/TokensTable.php" />
+            </errorLevel>
+        </MethodSignatureMismatch>
+
+        <NoInterfaceProperties>
+            <errorLevel type="suppress">
+                <directory name="src/TestSuite" />
+                <directory name="tests/TestCase" />
+            </errorLevel>
+        </NoInterfaceProperties>
+
+        <RedundantCondition>
+            <errorLevel type="suppress">
+                <file name="src/Controller/Traits/GetStartAndEndDateTrait.php" />
+            </errorLevel>
+        </RedundantCondition>
+
+        <TypeDoesNotContainType>
+            <errorLevel type="suppress">
+                <file name="src/Controller/Traits/GetStartAndEndDateTrait.php" />
+                <file name="src/Utility/StaticPage.php" />
+                <file name="templates/Posts/index_by_date.php" />
+            </errorLevel>
+        </TypeDoesNotContainType>
+
+        <UndefinedPropertyFetch>
+            <errorLevel type="suppress">
+                <directory name="tests/TestCase/Command" />
+            </errorLevel>
+        </UndefinedPropertyFetch>
+
+        <UndefinedMagicPropertyAssignment>
+            <errorLevel type="suppress">
+                <directory name="tests/TestCase" />
+            </errorLevel>
+        </UndefinedMagicPropertyAssignment>
+
+        <UndefinedMagicPropertyFetch>
+            <errorLevel type="suppress">
+                <directory name="tests/TestCase" />
+            </errorLevel>
+        </UndefinedMagicPropertyFetch>
+
+        <UndefinedGlobalVariable>
+            <errorLevel type="suppress">
+                <directory name="templates" />
+            </errorLevel>
+        </UndefinedGlobalVariable>
+
+        <UndefinedConstant errorLevel="suppress" />
+        <UndefinedMagicMethod errorLevel="suppress" />
+        <UndefinedMethod errorLevel="suppress" />
+        <UndefinedThisPropertyFetch errorLevel="suppress" />
+    </issueHandlers>
+</psalm>

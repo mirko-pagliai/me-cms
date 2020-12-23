@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -16,7 +17,7 @@ namespace MeCms\Test\Fixture;
 
 use Cake\Datasource\ConnectionInterface;
 use Cake\TestSuite\Fixture\TestFixture;
-use Symfony\Component\Filesystem\Exception\IOException;
+use Tools\Filesystem;
 
 /**
  * PhotosFixture
@@ -92,10 +93,7 @@ class PhotosFixture extends TestFixture
      */
     public function drop(ConnectionInterface $db): bool
     {
-        try {
-            unlink_recursive(PHOTOS, 'empty');
-        } catch (IOException $e) {
-        }
+        (new Filesystem())->unlinkRecursive(PHOTOS, 'empty', true);
 
         return parent::drop($db);
     }
@@ -111,8 +109,10 @@ class PhotosFixture extends TestFixture
     {
         foreach ($this->records as $record) {
             $file = PHOTOS . $record['album_id'] . DS . $record['filename'];
-            @mkdir(dirname($file));
-            @copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
+            if (!file_exists($file)) {
+                @mkdir(dirname($file));
+                copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
+            }
         }
 
         return parent::insert($db);

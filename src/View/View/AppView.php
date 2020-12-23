@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -25,7 +26,6 @@ class AppView extends View
     /**
      * Internal property to set the userbar elements
      * @var array
-     * @see userbar()
      */
     protected $userbar = [];
 
@@ -33,10 +33,6 @@ class AppView extends View
      * Internal method to set some blocks
      * @return void
      * @uses \MeCms\View\View::getTitleForLayout()
-     * @uses \MeTools\View\Helper\HtmlHelper::meta()
-     * @uses \MeTools\View\Helper\LibraryHelper::analytics()
-     * @uses \MeTools\View\Helper\LibraryHelper::shareaholic()
-     * @uses $userbar
      */
     protected function setBlocks(): void
     {
@@ -111,18 +107,17 @@ class AppView extends View
     }
 
     /**
-     * Sets one or more userbar contents.
+     * Sets one or more userbar contents
      * @param string|array|null $content Contents. It can be a string or an
      *  array of contents. If `null`, returns an array of current contents
-     * @return array|void
-     * @uses $userbar
+     * @return array
      */
-    public function userbar($content = null)
+    public function userbar($content = null): array
     {
-        if (!$content) {
-            return $this->userbar;
+        if ($content) {
+            $this->userbar = array_merge($this->userbar, (array)$content);
         }
 
-        $this->userbar = array_merge($this->userbar, (array)$content);
+        return $this->userbar;
     }
 }

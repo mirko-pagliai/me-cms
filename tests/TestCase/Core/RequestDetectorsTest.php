@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -24,13 +25,13 @@ use MeCms\TestSuite\TestCase;
 class RequestDetectorsTest extends TestCase
 {
     /**
-     * @var \Cake\Http\ServerRequest|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\Http\ServerRequest|\PHPUnit\Framework\MockObject\MockObject
      */
     public $Request;
 
     /**
      * Internal method to mock a request
-     * @return \Cake\Http\ServerRequest|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Cake\Http\ServerRequest|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockForRequest()
     {

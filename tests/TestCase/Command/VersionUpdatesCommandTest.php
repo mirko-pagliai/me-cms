@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -104,10 +105,10 @@ class VersionUpdatesCommandTest extends TestCase
      * Test for `deleteOldDirectories()` method
      * @test
      */
-    public function testdeleteOldDirectories()
+    public function testDeleteOldDirectories()
     {
         $dir = WWW_ROOT . 'fonts';
-        mkdir($dir);
+        @mkdir($dir);
         $this->assertFileExists($dir);
         $this->Command->deleteOldDirectories();
         $this->assertFileNotExists($dir);

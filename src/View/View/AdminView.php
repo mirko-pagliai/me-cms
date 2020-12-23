@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -40,11 +41,11 @@ class AdminView extends View
 
     /**
      * Renders view for given template file and layout
-     * @param string|null $view Name of view file to use
-     * @param string|null $layout Layout to use
+     * @param string|null $template Name of template file to use
+     * @param string|false|null $layout Layout to use. False to disable
      * @return string Rendered content
      */
-    public function render($view = null, $layout = null): string
+    public function render(?string $template = null, $layout = null): string
     {
         //Sets some view vars
         $this->set('priorities', [
@@ -55,6 +56,6 @@ class AdminView extends View
             '5' => sprintf('5 - %s', __d('me_cms', 'Very high')),
         ]);
 
-        return parent::render($view, $layout);
+        return parent::render($template, $layout);
     }
 }

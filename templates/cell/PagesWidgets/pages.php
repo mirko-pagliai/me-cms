@@ -19,7 +19,7 @@ if (empty($pages) || $pages->isEmpty()) {
     return;
 }
 
-$this->extend('/common/widget');
+$this->extend('MeCms./common/widget');
 $this->assign('title', I18N_PAGES);
 
 $pages = $pages->map(function (Page $page) {

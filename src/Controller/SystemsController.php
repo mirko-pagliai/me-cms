@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -20,6 +21,7 @@ use Cake\I18n\Time;
 use MeCms\Controller\AppController;
 use MeCms\Form\ContactUsForm;
 use MeCms\Utility\Sitemap;
+use Tools\Filesystem;
 
 /**
  * Systems controller
@@ -121,7 +123,7 @@ class SystemsController extends AppController
         }
 
         if (empty($sitemap)) {
-            create_file(SITEMAP, gzencode(Sitemap::generate(), 9), 0777);
+            (new Filesystem())->createFile(SITEMAP, gzencode(Sitemap::generate(), 9), 0777);
         }
 
         return $this->getResponse()->withFile(SITEMAP);

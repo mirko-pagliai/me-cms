@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -66,18 +67,19 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     public function testGetFontSizes()
     {
         $widget = $this->Widget->widget('MeCms.PostsTags::popular');
-        $getFontSizesMethod = function () use ($widget) {
-            return $this->invokeMethod($widget, 'getFontSizes', func_get_args());
+        $getFontSizesMethod = function ($style) use ($widget) {
+            return $this->invokeMethod($widget, 'getFontSizes', [$style]);
         };
 
-        $this->assertEquals([40, 12], $getFontSizesMethod());
+        $this->assertEquals([40, 12], $getFontSizesMethod([]));
         $this->assertEquals([20, 12], $getFontSizesMethod(['maxFont' => 20]));
         $this->assertEquals([40, 20], $getFontSizesMethod(['minFont' => 20]));
         $this->assertEquals([30, 20], $getFontSizesMethod(['maxFont' => 30, 'minFont' => 20]));
+        $this->assertEquals([40, 12], $getFontSizesMethod(false));
 
         //With invalid values
         $this->expectException(InvalidArgumentException::class);
-        $this->invokeMethod($getFontSizesMethod(['maxFont' => 10, 'minFont' => 20]));
+        $getFontSizesMethod(['maxFont' => 10, 'minFont' => 20]);
     }
 
     /**

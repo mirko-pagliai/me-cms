@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -41,7 +42,7 @@ class PostsTagsWidgetsCell extends Cell
      * @return array
      * @throws \InvalidArgumentException
      */
-    protected function getFontSizes(array $style = []): array
+    protected function getFontSizes($style = []): array
     {
         //Maximum and minimun font sizes we want to use
         [$maxFont, $minFont] = [$style['maxFont'] ?? 40, $style['minFont'] ?? 12];

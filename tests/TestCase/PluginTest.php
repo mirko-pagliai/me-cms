@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\TestCase;
 
+use Cake\Core\Configure;
 use Cake\Http\BaseApplication;
 use MeCms\Plugin as MeCms;
 use MeCms\TestSuite\TestCase;
@@ -37,6 +38,7 @@ class PluginTest extends TestCase
             return array_keys(iterator_to_array($app->getPlugins()));
         };
 
+        Configure::write('MeCms.default.theme', 'MyTheme');
         $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
 
         $Plugin = $this->getMockBuilder(MeCms::class)
@@ -53,6 +55,7 @@ class PluginTest extends TestCase
         //Now is cli
         $Plugin->bootstrap($app);
         $loadedPlugins = $getLoadedPlugins($app);
+        $this->assertContains('MyTheme', $loadedPlugins);
         $this->assertNotEmpty($loadedPlugins);
 
         //Now is not cli

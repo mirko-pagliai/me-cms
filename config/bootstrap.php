@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Database\Type;
 use Cake\Log\Log;
 use EntityFileLog\Log\Engine\EntityFileLog;
@@ -54,12 +53,6 @@ Configure::write('Tokens.usersClassOptions', [
 Configure::load('MeCms.me_cms');
 if (is_readable(CONFIG . 'me_cms.php')) {
     Configure::load('me_cms');
-}
-
-//Loads theme plugin
-$theme = getConfig('default.theme');
-if ($theme && !Plugin::loaded($theme)) {
-    Plugin::load($theme);
 }
 
 //Adds all cache configurations

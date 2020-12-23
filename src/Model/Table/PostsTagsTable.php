@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -16,6 +17,8 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Table\AppTable;
+use MeCms\Model\Table\PostsTable;
+use MeCms\Model\Table\TagsTable;
 use MeCms\Model\Validation\PostsTagValidator;
 
 /**
@@ -56,11 +59,11 @@ class PostsTagsTable extends AppTable
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Posts', ['className' => 'MeCms.Posts'])
+        $this->belongsTo('Posts', ['className' => PostsTable::class])
             ->setForeignKey('post_id')
             ->setJoinType('INNER');
 
-        $this->belongsTo('Tags', ['className' => 'MeCms.Tags'])
+        $this->belongsTo('Tags', ['className' => TagsTable::class])
             ->setForeignKey('tag_id')
             ->setJoinType('INNER');
 

@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -45,13 +46,12 @@ class AssociationsSameAliasesTest extends TableTestCase
     public function testAssociationsSameAliases()
     {
         foreach (['Pages', 'Posts'] as $name) {
-            $table = TableRegistry::getTableLocator()->get('MeCms.' . $name);
-            $categories = $table->Categories;
+            $categories = TableRegistry::getTableLocator()->get('MeCms.' . $name)->Categories;
 
             $this->assertBelongsTo($categories);
             $this->assertEquals('Categories', $categories->getName());
-            $this->assertEquals(sprintf('%s.%sCategories', 'MeCms', $name), $categories->getClassName());
-            $this->assertInstanceof(sprintf('%s\Model\Entity\%sCategory', 'MeCms', $name), $categories->find()->first());
+            $this->assertEquals('MeCms\\Model\\Table\\' . $name . 'CategoriesTable', $categories->getClassName());
+            $this->assertInstanceof('MeCms\\Model\\Entity\\' . $name . 'Category', $categories->find()->first());
         }
     }
 }

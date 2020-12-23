@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -56,6 +57,16 @@ class PhotoTest extends EntityTestCase
     {
         $expected = PHOTOS . $this->Entity->get('album_id') . DS . $this->Entity->get('filename');
         $this->assertEquals($expected, $this->Entity->get('path'));
+    }
+
+    /**
+     * Test for `_getDescription()` method
+     * @test
+     */
+    public function testDescriptionAccessors()
+    {
+        $this->assertNotNull($this->Entity->get('description'));
+        $this->assertSame('', $this->Entity->set('description', null)->get('description'));
     }
 
     /**

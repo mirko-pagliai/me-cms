@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -83,7 +84,8 @@ abstract class BannersAndPhotosAdminControllerTestCase extends ControllerTestCas
         //Only for the `testUploadErrors()` method, it mocks the table
         if ($this->getName() == 'testUploadErrors') {
             $alias = $this->Table->getRegistryAlias();
-            $this->_controller->$alias = $this->getMockForModel('MeCms.' . $alias, ['save']);
+            $plugin = $this->getPluginName($this);
+            $this->_controller->$alias = $this->getMockForModel($plugin . '.' . $alias, ['save']);
         }
     }
 

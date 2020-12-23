@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -21,7 +22,11 @@ use Cake\Event\Event;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
+use MeCms\Model\Table\PostsCategoriesTable;
+use MeCms\Model\Table\PostsTagsTable;
+use MeCms\Model\Table\TagsTable;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
+use MeCms\Model\Table\UsersTable;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\ORM\PostsAndPagesTables;
 use MeCms\ORM\Query;
@@ -100,8 +105,8 @@ class PostsTable extends PostsAndPagesTables
 
     /**
      * `forIndex()` find method
-     * @param \Cake\ORM\Query $query Query object
-     * @return \Cake\ORM\Query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      * @since 2.22.8
      */
     public function findForIndex(Query $query): Query
@@ -129,7 +134,7 @@ class PostsTable extends PostsAndPagesTables
         Exceptionist::objectPropertyExists($post, ['id', 'tags']);
 
         $cache = sprintf('related_%s_posts_for_%s', $limit, $post->get('id'));
-        $cache = $images ? $cache . '_with_images' : $cache;
+        $cache .= $images ? '_with_images' : '';
 
         return Cache::remember($cache, function () use ($images, $limit, $post) {
             $related = [];
@@ -175,20 +180,20 @@ class PostsTable extends PostsAndPagesTables
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', ['className' => 'MeCms.PostsCategories'])
+        $this->belongsTo('Categories', ['className' => PostsCategoriesTable::class])
             ->setForeignKey('category_id')
             ->setJoinType('INNER')
             ->setTarget($this->getTableLocator()->get('MeCms.PostsCategories'))
             ->setAlias('Categories');
 
-        $this->belongsTo('Users', ['className' => 'MeCms.Users'])
+        $this->belongsTo('Users', ['className' => UsersTable::class])
             ->setForeignKey('user_id')
             ->setJoinType('INNER');
 
-        $this->belongsToMany('Tags', ['className' => 'MeCms.Tags', 'joinTable' => 'posts_tags'])
+        $this->belongsToMany('Tags', ['className' => TagsTable::class, 'joinTable' => 'posts_tags'])
             ->setForeignKey('post_id')
             ->setTargetForeignKey('tag_id')
-            ->setThrough('MeCms.PostsTags');
+            ->setThrough(PostsTagsTable::class);
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', [
@@ -203,7 +208,7 @@ class PostsTable extends PostsAndPagesTables
      * Gets the query for related posts from a tag ID
      * @param int $tagId Tag ID
      * @param bool $onlyWithImages If `true`, gets only posts with images
-     * @return \Cake\ORM\Query $query Query object
+     * @return \MeCms\ORM\Query $query Query object
      * @since 2.23.0
      */
     public function queryForRelated(int $tagId, bool $onlyWithImages = true): Query
@@ -224,9 +229,9 @@ class PostsTable extends PostsAndPagesTables
 
     /**
      * Build query from filter data
-     * @param \Cake\ORM\Query $query Query object
-     * @param array $data Filter data ($this->getRequest()->getQueryParams())
-     * @return \Cake\ORM\Query $query Query object
+     * @param \MeCms\ORM\Query $query Query object
+     * @param array $data Filter data (`$this->getRequest()->getQueryParams()`)
+     * @return \MeCms\ORM\Query $query Query object
      */
     public function queryFromFilter(Query $query, array $data = []): Query
     {

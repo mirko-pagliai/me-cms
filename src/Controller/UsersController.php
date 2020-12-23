@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -207,6 +208,7 @@ class UsersController extends AppController
 
         if ($this->getRequest()->is('post')) {
             $user = $this->Auth->identify();
+            $username = $password = null;
             extract($this->getRequest()->getData());
 
             if ($user) {

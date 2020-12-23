@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -15,7 +16,6 @@ declare(strict_types=1);
 
 namespace MeCms\Mailer;
 
-use Cake\Mailer\Email;
 use Cake\Mailer\Mailer as CakeMailer;
 
 /**
@@ -25,12 +25,11 @@ abstract class Mailer extends CakeMailer
 {
     /**
      * Constructor
-     * @param \Cake\Mailer\Email|null $email Email instance
-     * @uses getEmailInstance()
+     * @param array|string|null $config Array of configs, or string to load configs from app.php
      */
-    public function __construct(?Email $email = null)
+    public function __construct($config = null)
     {
-        parent::__construct($email);
+        parent::__construct($config);
 
         $this->viewBuilder()->setHelpers(['MeTools.Html'], false);
         $this->setFrom(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))

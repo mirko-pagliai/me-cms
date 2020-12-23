@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -15,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Model\Entity;
 
 use MeCms\TestSuite\EntityTestCase;
+use Tools\Filesystem;
 
 /**
  * UserTest class
@@ -29,7 +31,7 @@ class UserTest extends EntityTestCase
     {
         parent::tearDown();
 
-        @unlink_recursive(USER_PICTURES, 'empty');
+        (new Filesystem())->unlinkRecursive(USER_PICTURES, 'empty', true);
         @unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
     }
 
@@ -60,12 +62,14 @@ class UserTest extends EntityTestCase
     {
         $this->assertEquals('MeCms.no-avatar.jpg', $this->Entity->set('id', 1)->get('picture'));
 
-        @create_file(WWW_ROOT . 'img' . DS . 'no-avatar.jpg', null);
+        $Filesystem = new Filesystem();
+
+        $Filesystem->createFile(WWW_ROOT . 'img' . DS . 'no-avatar.jpg', null);
         $this->assertEquals('no-avatar.jpg', $this->Entity->get('picture'));
 
         $id = 0;
         foreach (['jpg', 'jpeg', 'gif', 'png', 'JPEG'] as $extension) {
-            @create_file(WWW_ROOT . 'img' . DS . 'users' . DS . ++$id . '.' . $extension);
+            $Filesystem->createFile(WWW_ROOT . 'img' . DS . 'users' . DS . ++$id . '.' . $extension);
             $this->assertEquals('users' . DS . $id . '.' . $extension, $this->Entity->set('id', $id)->get('picture'));
         }
     }

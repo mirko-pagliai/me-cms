@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of me-cms.
@@ -22,8 +23,8 @@ $routes->scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
     $routes->setExtensions(['rss']);
 
     //Requires other routes
-    foreach (['banners', 'pages', 'photos', 'posts', 'systems', 'users'] as $name) {
-        require 'routes' . DS . $name . '.php';
+    foreach (glob(dirname(__FILE__) . DS . 'routes' . DS . '*.php') as $filename) {
+        require $filename;
     }
 
     //Default home page
@@ -34,27 +35,19 @@ $routes->scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
 
     $routes->connect('/homepage', ['controller' => 'Posts', 'action' => 'index']);
 
-    //Admin routes
-    $routes->prefix(ADMIN_PREFIX, function (RouteBuilder $routes) {
-        //Admin home page
-        if (!$routes->nameExists('dashboard')) {
-            $routes->connect('/', ['controller' => 'Posts', 'action' => 'index'], ['_name' => 'dashboard']);
-        }
-    });
+    //Admin home page
+    if (!$routes->nameExists('dashboard')) {
+        $routes->connect('/admin', ['controller' => 'Posts', 'action' => 'index', 'prefix' => ADMIN_PREFIX], ['_name' => 'dashboard']);
+    }
+
+    $routes->fallbacks('DashedRoute');
 });
 
-$routes->plugin('MeCms', ['path' => '/me-cms'], function (RouteBuilder $routes) {
+$routes->plugin('MeCms', function (RouteBuilder $routes) {
     $routes->setExtensions(['json']);
 
     //Admin routes
     $routes->prefix(ADMIN_PREFIX, function (RouteBuilder $routes) {
-        //Route `/me-cms/admin`
-        $routes->connect('/', ['controller' => 'Posts', 'action' => 'index']);
-
-        //All others admin routes
         $routes->fallbacks('DashedRoute');
     });
-
-    //All others routes
-    $routes->fallbacks('DashedRoute');
 });

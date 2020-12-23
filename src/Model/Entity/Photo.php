@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of me-cms.
  *
@@ -60,6 +61,16 @@ class Photo extends Entity
         Exceptionist::objectPropertyExists($this, ['album_id', 'filename']);
 
         return PHOTOS . $this->get('album_id') . DS . $this->get('filename');
+    }
+
+    /**
+     * Gets description as string
+     * @param string|null $description Description
+     * @return string
+     */
+    protected function _getDescription(?string $description): string
+    {
+        return (string)$description;
     }
 
     /**
