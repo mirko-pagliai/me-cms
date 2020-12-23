@@ -87,7 +87,7 @@ class UsersController extends AppController
         $token = $this->Token->create($user->get('email'), ['type' => 'signup', 'user_id' => $user->get('id')]);
 
         return (bool)$this->getMailer('MeCms.User')
-            ->set('url', Router::url(['_name' => 'activation', (string)$user->get('id'), $token], true))
+            ->setViewVars('url', Router::url(['_name' => 'activation', (string)$user->get('id'), $token], true))
             ->send('activation', [$user]);
     }
 
@@ -286,7 +286,7 @@ class UsersController extends AppController
                 if ($user) {
                     $token = $this->Token->create($email, ['type' => 'password_forgot', 'user_id' => $user->get('id')]);
                     $this->getMailer('MeCms.User')
-                        ->set('url', Router::url(['_name' => 'passwordReset', (string)$user->get('id'), $token], true))
+                        ->setViewVars('url', Router::url(['_name' => 'passwordReset', (string)$user->get('id'), $token], true))
                         ->send('passwordForgot', [$user]);
                     $this->Flash->success(__d('me_cms', 'We have sent you an email to reset your password'));
 
