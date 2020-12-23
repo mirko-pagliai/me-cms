@@ -1,8 +1,10 @@
 .directory
+.idea
 .phpunit.result.cache
 *_old
 *.lock
 *.old.*
+bin/
 composer.lock
 coverage/
 plugins/
