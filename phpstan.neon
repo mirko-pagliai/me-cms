@@ -95,5 +95,5 @@ parameters:
             path: tests/TestCase/Mailer
 
         -
-            message: '#^Property [\w\\]+::\$Posts \(MeCms\\Model\\Table\\PostsTable\|PHPUnit\\Framework\\MockObject\\MockObject\) does not accept Cake\\ORM\\Table\.#'
-            path: tests/TestCase/Model/Table/Traits
+            message: '#^Property [\w\\]+::\$\w+ \([\w\\\|]*PHPUnit\\Framework\\MockObject\\MockObject\) does not accept Cake\\ORM\\Table\.#'
+            path: tests/TestCase/Model
