@@ -26,7 +26,6 @@ require_once __DIR__ . DS . 'constants.php';
 Configure::write('WRITABLE_DIRS', array_merge(Configure::read('WRITABLE_DIRS', []), [
     getConfigOrFail('Assets.target'),
     getConfigOrFail('DatabaseBackup.target'),
-    BANNERS,
     LOGIN_RECORDS,
     THUMBER_TARGET,
     UPLOADED,

@@ -17,7 +17,6 @@ define('I18N_ALL_STATUS', sprintf('-- %s --', __d('me_cms', 'all status')));
 define('I18N_ALL_VALUES', sprintf('-- %s --', __d('me_cms', 'all values')));
 define('I18N_ALLOWED_CHARS', __d('me_cms', 'Allowed chars'));
 define('I18N_AUTHOR', __d('me_cms', 'Author'));
-define('I18N_BANNERS', __d('me_cms', 'Banners'));
 define('I18N_BEFORE_DELETE', __d('me_cms', 'You must first delete or reassign all items that belong to this element'));
 define('I18N_BELONG_ELEMENT', __d('me_cms', 'View items that belong to this element'));
 define('I18N_BELONG_USER', __d('me_cms', 'View items that belong to this user'));

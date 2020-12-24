@@ -21,7 +21,7 @@ $options = [
     'mask' => 0777,
 ];
 
-foreach (['default', 'admin', 'banners', 'pages', 'posts', 'static_pages', 'users'] as $name) {
+foreach (['default', 'admin', 'pages', 'posts', 'static_pages', 'users'] as $name) {
     $Cache[$name] = $options + ['path' => CACHE . 'me_cms' . DS . $name];
 }
 

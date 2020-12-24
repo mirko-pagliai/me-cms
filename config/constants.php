@@ -17,16 +17,6 @@ if (!defined('ADMIN_PREFIX')) {
     define('ADMIN_PREFIX', 'Admin');
 }
 
-//Sets the default banners directory
-if (!defined('BANNERS')) {
-    define('BANNERS', WWW_ROOT . 'img' . DS . 'banners' . DS);
-}
-
-//Sets the default banners web address
-if (!defined('BANNERS_WWW')) {
-    define('BANNERS_WWW', 'banners/');
-}
-
 //Sets the default ElFinder path
 if (!defined('ELFINDER')) {
     define('ELFINDER', WWW_ROOT . 'vendor' . DS . 'elfinder' . DS);
