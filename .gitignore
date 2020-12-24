@@ -4,6 +4,7 @@
 *_old
 *.lock
 *.old.*
+bin/
 composer.lock
 coverage/
 plugins/
