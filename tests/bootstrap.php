@@ -77,7 +77,7 @@ Configure::write('Session', ['defaults' => 'php']);
 Configure::write('Assets.target', TMP . 'assets');
 Configure::write('DatabaseBackup', ['connection' => 'test', 'target' => TMP . 'backups']);
 Configure::write('Tokens.usersClassOptions', ['foreignKey' => 'user_id', 'className' => 'Users']);
-Configure::write('pluginsToLoad', ['MeTools', 'MeCms']);
+Configure::write('pluginsToLoad', ['MeCms']);
 Security::setSalt('a-long-but-not-random-value');
 define('THUMBER_DRIVER', 'gd');
 
