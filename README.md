@@ -12,7 +12,7 @@ See [cakephp-for-mecms](https://github.com/mirko-pagliai/cakephp-for-mecms).
 ## How to extract POT files
 To extract POT files for this plugin, use the following command:
 ```bash
-$ composer run-script i18n-extract
+$ bin/cake bake migration_snapshot -f --require-table --no-lock --plugin MeCms Initial
 ```
 
 ## Versioning
