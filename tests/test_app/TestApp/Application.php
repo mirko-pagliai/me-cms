@@ -39,7 +39,7 @@ class Application extends BaseApplication
     {
         $this->addPlugin(RecaptchaMailhide::class, ['routes' => false]);
         $this->addPlugin(Thumber::class, ['routes' => false]);
-        $this->addPlugin(MeCms::class, ['bootstrap' => true, 'routes' => false]);
+        $this->addPlugin(MeCms::class, ['bootstrap' => false, 'routes' => false]);
     }
 
     /**
