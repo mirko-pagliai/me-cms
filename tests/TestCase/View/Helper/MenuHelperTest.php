@@ -63,27 +63,6 @@ class MenuHelperTest extends MenuHelperTestCase
     }
 
     /**
-     * Tests for `banners()` method
-     * @test
-     */
-    public function testBanners()
-    {
-        $this->assertEmpty($this->Helper->banners());
-
-        $this->writeAuthOnSession(['group' => ['name' => 'manager']]);
-        [$links,,, $handledControllers] = $this->Helper->banners();
-        $this->assertNotEmpty($links);
-        $this->assertTextNotContains('List positions', $links);
-        $this->assertTextNotContains('Add position', $links);
-        $this->assertEquals(['Banners', 'BannersPositions'], $handledControllers);
-
-        $this->writeAuthOnSession(['group' => ['name' => 'admin']]);
-        [$links] = $this->Helper->banners();
-        $this->assertTextContains('List positions', $links);
-        $this->assertTextContains('Add position', $links);
-    }
-
-    /**
      * Tests for `users()` method
      * @test
      */

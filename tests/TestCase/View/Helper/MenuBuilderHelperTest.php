@@ -43,7 +43,6 @@ class MenuBuilderHelperTest extends HelperTestCase
         $this->assertEquals([
             'posts',
             'pages',
-            'banners',
             'users',
             'backups',
             'systems',
