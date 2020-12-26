@@ -3,9 +3,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-16 13:30+0000\n"
-"PO-Revision-Date: 2020-12-16 16:19+0100\n"
+"POT-Creation-Date: 2020-12-26 12:27+0000\n"
+"PO-Revision-Date: 2020-12-26 13:27+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -35,106 +34,100 @@ msgid "Author"
 msgstr "Autore"
 
 #: ./i18n_constants.php:20
-#: ./View/Helper/MenuHelper.php:121
-#: ./Admin/BannersPositions/index.php:36
-msgid "Banners"
-msgstr "Banner"
-
-#: ./i18n_constants.php:21
 msgid "You must first delete or reassign all items that belong to this element"
 msgstr ""
 "Prima di cancellare questo, devi cancellare o riassegnare tutti gli oggetti"
 " che appartengono a questo elemento"
 
-#: ./i18n_constants.php:22
+#: ./i18n_constants.php:21
 msgid "View items that belong to this element"
 msgstr "Guarda gli oggetti che appartengono a questo elemento"
 
-#: ./i18n_constants.php:23
+#: ./i18n_constants.php:22
 msgid "View items that belong to this user"
 msgstr "Guarda gli oggetti che appartengono a questo utente"
 
-#: ./i18n_constants.php:24
+#: ./i18n_constants.php:23
 msgid "Leave blank to create a parent category"
 msgstr "Lasciare vuoto per creare una categoria genitore"
 
-#: ./i18n_constants.php:25
+#: ./i18n_constants.php:24
 msgid "Category"
 msgstr "Categoria"
 
-#: ./i18n_constants.php:26
+#: ./i18n_constants.php:25
 msgid "Date"
 msgstr "Data"
 
-#: ./i18n_constants.php:27
+#: ./i18n_constants.php:26
 msgid "You can delay the publication by entering a future date"
 msgstr "Con una data futura la pubblicazione sarà posticipata"
 
-#: ./i18n_constants.php:28
+#: ./i18n_constants.php:27
 msgid "Delete"
 msgstr "Cancella"
 
-#: ./i18n_constants.php:29
+#: ./i18n_constants.php:28
 msgid "Disabled"
 msgstr "Disabilitato"
 
-#: ./i18n_constants.php:30
+#: ./i18n_constants.php:29
 msgid "Draft"
 msgstr "Bozza"
 
-#: ./i18n_constants.php:31
+#: ./i18n_constants.php:30
 msgid "Description"
 msgstr "Descrizione"
 
-#: ./i18n_constants.php:32
+#: ./i18n_constants.php:31
 msgid "Download"
 msgstr "Download"
 
-#: ./i18n_constants.php:33
+#: ./i18n_constants.php:32
 msgid "Edit"
 msgstr "Modifica"
 
-#: ./i18n_constants.php:34
+#: ./i18n_constants.php:33
 msgid "Enable comments"
 msgstr "Abilita commenti"
 
-#: ./i18n_constants.php:35
+#: ./i18n_constants.php:34
 msgid "Email"
 msgstr "Email"
 
-#: ./i18n_constants.php:36
+#: ./i18n_constants.php:35
 msgid "You have to enter a valid value"
 msgstr "Devi inserire un valore valido"
 
-#: ./i18n_constants.php:37
+#: ./i18n_constants.php:36
 msgid "Enter your email"
 msgstr "Inserisci la tua email"
 
-#: ./i18n_constants.php:38
+#: ./i18n_constants.php:37
 msgid "Filename"
 msgstr "Filename"
 
-#: ./i18n_constants.php:39
+#: ./i18n_constants.php:38
 msgid "Filter"
 msgstr "Filtro"
 
-#: ./i18n_constants.php:40
+#: ./i18n_constants.php:39
 msgid "First name"
 msgstr "Nome"
 
-#: ./i18n_constants.php:41
+#: ./i18n_constants.php:40
 msgid "Group"
 msgstr "Gruppo"
 
-#: ./i18n_constants.php:42
+#: ./i18n_constants.php:41
 msgid "Disable this option to save as a draft"
 msgstr "Disabilita questa opzione per salvare come bozza"
 
-#: ./i18n_constants.php:43
+#: ./i18n_constants.php:42
 msgid "Enable comments, according to the general settings"
 msgstr "Abilita commenti, in accordo con la configurazione generale"
 
-#: ./i18n_constants.php:44
+#: ./i18n_constants.php:43
 msgid ""
 "The slug is a string identifying a resource. If you do nothave special needs,"
 " let it be generated automatically"
@@ -142,179 +135,179 @@ msgstr ""
 "Lo slug è una stringa che identifica una risorsa. Se non hai particolari"
 " necessità, lascia che sia generato automaticamente"
 
-#: ./i18n_constants.php:46
+#: ./i18n_constants.php:45
 msgid "ID"
 msgstr "ID"
 
-#: ./i18n_constants.php:47
+#: ./i18n_constants.php:46
 msgid "Label"
 msgstr "Etichetta"
 
-#: ./i18n_constants.php:48
+#: ./i18n_constants.php:47
 msgid "Last login"
 msgstr "Ultimi accessi"
 
-#: ./i18n_constants.php:49
+#: ./i18n_constants.php:48
 msgid "Last name"
 msgstr "Cognome"
 
-#: ./i18n_constants.php:50
+#: ./i18n_constants.php:49
 msgid "lowercase letters, numbers, dash"
 msgstr "lettere minuscole, numeri, trattino"
 
-#: ./i18n_constants.php:51
+#: ./i18n_constants.php:50
 msgid "lowercase letters, numbers, space"
 msgstr "lettere minuscole, numeri, spazio"
 
-#: ./i18n_constants.php:52
+#: ./i18n_constants.php:51
 msgid "Name"
 msgstr "Nome"
 
-#: ./i18n_constants.php:53
+#: ./i18n_constants.php:52
 msgid "no"
 msgstr "no"
 
-#: ./i18n_constants.php:54
+#: ./i18n_constants.php:53
 msgid "Record not found"
 msgstr "Record non trovato"
 
-#: ./i18n_constants.php:55
+#: ./i18n_constants.php:54
 msgid "Not published"
 msgstr "Non pubblicato"
 
-#: ./i18n_constants.php:56
+#: ./i18n_constants.php:55
 msgid "Only the admin founder can do this"
 msgstr "Solo il fondatore può fare questo"
 
-#: ./i18n_constants.php:57
+#: ./i18n_constants.php:56
 msgid "Only not published"
 msgstr "Solo non pubblicati"
 
-#: ./i18n_constants.php:58
+#: ./i18n_constants.php:57
 msgid "Only published"
 msgstr "Solo pubblicati"
 
-#: ./i18n_constants.php:59
+#: ./i18n_constants.php:58
 msgid "Open"
 msgstr "Apri"
 
-#: ./i18n_constants.php:60
+#: ./i18n_constants.php:59
 msgid "The operation has not been performed correctly"
 msgstr "L'operazione non è stata eseguita correttamente"
 
-#: ./i18n_constants.php:61
+#: ./i18n_constants.php:60
 msgid "The operation has been performed correctly"
 msgstr "L'operazione è stata eseguita correttamente"
 
-#: ./i18n_constants.php:62
+#: ./i18n_constants.php:61
 msgid "Pages"
 msgstr "Pagine"
 
-#: ./i18n_constants.php:63
+#: ./i18n_constants.php:62
 msgid "Parent category"
 msgstr "Categoria genitore"
 
-#: ./i18n_constants.php:64
+#: ./i18n_constants.php:63
 msgid "Password"
 msgstr "Password"
 
-#: ./i18n_constants.php:65
+#: ./i18n_constants.php:64
 msgid "Position"
 msgstr "Posizione"
 
-#: ./i18n_constants.php:66
+#: ./i18n_constants.php:65
 msgid "Posts"
 msgstr "Articoli"
 
-#: ./i18n_constants.php:67
+#: ./i18n_constants.php:66
 msgid "Posts categories"
 msgstr "Categorie articoli"
 
-#: ./i18n_constants.php:68
+#: ./i18n_constants.php:67
 msgid "Preview"
 msgstr "Anteprima"
 
-#: ./i18n_constants.php:69
+#: ./i18n_constants.php:68
 msgid "Priority"
 msgstr "Priorità"
 
-#: ./i18n_constants.php:70
+#: ./i18n_constants.php:69
 msgid "Published"
 msgstr "Pubblicato"
 
-#: ./i18n_constants.php:71
+#: ./i18n_constants.php:70
 msgid "Repeat email"
 msgstr "Ripeti email"
 
-#: ./i18n_constants.php:72
+#: ./i18n_constants.php:71
 msgid "Repeat password"
 msgstr "Ripeti password"
 
-#: ./i18n_constants.php:73
+#: ./i18n_constants.php:72
 msgid "Scheduled"
 msgstr "Programmato"
 
-#: ./i18n_constants.php:74
+#: ./i18n_constants.php:73
 msgid "Select"
 msgstr "Seleziona"
 
-#: ./i18n_constants.php:75
+#: ./i18n_constants.php:74
 msgid "You have to select a valid option"
 msgstr "Devi selezionare un'opzione valida"
 
-#: ./i18n_constants.php:76
+#: ./i18n_constants.php:75
 msgid "Show/hide password"
 msgstr "Mostra/nascondi password"
 
-#: ./i18n_constants.php:77
+#: ./i18n_constants.php:76
 msgid "Slug"
 msgstr "Slug"
 
-#: ./i18n_constants.php:78
+#: ./i18n_constants.php:77
 msgid "Status"
 msgstr "Stato"
 
-#: ./i18n_constants.php:79
+#: ./i18n_constants.php:78
 msgid "Subtitle"
 msgstr "Sottotitolo"
 
-#: ./i18n_constants.php:80
+#: ./i18n_constants.php:79
 msgid "Tags"
 msgstr "Tag"
 
-#: ./i18n_constants.php:81
+#: ./i18n_constants.php:80
 msgid "Text"
 msgstr "Testo"
 
-#: ./i18n_constants.php:82
+#: ./i18n_constants.php:81
 msgid "Are you sure you want to delete this?"
 msgstr "Sei sicuro di volerlo cancellare?"
 
-#: ./i18n_constants.php:83
+#: ./i18n_constants.php:82
 msgid "Title"
 msgstr "Titolo"
 
-#: ./i18n_constants.php:84
+#: ./i18n_constants.php:83
 msgid "Upload"
 msgstr "Carica"
 
-#: ./i18n_constants.php:85
+#: ./i18n_constants.php:84
 msgid "If blank, the current date and time will be used"
 msgstr "Se vuoto, saranno usate data e orario correnti"
 
-#: ./i18n_constants.php:86
+#: ./i18n_constants.php:85
 msgid "Username"
 msgstr "Username"
 
-#: ./i18n_constants.php:87
+#: ./i18n_constants.php:86
 msgid "Users"
 msgstr "Utenti"
 
-#: ./i18n_constants.php:88
+#: ./i18n_constants.php:87
 msgid "This value is already used"
 msgstr "Questo valore è già in uso"
 
-#: ./i18n_constants.php:89
+#: ./i18n_constants.php:88
 msgid "yes"
 msgstr "sì"
 
@@ -426,14 +419,6 @@ msgid "Performs some updates to the database or files needed for versioning"
 msgstr ""
 "Esegue alcuni aggiornamenti per il database o file necessari per"
 " l'aggiornamento di versione"
-
-#: ./Controller/Admin/BannersController.php:50
-msgid "You must first create a banner position"
-msgstr "Devi prima creare una posizione per i banner"
-
-#: ./Controller/Admin/BannersController.php:124
-msgid "Missing ID"
-msgstr "ID mancante"
 
 #: ./Controller/Admin/PagesCategoriesController.php:108
 msgid "Add pages category"
@@ -586,7 +571,12 @@ msgid "Account created. Now you can login"
 msgstr "Account creato. Puoi fare il login"
 
 #: ./Form/BackupForm.php:47
-#: ./Model/Validation/BannerValidator.php:46
+#: ./Validation/AppValidator.php:50
+#: ./Validation/AppValidator.php:132
+msgid "Must be at most {0} chars"
+msgstr "Deve essere lungo al massimo {0} caratteri"
+
+#: ./Form/BackupForm.php:51
 #: ./Admin/Backups/add.php:23
 msgid "Valid extensions: {0}"
 msgstr "Estensioni valide: {0}"
@@ -603,8 +593,8 @@ msgstr "Questo indirizzo email è stato segnalato come spam"
 #: ./Validation/AppValidator.php:58
 #: ./Validation/AppValidator.php:75
 #: ./Validation/AppValidator.php:92
-#: ./Validation/AppValidator.php:108
-#: ./Validation/AppValidator.php:117
+#: ./Validation/AppValidator.php:100
+#: ./Validation/AppValidator.php:109
 msgid "Must be between {0} and {1} chars"
 msgstr "Deve essere compreso tra {0} e {1} caratteri"
 
@@ -624,17 +614,6 @@ msgstr "La tua password è stata modificata"
 #: ./Mailer/UserMailer.php:81
 msgid "Reset your password"
 msgstr "Reimposta la tua password"
-
-#: ./Model/Validation/BannerValidator.php:53
-#: ./Validation/AppValidator.php:50
-#: ./Validation/AppValidator.php:100
-#: ./Validation/AppValidator.php:140
-msgid "Must be at most {0} chars"
-msgstr "Deve essere lungo al massimo {0} caratteri"
-
-#: ./Model/Validation/BannerValidator.php:57
-msgid "Must be a valid url"
-msgstr "Deve essere un url valido"
 
 #: ./Model/Validation/PostValidator.php:63
 msgid "Tag \"{0}\": {1}"
@@ -678,7 +657,7 @@ msgstr "lettere, apostrofo, spazio"
 msgid "Has to begin with a capital letter"
 msgstr "Deve cominciare con una lettera maiuscola"
 
-#: ./Validation/AppValidator.php:127
+#: ./Validation/AppValidator.php:119
 msgid "This field can not be empty"
 msgstr "Questo campo non può rimanere vuoto"
 
@@ -719,76 +698,57 @@ msgid "List static pages"
 msgstr "Elenca pagine statiche"
 
 #: ./View/Helper/MenuHelper.php:112
-msgid "List banners"
-msgstr "Elenca banner"
-
-#: ./View/Helper/MenuHelper.php:113
-#: ./Admin/Banners/upload.php:16
-#: ./Admin/BannersPositions/index.php:24
-msgid "Upload banners"
-msgstr "Carica banner"
-
-#: ./View/Helper/MenuHelper.php:117
-msgid "List positions"
-msgstr "Elenca posizioni"
-
-#: ./View/Helper/MenuHelper.php:118
-#: ./Admin/common/Banners/index.php:24
-msgid "Add position"
-msgstr "Aggiungi posizione"
-
-#: ./View/Helper/MenuHelper.php:136
 msgid "List users"
 msgstr "Elenca utenti"
 
-#: ./View/Helper/MenuHelper.php:137
+#: ./View/Helper/MenuHelper.php:113
 #: ./Admin/Users/add.php:16
 #: ./Admin/UsersGroups/index.php:23
 msgid "Add user"
 msgstr "Aggiungi utente"
 
-#: ./View/Helper/MenuHelper.php:141
+#: ./View/Helper/MenuHelper.php:117
 msgid "List groups"
 msgstr "Elenca gruppi"
 
-#: ./View/Helper/MenuHelper.php:142
+#: ./View/Helper/MenuHelper.php:118
 #: ./Admin/Users/index.php:23
 msgid "Add group"
 msgstr "Aggiungi gruppo"
 
-#: ./View/Helper/MenuHelper.php:160
+#: ./View/Helper/MenuHelper.php:136
 msgid "List backups"
 msgstr "Elenca backup"
 
-#: ./View/Helper/MenuHelper.php:161
+#: ./View/Helper/MenuHelper.php:137
 #: ./Admin/Backups/add.php:16
 msgid "Add backup"
 msgstr "Aggiungi backup"
 
-#: ./View/Helper/MenuHelper.php:163
+#: ./View/Helper/MenuHelper.php:139
 msgid "Backups"
 msgstr "Backup"
 
-#: ./View/Helper/MenuHelper.php:178
+#: ./View/Helper/MenuHelper.php:154
 #: ./Admin/Systems/tmp_viewer.php:16
 msgid "Temporary files"
 msgstr "File temporanei"
 
-#: ./View/Helper/MenuHelper.php:179
+#: ./View/Helper/MenuHelper.php:155
 #: ./Admin/Systems/browser.php:16
 msgid "Media browser"
 msgstr "Browser multimediale"
 
-#: ./View/Helper/MenuHelper.php:180
+#: ./View/Helper/MenuHelper.php:156
 #: ./Admin/Systems/changelogs.php:16
 msgid "Changelogs"
 msgstr "Changelog"
 
-#: ./View/Helper/MenuHelper.php:183
+#: ./View/Helper/MenuHelper.php:159
 msgid "Log management"
 msgstr "Gestione log"
 
-#: ./View/Helper/MenuHelper.php:186
+#: ./View/Helper/MenuHelper.php:162
 msgid "System"
 msgstr "Sistema"
 
@@ -888,59 +848,6 @@ msgstr "Invia"
 msgid "The backup file will be sent by mail. Are you sure?"
 msgstr "Il file di backup sarà inviato tramite mail. Sei sicuro?"
 
-#: ./Admin/Banners/edit.php:16
-msgid "Edit banner"
-msgstr "Modifica banner"
-
-#: ./Admin/Banners/edit.php:31
-msgid ""
-"The banner is displayed as a  thumbnail. You should disable this, if the"
-" banner is an animated gif"
-msgstr ""
-"Il banner viene visualizzato come miniatura. Dovresti disabilitarlo, se il"
-" banner è una gif animata"
-
-#: ./Admin/Banners/edit.php:33
-msgid "Thumbnail"
-msgstr "Miniatura"
-
-#: ./Admin/Banners/edit.php:55
-msgid "The address should begin with {0}"
-msgstr "L'indirizzo deve cominciare con {0}"
-
-#: ./Admin/Banners/edit.php:56
-msgid "Web address"
-msgstr "Indirizzo web"
-
-#: ./Admin/Banners/index.php:24
-msgid "Url"
-msgstr "Url"
-
-#: ./Admin/Banners/index.php:26
-msgid "Click"
-msgstr "Click"
-
-#: ./Admin/Banners/index.php:51
-msgid "No thumbnail"
-msgstr "Nessuna miniatura"
-
-#: ./Admin/Banners/upload.php:23
-#: ./Admin/Banners/upload.php:26
-msgid "Position where to upload banners"
-msgstr "Posizione dove caricare i banner"
-
-#: ./Admin/BannersPositions/add.php:16
-msgid "Add banners position"
-msgstr "Aggiungi posizione dei banner"
-
-#: ./Admin/BannersPositions/edit.php:16
-msgid "Edit banners position"
-msgstr "Modifica posizione dei banner"
-
-#: ./Admin/BannersPositions/index.php:16
-msgid "Banners positions"
-msgstr "Posizioni banner"
-
 #: ./Admin/Logs/index.php:16
 #: ./Admin/Systems/tmp_viewer.php:70
 msgid "Logs"
@@ -1000,7 +907,6 @@ msgstr "Log completo"
 #: ./Admin/Pages/index.php:60
 #: ./Admin/Posts/index.php:64
 #: ./Admin/Users/index.php:60
-#: ./Admin/common/Banners/index.php:63
 msgid "month"
 msgstr "mese"
 
