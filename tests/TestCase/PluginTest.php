@@ -34,7 +34,7 @@ class PluginTest extends TestCase
         /**
          * Internal functions. Returns an array of loaded plugins
          */
-        $getLoadedPlugins = function ($app) {
+        $getLoadedPlugins = function (BaseApplication $app): array {
             return array_keys(iterator_to_array($app->getPlugins()));
         };
 
