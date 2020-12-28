@@ -93,7 +93,7 @@ class Plugin extends BasePlugin
                 // @codeCoverageIgnoreEnd
             }
 
-            $app->addPlugin('WyriHaximus/MinifyHtml', ['path' => ROOT . DS . 'vendor' . DS . 'wyrihaximus' . DS . 'minify-html' . DS]);
+            $app->addPlugin('WyriHaximus/MinifyHtml');
         }
     }
 
