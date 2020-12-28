@@ -71,6 +71,9 @@ if (is_readable(CONFIG . 'widgets.php')) {
 }
 
 //Loads the reCAPTCHA configuration
+if (!is_readable(CONFIG . 'recaptcha.php')) {
+    throw new \Exception('Missing `config/recaptcha.php` file. You can rename the `recaptcha.example.php` file and change values');
+}
 Configure::load('recaptcha');
 if (!getConfig('RecaptchaMailhide.encryptKey')) {
     Configure::write('RecaptchaMailhide.encryptKey', getConfigOrFail('Recaptcha.private'));
