@@ -13,7 +13,6 @@
     "require": {
         "php": ">=7.2",
         "cakephp/cakephp": "^4.1.4",
-        "ctlabvn/recaptcha": "^3.0",
         "dereuromark/cakephp-feed": "^2.0",
         "donatj/phpuseragentparser": "^v0.15",
         "enyo/dropzone": "^5.1",
@@ -22,7 +21,7 @@
         "mirko-pagliai/cakephp-assets": "^1.5",
         "mirko-pagliai/cakephp-database-backup": "^2.8.3",
         "mirko-pagliai/cakephp-entity-file-log": "^1.1",
-        "mirko-pagliai/cakephp-recaptcha-mailhide": "^1.4.5",
+        "mirko-pagliai/cakephp-recaptcha-mailhide": "^1.4.6",
         "mirko-pagliai/cakephp-stop-spam": "^1.1.2",
         "mirko-pagliai/cakephp-thumber": "^1.9.3",
         "mirko-pagliai/cakephp-tokens": "^1.3",
@@ -45,24 +44,9 @@
         "mirko-pagliai/me-cms-link-scanner": "Link scanner plugin for MeCms",
         "studio-42/elfinder": "To use ElFinder to browse and upload files"
     },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "ctlabvn/recaptcha",
-                "version": "3.0.0",
-                "source": {
-                    "url": "https://github.com/ctlabvn/recaptcha.git",
-                    "type": "git",
-                    "reference": "3.0.0"
-                }
-            }
-        }
-    ],
     "autoload": {
         "psr-4": {
-            "MeCms\\": "src",
-            "Recaptcha\\": "vendor/ctlabvn/recaptcha/src/"
+            "MeCms\\": "src"
         },
         "files": [
             "src/Core/global_functions.php",

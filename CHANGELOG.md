@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.29 branch
 ### 2.29.5
+* updated for `cakephp-recaptcha-mailhide` `1.4.6`; no longer needs extra repositories;
 * removed `js-cookie` as package, added static asset.
 
 ### 2.29.4
