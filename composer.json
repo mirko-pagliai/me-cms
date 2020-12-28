@@ -28,7 +28,6 @@
         "mirko-pagliai/cakephp-tokens": "^1.3",
         "mirko-pagliai/me-tools": "^2.19.9",
         "mirko-pagliai/php-tools": "^1.4.5",
-        "npm-asset/js-cookie": "^v2.2",
         "twbs/bootstrap": "^v4.4",
         "wyrihaximus/minify-html": "^2.0"
     },
@@ -49,10 +48,6 @@
         "studio-42/elfinder": "To use ElFinder to browse and upload files"
     },
     "repositories": [
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        },
         {
             "type": "package",
             "package": {
