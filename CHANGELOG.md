@@ -9,6 +9,9 @@
     and which now needs to be extended by the `Sitemap` class.
 
 ## 2.29 branch
+### 2.29.5
+* removed `js-cookie` as package, added static asset.
+
 ### 2.29.4
 * `SitemapBuilder::getMethods()` returns a collection and it's now public;
 * `StaticPage::all()` returns a collection;

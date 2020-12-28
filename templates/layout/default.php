@@ -40,8 +40,8 @@ declare(strict_types=1);
 
         echo $this->Asset->script([
             '/vendor/jquery/jquery.min',
-            '/vendor/js-cookie/js.cookie',
             '/vendor/bootstrap/js/bootstrap.bundle.min',
+            'MeCms.js.cookie.min',
             'MeTools.default',
             'MeCms.layout',
         ], ['block' => true]);
