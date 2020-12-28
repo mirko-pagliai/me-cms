@@ -86,9 +86,11 @@ class Plugin extends BasePlugin
             if (getConfig('debug') && !$app->getPlugins()->has('DebugKit')) {
                 try {
                     $app->addPlugin('DebugKit');
+                // @codeCoverageIgnoreStart
                 } catch (MissingPluginException $e) {
                     //Do not halt if the plugin is missing
                 }
+                // @codeCoverageIgnoreEnd
             }
 
             $app->addPlugin('WyriHaximus/MinifyHtml', ['path' => ROOT . DS . 'vendor' . DS . 'wyrihaximus' . DS . 'minify-html' . DS]);
