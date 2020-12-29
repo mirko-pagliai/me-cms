@@ -35,7 +35,6 @@ Configure::write('WRITABLE_DIRS', array_merge(Configure::read('WRITABLE_DIRS', [
 
 //Sets symbolic links for vendor assets to be created
 Configure::write('VENDOR_LINKS', array_merge(Configure::read('VENDOR_LINKS', []), [
-    'npm-asset' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
     'studio-42' . DS . 'elfinder' => 'elfinder',
     'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
 ]));
@@ -69,6 +68,9 @@ if (is_readable(CONFIG . 'widgets.php')) {
 }
 
 //Loads the reCAPTCHA configuration
+if (!is_readable(CONFIG . 'recaptcha.php')) {
+    throw new \Exception('Missing `config/recaptcha.php` file. You can rename the `recaptcha.example.php` file and change values');
+}
 Configure::load('recaptcha');
 if (!getConfig('RecaptchaMailhide.encryptKey')) {
     Configure::write('RecaptchaMailhide.encryptKey', getConfigOrFail('Recaptcha.private'));

@@ -63,8 +63,8 @@ abstract class PostAndPageEntity extends Entity
 
     /**
      * Gets the url (virtual field)
-     * @return string
+     * @return string|null
      * @since 2.27.2
      */
-    abstract protected function _getUrl(): string;
+    abstract protected function _getUrl(): ?string;
 }

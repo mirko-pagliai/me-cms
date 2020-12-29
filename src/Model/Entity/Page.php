@@ -17,7 +17,6 @@ namespace MeCms\Model\Entity;
 
 use Cake\Routing\Router;
 use MeCms\ORM\PostAndPageEntity;
-use Tools\Exceptionist;
 
 /**
  * Page entity
@@ -43,14 +42,11 @@ class Page extends PostAndPageEntity
 
     /**
      * Gets the url (virtual field)
-     * @return string
+     * @return string|null
      * @since 2.27.2
-     * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getUrl(): string
+    protected function _getUrl(): ?string
     {
-        Exceptionist::objectPropertyExists($this, 'slug');
-
-        return Router::url(['_name' => 'page', $this->get('slug')], true);
+        return $this->has('slug') ? Router::url(['_name' => 'page', $this->get('slug')], true) : null;
     }
 }

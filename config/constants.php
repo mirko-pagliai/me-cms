@@ -24,7 +24,7 @@ if (!defined('ELFINDER')) {
 
 //Sets the datetime format for MySql
 if (!defined('FORMAT_FOR_MYSQL')) {
-    define('FORMAT_FOR_MYSQL', 'YYYY-MM-dd HH:mm');
+    define('FORMAT_FOR_MYSQL', 'yyyy-MM-dd HH:mm');
 }
 
 //Sets the default login log directory
