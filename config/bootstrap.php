@@ -37,7 +37,6 @@ Configure::write('WRITABLE_DIRS', array_merge(Configure::read('WRITABLE_DIRS', [
 
 //Sets symbolic links for vendor assets to be created
 Configure::write('VENDOR_LINKS', array_merge(Configure::read('VENDOR_LINKS', []), [
-    'npm-asset' . DS . 'js-cookie' . DS . 'src' => 'js-cookie',
     'studio-42' . DS . 'elfinder' => 'elfinder',
     'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
 ]));
