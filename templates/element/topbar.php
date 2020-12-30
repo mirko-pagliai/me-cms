@@ -24,7 +24,7 @@ declare(strict_types=1);
         'aria-label' => __d('me_cms', 'Toggle navigation'),
     ]) ?>
 
-    <div class="collapse navbar-collapse" id="topbarNav">
+    <div class="container collapse navbar-collapse" id="topbarNav">
         <?php
         $links = [
             $this->Html->link(__d('me_cms', 'Home'), ['_name' => 'homepage'], ['class' => 'nav-link', 'icon' => 'home']),
@@ -33,7 +33,7 @@ declare(strict_types=1);
             $this->Html->link(I18N_PHOTOS, ['_name' => 'albums'], ['class' => 'nav-link']),
         ];
 
-        echo $this->Html->ul($links, ['class' => 'container navbar-nav mr-auto'], ['class' => 'nav-item']);
+        echo $this->Html->ul($links, ['class' => 'navbar-nav mr-auto'], ['class' => 'nav-item mr-3']);
         ?>
     </div>
 </nav>

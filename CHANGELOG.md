@@ -4,7 +4,8 @@
 * fixed bug for virtual fields for posts and pages;
 * fixed bug in the formatting of some dates when editing posts and pages;
 * updated for `cakephp-recaptcha-mailhide` `1.4.6`; no longer needs extra repositories;
-* removed `js-cookie` as package, added static asset.
+* removed `js-cookie` as package, added static asset;
+* fixed little bug for the fronend topbar.
 
 ### 2.29.4
 * `SitemapBuilder::getMethods()` returns a collection and it's now public;
