@@ -99,7 +99,7 @@ class AppView extends View
         $this->setBlocks();
 
         //Assign the userbar
-        $this->assign('userbar', implode(PHP_EOL, array_map(function ($element) {
+        $this->assign('userbar', implode(PHP_EOL, array_map(function ($element): string {
             return $this->Html->li($element);
         }, $this->userbar())));
 
@@ -111,6 +111,7 @@ class AppView extends View
      * @param string|array|null $content Contents. It can be a string or an
      *  array of contents. If `null`, returns an array of current contents
      * @return array
+     * @todo split into `getUserbar()`/`setUserbar()`
      */
     public function userbar($content = null): array
     {

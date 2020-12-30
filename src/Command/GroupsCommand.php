@@ -52,7 +52,7 @@ class GroupsCommand extends Command
             return $io->error(__d('me_cms', 'There are no user groups'));
         }
 
-        $rows = $rows->map(function (UsersGroup $group) {
+        $rows = $rows->map(function (UsersGroup $group): array {
             return array_map('strval', $group->toArray());
         });
 

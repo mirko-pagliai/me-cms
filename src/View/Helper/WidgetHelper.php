@@ -37,7 +37,7 @@ class WidgetHelper extends Helper
             $widgets = $widgetsHomepage;
         }
 
-        return $widgets ? collection($widgets)->map(function ($args, $name) {
+        return $widgets ? collection($widgets)->map(function ($args, $name): array {
             if (is_array($args) && !is_string($name)) {
                 [$name, $args] = [array_key_first($args), array_value_first($args)];
             }

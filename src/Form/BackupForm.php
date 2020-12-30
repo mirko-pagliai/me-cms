@@ -72,11 +72,9 @@ class BackupForm extends Form
     protected function _execute(array $data): bool
     {
         try {
-            $this->getBackupExportInstance()
+            return (bool) $this->getBackupExportInstance()
                 ->filename($data['filename'])
                 ->export();
-
-            return true;
         } catch (InternalErrorException $e) {
             return false;
         }

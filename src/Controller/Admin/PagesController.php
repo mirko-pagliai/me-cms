@@ -53,7 +53,7 @@ class PagesController extends AppController
         }
 
         $methodToCall = $this->getRequest()->isAction(['add', 'edit']) ? 'getTreeList' : 'getList';
-        $categories = call_user_func([$this->Categories, $methodToCall]);
+        $categories = $this->Categories->$methodToCall();
         if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 
@@ -145,7 +145,7 @@ class PagesController extends AppController
     {
         $page = $this->Pages->findById($id)
             ->formatResults(function (ResultSet $results) {
-                return $results->map(function (Page $page) {
+                return $results->map(function (Page $page): Page {
                     return $page->set('created', $page->get('created')->i18nFormat(FORMAT_FOR_MYSQL));
                 });
             })

@@ -146,7 +146,7 @@ class LogsController extends AppController
         if ($success && $successSerialized) {
             [$method, $message] = ['success', I18N_OPERATION_OK];
         }
-        call_user_func([$this->Flash, $method], $message);
+        $this->Flash->$method($message);
 
         return $this->redirect($this->referer(['action' => 'index']));
     }

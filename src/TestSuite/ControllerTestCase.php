@@ -111,7 +111,7 @@ abstract class ControllerTestCase extends TestCase
     {
         parent::setUp();
 
-        $isAdminController = string_contains(get_class($this), 'Controller\\Admin');
+        $isAdmin = string_contains(get_class($this), 'Controller\\Admin');
 
         //Tries to retrieve controller and table from the class name
         if (!$this->Controller && $this->autoInitializeClass) {
@@ -120,7 +120,7 @@ abstract class ControllerTestCase extends TestCase
             $plugin = $this->getPluginName($this);
 
             $this->Controller = $this->getMockForController($originClassName, null, $alias);
-            $this->url = ['controller' => $alias, 'prefix' => $isAdminController ? ADMIN_PREFIX : null] + compact('plugin');
+            $this->url = ['controller' => $alias, 'prefix' => $isAdmin ? ADMIN_PREFIX : null] + compact('plugin');
 
             $className = $this->getTableClassNameFromAlias($alias, $plugin);
             if (class_exists($className)) {
@@ -128,7 +128,7 @@ abstract class ControllerTestCase extends TestCase
             }
         }
 
-        if ($isAdminController) {
+        if ($isAdmin) {
             $this->setUserGroup('admin');
         }
     }

@@ -73,10 +73,9 @@ class PostsCategoriesController extends AppController
             ->contain(['Parents' => ['fields' => ['title']]])
             ->orderAsc(sprintf('%s.lft', $this->PostsCategories->getAlias()))
             ->formatResults(function (ResultSet $results) {
-                //Gets categories as tree list
                 $treeList = $this->PostsCategories->getTreeList()->toArray();
 
-                return $results->map(function (PostsCategory $category) use ($treeList) {
+                return $results->map(function (PostsCategory $category) use ($treeList): PostsCategory {
                     return $category->set('title', $treeList[$category->get('id')]);
                 });
             });
@@ -151,7 +150,7 @@ class PostsCategoriesController extends AppController
             $this->PostsCategories->deleteOrFail($category);
             [$method, $message] = ['success', I18N_OPERATION_OK];
         }
-        call_user_func([$this->Flash, $method], $message);
+        $this->Flash->$method($message);
 
         return $this->redirect($this->referer(['action' => 'index']));
     }
