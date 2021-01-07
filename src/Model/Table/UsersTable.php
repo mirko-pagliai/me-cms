@@ -125,7 +125,7 @@ class UsersTable extends AppTable
             ->where(['active' => true])
             ->orderAsc('username')
             ->formatResults(function (ResultSet $results) {
-                return $results->indexBy('id')->map(function (User $user): User {
+                return $results->indexBy('id')->map(function (User $user): string {
                     return $user->get('first_name') . ' ' . $user->get('last_name');
                 });
             })
