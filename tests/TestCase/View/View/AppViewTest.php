@@ -134,6 +134,6 @@ class AppViewTest extends TestCase
 
         $this->expectDeprecation();
         $this->expectExceptionMessageMatches('/^Deprecated\. Use instead `addToUserbar\(\)`/');
-        $this->getControllerAlias($this->View->userbar());
+        $this->View->userbar();
     }
 }

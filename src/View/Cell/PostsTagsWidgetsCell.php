@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\View\Cell;
 
-use Cake\Collection\Collection;
+use Cake\Collection\CollectionInterface;
 use Cake\ORM\ResultSet;
 use Cake\View\Cell;
 use InvalidArgumentException;
@@ -94,7 +94,7 @@ class PostsTagsWidgetsCell extends Cell
             ->select(['tag', 'post_count'])
             ->limit($limit)
             ->order(['post_count' => 'DESC', 'tag' => 'ASC'])
-            ->formatResults(function (ResultSet $results) use ($style, $maxFont, $minFont): Collection {
+            ->formatResults(function (ResultSet $results) use ($style, $maxFont, $minFont): CollectionInterface {
                 $results = $results->indexBy('slug');
 
                 if (!$results->count() || !$style || !$maxFont || !$minFont) {
