@@ -148,6 +148,6 @@ class LogsController extends AppController
         }
         call_user_func([$this->Flash, $method], $message);
 
-        return $this->redirect($this->referer(['action' => 'index']));
+        return $this->redirectMatchingReferer(['action' => 'index']);
     }
 }

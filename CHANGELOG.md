@@ -1,7 +1,12 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.0
-* The topbar element will use the `TopbarHelper` from APP to build links, if
+* `MeCms\Controller\Admin\AppController` class: the last valid referer is saved
+    in session by the `beforeFilter()` event and no longer by the `beforeRender()`
+    event (which has been removed). The `referer()` method was removed (this
+    will directly call the method provided by CakePHP) and the
+    `redirectMatchingReferer()` method was added instead;
+* the topbar element will use the `TopbarHelper` from APP to build links, if
     that helper exists. Otherwise it will use the helper provided by MeCms, with
     the helper of any other plugin;
 * the sitemap classes have been moved into the `MeCms\Utility\Sitemap` namespace.

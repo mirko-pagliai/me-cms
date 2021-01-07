@@ -17,8 +17,8 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Http\ServerRequest;
-use Cake\Http\Session;
+use Cake\Http\Response;
+use Cake\Routing\Router;
 use MeCms\TestSuite\ControllerTestCase;
 
 /**
@@ -26,6 +26,26 @@ use MeCms\TestSuite\ControllerTestCase;
  */
 class AppControllerTest extends ControllerTestCase
 {
+    /**
+     * Controller instance
+     * @var \MeCms\Controller\Admin\AppController|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $Controller;
+
+    /**
+     * @var bool
+     */
+    public $autoFixtures = false;
+
+    /**
+     * Fixtures
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.MeCms.Pages',
+        'plugin.MeCms.PagesCategories',
+    ];
+
     /**
      * Called before every test method
      * @return void
@@ -62,41 +82,51 @@ class AppControllerTest extends ControllerTestCase
         Configure::write('MeCms.default.offline', true);
         $this->Controller->getRequest()->clearDetectorCache();
         $this->assertNull($this->Controller->beforeFilter(new Event('myEvent')));
+
+        $url = ['controller'=> 'Pages', 'action' => 'index'] + $this->url;
+        $this->loadFixtures();
+
+        $this->get(['action' => 'add'] + $url);
+        $this->assertSessionNotHasKey('referer');
+
+        $this->configRequest(['environment' => ['HTTP_REFERER' => Router::url($url, true)]]);
+        $this->get(['action' => 'add'] + $url);
+        $this->assertSession(Router::url($url), 'referer');
+
+        //No referer when this matches with the current request target
+        $this->configRequest(['environment' => ['HTTP_REFERER' => Router::url($url, true)]]);
+        $this->get($url);
+        $this->assertSessionNotHasKey('referer');
+
+        //No referer on session for `post` and `put` requests
+        foreach (['post', 'put'] as $method) {
+            $this->configRequest(['environment' => ['HTTP_REFERER' => Router::url($url, true)]]);
+            $this->$method(['action' => 'add'] + $url);
+            $this->assertSessionNotHasKey('referer');
+        }
     }
 
     /**
-     * Tests for `beforeRender()` method
+     * Tests for `redirectMatchingReferer()` method
      * @test
      */
-    public function testBeforeRender()
+    public function testRedirectMatchingReferer()
     {
-        $this->Controller->beforeRender(new Event('myEvent'));
-        $this->assertNull($this->Controller->getRequest()->getSession()->read('referer'));
+        $this->_response = $this->Controller->redirectMatchingReferer('/');
+        $this->assertRedirect('/');
 
-        $request = $this->Controller->getRequest()->withParam('controller', 'MyController')->withParam('action', 'edit');
-        $this->Controller->setRequest($request)->beforeRender(new Event('myEvent'));
-        $this->assertNull($this->Controller->getRequest()->getSession()->read('referer'));
+        $url = ['controller'=> 'Pages', 'action' => 'index'] + $this->url;
+        $this->_response = $this->Controller->setResponse(new Response())->redirectMatchingReferer($url);
+        $this->assertRedirect(Router::url($url));
 
-        $request = $this->Controller->getRequest()->withParam('action', 'index');
-        $this->Controller->setRequest($request)->beforeRender(new Event('myEvent'));
-        $result = $this->Controller->getRequest()->getSession()->read('referer');
-        $this->assertEquals(['controller' => 'MyController', 'target' => '/'], $result);
-    }
+        //Sets a referer with a query string. The referer will match the requested redirect
+        $this->Controller->getRequest()->getSession()->write('referer', Router::url($url + ['?' => ['page' => '2']]));
+        $this->_response = $this->Controller->setResponse(new Response())->redirectMatchingReferer($url);
+        $this->assertRedirect(Router::url($url + ['?' => ['page' => '2']]));
 
-    /**
-     * Tests for `referer()` method
-     * @test
-     */
-    public function testReferer()
-    {
-        $request = $this->Controller->getRequest()->withParam('controller', 'MyController')->withParam('action', 'edit');
-        $this->assertSame('http://localhost/', $this->Controller->setRequest($request)->referer());
-
-        $session = new Session();
-        $session->write('referer', ['controller' => 'MyController', 'target' => '/here']);
-        $request = new ServerRequest(compact('session'));
-        $request = $request->withParam('controller', 'MyController')->withParam('action', 'edit');
-        $this->assertSame('/here', $this->Controller->setRequest($request)->referer(['action' => 'index']));
+        //Different controller, so the referer does not match the requested redirect
+        $this->_response = $this->Controller->setResponse(new Response())->redirectMatchingReferer(['controller' => 'Posts'] + $url);
+        $this->assertRedirect(Router::url(['controller' => 'Posts'] + $url));
     }
 
     /**

@@ -98,7 +98,7 @@ class PostsCategoriesController extends AppController
             if ($this->PostsCategories->save($category)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect($this->referer(['action' => 'index']));
+                return $this->redirectMatchingReferer(['action' => 'index']);
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -124,7 +124,7 @@ class PostsCategoriesController extends AppController
             if ($this->PostsCategories->save($category)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect($this->referer(['action' => 'index']));
+                return $this->redirectMatchingReferer(['action' => 'index']);
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -153,6 +153,6 @@ class PostsCategoriesController extends AppController
         }
         call_user_func([$this->Flash, $method], $message);
 
-        return $this->redirect($this->referer(['action' => 'index']));
+        return $this->redirectMatchingReferer(['action' => 'index']);
     }
 }
