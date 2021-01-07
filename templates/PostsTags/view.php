@@ -18,7 +18,7 @@ $this->assign('title', $title = __d('me_cms', 'Tag {0}', $tag->get('tag')));
 /**
  * Userbar
  */
-$this->userbar($this->Html->link(
+$this->addToUserbar($this->Html->link(
     __d('me_cms', 'Edit tag'),
     ['controller' => 'PostsTags', 'action' => 'edit', 'prefix' => ADMIN_PREFIX, $tag->get('id')],
     ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']

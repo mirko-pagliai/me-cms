@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.29 branch
 ### 2.29.5
+* `AppView::userbar()` is deprecated. Use instead `addToUserbar()`;
 * fixed bug for virtual fields for posts and pages;
 * fixed bug in the formatting of some dates when editing posts and pages;
 * updated for `cakephp-recaptcha-mailhide` `1.4.6`; no longer needs extra repositories;
