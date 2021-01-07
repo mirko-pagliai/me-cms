@@ -59,8 +59,8 @@ class BackupsController extends AppController
     {
         parent::initialize();
 
-        $this->BackupManager = new BackupManager();
-        $this->BackupImport = new BackupImport();
+        $this->BackupManager = $this->BackupManager ?: new BackupManager();
+        $this->BackupImport = $this->BackupImport ?: new BackupImport();
     }
 
     /**
@@ -82,7 +82,7 @@ class BackupsController extends AppController
      */
     public function index(): void
     {
-        $backups = $this->BackupManager->index()->map(function (Entity $backup) {
+        $backups = $this->BackupManager->index()->map(function (Entity $backup): Entity {
             return $backup->set('slug', urlencode($backup->get('filename')));
         });
 

@@ -35,6 +35,7 @@ class CreateGroupsCommand extends Command
     public function initialize(): void
     {
         parent::initialize();
+
         $this->loadModel('MeCms.UsersGroups');
     }
 

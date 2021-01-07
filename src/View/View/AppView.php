@@ -99,25 +99,21 @@ class AppView extends View
         $this->setBlocks();
 
         //Assign the userbar
-        $this->assign('userbar', implode(PHP_EOL, array_map(function ($element) {
+        $this->assign('userbar', implode(PHP_EOL, array_map(function ($element): string {
             return $this->Html->li($element);
-        }, $this->userbar())));
+        }, $this->userbar)));
 
         return parent::renderLayout($content, $layout);
     }
 
     /**
-     * Sets one or more userbar contents
-     * @param string|array|null $content Contents. It can be a string or an
-     *  array of contents. If `null`, returns an array of current contents
-     * @return array
+     * Adds content to the userbar
+     * @param string|array $content Contents as string or an array of contents
+     * @return void
+     * @since 2.29.5
      */
-    public function userbar($content = null): array
+    public function addToUserbar($content): void
     {
-        if ($content) {
-            $this->userbar = array_merge($this->userbar, (array)$content);
-        }
-
-        return $this->userbar;
+        $this->userbar = array_merge($this->userbar, (array)$content);
     }
 }

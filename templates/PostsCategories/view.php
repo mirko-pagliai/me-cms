@@ -18,12 +18,12 @@ $this->assign('title', $category->get('title'));
 /**
  * Userbar
  */
-$this->userbar($this->Html->link(
+$this->addToUserbar($this->Html->link(
     __d('me_cms', 'Edit category'),
     ['action' => 'edit', $category->get('id'), 'prefix' => ADMIN_PREFIX],
     ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']
 ));
-$this->userbar($this->Form->postLink(
+$this->addToUserbar($this->Form->postLink(
     __d('me_cms', 'Delete category'),
     ['action' => 'delete', $category->get('id'), 'prefix' => ADMIN_PREFIX],
     ['class' => 'nav-link text-danger', 'icon' => 'trash-alt', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']

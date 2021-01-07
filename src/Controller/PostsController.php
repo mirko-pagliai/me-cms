@@ -170,7 +170,7 @@ class PostsController extends AppController
             ->limit(getConfigOrFail('default.records_for_rss'))
             ->orderDesc('created')
             ->formatResults(function (ResultSet $results) {
-                return $results->map(function (Post $post) {
+                return $results->map(function (Post $post): array {
                     //Truncates the description if the "<!-- read-more -->" tag is
                     //  present or if requested by the configuration
                     $description = $text = $post->get('text');

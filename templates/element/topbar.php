@@ -33,7 +33,7 @@ use MeCms\Core\Plugin;
         'aria-label' => __d('me_cms', 'Toggle navigation'),
     ]) ?>
 
-    <div class="collapse navbar-collapse" id="topbarNav">
+    <div class="container collapse navbar-collapse" id="topbarNav">
         <?php
         $app = (bool)App::className('TopbarHelper', 'View/Helper');
         $links = $this->loadHelper($app ? 'Topbar' : 'MeCms.Topbar')->build();
@@ -49,7 +49,7 @@ use MeCms\Core\Plugin;
             }
         }
 
-        echo $this->Html->ul($links, ['class' => 'container navbar-nav mr-auto'], ['class' => 'nav-item']);
+        echo $this->Html->ul($links, ['class' => 'navbar-nav mr-auto'], ['class' => 'nav-item mr-3']);
         ?>
     </div>
 </nav>

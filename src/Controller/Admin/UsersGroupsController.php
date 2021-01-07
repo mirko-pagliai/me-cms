@@ -116,7 +116,7 @@ class UsersGroupsController extends AppController
         } elseif ($id <= 3) {
             $message = __d('me_cms', 'You cannot delete this users group');
         }
-        call_user_func([$this->Flash, $method], $message);
+        $this->Flash->$method($message);
 
         return $this->redirectMatchingReferer(['action' => 'index']);
     }

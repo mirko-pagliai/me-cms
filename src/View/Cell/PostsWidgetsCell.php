@@ -100,10 +100,10 @@ class PostsWidgetsCell extends Cell
             ->select('created')
             ->formatResults(function (ResultSet $results) {
                 return $results->sortBy('created', SORT_DESC)
-                    ->countBy(function (Post $post) {
+                    ->countBy(function (Post $post): string {
                         return $post->get('created')->i18nFormat('yyyy/MM');
                     })
-                    ->map(function (int $countBy, string $month) {
+                    ->map(function (int $countBy, string $month): array {
                         return [
                             'created' => Time::createFromFormat('Y/m/d H:i:s', $month . '/01 00:00:00'),
                             'post_count' => $countBy,

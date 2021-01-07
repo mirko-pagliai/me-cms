@@ -152,10 +152,10 @@ class SystemsController extends AppController
                 $success = self::clearCache();
                 break;
             case 'assets':
-                @unlink_recursive($assetsTarget, $exceptions);
+                $Filesystem->unlinkRecursive($assetsTarget, $exceptions);
                 break;
             case 'logs':
-                @unlink_recursive(LOGS, $exceptions);
+                $Filesystem->unlinkRecursive(LOGS, $exceptions);
                 break;
             case 'sitemap':
                 $success = self::clearSitemap();
@@ -168,7 +168,7 @@ class SystemsController extends AppController
         }
 
         [$method, $message] = $success ? ['success', I18N_OPERATION_OK] : ['error', I18N_OPERATION_NOT_OK];
-        call_user_func([$this->Flash, $method], $message);
+        $this->Flash->$method($message);
 
         return $this->redirect($this->referer(['action' => 'tmpViewer']));
     }

@@ -98,22 +98,14 @@ class AppViewTest extends TestCase
     }
 
     /**
-     * Tests for `userbar()` method
+     * Tests for `addToUserbar()` method
      * @test
      */
-    public function testUserbar()
+    public function testAddToUserbar()
     {
-        $this->assertEmpty($this->View->userbar());
-
-        $this->View->userbar('string');
-        $this->View->userbar(['first', 'second']);
-        $this->View->userbar([['nestled']]);
-        $this->assertEquals([
-            'string',
-            'first',
-            'second',
-            ['nestled'],
-        ], $this->View->userbar());
+        $this->View->addToUserbar('string');
+        $this->View->addToUserbar(['first', 'second']);
+        $this->View->addToUserbar([['nestled']]);
         $this->View->render('StaticPages/page-from-app');
         $this->assertEquals('<li>string</li>' . PHP_EOL . '<li>first</li>' . PHP_EOL . '<li>second</li>' . PHP_EOL . '<li>nestled</li>', $this->View->fetch('userbar'));
     }

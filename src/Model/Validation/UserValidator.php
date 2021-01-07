@@ -87,7 +87,7 @@ class UserValidator extends AppValidator
         $this->add('password_old', [
             'oldPasswordIsRight' => [
                 'message' => __d('me_cms', 'The old password is wrong'),
-                'rule' => function (string $value, array $context) {
+                'rule' => function (string $value, array $context): bool {
                     //Gets the old password
                     $user = TableRegistry::get('Users')
                         ->findById($context['data']['id'])
@@ -95,7 +95,7 @@ class UserValidator extends AppValidator
                         ->firstOrFail();
 
                     //Checks if the password matches
-                    return (new DefaultPasswordHasher())->check($value, $user->password);
+                    return (new DefaultPasswordHasher())->check($value, $user->get('password'));
                 },
             ],
         ]);

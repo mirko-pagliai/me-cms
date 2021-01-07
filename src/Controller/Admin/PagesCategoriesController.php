@@ -152,7 +152,7 @@ class PagesCategoriesController extends AppController
             $this->PagesCategories->deleteOrFail($category);
             [$method, $message] = ['success', I18N_OPERATION_OK];
         }
-        call_user_func([$this->Flash, $method], $message);
+        $this->Flash->$method($message);
 
         return $this->redirectMatchingReferer(['action' => 'index']);
     }

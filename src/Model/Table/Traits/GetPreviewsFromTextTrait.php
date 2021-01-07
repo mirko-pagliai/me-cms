@@ -20,8 +20,8 @@ use Cake\Collection\CollectionInterface;
 use Cake\ORM\Entity;
 use DOMDocument;
 use MeTools\Utility\Youtube;
-use Symfony\Component\Filesystem\Filesystem;
 use Thumber\Cake\Utility\ThumbCreator;
+use Tools\Filesystem;
 
 /**
  * This trait provides a method to get the first available image or the preview
@@ -95,8 +95,7 @@ trait GetPreviewsFromTextTrait
     {
         $images = array_map(function (string $url) {
             if (!is_url($url)) {
-                $url = (new Filesystem())->isAbsolutePath($url) ? $url : WWW_ROOT . 'img' . DS . $url;
-
+                $url = (new Filesystem())->makePathAbsolute($url, WWW_ROOT . 'img');
                 if (!file_exists($url)) {
                     return false;
                 }
