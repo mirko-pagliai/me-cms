@@ -92,7 +92,6 @@ abstract class AppController extends BaseAppController
      * @return string Referring URL
      * @see beforeRender()
      * @since 2.27.5
-     * @todo the referer's behavior needs to be reviewed
      */
     public function referer($default = '/', bool $local = false): string
     {
