@@ -18,7 +18,6 @@ namespace MeCms\Test\TestCase\View\View;
 use Cake\Core\Configure;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\View\AppView as View;
-use PHPUnit\Framework\Error\Deprecated;
 
 /**
  * AppViewTest class
