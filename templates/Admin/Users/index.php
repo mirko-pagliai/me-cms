@@ -81,39 +81,39 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
         <?php foreach ($users as $user) : ?>
             <tr>
                 <td class="text-nowrap text-center">
-                    <code><?= $user->id ?></code>
+                    <code><?= $user->get('id') ?></code>
                 </td>
                 <td>
                     <strong>
-                        <?= $this->Html->link($user->username, ['action' => 'view', $user->id]) ?>
+                        <?= $this->Html->link($user->get('username'), ['action' => 'view', $user->get('id')]) ?>
                     </strong>
                     <?php
                     $class = 'record-badge badge badge-danger';
 
                     //If the user is banned
-                    if ($user->banned) {
+                    if ($user->get('banned')) {
                         echo $this->Html->span(__d('me_cms', 'Banned'), compact('class'));
                     //Else, if the user is not active (pending)
-                    } elseif (!$user->active) {
+                    } elseif (!$user->get('active')) {
                         echo $this->Html->span(__d('me_cms', 'Pending'), compact('class'));
                     }
 
                     $actions = [
-                        $this->Html->link(__d('me_cms', 'View'), ['action' => 'view', $user->id], ['icon' => 'eye']),
-                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $user->id], ['icon' => 'pencil-alt']),
+                        $this->Html->link(__d('me_cms', 'View'), ['action' => 'view', $user->get('id')], ['icon' => 'eye']),
+                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $user->get('id')], ['icon' => 'pencil-alt']),
                     ];
 
                     //Only admins can activate accounts and delete users
                     if ($this->Auth->isGroup('admin')) {
                         //If the user is not active (pending)
-                        if (!$user->active) {
-                            $actions[] = $this->Form->postLink(__d('me_cms', 'Activate'), ['action' => 'activate', $user->id], [
+                        if (!$user->get('active')) {
+                            $actions[] = $this->Form->postLink(__d('me_cms', 'Activate'), ['action' => 'activate', $user->get('id')], [
                                 'icon' => 'user-plus',
                                 'confirm' => __d('me_cms', 'Are you sure you want to activate this account?'),
                             ]);
                         }
 
-                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $user->id], [
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $user->get('id')], [
                             'class' => 'text-danger',
                             'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
@@ -124,38 +124,38 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     ?>
                 </td>
                 <td class="text-center">
-                    <?= $user->full_name ?>
+                    <?= $user->get('full_name') ?>
                 </td>
                 <td class="text-center d-none d-lg-block">
-                    <?= $this->Html->link($user->email, sprintf('mailto:%s', $user->email)) ?>
+                    <?= $this->Html->link($user->get('email'), sprintf('mailto:%s', $user->get('email'))) ?>
                 </td>
                 <td class="text-center">
                     <?= $this->Html->link(
-                        $user->group->label,
-                        ['?' => ['group' => $user->group->id]],
+                        $user->get('group')->get('label'),
+                        ['?' => ['group' => $user->get('group')->get('id')]],
                         ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
                 <td class="text-nowrap text-center">
                     <?php
-                    if ($user->post_count) {
+                    if ($user->get('post_count')) {
                         echo $this->Html->link(
-                            $user->post_count,
-                            ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->id]],
+                            $user->get('post_count'),
+                            ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->get('id')]],
                             ['title' => I18N_BELONG_USER]
                         );
                     } else {
-                        echo $user->post_count;
+                        echo $user->get('post_count');
                     }
                     ?>
                 </td>
                 <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
-                        <?= $user->created->i18nFormat() ?>
+                        <?= $user->get('created')->i18nFormat() ?>
                     </div>
                     <div class="d-lg-none">
-                        <div><?= $user->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
-                        <div><?= $user->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
+                        <div><?= $user->get('created')->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
+                        <div><?= $user->get('created')->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>
                 </td>
             </tr>

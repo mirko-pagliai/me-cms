@@ -40,27 +40,27 @@ $this->append('actions', $this->Html->button(
         <?php foreach ($positions as $position) : ?>
             <tr>
                 <td class="text-nowrap text-center">
-                    <code><?= $position->id ?></code>
+                    <code><?= $position->get('id') ?></code>
                 </td>
                 <td>
                     <strong>
-                        <?= $this->Html->link($position->title, ['action' => 'edit', $position->id]) ?>
+                        <?= $this->Html->link($position->get('title'), ['action' => 'edit', $position->get('id')]) ?>
                     </strong>
                     <?php
                         $actions = [];
                         $actions[] = $this->Html->link(
                             I18N_EDIT,
-                            ['action' => 'edit', $position->id],
+                            ['action' => 'edit', $position->get('id')],
                             ['icon' => 'pencil-alt']
                         );
-                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $position->id], [
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $position->get('id')], [
                             'class' => 'text-danger',
                             'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
                         ]);
                         $actions[] = $this->Html->link(
                             I18N_UPLOAD,
-                            [ 'controller' => 'Banners', 'action' => 'upload', '?' => ['position' => $position->id]],
+                            [ 'controller' => 'Banners', 'action' => 'upload', '?' => ['position' => $position->get('id')]],
                             ['icon' => 'upload']
                         );
 
@@ -68,18 +68,18 @@ $this->append('actions', $this->Html->button(
                     ?>
                 </td>
                 <td class="text-center">
-                    <?= $position->description ?>
+                    <?= $position->get('description') ?>
                 </td>
                 <td class="text-nowrap text-center">
                     <?php
-                    if ($position->banner_count) {
+                    if ($position->get('banner_count')) {
                         echo $this->Html->link(
-                            $position->banner_count,
-                            ['controller' => 'Banners', 'action' => 'index', '?' => ['position' => $position->id]],
+                            $position->get('banner_count'),
+                            ['controller' => 'Banners', 'action' => 'index', '?' => ['position' => $position->get('id')]],
                             ['title' => I18N_BELONG_ELEMENT]
                         );
                     } else {
-                        echo $position->banner_count;
+                        echo $position->get('banner_count');
                     }
                     ?>
                 </td>

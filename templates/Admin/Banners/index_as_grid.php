@@ -21,19 +21,19 @@ $this->extend('/Admin/common/BannersAndPhotos/index');
             <div class="card">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item p-1 text-truncate text-center">
-                        <?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?>
+                        <?= $this->Html->link($banner->get('filename'), ['action' => 'edit', $banner->get('id')]) ?>
                     </li>
                     <li class="list-group-item p-1 small text-center">
-                        <samp><?= I18N_ID ?> <?= $banner->id ?></samp>
+                        <samp><?= I18N_ID ?> <?= $banner->get('id') ?></samp>
                     </li>
                     <li class="list-group-item p-1 small text-center">
                         <?= I18N_POSITION ?>:
-                        <?= $this->Html->link($banner->position->title, [
-                            '?' => ['position' => $banner->position->id],
+                        <?= $this->Html->link($banner->get('position')->get('title'), [
+                            '?' => ['position' => $banner->get('position')->get('id')],
                         ], ['title' => I18N_BELONG_ELEMENT]) ?>
                     </li>
                     <li class="list-group-item p-1 small text-center">
-                        (<?= $banner->created->i18nFormat() ?>)
+                        (<?= $banner->get('created')->i18nFormat() ?>)
                     </li>
                 </ul>
 
@@ -46,15 +46,15 @@ $this->extend('/Admin/common/BannersAndPhotos/index');
                 }
 
                 $actions = [
-                    $this->Html->button(null, ['action' => 'edit', $banner->id], [
+                    $this->Html->button(null, ['action' => 'edit', $banner->get('id')], [
                         'class' => 'btn-link',
                         'icon' => 'pencil-alt',
                         'title' => I18N_EDIT,
                     ]),
                 ];
 
-                if ($banner->target) {
-                    $actions[] = $this->Html->button(null, $banner->target, [
+                if ($banner->has('target')) {
+                    $actions[] = $this->Html->button(null, $banner->get('target'), [
                         'class' => 'btn-link',
                         'icon' => 'external-link-alt',
                         'title' => I18N_OPEN,
@@ -62,7 +62,7 @@ $this->extend('/Admin/common/BannersAndPhotos/index');
                     ]);
                 }
 
-                $actions[] = $this->Html->button(null, ['action' => 'download', $banner->id], [
+                $actions[] = $this->Html->button(null, ['action' => 'download', $banner->get('id')], [
                     'class' => 'btn-link',
                     'icon' => 'download',
                     'title' => I18N_DOWNLOAD,
@@ -70,7 +70,7 @@ $this->extend('/Admin/common/BannersAndPhotos/index');
 
                 //Only admins can delete banners
                 if ($this->Auth->isGroup('admin')) {
-                    $actions[] = $this->Form->postButton(null, ['action' => 'delete', $banner->id], [
+                    $actions[] = $this->Form->postButton(null, ['action' => 'delete', $banner->get('id')], [
                         'class' => 'btn-link text-danger',
                         'icon' => 'trash-alt',
                         'title' => I18N_DELETE,

@@ -45,18 +45,18 @@ $this->append('actions', $this->Html->button(
         <div class="col-md-3 mb-4">
             <div class="card bg-light px-3 py-2 border-0">
                 <div>
-                    <samp><?= I18N_ID ?> <?= $tag->id ?></samp>
+                    <samp><?= I18N_ID ?> <?= $tag->get('id') ?></samp>
                 </div>
                 <div class="mb-1">
                     <?= $this->Html->link(
-                        $this->Html->strong($tag->tag),
-                        ['controller' => 'PostsTags', 'action' => 'edit', $tag->id]
+                        $this->Html->strong($tag->get('tag')),
+                        ['controller' => 'PostsTags', 'action' => 'edit', $tag->get('id')]
                     ) ?>
                 </div>
                 <div class="mb-1">
                     <?= sprintf('(%s)', $this->Html->link(
-                        __dn('me_cms', '{0} post', '{0} posts', $tag->post_count, $tag->post_count),
-                        ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->tag]],
+                        __dn('me_cms', '{0} post', '{0} posts', $tag->get('post_count'), $tag->get('post_count')),
+                        ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->get('tag')]],
                         ['title' => I18N_BELONG_ELEMENT]
                     )) ?>
                     </div>
@@ -67,14 +67,14 @@ $this->append('actions', $this->Html->button(
                 if ($this->Auth->isGroup(['admin', 'manager'])) {
                     $actions[] = $this->Html->link(
                         I18N_EDIT,
-                        ['controller' => 'PostsTags', 'action' => 'edit', $tag->id],
+                        ['controller' => 'PostsTags', 'action' => 'edit', $tag->get('id')],
                         ['icon' => 'pencil-alt']
                     );
                 }
 
                 $actions[] = $this->Html->link(
                     I18N_OPEN,
-                    ['_name' => 'postsTag', $tag->slug],
+                    ['_name' => 'postsTag', $tag->get('slug')],
                     ['icon' => 'external-link-alt', 'target' => '_blank']
                 );
 

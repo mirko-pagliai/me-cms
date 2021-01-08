@@ -39,16 +39,16 @@ $this->append('actions', $this->Html->button(
         <?php foreach ($groups as $group) : ?>
             <tr>
                 <td class="text-nowrap text-center">
-                    <code><?= $group->id ?></code>
+                    <code><?= $group->get('id') ?></code>
                 </td>
                 <td>
                     <strong>
-                        <?= $this->Html->link($group->name, ['action' => 'edit', $group->id]) ?>
+                        <?= $this->Html->link($group->get('name'), ['action' => 'edit', $group->get('id')]) ?>
                     </strong>
                     <?php
                     $actions = [
-                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $group->id], ['icon' => 'pencil-alt']),
-                        $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $group->id], [
+                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $group->get('id')], ['icon' => 'pencil-alt']),
+                        $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $group->get('id')], [
                             'class' => 'text-danger',
                             'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
@@ -59,18 +59,18 @@ $this->append('actions', $this->Html->button(
                     ?>
                 </td>
                 <td>
-                    <?= $group->description ?>
+                    <?= $group->get('description') ?>
                 </td>
                 <td class="text-nowrap text-center">
                     <?php
-                    if ($group->user_count) {
+                    if ($group->get('user_count')) {
                         echo $this->Html->link(
-                            $group->user_count,
-                            ['controller' => 'Users', 'action' => 'index', '?' => ['group' => $group->id]],
+                            $group->get('user_count'),
+                            ['controller' => 'Users', 'action' => 'index', '?' => ['group' => $group->get('id')]],
                             ['title' => I18N_BELONG_ELEMENT]
                         );
                     } else {
-                        echo $group->user_count;
+                        echo $group->get('user_count');
                     }
                     ?>
                 </td>

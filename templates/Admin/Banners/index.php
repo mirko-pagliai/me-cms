@@ -31,32 +31,32 @@ $this->extend('/Admin/common/BannersAndPhotos/index');
         <?php foreach ($banners as $banner) : ?>
             <tr>
                 <td class="text-nowrap text-center">
-                    <code><?= $banner->id ?></code>
+                    <code><?= $banner->get('id') ?></code>
                 </td>
                 <td>
                     <strong>
-                        <?= $this->Html->link($banner->filename, ['action' => 'edit', $banner->id]) ?>
+                        <?= $this->Html->link($banner->get('filename'), ['action' => 'edit', $banner->get('id')]) ?>
                     </strong>
 
                     <?php
                     $class = 'record-badge badge badge-warning';
 
                     //If the banner is not active (not published)
-                    if (!$banner->active) {
+                    if (!$banner->get('active')) {
                         echo $this->Html->span(I18N_NOT_PUBLISHED, compact('class'));
                     }
 
                     //If the banner is not displayed as a thumbnail
-                    if (!$banner->thumbnail) {
+                    if (!$banner->has('thumbnail')) {
                         echo $this->Html->span(__d('me_cms', 'No thumbnail'), compact('class'));
                     }
 
                     $actions = [
-                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $banner->id], ['icon' => 'pencil-alt']),
+                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $banner->get('id')], ['icon' => 'pencil-alt']),
                     ];
 
-                    if ($banner->target) {
-                        $actions[] = $this->Html->link(I18N_OPEN, $banner->target, [
+                    if ($banner->get('target')) {
+                        $actions[] = $this->Html->link(I18N_OPEN, $banner->get('target'), [
                             'icon' => 'external-link-alt',
                             'target' => '_blank',
                         ]);
@@ -64,13 +64,13 @@ $this->extend('/Admin/common/BannersAndPhotos/index');
 
                     $actions[] = $this->Html->link(
                         I18N_DOWNLOAD,
-                        ['action' => 'download', $banner->id],
+                        ['action' => 'download', $banner->get('id')],
                         ['icon' => 'download']
                     );
 
                     //Only admins can delete banners
                     if ($this->Auth->isGroup('admin')) {
-                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $banner->id], [
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $banner->get('id')], [
                             'class' => 'text-danger',
                             'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
@@ -81,31 +81,31 @@ $this->extend('/Admin/common/BannersAndPhotos/index');
                     ?>
                 </td>
                 <td class="text-center">
-                    <?= $this->Html->link($banner->position->title, [
-                        '?' => ['position' => $banner->position->id],
+                    <?= $this->Html->link($banner->get('position')->get('title'), [
+                        '?' => ['position' => $banner->get('position')->get('id')],
                     ], ['title' => I18N_BELONG_ELEMENT]) ?>
                 </td>
                 <td class="text-center d-none d-lg-block">
                     <?php
-                    if ($banner->target) {
-                        $truncated = $this->Text->truncate($banner->target, 50, ['exact' => false]);
-                        echo $this->Html->link($truncated, $banner->target, ['target' => '_blank']);
+                    if ($banner->get('target')) {
+                        $truncated = $this->Text->truncate($banner->get('target'), 50, ['exact' => false]);
+                        echo $this->Html->link($truncated, $banner->get('target'), ['target' => '_blank']);
                     }
                     ?>
                 </td>
                 <td class="text-center">
-                    <?= $banner->description ?>
+                    <?= $banner->get('description') ?>
                 </td>
                 <td class="text-nowrap text-center">
-                    <?= $banner->click_count ?>
+                    <?= $banner->get('click_count') ?>
                 </td>
                 <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
-                        <?= $banner->created->i18nFormat() ?>
+                        <?= $banner->get('created')->i18nFormat() ?>
                     </div>
                     <div class="d-lg-none">
-                        <div><?= $banner->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
-                        <div><?= $banner->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
+                        <div><?= $banner->get('created')->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
+                        <div><?= $banner->get('created')->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>
                 </td>
             </tr>
