@@ -43,7 +43,7 @@ echo $this->Form->end();
                 <h6>
                     <?= $this->Html->link($post->get('title'), $post->get('url')) ?>
                     <span class="small text-muted">
-                        (<?= $post->created->i18nFormat(getConfigOrFail('main.datetime.short')) ?>)
+                        (<?= $post->get('created')->i18nFormat(getConfigOrFail('main.datetime.short')) ?>)
                     </span>
                 </h6>
 

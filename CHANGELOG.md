@@ -21,7 +21,8 @@
 * fixed bug in the formatting of some dates when editing posts and pages;
 * updated for `cakephp-recaptcha-mailhide` `1.4.6`; no longer needs extra repositories;
 * removed `js-cookie` as package, added static asset;
-* fixed little bug for the fronend topbar.
+* fixed little bug for the fronend topbar;
+* fixed all template files for them to use the `get()` method to access properties.
 
 ### 2.29.4
 * `SitemapBuilder::getMethods()` returns a collection and it's now public;

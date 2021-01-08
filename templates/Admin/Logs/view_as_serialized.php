@@ -30,9 +30,9 @@ $this->append('actions', $this->Form->postButton(
 <?php if (!empty($content)) : ?>
     <?php foreach ($content as $k => $row) : ?>
         <?php
-        if (in_array($row->level, ['error', 'fatal'])) {
+        if (in_array($row->get('level'), ['error', 'fatal'])) {
             $class = 'bg-danger';
-        } elseif (in_array($row->level, ['warning', 'notice'])) {
+        } elseif (in_array($row->get('level'), ['warning', 'notice'])) {
             $class = 'bg-warning';
         } else {
             $class = 'bg-info';
@@ -41,43 +41,43 @@ $this->append('actions', $this->Form->postButton(
         ?>
 
         <div class="<?= $class ?> mb-1 p-1">
-            <strong><?= $row->datetime ?> - <?= $row->message ?></strong>
+            <strong><?= $row->get('datetime') ?> - <?= $row->get('message') ?></strong>
         </div>
 
-        <?php if (!empty($row->request) || !empty($row->referer) || !empty($row->ip)) : ?>
+        <?php if (!empty($row->get('request')) || !empty($row->get('referer')) || !empty($row->get('ip'))) : ?>
             <div class="mb-1 text-muted">
-                <?php if (!empty($row->request)) : ?>
+                <?php if (!empty($row->get('request'))) : ?>
                     <div class="small text-truncated">
                         <?= __d('me_cms', 'Request URL') ?>:
                         <?= $this->Html->link(
-                            $row->request === '/' ? '(Root)' : $row->request,
-                            $row->request,
+                            $row->get('request') === '/' ? '(Root)' : $row->get('request'),
+                            $row->get('request'),
                             ['target' => '_blank']
                         ) ?>
                     </div>
                 <?php endif; ?>
 
-                <?php if (!empty($row->referer)) : ?>
+                <?php if (!empty($row->get('referer'))) : ?>
                     <div class="small text-truncated">
                         <?= __d('me_cms', 'Referer URL') ?>:
-                        <?= $this->Html->link($row->referer, $row->referer, ['target' => '_blank']) ?>
+                        <?= $this->Html->link($row->get('referer'), $row->get('referer'), ['target' => '_blank']) ?>
                     </div>
                 <?php endif; ?>
 
-                <?php if (!empty($row->ip)) : ?>
+                <?php if (!empty($row->get('ip'))) : ?>
                     <div>
                         <?= sprintf(
                             '%s: %s (%s | %s)',
                             __d('me_cms', 'Client IP'),
-                            $row->ip,
+                            $row->get('ip'),
                             $this->Html->link(
                                 __d('me_cms', 'Who is'),
-                                str_replace('{IP}', $row->ip, getConfigOrFail('security.ip_whois')),
+                                str_replace('{IP}', $row->get('ip'), getConfigOrFail('security.ip_whois')),
                                 ['target' => '_blank']
                             ),
                             $this->Html->link(
                                 __d('me_cms', 'Map'),
-                                str_replace('{IP}', $row->ip, getConfigOrFail('security.ip_map')),
+                                str_replace('{IP}', $row->get('ip'), getConfigOrFail('security.ip_map')),
                                 ['target' => '_blank']
                             )
                         ) ?>
@@ -89,7 +89,7 @@ $this->append('actions', $this->Form->postButton(
         <?php
         $buttons = $collapse = [];
 
-        if (!empty($row->attributes)) {
+        if (!empty($row->get('attributes'))) {
             $buttons[] = $this->Html->button(__d('me_cms', 'Exception attributes'), "#log-attributes-{$k}", [
                 'class' => 'btn-sm btn-primary',
                 'data-toggle' => 'collapse',
@@ -97,12 +97,12 @@ $this->append('actions', $this->Form->postButton(
             ]);
             $collapse[] = $this->Html->div(
                 'collapse',
-                $this->Html->pre($row->attributes, ['class' => 'pre-scrollable mb-2']),
+                $this->Html->pre($row->get('attributes'), ['class' => 'pre-scrollable mb-2']),
                 ['id' => "log-attributes-{$k}"]
             );
         }
 
-        if (!empty($row->trace)) {
+        if (!empty($row->get('trace'))) {
             $buttons[] = $this->Html->button(__d('me_cms', 'Trace'), "#log-trace-{$k}", [
                 'class' => 'btn-sm btn-primary',
                 'data-toggle' => 'collapse',
@@ -110,7 +110,7 @@ $this->append('actions', $this->Form->postButton(
             ]);
             $collapse[] = $this->Html->div(
                 'collapse',
-                $this->Html->pre($row->trace, ['class' => 'pre-scrollable mb-2']),
+                $this->Html->pre($row->get('trace'), ['class' => 'pre-scrollable mb-2']),
                 ['id' => "log-trace-{$k}"]
             );
         }
@@ -122,7 +122,7 @@ $this->append('actions', $this->Form->postButton(
         ]);
         $collapse[] = $this->Html->div(
             'collapse',
-            $this->Html->pre($row->full, ['class' => 'pre-scrollable mb-2']),
+            $this->Html->pre($row->get('full'), ['class' => 'pre-scrollable mb-2']),
             ['id' => "log-full-{$k}"]
         );
 

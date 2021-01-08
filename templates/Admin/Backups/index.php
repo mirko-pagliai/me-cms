@@ -42,27 +42,27 @@ $this->append('actions', $this->Form->postButton(
             <tr>
                 <td>
                     <strong>
-                        <?= $this->Html->link($backup->filename, ['action' => 'download', $backup->slug]) ?>
+                        <?= $this->Html->link($backup->get('filename'), ['action' => 'download', $backup->get('slug')]) ?>
                     </strong>
                     <?php
                     $actions = [
                         $this->Html->link(
                             I18N_DOWNLOAD,
-                            ['action' => 'download', $backup->slug],
+                            ['action' => 'download', $backup->get('slug')],
                             ['icon' => 'download']
                         ),
-                        $this->Form->postLink(__d('me_cms', 'Restore'), ['action' => 'restore', $backup->slug], [
+                        $this->Form->postLink(__d('me_cms', 'Restore'), ['action' => 'restore', $backup->get('slug')], [
                             'icon' => 'upload',
                             'confirm' => __d('me_cms', 'This will overwrite the current database and ' .
                                 'some data may be lost. Are you sure?'),
                         ]),
-                        $this->Form->postLink(__d('me_cms', 'Send'), ['action' => 'send', $backup->slug], [
+                        $this->Form->postLink(__d('me_cms', 'Send'), ['action' => 'send', $backup->get('slug')], [
                             'icon' => 'envelope',
                             'confirm' => __d('me_cms', 'The backup file will be sent by mail. Are you sure?'),
                         ]),
                         $this->Form->postLink(
                             I18N_DELETE,
-                            ['action' => 'delete', $backup->slug],
+                            ['action' => 'delete', $backup->get('slug')],
                             ['class' => 'text-danger', 'icon' => 'trash-alt', 'confirm' => I18N_SURE_TO_DELETE]
                         ),
                     ];
@@ -71,16 +71,16 @@ $this->append('actions', $this->Form->postButton(
                     ?>
                 </td>
                 <td class="text-nowrap text-center">
-                    <?= $backup->extension ?>
+                    <?= $backup->get('extension') ?>
                 </td>
                 <td class="text-nowrap text-center">
-                    <?= $backup->compression ?>
+                    <?= $backup->get('compression') ?>
                 </td>
                 <td class="text-nowrap text-center">
-                    <?= $this->Number->toReadableSize($backup->size) ?>
+                    <?= $this->Number->toReadableSize($backup->get('size')) ?>
                 </td>
                 <td class="text-nowrap text-center">
-                    <?= $backup->datetime->i18nFormat() ?>
+                    <?= $backup->get('datetime')->i18nFormat() ?>
                 </td>
             </tr>
         <?php endforeach; ?>

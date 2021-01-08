@@ -40,30 +40,30 @@ $this->append('actions', $this->Html->button(
         <?php foreach ($categories as $category) : ?>
             <tr>
                 <td class="text-nowrap text-center">
-                    <code><?= $category->id ?></code>
+                    <code><?= $category->get('id') ?></code>
                 </td>
                 <td>
                     <strong>
-                        <?= $this->Html->link($category->title, ['action' => 'edit', $category->id]) ?>
+                        <?= $this->Html->link($category->get('title'), ['action' => 'edit', $category->get('id')]) ?>
                     </strong>
                     <?php
                     $actions = [
-                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $category->id], ['icon' => 'pencil-alt']),
+                        $this->Html->link(I18N_EDIT, ['action' => 'edit', $category->get('id')], ['icon' => 'pencil-alt']),
                     ];
 
                     //Only admins can delete pages categories
                     if ($this->Auth->isGroup('admin')) {
-                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $category->id], [
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $category->get('id')], [
                             'class' => 'text-danger',
                             'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
                         ]);
                     }
 
-                    if ($category->page_count) {
+                    if ($category->get('page_count')) {
                         $actions[] = $this->Html->link(
                             I18N_OPEN,
-                            ['_name' => 'pagesCategory', $category->slug],
+                            ['_name' => 'pagesCategory', $category->get('slug')],
                             ['icon' => 'external-link-alt', 'target' => '_blank']
                         );
                     }
@@ -73,21 +73,21 @@ $this->append('actions', $this->Html->button(
                 </td>
                 <td class="text-nowrap text-center">
                     <?php
-                    if (!empty($category->parent->title)) {
-                        echo $category->parent->title;
+                    if ($category->has('parent') && $category->get('parent')->has('title')) {
+                        echo $category->get('parent')->get('title');
                     }
                     ?>
                 </td>
                 <td class="text-nowrap text-center">
                     <?php
-                    if ($category->page_count) {
+                    if ($category->get('page_count')) {
                         echo $this->Html->link(
-                            $category->page_count,
-                            ['controller' => 'Pages', 'action' => 'index', '?' => ['category' => $category->id]],
+                            $category->get('page_count'),
+                            ['controller' => 'Pages', 'action' => 'index', '?' => ['category' => $category->get('id')]],
                             ['title' => I18N_BELONG_ELEMENT]
                         );
                     } else {
-                        echo $category->page_count;
+                        echo $category->get('page_count');
                     }
                     ?>
                 </td>
