@@ -22,6 +22,13 @@ use MeCms\Database\Type\JsonEntityType;
 
 require_once __DIR__ . DS . 'constants.php';
 
+//Sets files to be copied
+Configure::write('CONFIG_FILES', [
+    'MeCms.recaptcha',
+    'MeCms.me_cms',
+    'MeCms.widgets',
+]);
+
 //Sets directories to be created and must be writable
 Configure::write('WRITABLE_DIRS', array_merge(Configure::read('WRITABLE_DIRS', []), [
     getConfigOrFail('Assets.target'),

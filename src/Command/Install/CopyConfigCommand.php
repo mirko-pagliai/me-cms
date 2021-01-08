@@ -19,6 +19,7 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Core\Configure;
 use MeCms\Core\Plugin;
 use MeTools\Console\Command;
 use Tools\Filesystem;
@@ -28,15 +29,6 @@ use Tools\Filesystem;
  */
 class CopyConfigCommand extends Command
 {
-    /**
-     * Configuration files to be copied
-     */
-    public const CONFIG_FILES = [
-        'MeCms.recaptcha',
-        'MeCms.me_cms',
-        'MeCms.widgets',
-    ];
-
     /**
      * Hook method for defining this command's option parser
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
@@ -56,8 +48,7 @@ class CopyConfigCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $Filesystem = new Filesystem();
-        $class = get_class($this);
-        foreach ($class::CONFIG_FILES as $file) {
+        foreach (Configure::read('CONFIG_FILES') as $file) {
             [$plugin, $file] = pluginSplit($file);
             $file .= '.php';
             $this->copyFile($io, Plugin::path($plugin, 'config' . DS . $file), $Filesystem->concatenate(CONFIG, $file));
