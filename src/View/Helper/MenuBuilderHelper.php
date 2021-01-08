@@ -46,7 +46,7 @@ class MenuBuilderHelper extends Helper
      */
     protected function buildLinks(array $links, array $options = []): array
     {
-        return array_map(function ($link) use ($options) {
+        return array_map(function ($link) use ($options): string {
             [$title, $url] = $link;
 
             return $this->Html->link($title, $url, $options);
@@ -106,7 +106,7 @@ class MenuBuilderHelper extends Helper
     {
         $controller = $this->getView()->getRequest()->getParam('controller');
 
-        return implode(PHP_EOL, array_map(function (array $menu) use ($controller, $idContainer) {
+        return implode(PHP_EOL, array_map(function (array $menu) use ($controller, $idContainer): string {
             $collapseName = 'collapse-' . strtolower(Text::slug($menu['title']));
             $titleOptions = [
                 'aria-controls' => $collapseName,
@@ -147,7 +147,7 @@ class MenuBuilderHelper extends Helper
      */
     public function renderAsDropdown(string $plugin, array $titleOptions = []): array
     {
-        return array_map(function (array $menu) use ($titleOptions) {
+        return array_map(function (array $menu) use ($titleOptions): string {
             return $this->Dropdown->menu(
                 $menu['title'],
                 $this->buildLinks($menu['links'], ['class' => 'dropdown-item']),

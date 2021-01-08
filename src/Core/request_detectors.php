@@ -22,7 +22,7 @@ use Cake\Http\ServerRequest;
  * They check if the specified action is the current action.
  */
 foreach (['add', 'delete', 'edit', 'index', 'view'] as $action) {
-    ServerRequest::addDetector($action, function (ServerRequest $request) use ($action) {
+    ServerRequest::addDetector($action, function (ServerRequest $request) use ($action): bool {
         return $request->isAction($action);
     });
 }
@@ -37,7 +37,7 @@ foreach (['add', 'delete', 'edit', 'index', 'view'] as $action) {
  * $this->getRequest()->isAdmin();
  * </code>
  */
-ServerRequest::addDetector('admin', function (ServerRequest $request) {
+ServerRequest::addDetector('admin', function (ServerRequest $request): bool {
     return $request->getParam('prefix') === ADMIN_PREFIX;
 });
 
@@ -51,7 +51,7 @@ ServerRequest::addDetector('admin', function (ServerRequest $request) {
  * $this->getRequest()->isOffline();
  * </code>
  */
-ServerRequest::addDetector('offline', function (ServerRequest $request) {
+ServerRequest::addDetector('offline', function (ServerRequest $request): bool {
     if (!getConfig('default.offline')) {
         return false;
     }

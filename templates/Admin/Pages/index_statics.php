@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Admin/common/index');
+$this->extend('MeCms./Admin/common/index');
 $this->assign('title', __d('me_cms', 'Static pages'));
 ?>
 
@@ -29,11 +29,11 @@ $this->assign('title', __d('me_cms', 'Static pages'));
             <tr>
                 <td>
                     <strong>
-                        <?= $this->Html->link($page->filename, ['_name' => 'page', $page->slug], ['target' => '_blank']) ?>
+                        <?= $this->Html->link($page->get('filename'), ['_name' => 'page', $page->get('slug')], ['target' => '_blank']) ?>
                     </strong>
                     <?php
                     $actions = [
-                        $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->slug], [
+                        $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->get('slug')], [
                             'icon' => 'external-link-alt',
                             'target' => '_blank',
                         ]),
@@ -43,10 +43,10 @@ $this->assign('title', __d('me_cms', 'Static pages'));
                     ?>
                 </td>
                 <td class="text-center">
-                    <?= $page->title ?>
+                    <?= $page->get('title') ?>
                 </td>
                 <td class="text-nowrap">
-                    <samp><?= $page->path ?></samp>
+                    <samp><?= $page->get('path') ?></samp>
                 </td>
             </tr>
         <?php endforeach; ?>

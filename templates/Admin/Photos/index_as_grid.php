@@ -76,7 +76,7 @@ $this->extend('/Admin/common/BannersAndPhotos/index');
                 }
 
                 //If the photo is active
-                if ($photo->active) {
+                if ($photo->get('active')) {
                     $actions[] = $this->Html->button(null, [
                         '_name' => 'photo',
                         'slug' => $photo->get('album')->get('slug'),

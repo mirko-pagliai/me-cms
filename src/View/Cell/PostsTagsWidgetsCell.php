@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\View\Cell;
 
+use Cake\Collection\CollectionInterface;
 use Cake\ORM\ResultSet;
 use Cake\View\Cell;
 use InvalidArgumentException;
@@ -93,7 +94,7 @@ class PostsTagsWidgetsCell extends Cell
             ->select(['tag', 'post_count'])
             ->limit($limit)
             ->order(['post_count' => 'DESC', 'tag' => 'ASC'])
-            ->formatResults(function (ResultSet $results) use ($style, $maxFont, $minFont) {
+            ->formatResults(function (ResultSet $results) use ($style, $maxFont, $minFont): CollectionInterface {
                 $results = $results->indexBy('slug');
 
                 if (!$results->count() || !$style || !$maxFont || !$minFont) {
@@ -105,7 +106,7 @@ class PostsTagsWidgetsCell extends Cell
                 $diffCount = $results->first()->get('post_count') - $minCount;
                 $diffFont = $maxFont - $minFont;
 
-                return $results->map(function (Tag $tag) use ($minCount, $diffCount, $maxFont, $minFont, $diffFont) {
+                return $results->map(function (Tag $tag) use ($minCount, $diffCount, $maxFont, $minFont, $diffFont): Tag {
                     $size = $diffCount ? round((($tag->get('post_count') - $minCount) / $diffCount * $diffFont) + $minFont) : $maxFont;
 
                     return $tag->set('size', $size);

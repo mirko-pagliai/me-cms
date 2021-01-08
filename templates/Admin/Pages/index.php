@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Admin/common/index');
+$this->extend('MeCms./Admin/common/index');
 $this->assign('title', I18N_PAGES);
 $this->append('actions', $this->Html->button(
     I18N_ADD,
@@ -79,22 +79,22 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
         <?php foreach ($pages as $page) : ?>
             <tr>
                 <td class="text-nowrap text-center">
-                    <code><?= $page->id ?></code>
+                    <code><?= $page->get('id') ?></code>
                 </td>
                 <td>
                     <strong>
-                        <?= $this->Html->link($page->title, ['action' => 'edit', $page->id]) ?>
+                        <?= $this->Html->link($page->get('title'), ['action' => 'edit', $page->get('id')]) ?>
                     </strong>
                     <?php
                     $class = 'record-badge badge badge-warning';
 
                     //If the page is not active (it's a draft)
-                    if (!$page->active) {
+                    if (!$page->get('active')) {
                         echo $this->Html->span(I18N_DRAFT, compact('class'));
                     }
 
                     //If the page is scheduled
-                    if ($page->created->isFuture()) {
+                    if ($page->get('created')->isFuture()) {
                         echo $this->Html->span(I18N_SCHEDULED, compact('class'));
                     }
 
@@ -102,12 +102,12 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
 
                     //Only admins and managers can edit pages
                     if ($this->Auth->isGroup(['admin', 'manager'])) {
-                        $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $page->id], ['icon' => 'pencil-alt']);
+                        $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $page->get('id')], ['icon' => 'pencil-alt']);
                     }
 
                     //Only admins can delete pages
                     if ($this->Auth->isGroup('admin')) {
-                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $page->id], [
+                        $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $page->get('id')], [
                             'class' => 'text-danger',
                             'icon' => 'trash-alt',
                             'confirm' => I18N_SURE_TO_DELETE,
@@ -115,13 +115,13 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     }
 
                     //If the page is active and is not scheduled
-                    if ($page->active && !$page->created->isFuture()) {
-                        $actions[] = $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->slug], [
+                    if ($page->get('active') && !$page->get('created')->isFuture()) {
+                        $actions[] = $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->get('slug')], [
                             'icon' => 'external-link-alt',
                             'target' => '_blank',
                         ]);
                     } else {
-                        $actions[] = $this->Html->link(I18N_PREVIEW, ['_name' => 'pagesPreview', $page->slug], [
+                        $actions[] = $this->Html->link(I18N_PREVIEW, ['_name' => 'pagesPreview', $page->get('slug')], [
                             'icon' => 'external-link-alt',
                             'target' => '_blank',
                         ]);
@@ -132,8 +132,8 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 </td>
                 <td class="text-nowrap text-center">
                     <?= $this->Html->link(
-                        $page->category->title,
-                        ['?' => ['category' => $page->category->id]],
+                        $page->get('category')->get('title'),
+                        ['?' => ['category' => $page->get('category')->get('id')]],
                         ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
@@ -142,14 +142,13 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                 <td class="text-nowrap text-center">
                     <?= $this->element('admin/priority-badge', ['priority' => $page->get('priority')]) ?>
                 </td>
-                </td>
                 <td class="text-nowrap text-center">
                     <div class="d-none d-lg-block">
-                        <?= $page->created->i18nFormat() ?>
+                        <?= $page->get('created')->i18nFormat() ?>
                     </div>
                     <div class="d-lg-none">
-                        <div><?= $page->created->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
-                        <div><?= $page->created->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
+                        <div><?= $page->get('created')->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
+                        <div><?= $page->get('created')->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                     </div>
                 </td>
             </tr>

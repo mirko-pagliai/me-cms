@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->assign('title', $page->title = 'Cookies policy');
+$this->assign('title', $page->set('title', 'Cookies policy'));
 ob_start();
 ?>
 <p>Effective date: Genuary 28, 2016.</p>
@@ -198,5 +198,5 @@ ob_start();
 </p>
 
 <?php
-    $page->text = ob_get_clean();
+    $page->set('text', ob_get_clean());
     echo $this->Html->div('pages view', $this->element('views/page', compact('page')));

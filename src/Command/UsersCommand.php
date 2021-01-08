@@ -45,7 +45,7 @@ class UsersCommand extends Command
     {
         return $this->Users->find()
             ->contain('Groups')
-            ->map(function (User $user) {
+            ->map(function (User $user): array {
                 $status = $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending');
                 if ($user->get('banned')) {
                     $status = __d('me_cms', 'Banned');
@@ -53,7 +53,7 @@ class UsersCommand extends Command
 
                 $created = $user->get('created');
                 if (is_object($created) && method_exists($created, 'i18nFormat')) {
-                    $created = $created->i18nFormat('yyyy/MM/dd HH:mm');
+                    $created = $created->i18nFormat(FORMAT_FOR_MYSQL);
                 }
 
                 return [
@@ -66,8 +66,7 @@ class UsersCommand extends Command
                     $status,
                     $created,
                 ];
-            })
-            ->toList();
+            })->toList();
     }
 
     /**

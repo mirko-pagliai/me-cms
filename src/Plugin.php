@@ -19,10 +19,10 @@ namespace MeCms;
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
+use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\MiddlewareQueue;
-use DebugKit\Plugin as DebugKit;
 use MeCms\Command\AddUserCommand;
 use MeCms\Command\GroupsCommand;
 use MeCms\Command\Install\CopyConfigCommand;
@@ -83,11 +83,15 @@ class Plugin extends BasePlugin
 
         if (!$this->isCli()) {
             //Loads DebugKit, if debugging is enabled
-            if (getConfig('debug') && !$app->getPlugins()->has('DebugKit') && class_exists(DebugKit::class)) {
-                $app->addPlugin(DebugKit::class);
+            if (getConfig('debug') && !$app->getPlugins()->has('DebugKit')) {
+                try {
+                    $app->addPlugin('DebugKit');
+                } catch (MissingPluginException $e) {
+                    //Do not halt if the plugin is missing
+                }
             }
 
-            $app->addPlugin('WyriHaximus/MinifyHtml', ['path' => ROOT . DS . 'vendor' . DS . 'wyrihaximus' . DS . 'minify-html' . DS]);
+            $app->addPlugin('WyriHaximus/MinifyHtml');
         }
     }
 

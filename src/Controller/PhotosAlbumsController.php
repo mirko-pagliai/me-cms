@@ -47,7 +47,7 @@ class PhotosAlbumsController extends AppController
         }
 
         //Album photos are randomly ordered
-        $albums = $albums->all()->map(function (PhotosAlbum $album) {
+        $albums = $albums->all()->map(function (PhotosAlbum $album): PhotosAlbum {
             $photos = $album->get('photos');
             shuffle($photos);
 

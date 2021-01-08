@@ -139,11 +139,8 @@ class UsersController extends AppController
             ->set(['active' => true])
             ->execute();
 
-        [$method, $message] = ['error', I18N_OPERATION_NOT_OK];
-        if ($update->count()) {
-            [$method, $message] = ['success', I18N_OPERATION_OK];
-        }
-        call_user_func([$this->Flash, $method], $message);
+        [$method, $message] = $update->count() ? ['success', I18N_OPERATION_OK] : ['error', I18N_OPERATION_NOT_OK];
+        $this->Flash->$method($message);
 
         return $this->redirect(['_name' => 'login']);
     }
@@ -181,8 +178,11 @@ class UsersController extends AppController
                     }
 
                     if ($email) {
-                        $ip = $this->getRequest()->clientIp();
-                        Log::error(sprintf('%s - Resend activation request: invalid email `%s`', $ip, $email), 'users');
+                        Log::error(sprintf(
+                            '%s - Resend activation request: invalid email `%s`',
+                            $this->getRequest()->clientIp(),
+                            $email
+                        ), 'users');
                     }
                 }
             }
@@ -237,8 +237,12 @@ class UsersController extends AppController
             }
 
             if ($username && $password) {
-                $ip = $this->getRequest()->clientIp();
-                Log::error(sprintf('%s - Failed login: username `%s`, password `%s`', $ip, $username, $password), 'users');
+                Log::error(sprintf(
+                    '%s - Failed login: username `%s`, password `%s`',
+                    $this->getRequest()->clientIp(),
+                    $username,
+                    $password
+                ), 'users');
             }
 
             $this->Flash->error(__d('me_cms', 'Invalid username or password'));
@@ -294,8 +298,11 @@ class UsersController extends AppController
                 }
 
                 if ($this->getRequest()->getData('email')) {
-                    $ip = $this->getRequest()->clientIp();
-                    Log::error(sprintf('%s - Forgot password request: invalid email `%s`', $ip, $email), 'users');
+                    Log::error(sprintf(
+                        '%s - Forgot password request: invalid email `%s`',
+                        $this->getRequest()->clientIp(),
+                        $email
+                    ), 'users');
                 }
             }
             $this->Flash->error($message);

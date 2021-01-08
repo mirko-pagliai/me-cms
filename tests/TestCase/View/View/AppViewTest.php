@@ -98,11 +98,25 @@ class AppViewTest extends TestCase
     }
 
     /**
+     * Tests for `addToUserbar()` method
+     * @test
+     */
+    public function testAddToUserbar()
+    {
+        $this->View->addToUserbar('string');
+        $this->View->addToUserbar(['first', 'second']);
+        $this->View->addToUserbar([['nestled']]);
+        $this->View->render('StaticPages/page-from-app');
+        $this->assertEquals('<li>string</li>' . PHP_EOL . '<li>first</li>' . PHP_EOL . '<li>second</li>' . PHP_EOL . '<li>nestled</li>', $this->View->fetch('userbar'));
+    }
+
+    /**
      * Tests for `userbar()` method
      * @test
      */
     public function testUserbar()
     {
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertEmpty($this->View->userbar());
 
         $this->View->userbar('string');
@@ -116,5 +130,10 @@ class AppViewTest extends TestCase
         ], $this->View->userbar());
         $this->View->render('StaticPages/page-from-app');
         $this->assertEquals('<li>string</li>' . PHP_EOL . '<li>first</li>' . PHP_EOL . '<li>second</li>' . PHP_EOL . '<li>nestled</li>', $this->View->fetch('userbar'));
+        error_reporting($current);
+
+        $this->expectDeprecation();
+        $this->expectExceptionMessageMatches('/^Deprecated\. Use instead `addToUserbar\(\)`/');
+        $this->View->userbar();
     }
 }

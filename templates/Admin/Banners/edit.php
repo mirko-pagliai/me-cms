@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/common/form');
+$this->extend('MeCms./common/form');
 $this->assign('title', $title = __d('me_cms', 'Edit banner'));
 ?>
 
@@ -41,10 +41,10 @@ $this->assign('title', $title = __d('me_cms', 'Edit banner'));
         </div>
         <?php
         $class = 'img-thumbnail mb-3';
-        if ($banner->thumbnail) {
-            echo $this->Thumb->resize($banner->path, ['width' => 1186], compact('class'));
+        if ($banner->has('thumbnail')) {
+            echo $this->Thumb->resize($banner->get('path'), ['width' => 1186], compact('class'));
         } else {
-            echo $this->Html->img($banner->www, compact('class'));
+            echo $this->Html->img($banner->get('www'), compact('class'));
         }
 
         echo $this->Form->control('filename', [

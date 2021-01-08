@@ -34,7 +34,7 @@ class PluginTest extends TestCase
         /**
          * Internal functions. Returns an array of loaded plugins
          */
-        $getLoadedPlugins = function ($app) {
+        $getLoadedPlugins = function (BaseApplication $app): array {
             return array_keys(iterator_to_array($app->getPlugins()));
         };
 
@@ -56,11 +56,9 @@ class PluginTest extends TestCase
         $Plugin->bootstrap($app);
         $loadedPlugins = $getLoadedPlugins($app);
         $this->assertContains('MyTheme', $loadedPlugins);
-        $this->assertNotEmpty($loadedPlugins);
 
         //Now is not cli
-        $expectedDiff = ['DebugKit', 'WyriHaximus/MinifyHtml'];
         $Plugin->bootstrap($app);
-        $this->assertEquals($expectedDiff, array_values(array_diff($getLoadedPlugins($app), $loadedPlugins)));
+        $this->assertEquals(array_merge($loadedPlugins, ['WyriHaximus/MinifyHtml']), $getLoadedPlugins($app));
     }
 }
