@@ -83,7 +83,7 @@ class AppControllerTest extends ControllerTestCase
         $this->Controller->getRequest()->clearDetectorCache();
         $this->assertNull($this->Controller->beforeFilter(new Event('myEvent')));
 
-        $url = ['controller'=> 'Pages', 'action' => 'index'] + $this->url;
+        $url = ['controller' => 'Pages', 'action' => 'index'] + $this->url;
         $this->loadFixtures();
 
         $this->get(['action' => 'add'] + $url);
@@ -115,7 +115,7 @@ class AppControllerTest extends ControllerTestCase
         $this->_response = $this->Controller->redirectMatchingReferer('/');
         $this->assertRedirect('/');
 
-        $url = ['controller'=> 'Pages', 'action' => 'index'] + $this->url;
+        $url = ['controller' => 'Pages', 'action' => 'index'] + $this->url;
         $this->_response = $this->Controller->setResponse(new Response())->redirectMatchingReferer($url);
         $this->assertRedirect(Router::url($url));
 

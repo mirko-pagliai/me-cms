@@ -90,6 +90,7 @@
         <NullableReturnStatement>
             <errorLevel type="suppress">
                 <file name="src/View/Helper/MenuBuilderHelper.php" />
+                <file name="src/View/View/AppView.php" />
             </errorLevel>
         </NullableReturnStatement>
 
