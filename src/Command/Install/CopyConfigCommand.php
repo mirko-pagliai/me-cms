@@ -19,6 +19,7 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Core\Configure;
 use MeCms\Core\Plugin;
 use MeTools\Console\Command;
 use Tools\Filesystem;
@@ -56,8 +57,7 @@ class CopyConfigCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $Filesystem = new Filesystem();
-        $class = get_class($this);
-        foreach ($class::CONFIG_FILES as $file) {
+        foreach (Configure::read('CONFIG_FILES') as $file) {
             [$plugin, $file] = pluginSplit($file);
             $file .= '.php';
             $this->copyFile($io, Plugin::path($plugin, 'config' . DS . $file), $Filesystem->concatenate(CONFIG, $file));
