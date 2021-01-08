@@ -81,6 +81,13 @@
             </errorLevel>
         </NoInterfaceProperties>
 
+        <NullableReturnStatement>
+            <errorLevel type="suppress">
+                <file name="src/View/Helper/MenuBuilderHelper.php" />
+                <file name="src/View/View/AppView.php" />
+            </errorLevel>
+        </NullableReturnStatement>
+
         <RedundantCondition>
             <errorLevel type="suppress">
                 <file name="src/Controller/Traits/GetStartAndEndDateTrait.php" />
