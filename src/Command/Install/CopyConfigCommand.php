@@ -30,15 +30,6 @@ use Tools\Filesystem;
 class CopyConfigCommand extends Command
 {
     /**
-     * Configuration files to be copied
-     */
-    public const CONFIG_FILES = [
-        'MeCms.recaptcha',
-        'MeCms.me_cms',
-        'MeCms.widgets',
-    ];
-
-    /**
      * Hook method for defining this command's option parser
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
      * @return \Cake\Console\ConsoleOptionParser
