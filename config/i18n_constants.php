@@ -49,6 +49,7 @@ define('I18N_LAST_LOGIN', __d('me_cms', 'Last login'));
 define('I18N_LAST_NAME', __d('me_cms', 'Last name'));
 define('I18N_LOWERCASE_NUMBERS_DASH', __d('me_cms', 'lowercase letters, numbers, dash'));
 define('I18N_LOWERCASE_NUMBERS_SPACE', __d('me_cms', 'lowercase letters, numbers, space'));
+define('I18N_MISSING_ID', __d('me_cms', 'Missing ID'));
 define('I18N_NAME', __d('me_cms', 'Name'));
 define('I18N_NO', __d('me_cms', 'no'));
 define('I18N_NOT_FOUND', __d('me_cms', 'Record not found'));
