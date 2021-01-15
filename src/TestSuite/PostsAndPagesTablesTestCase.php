@@ -102,7 +102,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
         $Table->beforeSave($event, $entity, $options);
         $this->assertCount(1, $entity->get('preview'));
         $this->assertContainsOnlyInstancesOf(Entity::class, $entity->get('preview'));
-        $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $entity->get('preview')->first()->get('url'));
+        $this->assertMatchesRegularExpression('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $entity->get('preview')->first()->get('url'));
         $this->assertEquals(400, $entity->get('preview')->first()->get('width'));
         $this->assertEquals(300, $entity->get('preview')->first()->get('height'));
     }

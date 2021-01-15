@@ -12,7 +12,8 @@
 * the sitemap classes have been moved into the `MeCms\Utility\Sitemap` namespace.
     Added the `SitemapBase` abstract class, that provides the `parse()` method
     and which now needs to be extended by the `Sitemap` class;
-* `AppView::userbar()` has been removed.
+* `AppView::userbar()` has been removed;
+* ready for `phpunit` 9.0.
 
 ## 2.29 branch
 ### 2.29.5

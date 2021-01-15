@@ -111,7 +111,7 @@ class VersionUpdatesCommandTest extends TestCase
         @mkdir($dir);
         $this->assertFileExists($dir);
         $this->Command->deleteOldDirectories();
-        $this->assertFileNotExists($dir);
+        $this->assertFileDoesNotExist($dir);
     }
 
     /**
