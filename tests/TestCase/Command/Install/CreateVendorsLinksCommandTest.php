@@ -15,12 +15,10 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command\Install;
 
-use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
-use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\TestSuite\TestCase;
-use MeTools\Command\Install\CreateVendorsLinksCommand;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
+use Tools\Filesystem;
 
 /**
  * CreateVendorsLinksCommandTest class
@@ -35,21 +33,16 @@ class CreateVendorsLinksCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $io = new ConsoleIo(new ConsoleOutput(), new ConsoleOutput());
-        $Command = $this->getMockBuilder(CreateVendorsLinksCommand::class)
-            ->setMethods(['createLink'])
-            ->getMock();
+        $expected = array_values(array_filter(array_map(function (string $target, string $origin): string {
+            $target = WWW_ROOT . 'vendor' . DS . $target;
+            if (file_exists($target)) {
+                return 'File or directory `' . (new Filesystem())->rtr($target) . '` already exists';
+            }
 
-        $count = 0;
-        foreach (Configure::read('VENDOR_LINKS') as $origin => $target) {
-            $Command->expects($this->at($count++))
-                ->method('createLink')
-                ->with($io, ROOT . 'vendor' . DS . $origin, WWW_ROOT . 'vendor' . DS . $target);
-        }
+            return file_exists(ROOT . 'vendor' . DS . $origin) ? 'Link `' . (new Filesystem())->rtr($target) . '` has been created' : '';
+        }, Configure::read('VENDOR_LINKS'), array_keys(Configure::read('VENDOR_LINKS')))));
 
-        $Command->expects($this->exactly(count(Configure::read('VENDOR_LINKS'))))
-            ->method('createLink');
-
-        $this->assertNull($Command->run([], $io));
+        $this->exec('me_cms.create_vendors_links -v');
+        $this->assertSame($expected, $this->_out->messages());
     }
 }

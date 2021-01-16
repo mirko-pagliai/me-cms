@@ -19,7 +19,7 @@ use MeCms\Model\Entity\Tag;
 use MeCms\TestSuite\ControllerTestCase;
 
 /**
- * PhotosControllerTest class
+ * PostsTagsControllerTest class
  */
 class PostsTagsControllerTest extends ControllerTestCase
 {

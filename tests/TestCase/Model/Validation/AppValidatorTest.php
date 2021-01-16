@@ -24,17 +24,17 @@ use MeCms\TestSuite\TestCase;
 class AppValidatorTest extends TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $Banners;
-
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Cake\ORM\Table
      */
     protected $Posts;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Cake\ORM\Table
+     */
+    protected $PostsCategories;
+
+    /**
+     * @var \Cake\ORM\Table
      */
     protected $Users;
 
@@ -47,7 +47,6 @@ class AppValidatorTest extends TestCase
      * @var array
      */
     protected $example = [
-        'Banners' => ['position_id' => 1, 'filename' => 'pic.jpg'],
         'Posts' => [
             'category_id' => 1,
             'user_id' => 1,
@@ -71,8 +70,8 @@ class AppValidatorTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.MeCms.Banners',
         'plugin.MeCms.Posts',
+        'plugin.MeCms.PostsCategories',
         'plugin.MeCms.Users',
     ];
 
@@ -84,7 +83,7 @@ class AppValidatorTest extends TestCase
     {
         parent::setUp();
 
-        foreach (['Banners', 'Posts', 'Users'] as $table) {
+        foreach (['Posts', 'PostsCategories', 'Users'] as $table) {
             $this->$table = TableRegistry::getTableLocator()->get('MeCms.' . $table);
         }
     }
@@ -170,21 +169,6 @@ class AppValidatorTest extends TestCase
      * Test validation for `filename` property
      * @test
      */
-    public function testValidationForFilename()
-    {
-        $this->loadFixtures('Banners');
-
-        $errors = $this->Banners->newEntity(['filename' => str_repeat('a', 252) . '.gif'] + $this->example['Banners'])->getErrors();
-        $this->assertEquals(['filename' => ['maxLength' => 'Must be at most 255 chars']], $errors);
-
-        $errors = $this->Banners->newEntity(['filename' => str_repeat('a', 251) . '.gif'] + $this->example['Banners'])->getErrors();
-        $this->assertEmpty($errors);
-    }
-
-    /**
-     * Test validation for `filename` property
-     * @test
-     */
     public function testValidationForSubtitle()
     {
         $this->loadFixtures('Posts');
@@ -247,12 +231,13 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForDescription()
     {
-        $this->loadFixtures('Banners');
+        $this->loadFixtures('PostsCategories');
+        $data = ['title' => 'A title', 'slug' => 'a-slug'];
 
-        $errors = $this->Banners->newEntity(['description' => str_repeat('a', 256)] + $this->example['Banners'])->getErrors();
+        $errors = $this->PostsCategories->newEntity(['description' => str_repeat('a', 256)] + $data)->getErrors();
         $this->assertEquals(['description' => ['maxLength' => 'Must be at most 255 chars']], $errors);
 
-        $errors = $this->Banners->newEntity(['description' => str_repeat('a', 255)] + $this->example['Banners'])->getErrors();
+        $errors = $this->PostsCategories->newEntity(['description' => str_repeat('a', 255)] + $data)->getErrors();
         $this->assertEmpty($errors);
     }
 

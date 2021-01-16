@@ -135,7 +135,7 @@ class BackupsControllerTest extends ControllerTestCase
         $this->post($url, ['filename' => 'backup.txt']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertFileNotExists(getConfigOrFail('DatabaseBackup.target') . DS . 'backup.txt');
+        $this->assertFileDoesNotExist(getConfigOrFail('DatabaseBackup.target') . DS . 'backup.txt');
 
         //POST request. Now data are valid
         $this->post($url, ['filename' => 'backup.sql']);
@@ -154,7 +154,7 @@ class BackupsControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'delete', urlencode(basename($file))]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
     }
 
     /**
@@ -167,7 +167,7 @@ class BackupsControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'deleteAll']);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        array_map([$this, 'assertFileNotExists'], $files);
+        array_map([$this, 'assertFileDoesNotExist'], $files);
     }
 
     /**

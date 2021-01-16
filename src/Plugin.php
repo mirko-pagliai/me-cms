@@ -23,18 +23,12 @@ use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\MiddlewareQueue;
-use MeCms\Command\AddUserCommand;
-use MeCms\Command\GroupsCommand;
-use MeCms\Command\Install\CopyConfigCommand;
-use MeCms\Command\Install\CreateAdminCommand;
-use MeCms\Command\Install\CreateGroupsCommand;
-use MeCms\Command\Install\FixElFinderCommand;
+use Cake\Utility\Inflector;
 use MeCms\Command\Install\RunAllCommand;
-use MeCms\Command\UsersCommand;
-use MeCms\Command\VersionUpdatesCommand;
 use MeTools\Command\Install\CreateDirectoriesCommand;
 use MeTools\Command\Install\CreateVendorsLinksCommand;
 use MeTools\Command\Install\SetPermissionsCommand;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Plugin class
@@ -102,17 +96,19 @@ class Plugin extends BasePlugin
      */
     public function console(CommandCollection $commands): CommandCollection
     {
-        $commands->add('me_cms.add_user', AddUserCommand::class)
-            ->add('me_cms.groups', GroupsCommand::class)
-            ->add('me_cms.users', UsersCommand::class)
-            ->add('me_cms.version_updates', VersionUpdatesCommand::class)
-            ->add('me_cms.copy_config', CopyConfigCommand::class)
-            ->add('me_cms.create_admin', CreateAdminCommand::class)
-            ->add('me_cms.create_groups', CreateGroupsCommand::class)
-            ->add('me_cms.fix_elfinder', FixElFinderCommand::class)
-            ->add('me_cms.install', RunAllCommand::class);
+        //Auto-discovers all `MeCms` commands.
+        //Unlike the `CommandCollection::discoverPlugin()` method, it also finds installation commands
+        $files = Finder::create()->files()->name('/Command\.php$/')->in($this->getPath() . 'src' . DS . 'Command');
+        foreach ($files as $fileInfo) {
+            $className = 'MeCms\\' . str_replace('/', '\\', substr($fileInfo->getPath(), strlen($this->getPath() . 'src' . DS))) . '\\' . $fileInfo->getBasename('.php');
+            $name = Inflector::underscore(preg_replace('/Command\.php$/', '', $fileInfo->getFilename()));
+            $commands->add('me_cms.' . $name, $className);
+        }
 
-        //Commands from MeTools
+        //Renames `RunAllCommand` command
+        $commands->add('me_cms.install', RunAllCommand::class);
+
+        //Adds commands from MeTools
         return $commands->add('me_cms.create_directories', CreateDirectoriesCommand::class)
             ->add('me_cms.create_vendors_links', CreateVendorsLinksCommand::class)
             ->add('me_cms.set_permissions', SetPermissionsCommand::class);

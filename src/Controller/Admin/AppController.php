@@ -18,6 +18,7 @@ namespace MeCms\Controller\Admin;
 
 use Cake\Event\EventInterface;
 use Cake\Http\Response;
+use Cake\Routing\Router;
 use MeCms\Controller\AppController as BaseAppController;
 
 /**
@@ -45,28 +46,14 @@ abstract class AppController extends BaseAppController
 
         $this->Auth->deny();
 
-        return null;
-    }
-
-    /**
-     * Called after the controller action is run, but before the view is rendered
-     * @param \Cake\Event\EventInterface $event An EventInterface instance
-     * @return void
-     * @since 2.27.5
-     */
-    public function beforeRender(EventInterface $event): void
-    {
-        parent::beforeRender($event);
-
-        //For `index` action, saves request target and current controller name
-        //  in session as a referer. The controller name will be used to verify
+        //Saves the referer in session, excluding post and put requests
         $request = $this->getRequest();
-        if ($request->isAction('index')) {
-            $request->getSession()->write('referer', [
-                'controller' => $request->getParam('controller'),
-                'target' => $request->getRequestTarget(),
-            ]);
+        $referer = $request->referer();
+        if (!$request->is('post') && !$request->is('put') && $referer && $request->getRequestTarget() !== $referer) {
+            $request->getSession()->write('referer', $referer);
         }
+
+        return null;
     }
 
     /**
@@ -81,27 +68,28 @@ abstract class AppController extends BaseAppController
     }
 
     /**
-     * Returns the referring URL for this request.
+     * Redirects to given $url, after turning off $this->autoRender.
      *
-     * Unlike the original method, this can return the `index` action of the same
-     *  controller (if it has been indicated as the `$default` parameter),
-     *  preserving also the query string
-     * @param string|array|null $default Default URL to use if `HTTP_REFERER`
-     *  cannot be read from headers
-     * @param bool $local If `true`, restrict referring URLs to local server
-     * @return string Referring URL
-     * @see beforeRender()
-     * @since 2.27.5
+     * Unlike the common `redirect()` method, checks whether a referer has been
+     *  saved in the session that coincides with the requested redirect (and
+     * which could contain a query string, for example).
+     * @param string|array|\Psr\Http\Message\UriInterface $url A string,
+     *  array-based URL or UriInterface instance
+     * @param int $status HTTP status code. Defaults to `302`
+     * @return \Cake\Http\Response|null
+     * @since 2.30.0
      */
-    public function referer($default = '/', bool $local = false): string
+    public function redirectMatchingReferer($url, int $status = 302): ?Response
     {
-        $request = $this->getRequest();
-        $referer = (array)$request->getSession()->read('referer') + ['controller' => '', 'target' => ''];
-        if ($default == ['action' => 'index'] && $referer['controller'] == $request->getParam('controller')) {
-            return $referer['target'];
+        if (is_array($url)) {
+            $referer = $this->getRequest()->getSession()->read('referer');
+            $expectedRedirect = '/' . ltrim(Router::url($url, true), Router::url('/', true));
+            if ($referer && string_starts_with($referer, $expectedRedirect)) {
+                $url = $referer;
+            }
         }
 
-        return parent::referer($default, $local);
+        return $this->redirect($url, $status);
     }
 
     /**

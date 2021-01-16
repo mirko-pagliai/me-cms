@@ -116,22 +116,4 @@ class AppView extends View
     {
         $this->userbar = array_merge($this->userbar, (array)$content);
     }
-
-    /**
-     * Sets one or more userbar contents
-     * @param string|array|null $content Contents. It can be a string or an
-     *  array of contents. If `null`, returns an array of current contents
-     * @return array
-     * @deprecated 2.29.5 Use instead `addToUserbar()`
-     */
-    public function userbar($content = null): array
-    {
-        deprecationWarning('Deprecated. Use instead `addToUserbar()`');
-
-        if ($content) {
-            $this->addToUserbar($content);
-        }
-
-        return $this->userbar;
-    }
 }

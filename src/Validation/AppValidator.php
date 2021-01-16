@@ -94,14 +94,6 @@ class AppValidator extends Validator
             ],
         ]);
 
-        //Filename
-        $this->add('filename', [
-            'maxLength' => [
-                'message' => __d('me_cms', 'Must be at most {0} chars', 255),
-                'rule' => ['maxLength', 255],
-            ],
-        ]);
-
         //Subtitle
         $this->add('subtitle', [
             'lengthBetween' => [

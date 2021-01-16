@@ -19,8 +19,7 @@ namespace MeCms\Validation;
 use MeCms\Validation\AppValidator;
 
 /**
- * Abstract class for `PagesCategoryValidator`, `PhotosAlbumValidator` and
- *  `PostsCategoryValidator` classes.
+ * Abstract class for `PagesCategoryValidator` and `PostsCategoryValidator` classes.
  *
  * This class provides some methods and properties common to both classes.
  */

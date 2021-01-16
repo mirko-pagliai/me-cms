@@ -53,9 +53,6 @@ class WidgetHelperTest extends HelperTestCase
         $this->assertSame([
             'MeCms.Pages::categories',
             'MeCms.Pages::pages',
-            'MeCms.Photos::albums',
-            'MeCms.Photos::latest',
-            'MeCms.Photos::random',
             'MeCms.Posts::categories',
             'MeCms.Posts::latest',
             'MeCms.Posts::months',

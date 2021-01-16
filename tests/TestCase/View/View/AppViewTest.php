@@ -109,31 +109,4 @@ class AppViewTest extends TestCase
         $this->View->render('StaticPages/page-from-app');
         $this->assertEquals('<li>string</li>' . PHP_EOL . '<li>first</li>' . PHP_EOL . '<li>second</li>' . PHP_EOL . '<li>nestled</li>', $this->View->fetch('userbar'));
     }
-
-    /**
-     * Tests for `userbar()` method
-     * @test
-     */
-    public function testUserbar()
-    {
-        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEmpty($this->View->userbar());
-
-        $this->View->userbar('string');
-        $this->View->userbar(['first', 'second']);
-        $this->View->userbar([['nestled']]);
-        $this->assertEquals([
-            'string',
-            'first',
-            'second',
-            ['nestled'],
-        ], $this->View->userbar());
-        $this->View->render('StaticPages/page-from-app');
-        $this->assertEquals('<li>string</li>' . PHP_EOL . '<li>first</li>' . PHP_EOL . '<li>second</li>' . PHP_EOL . '<li>nestled</li>', $this->View->fetch('userbar'));
-        error_reporting($current);
-
-        $this->expectDeprecation();
-        $this->expectExceptionMessageMatches('/^Deprecated\. Use instead `addToUserbar\(\)`/');
-        $this->View->userbar();
-    }
 }
