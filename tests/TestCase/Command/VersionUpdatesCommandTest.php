@@ -120,6 +120,9 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testExecute()
     {
+        $this->exec('me_cms.version_updates -h');
+        $this->assertNotEmpty($this->_out->messages());
+
         $methods = get_child_methods(VersionUpdatesCommand::class);
         $Command = $this->getMockBuilder(VersionUpdatesCommand::class)
             ->setMethods($methods)

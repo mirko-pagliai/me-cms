@@ -12,6 +12,8 @@
 * the sitemap classes have been moved into the `MeCms\Utility\Sitemap` namespace.
     Added the `SitemapBase` abstract class, that provides the `parse()` method
     and which now needs to be extended by the `Sitemap` class;
+* `Plugin::console()` is now able to auto-discover commands. The
+    `me_cms.fix_elfinder` command is now `me_cms.fix_el_finder`;
 * `AppView::userbar()` has been removed;
 * ready for `phpunit` 9.0.
 
