@@ -41,7 +41,9 @@
     },
     "suggest": {
         "cakephp/debug_kit": "Debug Toolbar for CakePHP applications",
+        "mirko-pagliai/me-cms-banners": "Banners plugin for MeCms",
         "mirko-pagliai/me-cms-link-scanner": "Link scanner plugin for MeCms",
+        "mirko-pagliai/me-cms-photos": "Photos plugin for MeCms",
         "studio-42/elfinder": "To use ElFinder to browse and upload files"
     },
     "autoload": {

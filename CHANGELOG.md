@@ -1,6 +1,9 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.0
+* starting from this release, it no longer contains the code for banners and photos,
+    which has been split into [me-cms-banners](//github.com/mirko-pagliai/me-cms-banners)
+    and [me-cms-photos](//github.com/mirko-pagliai/me-cms-photos) suggested plugins;
 * `MeCms\Controller\Admin\AppController` class: the last valid referer is saved
     in session by the `beforeFilter()` event and no longer by the `beforeRender()`
     event (which has been removed). The `referer()` method was removed (this
