@@ -180,7 +180,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
         foreach (['image.jpg', WWW_ROOT . 'img' . DS . 'image.jpg'] as $image) {
             $result = $Posts->getPreviews('<img src=\'' . $image . '\' />');
             $this->assertCount(1, $result);
-            $this->assertRegExp('/^http:\/\/localhost\/thumb\/[A-z0-9]+$/', $result->first()->get('url'));
+            $this->assertMatchesRegularExpression('/^http:\/\/localhost\/thumb\/[A-z0-9]+$/', $result->first()->get('url'));
             $this->assertEquals(400, $result->first()->get('width'));
             $this->assertEquals(300, $result->first()->get('height'));
         }

@@ -42,10 +42,15 @@ class BackupForm extends Form
     {
         $validator = new AppValidator();
 
-        //Filename
-        $validator->add('filename', 'extension', [
-            'message' => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2'),
-            'rule' => ['custom', '/[^\.]\.sql(\.(bz2|gz))?$/'],
+        $validator->add('filename', [
+            'maxLength' => [
+                'message' => __d('me_cms', 'Must be at most {0} chars', 255),
+                'rule' => ['maxLength', 255],
+            ],
+            'extension' => [
+                'message' => __d('me_cms', 'Valid extensions: {0}', 'sql, sql.gz, sql.bz2'),
+                'rule' => ['custom', '/[^\.]\.sql(\.(bz2|gz))?$/'],
+            ],
         ])->requirePresence('filename');
 
         return $validator;

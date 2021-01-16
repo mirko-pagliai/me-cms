@@ -15,12 +15,10 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command\Install;
 
-use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
-use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\TestSuite\TestCase;
-use MeTools\Command\Install\CreateDirectoriesCommand;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
+use Tools\Filesystem;
 
 /**
  * CreateDirectoriesCommandTest class
@@ -35,21 +33,10 @@ class CreateDirectoriesCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $io = new ConsoleIo(new ConsoleOutput(), new ConsoleOutput());
-        $Command = $this->getMockBuilder(CreateDirectoriesCommand::class)
-            ->setMethods(['createDir'])
-            ->getMock();
-
-        $count = 0;
-        foreach (Configure::read('WRITABLE_DIRS') as $path) {
-            $Command->expects($this->at($count++))
-                ->method('createDir')
-                ->with($io, $path);
-        }
-
-        $Command->expects($this->exactly(count(Configure::read('WRITABLE_DIRS'))))
-            ->method('createDir');
-
-        $this->assertNull($Command->run([], $io));
+        $expected = array_map(function (string $path): string {
+            return 'File or directory `' . (new Filesystem())->rtr($path) . '` already exists';
+        }, Configure::read('WRITABLE_DIRS'));
+        $this->exec('me_cms.create_directories -v');
+        $this->assertSame($expected, $this->_out->messages());
     }
 }

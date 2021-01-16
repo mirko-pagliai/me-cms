@@ -2,8 +2,6 @@
 return ['MeCms' => [
     //Admin layout
     'admin' => [
-        //Number of photos to show per page. This must be a multiple of 4
-        'photos' => 12,
         //Number of records to show per page
         'records' => 10,
      ],
@@ -25,9 +23,6 @@ return ['MeCms' => [
         'offline' => false,
         //Text to display when the site is offline or `false`
         'offline_text' => false,
-        //Number of photos to show per page.
-        //This must be a multiple of 4
-        'photos' => 20,
         //Number of records to show per page
         'records' => 10,
         //Number of records to show on RSS
@@ -46,6 +41,12 @@ return ['MeCms' => [
         //Note that you can use the "<!-- read-more -->" tag to indicate
         //  manually where to truncate a text
         'truncate_to' => 1000,
+    ],
+    //Disqus
+    'disqus' => [
+        //Site shortname or `false` to disable Disqus. To get the site shortname,
+        //  you must first create and set up your site on Disqus
+        'shortname' => false,
     ],
     //Email
     'email' => [
@@ -73,6 +74,8 @@ return ['MeCms' => [
             //Short format
             'short' => 'yy/MM/dd, HH:mm',
         ],
+        //Forces debug on localhost (enabled or disabled)
+        'debug_on_localhost' => true,
         //Sitemap expiration. Must be a valid strtotime string
         'sitemap_expiration' => '+24 hours',
         //Time formats
@@ -92,6 +95,11 @@ return ['MeCms' => [
         'category' => true,
         //Displays the page created datetime
         'created' => false,
+        //This enables or disables the comment system for pages. You will then
+        //  be able to choose whether to enable comments for each page
+        'enable_comments' => false,
+        //Displays the page modified datetime
+        'modified' => false,
         //Displays the Shareaholic social buttons.
         //Remember you have to set app and site IDs. See `shareaholic.app_id`
         //  and `shareaholic.site_id`
@@ -99,14 +107,21 @@ return ['MeCms' => [
     ],
     //Posts
     'post' => [
-        //Displays the post author
+        //Displays the author name as "Posted by"
         'author' => true,
+        //Displays the author picture
+        'author_picture' => true,
         //Displays the post category
         'category' => true,
         //Displays the post created datetime
         'created' => true,
+        //This enables or disables the comment system for posts. You will then
+        //  be able to choose whether to enable comments for each post
+        'enable_comments' => true,
         //Adds post tags as keywords meta-tag
         'keywords' => true,
+        //Displays the post modified datetime
+        'modified' => true,
         //Related posts. `false` to disable
         'related' => [
             //Limit of related posts to get for each post.
@@ -125,9 +140,9 @@ return ['MeCms' => [
     //Security
     'security' => [
         //Link for "IP map". The `{IP}` string will be replaced
-        'ip_map' => 'http://www.traceip.net/?query={IP}',
+        'ip_map' => 'https://db-ip.com/{IP}',
         //Link for "IP who is". The `{IP}` string will be replaced
-        'ip_whois' => 'http://www.traceip.net/whois/{IP}',
+        'ip_whois' => 'https://db-ip.com/{IP}',
         //reCAPTCHA (enabled or disabled).
         //It will be used for some actions, such as signup or password reset
         'recaptcha' => false,
@@ -142,6 +157,19 @@ return ['MeCms' => [
         //Site ID. Used for render the "setup code" of Shareaholic.
         //You can found it on the "Site Tools Dashboard"
         'site_id' => '',
+    ],
+    //Sitemap
+    'sitemap' => [
+        //Includes pages (pages and categories) in the sitemap
+        'pages' => true,
+        //Includes posts (posts and categories) in the sitemap
+        'posts' => true,
+        //Includes tags in the sitemap
+        'posts_tags' => true,
+        //Includes system pages (eg, the contact form) in the sitemap
+        'systems' => true,
+        //Includes static pages in the sitemap
+        'static_pages' => true,
     ],
     //Users
     'users' => [
@@ -160,7 +188,8 @@ return ['MeCms' => [
         'reset_password' => true,
         //Signup (enabled or disabled)
         'signup' => true,
-        //Displays the userbar
+        //Displays the userbar. This will have effect only on the frontend; in
+        //  the backend, the userbar will always be visible
         'userbar' => true,
     ],
 ]];

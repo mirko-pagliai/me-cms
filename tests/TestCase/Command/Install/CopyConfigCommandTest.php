@@ -28,12 +28,6 @@ class CopyConfigCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
-     * If `true`, a mock instance of the shell will be created
-     * @var bool
-     */
-    protected $autoInitializeClass = true;
-
-    /**
      * Test for `execute()` method
      * @test
      */

@@ -148,9 +148,11 @@ class StaticPageTest extends TestCase
     {
         $this->loadPlugins(['TestPlugin']);
         $result = StaticPage::getPaths();
-        $this->assertContains(APP . 'templates' . DS . 'StaticPages', $result);
-        $this->assertContains(ROOT . 'templates' . DS . 'StaticPages', $result);
-        $this->assertContains(Plugin::templatePath('TestPlugin') . 'StaticPages', $result);
+        $this->assertSame([
+            'App' => APP . 'templates' . DS . 'StaticPages',
+            'MeCms' => ROOT . 'templates' . DS . 'StaticPages',
+            'TestPlugin' => Plugin::templatePath('TestPlugin') . 'StaticPages',
+        ], $result);
         $this->assertEquals(Cache::read('paths', 'static_pages'), $result);
     }
 
@@ -206,8 +208,8 @@ class StaticPageTest extends TestCase
             'Test From Plugin',
         ];
 
-        $getTitles = function (array $pathsOrSlugs) {
-            return array_map(function (string $pathOrSlug) {
+        $getTitles = function (array $pathsOrSlugs): array {
+            return array_map(function (string $pathOrSlug): string {
                 return StaticPage::getTitle($pathOrSlug);
             }, $pathsOrSlugs);
         };

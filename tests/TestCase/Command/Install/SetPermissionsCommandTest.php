@@ -15,12 +15,10 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command\Install;
 
-use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
-use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\TestSuite\TestCase;
-use MeTools\Command\Install\SetPermissionsCommand;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
+use Tools\Filesystem;
 
 /**
  * SetPermissionsCommandTest class
@@ -35,21 +33,10 @@ class SetPermissionsCommandTest extends TestCase
      */
     public function testExecute()
     {
-        $io = new ConsoleIo(new ConsoleOutput(), new ConsoleOutput());
-        $Command = $this->getMockBuilder(SetPermissionsCommand::class)
-            ->setMethods(['folderChmod'])
-            ->getMock();
-
-        $count = 0;
-        foreach (Configure::read('WRITABLE_DIRS') as $path) {
-            $Command->expects($this->at($count++))
-                ->method('folderChmod')
-                ->with($io, $path);
-        }
-
-        $Command->expects($this->exactly(count(Configure::read('WRITABLE_DIRS'))))
-            ->method('folderChmod');
-
-        $this->assertNull($Command->run([], $io));
+        $expected = array_map(function (string $path): string {
+            return 'Setted permissions on `' . (new Filesystem())->rtr($path) . '`';
+        }, Configure::read('WRITABLE_DIRS'));
+        $this->exec('me_cms.set_permissions -v');
+        $this->assertSame($expected, $this->_out->messages());
     }
 }

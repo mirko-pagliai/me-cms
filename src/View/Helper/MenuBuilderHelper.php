@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\View\Helper;
 
 use BadMethodCallException;
+use Cake\Core\App;
 use Cake\Utility\Text;
 use Cake\View\Helper;
 use Tools\Exceptionist;
@@ -42,15 +43,30 @@ class MenuBuilderHelper extends Helper
      * @param array $links Array of links parameters
      * @param array $options Array of options and HTML attributes. These will be
      *  applied to all generated links
-     * @return array
+     * @return array Array of links as html string
      */
     protected function buildLinks(array $links, array $options = []): array
     {
-        return array_map(function ($link) use ($options): string {
+        return array_map(function (array $link) use ($options): string {
             [$title, $url] = $link;
 
             return $this->Html->link($title, $url, $options);
         }, $links);
+    }
+
+    /**
+     * Gets all valid methods from the `MenuHelper` provided by a plugin
+     * @param string $plugin Plugin name
+     * @return array
+     * @since 2.30.0
+     */
+    public function getMethods(string $plugin): array
+    {
+        $childMethods = get_child_methods(App::className($plugin . '.MenuHelper', 'View/Helper') ?? '') ?: [];
+
+        return array_values(array_filter($childMethods, function (string $childMethod): bool {
+            return !string_starts_with($childMethod, '_');
+        }));
     }
 
     /**
@@ -60,22 +76,15 @@ class MenuBuilderHelper extends Helper
      */
     public function generate(string $plugin): array
     {
-        //Gets all valid methods from `$PLUGIN\View\Helper\MenuHelper`
-        $methods = get_child_methods(sprintf('\%s\View\Helper\MenuHelper', $plugin));
-        $methods = $methods ? array_values(array_filter($methods, function ($method) {
-            return !string_starts_with($method, '_');
-        })) : [];
-
-        if (empty($methods)) {
+        $className = App::className($plugin . '.MenuHelper', 'View/Helper');
+        if (!$className) {
             return [];
         }
-
-        $className = sprintf('%s.Menu', $plugin);
-        $helper = $this->getView()->loadHelper($className, compact('className'));
+        $helper = $this->getView()->loadHelper($plugin . '.Menu', compact('className'));
 
         //Calls dynamically each method
         $menus = [];
-        foreach ($methods as $method) {
+        foreach ($this->getMethods($plugin) as $method) {
             $args = call_user_func([$helper, $method]);
             if (!$args) {
                 continue;
@@ -83,12 +92,12 @@ class MenuBuilderHelper extends Helper
 
             Exceptionist::isTrue(
                 count($args) >= 3,
-                __d('me_cms', 'Method `{0}::{1}()` returned only {2} values', get_class($helper), $method, count($args)),
+                __d('me_cms', 'Method `{0}::{1}()` returned only {2} values', $className, $method, count($args)),
                 BadMethodCallException::class
             );
 
             [$links, $title, $titleOptions, $handledControllers] = $args + [[], [], [], []];
-            $menus[sprintf('%s.%s', $plugin, $method)] = compact('links', 'title', 'titleOptions', 'handledControllers');
+            $menus[$plugin . '.' . $method] = compact('links', 'title', 'titleOptions', 'handledControllers');
         }
 
         return $menus;

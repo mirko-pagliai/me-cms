@@ -32,7 +32,7 @@ class FixElFinderCommandTest extends TestCase
     /**
      * @var string
      */
-    protected $command = 'me_cms.fix_elfinder -v';
+    protected $command = 'me_cms.fix_el_finder -v';
 
     /**
      * Test for `execute()` method

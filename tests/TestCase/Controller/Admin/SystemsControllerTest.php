@@ -170,7 +170,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertRedirect(['action' => 'tmpViewer']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertCacheIsEmpty();
-        array_map([$this, 'assertFileNotExists'], $files);
+        array_map([$this, 'assertFileDoesNotExist'], $files);
 
         //POST request. Cleans the cache
         $files = $this->createSomeTemporaryData();
@@ -184,7 +184,7 @@ class SystemsControllerTest extends ControllerTestCase
             $this->post($url + [$tmpName]);
             $this->assertRedirect(['action' => 'tmpViewer']);
             $this->assertFlashMessage(I18N_OPERATION_OK);
-            $this->assertFileNotExists($files[$tmpName]);
+            $this->assertFileDoesNotExist($files[$tmpName]);
         }
 
         //POST request. Invalid type

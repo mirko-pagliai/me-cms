@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-09 15:09+0000\n"
+"POT-Creation-Date: 2021-01-13 15:16+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,30 +14,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ./i18n_constants.php:15
+#: ./i18n_constants.php:16
 msgid "Add"
 msgstr ""
 
-#: ./i18n_constants.php:16
+#: ./i18n_constants.php:17
 msgid "all status"
 msgstr ""
 
-#: ./i18n_constants.php:17
+#: ./i18n_constants.php:18
 msgid "all values"
 msgstr ""
 
-#: ./i18n_constants.php:18
+#: ./i18n_constants.php:19
 msgid "Allowed chars"
 msgstr ""
 
-#: ./i18n_constants.php:19
-msgid "Author"
-msgstr ""
-
 #: ./i18n_constants.php:20
-#: ./View/Helper/MenuHelper.php:138
-#: ./Admin/BannersPositions/index.php:36
-msgid "Banners"
+msgid "Author"
 msgstr ""
 
 #: ./i18n_constants.php:21
@@ -161,59 +155,59 @@ msgid "lowercase letters, numbers, space"
 msgstr ""
 
 #: ./i18n_constants.php:52
-msgid "Name"
+msgid "Missing ID"
 msgstr ""
 
 #: ./i18n_constants.php:53
-msgid "no"
+msgid "Name"
 msgstr ""
 
 #: ./i18n_constants.php:54
-msgid "Record not found"
+msgid "no"
 msgstr ""
 
 #: ./i18n_constants.php:55
-msgid "Not published"
+msgid "Record not found"
 msgstr ""
 
 #: ./i18n_constants.php:56
-msgid "Only the admin founder can do this"
+msgid "Not published"
 msgstr ""
 
 #: ./i18n_constants.php:57
-msgid "Only not published"
+msgid "Only the admin founder can do this"
 msgstr ""
 
 #: ./i18n_constants.php:58
-msgid "Only published"
+msgid "Only not published"
 msgstr ""
 
 #: ./i18n_constants.php:59
-msgid "Open"
+msgid "Only published"
 msgstr ""
 
 #: ./i18n_constants.php:60
-msgid "The operation has not been performed correctly"
+msgid "Open"
 msgstr ""
 
 #: ./i18n_constants.php:61
-msgid "The operation has been performed correctly"
+msgid "The operation has not been performed correctly"
 msgstr ""
 
 #: ./i18n_constants.php:62
-msgid "Pages"
+msgid "The operation has been performed correctly"
 msgstr ""
 
 #: ./i18n_constants.php:63
-msgid "Parent category"
+msgid "Pages"
 msgstr ""
 
 #: ./i18n_constants.php:64
-msgid "Password"
+msgid "Parent category"
 msgstr ""
 
 #: ./i18n_constants.php:65
-msgid "Photos"
+msgid "Password"
 msgstr ""
 
 #: ./i18n_constants.php:66
@@ -357,7 +351,7 @@ msgstr ""
 msgid "There are no user groups"
 msgstr ""
 
-#: ./Command/Install/CopyConfigCommand.php:47
+#: ./Command/Install/CopyConfigCommand.php:39
 msgid "Copies the configuration files"
 msgstr ""
 
@@ -365,15 +359,15 @@ msgstr ""
 msgid "Creates an admin user"
 msgstr ""
 
-#: ./Command/Install/CreateGroupsCommand.php:48
+#: ./Command/Install/CreateGroupsCommand.php:49
 msgid "Creates the user groups"
 msgstr ""
 
-#: ./Command/Install/CreateGroupsCommand.php:60
+#: ./Command/Install/CreateGroupsCommand.php:61
 msgid "Some user groups already exist"
 msgstr ""
 
-#: ./Command/Install/CreateGroupsCommand.php:78
+#: ./Command/Install/CreateGroupsCommand.php:79
 msgid "The user groups have been created"
 msgstr ""
 
@@ -415,21 +409,12 @@ msgstr ""
 msgid "Banned"
 msgstr ""
 
-#: ./Command/UsersCommand.php:86
+#: ./Command/UsersCommand.php:85
 msgid "There are no users"
 msgstr ""
 
 #: ./Command/VersionUpdatesCommand.php:39
 msgid "Performs some updates to the database or files needed for versioning"
-msgstr ""
-
-#: ./Controller/Admin/BannersController.php:50
-msgid "You must first create a banner position"
-msgstr ""
-
-#: ./Controller/Admin/BannersController.php:124
-#: ./Controller/Admin/PhotosController.php:124
-msgid "Missing ID"
 msgstr ""
 
 #: ./Controller/Admin/PagesCategoriesController.php:108
@@ -456,15 +441,11 @@ msgstr ""
 msgid "Edit page"
 msgstr ""
 
-#: ./Controller/Admin/PhotosController.php:50
-msgid "You must first create an album"
-msgstr ""
-
-#: ./Controller/Admin/PostsCategoriesController.php:108
+#: ./Controller/Admin/PostsCategoriesController.php:107
 msgid "Add posts category"
 msgstr ""
 
-#: ./Controller/Admin/PostsCategoriesController.php:134
+#: ./Controller/Admin/PostsCategoriesController.php:133
 msgid "Edit posts category"
 msgstr ""
 
@@ -522,23 +503,23 @@ msgid "You have to wait {0} seconds to perform a new search"
 msgstr ""
 
 #: ./Controller/SystemsController.php:64
-#: ./Controller/UsersController.php:170
-#: ./Controller/UsersController.php:280
-#: ./Controller/UsersController.php:362
+#: ./Controller/UsersController.php:167
+#: ./Controller/UsersController.php:284
+#: ./Controller/UsersController.php:369
 msgid "You must fill in the {0} control correctly"
 msgstr ""
 
 #: ./Controller/UsersController.php:134
-#: ./Controller/UsersController.php:318
+#: ./Controller/UsersController.php:325
 msgid "Invalid token"
 msgstr ""
 
-#: ./Controller/UsersController.php:175
+#: ./Controller/UsersController.php:172
 msgid "No valid account was found"
 msgstr ""
 
-#: ./Controller/UsersController.php:178
-#: ./Controller/UsersController.php:376
+#: ./Controller/UsersController.php:175
+#: ./Controller/UsersController.php:383
 msgid "We send you an email to activate your account"
 msgstr ""
 
@@ -550,44 +531,49 @@ msgstr ""
 msgid "Your account has not been activated yet"
 msgstr ""
 
-#: ./Controller/UsersController.php:244
+#: ./Controller/UsersController.php:248
 msgid "Invalid username or password"
 msgstr ""
 
-#: ./Controller/UsersController.php:257
+#: ./Controller/UsersController.php:261
 msgid "You are successfully logged out"
 msgstr ""
 
-#: ./Controller/UsersController.php:282
+#: ./Controller/UsersController.php:286
 msgid "No account found"
 msgstr ""
 
-#: ./Controller/UsersController.php:291
+#: ./Controller/UsersController.php:295
 msgid "We have sent you an email to reset your password"
 msgstr ""
 
-#: ./Controller/UsersController.php:327
+#: ./Controller/UsersController.php:334
 msgid "The password has been edited"
 msgstr ""
 
-#: ./Controller/UsersController.php:332
+#: ./Controller/UsersController.php:339
 msgid "The password has not been edited"
 msgstr ""
 
-#: ./Controller/UsersController.php:364
+#: ./Controller/UsersController.php:371
 msgid "The account has not been created"
 msgstr ""
 
-#: ./Controller/UsersController.php:370
+#: ./Controller/UsersController.php:377
 msgid "Account created, but it needs to be activated by an admin"
 msgstr ""
 
-#: ./Controller/UsersController.php:380
+#: ./Controller/UsersController.php:387
 msgid "Account created. Now you can login"
 msgstr ""
 
 #: ./Form/BackupForm.php:47
-#: ./Validation/BannerAndPhotoValidator.php:42
+#: ./Validation/AppValidator.php:50
+#: ./Validation/AppValidator.php:132
+msgid "Must be at most {0} chars"
+msgstr ""
+
+#: ./Form/BackupForm.php:51
 #: ./Admin/Backups/add.php:23
 msgid "Valid extensions: {0}"
 msgstr ""
@@ -604,8 +590,8 @@ msgstr ""
 #: ./Validation/AppValidator.php:58
 #: ./Validation/AppValidator.php:75
 #: ./Validation/AppValidator.php:92
-#: ./Validation/AppValidator.php:108
-#: ./Validation/AppValidator.php:117
+#: ./Validation/AppValidator.php:100
+#: ./Validation/AppValidator.php:109
 msgid "Must be between {0} and {1} chars"
 msgstr ""
 
@@ -624,17 +610,6 @@ msgstr ""
 
 #: ./Mailer/UserMailer.php:81
 msgid "Reset your password"
-msgstr ""
-
-#: ./Model/Validation/BannerValidator.php:41
-#: ./Validation/AppValidator.php:50
-#: ./Validation/AppValidator.php:100
-#: ./Validation/AppValidator.php:140
-msgid "Must be at most {0} chars"
-msgstr ""
-
-#: ./Model/Validation/BannerValidator.php:45
-msgid "Must be a valid url"
 msgstr ""
 
 #: ./Model/Validation/PostValidator.php:63
@@ -679,15 +654,15 @@ msgstr ""
 msgid "Has to begin with a capital letter"
 msgstr ""
 
-#: ./Validation/AppValidator.php:127
+#: ./Validation/AppValidator.php:119
 msgid "This field can not be empty"
 msgstr ""
 
-#: ./View/Cell/PostsTagsWidgetsCell.php:49
+#: ./View/Cell/PostsTagsWidgetsCell.php:50
 msgid "Invalid values"
 msgstr ""
 
-#: ./View/Helper/MenuBuilderHelper.php:86
+#: ./View/Helper/MenuBuilderHelper.php:95
 msgid "Method `{0}::{1}()` returned only {2} values"
 msgstr ""
 
@@ -719,97 +694,68 @@ msgstr ""
 msgid "List static pages"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:107
-msgid "List photos"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:108
-#: ./Admin/Photos/upload.php:16
-#: ./Admin/PhotosAlbums/index.php:23
-msgid "Upload photos"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:111
-msgid "List albums"
-msgstr ""
-
 #: ./View/Helper/MenuHelper.php:112
-#: ./Admin/common/BannersAndPhotos/index.php:27
-msgid "Add album"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:129
-msgid "List banners"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:130
-#: ./Admin/Banners/upload.php:16
-#: ./Admin/BannersPositions/index.php:24
-msgid "Upload banners"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:134
-msgid "List positions"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:135
-#: ./Admin/common/BannersAndPhotos/index.php:24
-msgid "Add position"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:153
 msgid "List users"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:154
+#: ./View/Helper/MenuHelper.php:113
 #: ./Admin/Users/add.php:16
 #: ./Admin/UsersGroups/index.php:23
 msgid "Add user"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:158
+#: ./View/Helper/MenuHelper.php:117
 msgid "List groups"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:159
+#: ./View/Helper/MenuHelper.php:118
 #: ./Admin/Users/index.php:23
 msgid "Add group"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:177
+#: ./View/Helper/MenuHelper.php:136
 msgid "List backups"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:178
+#: ./View/Helper/MenuHelper.php:137
 #: ./Admin/Backups/add.php:16
 msgid "Add backup"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:180
+#: ./View/Helper/MenuHelper.php:139
 msgid "Backups"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:195
+#: ./View/Helper/MenuHelper.php:154
 #: ./Admin/Systems/tmp_viewer.php:16
 msgid "Temporary files"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:196
+#: ./View/Helper/MenuHelper.php:155
 #: ./Admin/Systems/browser.php:16
 msgid "Media browser"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:197
+#: ./View/Helper/MenuHelper.php:156
 #: ./Admin/Systems/changelogs.php:16
 msgid "Changelogs"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:200
+#: ./View/Helper/MenuHelper.php:159
 msgid "Log management"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:203
+#: ./View/Helper/MenuHelper.php:162
 msgid "System"
+msgstr ""
+
+#: ./View/Helper/TopbarHelper.php:35
+#: ./layout/default.php:76
+msgid "Home"
+msgstr ""
+
+#: ./View/Helper/TopbarHelper.php:36
+msgid "Categories"
 msgstr ""
 
 #: ./View/View/AdminView.php:52
@@ -895,55 +841,6 @@ msgstr ""
 msgid "The backup file will be sent by mail. Are you sure?"
 msgstr ""
 
-#: ./Admin/Banners/edit.php:16
-msgid "Edit banner"
-msgstr ""
-
-#: ./Admin/Banners/edit.php:31
-msgid "The banner is displayed as a  thumbnail. You should disable this, if the banner is an animated gif"
-msgstr ""
-
-#: ./Admin/Banners/edit.php:33
-msgid "Thumbnail"
-msgstr ""
-
-#: ./Admin/Banners/edit.php:55
-msgid "The address should begin with {0}"
-msgstr ""
-
-#: ./Admin/Banners/edit.php:56
-msgid "Web address"
-msgstr ""
-
-#: ./Admin/Banners/index.php:24
-msgid "Url"
-msgstr ""
-
-#: ./Admin/Banners/index.php:26
-msgid "Click"
-msgstr ""
-
-#: ./Admin/Banners/index.php:51
-msgid "No thumbnail"
-msgstr ""
-
-#: ./Admin/Banners/upload.php:23
-#: ./Admin/Banners/upload.php:26
-msgid "Position where to upload banners"
-msgstr ""
-
-#: ./Admin/BannersPositions/add.php:16
-msgid "Add banners position"
-msgstr ""
-
-#: ./Admin/BannersPositions/edit.php:16
-msgid "Edit banners position"
-msgstr ""
-
-#: ./Admin/BannersPositions/index.php:16
-msgid "Banners positions"
-msgstr ""
-
 #: ./Admin/Logs/index.php:16
 #: ./Admin/Systems/tmp_viewer.php:70
 msgid "Logs"
@@ -1003,7 +900,6 @@ msgstr ""
 #: ./Admin/Pages/index.php:60
 #: ./Admin/Posts/index.php:64
 #: ./Admin/Users/index.php:60
-#: ./Admin/common/BannersAndPhotos/index.php:67
 msgid "month"
 msgstr ""
 
@@ -1025,36 +921,6 @@ msgstr ""
 #: ./Admin/PagesCategories/index.php:35
 #: ./Admin/PostsCategories/index.php:34
 msgid "Parent"
-msgstr ""
-
-#: ./Admin/Photos/edit.php:16
-#: ./Photos/view.php:25
-msgid "Edit photo"
-msgstr ""
-
-#: ./Admin/Photos/edit.php:24
-#: ./Admin/Photos/index.php:23
-#: ./Admin/Photos/index_as_grid.php:30
-msgid "Album"
-msgstr ""
-
-#: ./Admin/Photos/upload.php:23
-#: ./Admin/Photos/upload.php:26
-msgid "Album to upload photos"
-msgstr ""
-
-#: ./Admin/PhotosAlbums/add.php:16
-msgid "Add photos album"
-msgstr ""
-
-#: ./Admin/PhotosAlbums/edit.php:16
-msgid "Edit photos album"
-msgstr ""
-
-#: ./Admin/PhotosAlbums/index.php:16
-#: ./cell/PhotosWidgets/albums_as_form.php:23
-#: ./cell/PhotosWidgets/albums_as_list.php:23
-msgid "Albums"
 msgstr ""
 
 #: ./Admin/Posts/form.php:79
@@ -1274,22 +1140,6 @@ msgstr ""
 msgid "Delete category"
 msgstr ""
 
-#: ./Photos/view.php:30
-msgid "Delete photo"
-msgstr ""
-
-#: ./PhotosAlbums/index.php:30
-msgid "{0} photos"
-msgstr ""
-
-#: ./PhotosAlbums/view.php:29
-msgid "Edit album"
-msgstr ""
-
-#: ./PhotosAlbums/view.php:34
-msgid "Delete album"
-msgstr ""
-
 #: ./Posts/index_by_date.php:18
 msgid "Posts of today"
 msgstr ""
@@ -1411,18 +1261,6 @@ msgstr ""
 msgid "Repeat your password"
 msgstr ""
 
-#: ./cell/PhotosWidgets/latest.php:20
-msgid "Latest photo"
-msgid_plural "Latest {0} photos"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ./cell/PhotosWidgets/random.php:20
-msgid "Random photo"
-msgid_plural "Random {0} photos"
-msgstr[0] ""
-msgstr[1] ""
-
 #: ./cell/PostsTagsWidgets/popular_as_cloud.php:20
 #: ./cell/PostsTagsWidgets/popular_as_form.php:23
 #: ./cell/PostsTagsWidgets/popular_as_list.php:23
@@ -1502,7 +1340,7 @@ msgid "Homepage"
 msgstr ""
 
 #: ./element/common/userbar.php:24
-#: ./element/topbar.php:24
+#: ./element/topbar.php:33
 msgid "Toggle navigation"
 msgstr ""
 
@@ -1550,15 +1388,6 @@ msgstr ""
 
 #: ./element/login/menu.php:40
 msgid "Forgot your password?"
-msgstr ""
-
-#: ./element/topbar.php:30
-#: ./layout/default.php:76
-msgid "Home"
-msgstr ""
-
-#: ./element/topbar.php:31
-msgid "Categories"
 msgstr ""
 
 #: ./element/userbar.php:23

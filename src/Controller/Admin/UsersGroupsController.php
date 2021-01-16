@@ -64,7 +64,7 @@ class UsersGroupsController extends AppController
             if ($this->UsersGroups->save($group)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect($this->referer(['action' => 'index']));
+                return $this->redirectMatchingReferer(['action' => 'index']);
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -88,7 +88,7 @@ class UsersGroupsController extends AppController
             if ($this->UsersGroups->save($group)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
-                return $this->redirect($this->referer(['action' => 'index']));
+                return $this->redirectMatchingReferer(['action' => 'index']);
             }
 
             $this->Flash->error(I18N_OPERATION_NOT_OK);
@@ -118,6 +118,6 @@ class UsersGroupsController extends AppController
         }
         $this->Flash->$method($message);
 
-        return $this->redirect($this->referer(['action' => 'index']));
+        return $this->redirectMatchingReferer(['action' => 'index']);
     }
 }

@@ -2,8 +2,6 @@
 return ['MeCms' => [
     //Admin layout
     'admin' => [
-        //Number of photos to show per page. This must be a multiple of 4
-        'photos' => 12,
         //Number of records to show per page
         'records' => 10,
      ],
@@ -25,9 +23,6 @@ return ['MeCms' => [
         'offline' => false,
         //Text to display when the site is offline or `false`
         'offline_text' => false,
-        //Number of photos to show per page.
-        //This must be a multiple of 4
-        'photos' => 20,
         //Number of records to show per page
         'records' => 10,
         //Number of records to show on RSS
@@ -167,8 +162,6 @@ return ['MeCms' => [
     'sitemap' => [
         //Includes pages (pages and categories) in the sitemap
         'pages' => true,
-        //Includes photos (photos and albums) in the sitemap
-        'photos' => true,
         //Includes posts (posts and categories) in the sitemap
         'posts' => true,
         //Includes tags in the sitemap

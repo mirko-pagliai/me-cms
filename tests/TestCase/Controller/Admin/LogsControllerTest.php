@@ -132,6 +132,6 @@ class LogsControllerTest extends ControllerTestCase
         $this->assertRedirect(['action' => 'index']);
         $this->skipIf(IS_WIN);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertFileNotExists(LOGS . 'error.log');
+        $this->assertFileDoesNotExist(LOGS . 'error.log');
     }
 }

@@ -1,4 +1,25 @@
 # 2.x branch
+## 2.30 branch
+### 2.30.0
+* starting from this release, it no longer contains the code for banners and photos,
+    which has been split into [me-cms-banners](//github.com/mirko-pagliai/me-cms-banners)
+    and [me-cms-photos](//github.com/mirko-pagliai/me-cms-photos) suggested plugins;
+* `MeCms\Controller\Admin\AppController` class: the last valid referer is saved
+    in session by the `beforeFilter()` event and no longer by the `beforeRender()`
+    event (which has been removed). The `referer()` method was removed (this
+    will directly call the method provided by CakePHP) and the
+    `redirectMatchingReferer()` method was added instead;
+* the topbar element will use the `TopbarHelper` from APP to build links, if
+    that helper exists. Otherwise it will use the helper provided by MeCms, with
+    the helper of any other plugin;
+* the sitemap classes have been moved into the `MeCms\Utility\Sitemap` namespace.
+    Added the `SitemapBase` abstract class, that provides the `parse()` method
+    and which now needs to be extended by the `Sitemap` class;
+* `Plugin::console()` is now able to auto-discover commands. The
+    `me_cms.fix_elfinder` command is now `me_cms.fix_el_finder`;
+* `AppView::userbar()` has been removed;
+* ready for `phpunit` 9.0.
+
 ## 2.29 branch
 ### 2.29.5
 * `AppView::userbar()` is deprecated. Use instead `addToUserbar()`;

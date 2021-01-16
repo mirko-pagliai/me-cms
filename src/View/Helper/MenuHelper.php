@@ -98,47 +98,6 @@ class MenuHelper extends Helper
     }
 
     /**
-     * Internal function to generate the menu for "photos" actions
-     * @return array Array with links, title, title options and handled controllers
-     */
-    public function photos(): array
-    {
-        $params = ['controller' => 'Photos'] + $this->defaultParams;
-        $links[] = [__d('me_cms', 'List photos'), ['action' => 'index'] + $params];
-        $links[] = [__d('me_cms', 'Upload photos'), ['action' => 'upload'] + $params];
-
-        $params['controller'] = 'PhotosAlbums';
-        $links[] = [__d('me_cms', 'List albums'), ['action' => 'index'] + $params];
-        $links[] = [__d('me_cms', 'Add album'), ['action' => 'add'] + $params];
-
-        return [$links, I18N_PHOTOS, ['icon' => 'camera-retro'], ['Photos', 'PhotosAlbums']];
-    }
-
-    /**
-     * Internal function to generate the menu for "banners" actions
-     * @return array Array with links, title, title options and handled controllers
-     */
-    public function banners(): array
-    {
-        //Only admins and managers can access these controllers
-        if (!$this->Auth->isGroup(['admin', 'manager'])) {
-            return [];
-        }
-
-        $params = ['controller' => 'Banners'] + $this->defaultParams;
-        $links[] = [__d('me_cms', 'List banners'), ['action' => 'index'] + $params];
-        $links[] = [__d('me_cms', 'Upload banners'), ['action' => 'upload'] + $params];
-
-        if ($this->Auth->isGroup('admin')) {
-            $params['controller'] = 'BannersPositions';
-            $links[] = [__d('me_cms', 'List positions'), ['action' => 'index'] + $params];
-            $links[] = [__d('me_cms', 'Add position'), ['action' => 'add'] + $params];
-        }
-
-        return [$links, __d('me_cms', 'Banners'), ['icon' => 'shopping-cart'], ['Banners', 'BannersPositions']];
-    }
-
-    /**
      * Internal function to generate the menu for "users" actions
      * @return array Array with links, title, title options and handled controllers
      */

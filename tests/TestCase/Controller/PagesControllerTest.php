@@ -55,6 +55,7 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function testViewWithStaticPage()
     {
+        Cache::clear('static_pages');
         $slug = 'page-from-app';
         $url = ['_name' => 'page', $slug];
         $this->get($url);
@@ -74,6 +75,7 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function testViewWithStaticPageFromPlugin()
     {
+        Cache::clear('static_pages');
         $this->loadPlugins(['TestPlugin']);
         $this->get(['_name' => 'page', 'test-from-plugin']);
         $this->assertResponseOk();

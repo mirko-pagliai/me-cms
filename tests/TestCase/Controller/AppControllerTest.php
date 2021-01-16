@@ -22,7 +22,6 @@ use Cake\ORM\Association\BelongsTo;
 use MeCms\Controller\PostsController;
 use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\ControllerTestCase;
-use PHPUnit\Framework\Error\Notice;
 
 /**
  * AppControllerTest class
@@ -41,7 +40,7 @@ class AppControllerTest extends ControllerTestCase
         $this->assertInstanceOf(BelongsTo::class, $PostsController->Categories);
         $this->assertInstanceOf(BelongsTo::class, $PostsController->Users);
 
-        $this->expectException(Notice::class);
+        $this->expectNotice();
         $this->expectExceptionMessageMatches('/^Undefined property\: PostsController\:\:\$Foo in/');
         $PostsController->Foo;
     }

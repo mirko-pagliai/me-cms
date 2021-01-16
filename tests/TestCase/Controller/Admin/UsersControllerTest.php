@@ -329,7 +329,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertSession($expectedPicture, 'Auth.User.picture');
         $this->assertFileExists($expectedPicture);
-        array_map([$this, 'assertFileNotExists'], [USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
+        array_map([$this, 'assertFileDoesNotExist'], [USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
 
         @unlink($expectedPicture);
     }

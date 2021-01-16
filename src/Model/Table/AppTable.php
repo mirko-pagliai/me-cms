@@ -217,11 +217,9 @@ abstract class AppTable extends Table
             $query->where([sprintf('%s.id', $this->getAlias()) => $data['id']]);
         }
 
-        //"Title" field and "filename" fields
-        foreach (['title', 'filename'] as $field) {
-            if (!empty($data[$field]) && strlen($data[$field]) > 2) {
-                $query->where([sprintf('%s.%s LIKE', $this->getAlias(), $field) => '%' . $data[$field] . '%']);
-            }
+        //"Title" field
+        if (!empty($data['title']) && strlen($data['title']) > 2) {
+            $query->where([sprintf('%s.%s LIKE', $this->getAlias(), 'title') => '%' . $data['title'] . '%']);
         }
 
         //"User" (author) and "category" fields

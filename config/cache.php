@@ -17,13 +17,12 @@ declare(strict_types=1);
 $options = [
     'className' => 'File',
     'duration' => '+999 days',
-    'path' => CACHE . 'me_cms' . DS,
     'prefix' => '',
     'mask' => 0777,
 ];
 
-foreach (['default', 'admin', 'banners', 'pages', 'photos', 'posts', 'static_pages', 'users'] as $name) {
-    $Cache[$name] = ['path' => CACHE . 'me_cms' . DS . $name] + $options;
+foreach (['default', 'admin', 'pages', 'posts', 'static_pages', 'users'] as $name) {
+    $Cache[$name] = $options + ['path' => CACHE . 'me_cms' . DS . $name];
 }
 
 return compact('Cache');

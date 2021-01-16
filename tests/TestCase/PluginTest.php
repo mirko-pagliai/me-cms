@@ -44,20 +44,14 @@ class PluginTest extends TestCase
         $Plugin = $this->getMockBuilder(MeCms::class)
             ->setMethods(['isCli'])
             ->getMock();
+        $Plugin->method('isCli')->will($this->onConsecutiveCalls(true, false));
 
-        $Plugin->expects($this->at(0))
-            ->method('isCli')
-            ->will($this->returnValue(true));
-        $Plugin->expects($this->at(1))
-            ->method('isCli')
-            ->will($this->returnValue(false));
-
-        //Now is cli
+        //In the first call is cli
         $Plugin->bootstrap($app);
         $loadedPlugins = $getLoadedPlugins($app);
         $this->assertContains('MyTheme', $loadedPlugins);
 
-        //Now is not cli
+        //In the second call is not cli
         $Plugin->bootstrap($app);
         $this->assertEquals(array_merge($loadedPlugins, ['WyriHaximus/MinifyHtml']), $getLoadedPlugins($app));
     }
