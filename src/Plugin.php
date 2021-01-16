@@ -98,9 +98,9 @@ class Plugin extends BasePlugin
     {
         //Auto-discovers all `MeCms` commands.
         //Unlike the `CommandCollection::discoverPlugin()` method, it also finds installation commands
-        $files = Finder::create()->files()->name('/Command\.php$/')->in(dirname(__FILE__) . DS . 'Command');
+        $files = Finder::create()->files()->name('/Command\.php$/')->in($this->getPath() . 'src' . DS . 'Command');
         foreach ($files as $fileInfo) {
-            $className = 'MeCms\\' . str_replace('/', '\\', substr($fileInfo->getPath(), strlen(ROOT . 'src' . DS))) . '\\' . $fileInfo->getBasename('.php');
+            $className = 'MeCms\\' . str_replace('/', '\\', substr($fileInfo->getPath(), strlen($this->getPath() . 'src' . DS))) . '\\' . $fileInfo->getBasename('.php');
             $name = Inflector::underscore(preg_replace('/Command\.php$/', '', $fileInfo->getFilename()));
             $commands->add('me_cms.' . $name, $className);
         }
