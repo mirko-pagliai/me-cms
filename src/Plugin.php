@@ -100,7 +100,7 @@ class Plugin extends BasePlugin
         //Unlike the `CommandCollection::discoverPlugin()` method, it also finds installation commands
         $files = Finder::create()->files()->name('/Command\.php$/')->in(dirname(__FILE__) . DS . 'Command');
         foreach ($files as $fileInfo) {
-            $className = 'MeCms\\' . str_replace('/', '\\' ,substr($fileInfo->getPath(), strlen(ROOT . 'src' . DS))) . '\\' . $fileInfo->getBasename('.php');
+            $className = 'MeCms\\' . str_replace('/', '\\', substr($fileInfo->getPath(), strlen(ROOT . 'src' . DS))) . '\\' . $fileInfo->getBasename('.php');
             $name = Inflector::underscore(preg_replace('/Command\.php$/', '', $fileInfo->getFilename()));
             $commands->add('me_cms.' . $name, $className);
         }
