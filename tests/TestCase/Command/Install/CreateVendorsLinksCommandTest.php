@@ -40,6 +40,9 @@ class CreateVendorsLinksCommandTest extends TestCase
         }, Configure::read('VENDOR_LINKS'))));
 
         $this->exec('me_cms.create_vendors_links -v');
-        $this->assertSame($expected, $this->_out->messages());
+        $messages = $this->_out->messages();
+        sort($expected, SORT_STRING);
+        sort($messages, SORT_STRING);
+        $this->assertSame($expected, $messages);
     }
 }
