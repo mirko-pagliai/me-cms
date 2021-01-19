@@ -43,11 +43,11 @@ if ($this->Auth->isGroup('admin')) {
 }
 ?>
 
-<dl class="row">
-    <dd class="col-12">
-        <?= $this->Thumb->fit($user->get('picture'), ['height' => 150], ['class' => 'rounded-circle']) ?>
-    </dd>
+<div class="mb-4">
+    <?= $this->Thumb->fit($user->get('picture'), ['height' => 150], ['class' => 'rounded-circle']) ?>
+</div>
 
+<dl class="row">
     <dt class="col-1"><?= I18N_USERNAME ?></dt>
     <dd class="col-11"><?= $user->get('username') ?></dd>
 

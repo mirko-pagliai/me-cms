@@ -18,7 +18,6 @@ namespace MeCms\Model\Entity;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 use Symfony\Component\Finder\Finder;
-use Tools\Exceptionist;
 
 /**
  * User entity
@@ -60,13 +59,10 @@ class User extends Entity
     /**
      * Gets the full name (virtual field)
      * @return string
-     * @throws \Tools\Exception\PropertyNotExistsException
      */
-    protected function _getFullName(): ?string
+    protected function _getFullName(): string
     {
-        Exceptionist::objectPropertyExists($this, ['first_name', 'last_name']);
-
-        return sprintf('%s %s', $this->get('first_name'), $this->get('last_name'));
+        return $this->has('first_name') && $this->has('last_name') ? $this->get('first_name') . ' ' . $this->get('last_name') : '';
     }
 
     /**
@@ -93,7 +89,7 @@ class User extends Entity
     /**
      * Sets the password
      * @param string $password Password
-     * @return string|false Password hash or false on failure
+     * @return string|false Password hash or `false` on failure
      */
     protected function _setPassword(string $password)
     {

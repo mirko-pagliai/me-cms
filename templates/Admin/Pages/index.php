@@ -137,7 +137,6 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                         ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
-                <td class="text-nowrap text-center">
 
                 <td class="text-nowrap text-center">
                     <?= $this->element('admin/priority-badge', ['priority' => $page->get('priority')]) ?>
