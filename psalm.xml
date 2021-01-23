@@ -42,6 +42,12 @@
             </errorLevel>
         </InvalidArgument>
 
+        <InvalidPassByReference>
+            <errorLevel type="suppress">
+                <file name="templates/element/admin/sidebar.php" />
+            </errorLevel>
+        </InvalidPassByReference>
+
         <InvalidScalarArgument>
             <errorLevel type="suppress">
                 <file name="src/Command/AddUserCommand.php" />

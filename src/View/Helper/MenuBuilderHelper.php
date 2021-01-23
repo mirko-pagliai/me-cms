@@ -104,46 +104,39 @@ class MenuBuilderHelper extends Helper
     }
 
     /**
-     * Renders a menu as "collapse"
-     * @param string $plugin Plugin name
+     * Renders a menu as "collapse".
+     *
+     * The menu can be previously generated with the `generate()` method.
+     * @param array $menu The menu
      * @param string|null $idContainer Container ID
      * @return string
-     * @uses buildLinks()
-     * @uses generate()
      */
-    public function renderAsCollapse(string $plugin, ?string $idContainer = null): string
+    public function renderAsCollapse(array $menu, ?string $idContainer = null): string
     {
-        $controller = $this->getView()->getRequest()->getParam('controller');
+        $collapseName = 'collapse-' . strtolower(Text::slug($menu['title']));
+        $titleOptions = [
+            'aria-controls' => $collapseName,
+            'aria-expanded' => 'false',
+            'class' => 'collapsed',
+            'data-toggle' => 'collapse',
+        ] + $menu['titleOptions'];
+        $divOptions = ['class' => 'collapse', 'id' => $collapseName];
 
-        return implode(PHP_EOL, array_map(function (array $menu) use ($controller, $idContainer): string {
-            $collapseName = 'collapse-' . strtolower(Text::slug($menu['title']));
-            $titleOptions = [
-                'aria-controls' => $collapseName,
-                'aria-expanded' => 'false',
-                'class' => 'collapsed',
-                'data-toggle' => 'collapse',
-            ] + $menu['titleOptions'];
-            $divOptions = [
-                'class' => 'collapse',
-                'id' => $collapseName,
-            ];
+        if ($idContainer) {
+            $divOptions['data-parent'] = '#' . $idContainer;
+        }
 
-            if ($idContainer) {
-                $divOptions['data-parent'] = '#' . $idContainer;
-            }
+        //If the current controller is handled by this menu, marks the menu as open
+        if (in_array($this->getView()->getRequest()->getParam('controller'), $menu['handledControllers'])) {
+            $titleOptions['aria-expanded'] = 'true';
+            unset($titleOptions['class']);
+            $divOptions['class'] .= ' show';
+        }
 
-            //If the current controller is handled by this menu, opens the menu
-            if (in_array($controller, $menu['handledControllers'])) {
-                $titleOptions['aria-expanded'] = 'true';
-                unset($titleOptions['class']);
-                $divOptions['class'] .= ' show';
-            }
+        $title = $this->Html->link($menu['title'], '#' . $collapseName, $titleOptions);
+        $links = $this->Html->div(null, implode(PHP_EOL, $this->buildLinks($menu['links'])), $divOptions);
 
-            $title = $this->Html->link($menu['title'], '#' . $collapseName, $titleOptions);
-            $links = $this->Html->div(null, implode(PHP_EOL, $this->buildLinks($menu['links'])), $divOptions);
-
-            return $this->Html->div('card', $title . PHP_EOL . $links);
-        }, $this->generate($plugin)));
+        return $this->Html->div('card', $title . PHP_EOL . $links);
     }
 
     /**

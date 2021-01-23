@@ -71,6 +71,10 @@ parameters:
             path: templates
 
         -
+            message: '#^Parameter \#1 \$array1 of function array_multisort is passed by reference, so it expects variables only\.$#'
+            path: templates/element/admin/sidebar.php
+
+        -
             message: '#no (return )?typehint specified\.$#'
             path: tests/TestCase
 

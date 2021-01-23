@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.30 branch
+### 2.30.1
+* fixed the `MenuBuilderHelper` and the admin sidebar, menus are now better displayed.
+
 ### 2.30.0
 * starting from this release, it no longer contains the code for banners and photos,
     which has been split into [me-cms-banners](//github.com/mirko-pagliai/me-cms-banners)
