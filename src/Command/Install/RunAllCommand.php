@@ -19,6 +19,7 @@ namespace MeCms\Command\Install;
 use MeCms\Command\Install\CopyConfigCommand;
 use MeCms\Command\Install\CreateAdminCommand;
 use MeCms\Command\Install\CreateGroupsCommand;
+use MeCms\Command\Install\CreateSamplePostCommand;
 use MeCms\Command\Install\FixElFinderCommand;
 use MeCms\Command\VersionUpdatesCommand;
 use MeTools\Command\Install\RunAllCommand as BaseRunAllCommand;
@@ -61,6 +62,11 @@ class RunAllCommand extends BaseRunAllCommand
                 'question' => __d('me_cms', 'Create an admin user?'),
                 'default' => 'N',
                 'command' => CreateAdminCommand::class,
+            ],
+            [
+                'question' => __d('me_cms', 'Create a sample post?'),
+                'default' => 'N',
+                'command' => CreateSamplePostCommand::class,
             ],
         ]);
     }

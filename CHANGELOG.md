@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.1
+* added `CreateSamplePostCommand`, this creates a sample post during installation;
 * fixed the `MenuBuilderHelper` and the admin sidebar, menus are now better displayed.
 
 ### 2.30.0
