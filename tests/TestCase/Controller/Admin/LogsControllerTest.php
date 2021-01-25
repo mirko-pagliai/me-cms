@@ -34,9 +34,9 @@ class LogsControllerTest extends ControllerTestCase
      * Called before every test method
      * @return void
      */
-    public function setup(): void
+    public function setUp(): void
     {
-        parent::setup();
+        parent::setUp();
 
         Log::write('error', 'This is an error message');
         Log::write('critical', 'This is a critical message');
