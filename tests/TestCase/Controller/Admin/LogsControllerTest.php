@@ -31,11 +31,13 @@ class LogsControllerTest extends ControllerTestCase
     public $autoFixtures = false;
 
     /**
-     * Internal method to write some logs
+     * Called before every test method
      * @return void
      */
-    protected function writeSomeLogs(): void
+    public function setup(): void
     {
+        parent::setup();
+
         Log::write('error', 'This is an error message');
         Log::write('critical', 'This is a critical message');
     }
@@ -59,7 +61,6 @@ class LogsControllerTest extends ControllerTestCase
      */
     public function testIndex()
     {
-        $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'index.php');
@@ -79,7 +80,6 @@ class LogsControllerTest extends ControllerTestCase
      */
     public function testView()
     {
-        $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'view', 'error.log']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'view.php');
@@ -94,7 +94,6 @@ class LogsControllerTest extends ControllerTestCase
      */
     public function testViewAsSerialized()
     {
-        $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'view', 'error.log', '?' => ['as' => 'serialized']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'view_as_serialized.php');
@@ -109,7 +108,6 @@ class LogsControllerTest extends ControllerTestCase
      */
     public function testDownload()
     {
-        $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'download', 'error.log']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertFileResponse(LOGS . 'error.log');
@@ -127,7 +125,6 @@ class LogsControllerTest extends ControllerTestCase
         $this->assertFlashMessage(I18N_OPERATION_NOT_OK);
 
         //POST request
-        $this->writeSomeLogs();
         $this->post($this->url + ['action' => 'delete', 'error.log']);
         $this->assertRedirect(['action' => 'index']);
         $this->skipIf(IS_WIN);
