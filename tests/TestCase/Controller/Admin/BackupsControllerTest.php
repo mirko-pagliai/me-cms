@@ -34,9 +34,9 @@ class BackupsControllerTest extends ControllerTestCase
     /**
      * Internal method to create a backup file
      * @param string $extension Extension
-     * @return string|null File path
+     * @return string File path
      */
-    protected function createSingleBackup(string $extension = 'sql'): ?string
+    protected function createSingleBackup(string $extension = 'sql'): string
     {
         $file = getConfigOrFail('DatabaseBackup.target') . DS . 'backup.' . $extension;
         (new Filesystem())->createFile($file);
@@ -46,7 +46,7 @@ class BackupsControllerTest extends ControllerTestCase
 
     /**
      * Internal method to create some backup files
-     * @return array Files paths
+     * @return array<int, string> Files paths
      */
     protected function createSomeBackups(): array
     {
