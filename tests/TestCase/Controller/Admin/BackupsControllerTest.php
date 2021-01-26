@@ -184,6 +184,7 @@ class BackupsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `restore()` method
+     * @requires OS Linux
      * @test
      */
     public function testRestore()
