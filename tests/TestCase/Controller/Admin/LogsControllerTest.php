@@ -31,13 +31,11 @@ class LogsControllerTest extends ControllerTestCase
     public $autoFixtures = false;
 
     /**
-     * Called before every test method
+     * Internal method to write some logs
      * @return void
      */
-    public function setUp(): void
+    protected function writeSomeLogs(): void
     {
-        parent::setUp();
-
         Log::write('error', 'This is an error message');
         Log::write('critical', 'This is a critical message');
     }
@@ -61,6 +59,7 @@ class LogsControllerTest extends ControllerTestCase
      */
     public function testIndex()
     {
+        $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'index.php');
@@ -80,6 +79,7 @@ class LogsControllerTest extends ControllerTestCase
      */
     public function testView()
     {
+        $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'view', 'error.log']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'view.php');
@@ -94,6 +94,7 @@ class LogsControllerTest extends ControllerTestCase
      */
     public function testViewAsSerialized()
     {
+        $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'view', 'error.log', '?' => ['as' => 'serialized']]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Logs' . DS . 'view_as_serialized.php');
@@ -108,6 +109,7 @@ class LogsControllerTest extends ControllerTestCase
      */
     public function testDownload()
     {
+        $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'download', 'error.log']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertFileResponse(LOGS . 'error.log');
@@ -119,6 +121,8 @@ class LogsControllerTest extends ControllerTestCase
      */
     public function testDelete()
     {
+        $this->writeSomeLogs();
+
         //POST request. The log file doesn't exist
         $this->post($this->url + ['action' => 'delete', 'noExisting.log']);
         $this->assertRedirect(['action' => 'index']);
