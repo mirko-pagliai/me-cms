@@ -131,7 +131,6 @@ class LogsControllerTest extends ControllerTestCase
         //POST request
         $this->post($this->url + ['action' => 'delete', 'error.log']);
         $this->assertRedirect(['action' => 'index']);
-        $this->skipIf(IS_WIN);
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertFileDoesNotExist(LOGS . 'error.log');
     }
