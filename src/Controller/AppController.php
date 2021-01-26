@@ -18,6 +18,7 @@ namespace MeCms\Controller;
 use App\Controller\AppController as BaseAppController;
 use Cake\Event\EventInterface;
 use Cake\I18n\I18n;
+use RuntimeException;
 
 /**
  * Application controller class
@@ -100,11 +101,20 @@ abstract class AppController extends BaseAppController
         $this->loadComponent('MeCms.Auth');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler', ['enableBeforeRedirect' => false]);
-        $this->loadComponent('Recaptcha.Recaptcha', [
-            'sitekey' => getConfigOrFail('Recaptcha.public'),
-            'secret' => getConfigOrFail('Recaptcha.private'),
-            'lang' => substr(I18n::getLocale(), 0, 2),
-        ]);
+
+        //Loads Recaptcha. Throws an exception if the keys are not set or are the default ones
+        if (getConfig('MeCms.security.recaptcha')) {
+            try {
+                [$sitekey, $secret] = array_values(getConfigOrFail('Recaptcha'));
+                if ($sitekey == 'your-public-key-here' || $secret == 'your-public-key-here') {
+                    throw new RuntimeException();
+                }
+            } catch (RuntimeException $e) {
+                throw new RuntimeException('Missing Recaptcha keys. You can rename the `config/recaptcha.example.php` file as `recaptcha.php` and change the keys');
+            }
+
+            $this->loadComponent('Recaptcha.Recaptcha', compact('sitekey', 'secret') + ['lang' => substr(I18n::getLocale(), 0, 2)]);
+        }
 
         parent::initialize();
     }

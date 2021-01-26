@@ -22,6 +22,7 @@ use Cake\ORM\Association\BelongsTo;
 use MeCms\Controller\PostsController;
 use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\ControllerTestCase;
+use RuntimeException;
 
 /**
  * AppControllerTest class
@@ -84,6 +85,29 @@ class AppControllerTest extends ControllerTestCase
         $this->assertSame(['paging-example'], $this->Controller->getPaging());
         $this->assertSame(['paging-example'], $this->Controller->getRequest()->getAttribute('paging'));
         $this->assertSame(['paging-example'], $this->Controller->getRequest()->getParam('paging'));
+    }
+
+    /**
+     * Tests for `initialize()` method, for `Recaptcha` component
+     * @test
+     */
+    public function testInitializeForRecaptchaComponent()
+    {
+        $this->Controller->initialize();
+        $this->assertFalse($this->Controller->components()->has('Recaptcha'));
+
+        Configure::write('MeCms.security.recaptcha', true);
+        Configure::write('Recaptcha', [
+            'public' => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+            'private' => 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+        ]);
+        $this->Controller->initialize();
+        $this->assertTrue($this->Controller->components()->has('Recaptcha'));
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Missing Recaptcha keys. You can rename the `config/recaptcha.example.php` file as `recaptcha.php` and change the keys');
+        Configure::load('MeCms.recaptcha');
+        $this->Controller->initialize();
     }
 
     /**
