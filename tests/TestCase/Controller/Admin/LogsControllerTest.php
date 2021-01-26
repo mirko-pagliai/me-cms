@@ -117,6 +117,7 @@ class LogsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `delete()` method
+     * @requires OS Linux
      * @test
      */
     public function testDelete()
