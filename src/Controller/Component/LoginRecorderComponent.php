@@ -18,6 +18,7 @@ namespace MeCms\Controller\Component;
 use Cake\Controller\Component;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
+use donatj\UserAgent\UserAgentParser;
 use InvalidArgumentException;
 use Tools\Exceptionist;
 use Tools\FileArray;
@@ -79,7 +80,13 @@ class LoginRecorderComponent extends Component
      */
     protected function getUserAgent(?string $userAgent = null): array
     {
-        return parse_user_agent($userAgent);
+        $parser = (new UserAgentParser())->parse($userAgent);
+
+        return [
+            'platform' => $parser->platform(),
+            'browser' => $parser->browser(),
+            'version' => $parser->browserVersion(),
+        ];
     }
 
     /**
