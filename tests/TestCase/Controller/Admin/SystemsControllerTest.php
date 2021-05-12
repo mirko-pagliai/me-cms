@@ -17,6 +17,7 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\I18n\I18n;
+use MeCms\Controller\Admin\SystemsController;
 use MeCms\TestSuite\ControllerTestCase;
 use Tools\Filesystem;
 
@@ -126,7 +127,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
         $this->assertStringEndsWith('elfinder/elfinder.html', $this->viewVariable('explorer'));
 
-        $Controller = $this->getMockForController(get_parent_class($this->Controller), ['elFinderExists']);
+        $Controller = $this->getMockForController(SystemsController::class, ['elFinderExists']);
         $Controller->method('elFinderExists')->willReturn(false);
         $this->_response = $Controller->browser();
         $this->assertRedirect(['_name' => 'dashboard']);

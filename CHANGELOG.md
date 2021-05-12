@@ -4,7 +4,8 @@
 * if Recaptcha is not used, an exception is no longer throwned when configuration
     keys are missing;
 * added `CreateSamplePostCommand`, this creates a sample post during installation;
-* fixed the `MenuBuilderHelper` and the admin sidebar, menus are now better displayed.
+* fixed the `MenuBuilderHelper` and the admin sidebar, menus are now better displayed;
+* updated for `php-tools` 1.5.
 
 ### 2.30.0
 * starting from this release, it no longer contains the code for banners and photos,

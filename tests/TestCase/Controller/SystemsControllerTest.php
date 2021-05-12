@@ -144,16 +144,14 @@ class SystemsControllerTest extends ControllerTestCase
         //GET request. The sitemap will be created
         @unlink(SITEMAP);
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertContentType('application/x-gzip');
         $this->assertFileResponse(SITEMAP);
+        $this->assertContentType('application/x-gzip');
 
         //GET request. The sitemap will be the same as the previous request
         $filemtime = filemtime(SITEMAP);
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertContentType('application/x-gzip');
         $this->assertFileResponse(SITEMAP);
+        $this->assertContentType('application/x-gzip');
         $this->assertEquals($filemtime, filemtime(SITEMAP));
     }
 }

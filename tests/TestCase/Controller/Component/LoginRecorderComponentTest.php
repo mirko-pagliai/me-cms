@@ -106,11 +106,11 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
         //With invalid user ID
         foreach ([null, 'string'] as $value) {
-            $this->assertException(InvalidArgumentException::class, function () use ($value) {
+            $this->assertException(function () use ($value) {
                 $Component = $this->getMockForLoginRecorder();
                 $Component->setConfig('user', $value);
                 $Component->getFileArray();
-            }, 'You have to set a valid user id');
+            }, InvalidArgumentException::class, 'You have to set a valid user id');
         }
     }
 

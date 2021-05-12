@@ -326,7 +326,7 @@ class UsersControllerTest extends ControllerTestCase
 
         //POST request. This works
         $this->post($url + ['_ext' => 'json'], compact('file'));
-        $this->assertResponseOkAndNotEmpty();
+        $this->assertResponseOk();
         $this->assertSession($expectedPicture, 'Auth.User.picture');
         $this->assertFileExists($expectedPicture);
         array_map([$this, 'assertFileDoesNotExist'], [USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);

@@ -178,7 +178,6 @@ class BackupsControllerTest extends ControllerTestCase
     {
         $file = $this->createSingleBackup();
         $this->get($this->url + ['action' => 'download', urlencode(basename($file))]);
-        $this->assertResponseOkAndNotEmpty();
         $this->assertFileResponse($file);
     }
 

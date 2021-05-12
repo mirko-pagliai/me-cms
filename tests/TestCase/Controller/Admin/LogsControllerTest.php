@@ -111,7 +111,6 @@ class LogsControllerTest extends ControllerTestCase
     {
         $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'download', 'error.log']);
-        $this->assertResponseOkAndNotEmpty();
         $this->assertFileResponse(LOGS . 'error.log');
     }
 
