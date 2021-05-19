@@ -165,7 +165,7 @@ class UsersController extends AppController
         if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
             $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
-            if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+            if (!getConfig('security.recaptcha') || (isset($this->Recaptcha) && $this->Recaptcha->verify())) {
                 if (!$entity->getErrors()) {
                     $email = $this->getRequest()->getData('email');
                     $user = $this->Users->findPendingByEmail($email)->first();
@@ -282,7 +282,7 @@ class UsersController extends AppController
         if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
             $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
-            if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+            if (!getConfig('security.recaptcha') || (isset($this->Recaptcha) && $this->Recaptcha->verify())) {
                 $message = __d('me_cms', 'No account found');
                 $email = $this->getRequest()->getData('email');
                 $user = $this->Users->findActiveByEmail($email)->first();
@@ -367,7 +367,7 @@ class UsersController extends AppController
 
             //Checks for reCAPTCHA, if requested
             $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
-            if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+            if (!getConfig('security.recaptcha') || (isset($this->Recaptcha) && $this->Recaptcha->verify())) {
                 $message = __d('me_cms', 'The account has not been created');
 
                 if ($this->Users->save($user)) {

@@ -62,7 +62,7 @@ class SystemsController extends AppController
         if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
             $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
-            if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+            if (!getConfig('security.recaptcha') || (isset($this->Recaptcha) && $this->Recaptcha->verify())) {
                 //Sends the email
                 $message = I18N_OPERATION_NOT_OK;
                 if ($contact->execute($this->getRequest()->getData())) {
