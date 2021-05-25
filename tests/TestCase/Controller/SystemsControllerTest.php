@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Controller;
 
+use Cake\Cache\Cache;
 use Cake\Chronos\Chronos;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
@@ -108,7 +109,14 @@ class SystemsControllerTest extends ControllerTestCase
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertRedirect(['_name' => 'homepage']);
 
-        //Spammer IP
+        //With a spammer IP
+        Cache::write(md5(serialize(['ip' => ['31.133.120.18']])), [
+          'success' => 1,
+          'ip' => [[
+              'value' => '31.133.120.18',
+              'appears' => 1,
+            ]],
+        ], 'StopSpam');
         $this->configRequest(['environment' => ['REMOTE_ADDR' => '31.133.120.18']]);
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertResponseOkAndNotEmpty();
