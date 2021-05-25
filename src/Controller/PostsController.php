@@ -106,7 +106,7 @@ class PostsController extends AppController
      * @param string $date Date as `today`, `yesterday`, `YYYY/MM/dd`,
      *  `YYYY/MM` or `YYYY`
      * @return \Cake\Http\Response|null|void
-     * @use \MeCms\Controller\Traits\GetStartAndEndDateTrait::getStartAndEndDate()
+     * @uses \MeCms\Controller\Traits\GetStartAndEndDateTrait::getStartAndEndDate()
      */
     public function indexByDate(string $date)
     {

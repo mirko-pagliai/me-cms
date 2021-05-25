@@ -29,9 +29,8 @@ use MeCms\Core\Plugin;
     unset($menus['MeCms.posts'], $menus['MeCms.pages']);
 
     //Echoes all the remaining menus, sorted by title
-    array_multisort(array_map(function (array $menu): string {
-        return $menu['title'];
-    }, $menus), SORT_ASC, $menus);
+    $titles = array_column($menus, 'title');
+    array_multisort($titles, SORT_ASC, $menus);
     foreach ($menus as $menu) {
         echo $this->MenuBuilder->renderAsCollapse($menu, 'sidebar-accordion');
     }

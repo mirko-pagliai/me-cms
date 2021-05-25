@@ -25,6 +25,8 @@ use Thumber\Cake\Utility\ThumbManager;
 /**
  * Users controller
  * @property \MeCms\Model\Table\UsersGroupsTable $Groups
+ * @property \MeCms\Controller\Component\LoginRecorderComponent $LoginRecorder
+ * @property \MeTools\Controller\Component\UploaderComponent $Uploader
  * @property \MeCms\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController

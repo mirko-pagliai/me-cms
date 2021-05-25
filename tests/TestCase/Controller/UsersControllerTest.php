@@ -36,6 +36,11 @@ class UsersControllerTest extends ControllerTestCase
     public $Token;
 
     /**
+     * @var \MeCms\Controller\UsersController
+     */
+    protected $_controller;
+
+    /**
      * Fixtures
      * @var array
      */
@@ -97,6 +102,7 @@ class UsersControllerTest extends ControllerTestCase
     {
         parent::controllerSpy($event, $controller);
 
+        /** @phpstan-ignore-next-line */
         $this->_controller->LoginRecorder = $this->getMockForComponent(LoginRecorderComponent::class);
         $this->_controller->LoginRecorder->method('setConfig')->will($this->returnSelf());
     }

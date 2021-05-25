@@ -86,20 +86,13 @@ class ContactUsMailerTest extends TestCase
     {
         $result = $this->Mailer->setTransport('debug')
             ->send('contactUsMail', [$this->example]);
-
-        $headers = $message = null;
-        extract($result);
-
-        //Checks headers
-        $this->assertStringContainsString('From: MeCms <email@example.com>', $headers);
-        $this->assertStringContainsString('Reply-To: James Blue <mymail@example.com>', $headers);
-        $this->assertStringContainsString('Sender: James Blue <mymail@example.com>', $headers);
-        $this->assertStringContainsString('To: email@example.com', $headers);
-        $this->assertStringContainsString('Subject: Email from MeCms', $headers);
-        $this->assertStringContainsString('Content-Type: text/html; charset=UTF-8', $headers);
-
-        //Checks message
-        $this->assertStringContainsString('Email from James Blue (mymail@example.com)', $message);
-        $this->assertStringContainsString('Example of message', $message);
+        $this->assertStringContainsString('From: MeCms <email@example.com>', $result['headers']);
+        $this->assertStringContainsString('Reply-To: James Blue <mymail@example.com>', $result['headers']);
+        $this->assertStringContainsString('Sender: James Blue <mymail@example.com>', $result['headers']);
+        $this->assertStringContainsString('To: email@example.com', $result['headers']);
+        $this->assertStringContainsString('Subject: Email from MeCms', $result['headers']);
+        $this->assertStringContainsString('Content-Type: text/html; charset=UTF-8', $result['headers']);
+        $this->assertStringContainsString('Email from James Blue (mymail@example.com)', $result['message']);
+        $this->assertStringContainsString('Example of message', $result['message']);
     }
 }

@@ -5,6 +5,7 @@
     keys are missing;
 * added `CreateSamplePostCommand`, this creates a sample post during installation;
 * fixed the `MenuBuilderHelper` and the admin sidebar, menus are now better displayed;
+* a major improvement of the descriptions, thanks to `phpstan`;
 * updated for `php-tools` 1.5;
 * updated for `phpuseragentparser` 1.
 

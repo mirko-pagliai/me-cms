@@ -32,6 +32,11 @@ use Tools\Filesystem;
 class BackupsControllerTest extends ControllerTestCase
 {
     /**
+     * @var \MeCms\Controller\Admin\BackupsController
+     */
+    protected $_controller;
+
+    /**
      * Internal method to create a backup file
      * @param string $extension Extension
      * @return string File path

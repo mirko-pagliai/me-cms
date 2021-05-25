@@ -22,6 +22,7 @@ use MeTools\TestSuite\IntegrationTestTrait;
 
 /**
  * Abstract class for test controllers
+ * @property \MeCms\Controller\AppController $_controller
  */
 abstract class ControllerTestCase extends TestCase
 {
@@ -29,7 +30,7 @@ abstract class ControllerTestCase extends TestCase
 
     /**
      * Controller instance
-     * @var \Cake\Controller\Controller|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Controller\AppController|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Controller;
 

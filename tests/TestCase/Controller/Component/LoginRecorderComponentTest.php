@@ -125,11 +125,6 @@ class LoginRecorderComponentTest extends ComponentTestCase
             'browser' => 'Firefox',
             'version' => '16.0',
         ];
-
-        $Component = $this->getMockForLoginRecorder(null);
-        $result = $this->invokeMethod($Component, 'getUserAgent', $expected);
-        $this->assertArrayKeysEqual(['platform', 'browser', 'version'], $result);
-
         $Component = $this->getMockForLoginRecorder(['getUserAgent'], $expected);
         $result = $this->invokeMethod($Component, 'getUserAgent', ['Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0']);
         $this->assertEquals($expected, $result);

@@ -25,6 +25,8 @@ use Tools\Exceptionist;
  * MenuBuilder Helper
  *
  * An helper to generate the admin menus.
+ * @property \MeTools\View\Helper\DropdownHelper $Dropdown
+ * @property \MeTools\View\Helper\HtmlHelper $Html
  */
 class MenuBuilderHelper extends Helper
 {

@@ -22,6 +22,7 @@ use MeCms\Model\Entity\Post;
 
 /**
  * PostsWidgets cell
+ * @property \MeCms\Model\Table\PostsTable $Posts
  */
 class PostsWidgetsCell extends Cell
 {

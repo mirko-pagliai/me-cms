@@ -25,6 +25,7 @@ use MeTools\Console\Command;
 
 /**
  * Creates the user groups
+ * @property \MeCms\Model\Table\UsersGroupsTable $UsersGroups
  */
 class CreateGroupsCommand extends Command
 {

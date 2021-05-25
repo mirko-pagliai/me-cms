@@ -85,6 +85,7 @@ class CreateGroupsCommandTest extends TestCase
 
     /**
      * Test for `execute()` method
+     * @param class-string<\Cake\Database\DriverInterface> $driver
      * @dataProvider driverProvider
      * @test
      */
@@ -106,15 +107,13 @@ class CreateGroupsCommandTest extends TestCase
             return $query;
         }));
 
-        $this->Command->UsersGroups->method('getConnection')->will($this->returnCallback(function () use ($driver) {
-            $driver = $this->getMockBuilder($driver)->getMock();
-            $driver->method('enabled')->will($this->returnValue(true));
-
-            return $this->getMockBuilder(Connection::class)
-                ->setConstructorArgs([compact('driver')])
-                ->setMethods(['execute'])
-                ->getMock();
-        }));
+        $driver = $this->getMockBuilder($driver)->getMock();
+        $driver->method('enabled')->will($this->returnValue(true));
+        $connection = $this->getMockBuilder(Connection::class)
+            ->setConstructorArgs([compact('driver')])
+            ->setMethods(['execute'])
+            ->getMock();
+        $this->Command->UsersGroups->method('getConnection')->will($this->returnValue($connection));
 
         $this->assertNull($this->Command->execute(new Arguments([], [], []), new ConsoleIo()));
     }

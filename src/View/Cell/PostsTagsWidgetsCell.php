@@ -24,6 +24,7 @@ use Tools\Exceptionist;
 
 /**
  * PostsTagsWidgets cell
+ * @property \MeCms\Model\Table\TagsTable $Tags
  */
 class PostsTagsWidgetsCell extends Cell
 {

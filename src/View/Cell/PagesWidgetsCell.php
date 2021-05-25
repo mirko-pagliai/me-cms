@@ -20,6 +20,7 @@ use Cake\View\Cell;
 
 /**
  * PagesWidgets cell
+ * @property \MeCms\Model\Table\PagesTable $Pages
  */
 class PagesWidgetsCell extends Cell
 {

@@ -34,6 +34,7 @@ use Cake\View\Helper;
  *
  * See the `\MeCms\View\Helper\MenuBuilderHelper::generate()` method for more
  *  information.
+ * @property \MeCms\View\Helper\AuthHelper $Auth
  */
 class MenuHelper extends Helper
 {

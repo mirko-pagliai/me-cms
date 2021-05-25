@@ -27,7 +27,7 @@ use MeTools\Utility\Youtube;
 class GetPreviewsFromTextTraitTest extends TestCase
 {
     /**
-     * @var \MeCms\Model\Table\PostsTable|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Cake\ORM\Table|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Posts;
 
@@ -150,7 +150,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
      */
     public function testGetPreviews()
     {
-        $Posts = $this->getMockForModel(get_parent_class($this->Posts), ['getPreviewSize']);
+        $Posts = $this->getMockForModel('MeCms.Posts', ['getPreviewSize']);
         $Posts->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         foreach ([

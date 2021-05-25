@@ -25,6 +25,7 @@ use Tools\Filesystem;
 
 /**
  * Systems controller
+ * @property \Recaptcha\Controller\Component\RecaptchaComponent $Recaptcha
  */
 class SystemsController extends AppController
 {

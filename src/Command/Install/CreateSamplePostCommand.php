@@ -24,6 +24,8 @@ use MeTools\Console\Command;
 
 /**
  * Creates a sample post
+ * @property \MeCms\Model\Table\PostsTable $Posts
+ * @property \MeCms\Model\Table\UsersTable $Users
  */
 class CreateSamplePostCommand extends Command
 {

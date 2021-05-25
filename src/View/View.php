@@ -21,6 +21,8 @@ use App\View\AppView;
  * Base view class.
  * This class contains common methods, so you should not use it directly.
  * Instead, use `AppView` or `AdminView`.
+ * @property \MeTools\View\Helper\LibraryHelper $Library
+ * @property \MeTools\View\Helper\HtmlHelper $Html
  */
 class View extends AppView
 {

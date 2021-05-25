@@ -25,6 +25,7 @@ use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PostsControllerTest class
+ * @property \MeCms\Controller\PostsController|\PHPUnit\Framework\MockObject\MockObject $Controller
  */
 class PostsControllerTest extends ControllerTestCase
 {

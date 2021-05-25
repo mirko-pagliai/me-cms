@@ -38,11 +38,14 @@ class AppControllerTest extends ControllerTestCase
         $Request = new ServerRequest(['params' => ['plugin' => 'MeCms']]);
         $PostsController = new PostsController($Request);
         $this->assertInstanceOf(PostsTable::class, $PostsController->Posts);
+        /* @phpstan-ignore-next-line */
         $this->assertInstanceOf(BelongsTo::class, $PostsController->Categories);
+        /* @phpstan-ignore-next-line */
         $this->assertInstanceOf(BelongsTo::class, $PostsController->Users);
 
         $this->expectNotice();
         $this->expectExceptionMessageMatches('/^Undefined property\: PostsController\:\:\$Foo in/');
+        /* @phpstan-ignore-next-line */
         $PostsController->Foo;
     }
 

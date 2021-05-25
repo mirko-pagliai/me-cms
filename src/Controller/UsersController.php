@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Controller;
 
+use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
@@ -24,11 +25,13 @@ use Cake\Mailer\MailerAwareTrait;
 use Cake\Routing\Router;
 use DateTime;
 use MeCms\Controller\AppController;
-use MeCms\Model\Entity\User;
 use Tools\Exceptionist;
 
 /**
  * Users controller
+ * @property \MeCms\Controller\Component\LoginRecorderComponent $LoginRecorder
+ * @property \Recaptcha\Controller\Component\RecaptchaComponent $Recaptcha
+ * @property \Tokens\Controller\Component\TokenComponent $Token
  * @property \MeCms\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController
@@ -43,8 +46,8 @@ class UsersController extends AppController
      */
     protected function loginWithCookie(): ?Response
     {
-        $username = $password = null;
-        extract((array)$this->getRequest()->getCookie('login'));
+        $username = $this->getRequest()->getCookie('login.username');
+        $password = $this->getRequest()->getCookie('login.password');
         if (!$username || !$password) {
             return null;
         }
@@ -78,11 +81,11 @@ class UsersController extends AppController
 
     /**
      * Internal method to send the activation mail
-     * @param \MeCms\Model\Entity\User $user User entity
+     * @param \Cake\Datasource\EntityInterface $user User entity
      * @return bool
      * @see \MeCms\Mailer\UserMailer::activation()
      */
-    protected function sendActivationMail(User $user): bool
+    protected function sendActivationMail(EntityInterface $user): bool
     {
         $token = $this->Token->create($user->get('email'), ['type' => 'signup', 'user_id' => $user->get('id')]);
 
@@ -208,8 +211,8 @@ class UsersController extends AppController
 
         if ($this->getRequest()->is('post')) {
             $user = $this->Auth->identify();
-            $username = $password = null;
-            extract($this->getRequest()->getData());
+            $username = $this->getRequest()->getData('username');
+            $password = $this->getRequest()->getData('password');
 
             if ($user) {
                 //Checks if the user is banned or if is disabled (the account

@@ -22,6 +22,8 @@ use RuntimeException;
 
 /**
  * Application controller class
+ * @property \MeCms\Controller\Component\AuthComponent $Auth
+ * @property \MeTools\Controller\Component\FlashComponent $Flash
  */
 abstract class AppController extends BaseAppController
 {

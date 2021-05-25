@@ -25,9 +25,10 @@ use MeCms\TestSuite\TestCase;
 class NextToBePublishedTraitTest extends TestCase
 {
     /**
-     * @var \MeCms\Model\Table\PostsTable|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Cake\ORM\Table|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Posts;
+
     /**
      * Fixtures
      * @var array

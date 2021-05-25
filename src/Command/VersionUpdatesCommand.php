@@ -52,6 +52,7 @@ class VersionUpdatesCommand extends Command
         Cache::clear('_cake_model_');
 
         foreach (['Pages', 'Posts'] as $tableName) {
+            /** @var \MeCms\Model\Table\AppTable $Table **/
             $Table = $this->loadModel('MeCms.' . $tableName);
             if (!$Table->getSchema()->hasColumn('enable_comments')) {
                 $connection = $Table->getConnection();
@@ -70,6 +71,7 @@ class VersionUpdatesCommand extends Command
      */
     public function alterTagColumnSize(): void
     {
+        /** @var \MeCms\Model\Table\AppTable $Table **/
         $Table = $this->loadModel('MeCms.Tags');
         if ($Table->getSchema()->getColumn('tag')['length'] < 255) {
             $connection = $Table->getConnection();
