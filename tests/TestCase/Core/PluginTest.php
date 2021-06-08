@@ -27,7 +27,7 @@ class PluginTest extends TestCase
      * Tests for `all()` method
      * @test
      */
-    public function testAll()
+    public function testAll(): void
     {
         $this->removePlugins(['TestPlugin']);
 

@@ -54,7 +54,7 @@ class VersionUpdatesCommandTest extends TestCase
      * Test for `addEnableCommentsField()` method
      * @test
      */
-    public function testAddEnableCommentsField()
+    public function testAddEnableCommentsField(): void
     {
         $getTables = function () {
             return [$this->getTable('MeCms.Posts'), $this->getTable('MeCms.Pages')];
@@ -83,7 +83,7 @@ class VersionUpdatesCommandTest extends TestCase
      * Test for `alterTagColumnSize()` method
      * @test
      */
-    public function testAlterTagColumnSize()
+    public function testAlterTagColumnSize(): void
     {
         $Table = $this->getTable('MeCms.Tags');
         $connection = $Table->getConnection();
@@ -105,7 +105,7 @@ class VersionUpdatesCommandTest extends TestCase
      * Test for `deleteOldDirectories()` method
      * @test
      */
-    public function testDeleteOldDirectories()
+    public function testDeleteOldDirectories(): void
     {
         $dir = WWW_ROOT . 'fonts';
         @mkdir($dir);
@@ -118,7 +118,7 @@ class VersionUpdatesCommandTest extends TestCase
      * Test for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $this->exec('me_cms.version_updates -h');
         $this->assertNotEmpty($this->_out->messages());

@@ -63,7 +63,7 @@ class SitemapTest extends TestCase
      * Test for `pages()` method
      * @test
      */
-    public function testPages()
+    public function testPages(): void
     {
         $this->loadFixtures('Pages', 'PagesCategories');
         /** @var \MeCms\Model\Table\PagesCategoriesTable $table */
@@ -111,7 +111,7 @@ class SitemapTest extends TestCase
      * Test for `posts()` method
      * @test
      */
-    public function testPosts()
+    public function testPosts(): void
     {
         $this->loadFixtures('Posts', 'PostsCategories');
         /** @var \MeCms\Model\Table\PostsCategoriesTable $table */
@@ -188,7 +188,7 @@ class SitemapTest extends TestCase
      * Test for `postsTags()` method
      * @test
      */
-    public function testPostsTags()
+    public function testPostsTags(): void
     {
         $this->loadFixtures('Posts', 'PostsTags', 'Tags');
         /** @var \MeCms\Model\Table\TagsTable $table */
@@ -237,7 +237,7 @@ class SitemapTest extends TestCase
      * Test for `staticPages()` method
      * @test
      */
-    public function testStaticPages()
+    public function testStaticPages(): void
     {
         $map = Sitemap::staticPages();
 
@@ -263,7 +263,7 @@ class SitemapTest extends TestCase
      * Test for `systems()` method
      * @test
      */
-    public function testSystems()
+    public function testSystems(): void
     {
         $this->assertEquals([[
             'loc' => 'http://localhost/contact/us',

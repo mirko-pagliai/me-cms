@@ -47,7 +47,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      * @return void
      * @test
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $entity = $this->Table->newEntity(self::$example);
         $this->assertNotEmpty($this->Table->save($entity));
@@ -75,7 +75,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      * @return void
      * @test
      */
-    public function testInitializeSchema()
+    public function testInitializeSchema(): void
     {
         $this->assertEquals('jsonEntity', $this->Table->getSchema()->getColumnType('preview'));
     }
@@ -85,7 +85,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      * @return void
      * @test
      */
-    public function testEventMethods()
+    public function testEventMethods(): void
     {
         [$event, $entity, $options] = [new Event('myEvent'), $this->Table->newEmptyEntity(), new ArrayObject()];
 
@@ -117,7 +117,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      * @return void
      * @test
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $this->assertEquals('title', $this->Table->getDisplayField());
         $this->assertEquals('id', $this->Table->getPrimaryKey());
@@ -132,7 +132,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      * @return void
      * @test
      */
-    public function testFind()
+    public function testFind(): void
     {
         //Writes `next_to_be_published` and some data on cache
         $anHourAgo = (string)(time() - HOUR);

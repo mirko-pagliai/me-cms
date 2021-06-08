@@ -31,7 +31,7 @@ class CreateDirectoriesCommandTest extends TestCase
      * Tests for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $expected = array_map(function (string $path): string {
             return 'File or directory `' . (new Filesystem())->rtr($path) . '` already exists';

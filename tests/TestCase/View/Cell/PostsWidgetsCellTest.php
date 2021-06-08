@@ -39,7 +39,7 @@ class PostsWidgetsCellTest extends CellTestCase
      * Test for `categories()` method
      * @test
      */
-    public function testCategories()
+    public function testCategories(): void
     {
         $widget = 'MeCms.Posts::categories';
 
@@ -118,7 +118,7 @@ class PostsWidgetsCellTest extends CellTestCase
      * Test for `latest()` method
      * @test
      */
-    public function testLatest()
+    public function testLatest(): void
     {
         $widget = 'MeCms.Posts::latest';
         $post = $this->Table->find('active')->last();
@@ -200,7 +200,7 @@ class PostsWidgetsCellTest extends CellTestCase
      * Test for `months()` method
      * @test
      */
-    public function testMonths()
+    public function testMonths(): void
     {
         $widget = 'MeCms.Posts::months';
 
@@ -286,7 +286,7 @@ class PostsWidgetsCellTest extends CellTestCase
      * Test for `search()` method
      * @test
      */
-    public function testSearch()
+    public function testSearch(): void
     {
         $widget = 'MeCms.Posts::search';
 

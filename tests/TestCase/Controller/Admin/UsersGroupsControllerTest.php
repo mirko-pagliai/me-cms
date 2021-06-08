@@ -35,7 +35,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
      * Tests for `isAuthorized()` method
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         $this->assertGroupsAreAuthorized([
             'admin' => true,
@@ -48,7 +48,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
      * Tests for `index()` method
      * @test
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
@@ -60,7 +60,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
      * Tests for `add()` method
      * @test
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $url = $this->url + ['action' => 'add'];
 
@@ -84,7 +84,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
      * Tests for `edit()` method
      * @test
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $url = $this->url + ['action' => 'edit', 2];
 
@@ -110,7 +110,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
      * Tests for `delete()` method
      * @test
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $url = $this->url + ['action' => 'delete'];
 

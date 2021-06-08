@@ -35,7 +35,7 @@ class TreeBehaviorTest extends TestCase
      * Test for `findTreeList()` method
      * @test
      */
-    public function testFindTreeList()
+    public function testFindTreeList(): void
     {
         $PostsCategories = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
 

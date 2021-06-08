@@ -29,7 +29,7 @@ class PluginTest extends TestCase
      * Tests for `bootstrap()` method
      * @test
      */
-    public function testBootstrap()
+    public function testBootstrap(): void
     {
         /**
          * Internal functions. Returns an array of loaded plugins

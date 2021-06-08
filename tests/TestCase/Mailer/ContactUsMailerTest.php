@@ -55,7 +55,7 @@ class ContactUsMailerTest extends TestCase
      * Tests for `contactUsMail()` method
      * @test
      */
-    public function testContactUsMail()
+    public function testContactUsMail(): void
     {
         $this->Mailer->contactUsMail($this->example);
         $this->assertEquals(['mymail@example.com' => 'James Blue'], $this->Mailer->getSender());
@@ -82,7 +82,7 @@ class ContactUsMailerTest extends TestCase
      * Tests for `contactUsMail()` method, calling `send()` method
      * @test
      */
-    public function testContactUsMailWithSend()
+    public function testContactUsMailWithSend(): void
     {
         $result = $this->Mailer->setTransport('debug')
             ->send('contactUsMail', [$this->example]);

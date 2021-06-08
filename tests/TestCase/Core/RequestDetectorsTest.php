@@ -59,7 +59,7 @@ class RequestDetectorsTest extends TestCase
      *  `is('view')` detectors
      * @test
      */
-    public function testIsActionName()
+    public function testIsActionName(): void
     {
         $this->assertTrue($this->Request->isAdd());
         $this->assertFalse($this->Request->isDelete());
@@ -80,7 +80,7 @@ class RequestDetectorsTest extends TestCase
      * Tests for `is('admin')` detector
      * @test
      */
-    public function testIsAdmin()
+    public function testIsAdmin(): void
     {
         $this->assertFalse($this->Request->isAdmin());
         $this->assertFalse($this->Request->is('admin'));
@@ -94,7 +94,7 @@ class RequestDetectorsTest extends TestCase
      * Tests for `is('offline')` detector
      * @test
      */
-    public function testIsOffline()
+    public function testIsOffline(): void
     {
         $this->assertFalse($this->Request->isOffline());
         $this->assertFalse($this->Request->is('offline'));

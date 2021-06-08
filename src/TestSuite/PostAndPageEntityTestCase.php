@@ -40,7 +40,7 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
      * @return void
      * @test
      */
-    public function testNoAccessibleProperties()
+    public function testNoAccessibleProperties(): void
     {
         $this->assertHasNoAccessibleProperty(['id', 'preview', 'modified']);
     }
@@ -50,7 +50,7 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
      * @return void
      * @test
      */
-    public function testPlainTextGetMutator()
+    public function testPlainTextGetMutator(): void
     {
         $this->assertEquals('A text', $this->Entity->get('plain_text'));
     }
@@ -60,7 +60,7 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
      * @return void
      * @test
      */
-    public function testTextGetMutator()
+    public function testTextGetMutator(): void
     {
         $this->assertEquals('<b>A</b> <!-- read-more -->text', $this->Entity->get('text'));
     }

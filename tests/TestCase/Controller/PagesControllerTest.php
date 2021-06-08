@@ -39,7 +39,7 @@ class PagesControllerTest extends ControllerTestCase
      * Tests for `view()` method
      * @test
      */
-    public function testView()
+    public function testView(): void
     {
         $this->get(['_name' => 'page', 'first-page']);
         $this->assertResponseOkAndNotEmpty();
@@ -53,7 +53,7 @@ class PagesControllerTest extends ControllerTestCase
      * Tests for `view()` method, with a static page
      * @test
      */
-    public function testViewWithStaticPage()
+    public function testViewWithStaticPage(): void
     {
         Cache::clear('static_pages');
         $slug = 'page-from-app';
@@ -73,7 +73,7 @@ class PagesControllerTest extends ControllerTestCase
      * Tests for `view()` method, with a static page from a plugin
      * @test
      */
-    public function testViewWithStaticPageFromPlugin()
+    public function testViewWithStaticPageFromPlugin(): void
     {
         Cache::clear('static_pages');
         $this->loadPlugins(['TestPlugin']);
@@ -87,7 +87,7 @@ class PagesControllerTest extends ControllerTestCase
      * Tests for `preview()` method
      * @test
      */
-    public function testPreview()
+    public function testPreview(): void
     {
         $this->setUserGroup('user');
         $this->get(['_name' => 'pagesPreview', 'disabled-page']);

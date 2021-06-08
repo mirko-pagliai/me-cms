@@ -27,7 +27,7 @@ class PostTest extends PostAndPageEntityTestCase
      * Test for `_getUrl()` method
      * @test
      */
-    public function testUrl()
+    public function testUrl(): void
     {
         $this->assertStringEndsWith('/post/a-slug', $this->Entity->get('url'));
     }
@@ -36,7 +36,7 @@ class PostTest extends PostAndPageEntityTestCase
      * Test for `_getTagsAsString()` method
      * @test
      */
-    public function testTagsAsStringGetMutator()
+    public function testTagsAsStringGetMutator(): void
     {
         foreach (['cat', 'dog', 'bird'] as $tag) {
             $tags[] = new Tag(compact('tag'));

@@ -54,7 +54,7 @@ class NextToBePublishedTraitTest extends TestCase
      * Test for `getNextToBePublished()` and `setNextToBePublished()` methods
      * @test
      */
-    public function testGetNextToBePublishedAndSetNextToBePublished()
+    public function testGetNextToBePublishedAndSetNextToBePublished(): void
     {
         //Creates a record with a future publication time (1 hours)
         $future = new Time('+1 hours');

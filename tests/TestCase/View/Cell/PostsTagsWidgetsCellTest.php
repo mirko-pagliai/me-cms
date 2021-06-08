@@ -64,7 +64,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      * Test for `getFontSizes()` method
      * @test
      */
-    public function testGetFontSizes()
+    public function testGetFontSizes(): void
     {
         $widget = $this->Widget->widget('MeCms.PostsTags::popular');
         $getFontSizesMethod = function ($style) use ($widget) {
@@ -86,7 +86,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      * Test for `popular()` method
      * @test
      */
-    public function testPopular()
+    public function testPopular(): void
     {
         $widget = 'MeCms.PostsTags::popular';
 
@@ -260,7 +260,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      *  value
      * @test
      */
-    public function testPopularWithTagsSamePostCount()
+    public function testPopularWithTagsSamePostCount(): void
     {
         $widget = 'MeCms.PostsTags::popular';
 

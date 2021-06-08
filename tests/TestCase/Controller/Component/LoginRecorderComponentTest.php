@@ -79,7 +79,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Test for `getClientIp()` method
      * @test
      */
-    public function testGetClientIp()
+    public function testGetClientIp(): void
     {
         $this->assertEmpty($this->invokeMethod($this->Component, 'getClientIp'));
 
@@ -98,7 +98,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Test for `getFileArray()` method
      * @test
      */
-    public function testGetFileArray()
+    public function testGetFileArray(): void
     {
         $result = $this->Component->getFileArray();
         $this->assertInstanceOf(FileArray::class, $result);
@@ -118,7 +118,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Test for `getUserAgent()` method
      * @test
      */
-    public function testGetUserAgent()
+    public function testGetUserAgent(): void
     {
         $expected = [
             'platform' => 'Windows',
@@ -134,7 +134,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Test for `read()` method
      * @test
      */
-    public function testRead()
+    public function testRead(): void
     {
         //For now is empty
         $result = $this->Component->read();
@@ -164,7 +164,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Test for `write()` method
      * @test
      */
-    public function testWrite()
+    public function testWrite(): void
     {
         $this->assertTrue($this->Component->write());
 

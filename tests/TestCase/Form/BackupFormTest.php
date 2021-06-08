@@ -59,7 +59,7 @@ class BackupFormTest extends TestCase
      * It tests the proper functioning of the example data.
      * @test
      */
-    public function testValidationExampleData()
+    public function testValidationExampleData(): void
     {
         $this->assertTrue($this->Form->validate(['filename' => 'file.sql']));
         $this->assertEmpty($this->Form->getErrors());
@@ -73,7 +73,7 @@ class BackupFormTest extends TestCase
      * Test validation for `filename` property
      * @test
      */
-    public function testValidationForFilename()
+    public function testValidationForFilename(): void
     {
         $expected = ['filename' => ['extension' => 'Valid extensions: sql, sql.gz, sql.bz2']];
         foreach ([
@@ -105,7 +105,7 @@ class BackupFormTest extends TestCase
      * Tests for `getBackupExportInstance()` method
      * @test
      */
-    public function testGetBackupExportInstance()
+    public function testGetBackupExportInstance(): void
     {
         $this->assertEmpty($this->getProperty($this->Form, 'BackupExport'));
 
@@ -118,7 +118,7 @@ class BackupFormTest extends TestCase
      * Tests for `_execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $BackupForm = $this->getMockBuilder(BackupForm::class)
             ->setMethods(['getBackupExportInstance'])

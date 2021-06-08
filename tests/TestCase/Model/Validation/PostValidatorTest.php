@@ -46,7 +46,7 @@ class PostValidatorTest extends ValidationTestCase
      * Test validation for `category_id` property
      * @test
      */
-    public function testValidationForCategoryId()
+    public function testValidationForCategoryId(): void
     {
         $errors = $this->Table->newEntity(['category_id' => 'str'] + $this->example)->getErrors();
         $this->assertEquals(['category_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION]], $errors);
@@ -56,7 +56,7 @@ class PostValidatorTest extends ValidationTestCase
      * Test validation for `tags` property
      * @test
      */
-    public function testValidationForTags()
+    public function testValidationForTags(): void
     {
         foreach (['ab', str_repeat('a', 41)] as $tag) {
             $errors = $this->Table->newEntity(['tags_as_string' => $tag] + $this->example)->getErrors();

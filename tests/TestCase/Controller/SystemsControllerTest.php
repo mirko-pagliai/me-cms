@@ -48,7 +48,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `acceptCookies()` method
      * @test
      */
-    public function testAcceptCookies()
+    public function testAcceptCookies(): void
     {
         $this->get(['_name' => 'acceptCookies']);
         $this->assertRedirect(['_name' => 'homepage']);
@@ -61,7 +61,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `contactUs()` method
      * @test
      */
-    public function testContactUs()
+    public function testContactUs(): void
     {
         $url = ['_name' => 'contactUs'];
 
@@ -104,7 +104,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `ipNotAllowed()` method
      * @test
      */
-    public function testIpNotAllowed()
+    public function testIpNotAllowed(): void
     {
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertRedirect(['_name' => 'homepage']);
@@ -128,7 +128,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `offline()` method
      * @test
      */
-    public function testOffline()
+    public function testOffline(): void
     {
         $this->get(['_name' => 'offline']);
         $this->assertRedirect(['_name' => 'homepage']);
@@ -145,7 +145,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `sitemap()` method
      * @test
      */
-    public function testSitemap()
+    public function testSitemap(): void
     {
         $this->loadFixtures();
 

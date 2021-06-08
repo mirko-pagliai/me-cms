@@ -101,7 +101,7 @@ abstract class ValidationTestCase extends TestCase
      * @return void
      * @test
      */
-    public function testAllDataAreRequired()
+    public function testAllDataAreRequired(): void
     {
         $this->assertAllDataAreRequired($this->example);
     }

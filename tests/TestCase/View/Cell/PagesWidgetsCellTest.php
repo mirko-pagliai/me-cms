@@ -38,7 +38,7 @@ class PagesWidgetsCellTest extends CellTestCase
      * Test for `categories()` method
      * @test
      */
-    public function testCategories()
+    public function testCategories(): void
     {
         $widget = 'MeCms.Pages::categories';
 
@@ -116,7 +116,7 @@ class PagesWidgetsCellTest extends CellTestCase
      * Test for `pages()` method
      * @test
      */
-    public function testPages()
+    public function testPages(): void
     {
         $widget = 'MeCms.Pages::pages';
 

@@ -43,7 +43,7 @@ class AssociationsSameAliasesTest extends TableTestCase
      * Test for associations with the same alias
      * @test
      */
-    public function testAssociationsSameAliases()
+    public function testAssociationsSameAliases(): void
     {
         foreach (['Pages', 'Posts'] as $name) {
             /** @var \MeCms\Model\Table\PagesTable|\MeCms\Model\Table\PostsTable $Entity */

@@ -33,7 +33,7 @@ class AppControllerTest extends ControllerTestCase
      * Tests autoload modelClass
      * @test
      */
-    public function testTableAutoload()
+    public function testTableAutoload(): void
     {
         $Request = new ServerRequest(['params' => ['plugin' => 'MeCms']]);
         $PostsController = new PostsController($Request);
@@ -53,7 +53,7 @@ class AppControllerTest extends ControllerTestCase
      * Tests for `beforeFilter()` method
      * @test
      */
-    public function testBeforeFilter()
+    public function testBeforeFilter(): void
     {
         parent::testBeforeFilter();
 
@@ -81,7 +81,7 @@ class AppControllerTest extends ControllerTestCase
      * Tests for `getPaging()` and `setPaging()` methods
      * @test
      */
-    public function testGetAndSetPaging()
+    public function testGetAndSetPaging(): void
     {
         $this->assertSame([], $this->Controller->getPaging());
         $this->Controller->setPaging(['paging-example']);
@@ -94,7 +94,7 @@ class AppControllerTest extends ControllerTestCase
      * Tests for `initialize()` method, for `Recaptcha` component
      * @test
      */
-    public function testInitializeForRecaptchaComponent()
+    public function testInitializeForRecaptchaComponent(): void
     {
         $this->Controller->initialize();
         $this->assertFalse($this->Controller->components()->has('Recaptcha'));
@@ -117,7 +117,7 @@ class AppControllerTest extends ControllerTestCase
      * Tests for `isAuthorized()` method
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         //With prefixes
         foreach ([

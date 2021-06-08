@@ -28,7 +28,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `getConfig()` global function
      * @test
      */
-    public function testGetConfig()
+    public function testGetConfig(): void
     {
         $this->assertNotEmpty(getConfig());
         $this->assertNotEmpty(getConfig(null));
@@ -57,7 +57,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `getConfigOrFail()` global function
      * @test
      */
-    public function testGetConfigOrFail()
+    public function testGetConfigOrFail(): void
     {
         Configure::write('exampleKey', 'exampleValue');
         $this->assertEquals('exampleValue', getConfigOrFail('exampleKey'));

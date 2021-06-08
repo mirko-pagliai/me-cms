@@ -192,7 +192,7 @@ abstract class ControllerTestCase extends TestCase
      * @return void
      * @test
      */
-    public function testBeforeFilter()
+    public function testBeforeFilter(): void
     {
         //If the user has been reported as a spammer this makes a redirect
         $controller = $this->getMockForController($this->getOriginClassName($this), ['isSpammer']);
@@ -208,7 +208,7 @@ abstract class ControllerTestCase extends TestCase
      * @return void
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         $this->assertTrue($this->Controller->isAuthorized());
     }

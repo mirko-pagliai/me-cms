@@ -37,7 +37,7 @@ class AuthHelperTest extends HelperTestCase
      * Tests for `hasId()` method
      * @test
      */
-    public function testHasId()
+    public function testHasId(): void
     {
         $this->assertFalse($this->Helper->hasId(1));
 
@@ -52,7 +52,7 @@ class AuthHelperTest extends HelperTestCase
      * Tests for `isFounder()` method
      * @test
      */
-    public function testIsFounder()
+    public function testIsFounder(): void
     {
         $this->assertFalse($this->Helper->isFounder());
 
@@ -67,7 +67,7 @@ class AuthHelperTest extends HelperTestCase
      * Tests for `isGroup()` method
      * @test
      */
-    public function testIsGroup()
+    public function testIsGroup(): void
     {
         $this->assertFalse($this->Helper->isGroup('admin'));
 
@@ -82,7 +82,7 @@ class AuthHelperTest extends HelperTestCase
      * Tests for `isLogged()` method
      * @test
      */
-    public function testIsLogged()
+    public function testIsLogged(): void
     {
         $this->assertFalse($this->Helper->isLogged());
 
@@ -94,7 +94,7 @@ class AuthHelperTest extends HelperTestCase
      * Tests for `user()` method
      * @test
      */
-    public function testUser()
+    public function testUser(): void
     {
         $this->assertEmpty($this->Helper->user());
         $this->assertEmpty($this->Helper->user('id'));

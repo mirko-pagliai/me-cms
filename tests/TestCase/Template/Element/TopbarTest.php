@@ -28,7 +28,7 @@ class TopbarTest extends TestCase
      * Test for `topbar` element
      * @test
      */
-    public function testTopbar()
+    public function testTopbar(): void
     {
         $View = new AppView();
         $result = $View->element('MeCms.topbar');
@@ -44,7 +44,7 @@ class TopbarTest extends TestCase
      * Test for `topbar` element, using the APP helper
      * @test
      */
-    public function testTopbarFromApp()
+    public function testTopbarFromApp(): void
     {
         $content = <<<HEREDOC
 <?php

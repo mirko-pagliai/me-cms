@@ -47,10 +47,6 @@ parameters:
             path: templates
 
         -
-            message: '#no (return )?typehint specified\.$#'
-            path: tests/TestCase
-
-        -
             message: '#^Property [\w\\]+::\$_(err|in|out) \(Cake\\(Console\\ConsoleInput|TestSuite\\Stub\\ConsoleOutput)\) does not accept null\.$#'
             path: tests/TestCase
 

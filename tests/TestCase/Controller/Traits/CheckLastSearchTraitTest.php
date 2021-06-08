@@ -28,7 +28,7 @@ class CheckLastSearchTraitTest extends TestCase
      * Tests for `checkLastSearch()` method
      * @test
      */
-    public function testCheckLastSearch()
+    public function testCheckLastSearch(): void
     {
         $controller = $this->getMockForController(PostsController::class, null);
         $checkLastSearchMethod = function ($queryId = false) use ($controller) {

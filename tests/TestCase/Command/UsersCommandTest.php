@@ -43,7 +43,7 @@ class UsersCommandTest extends TestCase
      * Test for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $this->Command->Users = $this->getTable('MeCms.Users');
         $expectedRows = $this->invokeMethod($this->Command, 'getUsersRows');

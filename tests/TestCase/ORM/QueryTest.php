@@ -38,7 +38,7 @@ class QueryTest extends TestCase
      * Test for `query()` method
      * @test
      */
-    public function testQuery()
+    public function testQuery(): void
     {
         //This table HAS the `getCacheName()` method.
         //So its value will be used as default

@@ -46,7 +46,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
      * Test for `extractImages()` method
      * @test
      */
-    public function testExtractImages()
+    public function testExtractImages(): void
     {
         $extractImagesMethod = function (string $value) {
             return $this->invokeMethod($this->Posts, 'extractImages', [$value]);
@@ -138,7 +138,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
      * Test for `getPreviewSize()` method
      * @test
      */
-    public function testGetPreviewSize()
+    public function testGetPreviewSize(): void
     {
         $result = $this->invokeMethod($this->Posts, 'getPreviewSize', [WWW_ROOT . 'img' . DS . 'image.jpg']);
         $this->assertEquals([400, 400], $result);
@@ -148,7 +148,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
      * Test for `getPreviews()` method
      * @test
      */
-    public function testGetPreviews()
+    public function testGetPreviews(): void
     {
         $Posts = $this->getMockForModel('MeCms.Posts', ['getPreviewSize']);
         $Posts->method('getPreviewSize')->will($this->returnValue([400, 300]));

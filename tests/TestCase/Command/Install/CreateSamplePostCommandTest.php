@@ -45,7 +45,7 @@ class CreateSamplePostCommandTest extends TestCase
      * Test for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $this->exec('me_cms.create_sample_post -v');
         $this->assertExitWithSuccess();
@@ -72,7 +72,7 @@ class CreateSamplePostCommandTest extends TestCase
      * Test for `execute()` method, on failure
      * @test
      */
-    public function testExecuteOnFailure()
+    public function testExecuteOnFailure(): void
     {
         $this->Command->Posts = $this->getMockForModel('MeCms.Posts', ['save']);
         $this->Command->Posts->method('save')->will($this->returnValue(false));

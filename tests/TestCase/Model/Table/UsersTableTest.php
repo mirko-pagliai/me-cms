@@ -63,7 +63,7 @@ class UsersTableTest extends TableTestCase
      * Test for event methods
      * @test
      */
-    public function testEventMethods()
+    public function testEventMethods(): void
     {
         $entity = $this->Table->patchEntity($this->Table->get(1), self::$example, ['validate' => 'EmptyPassword']);
         $this->assertNotEmpty($entity->get('password'));
@@ -86,7 +86,7 @@ class UsersTableTest extends TableTestCase
      * Test for `buildRules()` method
      * @test
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $expected = [
             'email' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
@@ -111,7 +111,7 @@ class UsersTableTest extends TableTestCase
      * Test for `initialize()` method
      * @test
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $this->assertEquals('users', $this->Table->getTable());
         $this->assertEquals('username', $this->Table->getDisplayField());
@@ -136,7 +136,7 @@ class UsersTableTest extends TableTestCase
      * Test for associations
      * @test
      */
-    public function testAssociations()
+    public function testAssociations(): void
     {
         $token = (new TokenCreator())->create('testToken', ['user_id' => 4]);
         $tokens = $this->Table->findById(4)->contain('Tokens')->extract('tokens')->first();
@@ -149,7 +149,7 @@ class UsersTableTest extends TableTestCase
      * Test for `find()` methods
      * @test
      */
-    public function testFindMethods()
+    public function testFindMethods(): void
     {
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM users Users WHERE (active = :c0 AND banned = :c1)', $query->sql());
@@ -173,7 +173,7 @@ class UsersTableTest extends TableTestCase
      * Test for `getActiveList()` method
      * @test
      */
-    public function testGetActiveList()
+    public function testGetActiveList(): void
     {
         $this->loadFixtures();
         $query = $this->Table->getActiveList();
@@ -187,7 +187,7 @@ class UsersTableTest extends TableTestCase
      * Test for `queryFromFilter()` method
      * @test
      */
-    public function testQueryFromFilter()
+    public function testQueryFromFilter(): void
     {
         $data = [
             'username' => 'test',
@@ -224,7 +224,7 @@ class UsersTableTest extends TableTestCase
      * Test for `validationDoNotRequirePresence()` method
      * @test
      */
-    public function testValidationDoNotRequirePresence()
+    public function testValidationDoNotRequirePresence(): void
     {
         $this->loadFixtures();
 
@@ -248,7 +248,7 @@ class UsersTableTest extends TableTestCase
      * Test for `validationEmptyPassword()` method
      * @test
      */
-    public function testValidationEmptyPassword()
+    public function testValidationEmptyPassword(): void
     {
         $this->loadFixtures();
         $example = ['password' => '', 'password_repeat' => ''] + self::$example;

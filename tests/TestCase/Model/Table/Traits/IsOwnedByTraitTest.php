@@ -51,7 +51,7 @@ class IsOwnedByTraitTest extends TestCase
      * Test for `isOwnedBy()` method
      * @test
      */
-    public function testIsOwnedBy()
+    public function testIsOwnedBy(): void
     {
         $this->assertTrue($this->Posts->isOwnedBy(2, 4));
         $this->assertFalse($this->Posts->isOwnedBy(2, 1));

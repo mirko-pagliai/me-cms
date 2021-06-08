@@ -66,7 +66,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      * Test for event methods
      * @test
      */
-    public function testEventMethods()
+    public function testEventMethods(): void
     {
         parent::testEventMethods();
 
@@ -86,7 +86,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      * Test for `buildRules()` method
      * @test
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         parent::testBuildRules();
 
@@ -103,7 +103,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      * Test for `initialize()` method
      * @test
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         parent::testInitialize();
 
@@ -125,7 +125,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      * Test for associations
      * @test
      */
-    public function testAssociations()
+    public function testAssociations(): void
     {
         $tags = $this->Table->findById(2)->contain('Tags')->extract('tags')->first();
         $this->assertContainsOnlyInstancesOf(Tag::class, $tags);
@@ -139,7 +139,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      * Test for `find()` methods
      * @test
      */
-    public function testFindMethods()
+    public function testFindMethods(): void
     {
         $query = $this->Table->find('forIndex');
         $sql = $query->sql();
@@ -151,7 +151,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      * Test for `getRelated()` method
      * @test
      */
-    public function testGetRelated()
+    public function testGetRelated(): void
     {
         $this->loadFixtures();
 
@@ -200,7 +200,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      * Test for `queryFromFilter()` method
      * @test
      */
-    public function testQueryFromFilter()
+    public function testQueryFromFilter(): void
     {
         $query = $this->Table->queryFromFilter($this->Table->find(), ['tag' => 'test']);
         $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = (PostsTags.post_id) INNER JOIN tags Tags ON (tag = :c0 AND Tags.id = (PostsTags.tag_id))', $query->sql());
@@ -211,7 +211,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      * Test for `queryForRelated()` method
      * @test
      */
-    public function testQueryForRelated()
+    public function testQueryForRelated(): void
     {
         $this->loadFixtures();
 

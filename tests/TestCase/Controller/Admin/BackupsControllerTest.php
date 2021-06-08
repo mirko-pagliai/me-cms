@@ -101,7 +101,7 @@ class BackupsControllerTest extends ControllerTestCase
      * Tests for `isAuthorized()` method
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         $this->assertGroupsAreAuthorized([
             'admin' => true,
@@ -114,7 +114,7 @@ class BackupsControllerTest extends ControllerTestCase
      * Tests for `index()` method
      * @test
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->createSomeBackups();
         $this->get($this->url + ['action' => 'index']);
@@ -127,7 +127,7 @@ class BackupsControllerTest extends ControllerTestCase
      * Tests for `add()` method
      * @test
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $url = $this->url + ['action' => 'add'];
 
@@ -153,7 +153,7 @@ class BackupsControllerTest extends ControllerTestCase
      * Tests for `delete()` method
      * @test
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $file = $this->createSingleBackup();
         $this->post($this->url + ['action' => 'delete', urlencode(basename($file))]);
@@ -166,7 +166,7 @@ class BackupsControllerTest extends ControllerTestCase
      * Tests for `deleteAll()` method
      * @test
      */
-    public function testDeleteAll()
+    public function testDeleteAll(): void
     {
         $files = $this->createSomeBackups();
         $this->post($this->url + ['action' => 'deleteAll']);
@@ -179,7 +179,7 @@ class BackupsControllerTest extends ControllerTestCase
      * Tests for `download()` method
      * @test
      */
-    public function testDownload()
+    public function testDownload(): void
     {
         $file = $this->createSingleBackup();
         $this->get($this->url + ['action' => 'download', urlencode(basename($file))]);
@@ -191,7 +191,7 @@ class BackupsControllerTest extends ControllerTestCase
      * @requires OS Linux
      * @test
      */
-    public function testRestore()
+    public function testRestore(): void
     {
         Cache::writeMany(['firstKey' => 'firstValue', 'secondKey' => 'secondValue']);
         $file = $this->createSingleBackup();
@@ -206,7 +206,7 @@ class BackupsControllerTest extends ControllerTestCase
      * @requires OS Linux
      * @test
      */
-    public function testSend()
+    public function testSend(): void
     {
         $file = $this->createSingleBackup();
         $this->post($this->url + ['action' => 'send', urlencode(basename($file))]);

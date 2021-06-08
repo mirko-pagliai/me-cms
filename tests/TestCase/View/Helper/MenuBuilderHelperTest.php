@@ -37,7 +37,7 @@ class MenuBuilderHelperTest extends HelperTestCase
      * Tests for `getMethods()` method
      * @test
      */
-    public function testGetMethods()
+    public function testGetMethods(): void
     {
         $this->assertEquals([
             'posts',
@@ -54,7 +54,7 @@ class MenuBuilderHelperTest extends HelperTestCase
      * Tests for `generate()` method
      * @test
      */
-    public function testGenerate()
+    public function testGenerate(): void
     {
         foreach (['MeCms', 'TestPlugin'] as $plugin) {
             $result = $this->Helper->generate($plugin);
@@ -72,7 +72,7 @@ class MenuBuilderHelperTest extends HelperTestCase
      * Tests for `renderAsCollapse()` method
      * @test
      */
-    public function testRenderAsCollapse()
+    public function testRenderAsCollapse(): void
     {
         $expected = [
             ['div' => ['class' => 'card']],
@@ -147,7 +147,7 @@ class MenuBuilderHelperTest extends HelperTestCase
      * Tests for `renderAsDropdown()` method
      * @test
      */
-    public function testRenderAsDropdown()
+    public function testRenderAsDropdown(): void
     {
         $expected = [
             ['a' => [

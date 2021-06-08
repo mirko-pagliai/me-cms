@@ -48,7 +48,7 @@ class PostsCategoriesTableTest extends TableTestCase
      * Test for `buildRules()` method
      * @test
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
@@ -76,7 +76,7 @@ class PostsCategoriesTableTest extends TableTestCase
      * Test for `initialize()` method
      * @test
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $this->assertEquals('posts_categories', $this->Table->getTable());
         $this->assertEquals('title', $this->Table->getDisplayField());
@@ -100,7 +100,7 @@ class PostsCategoriesTableTest extends TableTestCase
      * Test for associations
      * @test
      */
-    public function testAssociations()
+    public function testAssociations(): void
     {
         $category = $this->Table->findById(4)->contain('Parents')->first();
         $this->assertNotEmpty($category->get('parent'));
@@ -126,7 +126,7 @@ class PostsCategoriesTableTest extends TableTestCase
      * Test for `find()` methods
      * @test
      */
-    public function testFindMethods()
+    public function testFindMethods(): void
     {
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM posts_categories PostsCategories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND PostsCategories.id = (Posts.category_id))', $query->sql());

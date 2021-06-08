@@ -26,7 +26,7 @@ class MenuHelperTest extends MenuHelperTestCase
      * Tests for `posts()` method
      * @test
      */
-    public function testPosts()
+    public function testPosts(): void
     {
         [$links,,, $handledControllers] = $this->Helper->posts();
         $this->assertNotEmpty($links);
@@ -46,7 +46,7 @@ class MenuHelperTest extends MenuHelperTestCase
      * Tests for `pages()` method
      * @test
      */
-    public function testPages()
+    public function testPages(): void
     {
         [$links,,, $handledControllers] = $this->Helper->pages();
         $this->assertNotEmpty($links);
@@ -66,7 +66,7 @@ class MenuHelperTest extends MenuHelperTestCase
      * Tests for `users()` method
      * @test
      */
-    public function testUsers()
+    public function testUsers(): void
     {
         $this->assertEmpty($this->Helper->users());
 
@@ -87,7 +87,7 @@ class MenuHelperTest extends MenuHelperTestCase
      * Tests for `backups()` method
      * @test
      */
-    public function testBackups()
+    public function testBackups(): void
     {
         $this->assertEmpty($this->Helper->backups());
 
@@ -104,7 +104,7 @@ class MenuHelperTest extends MenuHelperTestCase
      * Tests for `systems()` method
      * @test
      */
-    public function testSystems()
+    public function testSystems(): void
     {
         $this->assertEmpty($this->Helper->systems());
 

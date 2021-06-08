@@ -57,7 +57,7 @@ class UserMailerTest extends TestCase
      * Tests for `activation()` method
      * @test
      */
-    public function testActivation()
+    public function testActivation(): void
     {
         $this->Mailer->activation($this->example);
         $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getTo());
@@ -76,7 +76,7 @@ class UserMailerTest extends TestCase
      * Tests for `activation()` method, calling `send()` method
      * @test
      */
-    public function testActivationWithSend()
+    public function testActivationWithSend(): void
     {
         $result = $this->Mailer->setTransport('debug')
             ->setViewVars(['url' => 'http://example/link'])
@@ -95,7 +95,7 @@ class UserMailerTest extends TestCase
      * Tests for `changePassword()` method
      * @test
      */
-    public function testChangePassword()
+    public function testChangePassword(): void
     {
         $this->Mailer->changePassword($this->example);
         $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getTo());
@@ -114,7 +114,7 @@ class UserMailerTest extends TestCase
      * Tests for `changePassword()` method, calling `send()` method
      * @test
      */
-    public function testChangePasswordWithSend()
+    public function testChangePasswordWithSend(): void
     {
         $result = $this->Mailer->setTransport('debug')
             ->setViewVars(['url' => 'http://example/link'])
@@ -132,7 +132,7 @@ class UserMailerTest extends TestCase
      * Tests for `passwordForgot()` method
      * @test
      */
-    public function testPasswordForgot()
+    public function testPasswordForgot(): void
     {
         $this->Mailer->passwordForgot($this->example);
         $this->assertEquals(['test@test.com' => 'James Blue'], $this->Mailer->getTo());
@@ -151,7 +151,7 @@ class UserMailerTest extends TestCase
      * Tests for `passwordForgot()` method, calling `send()` method
      * @test
      */
-    public function testPasswordForgotWithSend()
+    public function testPasswordForgotWithSend(): void
     {
         $result = $this->Mailer->setTransport('debug')
             ->setViewVars(['url' => 'http://example/link'])

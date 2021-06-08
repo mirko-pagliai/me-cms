@@ -41,7 +41,7 @@ class PostsTagsControllerTest extends ControllerTestCase
      * Tests for `index()` method
      * @test
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $url = ['_name' => 'postsTags'];
 
@@ -68,7 +68,7 @@ class PostsTagsControllerTest extends ControllerTestCase
      * Tests for `view()` method
      * @test
      */
-    public function testView()
+    public function testView(): void
     {
         $url = ['_name' => 'postsTag', 'cat'];
 

@@ -39,7 +39,7 @@ class UsersGroupValidatorTest extends ValidationTestCase
      * Test validation for `name` property
      * @test
      */
-    public function testValidationForName()
+    public function testValidationForName(): void
     {
         foreach (['Abc', 'ab1', 'ab-c', 'ab$'] as $name) {
             $errors = $this->Table->newEntity(compact('name') + $this->example)->getErrors();
@@ -61,7 +61,7 @@ class UsersGroupValidatorTest extends ValidationTestCase
      * Test validation for `label` property
      * @test
      */
-    public function testValidationForLabel()
+    public function testValidationForLabel(): void
     {
         foreach (['ab', str_repeat('a', 101)] as $label) {
             $errors = $this->Table->newEntity(compact('label') + $this->example)->getErrors();

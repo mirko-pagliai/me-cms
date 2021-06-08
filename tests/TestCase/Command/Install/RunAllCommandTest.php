@@ -30,7 +30,7 @@ class RunAllCommandTest extends TestCase
      * Tests for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $questions = (new RunAllCommand())->questions;
         $this->exec('me_cms.install -v', array_fill(0, count($questions), 'n'));

@@ -66,7 +66,7 @@ class SitemapBuilderTest extends TestCase
      * Test for `getMethods()` method
      * @test
      */
-    public function testGetMethods()
+    public function testGetMethods(): void
     {
         $methods = $this->SitemapBuilder->getMethods('MeCms');
         $this->assertEquals([
@@ -91,7 +91,7 @@ class SitemapBuilderTest extends TestCase
      * Test for `generate()` method
      * @test
      */
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $this->loadFixtures();
         $map = Xml::toArray(Xml::build($this->SitemapBuilder->generate()))['urlset']['url'];
@@ -105,7 +105,7 @@ class SitemapBuilderTest extends TestCase
      * Test for `generate()` method, with a plugin
      * @test
      */
-    public function testGenerateWithPlugin()
+    public function testGenerateWithPlugin(): void
     {
         $this->loadFixtures();
         $this->loadPlugins(['TestPlugin']);

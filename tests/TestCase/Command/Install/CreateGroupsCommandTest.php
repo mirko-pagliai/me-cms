@@ -50,7 +50,7 @@ class CreateGroupsCommandTest extends TestCase
      * Test for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         //A group already exists
         $this->exec('me_cms.create_groups -v');
@@ -89,7 +89,7 @@ class CreateGroupsCommandTest extends TestCase
      * @dataProvider driverProvider
      * @test
      */
-    public function testExecuteOtherDrivers($driver)
+    public function testExecuteOtherDrivers($driver): void
     {
         $this->skipIf(IS_WIN);
 

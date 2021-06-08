@@ -95,7 +95,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `isAuthorized()` method
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         parent::testIsAuthorized();
 
@@ -120,7 +120,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `browser()` method
      * @test
      */
-    public function testBrowser()
+    public function testBrowser(): void
     {
         $this->get($this->url + ['action' => 'browser']);
         $this->assertResponseOkAndNotEmpty();
@@ -138,7 +138,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `changelogs()` method
      * @test
      */
-    public function testChangelogs()
+    public function testChangelogs(): void
     {
         $url = $this->url + ['action' => 'changelogs'];
 
@@ -161,7 +161,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `tmpCleaner()` method
      * @test
      */
-    public function testTmpCleaner()
+    public function testTmpCleaner(): void
     {
         $url = $this->url + ['action' => 'tmpCleaner'];
 
@@ -202,7 +202,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `tmpViewer()` method
      * @test
      */
-    public function testTmpViewer()
+    public function testTmpViewer(): void
     {
         $expectedViewVars = [
             'assetsSize',
