@@ -31,9 +31,14 @@ use Tokens\Controller\Component\TokenComponent;
 class UsersControllerTest extends ControllerTestCase
 {
     /**
+     * @var \MeCms\Model\Table\UsersTable
+     */
+    protected $Table;
+
+    /**
      * @var \Cake\Controller\Component|\PHPUnit\Framework\MockObject\MockObject
      */
-    public $Token;
+    protected $Token;
 
     /**
      * @var \MeCms\Controller\UsersController

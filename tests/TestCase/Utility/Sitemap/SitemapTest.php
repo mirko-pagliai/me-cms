@@ -66,6 +66,7 @@ class SitemapTest extends TestCase
     public function testPages()
     {
         $this->loadFixtures('Pages', 'PagesCategories');
+        /** @var \MeCms\Model\Table\PagesCategoriesTable $table */
         $table = TableRegistry::getTableLocator()->get('MeCms.PagesCategories');
 
         $expected = [
@@ -113,6 +114,7 @@ class SitemapTest extends TestCase
     public function testPosts()
     {
         $this->loadFixtures('Posts', 'PostsCategories');
+        /** @var \MeCms\Model\Table\PostsCategoriesTable $table */
         $table = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
 
         $expected = [
@@ -189,6 +191,7 @@ class SitemapTest extends TestCase
     public function testPostsTags()
     {
         $this->loadFixtures('Posts', 'PostsTags', 'Tags');
+        /** @var \MeCms\Model\Table\TagsTable $table */
         $table = TableRegistry::getTableLocator()->get('MeCms.Tags');
 
         $expected = [

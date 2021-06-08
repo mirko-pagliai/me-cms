@@ -28,6 +28,11 @@ use MeCms\TestSuite\TableTestCase;
 abstract class PostsAndPagesTablesTestCase extends TableTestCase
 {
     /**
+     * @var \MeCms\ORM\PostsAndPagesTables
+     */
+    protected $Table;
+
+    /**
      * @var array
      */
     protected static $example = [

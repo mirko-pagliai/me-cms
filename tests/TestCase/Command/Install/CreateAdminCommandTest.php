@@ -42,6 +42,7 @@ class CreateAdminCommandTest extends TestCase
     public function testExecute()
     {
         $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
+        /** @var \MeCms\Model\Table\UsersTable $Users */
         $Users = TableRegistry::getTableLocator()->get('MeCms.Users');
 
         $expectedUserId = $Users->find()->extract('id')->last() + 1;

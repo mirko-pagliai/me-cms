@@ -46,12 +46,12 @@ class AssociationsSameAliasesTest extends TableTestCase
     public function testAssociationsSameAliases()
     {
         foreach (['Pages', 'Posts'] as $name) {
-            $categories = TableRegistry::getTableLocator()->get('MeCms.' . $name)->Categories;
-
-            $this->assertBelongsTo($categories);
-            $this->assertEquals('Categories', $categories->getName());
-            $this->assertEquals('MeCms\\Model\\Table\\' . $name . 'CategoriesTable', $categories->getClassName());
-            $this->assertInstanceof('MeCms\\Model\\Entity\\' . $name . 'Category', $categories->find()->first());
+            /** @var \MeCms\Model\Table\PagesTable|\MeCms\Model\Table\PostsTable $Entity */
+            $Entity = TableRegistry::getTableLocator()->get('MeCms.' . $name);
+            $this->assertBelongsTo($Entity->Categories);
+            $this->assertEquals('Categories', $Entity->Categories->getName());
+            $this->assertEquals('MeCms\\Model\\Table\\' . $name . 'CategoriesTable', $Entity->Categories->getClassName());
+            $this->assertInstanceof('MeCms\\Model\\Entity\\' . $name . 'Category', $Entity->Categories->find()->first());
         }
     }
 }

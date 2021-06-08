@@ -25,6 +25,11 @@ use MeCms\TestSuite\ControllerTestCase;
 class PostsControllerTest extends ControllerTestCase
 {
     /**
+     * @var \MeCms\Model\Table\PostsTable
+     */
+    protected $Table;
+
+    /**
      * @var array
      */
     protected static $example = [

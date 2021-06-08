@@ -41,6 +41,7 @@ class Sitemap extends SitemapBase
             return [];
         }
 
+        /** @var \MeCms\Model\Table\PagesCategoriesTable $table */
         $table = TableRegistry::get('MeCms.PagesCategories');
         $url = Cache::read('sitemap', $table->getCacheName());
 
@@ -90,6 +91,7 @@ class Sitemap extends SitemapBase
             return [];
         }
 
+        /** @var \MeCms\Model\Table\PostsCategoriesTable $table */
         $table = TableRegistry::get('MeCms.PostsCategories');
         $url = Cache::read('sitemap', $table->getCacheName());
 
@@ -146,6 +148,7 @@ class Sitemap extends SitemapBase
             return [];
         }
 
+        /** @var \MeCms\Model\Table\TagsTable $table */
         $table = TableRegistry::get('MeCms.Tags');
         $url = Cache::read('sitemap', $table->getCacheName());
 

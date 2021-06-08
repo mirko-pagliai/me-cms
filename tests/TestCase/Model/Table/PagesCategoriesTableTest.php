@@ -26,6 +26,11 @@ use MeCms\TestSuite\TableTestCase;
 class PagesCategoriesTableTest extends TableTestCase
 {
     /**
+     * @var \MeCms\Model\Table\PagesCategoriesTable
+     */
+    protected $Table;
+
+    /**
      * @var bool
      */
     public $autoFixtures = false;

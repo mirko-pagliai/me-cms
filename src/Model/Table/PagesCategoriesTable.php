@@ -23,8 +23,10 @@ use MeCms\ORM\Query;
 
 /**
  * PagesCategories model
- * @property \Cake\ORM\Association\BelongsTo $ParentPagesCategories
- * @property \Cake\ORM\Association\HasMany $ChildPagesCategories
+ * @property \Cake\ORM\Association\BelongsTo $Parents
+ * @property \Cake\ORM\Association\HasMany $Childs
+ * @property \Cake\ORM\Association\HasMany $Pages
+ * @method findActiveBySlug(string $slug)
  */
 class PagesCategoriesTable extends AppTable
 {

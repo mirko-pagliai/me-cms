@@ -24,6 +24,11 @@ use MeCms\TestSuite\TableTestCase;
 class PostsTagsTableTest extends TableTestCase
 {
     /**
+     * @var \MeCms\Model\Table\PostsTagsTable
+     */
+    protected $Table;
+
+    /**
      * @var bool
      */
     public $autoFixtures = false;

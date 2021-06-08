@@ -26,6 +26,11 @@ use MeCms\TestSuite\TableTestCase;
 class PostsCategoriesTableTest extends TableTestCase
 {
     /**
+     * @var \MeCms\Model\Table\PostsCategoriesTable
+     */
+    protected $Table;
+
+    /**
      * @var bool
      */
     public $autoFixtures = false;

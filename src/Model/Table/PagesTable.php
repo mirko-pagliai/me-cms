@@ -23,7 +23,6 @@ use MeCms\ORM\PostsAndPagesTables;
 
 /**
  * Pages model
- * @property \Cake\ORM\Association\BelongsTo $Categories
  * @method \MeCms\Model\Entity\Page get($primaryKey, $options = [])
  * @method \MeCms\Model\Entity\Page newEntity($data = null, array $options = [])
  * @method \MeCms\Model\Entity\Page[] newEntities(array $data, array $options = [])

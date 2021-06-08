@@ -29,12 +29,12 @@ use MeCms\TestSuite\TableTestCase;
 class AppTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PostsTable|\Cake\ORM\Table
+     * @var \MeCms\Model\Table\PostsTable
      */
     protected $Posts;
 
     /**
-     * @var \MeCms\Model\Table\PostsCategoriesTable|\Cake\ORM\Table
+     * @var \MeCms\Model\Table\PostsCategoriesTable
      */
     protected $PostsCategories;
 

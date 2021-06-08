@@ -28,6 +28,11 @@ use Tools\Filesystem;
 class UsersControllerTest extends ControllerTestCase
 {
     /**
+     * @var \MeCms\Model\Table\UsersTable
+     */
+    protected $Table;
+
+    /**
      * @var array
      */
     protected static $example = [

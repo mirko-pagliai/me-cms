@@ -29,6 +29,9 @@ use MeCms\ORM\Query;
 
 /**
  * Application table class
+ * @method findActiveById($id)
+ * @method findById($id)
+ * @method findPendingById($id)
  */
 abstract class AppTable extends Table
 {
@@ -167,7 +170,10 @@ abstract class AppTable extends Table
                 return method_exists($association->getTarget(), 'getCacheName');
             })
             ->map(function (Association $association) {
-                return $association->getTarget()->getCacheName();
+                /** @var \MeCms\Model\Table\AppTable $target */
+                $target = $association->getTarget();
+
+                return $target->getCacheName();
             })
             ->prependItem($this->cache ?: null);
 
@@ -176,9 +182,9 @@ abstract class AppTable extends Table
 
     /**
      * Gets records as list
-     * @return \MeCms\ORM\Query $query Query object
+     * @return \Cake\ORM\Query $query Query object
      */
-    public function getList(): Query
+    public function getList(): CakeQuery
     {
         return $this->find('list')
             ->orderAsc($this->getDisplayField())
@@ -187,9 +193,9 @@ abstract class AppTable extends Table
 
     /**
      * Gets records as tree list
-     * @return \MeCms\ORM\Query $query Query object
+     * @return \Cake\ORM\Query $query Query object
      */
-    public function getTreeList(): Query
+    public function getTreeList(): CakeQuery
     {
         return $this->find('treeList')->cache($this->getTable() . '_tree_list');
     }
@@ -206,11 +212,11 @@ abstract class AppTable extends Table
 
     /**
      * Build query from filter data
-     * @param \MeCms\ORM\Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $data Filter data (`$this->getRequest()->getQueryParams()`)
-     * @return \MeCms\ORM\Query $query Query object
+     * @return \Cake\ORM\Query $query Query object
      */
-    public function queryFromFilter(Query $query, array $data = []): Query
+    public function queryFromFilter(CakeQuery $query, array $data = []): CakeQuery
     {
         //"ID" field
         if (!empty($data['id']) && is_positive($data['id'])) {

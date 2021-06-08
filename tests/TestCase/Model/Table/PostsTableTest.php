@@ -32,6 +32,11 @@ use Tools\Exception\PropertyNotExistsException;
 class PostsTableTest extends PostsAndPagesTablesTestCase
 {
     /**
+     * @var \MeCms\Model\Table\PostsTable
+     */
+    protected $Table;
+
+    /**
      * @var bool
      */
     public $autoFixtures = false;

@@ -25,6 +25,11 @@ use MeCms\TestSuite\ControllerTestCase;
 class PagesControllerTest extends ControllerTestCase
 {
     /**
+     * @var \MeCms\Model\Table\PagesTable
+     */
+    protected $Table;
+
+    /**
      * Cache keys to clear for each test
      * @var array
      */

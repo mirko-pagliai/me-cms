@@ -25,7 +25,7 @@ use MeTools\TestSuite\TestCase as BaseTestCase;
 abstract class TestCase extends BaseTestCase
 {
     /**
-     * @var \Cake\ORM\Table
+     * @var \MeCms\Model\Table\AppTable
      */
     protected $Table;
 
