@@ -163,7 +163,7 @@ class PostsController extends AppController
     public function rss(): void
     {
         //This method works only for RSS
-        Exceptionist::isTrue($this->RequestHandler->prefers('rss'), ForbiddenException::class);
+        Exceptionist::isTrue($this->RequestHandler->prefers('rss'), '', ForbiddenException::class);
         $this->viewBuilder()->setClassName('Feed.Rss');
 
         $posts = $this->Posts->find('active')
