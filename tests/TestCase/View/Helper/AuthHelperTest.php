@@ -19,6 +19,7 @@ use MeTools\TestSuite\HelperTestCase;
 
 /**
  * AuthHelperTest class
+ * @property \MeCms\View\Helper\AuthHelper $Helper
  */
 class AuthHelperTest extends HelperTestCase
 {

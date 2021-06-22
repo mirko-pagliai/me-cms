@@ -22,6 +22,7 @@ use TestPlugin\View\Cell\PluginExampleWidgetsCell;
 
 /**
  * WidgetHelperTest class
+ * @property \MeCms\View\Helper\WidgetHelper $Helper
  */
 class WidgetHelperTest extends HelperTestCase
 {

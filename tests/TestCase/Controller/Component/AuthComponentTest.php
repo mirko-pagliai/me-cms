@@ -19,6 +19,7 @@ use MeTools\TestSuite\ComponentTestCase;
 
 /**
  * AuthComponentTest class
+ * @property \MeCms\Controller\Component\AuthComponent $Component
  */
 class AuthComponentTest extends ComponentTestCase
 {

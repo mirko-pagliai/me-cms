@@ -46,8 +46,6 @@ abstract class ValidationTestCase extends TestCase
      * @param array $data Valid data
      * @param array $exclude Key to be excluded
      * @return void
-     * @uses $Table
-     * @uses $example
      */
     public function assertAllDataAreRequired($data, $exclude = [])
     {
@@ -74,8 +72,6 @@ abstract class ValidationTestCase extends TestCase
      * Called before every test method
      * @return void
      * @throw \PHPUnit\Framework\AssertionFailedError
-     * @uses $Table
-     * @uses $autoInitializeClass
      */
     public function setUp(): void
     {

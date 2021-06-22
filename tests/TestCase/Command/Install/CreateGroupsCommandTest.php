@@ -27,6 +27,7 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * CreateGroupsCommandTest class
+ * @property \MeCms\Command\Install\CreateGroupsCommand $Command
  */
 class CreateGroupsCommandTest extends TestCase
 {

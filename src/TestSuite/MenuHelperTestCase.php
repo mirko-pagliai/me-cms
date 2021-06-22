@@ -21,6 +21,7 @@ use MeTools\View\Helper\HtmlHelper;
 
 /**
  * Abstract class for test `MenuHelper` classes
+ * @property \MeCms\View\Helper\MenuHelper|\PHPUnit\Framework\MockObject\MockObject $Helper
  */
 abstract class MenuHelperTestCase extends HelperTestCase
 {

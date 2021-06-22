@@ -19,7 +19,6 @@ use BadMethodCallException;
 use Cake\Cache\Cache;
 use Cake\I18n\I18nDateTimeInterface;
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
 use MeCms\ORM\Query;
 use MeCms\TestSuite\TableTestCase;
 
@@ -63,8 +62,8 @@ class AppTableTest extends TableTestCase
     {
         parent::setUp();
 
-        $this->Posts = TableRegistry::getTableLocator()->get('MeCms.Posts');
-        $this->PostsCategories = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
+        $this->Posts = $this->Posts ?: $this->getTable('MeCms.Posts');
+        $this->PostsCategories = $this->PostsCategories ?: $this->getTable('MeCms.PostsCategories');
     }
 
     /**

@@ -22,6 +22,7 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * CreateSamplePostCommandTest class
+ * @property \MeCms\Command\Install\CreateSamplePostCommand $Command
  */
 class CreateSamplePostCommandTest extends TestCase
 {
@@ -74,11 +75,13 @@ class CreateSamplePostCommandTest extends TestCase
      */
     public function testExecuteOnFailure(): void
     {
-        $this->Command->Posts = $this->getMockForModel('MeCms.Posts', ['save']);
-        $this->Command->Posts->method('save')->will($this->returnValue(false));
-        $this->Command->Posts->deleteAll(['id is NOT' => null]);
+        /** @var \MeCms\Model\Table\PostsTable|\PHPUnit\Framework\MockObject\MockObject $Posts */
+        $Posts = $this->getMockForModel('MeCms.Posts', ['save']);
+        $Posts->method('save')->will($this->returnValue(false));
+        $Posts->deleteAll(['id is NOT' => null]);
 
         $this->_err = new ConsoleOutput();
+        $this->Command->Posts = $Posts;
         $this->assertSame(0, $this->Command->run(['-v'], new ConsoleIo(new ConsoleOutput(), $this->_err)));
         $this->assertErrorContains(I18N_OPERATION_NOT_OK);
     }

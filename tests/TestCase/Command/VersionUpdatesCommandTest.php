@@ -25,6 +25,7 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * VersionUpdatesCommandTest class
+ * @property \MeCms\Command\VersionUpdatesCommand $Command
  */
 class VersionUpdatesCommandTest extends TestCase
 {

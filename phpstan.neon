@@ -26,7 +26,6 @@ parameters:
 
     ignoreErrors:
         - '#^(Access|Call) to an undefined (method|property) ([\w\\]+\|)?PHPUnit\\Framework\\MockObject\\MockObject#'
-        - '#^Property [\w\\]+\:\:\$\w+ \(MeCms\\Model\\Table\\\w+Table\) does not accept Cake\\ORM\\Table(\|null)?\.$#'
 
         -
             message: '#^(Undefined variable: \$this|Variable \$\w+ might not be defined\.)$#'

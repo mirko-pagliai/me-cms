@@ -19,6 +19,7 @@ use MeTools\TestSuite\HelperTestCase;
 
 /**
  * MenuBuilderHelperTest class
+ * @property \MeCms\View\Helper\MenuBuilderHelper $Helper
  */
 class MenuBuilderHelperTest extends HelperTestCase
 {

@@ -21,6 +21,8 @@ use MeTools\TestSuite\TestCase as BaseTestCase;
 
 /**
  * TestCase class
+ * @method \MeCms\Model\Table\AppTable|\PHPUnit\Framework\MockObject\MockObject getMockBuilder(class-string $alias)
+ * @method \MeCms\Model\Table\AppTable getTable(string $alias, array $options = [])
  */
 abstract class TestCase extends BaseTestCase
 {

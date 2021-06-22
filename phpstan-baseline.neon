@@ -273,6 +273,11 @@ parameters:
 		-
 			message: "#^Ternary operator condition is always true\\.$#"
 			count: 1
+			path: tests/TestCase/Controller/Component/LoginRecorderComponentTest.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
 			path: tests/TestCase/Controller/UsersControllerTest.php
 
 		-
@@ -284,6 +289,11 @@ parameters:
 			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isOffline\\(\\)\\.$#"
 			count: 2
 			path: tests/TestCase/Core/RequestDetectorsTest.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 2
+			path: tests/TestCase/Model/Table/AppTableTest.php
 
 		-
 			message: "#^Ternary operator condition is always true\\.$#"
