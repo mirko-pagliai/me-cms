@@ -266,7 +266,7 @@ class UsersController extends AppController
 
             $filename = $id . '.' . pathinfo($this->getRequest()->getData('file')['tmp_name'], PATHINFO_EXTENSION);
 
-            $uploaded = $this->Uploader->set($this->getRequest()->getData('file'))
+            $uploaded = $this->Uploader->setFile($this->getRequest()->getData('file'))
                 ->mimetype('image')
                 ->save(USER_PICTURES, $filename);
 
