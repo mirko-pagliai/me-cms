@@ -23,6 +23,7 @@ use MeTools\TestSuite\IntegrationTestTrait;
 /**
  * Abstract class for test controllers
  * @property \MeCms\Controller\AppController $_controller
+ * @property \Cake\Http\Response $_response
  */
 abstract class ControllerTestCase extends TestCase
 {

@@ -25,12 +25,6 @@ use MeCms\TestSuite\TestCase;
 abstract class ValidationTestCase extends TestCase
 {
     /**
-     * Table instance
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Cake\ORM\Table
-     */
-    protected $Table;
-
-    /**
      * If `true`, a mock instance of the table will be created
      * @var bool
      */

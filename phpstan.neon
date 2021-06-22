@@ -1,3 +1,6 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
     level: 6
 
@@ -22,31 +25,9 @@ parameters:
         - tests/test_app/
 
     ignoreErrors:
-        - '#^Call to an undefined method Psr\\Http\\Message\\ResponseInterface#'
-        - '#^Call to an undefined method Cake\\(Http\\ServerRequest::is\w+|Core\\PluginApplicationInterface::getPlugins)\(\)\.$#'
-        - '#^Static call to instance method Tools\\Exceptionist#'
-        - '#^(Negated boolean expression|(Ternary operator|If) condition|Result of (\|\||\&\&)|(Right|Left) side of &&) is always (false|true)\.$#'
         - '#^(Access|Call) to an undefined (method|property) ([\w\\]+\|)?PHPUnit\\Framework\\MockObject\\MockObject#'
         - '#^Property [\w\\]+\:\:\$\w+ \(MeCms\\Model\\Table\\\w+Table\) does not accept Cake\\ORM\\Table(\|null)?\.$#'
 
         -
-            message: '#^Parameter \#1 \$entities of method Cake\\ORM\\Table::saveMany\(\) expects#'
-            path: src/Command/Install/CreateGroupsCommand.php
-
-        -
-            message: "#^Cannot unset offset 'class' on array\\('aria\\-expanded' \\=\\> 'true'\\)\\.$#"
-            count: 1
-            path: src/View/Helper/MenuBuilderHelper.php
-
-        -
             message: '#^(Undefined variable: \$this|Variable \$\w+ might not be defined\.)$#'
             path: templates
-
-        -
-            message: '#^Call to function compact\(\) contains possibly undefined variable \$\w+\.$#'
-            path: templates
-
-        -
-            message: '#^Property [\w\\]+::\$_(err|in|out) \(Cake\\(Console\\ConsoleInput|TestSuite\\Stub\\ConsoleOutput)\) does not accept null\.$#'
-            path: tests/TestCase
-

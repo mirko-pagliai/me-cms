@@ -1,0 +1,297 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 2
+			path: src/Controller/Admin/BackupsController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isAction\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/Admin/PagesCategoriesController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isDelete\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/Admin/PagesCategoriesController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isAction\\(\\)\\.$#"
+			count: 3
+			path: src/Controller/Admin/PagesController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isDelete\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/Admin/PagesController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isAction\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/Admin/PostsCategoriesController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isDelete\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/Admin/PostsCategoriesController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isAction\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/Admin/PostsController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isDelete\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/Admin/PostsController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isEdit\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/Admin/PostsController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isEdit\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/Admin/PostsTagsController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isAction\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/Admin/SystemsController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isAction\\(\\)\\.$#"
+			count: 3
+			path: src/Controller/Admin/UsersController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isAction\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/AppController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isOffline\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/AppController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isSpammer\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/AppController.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: src/Controller/Component/LoginRecorderComponent.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isSpammer\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/SystemsController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isAction\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/UsersController.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isAction\\(\\)\\.$#"
+			count: 2
+			path: src/Core/request_detectors.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: src/Form/BackupForm.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Core\\\\PluginApplicationInterface\\:\\:getPlugins\\(\\)\\.$#"
+			count: 2
+			path: src/Plugin.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 2
+			path: src/TestSuite/CellTestCase.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 2
+			path: src/TestSuite/CellTestCase.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 2
+			path: src/TestSuite/ControllerTestCase.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: src/TestSuite/ControllerTestCase.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: src/TestSuite/ControllerTestCase.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 2
+			path: src/TestSuite/ControllerTestCase.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: src/TestSuite/EntityTestCase.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: src/TestSuite/EntityTestCase.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: src/TestSuite/EntityTestCase.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: src/TestSuite/TableTestCase.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: src/TestSuite/TableTestCase.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: src/TestSuite/TableTestCase.php
+
+		-
+			message: "#^Left side of && is always true\\.$#"
+			count: 1
+			path: src/TestSuite/TestCase.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: src/TestSuite/ValidationTestCase.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: src/TestSuite/ValidationTestCase.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: src/TestSuite/ValidationTestCase.php
+
+		-
+			message: "#^Ternary operator condition is always false\\.$#"
+			count: 1
+			path: src/Utility/StaticPage.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isUrl\\(\\)\\.$#"
+			count: 2
+			path: src/View/Cell/PagesWidgetsCell.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isUrl\\(\\)\\.$#"
+			count: 1
+			path: src/View/Cell/PostsTagsWidgetsCell.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isUrl\\(\\)\\.$#"
+			count: 3
+			path: src/View/Cell/PostsWidgetsCell.php
+
+		-
+			message: "#^Cannot unset offset 'class' on array\\('aria\\-expanded' \\=\\> 'true'\\)\\.$#"
+			count: 1
+			path: src/View/Helper/MenuBuilderHelper.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isUrl\\(\\)\\.$#"
+			count: 1
+			path: src/View/Helper/WidgetHelper.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isUrl\\(\\)\\.$#"
+			count: 1
+			path: src/View/View.php
+
+		-
+			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$page\\.$#"
+			count: 1
+			path: templates/Pages/view.php
+
+		-
+			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$post\\.$#"
+			count: 1
+			path: templates/Posts/view.php
+
+		-
+			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$page\\.$#"
+			count: 1
+			path: templates/StaticPages/cookies-policy-it.php
+
+		-
+			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$page\\.$#"
+			count: 1
+			path: templates/StaticPages/cookies-policy.php
+
+		-
+			message: "#^Property MeCms\\\\Test\\\\TestCase\\\\Command\\\\AddUserCommandTest\\:\\:\\$_in \\(Cake\\\\Console\\\\ConsoleInput\\) does not accept null\\.$#"
+			count: 5
+			path: tests/TestCase/Command/AddUserCommandTest.php
+
+		-
+			message: "#^Property MeCms\\\\Test\\\\TestCase\\\\Command\\\\Install\\\\CreateGroupsCommandTest\\:\\:\\$_err \\(Cake\\\\TestSuite\\\\Stub\\\\ConsoleOutput\\) does not accept null\\.$#"
+			count: 1
+			path: tests/TestCase/Command/Install/CreateGroupsCommandTest.php
+
+		-
+			message: "#^Property MeCms\\\\Test\\\\TestCase\\\\Command\\\\Install\\\\CreateGroupsCommandTest\\:\\:\\$_in \\(Cake\\\\Console\\\\ConsoleInput\\) does not accept null\\.$#"
+			count: 1
+			path: tests/TestCase/Command/Install/CreateGroupsCommandTest.php
+
+		-
+			message: "#^Property MeCms\\\\Test\\\\TestCase\\\\Command\\\\Install\\\\CreateSamplePostCommandTest\\:\\:\\$_err \\(Cake\\\\TestSuite\\\\Stub\\\\ConsoleOutput\\) does not accept null\\.$#"
+			count: 2
+			path: tests/TestCase/Command/Install/CreateSamplePostCommandTest.php
+
+		-
+			message: "#^Property MeCms\\\\Test\\\\TestCase\\\\Command\\\\Install\\\\CreateSamplePostCommandTest\\:\\:\\$_out \\(Cake\\\\TestSuite\\\\Stub\\\\ConsoleOutput\\) does not accept null\\.$#"
+			count: 2
+			path: tests/TestCase/Command/Install/CreateSamplePostCommandTest.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: tests/TestCase/Controller/UsersControllerTest.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isAdmin\\(\\)\\.$#"
+			count: 2
+			path: tests/TestCase/Core/RequestDetectorsTest.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isOffline\\(\\)\\.$#"
+			count: 2
+			path: tests/TestCase/Core/RequestDetectorsTest.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: tests/TestCase/Utility/Sitemap/SitemapBuilderTest.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: tests/TestCase/View/Cell/PostsTagsWidgetsCellTest.php
+
