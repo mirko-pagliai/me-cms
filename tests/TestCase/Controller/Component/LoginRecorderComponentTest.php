@@ -34,14 +34,15 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Internal method to get a `LoginRecorder` instance
      * @param array|null $methods Methods you want to mock
      * @param array $userAgent Data returned by the `getUserAgent()` method
-     * @return \MeCms\Controller\Component\LoginRecorderComponent|\PHPUnit\Framework\MockObject\MockObject
+     * @return \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockForLoginRecorder(?array $methods = ['getUserAgent'], array $userAgent = [])
     {
-        $component = $this->getMockForComponent(LoginRecorderComponent::class, $methods);
+        /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $Component */
+        $Component = $this->getMockForComponent(LoginRecorderComponent::class, $methods);
 
         if (is_array($methods) && in_array('getUserAgent', $methods)) {
-            $component->method('getUserAgent')
+            $Component->method('getUserAgent')
                 ->will($this->returnValue($userAgent ?: [
                     'platform' => 'Linux',
                     'browser' => 'Chrome',
@@ -49,9 +50,9 @@ class LoginRecorderComponentTest extends ComponentTestCase
                 ]));
         }
 
-        $component->setConfig('user', 1);
+        $Component->setConfig('user', 1);
 
-        return $component;
+        return $Component;
     }
 
     /**

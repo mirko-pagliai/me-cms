@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: src/Command/Install/CreateSamplePostCommand.php
+
+		-
 			message: "#^Ternary operator condition is always true\\.$#"
 			count: 2
 			path: src/Controller/Admin/BackupsController.php
@@ -104,6 +109,11 @@ parameters:
 			message: "#^Ternary operator condition is always true\\.$#"
 			count: 1
 			path: src/Form/BackupForm.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: src/Model/Table/PostsTable.php
 
 		-
 			message: "#^Call to an undefined method Cake\\\\Core\\\\PluginApplicationInterface\\:\\:getPlugins\\(\\)\\.$#"
@@ -281,19 +291,59 @@ parameters:
 			path: tests/TestCase/Controller/UsersControllerTest.php
 
 		-
-			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isAdmin\\(\\)\\.$#"
-			count: 2
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest&PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\:\\:isAdd\\(\\)\\.$#"
+			count: 1
 			path: tests/TestCase/Core/RequestDetectorsTest.php
 
 		-
-			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest\\:\\:isOffline\\(\\)\\.$#"
-			count: 2
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest&PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\:\\:isAdmin\\(\\)\\.$#"
+			count: 3
+			path: tests/TestCase/Core/RequestDetectorsTest.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest&PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\:\\:isDelete\\(\\)\\.$#"
+			count: 1
+			path: tests/TestCase/Core/RequestDetectorsTest.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest&PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\:\\:isEdit\\(\\)\\.$#"
+			count: 1
+			path: tests/TestCase/Core/RequestDetectorsTest.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest&PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\:\\:isIndex\\(\\)\\.$#"
+			count: 1
+			path: tests/TestCase/Core/RequestDetectorsTest.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest&PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\:\\:isOffline\\(\\)\\.$#"
+			count: 4
+			path: tests/TestCase/Core/RequestDetectorsTest.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\Http\\\\ServerRequest&PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\:\\:isView\\(\\)\\.$#"
+			count: 1
 			path: tests/TestCase/Core/RequestDetectorsTest.php
 
 		-
 			message: "#^Ternary operator condition is always true\\.$#"
 			count: 2
 			path: tests/TestCase/Model/Table/AppTableTest.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: tests/TestCase/Model/Table/Traits/GetPreviewsFromTextTraitTest.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: tests/TestCase/Model/Table/Traits/IsOwnedByTraitTest.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: tests/TestCase/Model/Table/Traits/NextToBePublishedTraitTest.php
 
 		-
 			message: "#^Ternary operator condition is always true\\.$#"

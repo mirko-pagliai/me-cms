@@ -23,7 +23,7 @@ $routes->scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
     $routes->setExtensions(['rss']);
 
     //Requires other routes
-    foreach (glob(dirname(__FILE__) . DS . 'routes' . DS . '*.php') as $filename) {
+    foreach (glob(dirname(__FILE__) . DS . 'routes' . DS . '*.php') ?: [] as $filename) {
         require $filename;
     }
 

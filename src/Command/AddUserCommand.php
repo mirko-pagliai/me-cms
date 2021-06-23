@@ -92,7 +92,7 @@ class AddUserCommand extends Command
         }
 
         //Checks the group IDs
-        if (!array_key_exists($user['group_id'], $groups)) {
+        if (!array_key_exists((string)$user['group_id'], $groups)) {
             return $io->error(__d('me_cms', 'Invalid group ID'));
         }
 

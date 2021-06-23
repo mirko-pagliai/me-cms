@@ -87,7 +87,11 @@ class MenuBuilderHelper extends Helper
         //Calls dynamically each method
         $menus = [];
         foreach ($this->getMethods($plugin) as $method) {
-            $args = call_user_func([$helper, $method]);
+            $callable = [$helper, $method];
+            if (!is_callable($callable)) {
+                continue;
+            }
+            $args = call_user_func($callable);
             if (!$args) {
                 continue;
             }
@@ -151,7 +155,7 @@ class MenuBuilderHelper extends Helper
      */
     public function renderAsDropdown(string $plugin, array $titleOptions = []): array
     {
-        return array_map(function (array $menu) use ($titleOptions): string {
+        return array_map(function (array $menu) use ($titleOptions): ?string {
             return $this->Dropdown->menu(
                 $menu['title'],
                 $this->buildLinks($menu['links'], ['class' => 'dropdown-item']),

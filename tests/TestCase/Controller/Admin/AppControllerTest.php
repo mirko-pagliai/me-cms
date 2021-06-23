@@ -28,7 +28,7 @@ class AppControllerTest extends ControllerTestCase
 {
     /**
      * Controller instance
-     * @var \MeCms\Controller\Admin\AppController|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Controller\Admin\AppController&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Controller;
 

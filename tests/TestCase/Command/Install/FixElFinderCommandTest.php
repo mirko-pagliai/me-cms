@@ -53,8 +53,8 @@ class FixElFinderCommandTest extends TestCase
         }
         $this->assertErrorEmpty();
 
-        $this->assertStringContainsString('\'path\' => \'' . UPLOADED . '\'', file_get_contents($expectedFiles[0]));
-        $this->assertStringContainsString('getFileCallback', file_get_contents($expectedFiles[1]));
+        $this->assertStringContainsString('\'path\' => \'' . UPLOADED . '\'', file_get_contents($expectedFiles[0]) ?: '');
+        $this->assertStringContainsString('getFileCallback', file_get_contents($expectedFiles[1]) ?: '');
     }
 
     /**

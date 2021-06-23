@@ -55,7 +55,7 @@ class LogsController extends AppController
     {
         $log = $this->getPath($filename, $serialized);
         Exceptionist::isReadable($log);
-        $log = file_get_contents($log);
+        $log = file_get_contents($log) ?: '';
 
         return $serialized ? @unserialize($log) : trim($log);
     }

@@ -56,7 +56,7 @@ class FixElFinderCommand extends Command
         }
 
         $origin = Plugin::path('MeCms', 'config' . DS . 'elfinder' . DS . 'connector.minimal.php');
-        $content = str_replace(['{{UPLOADS_PATH}}', '{{UPLOADS_URL}}'], [(new Filesystem())->addSlashTerm(UPLOADED), Router::url('/files', true)], file_get_contents($origin));
+        $content = str_replace(['{{UPLOADS_PATH}}', '{{UPLOADS_URL}}'], [(new Filesystem())->addSlashTerm(UPLOADED), Router::url('/files', true)], file_get_contents($origin) ?: '');
         $io->createFile($target, $content);
     }
 
@@ -76,7 +76,7 @@ class FixElFinderCommand extends Command
         }
 
         $origin = Plugin::path('MeCms', 'config' . DS . 'elfinder' . DS . 'elfinder-cke.html');
-        $io->createFile($target, file_get_contents($origin));
+        $io->createFile($target, file_get_contents($origin) ?: '');
     }
 
     /**

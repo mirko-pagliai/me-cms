@@ -133,11 +133,11 @@ class StaticPageTest extends TestCase
 
         $originalValue = ini_set('intl.default_locale', 'it_IT');
         $this->assertEquals(sprintf('%s-it', $expected), StaticPage::get('cookies-policy'));
-        ini_set('intl.default_locale', $originalValue);
+        ini_set('intl.default_locale', (string)$originalValue);
 
         $originalValue = ini_set('intl.default_locale', 'it');
         $this->assertEquals(sprintf('%s-it', $expected), StaticPage::get('cookies-policy'));
-        ini_set('intl.default_locale', $originalValue);
+        ini_set('intl.default_locale', (string)$originalValue);
     }
 
     /**

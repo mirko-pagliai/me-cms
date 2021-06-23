@@ -36,7 +36,7 @@ use Tools\Exceptionist;
 /**
  * Posts model
  * @property \Cake\ORM\Association\BelongsTo $Users
- * @property \Cake\ORM\Association\BelongsToMany|\MeCms\Model\Table\TagsTable $Tags
+ * @property \Cake\ORM\Association\BelongsToMany&\MeCms\Model\Table\TagsTable $Tags
  * @method \MeCms\Model\Entity\Post get($primaryKey, $options = [])
  * @method \MeCms\Model\Entity\Post newEntity($data = null, array $options = [])
  * @method \MeCms\Model\Entity\Post[] newEntities(array $data, array $options = [])
@@ -71,7 +71,7 @@ class PostsTable extends PostsAndPagesTables
         parent::beforeMarshal($event, $data, $options);
 
         if (!empty($data['tags_as_string'])) {
-            $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']));
+            $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']) ?: []);
 
             //Gets existing tags
             $existingTags = $this->Tags->getList()->toArray();
@@ -150,6 +150,7 @@ class PostsTable extends PostsAndPagesTables
                 //It reverses the tags order, because the tags less popular have
                 //  less chance to find a related post
                 foreach (array_reverse($tags) as $tag) {
+                    /** @var \MeCms\Model\Entity\Post $post */
                     $post = $this->queryForRelated($tag->get('id'), $images)
                         ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude])
                         ->first();

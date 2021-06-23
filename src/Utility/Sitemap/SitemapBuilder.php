@@ -57,7 +57,10 @@ class SitemapBuilder
         foreach (Plugin::all(['mecms_core' => false]) as $plugin) {
             //Calls all executable methods for the `Sitemap` class of a plugin
             foreach (self::getMethods($plugin) as $method) {
-                $url = array_merge($url, (array)call_user_func([$method['class'], $method['name']]));
+                $callable = [$method['class'], $method['name']];
+                if (is_callable($callable)) {
+                    $url = array_merge($url, (array)call_user_func($callable));
+                }
             }
         }
 
@@ -66,6 +69,6 @@ class SitemapBuilder
             'url' => $url,
         ]], ['pretty' => true]);
 
-        return trim($xml->asXML());
+        return trim($xml->asXML() ?: '');
     }
 }

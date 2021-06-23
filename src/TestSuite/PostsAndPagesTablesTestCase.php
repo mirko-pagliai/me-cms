@@ -87,24 +87,25 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      */
     public function testEventMethods(): void
     {
-        [$event, $entity, $options] = [new Event('myEvent'), $this->Table->newEmptyEntity(), new ArrayObject()];
+        [$event, $entity] = [new Event('myEvent'), $this->Table->newEmptyEntity(), new ArrayObject()];
 
+        /** @var \MeCms\ORM\PostsAndPagesTables&\PHPUnit\Framework\MockObject\MockObject $Table */
         $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'getPreviewSize', 'setNextToBePublished']);
         $Table->expects($this->exactly(2))->method('clearCache');
         $Table->expects($this->exactly(2))->method('setNextToBePublished');
-        $Table->afterDelete($event, $entity, $options);
-        $Table->afterSave($event, $entity, $options);
+        $Table->afterDelete($event, $entity);
+        $Table->afterSave($event, $entity);
 
         $Table->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos
         $entity = $Table->newEntity(self::$example);
-        $Table->beforeSave($event, $entity, $options);
+        $Table->beforeSave($event, $entity);
         $this->assertTrue($entity->get('preview')->isEmpty());
 
         //Tries with a text with an image
         $entity = $Table->newEntity(['text' => '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg\' />'] + self::$example);
-        $Table->beforeSave($event, $entity, $options);
+        $Table->beforeSave($event, $entity);
         $this->assertCount(1, $entity->get('preview'));
         $this->assertContainsOnlyInstancesOf(Entity::class, $entity->get('preview'));
         $this->assertMatchesRegularExpression('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $entity->get('preview')->first()->get('url'));

@@ -27,7 +27,7 @@ abstract class CellTestCase extends TestCase
 {
     /**
      * Entity instance
-     * @var \MeCms\View\Helper\WidgetHelper|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\View\Helper\WidgetHelper&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Widget;
 

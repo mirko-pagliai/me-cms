@@ -25,7 +25,7 @@ abstract class EntityTestCase extends TestCase
 {
     /**
      * Entity instance
-     * @var \Cake\ORM\Entity|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Cake\ORM\Entity&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Entity;
 
@@ -61,7 +61,9 @@ abstract class EntityTestCase extends TestCase
         parent::setUp();
 
         if (!$this->Entity && $this->autoInitializeClass) {
-            $this->Entity = $this->getMockBuilder($this->getOriginClassNameOrFail($this))
+            /** @var class-string<\Cake\ORM\Entity> $className */
+            $className = $this->getOriginClassNameOrFail($this);
+            $this->Entity = $this->getMockBuilder($className)
                 ->setMethods(null)
                 ->getMock();
         }

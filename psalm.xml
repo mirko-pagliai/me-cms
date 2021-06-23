@@ -42,6 +42,12 @@
             </errorLevel>
         </InvalidArgument>
 
+        <InvalidArrayOffset>
+            <errorLevel type="suppress">
+                <file name="src/View/Helper/WidgetHelper.php" />
+            </errorLevel>
+        </InvalidArrayOffset>
+
         <InvalidPassByReference>
             <errorLevel type="suppress">
                 <file name="templates/element/admin/sidebar.php" />
@@ -59,14 +65,6 @@
                 <directory name="templates" />
             </errorLevel>
         </InvalidScope>
-
-        <InvalidArgument>
-            <errorLevel type="suppress">
-                <directory name="src/Controller" />
-                <directory name="tests/TestCase/Controller" />
-                <directory name="tests/TestCase/Model/Table" />
-            </errorLevel>
-        </InvalidArgument>
 
         <LessSpecificImplementedReturnType>
             <errorLevel type="suppress">
@@ -100,6 +98,12 @@
             </errorLevel>
         </NullableReturnStatement>
 
+        <RedundantCast>
+            <errorLevel type="suppress">
+                <file name="src/Controller/Traits/GetStartAndEndDateTrait.php" />
+            </errorLevel>
+        </RedundantCast>
+
         <RedundantCondition>
             <errorLevel type="suppress">
                 <file name="src/Controller/Traits/GetStartAndEndDateTrait.php" />
@@ -113,6 +117,18 @@
                 <file name="templates/Posts/index_by_date.php" />
             </errorLevel>
         </TypeDoesNotContainType>
+
+        <TooManyTemplateParams>
+            <errorLevel type="suppress">
+                <file name="src/Controller/Admin/BackupsController.php" />
+            </errorLevel>
+        </TooManyTemplateParams>
+
+        <UndefinedPropertyAssignment>
+            <errorLevel type="suppress">
+                <directory name="tests/TestCase/Command" />
+            </errorLevel>
+        </UndefinedPropertyAssignment>
 
         <UndefinedPropertyFetch>
             <errorLevel type="suppress">

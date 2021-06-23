@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -25,7 +24,7 @@ use MeCms\TestSuite\TestCase;
 class NextToBePublishedTraitTest extends TestCase
 {
     /**
-     * @var \Cake\ORM\Table|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Posts;
 
@@ -47,7 +46,7 @@ class NextToBePublishedTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = TableRegistry::getTableLocator()->get('MeCms.Posts');
+        $this->Posts = $this->Posts ?: $this->getTable('MeCms.Posts');
     }
 
     /**

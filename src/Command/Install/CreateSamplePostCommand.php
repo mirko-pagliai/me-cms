@@ -65,6 +65,7 @@ class CreateSamplePostCommand extends Command
             return null;
         }
 
+        /** @var \MeCms\Model\Entity\User $user */
         $user = $this->Users->find('all', ['fields' => ['id']])->first();
         if (!$user) {
             return $io->error(__d('me_cms', 'You must first create a user. Run the `{0}` command', 'bin/cake me_cms.create_admin'));

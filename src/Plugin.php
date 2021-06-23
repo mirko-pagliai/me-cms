@@ -116,14 +116,14 @@ class Plugin extends BasePlugin
 
     /**
      * Adds middleware for the plugin
-     * @param \Cake\Http\MiddlewareQueue $middleware The middleware queue to update
+     * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to update
      * @return \Cake\Http\MiddlewareQueue
      * @since 2.26.4
      */
-    public function middleware(MiddlewareQueue $middleware): MiddlewareQueue
+    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
         $key = Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
-        return $middleware->add(new EncryptedCookieMiddleware(['login'], $key));
+        return $middlewareQueue->add(new EncryptedCookieMiddleware(['login'], $key));
     }
 }

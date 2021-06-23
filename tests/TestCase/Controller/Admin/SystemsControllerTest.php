@@ -127,6 +127,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
         $this->assertStringEndsWith('elfinder/elfinder.html', $this->viewVariable('explorer'));
 
+        /** @var \MeCms\Controller\Admin\SystemsController&\PHPUnit\Framework\MockObject\MockObject $Controller */
         $Controller = $this->getMockForController(SystemsController::class, ['elFinderExists']);
         $Controller->method('elFinderExists')->willReturn(false);
         $this->_response = $Controller->browser();

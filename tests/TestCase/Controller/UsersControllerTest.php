@@ -36,7 +36,7 @@ class UsersControllerTest extends ControllerTestCase
     protected $Table;
 
     /**
-     * @var \Cake\Controller\Component|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Tokens\Controller\Component\TokenComponent&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Token;
 
@@ -70,12 +70,12 @@ class UsersControllerTest extends ControllerTestCase
      * Asserts cookie values which are encrypted by the CookieComponent
      * @param mixed $expected The expected contents
      * @param string $name The cookie name
-     * @param string|bool $encrypt Encryption mode to use
+     * @param string $encrypt Encryption mode to use
      * @param string|null $key Encryption key used
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    public function assertCookieEncrypted($expected, $name, $encrypt = 'aes', $key = null, $message = ''): void
+    public function assertCookieEncrypted($expected, string $name, string $encrypt = 'aes', ?string $key = null, string $message = ''): void
     {
         $key = $key ?: Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
@@ -107,9 +107,10 @@ class UsersControllerTest extends ControllerTestCase
     {
         parent::controllerSpy($event, $controller);
 
-        /** @phpstan-ignore-next-line */
-        $this->_controller->LoginRecorder = $this->getMockForComponent(LoginRecorderComponent::class);
-        $this->_controller->LoginRecorder->method('setConfig')->will($this->returnSelf());
+        /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $LoginRecorder */
+        $LoginRecorder = $this->getMockForComponent(LoginRecorderComponent::class);
+        $LoginRecorder->method('setConfig')->will($this->returnSelf());
+        $this->_controller->LoginRecorder = $LoginRecorder;
     }
 
     /**

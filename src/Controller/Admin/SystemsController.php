@@ -101,7 +101,7 @@ class SystemsController extends AppController
                 'html_input' => 'strip',
                 'allow_unsafe_links' => false,
             ]);
-            $changelog = $converter->convertToHtml(file_get_contents($file));
+            $changelog = $converter->convertToHtml(file_get_contents($file) ?: '');
 
             $this->set(compact('changelog'));
         }

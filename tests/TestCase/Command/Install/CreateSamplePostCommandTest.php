@@ -75,7 +75,7 @@ class CreateSamplePostCommandTest extends TestCase
      */
     public function testExecuteOnFailure(): void
     {
-        /** @var \MeCms\Model\Table\PostsTable|\PHPUnit\Framework\MockObject\MockObject $Posts */
+        /** @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject $Posts */
         $Posts = $this->getMockForModel('MeCms.Posts', ['save']);
         $Posts->method('save')->will($this->returnValue(false));
         $Posts->deleteAll(['id is NOT' => null]);

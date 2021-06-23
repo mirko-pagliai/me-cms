@@ -80,24 +80,29 @@ class AppTableTest extends TableTestCase
             'text' => 'Example text',
         ];
 
+        /** @var \MeCms\Model\Table\AppTable&\PHPUnit\Framework\MockObject\MockObject $Table */
         $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
         $Table->expects($this->atLeast(2))->method('clearCache');
 
+        /** @var \Cake\Datasource\EntityInterface $entity */
         $entity = $Table->save($Table->newEntity($example));
         $this->assertNotEmpty($entity->get('created'));
         $Table->delete($entity);
 
         $now = new Time();
+        /** @var \Cake\Datasource\EntityInterface $entity */
         $entity = $Table->save($Table->newEntity(['created' => $now] + $example));
         $this->assertEquals($now, $entity->get('created'));
         $Table->delete($entity);
 
         foreach (['2017-03-14 20:19', '2017-03-14 20:19:00'] as $created) {
+            /** @var \Cake\Datasource\EntityInterface $entity */
             $entity = $Table->save($Table->newEntity(compact('created') + $example));
             $this->assertEquals('2017-03-14 20:19:00', $entity->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'));
             $Table->delete($entity);
         }
 
+        /** @var \Cake\Datasource\EntityInterface $entity */
         $entity = $Table->save($Table->newEntity(['created' => null] + $example));
         $this->assertInstanceOf(Time::class, $entity->get('created'));
         $Table->delete($entity);

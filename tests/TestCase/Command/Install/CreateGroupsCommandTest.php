@@ -94,11 +94,11 @@ class CreateGroupsCommandTest extends TestCase
     {
         $this->skipIf(IS_WIN);
 
-        $this->Command->UsersGroups = $this->getMockBuilder(Table::class)
+        /** @var \MeCms\Model\Table\UsersGroupsTable&\PHPUnit\Framework\MockObject\MockObject $UsersGroups */
+        $UsersGroups = $this->getMockBuilder(Table::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-        $this->Command->UsersGroups->method('find')->will($this->returnCallback(function () {
+        $UsersGroups->method('find')->will($this->returnCallback(function () {
             $query = $this->getMockBuilder(Query::class)
                 ->disableOriginalConstructor()
                 ->setMethods(array_merge(get_class_methods(Query::class), ['isEmpty']))
@@ -107,6 +107,7 @@ class CreateGroupsCommandTest extends TestCase
 
             return $query;
         }));
+        $this->Command->UsersGroups = $UsersGroups;
 
         $driver = $this->getMockBuilder($driver)->getMock();
         $driver->method('enabled')->will($this->returnValue(true));

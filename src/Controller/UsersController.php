@@ -366,7 +366,7 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
 
             $user->set('group_id', getConfigOrFail('users.default_group'))
-                ->set('active', (bool)!getConfig('users.activation'));
+                ->set('active', !getConfig('users.activation'));
 
             //Checks for reCAPTCHA, if requested
             $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');

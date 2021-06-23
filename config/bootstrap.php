@@ -61,7 +61,7 @@ if (is_readable(CONFIG . 'me_cms.php')) {
 
 //Adds all cache configurations
 Configure::load('MeCms.cache');
-foreach (Configure::consume('Cache') as $key => $config) {
+foreach ((array)Configure::consume('Cache') as $key => $config) {
     if (!Cache::getConfig($key)) {
         Cache::setConfig($key, $config);
     }

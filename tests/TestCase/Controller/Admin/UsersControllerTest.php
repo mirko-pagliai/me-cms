@@ -358,6 +358,7 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testLastLogin(): void
     {
+        /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $LoginRecorder */
         $LoginRecorder = $this->getMockForComponent(LoginRecorderComponent::class, ['getController', 'getUserAgent']);
         $LoginRecorder->method('getController')->will($this->returnValue($this->Controller));
         $LoginRecorder->method('getUserAgent')
