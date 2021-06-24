@@ -202,7 +202,7 @@ abstract class AppTable extends Table
 
     /**
      * Creates a new Query instance for a table
-     * @return \MeCms\ORM\Query
+     * @return \Cake\ORM\Query
      * @since 2.27.1
      */
     public function query(): CakeQuery

@@ -17,11 +17,13 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use Cake\Event\Event;
+use Cake\Http\Response;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\IntegrationTestTrait;
 
 /**
  * Abstract class for test controllers
+ * @method \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject getMockForController(string $className, ?array $methods = [], ?string $alias = null)
  * @property \MeCms\Controller\AppController $_controller
  * @property \Cake\Http\Response $_response
  */
@@ -31,7 +33,7 @@ abstract class ControllerTestCase extends TestCase
 
     /**
      * Controller instance
-     * @var \MeCms\Controller\AppController|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Controller;
 
@@ -117,6 +119,7 @@ abstract class ControllerTestCase extends TestCase
 
         //Tries to retrieve controller and table from the class name
         if (!$this->Controller && $this->autoInitializeClass) {
+            /** @var class-string<\MeCms\Controller\AppController> $originClassName */
             $originClassName = $this->getOriginClassNameOrFail($this);
             $alias = $this->getAlias($originClassName);
             $plugin = $this->getPluginName($this);
@@ -198,7 +201,7 @@ abstract class ControllerTestCase extends TestCase
         //If the user has been reported as a spammer this makes a redirect
         $controller = $this->getMockForController($this->getOriginClassName($this), ['isSpammer']);
         $controller->method('isSpammer')->willReturn(true);
-        $this->_response = $controller->beforeFilter(new Event('myEvent'));
+        $this->_response = $controller->beforeFilter(new Event('myEvent')) ?: new Response();
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
     }
 

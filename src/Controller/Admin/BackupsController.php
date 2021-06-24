@@ -122,7 +122,11 @@ class BackupsController extends AppController
     {
         $this->getRequest()->allowMethod(['post', 'delete']);
         $filename = $filename ? $this->getFilename($filename) : null;
-        call_user_func([$this->BackupManager, $filename ? 'delete' : 'deleteAll'], $filename);
+        if ($filename) {
+            $this->BackupManager->delete($filename);
+        } else {
+            $this->BackupManager->deleteAll();
+        }
         $this->Flash->success(I18N_OPERATION_OK);
 
         return $this->redirectMatchingReferer(['action' => 'index']);
