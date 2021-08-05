@@ -65,7 +65,7 @@ $this->append('actions', $this->Html->button(
                     <?php
                     if ($group->get('user_count')) {
                         echo $this->Html->link(
-                            $group->get('user_count'),
+                            (string)$group->get('user_count'),
                             ['controller' => 'Users', 'action' => 'index', '?' => ['group' => $group->get('id')]],
                             ['title' => I18N_BELONG_ELEMENT]
                         );

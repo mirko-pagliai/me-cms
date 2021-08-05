@@ -65,6 +65,7 @@ class UsersControllerTest extends ControllerTestCase
 
         foreach (['index', 'add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [2]);
+            $this->assertResponseOkAndNotEmpty();
             $this->assertNotEmpty($this->viewVariable('groups'));
         }
 
