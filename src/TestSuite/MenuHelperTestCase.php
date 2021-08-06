@@ -42,6 +42,7 @@ abstract class MenuHelperTestCase extends HelperTestCase
      */
     public function setUp(): void
     {
+        /** @var class-string<\Cake\View\Helper> $className */
         $className = $this->getOriginClassNameOrFail($this);
         $methods = get_child_methods($className);
 

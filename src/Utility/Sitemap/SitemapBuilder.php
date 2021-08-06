@@ -69,6 +69,7 @@ class SitemapBuilder
             'url' => $url,
         ]], ['pretty' => true]);
 
+        /** @phpstan-ignore-next-line */
         return trim($xml->asXML() ?: '');
     }
 }

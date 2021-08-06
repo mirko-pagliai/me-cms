@@ -17,7 +17,6 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\ORM\Association\BelongsTo;
 use MeCms\Controller\PostsController;
@@ -74,7 +73,7 @@ class AppControllerTest extends ControllerTestCase
         //If the site is offline this makes a redirect
         Configure::write('MeCms.default.offline', true);
         $this->Controller->getRequest()->clearDetectorCache();
-        $this->_response = $this->Controller->beforeFilter(new Event('myEvent')) ?: new Response();
+        $this->get('/');
         $this->assertRedirect(['_name' => 'offline']);
     }
 

@@ -2,7 +2,7 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
-    level: 6
+    level: 7
 
     paths:
         - config
@@ -23,8 +23,3 @@ parameters:
         - config/Migrations/
         - config/elfinder/
         - tests/test_app/
-
-    ignoreErrors:
-        -
-            message: '#^(Undefined variable: \$this|Variable \$\w+ might not be defined\.)$#'
-            path: templates

@@ -201,7 +201,9 @@ abstract class ControllerTestCase extends TestCase
         //If the user has been reported as a spammer this makes a redirect
         $controller = $this->getMockForController($this->getOriginClassName($this), ['isSpammer']);
         $controller->method('isSpammer')->willReturn(true);
-        $this->_response = $controller->beforeFilter(new Event('myEvent')) ?: new Response();
+        /** @var \Cake\Http\Response $response */
+        $response = $controller->beforeFilter(new Event('myEvent'));
+        $this->_response = $response;
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
     }
 

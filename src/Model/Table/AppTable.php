@@ -26,6 +26,7 @@ use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\Table;
 use Exception;
 use MeCms\ORM\Query;
+use Tools\Exceptionist;
 
 /**
  * Application table class
@@ -187,7 +188,7 @@ abstract class AppTable extends Table
     public function getList(): CakeQuery
     {
         return $this->find('list')
-            ->orderAsc($this->getDisplayField())
+            ->orderAsc(Exceptionist::isString($this->getDisplayField()))
             ->cache($this->getTable() . '_list');
     }
 
