@@ -117,7 +117,6 @@ class PostsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
-//        dd($this->_controller->getRequest());
         $this->assertNotEmpty($this->_controller->getPaging()['Posts']);
 
         //Tries with various possible dates
@@ -190,6 +189,10 @@ class PostsControllerTest extends ControllerTestCase
         $this->get($url + ['?' => ['p' => 'a']]);
         $this->assertRedirect($url);
         $this->assertFlashMessage('You have to search at least a word of 4 characters');
+
+        //Pattern is an array
+        $this->get($url + ['?' => ['p' => ['a', 'b']]]);
+        $this->assertResponseFailure();
 
         $this->session(['last_search' => ['id' => md5((string)time()), 'time' => time()]]);
         $this->get($url + ['?' => ['p' => $pattern]]);

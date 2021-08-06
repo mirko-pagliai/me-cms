@@ -5,6 +5,8 @@
     keys are missing;
 * added `CreateSamplePostCommand`, this creates a sample post during installation;
 * fixed the `MenuBuilderHelper` and the admin sidebar, menus are now better displayed;
+* fixed bug for `Admin/SystemsController::changelogs()` and `PostsController::search()`
+    when using invalid GET parameters;
 * a major improvement of the descriptions, thanks to `phpstan`;
 * updated for `php-tools` 1.5.1, `me-tools` 2.20.1 and `phpuseragentparser` 1.
 

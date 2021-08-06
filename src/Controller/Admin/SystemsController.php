@@ -23,6 +23,7 @@ use MeCms\Controller\Admin\AppController;
 use MeCms\Core\Plugin;
 use Symfony\Component\Finder\Finder;
 use Thumber\Cake\Utility\ThumbManager;
+use Tools\Exceptionist;
 use Tools\Filesystem;
 
 /**
@@ -96,7 +97,9 @@ class SystemsController extends AppController
 
         //If a changelog file has been specified
         if ($this->getRequest()->getQuery('file') && $files) {
-            $file = $Filesystem->makePathAbsolute($files[$this->getRequest()->getQuery('file')], ROOT);
+            Exceptionist::arrayKeyExists($this->getRequest()->getQuery('file'), $files);
+            $file = $files[$this->getRequest()->getQuery('file')];
+            $file = $Filesystem->makePathAbsolute($file, ROOT);
             $converter = new CommonMarkConverter([
                 'html_input' => 'strip',
                 'allow_unsafe_links' => false,

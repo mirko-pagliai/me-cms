@@ -156,6 +156,12 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'changelogs.php');
         $this->assertNotEmpty($this->viewVariable('changelog'));
         $this->assertTrue(is_html($this->viewVariable('changelog')));
+
+        //With bad values
+        foreach (['noExistingFile', ['arrayValue']] as $file) {
+            $this->get($url + ['?' => compact('file')]);
+            $this->assertResponseFailure();
+        }
     }
 
     /**

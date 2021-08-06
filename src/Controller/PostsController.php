@@ -215,7 +215,7 @@ class PostsController extends AppController
      */
     public function search()
     {
-        $pattern = $this->getRequest()->getQuery('p');
+        $pattern = Exceptionist::isString($this->getRequest()->getQuery('p') ?: '');
         $posts = false;
 
         //Checks if the pattern is at least 4 characters long
