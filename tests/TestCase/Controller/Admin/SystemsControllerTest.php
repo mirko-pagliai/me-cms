@@ -157,11 +157,9 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertNotEmpty($this->viewVariable('changelog'));
         $this->assertTrue(is_html($this->viewVariable('changelog')));
 
-        //With bad values
-        foreach (['noExistingFile', ['arrayValue']] as $file) {
-            $this->get($url + ['?' => compact('file')]);
-            $this->assertResponseFailure();
-        }
+        //With a no existing file
+        $this->get($url + ['?' => ['file' => 'noExistingFile']]);
+        $this->assertResponseFailure();
     }
 
     /**

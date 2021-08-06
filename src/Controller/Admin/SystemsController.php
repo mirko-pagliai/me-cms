@@ -96,15 +96,15 @@ class SystemsController extends AppController
         }
 
         //If a changelog file has been specified
-        if ($this->getRequest()->getQuery('file') && $files) {
-            Exceptionist::arrayKeyExists($this->getRequest()->getQuery('file'), $files);
-            $file = $files[$this->getRequest()->getQuery('file')];
-            $file = $Filesystem->makePathAbsolute($file, ROOT);
+        $file = $this->getRequest()->getQuery('file');
+        if ($file && is_string($file) && $files) {
+            Exceptionist::arrayKeyExists($file, $files);
+            $filename = $Filesystem->makePathAbsolute($files[$file], ROOT);
             $converter = new CommonMarkConverter([
                 'html_input' => 'strip',
                 'allow_unsafe_links' => false,
             ]);
-            $changelog = $converter->convertToHtml(file_get_contents($file) ?: '');
+            $changelog = $converter->convertToHtml(file_get_contents($filename) ?: '');
 
             $this->set(compact('changelog'));
         }
