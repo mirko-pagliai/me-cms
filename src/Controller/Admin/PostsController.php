@@ -47,7 +47,7 @@ class PostsController extends AppController
         }
 
         [$categoriesMethod, $usersMethod] = ['getList', 'getList'];
-        if ($this->getRequest()->isAction(['add', 'edit'])) {
+        if ($this->getRequest()->is('action', ['add', 'edit'])) {
             [$categoriesMethod, $usersMethod] = ['getTreeList', 'getActiveList'];
 
             //Only admins and managers can add and edit posts on behalf of other users
@@ -89,14 +89,14 @@ class PostsController extends AppController
         }
 
         //Users can edit only their own post
-        if ($this->getRequest()->isEdit()) {
+        if ($this->getRequest()->is('edit')) {
             [$postId, $userId] = [$this->getRequest()->getParam('pass.0'), $this->Auth->user('id')];
 
             return $postId && $userId ? $this->Posts->isOwnedBy((int)$postId, $userId) : false;
         }
 
         //Only admins and managers can delete posts
-        return !$this->getRequest()->isDelete();
+        return !$this->getRequest()->is('delete');
     }
 
     /**

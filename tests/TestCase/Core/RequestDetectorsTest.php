@@ -61,12 +61,6 @@ class RequestDetectorsTest extends TestCase
      */
     public function testIsActionName(): void
     {
-        $this->assertTrue($this->Request->isAdd());
-        $this->assertFalse($this->Request->isDelete());
-        $this->assertFalse($this->Request->isEdit());
-        $this->assertFalse($this->Request->isIndex());
-        $this->assertFalse($this->Request->isView());
-
         foreach (['delete', 'edit', 'index', 'view'] as $action) {
             $this->assertFalse($this->Request->is($action));
         }
@@ -82,12 +76,8 @@ class RequestDetectorsTest extends TestCase
      */
     public function testIsAdmin(): void
     {
-        $this->assertFalse($this->Request->isAdmin());
         $this->assertFalse($this->Request->is('admin'));
-
-        $request = $this->getMockForRequest()->withParam('prefix', ADMIN_PREFIX);
-        $this->assertTrue($request->isAdmin());
-        $this->assertTrue($request->is('admin'));
+        $this->assertTrue($this->getMockForRequest()->withParam('prefix', ADMIN_PREFIX)->is('admin'));
     }
 
     /**
@@ -96,21 +86,15 @@ class RequestDetectorsTest extends TestCase
      */
     public function testIsOffline(): void
     {
-        $this->assertFalse($this->Request->isOffline());
         $this->assertFalse($this->Request->is('offline'));
 
         Configure::write('MeCms.default.offline', true);
-        $request = $this->getMockForRequest();
-        $this->assertTrue($request->isOffline());
-        $this->assertTrue($request->is('offline'));
+        $this->assertTrue($this->getMockForRequest()->is('offline'));
 
         $request = $this->getMockForRequest()->withParam('prefix', ADMIN_PREFIX);
-        $this->assertTrue($request->isAdmin());
-        $this->assertFalse($request->isOffline());
+        $this->assertTrue($request->is('admin'));
         $this->assertFalse($request->is('offline'));
 
-        $request = $this->getMockForRequest()->withParam('action', 'offline');
-        $this->assertFalse($request->isOffline());
-        $this->assertFalse($request->is('offline'));
+        $this->assertFalse($this->getMockForRequest()->withParam('action', 'offline')->is('offline'));
     }
 }

@@ -119,7 +119,7 @@ class UsersController extends AppController
         }
 
         //Checks if the user is already logged in
-        if (!$this->getRequest()->isAction('logout') && $this->Auth->isLogged()) {
+        if (!$this->getRequest()->is('action', 'logout') && $this->Auth->isLogged()) {
             return $this->redirect(['_name' => 'dashboard']);
         }
     }

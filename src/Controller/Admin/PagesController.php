@@ -48,11 +48,11 @@ class PagesController extends AppController
         }
 
         //Returns for `indexStatics` action
-        if ($this->getRequest()->isAction('indexStatics')) {
+        if ($this->getRequest()->is('action', 'indexStatics')) {
             return null;
         }
 
-        $methodToCall = $this->getRequest()->isAction(['add', 'edit']) ? 'getTreeList' : 'getList';
+        $methodToCall = $this->getRequest()->is('action', ['add', 'edit']) ? 'getTreeList' : 'getList';
         $categories = $this->Categories->$methodToCall();
         if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
@@ -75,12 +75,12 @@ class PagesController extends AppController
     public function isAuthorized($user = null): bool
     {
         //Everyone can list pages and static pages
-        if ($this->getRequest()->isAction(['index', 'indexStatics'])) {
+        if ($this->getRequest()->is('action', ['index', 'indexStatics'])) {
             return true;
         }
 
         //Only admins can delete pages. Admins and managers can access other actions
-        return $this->Auth->isGroup($this->getRequest()->isDelete() ? ['admin'] : ['admin', 'manager']);
+        return $this->Auth->isGroup($this->getRequest()->is('delete') ? ['admin'] : ['admin', 'manager']);
     }
 
     /**

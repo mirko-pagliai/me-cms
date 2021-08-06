@@ -53,7 +53,7 @@ $this->Breadcrumbs->add($post->get('title'), ['_name' => 'post', $post->get('slu
 /**
  * Meta tags
  */
-if ($this->getRequest()->isAction('view', 'Posts')) {
+if ($this->getRequest()->is('action', 'view', 'Posts')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
 
     if ($post->has('modified')) {

@@ -15,28 +15,28 @@ declare(strict_types=1);
 $menu = [];
 $url = ['_name' => 'login'];
 
-if (!$this->getRequest()->isUrl($url)) {
+if (!$this->getRequest()->is('url', $url)) {
     $menu[] = $this->Html->link(__d('me_cms', 'Login'), $url);
 }
 
 //If signup is enabled
 $url = ['_name' => 'signup'];
 
-if (getConfig('users.signup') && !$this->getRequest()->isUrl($url)) {
+if (getConfig('users.signup') && !$this->getRequest()->is('url', $url)) {
     $menu[] = $this->Html->link(__d('me_cms', 'Sign up'), $url);
 }
 
 //If signup is enabled and if accounts will be enabled by the user via email
 $url = ['_name' => 'activationResend'];
 
-if (getConfig('users.signup') && getConfig('users.activation') === 1 && !$this->getRequest()->isUrl($url)) {
+if (getConfig('users.signup') && getConfig('users.activation') === 1 && !$this->getRequest()->is('url', $url)) {
     $menu[] = $this->Html->link(__d('me_cms', 'Resend activation email'), $url);
 }
 
 //If reset password is enabled
 $url = ['_name' => 'passwordForgot'];
 
-if (getConfig('users.reset_password') && !$this->getRequest()->isUrl($url)) {
+if (getConfig('users.reset_password') && !$this->getRequest()->is('url', $url)) {
     $menu[] = $this->Html->link(__d('me_cms', 'Forgot your password?'), $url);
 }
 

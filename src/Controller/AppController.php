@@ -57,7 +57,7 @@ abstract class AppController extends BaseAppController
     public function beforeFilter(EventInterface $event)
     {
         //Checks if the site is offline
-        if ($this->getRequest()->isOffline()) {
+        if ($this->getRequest()->is('offline')) {
             return $this->redirect(['_name' => 'offline']);
         }
 
@@ -142,7 +142,7 @@ abstract class AppController extends BaseAppController
      */
     protected function isSpammer(): bool
     {
-        return $this->getRequest()->isSpammer() && !$this->getRequest()->isAction('ipNotAllowed', 'Systems');
+        return $this->getRequest()->is('spammer') && !$this->getRequest()->is('action', 'ipNotAllowed', 'Systems');
     }
 
     /**

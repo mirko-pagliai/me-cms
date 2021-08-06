@@ -21,6 +21,7 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * AddUserCommandTest class
+ * @property \Cake\Console\ConsoleInput|null $_in
  */
 class AddUserCommandTest extends TestCase
 {

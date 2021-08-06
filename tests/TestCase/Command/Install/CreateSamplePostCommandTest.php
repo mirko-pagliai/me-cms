@@ -23,6 +23,8 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 /**
  * CreateSamplePostCommandTest class
  * @property \MeCms\Command\Install\CreateSamplePostCommand $Command
+ * @property \Cake\TestSuite\Stub\ConsoleOutput|null $_err
+ * @property \Cake\TestSuite\Stub\ConsoleOutput|null $_out
  */
 class CreateSamplePostCommandTest extends TestCase
 {

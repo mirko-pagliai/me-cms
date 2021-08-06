@@ -45,7 +45,7 @@ class PostsWidgetsCell extends Cell
         $this->viewBuilder()->setTemplate(sprintf('categories_as_%s', $render));
 
         //Returns on categories index
-        if ($this->request->isUrl(['_name' => 'postsCategories'])) {
+        if ($this->request->is('url', ['_name' => 'postsCategories'])) {
             return;
         }
 
@@ -69,7 +69,7 @@ class PostsWidgetsCell extends Cell
     public function latest(int $limit = 10): void
     {
         //Returns on posts index
-        if ($this->request->isUrl(['_name' => 'posts'])) {
+        if ($this->request->is('url', ['_name' => 'posts'])) {
             return;
         }
 
@@ -93,7 +93,7 @@ class PostsWidgetsCell extends Cell
         $this->viewBuilder()->setTemplate(sprintf('months_as_%s', $render));
 
         //Returns on posts index
-        if ($this->request->isUrl(['_name' => 'posts'])) {
+        if ($this->request->is('url', ['_name' => 'posts'])) {
             return;
         }
 

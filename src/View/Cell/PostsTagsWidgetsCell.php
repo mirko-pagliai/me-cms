@@ -75,7 +75,7 @@ class PostsTagsWidgetsCell extends Cell
         $this->viewBuilder()->setTemplate(sprintf('popular_as_%s', $render));
 
         //Returns on tags index
-        if ($this->request->isUrl(['_name' => 'postsTags'])) {
+        if ($this->request->is('url', ['_name' => 'postsTags'])) {
             return;
         }
 

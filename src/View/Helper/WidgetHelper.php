@@ -33,7 +33,7 @@ class WidgetHelper extends Helper
     {
         $widgets = getConfig('Widgets.general', []);
         $widgetsHomepage = getConfig('Widgets.homepage');
-        if ($this->getView()->getRequest()->isUrl(['_name' => 'homepage']) && $widgetsHomepage) {
+        if ($this->getView()->getRequest()->is('url', ['_name' => 'homepage']) && $widgetsHomepage) {
             $widgets = $widgetsHomepage;
         }
 

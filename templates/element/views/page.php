@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$isView = $this->getRequest()->isAction('view', 'Pages') && !$this->getRequest()->isAjax();
+$isView = $this->getRequest()->is('action', 'view', 'Pages') && !$this->getRequest()->isAjax();
 $category = $page->get('category');
 ?>
 
@@ -61,7 +61,7 @@ $category = $page->get('category');
         //  location of the `<!-- readmore -->` tag. If the tag is not present,
         //  the value in the configuration will be used
         $text = $page->get('text');
-        if (!$this->getRequest()->isAction(['view', 'preview'])) {
+        if (!$this->getRequest()->is('action', ['view', 'preview'])) {
             $strpos = strpos($text, '<!-- read-more -->');
             $truncatedOptions = ['ellipsis' => ''];
             if (!$strpos) {

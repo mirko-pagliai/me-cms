@@ -48,7 +48,7 @@ class UsersController extends AppController
             return $result;
         }
 
-        if ($this->getRequest()->isAction(['index', 'add', 'edit'])) {
+        if ($this->getRequest()->is('action', ['index', 'add', 'edit'])) {
             $groups = $this->Groups->getList();
             if ($groups->isEmpty()) {
                 $this->Flash->alert(__d('me_cms', 'You must first create an user group'));
@@ -82,12 +82,12 @@ class UsersController extends AppController
     public function isAuthorized($user = null): bool
     {
         //Every user can change his password
-        if ($this->getRequest()->isAction('changePassword')) {
+        if ($this->getRequest()->is('action', 'changePassword')) {
             return true;
         }
 
         //Only admins can activate account and delete users
-        if ($this->getRequest()->isAction(['activate', 'delete'])) {
+        if ($this->getRequest()->is('action', ['activate', 'delete'])) {
             return $this->Auth->isGroup('admin');
         }
 

@@ -49,7 +49,7 @@ class View extends AppView
         $title = getConfigOrFail('main.title');
 
         //For homepage, it returns only the main title
-        if ($this->getRequest()->isUrl(['_name' => 'homepage'])) {
+        if ($this->getRequest()->is('url', ['_name' => 'homepage'])) {
             return $title;
         }
 

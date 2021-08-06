@@ -42,7 +42,7 @@ class PagesCategoriesController extends AppController
             return $result;
         }
 
-        if ($this->getRequest()->isAction(['add', 'edit'])) {
+        if ($this->getRequest()->is('action', ['add', 'edit'])) {
             $this->set('categories', $this->PagesCategories->getTreeList());
         }
 
@@ -59,7 +59,7 @@ class PagesCategoriesController extends AppController
     public function isAuthorized($user = null): bool
     {
         //Only admins can delete pages categories. Admins and managers can access other actions
-        return $this->Auth->isGroup($this->getRequest()->isDelete() ? ['admin'] : ['admin', 'manager']);
+        return $this->Auth->isGroup($this->getRequest()->is('delete') ? ['admin'] : ['admin', 'manager']);
     }
 
     /**

@@ -47,7 +47,7 @@ $this->Breadcrumbs->add($page->get('title'), $page->get('url'));
 /**
  * Meta tags
  */
-if ($this->getRequest()->isAction('view', 'Pages')) {
+if ($this->getRequest()->is('action', 'view', 'Pages')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
 
     if ($page->has('modified')) {

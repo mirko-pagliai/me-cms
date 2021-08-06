@@ -85,7 +85,7 @@ class SystemsController extends AppController
     public function ipNotAllowed()
     {
         //If the user's IP address is not reported as spammer
-        if (!$this->getRequest()->isSpammer()) {
+        if (!$this->getRequest()->is('spammer')) {
             return $this->redirect($this->referer(['_name' => 'homepage'], true));
         }
 

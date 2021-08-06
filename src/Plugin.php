@@ -68,6 +68,7 @@ class Plugin extends BasePlugin
         }
 
         //Loads theme plugin
+        /** @var \Cake\Http\BaseApplication $app */
         $theme = getConfig('default.theme');
         if ($theme && !$app->getPlugins()->has($theme)) {
             $app->addPlugin($theme);

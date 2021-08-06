@@ -28,6 +28,8 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 /**
  * CreateGroupsCommandTest class
  * @property \MeCms\Command\Install\CreateGroupsCommand $Command
+ * @property \Cake\TestSuite\Stub\ConsoleOutput|null $_err
+ * @property \Cake\Console\ConsoleInput|null $_in
  */
 class CreateGroupsCommandTest extends TestCase
 {
