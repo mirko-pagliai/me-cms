@@ -31,7 +31,7 @@ class BackupFormTest extends TestCase
     protected $BackupExport;
 
     /**
-     * @var \MeCms\Form\BackupForm&\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Form\BackupForm
      */
     protected $Form;
 
@@ -49,9 +49,7 @@ class BackupFormTest extends TestCase
 
         $this->BackupExport->method('filename')->will($this->returnSelf());
 
-        $this->Form = $this->getMockBuilder(BackupForm::class)
-            ->setMethods(null)
-            ->getMock();
+        $this->Form = $this->Form ?: new BackupForm();
     }
 
     /**
