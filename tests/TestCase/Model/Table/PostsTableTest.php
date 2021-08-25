@@ -28,14 +28,10 @@ use Tools\Exception\PropertyNotExistsException;
 
 /**
  * PostsTableTest class
+ * @property \MeCms\Model\Table\PostsTable $Table
  */
 class PostsTableTest extends PostsAndPagesTablesTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\PostsTable
-     */
-    protected $Table;
-
     /**
      * @var bool
      */

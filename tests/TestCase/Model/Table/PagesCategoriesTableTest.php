@@ -22,14 +22,10 @@ use MeCms\TestSuite\TableTestCase;
 
 /**
  * PagesCategoriesTableTest class
+ * @property \MeCms\Model\Table\PagesCategoriesTable $Table
  */
 class PagesCategoriesTableTest extends TableTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\PagesCategoriesTable
-     */
-    protected $Table;
-
     /**
      * @var bool
      */

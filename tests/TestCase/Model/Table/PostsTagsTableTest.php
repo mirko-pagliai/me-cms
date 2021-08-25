@@ -20,14 +20,10 @@ use MeCms\TestSuite\TableTestCase;
 
 /**
  * PostsTableTest class
+ * @property \MeCms\Model\Table\PostsTagsTable $Table
  */
 class PostsTagsTableTest extends TableTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\PostsTagsTable
-     */
-    protected $Table;
-
     /**
      * @var bool
      */

@@ -20,14 +20,10 @@ use MeCms\TestSuite\TableTestCase;
 
 /**
  * UsersGroupsTableTest class
+ * @property \MeCms\Model\Table\UsersGroupsTable $Table
  */
 class UsersGroupsTableTest extends TableTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\UsersGroupsTable
-     */
-    protected $Table;
-
     /**
      * @var bool
      */

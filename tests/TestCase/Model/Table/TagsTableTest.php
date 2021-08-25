@@ -21,14 +21,10 @@ use MeCms\TestSuite\TableTestCase;
 
 /**
  * TagsTableTest class
+ * @property \MeCms\Model\Table\TagsTable $Table
  */
 class TagsTableTest extends TableTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\TagsTable
-     */
-    protected $Table;
-
     /**
      * @var bool
      */

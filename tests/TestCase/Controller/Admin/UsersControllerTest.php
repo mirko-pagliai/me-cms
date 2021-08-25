@@ -24,14 +24,10 @@ use Tools\Filesystem;
 
 /**
  * UsersControllerTest class
+ * @property \MeCms\Model\Table\UsersTable $Table
  */
 class UsersControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\UsersTable
-     */
-    protected $Table;
-
     /**
      * @var array
      */

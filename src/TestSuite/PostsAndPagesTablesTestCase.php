@@ -24,14 +24,10 @@ use MeCms\TestSuite\TableTestCase;
 
 /**
  * Abstract class for `PagesTableTest` and `PostsTableTest` classes
+ * @property \MeCms\ORM\PostsAndPagesTables $Table
  */
 abstract class PostsAndPagesTablesTestCase extends TableTestCase
 {
-    /**
-     * @var \MeCms\ORM\PostsAndPagesTables
-     */
-    protected $Table;
-
     /**
      * @var array
      */

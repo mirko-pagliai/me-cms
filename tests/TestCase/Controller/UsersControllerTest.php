@@ -27,23 +27,15 @@ use Tokens\Controller\Component\TokenComponent;
 
 /**
  * UsersControllerTest class
+ * @property \MeCms\Controller\UsersController $_controller
+ * @property \MeCms\Model\Table\UsersTable $Table
  */
 class UsersControllerTest extends ControllerTestCase
 {
     /**
-     * @var \MeCms\Model\Table\UsersTable
-     */
-    protected $Table;
-
-    /**
      * @var \Tokens\Controller\Component\TokenComponent&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Token;
-
-    /**
-     * @var \MeCms\Controller\UsersController
-     */
-    protected $_controller;
 
     /**
      * Fixtures

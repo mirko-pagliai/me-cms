@@ -21,14 +21,10 @@ use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PostsControllerTest class
+ * @property \MeCms\Model\Table\PostsTable $Table
  */
 class PostsControllerTest extends ControllerTestCase
 {
-    /**
-     * @var \MeCms\Model\Table\PostsTable
-     */
-    protected $Table;
-
     /**
      * @var array
      */
