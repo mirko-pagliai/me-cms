@@ -8,7 +8,7 @@
 * fixed bug for `Admin/SystemsController::changelogs()` and `PostsController::search()`
     when using invalid GET parameters;
 * a major improvement of the descriptions, thanks to `phpstan`;
-* updated for `php-tools` 1.5.1, `me-tools` 2.20.1 and `phpuseragentparser` 1.
+* updated for `php-tools` 1.5.3, `me-tools` 2.20.1 and `phpuseragentparser` 1.
 
 ### 2.30.0
 * starting from this release, it no longer contains the code for banners and photos,
