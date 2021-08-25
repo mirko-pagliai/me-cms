@@ -24,14 +24,10 @@ use MeTools\Console\Command;
 
 /**
  * Lists user groups
+ * @property \MeCms\Model\Table\UsersGroupsTable $UsersGroups
  */
 class GroupsCommand extends Command
 {
-    /**
-     * @var \MeCms\Model\Table\UsersGroupsTable
-     */
-    protected $UsersGroups;
-
     /**
      * Hook method for defining this command's option parser
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined

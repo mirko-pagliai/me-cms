@@ -48,6 +48,12 @@
             </errorLevel>
         </InvalidArrayOffset>
 
+        <InvalidDocblock>
+            <errorLevel type="suppress">
+                <file name="tests/TestCase/Model/Table/Others/AssociationsSameAliasesTest.php" />
+            </errorLevel>
+        </InvalidDocblock>
+
         <InvalidPassByReference>
             <errorLevel type="suppress">
                 <file name="templates/element/admin/sidebar.php" />

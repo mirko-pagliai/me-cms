@@ -23,14 +23,10 @@ use MeTools\Console\Command;
 
 /**
  * Adds an user
+ * @property \MeCms\Model\Table\UsersTable $Users
  */
 class AddUserCommand extends Command
 {
-    /**
-     * @var \MeCms\Model\Table\UsersTable
-     */
-    protected $Users;
-
     /**
      * Hook method for defining this command's option parser
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined

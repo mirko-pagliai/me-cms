@@ -7,7 +7,8 @@
 * fixed the `MenuBuilderHelper` and the admin sidebar, menus are now better displayed;
 * fixed bug for `Admin/SystemsController::changelogs()` and `PostsController::search()`
     when using invalid GET parameters;
-* a major improvement of the descriptions, thanks to `phpstan`;
+* a major improvement of the descriptions, thanks to `phpstan` (the level has
+    been raised);
 * updated for `php-tools` 1.5.3, `me-tools` 2.20.1 and `phpuseragentparser` 1.
 
 ### 2.30.0

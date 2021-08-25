@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use Cake\Event\Event;
-use Cake\Http\Response;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\IntegrationTestTrait;
 
