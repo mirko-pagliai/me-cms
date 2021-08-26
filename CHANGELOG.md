@@ -9,6 +9,7 @@
     when using invalid GET parameters;
 * a major improvement of the descriptions, thanks to `phpstan` (the level has
     been raised);
+* ready fot `php` 8.0;
 * updated for `php-tools` 1.5.3, `me-tools` 2.20.1 and `phpuseragentparser` 1.
 
 ### 2.30.0

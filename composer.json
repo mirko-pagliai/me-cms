@@ -29,7 +29,7 @@
         "mirko-pagliai/php-tools": "^1.5.3",
         "mirko-pagliai/php-thumber": "^1.4.1",
         "twbs/bootstrap": "^v4.4",
-        "wyrihaximus/minify-html": "^2.0"
+        "wyrihaximus/minify-html": "^2.0|dev-master"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^4.0",
