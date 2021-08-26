@@ -22,6 +22,7 @@ use MeCms\TestSuite\TableTestCase;
 
 /**
  * PagesCategoriesTableTest class
+ * @property \MeCms\Model\Table\PagesCategoriesTable $Table
  */
 class PagesCategoriesTableTest extends TableTestCase
 {
@@ -43,7 +44,7 @@ class PagesCategoriesTableTest extends TableTestCase
      * Test for `buildRules()` method
      * @test
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
@@ -71,7 +72,7 @@ class PagesCategoriesTableTest extends TableTestCase
      * Test for `initialize()` method
      * @test
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $this->assertEquals('Categories', $this->Table->getAlias());
         $this->assertEquals('pages_categories', $this->Table->getTable());
@@ -96,7 +97,7 @@ class PagesCategoriesTableTest extends TableTestCase
      * Test for associations
      * @test
      */
-    public function testAssociations()
+    public function testAssociations(): void
     {
         $childs = $this->Table->findById(1)->contain('Childs')->extract('childs')->first();
         $this->assertContainsOnlyInstancesOf(PagesCategory::class, $childs);
@@ -112,7 +113,7 @@ class PagesCategoriesTableTest extends TableTestCase
      * Test for `find()` methods
      * @test
      */
-    public function testFindMethods()
+    public function testFindMethods(): void
     {
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM pages_categories Categories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND Categories.id = (Pages.category_id))', $query->sql());

@@ -41,7 +41,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
      * Tests for `index()` method
      * @test
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->get(['_name' => 'postsCategories']);
         $this->assertResponseOkAndNotEmpty();
@@ -55,7 +55,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
      * Tests for `view()` method
      * @test
      */
-    public function testView()
+    public function testView(): void
     {
         $url = ['_name' => 'postsCategory', 'first-post-category'];
 

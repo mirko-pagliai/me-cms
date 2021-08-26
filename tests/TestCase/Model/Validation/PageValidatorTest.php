@@ -44,7 +44,7 @@ class PageValidatorTest extends ValidationTestCase
      * Test validation for `category_id` property
      * @test
      */
-    public function testValidationForCategoryId()
+    public function testValidationForCategoryId(): void
     {
         $errors = $this->Table->newEntity(['category_id' => 'str'] + $this->example)->getErrors();
         $this->assertEquals(['category_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION]], $errors);

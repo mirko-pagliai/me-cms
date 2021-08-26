@@ -25,6 +25,8 @@ use Tools\Exceptionist;
  * MenuBuilder Helper
  *
  * An helper to generate the admin menus.
+ * @property \MeTools\View\Helper\DropdownHelper $Dropdown
+ * @property \MeTools\View\Helper\HtmlHelper $Html
  */
 class MenuBuilderHelper extends Helper
 {
@@ -85,65 +87,61 @@ class MenuBuilderHelper extends Helper
         //Calls dynamically each method
         $menus = [];
         foreach ($this->getMethods($plugin) as $method) {
-            $args = call_user_func([$helper, $method]);
-            if (!$args) {
-                continue;
+            $callable = [$helper, $method];
+            if (is_callable($callable)) {
+                $args = call_user_func($callable);
+                if (!$args) {
+                    continue;
+                }
+
+                Exceptionist::isTrue(
+                    count($args) >= 3,
+                    __d('me_cms', 'Method `{0}::{1}()` returned only {2} values', $className, $method, count($args)),
+                    BadMethodCallException::class
+                );
+
+                [$links, $title, $titleOptions, $handledControllers] = $args + [[], [], [], []];
+                $menus[$plugin . '.' . $method] = compact('links', 'title', 'titleOptions', 'handledControllers');
             }
-
-            Exceptionist::isTrue(
-                count($args) >= 3,
-                __d('me_cms', 'Method `{0}::{1}()` returned only {2} values', $className, $method, count($args)),
-                BadMethodCallException::class
-            );
-
-            [$links, $title, $titleOptions, $handledControllers] = $args + [[], [], [], []];
-            $menus[$plugin . '.' . $method] = compact('links', 'title', 'titleOptions', 'handledControllers');
         }
 
         return $menus;
     }
 
     /**
-     * Renders a menu as "collapse"
-     * @param string $plugin Plugin name
+     * Renders a menu as "collapse".
+     *
+     * The menu can be previously generated with the `generate()` method.
+     * @param array $menu The menu
      * @param string|null $idContainer Container ID
      * @return string
-     * @uses buildLinks()
-     * @uses generate()
      */
-    public function renderAsCollapse(string $plugin, ?string $idContainer = null): string
+    public function renderAsCollapse(array $menu, ?string $idContainer = null): string
     {
-        $controller = $this->getView()->getRequest()->getParam('controller');
+        $collapseName = 'collapse-' . strtolower(Text::slug($menu['title']));
+        $titleOptions = [
+            'aria-controls' => $collapseName,
+            'aria-expanded' => 'false',
+            'class' => 'collapsed',
+            'data-toggle' => 'collapse',
+        ] + $menu['titleOptions'];
+        $divOptions = ['class' => 'collapse', 'id' => $collapseName];
 
-        return implode(PHP_EOL, array_map(function (array $menu) use ($controller, $idContainer): string {
-            $collapseName = 'collapse-' . strtolower(Text::slug($menu['title']));
-            $titleOptions = [
-                'aria-controls' => $collapseName,
-                'aria-expanded' => 'false',
-                'class' => 'collapsed',
-                'data-toggle' => 'collapse',
-            ] + $menu['titleOptions'];
-            $divOptions = [
-                'class' => 'collapse',
-                'id' => $collapseName,
-            ];
+        if ($idContainer) {
+            $divOptions['data-parent'] = '#' . $idContainer;
+        }
 
-            if ($idContainer) {
-                $divOptions['data-parent'] = '#' . $idContainer;
-            }
+        //If the current controller is handled by this menu, marks the menu as open
+        if (in_array($this->getView()->getRequest()->getParam('controller'), $menu['handledControllers'])) {
+            $titleOptions['aria-expanded'] = 'true';
+            unset($titleOptions['class']);
+            $divOptions['class'] .= ' show';
+        }
 
-            //If the current controller is handled by this menu, opens the menu
-            if (in_array($controller, $menu['handledControllers'])) {
-                $titleOptions['aria-expanded'] = 'true';
-                unset($titleOptions['class']);
-                $divOptions['class'] .= ' show';
-            }
+        $title = $this->Html->link($menu['title'], '#' . $collapseName, $titleOptions);
+        $links = $this->Html->div(null, implode(PHP_EOL, $this->buildLinks($menu['links'])), $divOptions);
 
-            $title = $this->Html->link($menu['title'], '#' . $collapseName, $titleOptions);
-            $links = $this->Html->div(null, implode(PHP_EOL, $this->buildLinks($menu['links'])), $divOptions);
-
-            return $this->Html->div('card', $title . PHP_EOL . $links);
-        }, $this->generate($plugin)));
+        return $this->Html->div('card', $title . PHP_EOL . $links);
     }
 
     /**
@@ -156,7 +154,7 @@ class MenuBuilderHelper extends Helper
      */
     public function renderAsDropdown(string $plugin, array $titleOptions = []): array
     {
-        return array_map(function (array $menu) use ($titleOptions): string {
+        return array_map(function (array $menu) use ($titleOptions): ?string {
             return $this->Dropdown->menu(
                 $menu['title'],
                 $this->buildLinks($menu['links'], ['class' => 'dropdown-item']),

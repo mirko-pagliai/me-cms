@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Model\Table\Others;
 
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TableTestCase;
 
 /**
@@ -43,15 +42,17 @@ class AssociationsSameAliasesTest extends TableTestCase
      * Test for associations with the same alias
      * @test
      */
-    public function testAssociationsSameAliases()
+    public function testAssociationsSameAliases(): void
     {
         foreach (['Pages', 'Posts'] as $name) {
-            $categories = TableRegistry::getTableLocator()->get('MeCms.' . $name)->Categories;
-
-            $this->assertBelongsTo($categories);
-            $this->assertEquals('Categories', $categories->getName());
-            $this->assertEquals('MeCms\\Model\\Table\\' . $name . 'CategoriesTable', $categories->getClassName());
-            $this->assertInstanceof('MeCms\\Model\\Entity\\' . $name . 'Category', $categories->find()->first());
+            /** @var \MeCms\Model\Table\PagesTable|\MeCms\Model\Table\PostsTable $Table */
+            $Table = $this->getTable('MeCms.' . $name);
+            $this->assertBelongsTo($Table->Categories);
+            $this->assertEquals('Categories', $Table->Categories->getName());
+            $this->assertEquals('MeCms\\Model\\Table\\' . $name . 'CategoriesTable', $Table->Categories->getClassName());
+            /** @var class-string<\MeCms\Model\Table\PagesTable|\MeCms\Model\Table\PostsTable> $className */
+            $className = '\\MeCms\\Model\\Entity\\' . $name . 'Category';
+            $this->assertInstanceof($className, $Table->Categories->find()->first());
         }
     }
 }

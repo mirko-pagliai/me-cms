@@ -22,6 +22,7 @@ use MeCms\Model\Validation\UsersGroupValidator;
 
 /**
  * UsersGroups model
+ * @property \Cake\ORM\Association\HasMany $Users
  */
 class UsersGroupsTable extends AppTable
 {

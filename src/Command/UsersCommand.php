@@ -24,9 +24,21 @@ use MeTools\Console\Command;
 
 /**
  * Lists users
+ * @property \MeCms\Model\Table\UsersTable $Users
  */
 class UsersCommand extends Command
 {
+    /**
+     * Hook method invoked by CakePHP when a command is about to be executed
+     * @return void
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->loadModel('MeCms.Users');
+    }
+
     /**
      * Hook method for defining this command's option parser
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
@@ -74,12 +86,9 @@ class UsersCommand extends Command
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
-     * @uses getUsersRows()
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $this->loadModel('MeCms.Users');
-
         $rows = $this->getUsersRows();
         if (!$rows) {
             return $io->error(__d('me_cms', 'There are no users'));

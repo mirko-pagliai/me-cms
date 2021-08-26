@@ -21,6 +21,7 @@ use MeTools\View\Helper\HtmlHelper;
 
 /**
  * Abstract class for test `MenuHelper` classes
+ * @property \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper
  */
 abstract class MenuHelperTestCase extends HelperTestCase
 {
@@ -41,15 +42,17 @@ abstract class MenuHelperTestCase extends HelperTestCase
      */
     public function setUp(): void
     {
+        /** @var class-string<\Cake\View\Helper> $className */
         $className = $this->getOriginClassNameOrFail($this);
         $methods = get_child_methods($className);
 
         //Mocks the helper. Each method returns its original value, but the
         //  links are already builded and returned as an HTML string
-        $this->Helper = $this->getMockForHelper($className, $methods);
+        /** @var \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper */
+        $Helper = $this->getMockForHelper($className, $methods);
 
         foreach ($methods as $method) {
-            $this->Helper->method($method)->will($this->returnCallback(function () use ($className, $method) {
+            $Helper->method($method)->will($this->returnCallback(function () use ($className, $method) {
                 $originalHelper = new $className($this->Helper->getView());
                 $returned = $originalHelper->$method();
 
@@ -63,6 +66,8 @@ abstract class MenuHelperTestCase extends HelperTestCase
                 return $returned;
             }));
         }
+
+        $this->Helper = $Helper;
 
         parent::setUp();
     }

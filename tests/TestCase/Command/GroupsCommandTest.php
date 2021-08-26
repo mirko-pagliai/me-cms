@@ -40,7 +40,7 @@ class GroupsCommandTest extends TestCase
      * Test for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $UsersGroups = TableRegistry::getTableLocator()->get('MeCms.UsersGroups');
 

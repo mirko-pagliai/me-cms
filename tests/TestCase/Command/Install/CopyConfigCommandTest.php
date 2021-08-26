@@ -31,7 +31,7 @@ class CopyConfigCommandTest extends TestCase
      * Test for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $this->exec('me_cms.copy_config -v');
         $this->assertExitWithSuccess();

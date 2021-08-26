@@ -82,7 +82,7 @@ $this->append('actions', $this->Html->button(
                     <?php
                     if ($category->get('post_count')) {
                         echo $this->Html->link(
-                            $category->get('post_count'),
+                            (string)$category->get('post_count'),
                             ['controller' => 'Posts', 'action' => 'index', '?' => ['category' => $category->get('id')]],
                             ['title' => I18N_BELONG_ELEMENT]
                         );

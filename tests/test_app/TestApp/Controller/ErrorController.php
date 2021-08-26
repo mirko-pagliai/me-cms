@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace App\Controller;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 
 /**
  * Error Handling Controller
@@ -21,10 +21,10 @@ class ErrorController extends AppController
 
     /**
      * beforeRender callback
-     * @param \Cake\Event\Event $event Event
+     * @param \Cake\Event\EventInterface $event Event
      * @return \Cake\Http\Response|null|void
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(EventInterface $event)
     {
         parent::beforeRender($event);
 

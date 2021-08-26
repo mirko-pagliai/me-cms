@@ -13,20 +13,26 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-use MeTools\Core\Plugin;
+use MeCms\Core\Plugin;
 ?>
 
 <div id="sidebar-accordion" role="tablist">
     <?php
-    //Renders menus for MeCms and for each plugin
-    echo $this->MenuBuilder->renderAsCollapse('MeCms', 'sidebar-accordion');
+    $menus = [];
+    foreach (Plugin::all(['mecms_core' => false]) as $plugin) {
+        $menus += $this->MenuBuilder->generate($plugin);
+    }
 
-    foreach (Plugin::all(['exclude' => 'MeCms', 'mecms_core' => false]) as $plugin) {
-        $menus = $this->MenuBuilder->renderAsCollapse($plugin, 'sidebar-accordion');
-        if ($menus) {
-            echo $this->Html->h6($plugin);
-            echo $menus;
-        }
+    //Echoes posts and pages menus
+    echo $this->MenuBuilder->renderAsCollapse($menus['MeCms.posts'], 'sidebar-accordion');
+    echo $this->MenuBuilder->renderAsCollapse($menus['MeCms.pages'], 'sidebar-accordion');
+    unset($menus['MeCms.posts'], $menus['MeCms.pages']);
+
+    //Echoes all the remaining menus, sorted by title
+    $titles = array_column($menus, 'title');
+    array_multisort($titles, SORT_ASC, $menus);
+    foreach ($menus as $menu) {
+        echo $this->MenuBuilder->renderAsCollapse($menu, 'sidebar-accordion');
     }
     ?>
 </div>

@@ -25,12 +25,6 @@ use MeCms\TestSuite\TestCase;
 abstract class ValidationTestCase extends TestCase
 {
     /**
-     * Table instance
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Cake\ORM\Table
-     */
-    protected $Table;
-
-    /**
      * If `true`, a mock instance of the table will be created
      * @var bool
      */
@@ -52,8 +46,6 @@ abstract class ValidationTestCase extends TestCase
      * @param array $data Valid data
      * @param array $exclude Key to be excluded
      * @return void
-     * @uses $Table
-     * @uses $example
      */
     public function assertAllDataAreRequired($data, $exclude = [])
     {
@@ -80,8 +72,6 @@ abstract class ValidationTestCase extends TestCase
      * Called before every test method
      * @return void
      * @throw \PHPUnit\Framework\AssertionFailedError
-     * @uses $Table
-     * @uses $autoInitializeClass
      */
     public function setUp(): void
     {
@@ -101,7 +91,7 @@ abstract class ValidationTestCase extends TestCase
      * @return void
      * @test
      */
-    public function testAllDataAreRequired()
+    public function testAllDataAreRequired(): void
     {
         $this->assertAllDataAreRequired($this->example);
     }

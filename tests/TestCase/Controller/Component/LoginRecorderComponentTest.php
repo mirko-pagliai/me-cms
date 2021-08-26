@@ -26,6 +26,7 @@ use Tools\Filesystem;
 
 /**
  * LoginRecorderTest class
+ * @property \MeCms\Controller\Component\LoginRecorderComponent $Component
  */
 class LoginRecorderComponentTest extends ComponentTestCase
 {
@@ -33,14 +34,15 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Internal method to get a `LoginRecorder` instance
      * @param array|null $methods Methods you want to mock
      * @param array $userAgent Data returned by the `getUserAgent()` method
-     * @return \MeCms\Controller\Component\LoginRecorderComponent|\PHPUnit\Framework\MockObject\MockObject
+     * @return \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockForLoginRecorder(?array $methods = ['getUserAgent'], array $userAgent = [])
     {
-        $component = $this->getMockForComponent(LoginRecorderComponent::class, $methods);
+        /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $Component */
+        $Component = $this->getMockForComponent(LoginRecorderComponent::class, $methods);
 
         if (is_array($methods) && in_array('getUserAgent', $methods)) {
-            $component->method('getUserAgent')
+            $Component->method('getUserAgent')
                 ->will($this->returnValue($userAgent ?: [
                     'platform' => 'Linux',
                     'browser' => 'Chrome',
@@ -48,9 +50,9 @@ class LoginRecorderComponentTest extends ComponentTestCase
                 ]));
         }
 
-        $component->setConfig('user', 1);
+        $Component->setConfig('user', 1);
 
-        return $component;
+        return $Component;
     }
 
     /**
@@ -59,7 +61,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      */
     public function setUp(): void
     {
-        $this->Component = $this->getMockForLoginRecorder();
+        $this->Component = $this->Component ?: $this->getMockForLoginRecorder();
 
         parent::setUp();
     }
@@ -79,7 +81,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Test for `getClientIp()` method
      * @test
      */
-    public function testGetClientIp()
+    public function testGetClientIp(): void
     {
         $this->assertEmpty($this->invokeMethod($this->Component, 'getClientIp'));
 
@@ -98,7 +100,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Test for `getFileArray()` method
      * @test
      */
-    public function testGetFileArray()
+    public function testGetFileArray(): void
     {
         $result = $this->Component->getFileArray();
         $this->assertInstanceOf(FileArray::class, $result);
@@ -106,11 +108,11 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
         //With invalid user ID
         foreach ([null, 'string'] as $value) {
-            $this->assertException(InvalidArgumentException::class, function () use ($value) {
+            $this->assertException(function () use ($value) {
                 $Component = $this->getMockForLoginRecorder();
                 $Component->setConfig('user', $value);
                 $Component->getFileArray();
-            }, 'You have to set a valid user id');
+            }, InvalidArgumentException::class, 'You have to set a valid user id');
         }
     }
 
@@ -118,20 +120,14 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Test for `getUserAgent()` method
      * @test
      */
-    public function testGetUserAgent()
+    public function testGetUserAgent(): void
     {
         $expected = [
             'platform' => 'Windows',
             'browser' => 'Firefox',
             'version' => '16.0',
         ];
-
-        $Component = $this->getMockForLoginRecorder(null);
-        $result = $this->invokeMethod($Component, 'getUserAgent', $expected);
-        $this->assertArrayKeysEqual(['platform', 'browser', 'version'], $result);
-
-        $Component = $this->getMockForLoginRecorder(['getUserAgent'], $expected);
-        $result = $this->invokeMethod($Component, 'getUserAgent', ['Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0']);
+        $result = $this->invokeMethod($this->getMockForComponent(LoginRecorderComponent::class), 'getUserAgent', ['Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0']);
         $this->assertEquals($expected, $result);
     }
 
@@ -139,7 +135,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Test for `read()` method
      * @test
      */
-    public function testRead()
+    public function testRead(): void
     {
         //For now is empty
         $result = $this->Component->read();
@@ -169,7 +165,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Test for `write()` method
      * @test
      */
-    public function testWrite()
+    public function testWrite(): void
     {
         $this->assertTrue($this->Component->write());
 

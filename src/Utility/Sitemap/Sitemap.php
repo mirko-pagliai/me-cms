@@ -41,6 +41,7 @@ class Sitemap extends SitemapBase
             return [];
         }
 
+        /** @var \MeCms\Model\Table\PagesCategoriesTable $table */
         $table = TableRegistry::get('MeCms.PagesCategories');
         $url = Cache::read('sitemap', $table->getCacheName());
 
@@ -59,7 +60,7 @@ class Sitemap extends SitemapBase
             }
 
             //Adds categories index
-            $url[] = self::parse(['_name' => 'pagesCategories']);
+            $url = [self::parse(['_name' => 'pagesCategories'])];
 
             foreach ($categories as $category) {
                 //Adds category
@@ -90,6 +91,7 @@ class Sitemap extends SitemapBase
             return [];
         }
 
+        /** @var \MeCms\Model\Table\PostsCategoriesTable $table */
         $table = TableRegistry::get('MeCms.PostsCategories');
         $url = Cache::read('sitemap', $table->getCacheName());
 
@@ -107,15 +109,18 @@ class Sitemap extends SitemapBase
                 return [];
             }
 
+            /** @var \MeCms\Model\Entity\Post $latest */
             $latest = $table->Posts->find('active')
                 ->select(['modified'])
                 ->orderDesc('modified')
                 ->firstOrFail();
 
             //Adds posts index, categories index and posts search
-            $url[] = self::parse(['_name' => 'posts'], ['lastmod' => $latest->get('modified')]);
-            $url[] = self::parse(['_name' => 'postsCategories']);
-            $url[] = self::parse(['_name' => 'postsSearch'], ['priority' => '0.2']);
+            $url = [
+                self::parse(['_name' => 'posts'], ['lastmod' => $latest->get('modified')]),
+                self::parse(['_name' => 'postsCategories']),
+                self::parse(['_name' => 'postsSearch'], ['priority' => '0.2']),
+            ];
 
             foreach ($categories as $category) {
                 //Adds category
@@ -146,6 +151,7 @@ class Sitemap extends SitemapBase
             return [];
         }
 
+        /** @var \MeCms\Model\Table\TagsTable $table */
         $table = TableRegistry::get('MeCms.Tags');
         $url = Cache::read('sitemap', $table->getCacheName());
 
@@ -159,11 +165,12 @@ class Sitemap extends SitemapBase
             }
 
             //Adds tags index
+            /** @var \MeCms\Model\Entity\Tag $latest */
             $latest = $table->find()
                 ->select(['modified'])
                 ->orderDesc('modified')
                 ->firstOrFail();
-            $url[] = self::parse(['_name' => 'postsTags'], ['lastmod' => $latest->get('modified')]);
+            $url = [self::parse(['_name' => 'postsTags'], ['lastmod' => $latest->get('modified')])];
 
             //Adds each tag
             foreach ($tags as $tag) {

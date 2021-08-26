@@ -24,6 +24,7 @@ use MeTools\Console\Command;
 
 /**
  * Lists user groups
+ * @property \MeCms\Model\Table\UsersGroupsTable $UsersGroups
  */
 class GroupsCommand extends Command
 {

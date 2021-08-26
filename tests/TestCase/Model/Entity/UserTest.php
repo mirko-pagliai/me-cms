@@ -39,7 +39,7 @@ class UserTest extends EntityTestCase
      * Test for fields that cannot be mass assigned
      * @test
      */
-    public function testNoAccessibleProperties()
+    public function testNoAccessibleProperties(): void
     {
         $this->assertHasNoAccessibleProperty(['id', 'post_count', 'modified']);
     }
@@ -48,7 +48,7 @@ class UserTest extends EntityTestCase
      * Test for `_getFullName()` method
      * @test
      */
-    public function testFullNameGetMutator()
+    public function testFullNameGetMutator(): void
     {
         $this->Entity->set(['first_name' => 'Alfa', 'last_name' => 'Beta']);
         $this->assertEquals('Alfa Beta', $this->Entity->get('full_name'));
@@ -58,7 +58,7 @@ class UserTest extends EntityTestCase
      * Test for `_getPicture()` method
      * @test
      */
-    public function testPictureGetMutator()
+    public function testPictureGetMutator(): void
     {
         $this->assertEquals('MeCms.no-avatar.jpg', $this->Entity->set('id', 1)->get('picture'));
 

@@ -17,7 +17,6 @@ namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\Collection\CollectionInterface;
 use Cake\ORM\Entity;
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 use MeTools\Utility\Youtube;
 
@@ -27,7 +26,7 @@ use MeTools\Utility\Youtube;
 class GetPreviewsFromTextTraitTest extends TestCase
 {
     /**
-     * @var \MeCms\Model\Table\PostsTable|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Posts;
 
@@ -39,14 +38,14 @@ class GetPreviewsFromTextTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = TableRegistry::getTableLocator()->get('MeCms.Posts');
+        $this->Posts = $this->Posts ?: $this->getTable('MeCms.Posts');
     }
 
     /**
      * Test for `extractImages()` method
      * @test
      */
-    public function testExtractImages()
+    public function testExtractImages(): void
     {
         $extractImagesMethod = function (string $value) {
             return $this->invokeMethod($this->Posts, 'extractImages', [$value]);
@@ -138,7 +137,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
      * Test for `getPreviewSize()` method
      * @test
      */
-    public function testGetPreviewSize()
+    public function testGetPreviewSize(): void
     {
         $result = $this->invokeMethod($this->Posts, 'getPreviewSize', [WWW_ROOT . 'img' . DS . 'image.jpg']);
         $this->assertEquals([400, 400], $result);
@@ -148,9 +147,10 @@ class GetPreviewsFromTextTraitTest extends TestCase
      * Test for `getPreviews()` method
      * @test
      */
-    public function testGetPreviews()
+    public function testGetPreviews(): void
     {
-        $Posts = $this->getMockForModel(get_parent_class($this->Posts), ['getPreviewSize']);
+        /** @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject $Posts */
+        $Posts = $this->getMockForModel('MeCms.Posts', ['getPreviewSize']);
         $Posts->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         foreach ([

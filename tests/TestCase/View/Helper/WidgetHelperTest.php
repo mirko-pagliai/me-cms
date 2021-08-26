@@ -22,6 +22,7 @@ use TestPlugin\View\Cell\PluginExampleWidgetsCell;
 
 /**
  * WidgetHelperTest class
+ * @property \MeCms\View\Helper\WidgetHelper $Helper
  */
 class WidgetHelperTest extends HelperTestCase
 {
@@ -43,7 +44,7 @@ class WidgetHelperTest extends HelperTestCase
      * Tests for `getAll()` method
      * @test
      */
-    public function testGetAll()
+    public function testGetAll(): void
     {
         $getAllMethod = function () {
             return $this->invokeMethod($this->Helper, 'getAll');
@@ -96,7 +97,7 @@ class WidgetHelperTest extends HelperTestCase
      * Tests for `all()` method
      * @test
      */
-    public function testAll()
+    public function testAll(): void
     {
         //Sets some widgets
         Configure::write('Widgets.general', ['Example', 'TestPlugin.PluginExample']);
@@ -113,7 +114,7 @@ class WidgetHelperTest extends HelperTestCase
      * Tests for `widget()` method
      * @test
      */
-    public function testWidget()
+    public function testWidget(): void
     {
         $cell = $this->Helper->widget('Example');
         $this->assertSame('display', $cell->__debugInfo()['action']);

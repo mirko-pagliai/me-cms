@@ -21,7 +21,7 @@ $this->assign('title', $title = __d('me_cms', 'Reset password'));
     <?php
     echo $this->Form->control('password', [
         'autocomplete' => 'off',
-        'button' => $this->Html->button(null, '#', [
+        'button' => $this->Html->button('', '#', [
             'class' => 'display-password',
             'icon' => 'eye',
             'title' => I18N_SHOW_HIDE_PASSWORD,
@@ -31,7 +31,7 @@ $this->assign('title', $title = __d('me_cms', 'Reset password'));
     ]);
     echo $this->Form->control('password_repeat', [
         'autocomplete' => 'off',
-        'button' => $this->Html->button(null, '#', [
+        'button' => $this->Html->button('', '#', [
             'class' => 'display-password',
             'icon' => 'eye',
             'title' => I18N_SHOW_HIDE_PASSWORD,

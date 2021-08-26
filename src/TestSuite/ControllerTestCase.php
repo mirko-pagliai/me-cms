@@ -22,6 +22,9 @@ use MeTools\TestSuite\IntegrationTestTrait;
 
 /**
  * Abstract class for test controllers
+ * @method \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject getMockForController(string $className, ?array $methods = [], ?string $alias = null)
+ * @property \MeCms\Controller\AppController $_controller
+ * @property \Cake\Http\Response $_response
  */
 abstract class ControllerTestCase extends TestCase
 {
@@ -29,7 +32,7 @@ abstract class ControllerTestCase extends TestCase
 
     /**
      * Controller instance
-     * @var \Cake\Controller\Controller|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Controller;
 
@@ -115,6 +118,7 @@ abstract class ControllerTestCase extends TestCase
 
         //Tries to retrieve controller and table from the class name
         if (!$this->Controller && $this->autoInitializeClass) {
+            /** @var class-string<\MeCms\Controller\AppController> $originClassName */
             $originClassName = $this->getOriginClassNameOrFail($this);
             $alias = $this->getAlias($originClassName);
             $plugin = $this->getPluginName($this);
@@ -191,12 +195,14 @@ abstract class ControllerTestCase extends TestCase
      * @return void
      * @test
      */
-    public function testBeforeFilter()
+    public function testBeforeFilter(): void
     {
         //If the user has been reported as a spammer this makes a redirect
         $controller = $this->getMockForController($this->getOriginClassName($this), ['isSpammer']);
         $controller->method('isSpammer')->willReturn(true);
-        $this->_response = $controller->beforeFilter(new Event('myEvent'));
+        /** @var \Cake\Http\Response $response */
+        $response = $controller->beforeFilter(new Event('myEvent'));
+        $this->_response = $response;
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
     }
 
@@ -207,7 +213,7 @@ abstract class ControllerTestCase extends TestCase
      * @return void
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         $this->assertTrue($this->Controller->isAuthorized());
     }

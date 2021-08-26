@@ -37,7 +37,7 @@ class PostsTagsControllerTest extends ControllerTestCase
      * Tests for `isAuthorized()` method
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         $this->assertGroupsAreAuthorized([
             'admin' => true,
@@ -57,7 +57,7 @@ class PostsTagsControllerTest extends ControllerTestCase
      * Tests for `index()` method
      * @test
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
@@ -69,7 +69,7 @@ class PostsTagsControllerTest extends ControllerTestCase
      * Tests for `edit()` method
      * @test
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $url = $this->url + ['action' => 'edit', 1];
 

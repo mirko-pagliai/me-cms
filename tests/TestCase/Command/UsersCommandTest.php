@@ -20,6 +20,7 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * UsersCommandTest class
+ * @property \MeCms\Command\UsersCommand $Command
  */
 class UsersCommandTest extends TestCase
 {
@@ -43,9 +44,11 @@ class UsersCommandTest extends TestCase
      * Test for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
-        $this->Command->Users = $this->getTable('MeCms.Users');
+        /** @var \MeCms\Model\Table\UsersTable $Users */
+        $Users = $this->getTable('MeCms.Users');
+        $this->Command->Users = $Users;
         $expectedRows = $this->invokeMethod($this->Command, 'getUsersRows');
         array_unshift($expectedRows, ['<info>ID</info>', '<info>Username</info>', '<info>Group</info>', '<info>Name</info>', '<info>Email</info>', '<info>Posts</info>', '<info>Status</info>', '<info>Date</info>']);
 

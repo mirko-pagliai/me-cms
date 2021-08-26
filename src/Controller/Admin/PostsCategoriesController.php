@@ -32,17 +32,17 @@ class PostsCategoriesController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      */
-    public function beforeFilter(EventInterface $event): ?Response
+    public function beforeFilter(EventInterface $event)
     {
         $result = parent::beforeFilter($event);
         if ($result) {
             return $result;
         }
 
-        if ($this->getRequest()->isAction(['add', 'edit'])) {
+        if ($this->getRequest()->is('action', ['add', 'edit'])) {
             $this->set('categories', $this->PostsCategories->getTreeList());
         }
 
@@ -59,7 +59,7 @@ class PostsCategoriesController extends AppController
     public function isAuthorized($user = null): bool
     {
         //Only admins can delete posts categories. Admins and managers can access other actions
-        return $this->Auth->isGroup($this->getRequest()->isDelete() ? ['admin'] : ['admin', 'manager']);
+        return $this->Auth->isGroup($this->getRequest()->is('delete') ? ['admin'] : ['admin', 'manager']);
     }
 
     /**

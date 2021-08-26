@@ -80,7 +80,7 @@ if ($this->Auth->isGroup('admin')) {
         <dt class="col-1"><?= I18N_POSTS ?></dt>
         <dd class="col-11">
             <?= $this->Html->link(
-                $user->get('post_count'),
+                (string)$user->get('post_count'),
                 ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->get('id')]],
                 ['title' => I18N_BELONG_USER]
             ) ?>

@@ -82,7 +82,7 @@ $this->append('actions', $this->Html->button(
                     <?php
                     if ($category->get('page_count')) {
                         echo $this->Html->link(
-                            $category->get('page_count'),
+                            (string)$category->get('page_count'),
                             ['controller' => 'Pages', 'action' => 'index', '?' => ['category' => $category->get('id')]],
                             ['title' => I18N_BELONG_ELEMENT]
                         );

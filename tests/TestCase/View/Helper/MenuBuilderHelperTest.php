@@ -15,11 +15,11 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\View\Helper;
 
-use Cake\Http\ServerRequest;
 use MeTools\TestSuite\HelperTestCase;
 
 /**
  * MenuBuilderHelperTest class
+ * @property \MeCms\View\Helper\MenuBuilderHelper $Helper
  */
 class MenuBuilderHelperTest extends HelperTestCase
 {
@@ -38,7 +38,7 @@ class MenuBuilderHelperTest extends HelperTestCase
      * Tests for `getMethods()` method
      * @test
      */
-    public function testGetMethods()
+    public function testGetMethods(): void
     {
         $this->assertEquals([
             'posts',
@@ -55,7 +55,7 @@ class MenuBuilderHelperTest extends HelperTestCase
      * Tests for `generate()` method
      * @test
      */
-    public function testGenerate()
+    public function testGenerate(): void
     {
         foreach (['MeCms', 'TestPlugin'] as $plugin) {
             $result = $this->Helper->generate($plugin);
@@ -73,7 +73,7 @@ class MenuBuilderHelperTest extends HelperTestCase
      * Tests for `renderAsCollapse()` method
      * @test
      */
-    public function testRenderAsCollapse()
+    public function testRenderAsCollapse(): void
     {
         $expected = [
             ['div' => ['class' => 'card']],
@@ -125,13 +125,21 @@ class MenuBuilderHelperTest extends HelperTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Helper->renderAsCollapse('TestPlugin', 'my-container');
+        $menus = $this->Helper->generate('TestPlugin');
+        $result = '';
+        foreach ($menus as $menu) {
+            $result .= $this->Helper->renderAsCollapse($menu, 'my-container');
+        }
         $this->assertHtml($expected, $result);
 
         //Sets the same controller that is handled by the menu
-        $request = (new ServerRequest())->withParam('controller', 'Articles');
+        $request = $this->Helper->getView()->getRequest()->withParam('controller', 'Articles');
         $this->Helper->getView()->setRequest($request);
-        $result = $this->Helper->renderAsCollapse('TestPlugin', 'my-container');
+        $menus = $this->Helper->generate('TestPlugin');
+        $result = '';
+        foreach ($menus as $menu) {
+            $result .= $this->Helper->renderAsCollapse($menu, 'my-container');
+        }
         $this->assertTextContains('<a href="#collapse-first-menu" aria-controls="collapse-first-menu" aria-expanded="true"', $result);
         $this->assertTextContains('<div class="collapse show"', $result);
     }
@@ -140,7 +148,7 @@ class MenuBuilderHelperTest extends HelperTestCase
      * Tests for `renderAsDropdown()` method
      * @test
      */
-    public function testRenderAsDropdown()
+    public function testRenderAsDropdown(): void
     {
         $expected = [
             ['a' => [

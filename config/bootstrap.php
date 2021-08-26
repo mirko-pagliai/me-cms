@@ -61,7 +61,7 @@ if (is_readable(CONFIG . 'me_cms.php')) {
 
 //Adds all cache configurations
 Configure::load('MeCms.cache');
-foreach (Configure::consume('Cache') as $key => $config) {
+foreach ((array)Configure::consume('Cache') as $key => $config) {
     if (!Cache::getConfig($key)) {
         Cache::setConfig($key, $config);
     }
@@ -75,12 +75,11 @@ if (is_readable(CONFIG . 'widgets.php')) {
 }
 
 //Loads the reCAPTCHA configuration
-if (!is_readable(CONFIG . 'recaptcha.php')) {
-    throw new \Exception('Missing `config/recaptcha.php` file. You can rename the `recaptcha.example.php` file and change values');
-}
-Configure::load('recaptcha');
-if (!getConfig('RecaptchaMailhide.encryptKey')) {
-    Configure::write('RecaptchaMailhide.encryptKey', getConfigOrFail('Recaptcha.private'));
+if (is_readable(CONFIG . 'recaptcha.php')) {
+    Configure::load('recaptcha');
+    if (!getConfig('RecaptchaMailhide.encryptKey')) {
+        Configure::write('RecaptchaMailhide.encryptKey', getConfigOrFail('Recaptcha.private'));
+    }
 }
 
 if (!getConfig('DatabaseBackup.mailSender')) {

@@ -21,6 +21,7 @@ use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PostsControllerTest class
+ * @property \MeCms\Model\Table\PostsTable $Table
  */
 class PostsControllerTest extends ControllerTestCase
 {
@@ -76,7 +77,7 @@ class PostsControllerTest extends ControllerTestCase
      * Tests for `isAuthorized()` method
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         $this->assertGroupsAreAuthorized([
             'admin' => true,
@@ -115,7 +116,7 @@ class PostsControllerTest extends ControllerTestCase
      * Tests for `index()` method
      * @test
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
@@ -127,7 +128,7 @@ class PostsControllerTest extends ControllerTestCase
      * Tests for `add()` method
      * @test
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $url = $this->url + ['action' => 'add'];
 
@@ -152,7 +153,7 @@ class PostsControllerTest extends ControllerTestCase
      * Tests for `edit()` method
      * @test
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $url = $this->url + ['action' => 'edit', 1];
 
@@ -179,7 +180,7 @@ class PostsControllerTest extends ControllerTestCase
      * Tests for `delete()` method
      * @test
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
@@ -191,7 +192,7 @@ class PostsControllerTest extends ControllerTestCase
      * Tests that the admins and manangers can add and edit as another user
      * @test
      */
-    public function testAdminsAndManagersCanAddAndEditAsAnotherUser()
+    public function testAdminsAndManagersCanAddAndEditAsAnotherUser(): void
     {
         foreach (['admin', 'manager'] as $userGroup) {
             $this->setUserGroup($userGroup);
@@ -222,7 +223,7 @@ class PostsControllerTest extends ControllerTestCase
      * Tests that the other users cannot add and edit as another user
      * @test
      */
-    public function testOtherUsersCannotAddOrEditAsAnotherUser()
+    public function testOtherUsersCannotAddOrEditAsAnotherUser(): void
     {
         $this->setUserGroup('user');
         $this->setUserId(3);

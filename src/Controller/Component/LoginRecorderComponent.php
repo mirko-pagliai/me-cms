@@ -18,6 +18,7 @@ namespace MeCms\Controller\Component;
 use Cake\Controller\Component;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
+use donatj\UserAgent\UserAgentParser;
 use InvalidArgumentException;
 use Tools\Exceptionist;
 use Tools\FileArray;
@@ -63,7 +64,7 @@ class LoginRecorderComponent extends Component
     {
         if (!$this->FileArray) {
             $user = $this->getConfig('user');
-            Exceptionist::isPositive([$user], __d('me_cms', 'You have to set a valid user id'), InvalidArgumentException::class);
+            Exceptionist::isPositive($user, __d('me_cms', 'You have to set a valid user id'), InvalidArgumentException::class);
             $this->FileArray = new FileArray(LOGIN_RECORDS . 'user_' . $user . '.log');
         }
 
@@ -79,7 +80,13 @@ class LoginRecorderComponent extends Component
      */
     protected function getUserAgent(?string $userAgent = null): array
     {
-        return parse_user_agent($userAgent);
+        $parser = (new UserAgentParser())->parse($userAgent);
+
+        return [
+            'platform' => $parser->platform(),
+            'browser' => $parser->browser(),
+            'version' => $parser->browserVersion(),
+        ];
     }
 
     /**

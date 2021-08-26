@@ -24,6 +24,7 @@ use Tools\Exceptionist;
 
 /**
  * PostsTagsWidgets cell
+ * @property \MeCms\Model\Table\TagsTable $Tags
  */
 class PostsTagsWidgetsCell extends Cell
 {
@@ -46,7 +47,8 @@ class PostsTagsWidgetsCell extends Cell
     protected function getFontSizes($style = []): array
     {
         //Maximum and minimun font sizes we want to use
-        [$maxFont, $minFont] = [$style['maxFont'] ?? 40, $style['minFont'] ?? 12];
+        $maxFont = is_array($style) && array_key_exists('maxFont', $style) ? $style['maxFont'] : 40;
+        $minFont = is_array($style) && array_key_exists('minFont', $style) ? $style['minFont'] : 12;
         Exceptionist::isTrue($maxFont > $minFont, __d('me_cms', 'Invalid values'), InvalidArgumentException::class);
 
         return [$maxFont, $minFont];
@@ -73,7 +75,7 @@ class PostsTagsWidgetsCell extends Cell
         $this->viewBuilder()->setTemplate(sprintf('popular_as_%s', $render));
 
         //Returns on tags index
-        if ($this->request->isUrl(['_name' => 'postsTags'])) {
+        if ($this->request->is('url', ['_name' => 'postsTags'])) {
             return;
         }
 

@@ -28,6 +28,9 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  * Abstract class for `PostsTable` and `PagesTable` table classes.
  *
  * This class provides some methods and properties common to both classes.
+ * @property \Cake\ORM\Association\BelongsTo $Categories
+ * @method findActiveBySlug(string $slug)
+ * @method findPendingBySlug(string $slug)
  */
 abstract class PostsAndPagesTables extends AppTable
 {
@@ -94,14 +97,13 @@ abstract class PostsAndPagesTables extends AppTable
      * Creates a new Query for this repository and applies some defaults based
      *  on the type of search that was selected
      * @param string $type The type of query to perform
-     * @param array|\ArrayAccess $options An array that will be passed to
-     *  Query::applyOptions()
+     * @param array $options An array that will be passed to Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
      * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
      * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      * @uses clearCache()
      */
-    public function find($type = 'all', $options = []): Query
+    public function find(string $type = 'all', array $options = []): Query
     {
         //Gets from cache the timestamp of the next record to be published
         $next = $this->getNextToBePublished();

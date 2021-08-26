@@ -23,7 +23,7 @@ use Cake\Http\ServerRequest;
  */
 foreach (['add', 'delete', 'edit', 'index', 'view'] as $action) {
     ServerRequest::addDetector($action, function (ServerRequest $request) use ($action): bool {
-        return $request->isAction($action);
+        return $request->is('action', $action);
     });
 }
 
@@ -34,7 +34,7 @@ foreach (['add', 'delete', 'edit', 'index', 'view'] as $action) {
  *
  * Example:
  * <code>
- * $this->getRequest()->isAdmin();
+ * $this->getRequest()->is('admin');
  * </code>
  */
 ServerRequest::addDetector('admin', function (ServerRequest $request): bool {
@@ -48,7 +48,7 @@ ServerRequest::addDetector('admin', function (ServerRequest $request): bool {
  *
  * Example:
  * <code>
- * $this->getRequest()->isOffline();
+ * $this->getRequest()->is('offline');
  * </code>
  */
 ServerRequest::addDetector('offline', function (ServerRequest $request): bool {
@@ -62,7 +62,7 @@ ServerRequest::addDetector('offline', function (ServerRequest $request): bool {
     }
 
     //Always online for some actions
-    if ($request->isAction(['offline', 'login', 'logout'])) {
+    if ($request->is('action', ['offline', 'login', 'logout'])) {
         return false;
     }
 

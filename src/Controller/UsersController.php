@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Controller;
 
+use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
@@ -24,11 +25,13 @@ use Cake\Mailer\MailerAwareTrait;
 use Cake\Routing\Router;
 use DateTime;
 use MeCms\Controller\AppController;
-use MeCms\Model\Entity\User;
 use Tools\Exceptionist;
 
 /**
  * Users controller
+ * @property \MeCms\Controller\Component\LoginRecorderComponent $LoginRecorder
+ * @property \Recaptcha\Controller\Component\RecaptchaComponent $Recaptcha
+ * @property \Tokens\Controller\Component\TokenComponent $Token
  * @property \MeCms\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController
@@ -43,8 +46,8 @@ class UsersController extends AppController
      */
     protected function loginWithCookie(): ?Response
     {
-        $username = $password = null;
-        extract((array)$this->getRequest()->getCookie('login'));
+        $username = $this->getRequest()->getCookie('login.username');
+        $password = $this->getRequest()->getCookie('login.password');
         if (!$username || !$password) {
             return null;
         }
@@ -78,11 +81,11 @@ class UsersController extends AppController
 
     /**
      * Internal method to send the activation mail
-     * @param \MeCms\Model\Entity\User $user User entity
+     * @param \Cake\Datasource\EntityInterface $user User entity
      * @return bool
      * @see \MeCms\Mailer\UserMailer::activation()
      */
-    protected function sendActivationMail(User $user): bool
+    protected function sendActivationMail(EntityInterface $user): bool
     {
         $token = $this->Token->create($user->get('email'), ['type' => 'signup', 'user_id' => $user->get('id')]);
 
@@ -116,7 +119,7 @@ class UsersController extends AppController
         }
 
         //Checks if the user is already logged in
-        if (!$this->getRequest()->isAction('logout') && $this->Auth->isLogged()) {
+        if (!$this->getRequest()->is('action', 'logout') && $this->Auth->isLogged()) {
             return $this->redirect(['_name' => 'dashboard']);
         }
     }
@@ -165,7 +168,7 @@ class UsersController extends AppController
         if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
             $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
-            if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+            if (!getConfig('security.recaptcha') || (isset($this->Recaptcha) && $this->Recaptcha->verify())) {
                 if (!$entity->getErrors()) {
                     $email = $this->getRequest()->getData('email');
                     $user = $this->Users->findPendingByEmail($email)->first();
@@ -208,8 +211,8 @@ class UsersController extends AppController
 
         if ($this->getRequest()->is('post')) {
             $user = $this->Auth->identify();
-            $username = $password = null;
-            extract($this->getRequest()->getData());
+            $username = $this->getRequest()->getData('username');
+            $password = $this->getRequest()->getData('password');
 
             if ($user) {
                 //Checks if the user is banned or if is disabled (the account
@@ -282,7 +285,7 @@ class UsersController extends AppController
         if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
             $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
-            if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+            if (!getConfig('security.recaptcha') || (isset($this->Recaptcha) && $this->Recaptcha->verify())) {
                 $message = __d('me_cms', 'No account found');
                 $email = $this->getRequest()->getData('email');
                 $user = $this->Users->findActiveByEmail($email)->first();
@@ -363,11 +366,11 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
 
             $user->set('group_id', getConfigOrFail('users.default_group'))
-                ->set('active', (bool)!getConfig('users.activation'));
+                ->set('active', !getConfig('users.activation'));
 
             //Checks for reCAPTCHA, if requested
             $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
-            if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+            if (!getConfig('security.recaptcha') || (isset($this->Recaptcha) && $this->Recaptcha->verify())) {
                 $message = __d('me_cms', 'The account has not been created');
 
                 if ($this->Users->save($user)) {

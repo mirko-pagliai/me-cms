@@ -55,7 +55,7 @@ class ContactUsMailerTest extends TestCase
      * Tests for `contactUsMail()` method
      * @test
      */
-    public function testContactUsMail()
+    public function testContactUsMail(): void
     {
         $this->Mailer->contactUsMail($this->example);
         $this->assertEquals(['mymail@example.com' => 'James Blue'], $this->Mailer->getSender());
@@ -82,24 +82,17 @@ class ContactUsMailerTest extends TestCase
      * Tests for `contactUsMail()` method, calling `send()` method
      * @test
      */
-    public function testContactUsMailWithSend()
+    public function testContactUsMailWithSend(): void
     {
         $result = $this->Mailer->setTransport('debug')
             ->send('contactUsMail', [$this->example]);
-
-        $headers = $message = null;
-        extract($result);
-
-        //Checks headers
-        $this->assertStringContainsString('From: MeCms <email@example.com>', $headers);
-        $this->assertStringContainsString('Reply-To: James Blue <mymail@example.com>', $headers);
-        $this->assertStringContainsString('Sender: James Blue <mymail@example.com>', $headers);
-        $this->assertStringContainsString('To: email@example.com', $headers);
-        $this->assertStringContainsString('Subject: Email from MeCms', $headers);
-        $this->assertStringContainsString('Content-Type: text/html; charset=UTF-8', $headers);
-
-        //Checks message
-        $this->assertStringContainsString('Email from James Blue (mymail@example.com)', $message);
-        $this->assertStringContainsString('Example of message', $message);
+        $this->assertStringContainsString('From: MeCms <email@example.com>', $result['headers']);
+        $this->assertStringContainsString('Reply-To: James Blue <mymail@example.com>', $result['headers']);
+        $this->assertStringContainsString('Sender: James Blue <mymail@example.com>', $result['headers']);
+        $this->assertStringContainsString('To: email@example.com', $result['headers']);
+        $this->assertStringContainsString('Subject: Email from MeCms', $result['headers']);
+        $this->assertStringContainsString('Content-Type: text/html; charset=UTF-8', $result['headers']);
+        $this->assertStringContainsString('Email from James Blue (mymail@example.com)', $result['message']);
+        $this->assertStringContainsString('Example of message', $result['message']);
     }
 }

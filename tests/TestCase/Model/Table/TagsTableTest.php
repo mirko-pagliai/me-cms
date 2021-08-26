@@ -21,6 +21,7 @@ use MeCms\TestSuite\TableTestCase;
 
 /**
  * TagsTableTest class
+ * @property \MeCms\Model\Table\TagsTable $Table
  */
 class TagsTableTest extends TableTestCase
 {
@@ -43,7 +44,7 @@ class TagsTableTest extends TableTestCase
      * Test for `buildRules()` method
      * @test
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $example = ['tag' => 'my tag'];
         $entity = $this->Table->newEntity($example);
@@ -59,7 +60,7 @@ class TagsTableTest extends TableTestCase
      * Test for `initialize()` method
      * @test
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $this->assertEquals('tags', $this->Table->getTable());
         $this->assertEquals('tag', $this->Table->getDisplayField());
@@ -79,7 +80,7 @@ class TagsTableTest extends TableTestCase
      * Test for `find()` methods
      * @test
      */
-    public function testFindMethods()
+    public function testFindMethods(): void
     {
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM tags Tags INNER JOIN posts_tags PostsTags ON Tags.id = (PostsTags.tag_id) INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Posts.id = (PostsTags.post_id))', $query->sql());
@@ -91,7 +92,7 @@ class TagsTableTest extends TableTestCase
      * Test for `queryFromFilter()` method
      * @test
      */
-    public function testQueryFromFilter()
+    public function testQueryFromFilter(): void
     {
         $query = $this->Table->queryFromFilter($this->Table->find(), ['name' => 'test']);
         $this->assertStringEndsWith('FROM tags Tags WHERE tag like :c0', $query->sql());

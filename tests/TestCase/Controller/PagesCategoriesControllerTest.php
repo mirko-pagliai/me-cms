@@ -38,7 +38,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
      * Tests for `index()` method
      * @test
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->get(['_name' => 'pagesCategories']);
         $this->assertResponseOkAndNotEmpty();
@@ -52,7 +52,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
      * Tests for `view()` method
      * @test
      */
-    public function testView()
+    public function testView(): void
     {
         $url = ['_name' => 'pagesCategory', 'first-page-category'];
 

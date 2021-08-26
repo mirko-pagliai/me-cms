@@ -26,7 +26,7 @@ class PostsCategoryTest extends EntityTestCase
      * Test for fields that cannot be mass assigned
      * @test
      */
-    public function testNoAccessibleProperties()
+    public function testNoAccessibleProperties(): void
     {
         $this->assertHasNoAccessibleProperty(['id', 'post_count', 'modified']);
     }
@@ -35,7 +35,7 @@ class PostsCategoryTest extends EntityTestCase
      * Test for `_getUrl()` method
      * @test
      */
-    public function testUrl()
+    public function testUrl(): void
     {
         $this->Entity->set('slug', 'a-slug');
         $this->assertStringEndsWith('/posts/category/a-slug', $this->Entity->get('url'));

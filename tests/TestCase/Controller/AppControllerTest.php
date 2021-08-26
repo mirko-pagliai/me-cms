@@ -22,6 +22,7 @@ use Cake\ORM\Association\BelongsTo;
 use MeCms\Controller\PostsController;
 use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\ControllerTestCase;
+use RuntimeException;
 
 /**
  * AppControllerTest class
@@ -32,16 +33,19 @@ class AppControllerTest extends ControllerTestCase
      * Tests autoload modelClass
      * @test
      */
-    public function testTableAutoload()
+    public function testTableAutoload(): void
     {
         $Request = new ServerRequest(['params' => ['plugin' => 'MeCms']]);
         $PostsController = new PostsController($Request);
         $this->assertInstanceOf(PostsTable::class, $PostsController->Posts);
+        /* @phpstan-ignore-next-line */
         $this->assertInstanceOf(BelongsTo::class, $PostsController->Categories);
+        /* @phpstan-ignore-next-line */
         $this->assertInstanceOf(BelongsTo::class, $PostsController->Users);
 
         $this->expectNotice();
         $this->expectExceptionMessageMatches('/^Undefined property\: PostsController\:\:\$Foo in/');
+        /* @phpstan-ignore-next-line */
         $PostsController->Foo;
     }
 
@@ -49,7 +53,7 @@ class AppControllerTest extends ControllerTestCase
      * Tests for `beforeFilter()` method
      * @test
      */
-    public function testBeforeFilter()
+    public function testBeforeFilter(): void
     {
         parent::testBeforeFilter();
 
@@ -69,7 +73,7 @@ class AppControllerTest extends ControllerTestCase
         //If the site is offline this makes a redirect
         Configure::write('MeCms.default.offline', true);
         $this->Controller->getRequest()->clearDetectorCache();
-        $this->_response = $this->Controller->beforeFilter(new Event('myEvent'));
+        $this->get('/');
         $this->assertRedirect(['_name' => 'offline']);
     }
 
@@ -77,7 +81,7 @@ class AppControllerTest extends ControllerTestCase
      * Tests for `getPaging()` and `setPaging()` methods
      * @test
      */
-    public function testGetAndSetPaging()
+    public function testGetAndSetPaging(): void
     {
         $this->assertSame([], $this->Controller->getPaging());
         $this->Controller->setPaging(['paging-example']);
@@ -87,10 +91,33 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
+     * Tests for `initialize()` method, for `Recaptcha` component
+     * @test
+     */
+    public function testInitializeForRecaptchaComponent(): void
+    {
+        $this->Controller->initialize();
+        $this->assertFalse($this->Controller->components()->has('Recaptcha'));
+
+        Configure::write('MeCms.security.recaptcha', true);
+        Configure::write('Recaptcha', [
+            'public' => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+            'private' => 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+        ]);
+        $this->Controller->initialize();
+        $this->assertTrue($this->Controller->components()->has('Recaptcha'));
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Missing Recaptcha keys. You can rename the `config/recaptcha.example.php` file as `recaptcha.php` and change the keys');
+        Configure::load('MeCms.recaptcha');
+        $this->Controller->initialize();
+    }
+
+    /**
      * Tests for `isAuthorized()` method
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         //With prefixes
         foreach ([

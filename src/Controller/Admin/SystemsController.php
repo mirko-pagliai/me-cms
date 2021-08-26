@@ -23,6 +23,7 @@ use MeCms\Controller\Admin\AppController;
 use MeCms\Core\Plugin;
 use Symfony\Component\Finder\Finder;
 use Thumber\Cake\Utility\ThumbManager;
+use Tools\Exceptionist;
 use Tools\Filesystem;
 
 /**
@@ -40,7 +41,7 @@ class SystemsController extends AppController
     public function isAuthorized($user = null): bool
     {
         //Only admins can clear all temporary files or logs
-        if ($this->getRequest()->isAction('tmpCleaner')
+        if ($this->getRequest()->is('action', 'tmpCleaner')
             && in_array($this->getRequest()->getParam('pass.0'), ['all', 'logs'])
         ) {
             return $this->Auth->isGroup('admin');
@@ -95,13 +96,15 @@ class SystemsController extends AppController
         }
 
         //If a changelog file has been specified
-        if ($this->getRequest()->getQuery('file') && $files) {
-            $file = $Filesystem->makePathAbsolute($files[$this->getRequest()->getQuery('file')], ROOT);
+        $file = $this->getRequest()->getQuery('file');
+        if ($file && is_string($file) && $files) {
+            Exceptionist::arrayKeyExists($file, $files);
+            $filename = $Filesystem->makePathAbsolute($files[$file], ROOT);
             $converter = new CommonMarkConverter([
                 'html_input' => 'strip',
                 'allow_unsafe_links' => false,
             ]);
-            $changelog = $converter->convertToHtml(file_get_contents($file));
+            $changelog = $converter->convertToHtml(file_get_contents($filename) ?: '');
 
             $this->set(compact('changelog'));
         }

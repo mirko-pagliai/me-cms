@@ -24,6 +24,7 @@ use MeCms\TestSuite\TableTestCase;
 
 /**
  * Abstract class for `PagesTableTest` and `PostsTableTest` classes
+ * @property \MeCms\ORM\PostsAndPagesTables $Table
  */
 abstract class PostsAndPagesTablesTestCase extends TableTestCase
 {
@@ -42,7 +43,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      * @return void
      * @test
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $entity = $this->Table->newEntity(self::$example);
         $this->assertNotEmpty($this->Table->save($entity));
@@ -70,7 +71,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      * @return void
      * @test
      */
-    public function testInitializeSchema()
+    public function testInitializeSchema(): void
     {
         $this->assertEquals('jsonEntity', $this->Table->getSchema()->getColumnType('preview'));
     }
@@ -80,26 +81,27 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      * @return void
      * @test
      */
-    public function testEventMethods()
+    public function testEventMethods(): void
     {
-        [$event, $entity, $options] = [new Event('myEvent'), $this->Table->newEmptyEntity(), new ArrayObject()];
+        [$event, $entity] = [new Event('myEvent'), $this->Table->newEmptyEntity(), new ArrayObject()];
 
+        /** @var \MeCms\ORM\PostsAndPagesTables&\PHPUnit\Framework\MockObject\MockObject $Table */
         $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'getPreviewSize', 'setNextToBePublished']);
         $Table->expects($this->exactly(2))->method('clearCache');
         $Table->expects($this->exactly(2))->method('setNextToBePublished');
-        $Table->afterDelete($event, $entity, $options);
-        $Table->afterSave($event, $entity, $options);
+        $Table->afterDelete($event, $entity);
+        $Table->afterSave($event, $entity);
 
         $Table->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos
         $entity = $Table->newEntity(self::$example);
-        $Table->beforeSave($event, $entity, $options);
+        $Table->beforeSave($event, $entity);
         $this->assertTrue($entity->get('preview')->isEmpty());
 
         //Tries with a text with an image
         $entity = $Table->newEntity(['text' => '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg\' />'] + self::$example);
-        $Table->beforeSave($event, $entity, $options);
+        $Table->beforeSave($event, $entity);
         $this->assertCount(1, $entity->get('preview'));
         $this->assertContainsOnlyInstancesOf(Entity::class, $entity->get('preview'));
         $this->assertMatchesRegularExpression('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $entity->get('preview')->first()->get('url'));
@@ -112,7 +114,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      * @return void
      * @test
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $this->assertEquals('title', $this->Table->getDisplayField());
         $this->assertEquals('id', $this->Table->getPrimaryKey());
@@ -127,7 +129,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      * @return void
      * @test
      */
-    public function testFind()
+    public function testFind(): void
     {
         //Writes `next_to_be_published` and some data on cache
         $anHourAgo = (string)(time() - HOUR);

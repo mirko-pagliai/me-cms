@@ -34,7 +34,7 @@ class PostsTagsController extends AppController
     public function isAuthorized($user = null): bool
     {
         //Only admins and managers can edit tags
-        return $this->getRequest()->isEdit() ? $this->Auth->isGroup(['admin', 'manager']) : true;
+        return $this->getRequest()->is('edit') ? $this->Auth->isGroup(['admin', 'manager']) : true;
     }
 
     /**

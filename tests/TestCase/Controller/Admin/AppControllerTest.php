@@ -28,7 +28,7 @@ class AppControllerTest extends ControllerTestCase
 {
     /**
      * Controller instance
-     * @var \MeCms\Controller\Admin\AppController|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Controller\Admin\AppController&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Controller;
 
@@ -61,7 +61,7 @@ class AppControllerTest extends ControllerTestCase
      * Tests for `beforeFilter()` method
      * @test
      */
-    public function testBeforeFilter()
+    public function testBeforeFilter(): void
     {
         parent::testBeforeFilter();
 
@@ -110,7 +110,7 @@ class AppControllerTest extends ControllerTestCase
      * Tests for `redirectMatchingReferer()` method
      * @test
      */
-    public function testRedirectMatchingReferer()
+    public function testRedirectMatchingReferer(): void
     {
         $this->_response = $this->Controller->redirectMatchingReferer('/');
         $this->assertRedirect('/');
@@ -133,7 +133,7 @@ class AppControllerTest extends ControllerTestCase
      * Tests for `isAuthorized()` method
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         $this->assertGroupsAreAuthorized([
             'admin' => true,

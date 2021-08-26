@@ -19,6 +19,7 @@ use MeTools\TestSuite\ComponentTestCase;
 
 /**
  * AuthComponentTest class
+ * @property \MeCms\Controller\Component\AuthComponent $Component
  */
 class AuthComponentTest extends ComponentTestCase
 {
@@ -40,7 +41,7 @@ class AuthComponentTest extends ComponentTestCase
      * Tests for `initialize()` method
      * @test
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $expected = [
             'authenticate' => [
@@ -73,7 +74,7 @@ class AuthComponentTest extends ComponentTestCase
      * Tests for `hasId()` method
      * @test
      */
-    public function testHasId()
+    public function testHasId(): void
     {
         $this->assertFalse($this->Component->hasId(1));
 
@@ -88,7 +89,7 @@ class AuthComponentTest extends ComponentTestCase
      * Tests for `identify()` method
      * @test
      */
-    public function testIdentify()
+    public function testIdentify(): void
     {
         $this->loadFixtures();
         $this->Component->constructAuthenticate();
@@ -102,7 +103,7 @@ class AuthComponentTest extends ComponentTestCase
      * Tests for `isFounder()` method
      * @test
      */
-    public function testIsFounder()
+    public function testIsFounder(): void
     {
         $this->assertFalse($this->Component->isFounder());
 
@@ -117,7 +118,7 @@ class AuthComponentTest extends ComponentTestCase
      * Tests for `isLogged()` method
      * @test
      */
-    public function testIsLogged()
+    public function testIsLogged(): void
     {
         $this->assertFalse($this->Component->isLogged());
 
@@ -129,7 +130,7 @@ class AuthComponentTest extends ComponentTestCase
      * Tests for `isGroup()` method
      * @test
      */
-    public function testIsGroup()
+    public function testIsGroup(): void
     {
         $this->assertFalse($this->Component->isGroup('admin'));
 

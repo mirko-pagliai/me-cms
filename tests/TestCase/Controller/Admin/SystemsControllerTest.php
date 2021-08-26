@@ -17,6 +17,7 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\I18n\I18n;
+use MeCms\Controller\Admin\SystemsController;
 use MeCms\TestSuite\ControllerTestCase;
 use Tools\Filesystem;
 
@@ -94,7 +95,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `isAuthorized()` method
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         parent::testIsAuthorized();
 
@@ -119,14 +120,15 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `browser()` method
      * @test
      */
-    public function testBrowser()
+    public function testBrowser(): void
     {
         $this->get($this->url + ['action' => 'browser']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
         $this->assertStringEndsWith('elfinder/elfinder.html', $this->viewVariable('explorer'));
 
-        $Controller = $this->getMockForController(get_parent_class($this->Controller), ['elFinderExists']);
+        /** @var \MeCms\Controller\Admin\SystemsController&\PHPUnit\Framework\MockObject\MockObject $Controller */
+        $Controller = $this->getMockForController(SystemsController::class, ['elFinderExists']);
         $Controller->method('elFinderExists')->willReturn(false);
         $this->_response = $Controller->browser();
         $this->assertRedirect(['_name' => 'dashboard']);
@@ -137,7 +139,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `changelogs()` method
      * @test
      */
-    public function testChangelogs()
+    public function testChangelogs(): void
     {
         $url = $this->url + ['action' => 'changelogs'];
 
@@ -154,13 +156,17 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'changelogs.php');
         $this->assertNotEmpty($this->viewVariable('changelog'));
         $this->assertTrue(is_html($this->viewVariable('changelog')));
+
+        //With a no existing file
+        $this->get($url + ['?' => ['file' => 'noExistingFile']]);
+        $this->assertResponseFailure();
     }
 
     /**
      * Tests for `tmpCleaner()` method
      * @test
      */
-    public function testTmpCleaner()
+    public function testTmpCleaner(): void
     {
         $url = $this->url + ['action' => 'tmpCleaner'];
 
@@ -201,7 +207,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `tmpViewer()` method
      * @test
      */
-    public function testTmpViewer()
+    public function testTmpViewer(): void
     {
         $expectedViewVars = [
             'assetsSize',

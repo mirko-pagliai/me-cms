@@ -29,9 +29,9 @@ abstract class AppController extends BaseAppController
     /**
      * Called before the controller action
      * @param \Cake\Event\EventInterface $event An EventInterface instance
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void
      */
-    public function beforeFilter(EventInterface $event): ?Response
+    public function beforeFilter(EventInterface $event)
     {
         $result = parent::beforeFilter($event);
         if ($result) {

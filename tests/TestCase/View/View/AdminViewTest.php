@@ -44,7 +44,7 @@ class AdminViewTest extends TestCase
      * Tests for `__construct()` method
      * @test
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertEquals('MeCms.admin', $this->View->getLayout());
     }
@@ -53,7 +53,7 @@ class AdminViewTest extends TestCase
      * Tests for `render()` method
      * @test
      */
-    public function testRender()
+    public function testRender(): void
     {
         $this->View->render('StaticPages/page-from-app');
         $this->assertEquals([

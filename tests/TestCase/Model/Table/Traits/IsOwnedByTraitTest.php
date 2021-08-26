@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -24,7 +23,7 @@ use MeCms\TestSuite\TestCase;
 class IsOwnedByTraitTest extends TestCase
 {
     /**
-     * @var \MeCms\Model\Table\PostsTable|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Posts;
 
@@ -44,14 +43,14 @@ class IsOwnedByTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = TableRegistry::getTableLocator()->get('MeCms.Posts');
+        $this->Posts = $this->Posts ?: $this->getTable('MeCms.Posts');
     }
 
     /**
      * Test for `isOwnedBy()` method
      * @test
      */
-    public function testIsOwnedBy()
+    public function testIsOwnedBy(): void
     {
         $this->assertTrue($this->Posts->isOwnedBy(2, 4));
         $this->assertFalse($this->Posts->isOwnedBy(2, 1));

@@ -140,7 +140,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                     <?php
                     if ($user->get('post_count')) {
                         echo $this->Html->link(
-                            $user->get('post_count'),
+                            (string)$user->get('post_count'),
                             ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->get('id')]],
                             ['title' => I18N_BELONG_USER]
                         );

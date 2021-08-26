@@ -33,13 +33,13 @@ class PostsController extends AppController
      * Called before the controller action.
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
      * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      * @uses \MeCms\Model\Table\UsersTable::getActiveList()
      * @uses \MeCms\Model\Table\UsersTable::getList()
      */
-    public function beforeFilter(EventInterface $event): ?Response
+    public function beforeFilter(EventInterface $event)
     {
         $result = parent::beforeFilter($event);
         if ($result) {
@@ -47,7 +47,7 @@ class PostsController extends AppController
         }
 
         [$categoriesMethod, $usersMethod] = ['getList', 'getList'];
-        if ($this->getRequest()->isAction(['add', 'edit'])) {
+        if ($this->getRequest()->is('action', ['add', 'edit'])) {
             [$categoriesMethod, $usersMethod] = ['getTreeList', 'getActiveList'];
 
             //Only admins and managers can add and edit posts on behalf of other users
@@ -89,14 +89,14 @@ class PostsController extends AppController
         }
 
         //Users can edit only their own post
-        if ($this->getRequest()->isEdit()) {
+        if ($this->getRequest()->is('edit')) {
             [$postId, $userId] = [$this->getRequest()->getParam('pass.0'), $this->Auth->user('id')];
 
             return $postId && $userId ? $this->Posts->isOwnedBy((int)$postId, $userId) : false;
         }
 
         //Only admins and managers can delete posts
-        return !$this->getRequest()->isDelete();
+        return !$this->getRequest()->is('delete');
     }
 
     /**

@@ -38,13 +38,14 @@ class QueryTest extends TestCase
      * Test for `query()` method
      * @test
      */
-    public function testQuery()
+    public function testQuery(): void
     {
         //This table HAS the `getCacheName()` method.
         //So its value will be used as default
-        $Table = $this->getMockForModel('MeCms.Posts', []);
+        $Table = $this->getTable('MeCms.Posts', []);
         $expectedConfig = $Table->getCacheName();
         $cacheKey = 'aKey';
+        /** @var \Cake\Cache\Engine\FileEngine $defaultEngine */
         $defaultEngine = Cache::pool('default');
 
         $Query = $this->getMockBuilder(Query::class)
@@ -68,6 +69,7 @@ class QueryTest extends TestCase
 
         //This table DOES NOT have the `getCacheName()` method.
         //So the `default` value will be used as default
+        /** @var \App\Model\Table\ArticlesTable&\PHPUnit\Framework\MockObject\MockObject $Table */
         $Table = $this->getMockForModel('Articles', []);
 
         $Query = $this->getMockBuilder(Query::class)

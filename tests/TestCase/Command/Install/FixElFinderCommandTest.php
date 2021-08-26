@@ -38,7 +38,7 @@ class FixElFinderCommandTest extends TestCase
      * Test for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $expectedFiles = [
             ELFINDER . 'php' . DS . 'connector.minimal.php',
@@ -53,15 +53,15 @@ class FixElFinderCommandTest extends TestCase
         }
         $this->assertErrorEmpty();
 
-        $this->assertStringContainsString('\'path\' => \'' . UPLOADED . '\'', file_get_contents($expectedFiles[0]));
-        $this->assertStringContainsString('getFileCallback', file_get_contents($expectedFiles[1]));
+        $this->assertStringContainsString('\'path\' => \'' . UPLOADED . '\'', file_get_contents($expectedFiles[0]) ?: '');
+        $this->assertStringContainsString('getFileCallback', file_get_contents($expectedFiles[1]) ?: '');
     }
 
     /**
      * Test for `execute()` method, file already exists
      * @test
      */
-    public function testExecuteFileAlreadyExists()
+    public function testExecuteFileAlreadyExists(): void
     {
         $this->exec($this->command);
         $this->assertExitWithSuccess();
@@ -72,7 +72,7 @@ class FixElFinderCommandTest extends TestCase
      * Test for `execute()` method, not readable file
      * @test
      */
-    public function testExecuteNotReadableFile()
+    public function testExecuteNotReadableFile(): void
     {
         $Command = $this->getMockBuilder(FixElFinderCommand::class)
             ->setMethods(['createElfinderCke'])

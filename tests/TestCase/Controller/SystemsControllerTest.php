@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Controller;
 
+use Cake\Cache\Cache;
 use Cake\Chronos\Chronos;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
@@ -47,7 +48,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `acceptCookies()` method
      * @test
      */
-    public function testAcceptCookies()
+    public function testAcceptCookies(): void
     {
         $this->get(['_name' => 'acceptCookies']);
         $this->assertRedirect(['_name' => 'homepage']);
@@ -60,7 +61,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `contactUs()` method
      * @test
      */
-    public function testContactUs()
+    public function testContactUs(): void
     {
         $url = ['_name' => 'contactUs'];
 
@@ -103,12 +104,19 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `ipNotAllowed()` method
      * @test
      */
-    public function testIpNotAllowed()
+    public function testIpNotAllowed(): void
     {
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertRedirect(['_name' => 'homepage']);
 
-        //Spammer IP
+        //With a spammer IP
+        Cache::write(md5(serialize(['ip' => ['31.133.120.18']])), [
+          'success' => 1,
+          'ip' => [[
+              'value' => '31.133.120.18',
+              'appears' => 1,
+            ]],
+        ], 'StopSpam');
         $this->configRequest(['environment' => ['REMOTE_ADDR' => '31.133.120.18']]);
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertResponseOkAndNotEmpty();
@@ -120,7 +128,7 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `offline()` method
      * @test
      */
-    public function testOffline()
+    public function testOffline(): void
     {
         $this->get(['_name' => 'offline']);
         $this->assertRedirect(['_name' => 'homepage']);
@@ -137,23 +145,21 @@ class SystemsControllerTest extends ControllerTestCase
      * Tests for `sitemap()` method
      * @test
      */
-    public function testSitemap()
+    public function testSitemap(): void
     {
         $this->loadFixtures();
 
         //GET request. The sitemap will be created
         @unlink(SITEMAP);
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertContentType('application/x-gzip');
         $this->assertFileResponse(SITEMAP);
+        $this->assertContentType('application/x-gzip');
 
         //GET request. The sitemap will be the same as the previous request
         $filemtime = filemtime(SITEMAP);
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertContentType('application/x-gzip');
         $this->assertFileResponse(SITEMAP);
+        $this->assertContentType('application/x-gzip');
         $this->assertEquals($filemtime, filemtime(SITEMAP));
     }
 }

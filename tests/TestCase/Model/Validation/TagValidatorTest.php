@@ -40,7 +40,7 @@ class TagValidatorTest extends ValidationTestCase
      * It tests the proper functioning of the example data.
      * @test
      */
-    public function testAllDataAreRequired()
+    public function testAllDataAreRequired(): void
     {
         $this->assertEmpty($this->Table->newEntity($this->example)->getErrors());
     }
@@ -49,7 +49,7 @@ class TagValidatorTest extends ValidationTestCase
      * Test validation for `tag` property
      * @test
      */
-    public function testValidationForTag()
+    public function testValidationForTag(): void
     {
         foreach (['AbC', 'ab_c', 'ab-c', 'abc$'] as $tag) {
             $errors = $this->Table->newEntity(compact('tag') + $this->example)->getErrors();

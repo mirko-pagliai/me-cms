@@ -47,7 +47,7 @@ class ViewTest extends TestCase
      * Tests for `__construct()` method
      * @test
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertNull($this->View->getTheme());
 
@@ -61,7 +61,7 @@ class ViewTest extends TestCase
      * Tests for `getTitleForLayout()` method
      * @test
      */
-    public function testGetTitleForLayout()
+    public function testGetTitleForLayout(): void
     {
         $getTitleForLayoutMethod = function () {
             return $this->invokeMethod($this->View, 'getTitleForLayout');
@@ -101,7 +101,7 @@ class ViewTest extends TestCase
      * Tests for `renderLayout()` method
      * @test
      */
-    public function testRenderLayout()
+    public function testRenderLayout(): void
     {
         //Disable widgets, sets title, creates a favicon, then renders
         Configure::write('Widgets.general', []);

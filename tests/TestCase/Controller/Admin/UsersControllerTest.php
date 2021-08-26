@@ -24,6 +24,7 @@ use Tools\Filesystem;
 
 /**
  * UsersControllerTest class
+ * @property \MeCms\Model\Table\UsersTable $Table
  */
 class UsersControllerTest extends ControllerTestCase
 {
@@ -54,12 +55,13 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `beforeFilter()` method
      * @test
      */
-    public function testBeforeFilter()
+    public function testBeforeFilter(): void
     {
         parent::testBeforeFilter();
 
         foreach (['index', 'add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [2]);
+            $this->assertResponseOkAndNotEmpty();
             $this->assertNotEmpty($this->viewVariable('groups'));
         }
 
@@ -73,7 +75,7 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `beforeFilter()` method, with no groups
      * @test
      */
-    public function testBeforeFilterNoGroups()
+    public function testBeforeFilterNoGroups(): void
     {
         //Deletes all categories
         $this->Table->Groups->deleteAll(['id IS NOT' => null]);
@@ -95,7 +97,7 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `isAuthorized()` method
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         parent::testIsAuthorized();
 
@@ -120,7 +122,7 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `index()` method
      * @test
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
@@ -132,7 +134,7 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `view()` method
      * @test
      */
-    public function testView()
+    public function testView(): void
     {
         $url = $this->url + ['action' => 'view', 1];
 
@@ -152,7 +154,7 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `add()` method
      * @test
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $url = $this->url + ['action' => 'add'];
 
@@ -177,7 +179,7 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `edit()` method
      * @test
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $url = $this->url + ['action' => 'edit', 2];
 
@@ -214,7 +216,7 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `delete()` method
      * @test
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $url = $this->url + ['action' => 'delete'];
 
@@ -246,7 +248,7 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `activate()` method
      * @test
      */
-    public function testActivate()
+    public function testActivate(): void
     {
         $this->get($this->url + ['action' => 'activate', 2]);
         $this->assertRedirect(['action' => 'index']);
@@ -258,7 +260,7 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `changePassword()` method
      * @test
      */
-    public function testChangePassword()
+    public function testChangePassword(): void
     {
         $oldPassword = 'OldPassword1"';
         $url = $this->url + ['action' => 'changePassword'];
@@ -307,7 +309,7 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `changePicture()` method
      * @test
      */
-    public function testChangePicture()
+    public function testChangePicture(): void
     {
         $expectedPicture = USER_PICTURES . '1.jpg';
         $file = $this->createImageToUpload();
@@ -326,7 +328,7 @@ class UsersControllerTest extends ControllerTestCase
 
         //POST request. This works
         $this->post($url + ['_ext' => 'json'], compact('file'));
-        $this->assertResponseOkAndNotEmpty();
+        $this->assertResponseOk();
         $this->assertSession($expectedPicture, 'Auth.User.picture');
         $this->assertFileExists($expectedPicture);
         array_map([$this, 'assertFileDoesNotExist'], [USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
@@ -338,7 +340,7 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `changePicture()` method, error during the upload
      * @test
      */
-    public function testChangePictureErrorDuringUpload()
+    public function testChangePictureErrorDuringUpload(): void
     {
         $file = ['error' => UPLOAD_ERR_NO_FILE] + $this->createImageToUpload();
         $this->post($this->url + ['action' => 'changePicture', '_ext' => 'json'], compact('file'));
@@ -351,8 +353,9 @@ class UsersControllerTest extends ControllerTestCase
      * Tests for `lastLogin()` method
      * @test
      */
-    public function testLastLogin()
+    public function testLastLogin(): void
     {
+        /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $LoginRecorder */
         $LoginRecorder = $this->getMockForComponent(LoginRecorderComponent::class, ['getController', 'getUserAgent']);
         $LoginRecorder->method('getController')->will($this->returnValue($this->Controller));
         $LoginRecorder->method('getUserAgent')

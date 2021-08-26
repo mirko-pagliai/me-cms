@@ -27,7 +27,7 @@ class MailerTest extends TestCase
      * Tests for `__construct()` method
      * @test
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $mailer = $this->getMockBuilder(Mailer::class)
             ->setMethods([])

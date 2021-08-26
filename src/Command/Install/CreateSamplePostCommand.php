@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       2.26.0
+ * @since       2.30.1
  */
 
 namespace MeCms\Command\Install;
@@ -19,15 +19,15 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\Database\Driver\Postgres;
-use Cake\Database\Driver\Sqlite;
+use MeCms\Model\Entity\Post;
 use MeTools\Console\Command;
 
 /**
- * Creates the user groups
- * @property \MeCms\Model\Table\UsersGroupsTable $UsersGroups
+ * Creates a sample post
+ * @property \MeCms\Model\Table\PostsTable $Posts
+ * @property \MeCms\Model\Table\UsersTable $Users
  */
-class CreateGroupsCommand extends Command
+class CreateSamplePostCommand extends Command
 {
     /**
      * Hook method invoked by CakePHP when a command is about to be executed
@@ -37,7 +37,8 @@ class CreateGroupsCommand extends Command
     {
         parent::initialize();
 
-        $this->loadModel('MeCms.UsersGroups');
+        $this->loadModel('MeCms.Posts');
+        $this->loadModel('MeCms.Users');
     }
 
     /**
@@ -47,37 +48,41 @@ class CreateGroupsCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
-        return $parser->setDescription(__d('me_cms', 'Creates the user groups'));
+        return $parser->setDescription(__d('me_cms', 'Creates a sample post'));
     }
 
     /**
-     * Creates the user groups
+     * Creates a sample post
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        if (!$this->UsersGroups->find()->isEmpty()) {
-            return $io->error(__d('me_cms', 'Some user groups already exist'));
+        if (!$this->Posts->find()->isEmpty()) {
+            $io->verbose(__d('me_cms', 'At least one post already exists'));
+
+            return null;
         }
 
-        //Truncates the table (this resets IDs), then saves groups
-        $connection = $this->UsersGroups->getConnection();
-        $command = 'TRUNCATE TABLE `%s`';
-        if ($connection->getDriver() instanceof Sqlite) {
-            $command = 'DELETE FROM "sqlite_sequence" WHERE "name"=\'%s\';';
-        } elseif ($connection->getDriver() instanceof Postgres) {
-            $command = 'truncate %s restart identity';
+        /** @var \MeCms\Model\Entity\User $user */
+        $user = $this->Users->find('all', ['fields' => ['id']])->first();
+        if (!$user) {
+            return $io->error(__d('me_cms', 'You must first create a user. Run the `{0}` command', 'bin/cake me_cms.create_admin'));
         }
-        $connection->execute(sprintf($command, $this->UsersGroups->getTable()));
 
-        $this->UsersGroups->saveMany($this->UsersGroups->newEntities([
-            ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
-            ['id' => 2, 'name' => 'manager', 'label' => 'Manager'],
-            ['id' => 3, 'name' => 'user', 'label' => 'User'],
-        ]));
-        $io->verbose(__d('me_cms', 'The user groups have been created'));
+        $post = new Post([
+            'user_id' => $user->get('id'),
+            'title' => 'This is sample post',
+            'subtitle' => 'Just a sample post',
+            'slug' => 'a-sample-post',
+            'text' => 'Hi! This is just <strong>a sample post</strong>, automatically created during installation.<br />Welcome!',
+        ]);
+        if (!$this->Posts->save($post)) {
+            return $io->error(__d('me_cms', I18N_OPERATION_NOT_OK));
+        }
+
+        $io->verbose('The sample post has been created');
 
         return null;
     }

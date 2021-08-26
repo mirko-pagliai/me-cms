@@ -49,7 +49,7 @@ class StaticPageTest extends TestCase
      * Test for `all()` method
      * @test
      */
-    public function testAll()
+    public function testAll(): void
     {
         $this->loadPlugins(['TestPlugin']);
         $TestPluginPath = (new Filesystem())->rtr(Plugin::templatePath('TestPlugin')) . DS . 'StaticPages' . DS;
@@ -103,7 +103,7 @@ class StaticPageTest extends TestCase
      * Test for `get()` method
      * @test
      */
-    public function testGet()
+    public function testGet(): void
     {
         $this->loadPlugins(['TestPlugin']);
 
@@ -126,25 +126,25 @@ class StaticPageTest extends TestCase
      * Test for `get()` method, using a different locale
      * @test
      */
-    public function testGetDifferentLocale()
+    public function testGetDifferentLocale(): void
     {
         $expected = 'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy';
         $this->assertEquals($expected, StaticPage::get('cookies-policy'));
 
         $originalValue = ini_set('intl.default_locale', 'it_IT');
         $this->assertEquals(sprintf('%s-it', $expected), StaticPage::get('cookies-policy'));
-        ini_set('intl.default_locale', $originalValue);
+        ini_set('intl.default_locale', (string)$originalValue);
 
         $originalValue = ini_set('intl.default_locale', 'it');
         $this->assertEquals(sprintf('%s-it', $expected), StaticPage::get('cookies-policy'));
-        ini_set('intl.default_locale', $originalValue);
+        ini_set('intl.default_locale', (string)$originalValue);
     }
 
     /**
      * Test for `getPaths()` method
      * @test
      */
-    public function testGetPaths()
+    public function testGetPaths(): void
     {
         $this->loadPlugins(['TestPlugin']);
         $result = StaticPage::getPaths();
@@ -161,7 +161,7 @@ class StaticPageTest extends TestCase
      * @requires OS Linux
      * @test
      */
-    public function testGetSlug()
+    public function testGetSlug(): void
     {
         foreach (['my-file', '/first/second/my-file'] as $file) {
             $this->assertEquals('my-file', StaticPage::getSlug($file, '/first/second'));
@@ -178,7 +178,7 @@ class StaticPageTest extends TestCase
      * @requires OS WIN32|WINNT
      * @test
      */
-    public function testGetSlugWin()
+    public function testGetSlugWin(): void
     {
         foreach ([
             '\\first\\second' => '\\first\\second\\my-file',
@@ -197,7 +197,7 @@ class StaticPageTest extends TestCase
      * Test for `getTitle()` method
      * @test
      */
-    public function testGetTitle()
+    public function testGetTitle(): void
     {
         $expected = [
             'Page From App',

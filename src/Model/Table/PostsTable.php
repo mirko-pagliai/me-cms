@@ -20,6 +20,7 @@ use Cake\Cache\Cache;
 use Cake\Collection\CollectionInterface;
 use Cake\Event\Event;
 use Cake\ORM\Locator\LocatorAwareTrait;
+use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Table\PostsCategoriesTable;
@@ -34,9 +35,8 @@ use Tools\Exceptionist;
 
 /**
  * Posts model
- * @property \Cake\ORM\Association\BelongsTo $Categories
  * @property \Cake\ORM\Association\BelongsTo $Users
- * @property \Cake\ORM\Association\BelongsToMany $Tags
+ * @property \Cake\ORM\Association\BelongsToMany&\MeCms\Model\Table\TagsTable $Tags
  * @method \MeCms\Model\Entity\Post get($primaryKey, $options = [])
  * @method \MeCms\Model\Entity\Post newEntity($data = null, array $options = [])
  * @method \MeCms\Model\Entity\Post[] newEntities(array $data, array $options = [])
@@ -71,7 +71,7 @@ class PostsTable extends PostsAndPagesTables
         parent::beforeMarshal($event, $data, $options);
 
         if (!empty($data['tags_as_string'])) {
-            $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']));
+            $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']) ?: []);
 
             //Gets existing tags
             $existingTags = $this->Tags->getList()->toArray();
@@ -150,6 +150,7 @@ class PostsTable extends PostsAndPagesTables
                 //It reverses the tags order, because the tags less popular have
                 //  less chance to find a related post
                 foreach (array_reverse($tags) as $tag) {
+                    /** @var \MeCms\Model\Entity\Post $post */
                     $post = $this->queryForRelated($tag->get('id'), $images)
                         ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude])
                         ->first();
@@ -208,10 +209,10 @@ class PostsTable extends PostsAndPagesTables
      * Gets the query for related posts from a tag ID
      * @param int $tagId Tag ID
      * @param bool $onlyWithImages If `true`, gets only posts with images
-     * @return \MeCms\ORM\Query $query Query object
+     * @return \Cake\ORM\Query $query Query object
      * @since 2.23.0
      */
-    public function queryForRelated(int $tagId, bool $onlyWithImages = true): Query
+    public function queryForRelated(int $tagId, bool $onlyWithImages = true): CakeQuery
     {
         $query = $this->find('active')
             ->select(['id', 'title', 'preview', 'slug', 'text'])
@@ -229,11 +230,11 @@ class PostsTable extends PostsAndPagesTables
 
     /**
      * Build query from filter data
-     * @param \MeCms\ORM\Query $query Query object
+     * @param \Cake\ORM\Query $query Query object
      * @param array $data Filter data (`$this->getRequest()->getQueryParams()`)
-     * @return \MeCms\ORM\Query $query Query object
+     * @return \Cake\ORM\Query $query Query object
      */
-    public function queryFromFilter(Query $query, array $data = []): Query
+    public function queryFromFilter(CakeQuery $query, array $data = []): CakeQuery
     {
         $query = parent::queryFromFilter($query, $data);
 

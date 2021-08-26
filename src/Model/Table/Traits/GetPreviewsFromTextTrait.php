@@ -78,7 +78,7 @@ trait GetPreviewsFromTextTrait
      */
     protected function getPreviewSize(string $image): array
     {
-        return array_slice(getimagesize($image), 0, 2);
+        return array_slice(getimagesize($image) ?: [], 0, 2);
     }
 
     /**

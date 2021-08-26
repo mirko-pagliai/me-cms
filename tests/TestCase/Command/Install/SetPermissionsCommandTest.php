@@ -31,7 +31,7 @@ class SetPermissionsCommandTest extends TestCase
      * Tests for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $expected = array_map(function (string $path): string {
             return 'Setted permissions on `' . (new Filesystem())->rtr($path) . '`';

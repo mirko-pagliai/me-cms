@@ -41,7 +41,7 @@ class PagesTableTest extends PostsAndPagesTablesTestCase
      * Test for `initialize()` method
      * @test
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         parent::testInitialize();
 

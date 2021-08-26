@@ -92,7 +92,7 @@ class AppValidatorTest extends TestCase
      * Test validation for `user_id` property
      * @test
      */
-    public function testValidationForUserId()
+    public function testValidationForUserId(): void
     {
         $this->loadFixtures('Posts');
         $errors = $this->Posts->newEntity(['user_id' => 'string'] + $this->example['Posts'])->getErrors();
@@ -103,7 +103,7 @@ class AppValidatorTest extends TestCase
      * Test validation for `email` property
      * @test
      */
-    public function testValidationForEmail()
+    public function testValidationForEmail(): void
     {
         $this->loadFixtures('Users');
 
@@ -123,7 +123,7 @@ class AppValidatorTest extends TestCase
      * Test validation for `first_name` property
      * @test
      */
-    public function testValidationForFirstNameAndLastName()
+    public function testValidationForFirstNameAndLastName(): void
     {
         $this->loadFixtures('Users');
 
@@ -150,7 +150,7 @@ class AppValidatorTest extends TestCase
      * Test validation for `title` property
      * @test
      */
-    public function testValidationForTitle()
+    public function testValidationForTitle(): void
     {
         $this->loadFixtures('Posts');
 
@@ -169,7 +169,7 @@ class AppValidatorTest extends TestCase
      * Test validation for `filename` property
      * @test
      */
-    public function testValidationForSubtitle()
+    public function testValidationForSubtitle(): void
     {
         $this->loadFixtures('Posts');
 
@@ -188,7 +188,7 @@ class AppValidatorTest extends TestCase
      * Test validation for `slug` property
      * @test
      */
-    public function testValidationForSlug()
+    public function testValidationForSlug(): void
     {
         $this->loadFixtures('Posts');
 
@@ -210,7 +210,7 @@ class AppValidatorTest extends TestCase
      * Test validation for `priority` property
      * @test
      */
-    public function testValidationForPriority()
+    public function testValidationForPriority(): void
     {
         $this->loadFixtures('Posts');
 
@@ -229,7 +229,7 @@ class AppValidatorTest extends TestCase
      * Test validation for `description` property
      * @test
      */
-    public function testValidationForDescription()
+    public function testValidationForDescription(): void
     {
         $this->loadFixtures('PostsCategories');
         $data = ['title' => 'A title', 'slug' => 'a-slug'];
@@ -245,7 +245,7 @@ class AppValidatorTest extends TestCase
      * Test validation for `active` property
      * @test
      */
-    public function testValidationForActive()
+    public function testValidationForActive(): void
     {
         $this->loadFixtures('Posts');
 
@@ -262,7 +262,7 @@ class AppValidatorTest extends TestCase
      * Test validation for `created` property
      * @test
      */
-    public function testValidationForCreated()
+    public function testValidationForCreated(): void
     {
         $this->loadFixtures('Posts');
 

@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 //Returns on search
-if ($this->getRequest()->isUrl(['_name' => 'postsSearch'])) {
+if ($this->getRequest()->is('url', ['_name' => 'postsSearch'])) {
     return;
 }
 

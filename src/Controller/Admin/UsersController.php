@@ -25,6 +25,8 @@ use Thumber\Cake\Utility\ThumbManager;
 /**
  * Users controller
  * @property \MeCms\Model\Table\UsersGroupsTable $Groups
+ * @property \MeCms\Controller\Component\LoginRecorderComponent $LoginRecorder
+ * @property \MeTools\Controller\Component\UploaderComponent $Uploader
  * @property \MeCms\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController
@@ -36,17 +38,17 @@ class UsersController extends AppController
      * You can use this method to perform logic that needs to happen before
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Model\Table\UsersGroupsTable::getList()
      */
-    public function beforeFilter(EventInterface $event): ?Response
+    public function beforeFilter(EventInterface $event)
     {
         $result = parent::beforeFilter($event);
         if ($result) {
             return $result;
         }
 
-        if ($this->getRequest()->isAction(['index', 'add', 'edit'])) {
+        if ($this->getRequest()->is('action', ['index', 'add', 'edit'])) {
             $groups = $this->Groups->getList();
             if ($groups->isEmpty()) {
                 $this->Flash->alert(__d('me_cms', 'You must first create an user group'));
@@ -80,12 +82,12 @@ class UsersController extends AppController
     public function isAuthorized($user = null): bool
     {
         //Every user can change his password
-        if ($this->getRequest()->isAction('changePassword')) {
+        if ($this->getRequest()->is('action', 'changePassword')) {
             return true;
         }
 
         //Only admins can activate account and delete users
-        if ($this->getRequest()->isAction(['activate', 'delete'])) {
+        if ($this->getRequest()->is('action', ['activate', 'delete'])) {
             return $this->Auth->isGroup('admin');
         }
 
@@ -264,7 +266,7 @@ class UsersController extends AppController
 
             $filename = $id . '.' . pathinfo($this->getRequest()->getData('file')['tmp_name'], PATHINFO_EXTENSION);
 
-            $uploaded = $this->Uploader->set($this->getRequest()->getData('file'))
+            $uploaded = $this->Uploader->setFile($this->getRequest()->getData('file'))
                 ->mimetype('image')
                 ->save(USER_PICTURES, $filename);
 

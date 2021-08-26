@@ -20,6 +20,7 @@ use Cake\View\Cell;
 
 /**
  * PagesWidgets cell
+ * @property \MeCms\Model\Table\PagesTable $Pages
  */
 class PagesWidgetsCell extends Cell
 {
@@ -42,7 +43,7 @@ class PagesWidgetsCell extends Cell
         $this->viewBuilder()->setTemplate(sprintf('categories_as_%s', $render));
 
         //Returns on categories index
-        if ($this->request->isUrl(['_name' => 'pagesCategories'])) {
+        if ($this->request->is('url', ['_name' => 'pagesCategories'])) {
             return;
         }
 
@@ -65,7 +66,7 @@ class PagesWidgetsCell extends Cell
     public function pages(): void
     {
         //Returns on pages index
-        if ($this->request->isUrl(['_name' => 'pagesCategories'])) {
+        if ($this->request->is('url', ['_name' => 'pagesCategories'])) {
             return;
         }
 

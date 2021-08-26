@@ -25,6 +25,7 @@ use Tools\Filesystem;
 
 /**
  * Systems controller
+ * @property \Recaptcha\Controller\Component\RecaptchaComponent $Recaptcha
  */
 class SystemsController extends AppController
 {
@@ -62,7 +63,7 @@ class SystemsController extends AppController
         if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
             $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
-            if (!getConfig('security.recaptcha') || $this->Recaptcha->verify()) {
+            if (!getConfig('security.recaptcha') || (isset($this->Recaptcha) && $this->Recaptcha->verify())) {
                 //Sends the email
                 $message = I18N_OPERATION_NOT_OK;
                 if ($contact->execute($this->getRequest()->getData())) {
@@ -84,7 +85,7 @@ class SystemsController extends AppController
     public function ipNotAllowed()
     {
         //If the user's IP address is not reported as spammer
-        if (!$this->getRequest()->isSpammer()) {
+        if (!$this->getRequest()->is('spammer')) {
             return $this->redirect($this->referer(['_name' => 'homepage'], true));
         }
 
@@ -115,7 +116,7 @@ class SystemsController extends AppController
     {
         //Checks if the sitemap exist and is not expired
         if (is_readable(SITEMAP)) {
-            $time = Time::createFromTimestamp(filemtime(SITEMAP));
+            $time = Time::createFromTimestamp((int)filemtime(SITEMAP));
 
             if (!$time->modify(getConfigOrFail('main.sitemap_expiration'))->isPast()) {
                 $sitemap = file_get_contents(SITEMAP);

@@ -19,7 +19,6 @@ use BadMethodCallException;
 use Cake\Cache\Cache;
 use Cake\I18n\I18nDateTimeInterface;
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
 use MeCms\ORM\Query;
 use MeCms\TestSuite\TableTestCase;
 
@@ -29,12 +28,12 @@ use MeCms\TestSuite\TableTestCase;
 class AppTableTest extends TableTestCase
 {
     /**
-     * @var \MeCms\Model\Table\PostsTable|\Cake\ORM\Table
+     * @var \MeCms\Model\Table\PostsTable
      */
     protected $Posts;
 
     /**
-     * @var \MeCms\Model\Table\PostsCategoriesTable|\Cake\ORM\Table
+     * @var \MeCms\Model\Table\PostsCategoriesTable
      */
     protected $PostsCategories;
 
@@ -63,15 +62,15 @@ class AppTableTest extends TableTestCase
     {
         parent::setUp();
 
-        $this->Posts = TableRegistry::getTableLocator()->get('MeCms.Posts');
-        $this->PostsCategories = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
+        $this->Posts = $this->Posts ?: $this->getTable('MeCms.Posts');
+        $this->PostsCategories = $this->PostsCategories ?: $this->getTable('MeCms.PostsCategories');
     }
 
     /**
      * Test for event methods
      * @test
      */
-    public function testEventMethods()
+    public function testEventMethods(): void
     {
         $example = [
             'user_id' => 1,
@@ -81,24 +80,29 @@ class AppTableTest extends TableTestCase
             'text' => 'Example text',
         ];
 
+        /** @var \MeCms\Model\Table\AppTable&\PHPUnit\Framework\MockObject\MockObject $Table */
         $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
         $Table->expects($this->atLeast(2))->method('clearCache');
 
+        /** @var \Cake\Datasource\EntityInterface $entity */
         $entity = $Table->save($Table->newEntity($example));
         $this->assertNotEmpty($entity->get('created'));
         $Table->delete($entity);
 
         $now = new Time();
+        /** @var \Cake\Datasource\EntityInterface $entity */
         $entity = $Table->save($Table->newEntity(['created' => $now] + $example));
         $this->assertEquals($now, $entity->get('created'));
         $Table->delete($entity);
 
         foreach (['2017-03-14 20:19', '2017-03-14 20:19:00'] as $created) {
+            /** @var \Cake\Datasource\EntityInterface $entity */
             $entity = $Table->save($Table->newEntity(compact('created') + $example));
             $this->assertEquals('2017-03-14 20:19:00', $entity->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'));
             $Table->delete($entity);
         }
 
+        /** @var \Cake\Datasource\EntityInterface $entity */
         $entity = $Table->save($Table->newEntity(['created' => null] + $example));
         $this->assertInstanceOf(Time::class, $entity->get('created'));
         $Table->delete($entity);
@@ -108,7 +112,7 @@ class AppTableTest extends TableTestCase
      * Test for `clearCache()` method
      * @test
      */
-    public function testClearCache()
+    public function testClearCache(): void
     {
         Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
         $this->assertTrue($this->Posts->clearCache());
@@ -119,7 +123,7 @@ class AppTableTest extends TableTestCase
      * Test for `deleteAll()` method
      * @test
      */
-    public function testDeleteAll()
+    public function testDeleteAll(): void
     {
         $this->assertNotEmpty($this->Posts->find()->count());
         Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
@@ -132,7 +136,7 @@ class AppTableTest extends TableTestCase
      * Test for `find()` methods
      * @test
      */
-    public function testFindMethods()
+    public function testFindMethods(): void
     {
         $query = $this->Posts->find('active');
         $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 AND Posts.created <= :c1)', $query->sql());
@@ -163,7 +167,7 @@ class AppTableTest extends TableTestCase
      * Test for `getCacheName()` method
      * @test
      */
-    public function testGetCacheName()
+    public function testGetCacheName(): void
     {
         $this->assertEquals('posts', $this->Posts->getCacheName());
         $this->assertEquals(['posts', 'users'], $this->Posts->getCacheName(true));
@@ -173,7 +177,7 @@ class AppTableTest extends TableTestCase
      * Test for `getList()` method
      * @test
      */
-    public function testGetList()
+    public function testGetList(): void
     {
         $query = $this->Posts->getList();
         $this->assertStringEndsWith('ORDER BY ' . $this->Posts->getDisplayField() . ' ASC', $query->sql());
@@ -186,7 +190,7 @@ class AppTableTest extends TableTestCase
      * Test for `getTreeList()` method
      * @test
      */
-    public function testGetTreeList()
+    public function testGetTreeList(): void
     {
         $expected = [
             1 => 'First post category',
@@ -210,7 +214,7 @@ class AppTableTest extends TableTestCase
      * Test for `query()` method
      * @test
      */
-    public function testQuery()
+    public function testQuery(): void
     {
         $this->assertInstanceOf(Query::class, $this->Posts->query());
     }
@@ -219,7 +223,7 @@ class AppTableTest extends TableTestCase
      * Test for `queryFromFilter()` method
      * @test
      */
-    public function testQueryFromFilter()
+    public function testQueryFromFilter(): void
     {
         $expectedSql = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
         $expectedParams = [

@@ -21,11 +21,12 @@ use MeTools\TestSuite\TestCase as BaseTestCase;
 
 /**
  * TestCase class
+ * @method \MeCms\Model\Table\AppTable getTable(string $alias, array $options = [])
  */
 abstract class TestCase extends BaseTestCase
 {
     /**
-     * @var \Cake\ORM\Table
+     * @var \MeCms\Model\Table\AppTable
      */
     protected $Table;
 
@@ -47,7 +48,7 @@ abstract class TestCase extends BaseTestCase
 
         //Clears all cache keys
         if ($this->Table && method_exists($this->Table, 'getCacheName')) {
-            $this->cacheToClear = array_merge($this->cacheToClear, $this->Table->getCacheName(true));
+            $this->cacheToClear = array_merge($this->cacheToClear, (array)$this->Table->getCacheName(true));
         }
 
         foreach ($this->cacheToClear as $cacheKey) {

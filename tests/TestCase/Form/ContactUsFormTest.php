@@ -27,7 +27,7 @@ class ContactUsFormTest extends TestCase
     use MailerAwareTrait;
 
     /**
-     * @var \MeCms\Form\ContactUsForm|\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Form\ContactUsForm&\PHPUnit\Framework\MockObject\MockObject
      */
     public $Form;
 
@@ -59,7 +59,7 @@ class ContactUsFormTest extends TestCase
      * It tests the proper functioning of the example data.
      * @test
      */
-    public function testValidationExampleData()
+    public function testValidationExampleData(): void
     {
         $this->assertTrue($this->Form->validate($this->example));
         $this->assertEmpty($this->Form->getErrors());
@@ -79,7 +79,7 @@ class ContactUsFormTest extends TestCase
      * Test validation for `email` property
      * @test
      */
-    public function testValidationForEmail()
+    public function testValidationForEmail(): void
     {
         $this->assertFalse($this->Form->validate(['email' => 'spammer@example.com'] + $this->example));
         $this->assertEquals([
@@ -91,7 +91,7 @@ class ContactUsFormTest extends TestCase
      * Test validation for `message` property
      * @test
      */
-    public function testValidationForMessage()
+    public function testValidationForMessage(): void
     {
         $expected = ['message' => ['lengthBetween' => 'Must be between 10 and 1000 chars']];
         foreach ([str_repeat('a', 9), str_repeat('a', 1001)] as $message) {
@@ -109,7 +109,7 @@ class ContactUsFormTest extends TestCase
      * Tests for `_execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $this->assertTrue($this->Form->execute($this->example));
     }

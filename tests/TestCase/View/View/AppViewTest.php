@@ -50,7 +50,7 @@ class AppViewTest extends TestCase
      * Tests for `setBlocks()` method
      * @test
      */
-    public function testSetBlocks()
+    public function testSetBlocks(): void
     {
         //Writes some configuration values
         Configure::write('MeCms.default.toolbar_color', '#ffffff');
@@ -72,7 +72,7 @@ class AppViewTest extends TestCase
      * Tests for `renderLayout()` method
      * @test
      */
-    public function testRenderLayout()
+    public function testRenderLayout(): void
     {
         $this->assertNotEmpty($this->View->render('StaticPages/page-from-app'));
         $this->assertEquals('default', $this->View->getLayout());
@@ -83,7 +83,7 @@ class AppViewTest extends TestCase
      * Tests for `renderLayout()` method, with a layout from a theme
      * @test
      */
-    public function testRenderLayoutFromTheme()
+    public function testRenderLayoutFromTheme(): void
     {
         //Loads the `TestPlugin` and sets it as a theme
         $this->loadPlugins(['TestPlugin']);
@@ -101,7 +101,7 @@ class AppViewTest extends TestCase
      * Tests for `addToUserbar()` method
      * @test
      */
-    public function testAddToUserbar()
+    public function testAddToUserbar(): void
     {
         $this->View->addToUserbar('string');
         $this->View->addToUserbar(['first', 'second']);

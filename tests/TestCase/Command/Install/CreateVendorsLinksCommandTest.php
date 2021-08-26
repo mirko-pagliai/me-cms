@@ -31,7 +31,7 @@ class CreateVendorsLinksCommandTest extends TestCase
      * Tests for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         $expected = array_values(array_filter(array_map(function (string $target, string $origin): string {
             $target = WWW_ROOT . 'vendor' . DS . $target;

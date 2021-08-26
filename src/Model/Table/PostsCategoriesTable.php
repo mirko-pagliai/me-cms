@@ -25,6 +25,7 @@ use MeCms\ORM\Query;
  * PostsCategories model
  * @property \Cake\ORM\Association\BelongsTo $Parents
  * @property \Cake\ORM\Association\HasMany $Childs
+ * @property \Cake\ORM\Association\HasMany $Posts
  */
 class PostsCategoriesTable extends AppTable
 {

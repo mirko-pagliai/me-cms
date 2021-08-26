@@ -38,7 +38,7 @@ class MenuTest extends TestCase
      * Test on `login` action
      * @test
      */
-    public function testLogin()
+    public function testLogin(): void
     {
         $this->get(['_name' => 'login']);
         $this->assertResponseNotContains('Login</a>');
@@ -57,7 +57,7 @@ class MenuTest extends TestCase
      * Test on `signup` action
      * @test
      */
-    public function testSignup()
+    public function testSignup(): void
     {
         $this->get(['_name' => 'signup']);
         $this->assertResponseContains('Login</a>');
@@ -70,7 +70,7 @@ class MenuTest extends TestCase
      * Test on `activationResend` action
      * @test
      */
-    public function testActivationResend()
+    public function testActivationResend(): void
     {
         $this->get(['_name' => 'activationResend']);
         $this->assertResponseContains('Login</a>');
@@ -83,7 +83,7 @@ class MenuTest extends TestCase
      * Test on `passwordForgot` action
      * @test
      */
-    public function testPasswordForgot()
+    public function testPasswordForgot(): void
     {
         $this->get(['_name' => 'passwordForgot']);
         $this->assertResponseContains('Login</a>');
@@ -96,7 +96,7 @@ class MenuTest extends TestCase
      * Test with disabled options
      * @test
      */
-    public function testDisabledOptions()
+    public function testDisabledOptions(): void
     {
         Configure::write('MeCms.users', ['signup' => false, 'reset_password' => false]);
         $this->get(['_name' => 'login']);

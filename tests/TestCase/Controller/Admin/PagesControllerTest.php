@@ -21,6 +21,7 @@ use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PagesControllerTest class
+ * @property \MeCms\Model\Table\PagesTable $Table
  */
 class PagesControllerTest extends ControllerTestCase
 {
@@ -43,7 +44,7 @@ class PagesControllerTest extends ControllerTestCase
      * Tests for `beforeFilter()` method
      * @test
      */
-    public function testBeforeFilter()
+    public function testBeforeFilter(): void
     {
         parent::testBeforeFilter();
 
@@ -77,7 +78,7 @@ class PagesControllerTest extends ControllerTestCase
      * Tests for `isAuthorized()` method
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         parent::testIsAuthorized();
 
@@ -102,7 +103,7 @@ class PagesControllerTest extends ControllerTestCase
      * Tests for `index()` method
      * @test
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->get($this->url + ['action' => 'index']);
         $this->assertResponseOkAndNotEmpty();
@@ -114,7 +115,7 @@ class PagesControllerTest extends ControllerTestCase
      * Tests for `indexStatics()` method
      * @test
      */
-    public function testIndexStatics()
+    public function testIndexStatics(): void
     {
         $this->get($this->url + ['action' => 'indexStatics']);
         $this->assertResponseOkAndNotEmpty();
@@ -126,7 +127,7 @@ class PagesControllerTest extends ControllerTestCase
      * Tests for `add()` method
      * @test
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $url = $this->url + ['action' => 'add'];
 
@@ -156,7 +157,7 @@ class PagesControllerTest extends ControllerTestCase
      * Tests for `edit()` method
      * @test
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $url = $this->url + ['action' => 'edit', 1];
 
@@ -182,7 +183,7 @@ class PagesControllerTest extends ControllerTestCase
      * Tests for `delete()` method
      * @test
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);

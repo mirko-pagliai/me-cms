@@ -28,7 +28,7 @@ trait AuthTrait
      * Checks whether the logged user has a specific ID.
      *
      * If you pass an array of IDs, it will check that at least one matches.
-     * @param string|array $id User ID as string or array
+     * @param string|int|array<int|string> $id User ID as string or array
      * @return bool
      * @uses user()
      */

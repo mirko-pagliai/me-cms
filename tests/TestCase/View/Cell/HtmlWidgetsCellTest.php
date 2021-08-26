@@ -26,7 +26,7 @@ class HtmlWidgetsCellTest extends CellTestCase
      * Test for `display()` method
      * @test
      */
-    public function testDisplay()
+    public function testDisplay(): void
     {
         $widget = 'MeCms.Html';
 

@@ -27,6 +27,9 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * CreateGroupsCommandTest class
+ * @property \MeCms\Command\Install\CreateGroupsCommand $Command
+ * @property \Cake\TestSuite\Stub\ConsoleOutput|null $_err
+ * @property \Cake\Console\ConsoleInput|null $_in
  */
 class CreateGroupsCommandTest extends TestCase
 {
@@ -50,7 +53,7 @@ class CreateGroupsCommandTest extends TestCase
      * Test for `execute()` method
      * @test
      */
-    public function testExecute()
+    public function testExecute(): void
     {
         //A group already exists
         $this->exec('me_cms.create_groups -v');
@@ -85,18 +88,19 @@ class CreateGroupsCommandTest extends TestCase
 
     /**
      * Test for `execute()` method
+     * @param class-string<\Cake\Database\DriverInterface> $driver
      * @dataProvider driverProvider
      * @test
      */
-    public function testExecuteOtherDrivers($driver)
+    public function testExecuteOtherDrivers($driver): void
     {
         $this->skipIf(IS_WIN);
 
-        $this->Command->UsersGroups = $this->getMockBuilder(Table::class)
+        /** @var \MeCms\Model\Table\UsersGroupsTable&\PHPUnit\Framework\MockObject\MockObject $UsersGroups */
+        $UsersGroups = $this->getMockBuilder(Table::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-        $this->Command->UsersGroups->method('find')->will($this->returnCallback(function () {
+        $UsersGroups->method('find')->will($this->returnCallback(function () {
             $query = $this->getMockBuilder(Query::class)
                 ->disableOriginalConstructor()
                 ->setMethods(array_merge(get_class_methods(Query::class), ['isEmpty']))
@@ -105,16 +109,15 @@ class CreateGroupsCommandTest extends TestCase
 
             return $query;
         }));
+        $this->Command->UsersGroups = $UsersGroups;
 
-        $this->Command->UsersGroups->method('getConnection')->will($this->returnCallback(function () use ($driver) {
-            $driver = $this->getMockBuilder($driver)->getMock();
-            $driver->method('enabled')->will($this->returnValue(true));
-
-            return $this->getMockBuilder(Connection::class)
-                ->setConstructorArgs([compact('driver')])
-                ->setMethods(['execute'])
-                ->getMock();
-        }));
+        $driver = $this->getMockBuilder($driver)->getMock();
+        $driver->method('enabled')->will($this->returnValue(true));
+        $connection = $this->getMockBuilder(Connection::class)
+            ->setConstructorArgs([compact('driver')])
+            ->setMethods(['execute'])
+            ->getMock();
+        $this->Command->UsersGroups->method('getConnection')->will($this->returnValue($connection));
 
         $this->assertNull($this->Command->execute(new Arguments([], [], []), new ConsoleIo()));
     }

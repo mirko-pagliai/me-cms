@@ -44,7 +44,7 @@ class LogsControllerTest extends ControllerTestCase
      * Tests for `isAuthorized()` method
      * @test
      */
-    public function testIsAuthorized()
+    public function testIsAuthorized(): void
     {
         $this->assertGroupsAreAuthorized([
             'admin' => true,
@@ -57,7 +57,7 @@ class LogsControllerTest extends ControllerTestCase
      * Tests for `index()` method
      * @test
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'index']);
@@ -77,7 +77,7 @@ class LogsControllerTest extends ControllerTestCase
      * Tests for `view()` method
      * @test
      */
-    public function testView()
+    public function testView(): void
     {
         $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'view', 'error.log']);
@@ -92,7 +92,7 @@ class LogsControllerTest extends ControllerTestCase
      * Tests for `view()` method, render as serialized
      * @test
      */
-    public function testViewAsSerialized()
+    public function testViewAsSerialized(): void
     {
         $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'view', 'error.log', '?' => ['as' => 'serialized']]);
@@ -107,30 +107,30 @@ class LogsControllerTest extends ControllerTestCase
      * Tests for `download()` method
      * @test
      */
-    public function testDownload()
+    public function testDownload(): void
     {
         $this->writeSomeLogs();
         $this->get($this->url + ['action' => 'download', 'error.log']);
-        $this->assertResponseOkAndNotEmpty();
         $this->assertFileResponse(LOGS . 'error.log');
     }
 
     /**
      * Tests for `delete()` method
+     * @requires OS Linux
      * @test
      */
-    public function testDelete()
+    public function testDelete(): void
     {
+        $this->writeSomeLogs();
+
         //POST request. The log file doesn't exist
         $this->post($this->url + ['action' => 'delete', 'noExisting.log']);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_NOT_OK);
 
         //POST request
-        $this->writeSomeLogs();
         $this->post($this->url + ['action' => 'delete', 'error.log']);
         $this->assertRedirect(['action' => 'index']);
-        $this->skipIf(IS_WIN);
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertFileDoesNotExist(LOGS . 'error.log');
     }

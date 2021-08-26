@@ -49,7 +49,7 @@ class UserValidatorTest extends ValidationTestCase
      * It tests the proper functioning of the example data.
      * @test
      */
-    public function testAllDataAreRequired()
+    public function testAllDataAreRequired(): void
     {
         $this->assertAllDataAreRequired($this->example, ['password']);
     }
@@ -58,7 +58,7 @@ class UserValidatorTest extends ValidationTestCase
      * Test validation for `group_id` property
      * @test
      */
-    public function testValidationForGroupId()
+    public function testValidationForGroupId(): void
     {
         $errors = $this->Table->newEntity(['group_id' => 'string'] + $this->example)->getErrors();
         $this->assertEquals(['group_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION]], $errors);
@@ -68,7 +68,7 @@ class UserValidatorTest extends ValidationTestCase
      * Test validation for `username` property
      * @test
      */
-    public function testValidationForUsername()
+    public function testValidationForUsername(): void
     {
         foreach (['Abcd', 'ab_cd', 'abcd$'] as $username) {
             $errors = $this->Table->newEntity(compact('username') + $this->example)->getErrors();
@@ -100,7 +100,7 @@ class UserValidatorTest extends ValidationTestCase
      * Test validation for `email_repeat` property
      * @test
      */
-    public function testValidationForEmailRepeat()
+    public function testValidationForEmailRepeat(): void
     {
         $errors = $this->Table->newEntity(['email_repeat' => 'a_different_email@email.it'] + $this->example)->getErrors();
         $this->assertEquals(['email_repeat' => ['compareWith' => 'Email addresses don\'t match']], $errors);
@@ -113,7 +113,7 @@ class UserValidatorTest extends ValidationTestCase
      * Test validation for `password` property
      * @test
      */
-    public function testValidationForPassword()
+    public function testValidationForPassword(): void
     {
         $password_repeat = $password = 'ab';
         $errors = $this->Table->newEntity(compact('password', 'password_repeat') + $this->example)->getErrors();
@@ -137,7 +137,7 @@ class UserValidatorTest extends ValidationTestCase
      * Test validation for `password_repeat` property
      * @test
      */
-    public function testValidationForPasswordRepeat()
+    public function testValidationForPasswordRepeat(): void
     {
         $errors = $this->Table->newEntity(['password_repeat' => 'differentPwd'] + $this->example)->getErrors();
         $this->assertEquals(['password_repeat' => ['compareWith' => 'Passwords don\'t match']], $errors);
@@ -150,7 +150,7 @@ class UserValidatorTest extends ValidationTestCase
      * Test validation for `old_password` property
      * @test
      */
-    public function testValidationForOldPassword()
+    public function testValidationForOldPassword(): void
     {
         //Saves the entity
         $entity = $this->Table->newEntity($this->example);
@@ -169,7 +169,7 @@ class UserValidatorTest extends ValidationTestCase
      * Test validation for `banned` property
      * @test
      */
-    public function testValidationForBanned()
+    public function testValidationForBanned(): void
     {
         $errors = $this->Table->newEntity(['banned' => 'str'] + $this->example)->getErrors();
         $this->assertEquals(['banned' => ['boolean' => I18N_SELECT_VALID_OPTION]], $errors);

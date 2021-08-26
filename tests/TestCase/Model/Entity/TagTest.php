@@ -26,7 +26,7 @@ class TagTest extends EntityTestCase
      * Test for fields that cannot be mass assigned
      * @test
      */
-    public function testNoAccessibleProperties()
+    public function testNoAccessibleProperties(): void
     {
         $this->assertHasNoAccessibleProperty(['id', 'post_count', 'modified']);
     }
@@ -35,7 +35,7 @@ class TagTest extends EntityTestCase
      * Test for `_getSlug()` method
      * @test
      */
-    public function testSlugGetMutator()
+    public function testSlugGetMutator(): void
     {
         foreach ([
             'This is a tag' => 'this-is-a-tag',
@@ -49,7 +49,7 @@ class TagTest extends EntityTestCase
      * Test for `_getUrl()` method
      * @test
      */
-    public function testUrl()
+    public function testUrl(): void
     {
         $this->Entity->set('tag', 'a-tag');
         $this->assertStringEndsWith('/posts/tag/a-tag', $this->Entity->get('url'));

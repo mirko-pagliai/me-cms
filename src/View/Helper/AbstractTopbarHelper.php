@@ -22,6 +22,7 @@ use Cake\View\Helper;
  * Abstract Topbar Helper.
  *
  * This helper returns an array with the links to put in the topbar.
+ * @property \MeTools\View\Helper\HtmlHelper $Html
  */
 abstract class AbstractTopbarHelper extends Helper
 {
