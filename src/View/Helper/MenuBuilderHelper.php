@@ -88,22 +88,21 @@ class MenuBuilderHelper extends Helper
         $menus = [];
         foreach ($this->getMethods($plugin) as $method) {
             $callable = [$helper, $method];
-            if (!is_callable($callable)) {
-                continue;
-            }
-            $args = call_user_func($callable);
-            if (!$args) {
-                continue;
-            }
+            if (is_callable($callable)) {
+                $args = call_user_func($callable);
+                if (!$args) {
+                    continue;
+                }
 
-            Exceptionist::isTrue(
-                count($args) >= 3,
-                __d('me_cms', 'Method `{0}::{1}()` returned only {2} values', $className, $method, count($args)),
-                BadMethodCallException::class
-            );
+                Exceptionist::isTrue(
+                    count($args) >= 3,
+                    __d('me_cms', 'Method `{0}::{1}()` returned only {2} values', $className, $method, count($args)),
+                    BadMethodCallException::class
+                );
 
-            [$links, $title, $titleOptions, $handledControllers] = $args + [[], [], [], []];
-            $menus[$plugin . '.' . $method] = compact('links', 'title', 'titleOptions', 'handledControllers');
+                [$links, $title, $titleOptions, $handledControllers] = $args + [[], [], [], []];
+                $menus[$plugin . '.' . $method] = compact('links', 'title', 'titleOptions', 'handledControllers');
+            }
         }
 
         return $menus;
