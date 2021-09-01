@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.30 branch
+### 2.30.2
+* fixed a small bug in the localization of static pages.
+
 ### 2.30.1
 * if Recaptcha is not used, an exception is no longer throwned when configuration
     keys are missing;

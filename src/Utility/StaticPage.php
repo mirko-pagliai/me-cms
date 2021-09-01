@@ -44,7 +44,7 @@ class StaticPage
     public static function getPaths(): array
     {
         return Cache::remember('paths', function (): array {
-            $paths['App'] = array_value_first(App::classPath('templates')) . 'StaticPages';
+            $paths['App'] = array_value_first(App::path('templates')) . 'StaticPages';
 
             foreach (Plugin::all(['mecms_core' => false]) as $plugin) {
                 $paths[$plugin] = Plugin::templatePath($plugin) . 'StaticPages';
@@ -116,7 +116,6 @@ class StaticPage
                 $patterns[] = $filename . '-' . $matches[1];
             }
             $patterns[] = $filename;
-
             foreach (self::getPaths() as $plugin => $path) {
                 foreach ($patterns as $pattern) {
                     $file = (new Filesystem())->concatenate($path, $pattern . '.' . self::EXTENSION);
