@@ -70,5 +70,5 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
      * @return void
      * @test
      */
-    abstract public function testUrl();
+    abstract public function testUrl(): void;
 }
