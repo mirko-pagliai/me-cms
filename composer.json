@@ -37,7 +37,7 @@
     },
     "conflict": {
         "newerton/fancy-box": "*",
-        "studio-42/elfinder": "<= 2.1.48",
+        "studio-42/elfinder": "<= 2.1.58",
         "sunhater/kcfinder": "*"
     },
     "suggest": {
