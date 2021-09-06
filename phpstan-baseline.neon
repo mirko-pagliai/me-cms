@@ -16,6 +16,11 @@ parameters:
 			path: src/Controller/Component/LoginRecorderComponent.php
 
 		-
+			message: "#^Cannot cast array\\|string\\|null to string\\.$#"
+			count: 1
+			path: src/Controller/PostsCategoriesController.php
+
+		-
 			message: "#^Parameter \\#1 \\$input of function array_values expects array, iterable given\\.$#"
 			count: 1
 			path: src/Controller/PostsCategoriesController.php
@@ -31,9 +36,9 @@ parameters:
 			path: src/Controller/PostsCategoriesController.php
 
 		-
-			message: "#^Parameter \\#4 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, array\\|string\\|null given\\.$#"
-			count: 1
-			path: src/Controller/PostsCategoriesController.php
+			message: "#^Cannot cast array\\|string\\|null to string\\.$#"
+			count: 3
+			path: src/Controller/PostsController.php
 
 		-
 			message: "#^Parameter \\#1 \\$input of function array_values expects array, iterable given\\.$#"
@@ -51,14 +56,9 @@ parameters:
 			path: src/Controller/PostsController.php
 
 		-
-			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, array\\|string\\|null given\\.$#"
-			count: 1
-			path: src/Controller/PostsController.php
-
-		-
-			message: "#^Parameter \\#4 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, array\\|string\\|null given\\.$#"
+			message: "#^Cannot cast array\\|string\\|null to string\\.$#"
 			count: 2
-			path: src/Controller/PostsController.php
+			path: src/Controller/PostsTagsController.php
 
 		-
 			message: "#^Parameter \\#1 \\$input of function array_values expects array, iterable given\\.$#"
@@ -73,16 +73,6 @@ parameters:
 		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:writeMany\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 2
-			path: src/Controller/PostsTagsController.php
-
-		-
-			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, array\\|string\\|null given\\.$#"
-			count: 1
-			path: src/Controller/PostsTagsController.php
-
-		-
-			message: "#^Parameter \\#4 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, array\\|string\\|null given\\.$#"
-			count: 1
 			path: src/Controller/PostsTagsController.php
 
 		-
@@ -1184,6 +1174,11 @@ parameters:
 			message: "#^Ternary operator condition is always true\\.$#"
 			count: 1
 			path: tests/TestCase/Controller/UsersControllerTest.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: tests/TestCase/Form/BackupFormTest.php
 
 		-
 			message: "#^Binary operation \"\\.\" between 'ORDER BY ' and array\\<string\\>\\|string\\|null results in an error\\.$#"
