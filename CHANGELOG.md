@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.30 branch
+### 2.30.3
+* fixed a small bug in url with query string and final slash.
+
 ### 2.30.2
 * fixed a small bug in the localization of static pages.
 
