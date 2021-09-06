@@ -63,7 +63,6 @@ class SystemsController extends AppController
     /**
      * Media explorer, with ElFinder
      * @return \Cake\Http\Response|null
-     * @uses elFinderExists()
      */
     public function browser(): ?Response
     {
