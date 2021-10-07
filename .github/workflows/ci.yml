@@ -123,7 +123,7 @@ jobs:
 
   testsuite-windows:
     runs-on: windows-2019
-    name: Windows - PHP 7.4
+    name: Windows - PHP 8.0
 
     env:
       EXTENSIONS: mbstring, intl, pdo_mysql, gd
