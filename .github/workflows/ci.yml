@@ -67,9 +67,11 @@ jobs:
 
         - name: Wait for MySQL
           run: |
+              if ${{ matrix.db-type == 'mysql' }}; then
                 while ! mysqladmin ping --host=127.0.0.1 --password=$MYSQL_ROOT_PASSWORD --silent; do
                   sleep 1
                 done
+              fi
 
         - name: Run PHPUnit
           run: |
