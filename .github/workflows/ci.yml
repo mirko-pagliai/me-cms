@@ -127,7 +127,7 @@ jobs:
 
     env:
       EXTENSIONS: mbstring, intl, pdo_mysql
-      PHP_VERSION: '7.4'
+      PHP_VERSION: '8.0'
 
     steps:
     - uses: actions/checkout@v2
