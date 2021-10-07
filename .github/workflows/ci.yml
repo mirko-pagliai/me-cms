@@ -140,6 +140,11 @@ jobs:
         ini-values: apc.enable_cli = 1, extension = php_fileinfo.dll
         coverage: none
 
+    - uses: ankane/setup-mysql@v1
+      with:
+        database: test
+        mysql-version: 5.7
+
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v2
@@ -153,4 +158,7 @@ jobs:
       run: composer update
 
     - name: Run PHPUnit
-      run: vendor/bin/phpunit --verbose
+      env:
+        db_dsn: 'mysql://root@localhost/test?encoding=utf8&quoteIdentifiers=true'
+      run: |
+          vendor/bin/phpunit --verbose
