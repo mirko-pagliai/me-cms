@@ -13,16 +13,25 @@ jobs:
       fail-fast: false
       matrix:
         php-version: ['7.2', '7.3', '7.4', '8.0']
-        db-type: [sqlite, mysql, pgsql]
+        db-type: [mysql, pgsql]
         prefer-lowest: ['']
+        exclude:
+          - php-version: '7.2'
+            db-type: 'pgsql'
+          - php-version: '7.3'
+            db-type: 'pgsql'
         include:
           - php-version: '7.2'
+            db-type: 'mysql'
             prefer-lowest: 'prefer-lowest'
           - php-version: '7.3'
+            db-type: 'mysql'
             prefer-lowest: 'prefer-lowest'
           - php-version: '7.4'
+            db-type: 'mysql'
             prefer-lowest: 'prefer-lowest'
           - php-version: '8.0'
+            db-type: 'mysql'
             prefer-lowest: 'prefer-lowest'
 
     steps:
@@ -75,7 +84,6 @@ jobs:
 
         - name: Run PHPUnit
           run: |
-            if [[ ${{ matrix.db-type }} == 'sqlite' ]]; then export db_dsn='sqlite:////tmp/cakephp-database-backup/test.sq3'; fi
             if [[ ${{ matrix.db-type }} == 'mysql' ]]; then export db_dsn='mysql://root:root@127.0.0.1/test?encoding=utf8&quoteIdentifiers=true'; fi
             if [[ ${{ matrix.db-type }} == 'pgsql' ]]; then export db_dsn='postgres://postgres:postgres@127.0.0.1/test?encoding=utf8&quoteIdentifiers=true'; fi
 
