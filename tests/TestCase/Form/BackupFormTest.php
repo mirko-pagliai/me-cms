@@ -15,8 +15,8 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Form;
 
-use Cake\Http\Exception\InternalErrorException;
 use DatabaseBackup\Utility\BackupExport;
+use Exception;
 use MeCms\Form\BackupForm;
 use MeCms\TestSuite\TestCase;
 
@@ -131,7 +131,7 @@ class BackupFormTest extends TestCase
         $this->assertTrue($BackupForm->execute(['filename' => 'test.sql']));
 
         $BackupForm->method('getBackupExportInstance')
-            ->will($this->throwException(new InternalErrorException()));
+            ->will($this->throwException(new Exception()));
         $this->assertFalse($BackupForm->execute(['filename' => 'test.sql']));
     }
 }

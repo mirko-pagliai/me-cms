@@ -16,9 +16,9 @@ declare(strict_types=1);
 namespace MeCms\Form;
 
 use Cake\Form\Form;
-use Cake\Http\Exception\InternalErrorException;
 use Cake\Validation\Validator;
 use DatabaseBackup\Utility\BackupExport;
+use Exception;
 use MeCms\Validation\AppValidator;
 
 /**
@@ -59,7 +59,6 @@ class BackupForm extends Form
     /**
      * Internal method to get a `BackupExport` instance
      * @return \DatabaseBackup\Utility\BackupExport
-     * @uses $BackupExport
      */
     protected function getBackupExportInstance(): BackupExport
     {
@@ -72,7 +71,6 @@ class BackupForm extends Form
      * Used by `execute()` to execute the form's action
      * @param array $data Form data
      * @return bool
-     * @uses getBackupExportInstance()
      */
     protected function _execute(array $data): bool
     {
@@ -80,7 +78,7 @@ class BackupForm extends Form
             return (bool)$this->getBackupExportInstance()
                 ->filename($data['filename'])
                 ->export();
-        } catch (InternalErrorException $e) {
+        } catch (Exception $e) {
             return false;
         }
     }

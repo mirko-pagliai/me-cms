@@ -159,6 +159,6 @@ jobs:
 
     - name: Run PHPUnit
       env:
-        db_dsn: 'mysql://root@localhost/test?encoding=utf8&quoteIdentifiers=true'
+        db_dsn: 'mysql://root@localhost/test?quoteIdentifiers=true'
       run: |
           vendor/bin/phpunit --verbose
