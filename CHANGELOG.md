@@ -2,6 +2,7 @@
 ## 2.30 branch
 ### 2.30.3
 * fixed a small bug in url with query string and final slash;
+* uses sql auto-quoting to make tests more compatible;
 * migration to github actions.
 
 ### 2.30.2
