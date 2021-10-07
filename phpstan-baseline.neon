@@ -1181,7 +1181,7 @@ parameters:
 			path: tests/TestCase/Form/BackupFormTest.php
 
 		-
-			message: "#^Binary operation \"\\.\" between 'ORDER BY ' and array\\<string\\>\\|string\\|null results in an error\\.$#"
+			message: "#^Binary operation \"\\.\" between 'ORDER BY `' and array\\<string\\>\\|string\\|null results in an error\\.$#"
 			count: 2
 			path: tests/TestCase/Model/Table/AppTableTest.php
 
