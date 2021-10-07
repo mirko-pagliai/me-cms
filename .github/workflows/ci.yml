@@ -13,6 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         php-version: ['7.2', '7.3', '7.4', '8.0']
+        db-type: [sqlite, mysql, pgsql]
         prefer-lowest: ['']
         include:
           - php-version: '7.2'
@@ -26,7 +27,12 @@ jobs:
 
     steps:
         - name: Setup Database
-          run: docker run --rm --name=mysqld -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=test -p 3306:3306 -d mysql --default-authentication-plugin=mysql_native_password --disable-log-bin
+          run: |
+            if ${{ matrix.db-type == 'mysql' }}; then
+                docker run --rm --name=mysqld -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=test -p 3306:3306 -d mysql --default-authentication-plugin=mysql_native_password --disable-log-bin
+            elif ${{ matrix.db-type == 'pgsql' }}; then
+                docker run --rm --name=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=test -p 5432:5432 -d postgres:9.6
+            fi
 
         - uses: actions/checkout@v2
 
@@ -37,7 +43,7 @@ jobs:
           uses: shivammathur/setup-php@v2
           with:
             php-version: ${{ matrix.php-version }}
-            extensions: mbstring, intl, pdo_mysql
+            extensions: mbstring, intl, pdo_${{ matrix.db-type }}
 
         - name: Cache Composer packages
           id: composer-cache
@@ -67,7 +73,9 @@ jobs:
 
         - name: Run PHPUnit
           run: |
-            export db_dsn='mysql://root:root@127.0.0.1/test?encoding=utf8&quoteIdentifiers=true'
+            if [[ ${{ matrix.db-type }} == 'sqlite' ]]; then export db_dsn='sqlite:////tmp/cakephp-database-backup/test.sq3'; fi
+            if [[ ${{ matrix.db-type }} == 'mysql' ]]; then export db_dsn='mysql://root:root@127.0.0.1/test?encoding=utf8&quoteIdentifiers=true'; fi
+            if [[ ${{ matrix.db-type }} == 'pgsql' ]]; then export db_dsn='postgres://postgres:postgres@127.0.0.1/test?encoding=utf8&quoteIdentifiers=true'; fi
 
             if [[ ${{ matrix.php-version }} == '8.0' ]]; then
               export CODECOVERAGE=1 && vendor/bin/phpunit --verbose --coverage-clover=coverage.xml
