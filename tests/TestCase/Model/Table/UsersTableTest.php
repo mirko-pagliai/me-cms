@@ -147,6 +147,7 @@ class UsersTableTest extends TableTestCase
      */
     public function testFindMethods(): void
     {
+        $this->skipIf(!$this->isMySql());
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM `users` `Users` WHERE (`active` = :c0 AND `banned` = :c1)', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
@@ -173,10 +174,12 @@ class UsersTableTest extends TableTestCase
     {
         $this->loadFixtures();
         $query = $this->Table->getActiveList();
-        $this->assertStringContainsString('FROM `users` `Users` WHERE `active` = :c0 ORDER BY `username` ASC', $query->sql());
         $this->assertNotEmpty($query->toArray());
         $fromCache = Cache::read('active_users_list', $this->Table->getCacheName())->toArray();
         $this->assertEquals($fromCache, $query->toArray());
+
+        $this->skipIf(!$this->isMySql());
+        $this->assertStringContainsString('FROM `users` `Users` WHERE `active` = :c0 ORDER BY `username` ASC', $query->sql());
     }
 
     /**
@@ -185,6 +188,8 @@ class UsersTableTest extends TableTestCase
      */
     public function testQueryFromFilter(): void
     {
+        $this->skipIf(!$this->isMySql());
+
         $data = [
             'username' => 'test',
             'group' => 1,

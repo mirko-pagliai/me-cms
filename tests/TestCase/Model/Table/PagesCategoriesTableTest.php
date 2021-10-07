@@ -115,6 +115,7 @@ class PagesCategoriesTableTest extends TableTestCase
      */
     public function testFindMethods(): void
     {
+        $this->skipIf(!$this->isMySql());
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM `pages_categories` `Categories` INNER JOIN `pages` `Pages` ON (`Pages`.`active` = :c0 AND `Pages`.`created` <= :c1 AND `Categories`.`id` = (`Pages`.`category_id`))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);

@@ -3,6 +3,8 @@
 ### 2.30.3
 * fixed a small bug in url with query string and final slash;
 * uses sql auto-quoting to make tests more compatible;
+* added `TestCase::isMySql()` method. This allows to skip tests with different
+    schema;
 * migration to github actions.
 
 ### 2.30.2

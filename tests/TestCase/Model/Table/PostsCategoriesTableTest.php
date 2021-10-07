@@ -124,6 +124,7 @@ class PostsCategoriesTableTest extends TableTestCase
      */
     public function testFindMethods(): void
     {
+        $this->skipIf(!$this->isMySql());
         $query = $this->Table->find('active');
         $this->assertStringEndsWith('FROM `posts_categories` `PostsCategories` INNER JOIN `posts` `Posts` ON (`Posts`.`active` = :c0 AND `Posts`.`created` <= :c1 AND `PostsCategories`.`id` = (`Posts`.`category_id`))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
