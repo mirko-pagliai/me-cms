@@ -43,11 +43,13 @@ class BackupFormTest extends TestCase
     {
         parent::setUp();
 
-        $this->BackupExport = $this->getMockBuilder(BackupExport::class)
-            ->setMethods(['export', 'filename'])
-            ->getMock();
+        if (!$this->BackupExport) {
+            $this->BackupExport = $this->getMockBuilder(BackupExport::class)
+                ->setMethods(['export', 'filename'])
+                ->getMock();
 
-        $this->BackupExport->method('filename')->will($this->returnSelf());
+            $this->BackupExport->method('filename')->will($this->returnSelf());
+        }
 
         $this->Form = $this->Form ?: new BackupForm();
     }
