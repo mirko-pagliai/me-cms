@@ -206,36 +206,6 @@ parameters:
 			path: src/View/Helper/MenuBuilderHelper.php
 
 		-
-			message: "#^Variable \\$logs might not be defined\\.$#"
-			count: 1
-			path: templates/Admin/Logs/index.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 11
-			path: templates/Admin/Logs/index.php
-
-		-
-			message: "#^Variable \\$filename might not be defined\\.$#"
-			count: 3
-			path: templates/Admin/Logs/view.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 7
-			path: templates/Admin/Logs/view.php
-
-		-
-			message: "#^Variable \\$filename might not be defined\\.$#"
-			count: 3
-			path: templates/Admin/Logs/view_as_serialized.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 20
-			path: templates/Admin/Logs/view_as_serialized.php
-
-		-
 			message: "#^Variable \\$categories might not be defined\\.$#"
 			count: 2
 			path: templates/Admin/Pages/form.php
