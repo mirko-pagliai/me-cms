@@ -92,14 +92,11 @@ class MenuHelperTest extends MenuHelperTestCase
     {
         $this->assertEmpty($this->Helper->systems());
 
-        $this->writeAuthOnSession(['group' => ['name' => 'manager']]);
-        [$links,,, $handledControllers] = $this->Helper->systems();
-        $this->assertNotEmpty($links);
-        $this->assertTextNotContains('Log management', $links);
-        $this->assertEquals(['Logs', 'Systems'], $handledControllers);
-
-        $this->writeAuthOnSession(['group' => ['name' => 'admin']]);
-        [$links] = $this->Helper->systems();
-        $this->assertTextContains('Log management', $links);
+        foreach (['manager', 'admin'] as $name) {
+            $this->writeAuthOnSession(['group' => compact('name')]);
+            [$links,,, $handledControllers] = $this->Helper->systems();
+            $this->assertNotEmpty($links);
+            $this->assertEquals(['Systems'], $handledControllers);
+        }
     }
 }
