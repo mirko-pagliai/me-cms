@@ -3,8 +3,8 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2021-10-12 15:45+0000\n"
-"PO-Revision-Date: 2021-10-12 17:46+0100\n"
+"POT-Creation-Date: 2021-10-12 16:22+0000\n"
+"PO-Revision-Date: 2021-10-12 18:23+0100\n"
 "Last-Translator: Mirko Pagliai <mirko.pagliai@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "MIME-Version: 1.0\n"
@@ -730,26 +730,22 @@ msgstr "Elenca gruppi"
 msgid "Add group"
 msgstr "Aggiungi gruppo"
 
-#: ./View/Helper/MenuHelper.php:137
+#: ./View/Helper/MenuHelper.php:139
 #: ./Admin/Systems/tmp_viewer.php:16
 msgid "Temporary files"
 msgstr "File temporanei"
 
-#: ./View/Helper/MenuHelper.php:138
+#: ./View/Helper/MenuHelper.php:140
 #: ./Admin/Systems/browser.php:16
 msgid "Media browser"
 msgstr "Browser multimediale"
 
-#: ./View/Helper/MenuHelper.php:139
+#: ./View/Helper/MenuHelper.php:141
 #: ./Admin/Systems/changelogs.php:16
 msgid "Changelogs"
 msgstr "Changelog"
 
 #: ./View/Helper/MenuHelper.php:142
-msgid "Log management"
-msgstr "Gestione log"
-
-#: ./View/Helper/MenuHelper.php:145
 msgid "System"
 msgstr "Sistema"
 
