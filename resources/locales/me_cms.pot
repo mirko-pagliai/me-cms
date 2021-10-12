@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-10-12 14:41+0000\n"
+"POT-Creation-Date: 2021-10-12 15:45+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -724,37 +724,25 @@ msgid "Add group"
 msgstr ""
 
 #: ./View/Helper/MenuHelper.php:137
-msgid "List backups"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:138
-msgid "Add backup"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:140
-msgid "Backups"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:155
 #: ./Admin/Systems/tmp_viewer.php:16
 msgid "Temporary files"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:156
+#: ./View/Helper/MenuHelper.php:138
 #: ./Admin/Systems/browser.php:16
 msgid "Media browser"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:157
+#: ./View/Helper/MenuHelper.php:139
 #: ./Admin/Systems/changelogs.php:16
 msgid "Changelogs"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:160
+#: ./View/Helper/MenuHelper.php:142
 msgid "Log management"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:163
+#: ./View/Helper/MenuHelper.php:145
 msgid "System"
 msgstr ""
 
