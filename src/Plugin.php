@@ -54,7 +54,6 @@ class Plugin extends BasePlugin
     {
         foreach ([
             'MeTools',
-            'DatabaseBackup',
             'RecaptchaMailhide',
             'StopSpam',
             'Thumber\Cake',

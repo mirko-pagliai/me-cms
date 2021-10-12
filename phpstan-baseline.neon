@@ -6,11 +6,6 @@ parameters:
 			path: src/Command/Install/CreateSamplePostCommand.php
 
 		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 2
-			path: src/Controller/Admin/BackupsController.php
-
-		-
 			message: "#^Negated boolean expression is always false\\.$#"
 			count: 1
 			path: src/Controller/Component/LoginRecorderComponent.php
@@ -74,11 +69,6 @@ parameters:
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:writeMany\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 2
 			path: src/Controller/PostsTagsController.php
-
-		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
-			path: src/Form/BackupForm.php
 
 		-
 			message: "#^Parameter \\#1 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:clear\\(\\) expects string, array\\|string\\|null given\\.$#"
@@ -214,26 +204,6 @@ parameters:
 			message: "#^Cannot unset offset 'class' on array\\('aria\\-expanded' \\=\\> 'true'\\)\\.$#"
 			count: 1
 			path: src/View/Helper/MenuBuilderHelper.php
-
-		-
-			message: "#^Variable \\$backup might not be defined\\.$#"
-			count: 1
-			path: templates/Admin/Backups/add.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 8
-			path: templates/Admin/Backups/add.php
-
-		-
-			message: "#^Variable \\$backups might not be defined\\.$#"
-			count: 1
-			path: templates/Admin/Backups/index.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 13
-			path: templates/Admin/Backups/index.php
 
 		-
 			message: "#^Variable \\$logs might not be defined\\.$#"
@@ -1174,11 +1144,6 @@ parameters:
 			message: "#^Ternary operator condition is always true\\.$#"
 			count: 1
 			path: tests/TestCase/Controller/UsersControllerTest.php
-
-		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
-			path: tests/TestCase/Form/BackupFormTest.php
 
 		-
 			message: "#^Binary operation \"\\.\" between 'ORDER BY `' and array\\<string\\>\\|string\\|null results in an error\\.$#"

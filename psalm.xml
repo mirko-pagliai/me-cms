@@ -124,12 +124,6 @@
             </errorLevel>
         </TypeDoesNotContainType>
 
-        <TooManyTemplateParams>
-            <errorLevel type="suppress">
-                <file name="src/Controller/Admin/BackupsController.php" />
-            </errorLevel>
-        </TooManyTemplateParams>
-
         <UndefinedPropertyAssignment>
             <errorLevel type="suppress">
                 <directory name="tests/TestCase/Command" />
