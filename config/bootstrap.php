@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Database\Type;
+use Cake\Database\TypeFactory;
 use Cake\Log\Log;
 use EntityFileLog\Log\Engine\EntityFileLog;
 use MeCms\Database\Type\JsonEntityType;
@@ -96,4 +96,4 @@ if (!Log::getConfig('users')) {
 require_once __DIR__ . DS . 'i18n_constants.php';
 require_once __DIR__ . DS . 'requirements.php';
 
-Type::map('jsonEntity', JsonEntityType::class);
+TypeFactory::map('jsonEntity', JsonEntityType::class);
