@@ -32,7 +32,6 @@ Configure::write('CONFIG_FILES', array_merge(Configure::read('CONFIG_FILES', [])
 //Sets directories to be created and must be writable
 Configure::write('WRITABLE_DIRS', array_merge(Configure::read('WRITABLE_DIRS', []), [
     getConfigOrFail('Assets.target'),
-    getConfigOrFail('DatabaseBackup.target'),
     LOGIN_RECORDS,
     THUMBER_TARGET,
     UPLOADED,
@@ -80,10 +79,6 @@ if (is_readable(CONFIG . 'recaptcha.php')) {
     if (!getConfig('RecaptchaMailhide.encryptKey')) {
         Configure::write('RecaptchaMailhide.encryptKey', getConfigOrFail('Recaptcha.private'));
     }
-}
-
-if (!getConfig('DatabaseBackup.mailSender')) {
-    Configure::write('DatabaseBackup.mailSender', getConfigOrFail('MeCms.email.webmaster'));
 }
 
 //Adds log for users actions

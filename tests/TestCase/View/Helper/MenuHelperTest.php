@@ -85,23 +85,6 @@ class MenuHelperTest extends MenuHelperTestCase
     }
 
     /**
-     * Tests for `backups()` method
-     * @test
-     */
-    public function testBackups(): void
-    {
-        $this->assertEmpty($this->Helper->backups());
-
-        $this->writeAuthOnSession(['group' => ['name' => 'manager']]);
-        $this->assertEmpty($this->Helper->backups());
-
-        $this->writeAuthOnSession(['group' => ['name' => 'admin']]);
-        [$links,,, $handledControllers] = $this->Helper->backups();
-        $this->assertNotEmpty($links);
-        $this->assertEquals(['Backups'], $handledControllers);
-    }
-
-    /**
      * Tests for `systems()` method
      * @test
      */

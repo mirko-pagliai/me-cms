@@ -123,24 +123,6 @@ class MenuHelper extends Helper
     }
 
     /**
-     * Internal function to generate the menu for "backups" actions
-     * @return array Array with links, title, title options and handled controllers
-     */
-    public function backups(): array
-    {
-        //Only admins can access this controller
-        if (!$this->Auth->isGroup('admin')) {
-            return [];
-        }
-
-        $params = ['controller' => 'Backups'] + $this->defaultParams;
-        $links[] = [__d('me_cms', 'List backups'), ['action' => 'index'] + $params];
-        $links[] = [__d('me_cms', 'Add backup'), ['action' => 'add'] + $params];
-
-        return [$links, __d('me_cms', 'Backups'), ['icon' => 'database'], ['Backups']];
-    }
-
-    /**
      * Internal function to generate the menu for "systems" actions
      * @return array Array with links, title, title options and handled controllers
      */
