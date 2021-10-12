@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-01-13 15:16+0000\n"
+"POT-Creation-Date: 2021-10-12 14:41+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -310,44 +310,44 @@ msgstr ""
 msgid "yes"
 msgstr ""
 
-#: ./Command/AddUserCommand.php:36
+#: ./Command/AddUserCommand.php:37
 msgid "Adds an user"
 msgstr ""
 
-#: ./Command/AddUserCommand.php:37
-#: ./Command/AddUserCommand.php:79
+#: ./Command/AddUserCommand.php:38
+#: ./Command/AddUserCommand.php:80
 msgid "Group ID"
 msgstr ""
 
-#: ./Command/AddUserCommand.php:52
+#: ./Command/AddUserCommand.php:53
 msgid "Before you can manage users, you have to create at least a user group"
 msgstr ""
 
-#: ./Command/AddUserCommand.php:85
+#: ./Command/AddUserCommand.php:86
 msgid "Field `{0}` is empty. Try again"
 msgstr ""
 
-#: ./Command/AddUserCommand.php:91
+#: ./Command/AddUserCommand.php:92
 msgid "Invalid group ID"
 msgstr ""
 
-#: ./Command/AddUserCommand.php:98
+#: ./Command/AddUserCommand.php:99
 msgid "The user could not be saved"
 msgstr ""
 
-#: ./Command/AddUserCommand.php:104
+#: ./Command/AddUserCommand.php:105
 msgid "Field `{0}`: {1}"
 msgstr ""
 
-#: ./Command/AddUserCommand.php:113
+#: ./Command/AddUserCommand.php:114
 msgid "The user was created with ID {0}"
 msgstr ""
 
-#: ./Command/GroupsCommand.php:37
+#: ./Command/GroupsCommand.php:38
 msgid "Lists user groups"
 msgstr ""
 
-#: ./Command/GroupsCommand.php:52
+#: ./Command/GroupsCommand.php:53
 msgid "There are no user groups"
 msgstr ""
 
@@ -359,57 +359,73 @@ msgstr ""
 msgid "Creates an admin user"
 msgstr ""
 
-#: ./Command/Install/CreateGroupsCommand.php:49
+#: ./Command/Install/CreateGroupsCommand.php:50
 msgid "Creates the user groups"
 msgstr ""
 
-#: ./Command/Install/CreateGroupsCommand.php:61
+#: ./Command/Install/CreateGroupsCommand.php:62
 msgid "Some user groups already exist"
 msgstr ""
 
-#: ./Command/Install/CreateGroupsCommand.php:79
+#: ./Command/Install/CreateGroupsCommand.php:80
 msgid "The user groups have been created"
+msgstr ""
+
+#: ./Command/Install/CreateSamplePostCommand.php:51
+msgid "Creates a sample post"
+msgstr ""
+
+#: ./Command/Install/CreateSamplePostCommand.php:63
+msgid "At least one post already exists"
+msgstr ""
+
+#: ./Command/Install/CreateSamplePostCommand.php:71
+msgid "You must first create a user. Run the `{0}` command"
 msgstr ""
 
 #: ./Command/Install/FixElFinderCommand.php:40
 msgid "Fixes {0}"
 msgstr ""
 
-#: ./Command/Install/RunAllCommand.php:51
+#: ./Command/Install/RunAllCommand.php:52
 msgid "Updates to the database or files needed for versioning?"
 msgstr ""
 
-#: ./Command/Install/RunAllCommand.php:56
+#: ./Command/Install/RunAllCommand.php:57
 msgid "Create the user groups?"
 msgstr ""
 
-#: ./Command/Install/RunAllCommand.php:61
+#: ./Command/Install/RunAllCommand.php:62
 msgid "Create an admin user?"
 msgstr ""
 
-#: ./Command/UsersCommand.php:37
-msgid "Lists users"
+#: ./Command/Install/RunAllCommand.php:67
+msgid "Create a sample post?"
 msgstr ""
 
 #: ./Command/UsersCommand.php:49
+msgid "Lists users"
+msgstr ""
+
+#: ./Command/UsersCommand.php:61
 #: ./Admin/Users/add.php:31
 #: ./Admin/Users/view.php:66
 msgid "Active"
 msgstr ""
 
-#: ./Command/UsersCommand.php:49
+#: ./Command/UsersCommand.php:61
 #: ./Admin/Users/index.php:98
 #: ./Admin/Users/view.php:72
 msgid "Pending"
 msgstr ""
 
-#: ./Command/UsersCommand.php:51
+#: ./Command/UsersCommand.php:63
 #: ./Admin/Users/index.php:95
 #: ./Admin/Users/view.php:69
 msgid "Banned"
 msgstr ""
 
-#: ./Command/UsersCommand.php:85
+#: ./Command/UsersCommand.php:94
 msgid "There are no users"
 msgstr ""
 
@@ -431,7 +447,7 @@ msgid "You must first create a category"
 msgstr ""
 
 #: ./Controller/Admin/PagesController.php:135
-#: ./View/Helper/MenuHelper.php:86
+#: ./View/Helper/MenuHelper.php:87
 #: ./Admin/PagesCategories/index.php:24
 msgid "Add page"
 msgstr ""
@@ -454,7 +470,7 @@ msgid "You must first create an user"
 msgstr ""
 
 #: ./Controller/Admin/PostsController.php:147
-#: ./View/Helper/MenuHelper.php:60
+#: ./View/Helper/MenuHelper.php:61
 #: ./Admin/PostsCategories/index.php:23
 msgid "Add post"
 msgstr ""
@@ -468,11 +484,11 @@ msgstr ""
 msgid "{0} not available"
 msgstr ""
 
-#: ./Controller/Admin/UsersController.php:52
+#: ./Controller/Admin/UsersController.php:54
 msgid "You must first create an user group"
 msgstr ""
 
-#: ./Controller/Admin/UsersController.php:197
+#: ./Controller/Admin/UsersController.php:199
 msgid "You cannot delete the admin founder"
 msgstr ""
 
@@ -484,7 +500,7 @@ msgstr ""
 msgid "You are not authorized for this action"
 msgstr ""
 
-#: ./Controller/Component/LoginRecorderComponent.php:66
+#: ./Controller/Component/LoginRecorderComponent.php:67
 msgid "You have to set a valid user id"
 msgstr ""
 
@@ -502,80 +518,69 @@ msgstr ""
 msgid "You have to wait {0} seconds to perform a new search"
 msgstr ""
 
-#: ./Controller/SystemsController.php:64
-#: ./Controller/UsersController.php:167
-#: ./Controller/UsersController.php:284
-#: ./Controller/UsersController.php:369
+#: ./Controller/SystemsController.php:65
+#: ./Controller/UsersController.php:170
+#: ./Controller/UsersController.php:287
+#: ./Controller/UsersController.php:372
 msgid "You must fill in the {0} control correctly"
 msgstr ""
 
-#: ./Controller/UsersController.php:134
-#: ./Controller/UsersController.php:325
+#: ./Controller/UsersController.php:137
+#: ./Controller/UsersController.php:328
 msgid "Invalid token"
 msgstr ""
 
-#: ./Controller/UsersController.php:172
+#: ./Controller/UsersController.php:175
 msgid "No valid account was found"
 msgstr ""
 
-#: ./Controller/UsersController.php:175
-#: ./Controller/UsersController.php:383
+#: ./Controller/UsersController.php:178
+#: ./Controller/UsersController.php:386
 msgid "We send you an email to activate your account"
 msgstr ""
 
-#: ./Controller/UsersController.php:219
+#: ./Controller/UsersController.php:222
 msgid "Your account has been banned by an admin"
 msgstr ""
 
-#: ./Controller/UsersController.php:221
+#: ./Controller/UsersController.php:224
 msgid "Your account has not been activated yet"
 msgstr ""
 
-#: ./Controller/UsersController.php:248
+#: ./Controller/UsersController.php:251
 msgid "Invalid username or password"
 msgstr ""
 
-#: ./Controller/UsersController.php:261
+#: ./Controller/UsersController.php:264
 msgid "You are successfully logged out"
 msgstr ""
 
-#: ./Controller/UsersController.php:286
+#: ./Controller/UsersController.php:289
 msgid "No account found"
 msgstr ""
 
-#: ./Controller/UsersController.php:295
+#: ./Controller/UsersController.php:298
 msgid "We have sent you an email to reset your password"
 msgstr ""
 
-#: ./Controller/UsersController.php:334
+#: ./Controller/UsersController.php:337
 msgid "The password has been edited"
 msgstr ""
 
-#: ./Controller/UsersController.php:339
+#: ./Controller/UsersController.php:342
 msgid "The password has not been edited"
 msgstr ""
 
-#: ./Controller/UsersController.php:371
+#: ./Controller/UsersController.php:374
 msgid "The account has not been created"
 msgstr ""
 
-#: ./Controller/UsersController.php:377
+#: ./Controller/UsersController.php:380
 msgid "Account created, but it needs to be activated by an admin"
 msgstr ""
 
-#: ./Controller/UsersController.php:387
+#: ./Controller/UsersController.php:390
 msgid "Account created. Now you can login"
-msgstr ""
-
-#: ./Form/BackupForm.php:47
-#: ./Validation/AppValidator.php:50
-#: ./Validation/AppValidator.php:132
-msgid "Must be at most {0} chars"
-msgstr ""
-
-#: ./Form/BackupForm.php:51
-#: ./Admin/Backups/add.php:23
-msgid "Valid extensions: {0}"
 msgstr ""
 
 #: ./Form/ContactUsForm.php:51
@@ -644,6 +649,11 @@ msgstr ""
 msgid "lowercase letters"
 msgstr ""
 
+#: ./Validation/AppValidator.php:50
+#: ./Validation/AppValidator.php:132
+msgid "Must be at most {0} chars"
+msgstr ""
+
 #: ./Validation/AppValidator.php:65
 #: ./Validation/AppValidator.php:82
 msgid "letters, apostrophe, space"
@@ -658,94 +668,93 @@ msgstr ""
 msgid "This field can not be empty"
 msgstr ""
 
-#: ./View/Cell/PostsTagsWidgetsCell.php:50
+#: ./View/Cell/PostsTagsWidgetsCell.php:52
 msgid "Invalid values"
 msgstr ""
 
-#: ./View/Helper/MenuBuilderHelper.php:95
+#: ./View/Helper/MenuBuilderHelper.php:99
 msgid "Method `{0}::{1}()` returned only {2} values"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:59
+#: ./View/Helper/MenuHelper.php:60
 msgid "List posts"
-msgstr ""
-
-#: ./View/Helper/MenuHelper.php:64
-#: ./View/Helper/MenuHelper.php:93
-msgid "List categories"
 msgstr ""
 
 #: ./View/Helper/MenuHelper.php:65
 #: ./View/Helper/MenuHelper.php:94
+msgid "List categories"
+msgstr ""
+
+#: ./View/Helper/MenuHelper.php:66
+#: ./View/Helper/MenuHelper.php:95
 #: ./Admin/Pages/index.php:23
 #: ./Admin/Posts/index.php:23
 msgid "Add category"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:68
+#: ./View/Helper/MenuHelper.php:69
 msgid "List tags"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:83
+#: ./View/Helper/MenuHelper.php:84
 msgid "List pages"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:89
+#: ./View/Helper/MenuHelper.php:90
 msgid "List static pages"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:112
+#: ./View/Helper/MenuHelper.php:113
 msgid "List users"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:113
+#: ./View/Helper/MenuHelper.php:114
 #: ./Admin/Users/add.php:16
 #: ./Admin/UsersGroups/index.php:23
 msgid "Add user"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:117
+#: ./View/Helper/MenuHelper.php:118
 msgid "List groups"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:118
+#: ./View/Helper/MenuHelper.php:119
 #: ./Admin/Users/index.php:23
 msgid "Add group"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:136
+#: ./View/Helper/MenuHelper.php:137
 msgid "List backups"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:137
-#: ./Admin/Backups/add.php:16
+#: ./View/Helper/MenuHelper.php:138
 msgid "Add backup"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:139
+#: ./View/Helper/MenuHelper.php:140
 msgid "Backups"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:154
+#: ./View/Helper/MenuHelper.php:155
 #: ./Admin/Systems/tmp_viewer.php:16
 msgid "Temporary files"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:155
+#: ./View/Helper/MenuHelper.php:156
 #: ./Admin/Systems/browser.php:16
 msgid "Media browser"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:156
+#: ./View/Helper/MenuHelper.php:157
 #: ./Admin/Systems/changelogs.php:16
 msgid "Changelogs"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:159
+#: ./View/Helper/MenuHelper.php:160
 msgid "Log management"
 msgstr ""
 
-#: ./View/Helper/MenuHelper.php:162
+#: ./View/Helper/MenuHelper.php:163
 msgid "System"
 msgstr ""
 
@@ -781,120 +790,6 @@ msgstr ""
 #: ./View/View/AdminView.php:56
 #: ./element/admin/priority-badge.php:27
 msgid "Very high"
-msgstr ""
-
-#: ./Admin/Backups/add.php:33
-msgid "Pattern"
-msgstr ""
-
-#: ./Admin/Backups/add.php:40
-msgid "Database name"
-msgstr ""
-
-#: ./Admin/Backups/add.php:45
-msgid "Datetime. This is the equivalent of {0}"
-msgstr ""
-
-#: ./Admin/Backups/add.php:50
-msgid "Database hostname"
-msgstr ""
-
-#: ./Admin/Backups/add.php:55
-msgid "Timestamp. This is the equivalent of {0}"
-msgstr ""
-
-#: ./Admin/Backups/index.php:16
-msgid "Database backups"
-msgstr ""
-
-#: ./Admin/Backups/index.php:24
-msgid "Delete all"
-msgstr ""
-
-#: ./Admin/Backups/index.php:34
-msgid "Extension"
-msgstr ""
-
-#: ./Admin/Backups/index.php:35
-msgid "Compression"
-msgstr ""
-
-#: ./Admin/Backups/index.php:36
-#: ./Admin/Logs/index.php:29
-msgid "Size"
-msgstr ""
-
-#: ./Admin/Backups/index.php:54
-msgid "Restore"
-msgstr ""
-
-#: ./Admin/Backups/index.php:56
-msgid "This will overwrite the current database and some data may be lost. Are you sure?"
-msgstr ""
-
-#: ./Admin/Backups/index.php:59
-#: ./Systems/contact_us.php:44
-msgid "Send"
-msgstr ""
-
-#: ./Admin/Backups/index.php:61
-msgid "The backup file will be sent by mail. Are you sure?"
-msgstr ""
-
-#: ./Admin/Logs/index.php:16
-#: ./Admin/Systems/tmp_viewer.php:70
-msgid "Logs"
-msgstr ""
-
-#: ./Admin/Logs/index.php:19
-#: ./Admin/Systems/tmp_viewer.php:75
-msgid "Clear all logs"
-msgstr ""
-
-#: ./Admin/Logs/index.php:41
-msgid "Basic view"
-msgstr ""
-
-#: ./Admin/Logs/index.php:46
-msgid "Advanced view"
-msgstr ""
-
-#: ./Admin/Logs/view.php:16
-#: ./Admin/Logs/view_as_serialized.php:16
-msgid "Log {0}"
-msgstr ""
-
-#: ./Admin/Logs/view_as_serialized.php:51
-msgid "Request URL"
-msgstr ""
-
-#: ./Admin/Logs/view_as_serialized.php:62
-msgid "Referer URL"
-msgstr ""
-
-#: ./Admin/Logs/view_as_serialized.php:71
-msgid "Client IP"
-msgstr ""
-
-#: ./Admin/Logs/view_as_serialized.php:74
-#: ./element/admin/last-logins.php:42
-msgid "Who is"
-msgstr ""
-
-#: ./Admin/Logs/view_as_serialized.php:79
-msgid "Map"
-msgstr ""
-
-#: ./Admin/Logs/view_as_serialized.php:93
-msgid "Exception attributes"
-msgstr ""
-
-#: ./Admin/Logs/view_as_serialized.php:106
-msgid "Trace"
-msgstr ""
-
-#: ./Admin/Logs/view_as_serialized.php:118
-msgid "Full log"
 msgstr ""
 
 #: ./Admin/Pages/index.php:60
@@ -1000,8 +895,16 @@ msgstr ""
 msgid "Clear all assets"
 msgstr ""
 
+#: ./Admin/Systems/tmp_viewer.php:70
+msgid "Logs"
+msgstr ""
+
 #: ./Admin/Systems/tmp_viewer.php:71
 msgid "Logs size: {0}"
+msgstr ""
+
+#: ./Admin/Systems/tmp_viewer.php:75
+msgid "Clear all logs"
 msgstr ""
 
 #: ./Admin/Systems/tmp_viewer.php:83
@@ -1204,6 +1107,10 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
+#: ./Systems/contact_us.php:44
+msgid "Send"
+msgstr ""
+
 #: ./Systems/ip_not_allowed.php:19
 msgid "Your IP address is not allowed"
 msgstr ""
@@ -1316,6 +1223,10 @@ msgstr ""
 
 #: ./element/admin/last-logins.php:24
 msgid "Client"
+msgstr ""
+
+#: ./element/admin/last-logins.php:42
+msgid "Who is"
 msgstr ""
 
 #: ./element/admin/last-logins.php:48
