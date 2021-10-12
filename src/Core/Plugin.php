@@ -39,7 +39,7 @@ class Plugin extends BasePlugin
         $options += ['exclude' => [], 'order' => true, 'mecms_core' => true];
 
         if (!$options['mecms_core']) {
-            $options['exclude'] = array_merge((array)$options['exclude'], ['MeTools', 'DatabaseBackup', 'Recaptcha', 'RecaptchaMailhide', 'StopSpam', 'Thumber/Cake', 'Tokens', 'WyriHaximus/MinifyHtml']);
+            $options['exclude'] = array_merge((array)$options['exclude'], ['MeTools', 'Assets', 'DatabaseBackup', 'Recaptcha', 'RecaptchaMailhide', 'StopSpam', 'Thumber/Cake', 'Tokens', 'WyriHaximus/MinifyHtml']);
         }
 
         $plugins = parent::all($options);
