@@ -82,8 +82,8 @@ class StaticPage
     public static function all(): CollectionInterface
     {
         foreach (self::getPaths() as $path) {
-            $finder = new Finder();
-            foreach ($finder->files()->name('/^.+\.' . self::EXTENSION . '$/')->sortByName()->in($path) as $file) {
+            $finder = (new Finder())->files()->name('/^.+\.' . self::EXTENSION . '$/')->sortByName();
+            foreach ($finder->in($path) as $file) {
                 $pages[] = new Entity([
                     'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
                     'path' => Filesystem::instance()->rtr($file->getPathname()),
