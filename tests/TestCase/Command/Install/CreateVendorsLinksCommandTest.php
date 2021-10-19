@@ -36,10 +36,10 @@ class CreateVendorsLinksCommandTest extends TestCase
         $expected = array_values(array_filter(array_map(function (string $target, string $origin): string {
             $target = WWW_ROOT . 'vendor' . DS . $target;
             if (file_exists($target)) {
-                return 'File or directory `' . (new Filesystem())->rtr($target) . '` already exists';
+                return 'File or directory `' . Filesystem::instance()->rtr($target) . '` already exists';
             }
 
-            return file_exists(ROOT . 'vendor' . DS . $origin) ? 'Link `' . (new Filesystem())->rtr($target) . '` has been created' : '';
+            return file_exists(ROOT . 'vendor' . DS . $origin) ? 'Link `' . Filesystem::instance()->rtr($target) . '` has been created' : '';
         }, Configure::read('VENDOR_LINKS'), array_keys(Configure::read('VENDOR_LINKS')))));
 
         $this->exec('me_cms.create_vendors_links -v');

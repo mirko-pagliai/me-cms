@@ -31,7 +31,7 @@ class UserTest extends EntityTestCase
     {
         parent::tearDown();
 
-        (new Filesystem())->unlinkRecursive(USER_PICTURES, 'empty', true);
+        Filesystem::instance()->unlinkRecursive(USER_PICTURES, 'empty', true);
         @unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
     }
 
