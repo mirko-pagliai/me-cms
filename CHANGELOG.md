@@ -3,8 +3,8 @@
 ### 2.30.3
 * removed the files that interacted with the `cakephp-database-backup` plugin.
     Now that is a new plugin, `me-cms-database-backup`;
-* removed the files that interacted with log files. Now that is a new plugin,
-    `me-cms-log-reader`;
+* removed `mirko-pagliai/cakephp-entity-file-log` and files that interacted with
+    log files;
 * fixed a small bug in url with query string and final slash;
 * uses sql auto-quoting to make tests more compatible;
 * added `TestCase::isMySql()` method. This allows to skip tests with different

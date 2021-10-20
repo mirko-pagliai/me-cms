@@ -17,7 +17,6 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Database\TypeFactory;
 use Cake\Log\Log;
-use EntityFileLog\Log\Engine\EntityFileLog;
 use MeCms\Database\Type\JsonEntityType;
 
 require_once __DIR__ . DS . 'constants.php';
@@ -84,7 +83,7 @@ if (is_readable(CONFIG . 'recaptcha.php')) {
 //Adds log for users actions
 if (!Log::getConfig('users')) {
     Log::setConfig('users', [
-        'className' => EntityFileLog::class,
+        'className' => 'File',
         'path' => LOGS,
         'levels' => [],
         'file' => 'users.log',
