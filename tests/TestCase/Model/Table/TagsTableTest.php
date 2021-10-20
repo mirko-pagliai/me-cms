@@ -82,8 +82,9 @@ class TagsTableTest extends TableTestCase
      */
     public function testFindMethods(): void
     {
+        $this->skipIf(!$this->isMySql());
         $query = $this->Table->find('active');
-        $this->assertStringEndsWith('FROM tags Tags INNER JOIN posts_tags PostsTags ON Tags.id = (PostsTags.tag_id) INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Posts.id = (PostsTags.post_id))', $query->sql());
+        $this->assertStringEndsWith('FROM `tags` `Tags` INNER JOIN `posts_tags` `PostsTags` ON `Tags`.`id` = (`PostsTags`.`tag_id`) INNER JOIN `posts` `Posts` ON (`Posts`.`active` = :c0 AND `Posts`.`created` <= :c1 AND `Posts`.`id` = (`PostsTags`.`post_id`))', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
     }
@@ -94,8 +95,9 @@ class TagsTableTest extends TableTestCase
      */
     public function testQueryFromFilter(): void
     {
+        $this->skipIf(!$this->isMySql());
         $query = $this->Table->queryFromFilter($this->Table->find(), ['name' => 'test']);
-        $this->assertStringEndsWith('FROM tags Tags WHERE tag like :c0', $query->sql());
+        $this->assertStringEndsWith('FROM `tags` `Tags` WHERE `tag` like :c0', $query->sql());
         $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
     }
 }

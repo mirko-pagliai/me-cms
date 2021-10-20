@@ -63,7 +63,7 @@ class TopbarHelper extends Helper
 }
 HEREDOC;
         $file = TEST_APP . 'TestApp' . DS . 'View' . DS . 'Helper' . DS . 'TopbarHelper.php';
-        (new Filesystem())->createFile($file, $content);
+        Filesystem::instance()->createFile($file, $content);
         require_once $file;
         $result = (new AppView())->element('MeCms.topbar');
         unlink($file);

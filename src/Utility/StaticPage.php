@@ -65,7 +65,7 @@ class StaticPage
     public static function getSlug(string $path, string $relativePath): string
     {
         if (string_starts_with($path, $relativePath)) {
-            $path = substr($path, strlen((new Filesystem())->addSlashTerm($relativePath)));
+            $path = substr($path, strlen(Filesystem::instance()->addSlashTerm($relativePath)));
         }
         $path = preg_replace(sprintf('/\.[^\.]+$/'), '', $path);
 
@@ -82,11 +82,11 @@ class StaticPage
     public static function all(): CollectionInterface
     {
         foreach (self::getPaths() as $path) {
-            $finder = new Finder();
-            foreach ($finder->files()->name('/^.+\.' . self::EXTENSION . '$/')->sortByName()->in($path) as $file) {
+            $finder = (new Finder())->files()->name('/^.+\.' . self::EXTENSION . '$/')->sortByName();
+            foreach ($finder->in($path) as $file) {
                 $pages[] = new Entity([
                     'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
-                    'path' => (new Filesystem())->rtr($file->getPathname()),
+                    'path' => Filesystem::instance()->rtr($file->getPathname()),
                     'slug' => self::getSlug($file->getPathname(), $path),
                     'title' => self::getTitle(pathinfo($file->getPathname(), PATHINFO_FILENAME)),
                     'modified' => new FrozenTime($file->getMTime()),
@@ -118,7 +118,7 @@ class StaticPage
             $patterns[] = $filename;
             foreach (self::getPaths() as $plugin => $path) {
                 foreach ($patterns as $pattern) {
-                    $file = (new Filesystem())->concatenate($path, $pattern . '.' . self::EXTENSION);
+                    $file = Filesystem::instance()->concatenate($path, $pattern . '.' . self::EXTENSION);
                     if (is_readable($file)) {
                         return ($plugin != 'App' ? $plugin . '.' : '') . DS . 'StaticPages' . DS . $pattern;
                     }

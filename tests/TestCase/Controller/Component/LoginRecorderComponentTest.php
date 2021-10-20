@@ -74,7 +74,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
     {
         parent::tearDown();
 
-        (new Filesystem())->unlinkRecursive(LOGIN_RECORDS, false, true);
+        Filesystem::instance()->unlinkRecursive(LOGIN_RECORDS, false, true);
     }
 
     /**
@@ -150,7 +150,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $this->assertIsArray($result);
 
         //Creates an empty file. Now is always empty
-        (new Filesystem())->createFile(LOGIN_RECORDS . 'user_1.log');
+        Filesystem::instance()->createFile(LOGIN_RECORDS . 'user_1.log');
         $result = $this->getMockForLoginRecorder()->read();
         $this->assertEmpty($result);
         $this->assertIsArray($result);

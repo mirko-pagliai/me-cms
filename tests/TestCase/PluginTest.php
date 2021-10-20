@@ -41,15 +41,21 @@ class PluginTest extends TestCase
         Configure::write('MeCms.default.theme', 'MyTheme');
         $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
 
+        //In the first call is cli
         $Plugin = $this->getMockBuilder(MeCms::class)
             ->setMethods(['isCli'])
             ->getMock();
-        $Plugin->method('isCli')->will($this->onConsecutiveCalls(true, false));
+        $Plugin->method('isCli')->willReturn(true);
 
-        //In the first call is cli
         $Plugin->bootstrap($app);
         $loadedPlugins = $getLoadedPlugins($app);
         $this->assertContains('MyTheme', $loadedPlugins);
+
+        $Plugin = $this->getMockBuilder(MeCms::class)
+            ->setMethods(['isCli'])
+            ->getMock();
+        $Plugin->method('isCli')->willReturn(false);
+        $Plugin->bootstrap($app);
 
         //In the second call is not cli
         $Plugin->bootstrap($app);

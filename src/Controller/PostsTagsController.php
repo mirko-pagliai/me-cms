@@ -34,15 +34,17 @@ class PostsTagsController extends AppController
      */
     public function index(): void
     {
-        $page = $this->getRequest()->getQuery('page', 1);
-
         $this->paginate['order'] = ['tag' => 'ASC'];
 
         //Limit X4
         $this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 4;
 
         //Sets the cache name
-        $cache = sprintf('tags_limit_%s_page_%s', $this->paginate['limit'], $page);
+        $cache = sprintf(
+            'tags_limit_%s_page_%s',
+            $this->paginate['limit'],
+            trim((string)$this->getRequest()->getQuery('page', 1), '/')
+        );
 
         //Tries to get data from the cache
         [$tags, $paging] = array_values(Cache::readMany(
@@ -86,10 +88,13 @@ class PostsTagsController extends AppController
             ->cache('tag_' . md5($slug))
             ->firstOrFail();
 
-        $page = $this->getRequest()->getQuery('page', 1);
-
         //Sets the cache name
-        $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $page);
+        $cache = sprintf(
+            'tag_%s_limit_%s_page_%s',
+            md5($slug),
+            $this->paginate['limit'],
+            trim((string)$this->getRequest()->getQuery('page', 1), '/')
+        );
 
         //Tries to get data from the cache
         [$posts, $paging] = array_values(Cache::readMany(

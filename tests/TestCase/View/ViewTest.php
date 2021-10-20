@@ -106,7 +106,7 @@ class ViewTest extends TestCase
         //Disable widgets, sets title, creates a favicon, then renders
         Configure::write('Widgets.general', []);
         $this->View->set('title', 'title from controller');
-        (new Filesystem())->createFile(WWW_ROOT . 'favicon.ico');
+        Filesystem::instance()->createFile(WWW_ROOT . 'favicon.ico');
         $this->View->loadHelper('MeCms.Auth');
         $this->View->loadHelper('MeCms.Widget');
         $result = $this->View->render('StaticPages/page-from-app', 'MeCms.default');

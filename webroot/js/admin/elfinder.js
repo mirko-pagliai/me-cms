@@ -15,7 +15,7 @@
 function setIframeHeight()
 {
     var content = $("#content");
-    var iframe = $("iframe#file-explorer");
+    var iframe = $("#file-explorer");
 
     if (!iframe.length) {
         return;

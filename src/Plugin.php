@@ -19,7 +19,6 @@ namespace MeCms;
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
-use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\MiddlewareQueue;
@@ -52,26 +51,18 @@ class Plugin extends BasePlugin
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
-        foreach ([
-            'MeTools',
-            'DatabaseBackup',
-            'RecaptchaMailhide',
-            'StopSpam',
-            'Thumber\Cake',
-            'Tokens',
-        ] as $plugin) {
-            $className = sprintf('%s\Plugin', $plugin);
-            $plugin = new $className();
-            $plugin->bootstrap($app);
-            $plugin->disable('bootstrap');
-            $app->addPlugin($plugin);
-        }
-
-        //Loads theme plugin
-        /** @var \Cake\Http\BaseApplication $app */
-        $theme = getConfig('default.theme');
-        if ($theme && !$app->getPlugins()->has($theme)) {
-            $app->addPlugin($theme);
+        $pluginsToLoad = array_merge([
+            'MeTools\Plugin',
+            'RecaptchaMailhide\Plugin',
+            'StopSpam\Plugin',
+            'Thumber\Cake\Plugin',
+            'Tokens\Plugin',
+        ], getConfig('default.theme') ? [getConfig('default.theme')] : [], !$this->isCli() ? ['WyriHaximus/MinifyHtml'] : []);
+        foreach ($pluginsToLoad as $plugin) {
+            /** @var \Cake\Http\BaseApplication $app */
+            if (!$app->getPlugins()->has($plugin)) {
+                $app->addPlugin($plugin);
+            }
         }
 
         parent::bootstrap($app);
@@ -79,14 +70,8 @@ class Plugin extends BasePlugin
         if (!$this->isCli()) {
             //Loads DebugKit, if debugging is enabled
             if (getConfig('debug') && !$app->getPlugins()->has('DebugKit')) {
-                try {
-                    $app->addPlugin('DebugKit');
-                } catch (MissingPluginException $e) {
-                    //Do not halt if the plugin is missing
-                }
+                $app->addOptionalPlugin('DebugKit');
             }
-
-            $app->addPlugin('WyriHaximus/MinifyHtml');
         }
     }
 

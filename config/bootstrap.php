@@ -15,9 +15,8 @@ declare(strict_types=1);
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Database\Type;
+use Cake\Database\TypeFactory;
 use Cake\Log\Log;
-use EntityFileLog\Log\Engine\EntityFileLog;
 use MeCms\Database\Type\JsonEntityType;
 
 require_once __DIR__ . DS . 'constants.php';
@@ -32,7 +31,6 @@ Configure::write('CONFIG_FILES', array_merge(Configure::read('CONFIG_FILES', [])
 //Sets directories to be created and must be writable
 Configure::write('WRITABLE_DIRS', array_merge(Configure::read('WRITABLE_DIRS', []), [
     getConfigOrFail('Assets.target'),
-    getConfigOrFail('DatabaseBackup.target'),
     LOGIN_RECORDS,
     THUMBER_TARGET,
     UPLOADED,
@@ -82,14 +80,10 @@ if (is_readable(CONFIG . 'recaptcha.php')) {
     }
 }
 
-if (!getConfig('DatabaseBackup.mailSender')) {
-    Configure::write('DatabaseBackup.mailSender', getConfigOrFail('MeCms.email.webmaster'));
-}
-
 //Adds log for users actions
 if (!Log::getConfig('users')) {
     Log::setConfig('users', [
-        'className' => EntityFileLog::class,
+        'className' => 'File',
         'path' => LOGS,
         'levels' => [],
         'file' => 'users.log',
@@ -101,4 +95,4 @@ if (!Log::getConfig('users')) {
 require_once __DIR__ . DS . 'i18n_constants.php';
 require_once __DIR__ . DS . 'requirements.php';
 
-Type::map('jsonEntity', JsonEntityType::class);
+TypeFactory::map('jsonEntity', JsonEntityType::class);

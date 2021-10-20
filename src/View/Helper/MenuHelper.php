@@ -123,24 +123,6 @@ class MenuHelper extends Helper
     }
 
     /**
-     * Internal function to generate the menu for "backups" actions
-     * @return array Array with links, title, title options and handled controllers
-     */
-    public function backups(): array
-    {
-        //Only admins can access this controller
-        if (!$this->Auth->isGroup('admin')) {
-            return [];
-        }
-
-        $params = ['controller' => 'Backups'] + $this->defaultParams;
-        $links[] = [__d('me_cms', 'List backups'), ['action' => 'index'] + $params];
-        $links[] = [__d('me_cms', 'Add backup'), ['action' => 'add'] + $params];
-
-        return [$links, __d('me_cms', 'Backups'), ['icon' => 'database'], ['Backups']];
-    }
-
-    /**
      * Internal function to generate the menu for "systems" actions
      * @return array Array with links, title, title options and handled controllers
      */
@@ -152,14 +134,11 @@ class MenuHelper extends Helper
         }
 
         $params = ['controller' => 'Systems'] + $this->defaultParams;
-        $links[] = [__d('me_cms', 'Temporary files'), ['action' => 'tmpViewer'] + $params];
-        $links[] = [__d('me_cms', 'Media browser'), ['action' => 'browser'] + $params];
-        $links[] = [__d('me_cms', 'Changelogs'), ['action' => 'changelogs'] + $params];
 
-        if ($this->Auth->isGroup('admin')) {
-            $links[] = [__d('me_cms', 'Log management'), ['controller' => 'Logs', 'action' => 'index'] + $params];
-        }
-
-        return [$links, __d('me_cms', 'System'), ['icon' => 'wrench'], ['Logs', 'Systems']];
+        return [[
+            [__d('me_cms', 'Temporary files'), ['action' => 'tmpViewer'] + $params],
+            [__d('me_cms', 'Media browser'), ['action' => 'browser'] + $params],
+            [__d('me_cms', 'Changelogs'), ['action' => 'changelogs'] + $params],
+        ], __d('me_cms', 'System'), ['icon' => 'wrench'], ['Systems']];
     }
 }

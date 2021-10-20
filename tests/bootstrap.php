@@ -20,7 +20,6 @@ use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\Mailer\TransportFactory;
 use Cake\Utility\Security;
-use EntityFileLog\Log\Engine\EntityFileLog;
 
 ini_set('intl.default_locale', 'en_US');
 date_default_timezone_set('UTC');
@@ -43,13 +42,17 @@ define('LOGS', TMP . 'log' . DS);
 define('SESSIONS', TMP . 'sessions' . DS);
 define('UPLOADED', WWW_ROOT . 'files' . DS);
 define('LOGIN_RECORDS', TMP . 'login' . DS);
-@mkdir(TMP);
-@mkdir(LOGS);
-@mkdir(SESSIONS);
-@mkdir(CACHE);
-@mkdir(CACHE . 'models');
-@mkdir(CACHE . 'persistent');
-@mkdir(CACHE . 'views');
+
+foreach ([
+    TMP . 'tests',
+    LOGS,
+    SESSIONS,
+    CACHE . 'models',
+    CACHE . 'persistent',
+    CACHE . 'views',
+] as $dir) {
+    @mkdir($dir, 0777, true);
+}
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once CORE_PATH . 'config' . DS . 'bootstrap.php';
@@ -75,9 +78,8 @@ Configure::write('App', [
 ]);
 Configure::write('Session', ['defaults' => 'php']);
 Configure::write('Assets.target', TMP . 'assets');
-Configure::write('DatabaseBackup', ['connection' => 'test', 'target' => TMP . 'backups']);
 Configure::write('Tokens.usersClassOptions', ['foreignKey' => 'user_id', 'className' => 'Users']);
-Configure::write('pluginsToLoad', ['MeCms']);
+Configure::write('pluginsToLoad', ['Thumber/Cake', 'MeCms']);
 Security::setSalt('a-long-but-not-random-value');
 define('THUMBER_DRIVER', 'gd');
 
@@ -100,7 +102,7 @@ Cache::setConfig([
 ]);
 
 if (!getenv('db_dsn')) {
-    putenv('db_dsn=mysql://travis@localhost/test');
+    putenv('db_dsn=mysql://travis@localhost/test?encoding=utf8&quoteIdentifiers=true');
     if (getenv('db_driver') == 'postgres') {
         putenv('db_dsn=postgres://postgres@localhost/travis_ci_test');
     }
@@ -114,7 +116,7 @@ Log::setConfig('debug', [
     'file' => 'debug',
 ]);
 Log::setConfig('error', [
-    'className' => EntityFileLog::class,
+    'className' => 'File',
     'path' => LOGS,
     'file' => 'error',
     'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],

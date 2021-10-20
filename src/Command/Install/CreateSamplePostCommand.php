@@ -79,7 +79,7 @@ class CreateSamplePostCommand extends Command
             'text' => 'Hi! This is just <strong>a sample post</strong>, automatically created during installation.<br />Welcome!',
         ]);
         if (!$this->Posts->save($post)) {
-            return $io->error(__d('me_cms', I18N_OPERATION_NOT_OK));
+            return $io->error(I18N_OPERATION_NOT_OK);
         }
 
         $io->verbose('The sample post has been created');

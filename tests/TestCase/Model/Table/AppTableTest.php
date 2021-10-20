@@ -133,34 +133,53 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `find()` methods
+     * Test for `findActive()` method
      * @test
      */
-    public function testFindMethods(): void
+    public function testFindActiveMethod(): void
     {
         $query = $this->Posts->find('active');
-        $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 AND Posts.created <= :c1)', $query->sql());
-        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertNotEmpty($query->count());
         foreach ($query as $entity) {
             $this->assertTrue($entity->get('active') && !$entity->get('created')->isFuture());
         }
 
-        $query = $this->Posts->find('pending');
-        $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 OR Posts.created > :c1)', $query->sql());
-        $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->skipIf(!$this->isMySql());
+        $this->assertStringEndsWith('FROM `posts` `Posts` WHERE (`Posts`.`active` = :c0 AND `Posts`.`created` <= :c1)', $query->sql());
+        $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
+    }
+
+    /**
+     * Test for `findPending()` method
+     * @test
+     */
+    public function testFindPendingMethod(): void
+    {
+        $query = $this->Posts->find('pending');
         $this->assertNotEmpty($query->count());
         foreach ($query as $entity) {
             $this->assertTrue(!$entity->get('active') || $entity->get('created')->isFuture());
         }
 
+        $this->skipIf(!$this->isMySql());
+        $this->assertStringEndsWith('FROM `posts` `Posts` WHERE (`Posts`.`active` = :c0 OR `Posts`.`created` > :c1)', $query->sql());
+        $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
+    }
+
+    /**
+     * Test for `findRandom()` method
+     * @test
+     */
+    public function testFindRandomMethod(): void
+    {
+        $this->skipIf(!$this->isMySql());
         $query = $this->Posts->find('random');
-        $this->assertStringEndsWith('FROM posts Posts ORDER BY rand() LIMIT 1', $query->sql());
+        $this->assertStringEndsWith('FROM `posts` `Posts` ORDER BY rand() LIMIT 1', $query->sql());
 
         $query = $this->Posts->find('random')->limit(2);
-        $this->assertStringEndsWith('FROM posts Posts ORDER BY rand() LIMIT 2', $query->sql());
+        $this->assertStringEndsWith('FROM `posts` `Posts` ORDER BY rand() LIMIT 2', $query->sql());
     }
 
     /**
@@ -180,10 +199,12 @@ class AppTableTest extends TableTestCase
     public function testGetList(): void
     {
         $query = $this->Posts->getList();
-        $this->assertStringEndsWith('ORDER BY ' . $this->Posts->getDisplayField() . ' ASC', $query->sql());
         $this->assertNotEmpty($query->toArray());
         $fromCache = Cache::read('posts_list', $this->Posts->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
+
+        $this->skipIf(!$this->isMySql());
+        $this->assertStringEndsWith('ORDER BY `' . $this->Posts->getDisplayField() . '` ASC', $query->sql());
     }
 
     /**
@@ -199,11 +220,20 @@ class AppTableTest extends TableTestCase
             2 => 'Another post category',
         ];
         $query = $this->PostsCategories->getTreeList();
-        $this->assertStringEndsNotWith('ORDER BY ' . $this->PostsCategories->getDisplayField() . ' ASC', $query->sql());
         $this->assertEquals($expected, $query->toArray());
         $fromCache = Cache::read('posts_categories_tree_list', $this->PostsCategories->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
 
+        $this->skipIf(!$this->isMySql());
+        $this->assertStringEndsNotWith('ORDER BY `' . $this->PostsCategories->getDisplayField() . '` ASC', $query->sql());
+    }
+
+    /**
+     * Test for `getTreeList()` method
+     * @test
+     */
+    public function testGetTreeListOnFailure(): void
+    {
         //With a model that does not have a tree
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Unknown finder method "treeList"');
@@ -225,7 +255,8 @@ class AppTableTest extends TableTestCase
      */
     public function testQueryFromFilter(): void
     {
-        $expectedSql = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
+        $this->skipIf(!$this->isMySql());
+        $expectedSql = 'FROM `posts` `Posts` WHERE (`Posts`.`id` = :c0 AND `Posts`.`title` like :c1 AND `Posts`.`user_id` = :c2 AND `Posts`.`category_id` = :c3 AND `Posts`.`active` = :c4 AND `Posts`.`priority` = :c5 AND `Posts`.`created` >= :c6 AND `Posts`.`created` < :c7)';
         $expectedParams = [
             2,
             '%Title%',
