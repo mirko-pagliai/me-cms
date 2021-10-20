@@ -42,13 +42,17 @@ define('LOGS', TMP . 'log' . DS);
 define('SESSIONS', TMP . 'sessions' . DS);
 define('UPLOADED', WWW_ROOT . 'files' . DS);
 define('LOGIN_RECORDS', TMP . 'login' . DS);
-@mkdir(TMP);
-@mkdir(LOGS);
-@mkdir(SESSIONS);
-@mkdir(CACHE);
-@mkdir(CACHE . 'models');
-@mkdir(CACHE . 'persistent');
-@mkdir(CACHE . 'views');
+
+foreach ([
+    TMP . 'tests',
+    LOGS,
+    SESSIONS,
+    CACHE . 'models',
+    CACHE . 'persistent',
+    CACHE . 'views',
+] as $dir) {
+    @mkdir($dir, 0777, true);
+}
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once CORE_PATH . 'config' . DS . 'bootstrap.php';
