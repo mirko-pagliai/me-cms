@@ -141,7 +141,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertArrayKeysEqual(['Categories', 'Tags', 'Users'], $query->getContain());
 
         $this->skipIf(!$this->isMySql());
-        $this->assertStringEndsWith('FROM `posts` `Posts` INNER JOIN `posts_categories` `Categories` ON `Categories`.`id` = (`Posts`.`category_id`) INNER JOIN `users` `Users` ON `Users`.`id` = (`Posts`.`user_id`) ORDER BY `Posts`.`created` DESC', $query->sql());
+        $this->assertStringEndsWith('FROM `posts` `Posts` INNER JOIN `posts_categories` `Categories` ON `Categories`.`id` = `Posts`.`category_id` INNER JOIN `users` `Users` ON `Users`.`id` = `Posts`.`user_id` ORDER BY `Posts`.`created` DESC', $query->sql());
     }
 
     /**
@@ -201,7 +201,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     {
         $this->skipIf(!$this->isMySql());
         $query = $this->Table->queryFromFilter($this->Table->find(), ['tag' => 'test']);
-        $this->assertStringEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = (`PostsTags`.`post_id`) INNER JOIN `tags` `Tags` ON (`tag` = :c0 AND `Tags`.`id` = (`PostsTags`.`tag_id`))', $query->sql());
+        $this->assertStringEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = `PostsTags`.`post_id` INNER JOIN `tags` `Tags` ON (`tag` = :c0 AND `Tags`.`id` = `PostsTags`.`tag_id`)', $query->sql());
         $this->assertEquals('test', $query->getValueBinder()->bindings()[':c0']['value']);
     }
 
@@ -215,14 +215,14 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->loadFixtures();
 
         $query = $this->Table->queryForRelated(4, true);
-        $this->assertStringEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = (`PostsTags`.`post_id`) INNER JOIN `tags` `Tags` ON (`Tags`.`id` = :c0 AND `Tags`.`id` = (`PostsTags`.`tag_id`)) WHERE (`Posts`.`active` = :c1 AND `Posts`.`created` <= :c2 AND (`Posts`.`preview`) IS NOT NULL AND `Posts`.`preview` != :c3)', $query->sql());
+        $this->assertStringEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = `PostsTags`.`post_id` INNER JOIN `tags` `Tags` ON (`Tags`.`id` = :c0 AND `Tags`.`id` = `PostsTags`.`tag_id`) WHERE (`Posts`.`active` = :c1 AND `Posts`.`created` <= :c2 AND (`Posts`.`preview`) IS NOT NULL AND `Posts`.`preview` != :c3)', $query->sql());
         $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertInstanceof(Time::class, $query->getValueBinder()->bindings()[':c2']['value']);
         $this->assertEquals([], $query->getValueBinder()->bindings()[':c3']['value']);
 
         $query = $this->Table->queryForRelated(4, false);
-        $this->assertStringEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = (`PostsTags`.`post_id`) INNER JOIN `tags` `Tags` ON (`Tags`.`id` = :c0 AND `Tags`.`id` = (`PostsTags`.`tag_id`)) WHERE (`Posts`.`active` = :c1 AND `Posts`.`created` <= :c2)', $query->sql());
+        $this->assertStringEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = `PostsTags`.`post_id` INNER JOIN `tags` `Tags` ON (`Tags`.`id` = :c0 AND `Tags`.`id` = `PostsTags`.`tag_id`) WHERE (`Posts`.`active` = :c1 AND `Posts`.`created` <= :c2)', $query->sql());
         $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertInstanceof(Time::class, $query->getValueBinder()->bindings()[':c2']['value']);
