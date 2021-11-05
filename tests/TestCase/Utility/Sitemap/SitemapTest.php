@@ -50,7 +50,7 @@ class SitemapTest extends TestCase
 
         Cache::clearAll();
 
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
     }
 
     /**

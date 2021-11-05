@@ -36,7 +36,7 @@ class PluginTest extends TestCase
         $this->assertEquals('MeTools', $result[1]);
         $this->assertNotContains('TestPlugin', $result);
 
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
         $result = Plugin::all();
         $this->assertEquals('MeCms', $result[0]);
         $this->assertEquals('MeTools', $result[1]);

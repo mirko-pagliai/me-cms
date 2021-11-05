@@ -71,12 +71,12 @@ class SitemapBuilderTest extends TestCase
             'systems',
         ], $methods->extract('name')->toArray());
 
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
         $methods = $this->SitemapBuilder->getMethods('TestPlugin');
         $this->assertEquals(['urlMethod1', 'urlMethod2'], $methods->extract('name')->toArray());
 
         //This plugin does not have the `Sitemap` class
-        $this->loadPlugins(['TestPluginTwo']);
+        $this->loadPlugins(['TestPluginTwo' => []]);
         $methods = $this->SitemapBuilder->getMethods('TestPluginTwo');
         $this->assertCount(0, $methods);
     }
@@ -100,7 +100,7 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGenerateWithPlugin(): void
     {
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
         $map = $this->SitemapBuilder->generate();
         $this->assertStringContainsString('first-folder/page-on-first-from-plugin', $map);
         $this->assertStringContainsString('first-folder/second_folder/page_on_second_from_plugin', $map);

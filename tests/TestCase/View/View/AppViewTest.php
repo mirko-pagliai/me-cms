@@ -86,7 +86,7 @@ class AppViewTest extends TestCase
     public function testRenderLayoutFromTheme(): void
     {
         //Loads the `TestPlugin` and sets it as a theme
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
         Configure::write('MeCms.default.theme', 'TestPlugin');
 
         //Reloads the View

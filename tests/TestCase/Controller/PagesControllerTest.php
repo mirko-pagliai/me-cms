@@ -76,7 +76,7 @@ class PagesControllerTest extends ControllerTestCase
     public function testViewWithStaticPageFromPlugin(): void
     {
         Cache::clear('static_pages');
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
         $this->get(['_name' => 'page', 'test-from-plugin']);
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page from a plugin');
