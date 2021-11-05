@@ -226,6 +226,8 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      */
     public function testQueryForRelatedWithoutImages(): void
     {
+        $this->skipIf(!$this->isMySql());
+
         $query = $this->Table->queryForRelated(4, false);
         $sql = $query->sql();
         $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
