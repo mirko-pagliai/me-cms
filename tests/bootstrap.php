@@ -106,7 +106,7 @@ Cache::setConfig([
 ]);
 
 if (!getenv('db_dsn')) {
-    putenv('db_dsn=mysql://travis@localhost/test?encoding=utf8&quoteIdentifiers=true');
+    putenv('db_dsn=mysql://travis@localhost/test?encoding=utf8');
     if (getenv('driver_test') == 'postgres') {
         putenv('db_dsn=postgres://postgres@localhost/travis_ci_test');
     }
