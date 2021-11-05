@@ -205,11 +205,14 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     public function testQueryForRelated(): void
     {
         $query = $this->Table->queryForRelated(4);
-        $this->assertSqlEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = `PostsTags`.`post_id` INNER JOIN `tags` `Tags` ON (`Tags`.`id` = :c0 AND `Tags`.`id` = `PostsTags`.`tag_id`) WHERE (`Posts`.`active` = :c1 AND `Posts`.`created` <= :c2 AND (`Posts`.`preview`) IS NOT NULL AND `Posts`.`preview` != :c3)', $query->sql());
+        $sql = $query->sql();
         $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertInstanceof(FrozenTime::class, $query->getValueBinder()->bindings()[':c2']['value']);
         $this->assertEquals([], $query->getValueBinder()->bindings()[':c3']['value']);
+
+        $this->skipIfCakeIsLessThan('4.3');
+        $this->assertSqlEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = `PostsTags`.`post_id` INNER JOIN `tags` `Tags` ON (`Tags`.`id` = :c0 AND `Tags`.`id` = `PostsTags`.`tag_id`) WHERE (`Posts`.`active` = :c1 AND `Posts`.`created` <= :c2 AND (`Posts`.`preview`) IS NOT NULL AND `Posts`.`preview` != :c3)', $sql);
     }
 
     /**
