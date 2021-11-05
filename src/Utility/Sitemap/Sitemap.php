@@ -53,7 +53,8 @@ class Sitemap extends SitemapBase
                         ->select(['category_id', 'slug', 'modified'])
                         ->orderDesc('modified');
                 })
-                ->orderAsc(sprintf('%s.lft', $table->getAlias()));
+                ->orderAsc(sprintf('%s.lft', $table->getAlias()))
+                ->all();
 
             if ($categories->isEmpty()) {
                 return [];
@@ -103,7 +104,8 @@ class Sitemap extends SitemapBase
                         ->select(['category_id', 'slug', 'modified'])
                         ->orderDesc('modified');
                 })
-                ->orderAsc(sprintf('%s.lft', $table->getAlias()));
+                ->orderAsc(sprintf('%s.lft', $table->getAlias()))
+                ->all();
 
             if ($categories->isEmpty()) {
                 return [];
@@ -158,7 +160,8 @@ class Sitemap extends SitemapBase
         if (!$url) {
             $tags = $table->find('active')
                 ->select(['tag', 'modified'])
-                ->orderAsc(sprintf('%s.tag', $table->getAlias()));
+                ->orderAsc(sprintf('%s.tag', $table->getAlias()))
+                ->all();
 
             if ($tags->isEmpty()) {
                 return [];

@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -56,7 +56,7 @@ class NextToBePublishedTraitTest extends TestCase
     public function testGetNextToBePublishedAndSetNextToBePublished(): void
     {
         //Creates a record with a future publication time (1 hours)
-        $future = new Time('+1 hours');
+        $future = new FrozenTime('+1 hours');
         $entity = $this->Posts->newEntity([
             'user_id' => 1,
             'category_id' => 1,
@@ -71,7 +71,7 @@ class NextToBePublishedTraitTest extends TestCase
 
         //Creates another record with a future publication time (30 minuts)
         //This record takes precedence over the previous
-        $future = new Time('+30 minutes');
+        $future = new FrozenTime('+30 minutes');
         $entity = $this->Posts->newEntity([
             'user_id' => 1,
             'category_id' => 1,

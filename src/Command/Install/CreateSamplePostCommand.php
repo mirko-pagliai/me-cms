@@ -59,7 +59,7 @@ class CreateSamplePostCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        if (!$this->Posts->find()->isEmpty()) {
+        if (!$this->Posts->find()->all()->isEmpty()) {
             $io->verbose(__d('me_cms', 'At least one post already exists'));
 
             return null;

@@ -19,7 +19,7 @@ use Cake\Cache\Cache;
 use Cake\Controller\Controller;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use MeCms\Model\Entity\Post;
 use MeCms\TestSuite\ControllerTestCase;
 
@@ -98,12 +98,12 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertEquals($date, $this->viewVariable('date'));
 
         $startFromView = $this->viewVariable('start');
-        $this->assertInstanceof(Time::class, $startFromView);
+        $this->assertInstanceof(FrozenTime::class, $startFromView);
         $this->assertEquals('2016-12-29 00:00:00', $startFromView->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         $cache = sprintf(
             'index_date_%s_limit_%s_page_%s',
-            md5(serialize([$startFromView, Time::parse($startFromView)->addDay(1)])),
+            md5(serialize([$startFromView, FrozenTime::parse($startFromView)->addDay(1)])),
             getConfigOrFail('default.records'),
             1
         );

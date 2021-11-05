@@ -17,7 +17,7 @@
 //Activation
 if (!$routes->nameExists('activation')) {
     $routes->connect(
-        '/activation/:id/:token',
+        '/activation/{id}/{token}',
         ['controller' => 'Users', 'action' => 'activation'],
         ['_name' => 'activation']
     )->setPatterns(['id' => '\d+', 'token' => '[\d\w]+'])->setPass(['id', 'token']);
@@ -54,7 +54,7 @@ if (!$routes->nameExists('passwordForgot')) {
 //Password reset
 if (!$routes->nameExists('passwordReset')) {
     $routes->connect(
-        '/password/reset/:id/:token',
+        '/password/reset/{id}/{token}',
         ['controller' => 'Users', 'action' => 'passwordReset'],
         ['_name' => 'passwordReset']
     )->setPatterns(['id' => '\d+', 'token' => '[\d\w]+'])->setPass(['id', 'token']);

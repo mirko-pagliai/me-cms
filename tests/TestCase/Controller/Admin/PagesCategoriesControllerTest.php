@@ -133,12 +133,12 @@ class PagesCategoriesControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'delete', 2]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertTrue($this->Table->findById(2)->isEmpty());
+        $this->assertTrue($this->Table->findById(2)->all()->isEmpty());
 
         //POST request. This category has some pages, so it cannot be deleted
         $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
-        $this->assertFalse($this->Table->findById(1)->isEmpty());
+        $this->assertFalse($this->Table->findById(1)->all()->isEmpty());
     }
 }

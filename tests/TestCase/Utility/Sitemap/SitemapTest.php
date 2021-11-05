@@ -28,12 +28,6 @@ use MeCms\Utility\Sitemap\Sitemap;
 class SitemapTest extends TestCase
 {
     /**
-     * Does not automatically load fixtures
-     * @var bool
-     */
-    public $autoFixtures = false;
-
-    /**
      * Fixtures
      * @var array
      */
@@ -65,7 +59,6 @@ class SitemapTest extends TestCase
      */
     public function testPages(): void
     {
-        $this->loadFixtures('Pages', 'PagesCategories');
         /** @var \MeCms\Model\Table\PagesCategoriesTable $table */
         $table = TableRegistry::getTableLocator()->get('MeCms.PagesCategories');
 
@@ -113,7 +106,6 @@ class SitemapTest extends TestCase
      */
     public function testPosts(): void
     {
-        $this->loadFixtures('Posts', 'PostsCategories');
         /** @var \MeCms\Model\Table\PostsCategoriesTable $table */
         $table = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
 
@@ -190,7 +182,6 @@ class SitemapTest extends TestCase
      */
     public function testPostsTags(): void
     {
-        $this->loadFixtures('Posts', 'PostsTags', 'Tags');
         /** @var \MeCms\Model\Table\TagsTable $table */
         $table = TableRegistry::getTableLocator()->get('MeCms.Tags');
 

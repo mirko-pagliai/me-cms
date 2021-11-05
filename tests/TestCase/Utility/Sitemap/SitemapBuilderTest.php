@@ -34,12 +34,6 @@ class SitemapBuilderTest extends TestCase
     protected $SitemapBuilder;
 
     /**
-     * Does not automatically load fixtures
-     * @var bool
-     */
-    public $autoFixtures = false;
-
-    /**
      * Fixtures
      * @var array
      */
@@ -93,7 +87,6 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGenerate(): void
     {
-        $this->loadFixtures();
         $map = Xml::toArray(Xml::build($this->SitemapBuilder->generate()))['urlset']['url'];
         $this->assertNotEmpty($map);
         $this->assertSame(['loc' => 'http://localhost/', 'priority' => '0.5'], array_value_first($map));
@@ -107,7 +100,6 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGenerateWithPlugin(): void
     {
-        $this->loadFixtures();
         $this->loadPlugins(['TestPlugin']);
         $map = $this->SitemapBuilder->generate();
         $this->assertStringContainsString('first-folder/page-on-first-from-plugin', $map);

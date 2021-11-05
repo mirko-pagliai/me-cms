@@ -27,11 +27,6 @@ use MeCms\TestSuite\TableTestCase;
 class UsersTableTest extends TableTestCase
 {
     /**
-     * @var bool
-     */
-    public $autoFixtures = false;
-
-    /**
      * @var array
      */
     protected static $example = [
@@ -135,7 +130,7 @@ class UsersTableTest extends TableTestCase
     public function testAssociations(): void
     {
         $token = (new TokenCreator())->create('testToken', ['user_id' => 4]);
-        $tokens = $this->Table->findById(4)->contain('Tokens')->extract('tokens')->first();
+        $tokens = $this->Table->findById(4)->contain('Tokens')->all()->extract('tokens')->first();
         $this->assertEquals(1, count($tokens));
         $this->assertEquals(4, $tokens[0]->get('user_id'));
         $this->assertEquals($token, $tokens[0]->get('token'));
@@ -172,7 +167,6 @@ class UsersTableTest extends TableTestCase
      */
     public function testGetActiveList(): void
     {
-        $this->loadFixtures();
         $query = $this->Table->getActiveList();
         $this->assertNotEmpty($query->toArray());
         $fromCache = Cache::read('active_users_list', $this->Table->getCacheName())->toArray();
@@ -227,8 +221,6 @@ class UsersTableTest extends TableTestCase
      */
     public function testValidationDoNotRequirePresence(): void
     {
-        $this->loadFixtures();
-
         $example = ['email' => 'example@test.com'];
         $entity = $this->Table->newEntity($example);
         $this->assertNotEmpty($entity->getErrors());
@@ -251,7 +243,6 @@ class UsersTableTest extends TableTestCase
      */
     public function testValidationEmptyPassword(): void
     {
-        $this->loadFixtures();
         $example = ['password' => '', 'password_repeat' => ''] + self::$example;
         $expected = [
             'password' => ['_empty' => 'This field cannot be left empty'],

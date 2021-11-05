@@ -16,22 +16,22 @@ declare(strict_types=1);
 
 namespace MeCms\Controller\Traits;
 
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 
 /**
- * This trait provides a method to fets start and end date as `Time` instances
+ * This trait provides a method to get start and end date as `FrozenTime` instances
  *  starting from a string. These can be used for a `where` condition to search
  *  for records based on a date.
  */
 trait GetStartAndEndDateTrait
 {
     /**
-     * Gets start and end date as `Time` instances starting from a string.
+     * Gets start and end date as `FrozenTime` instances starting from a string.
      * These can be used for a `where` condition to search for records based on
      *  a date.
      * @param string $date Date as `today`, `yesterday`, `YYYY/MM/dd`,
      *  `YYYY/MM` or `YYYY`
-     * @return array Array with start and end date as `Time` instances
+     * @return array Array with start and end date as `FrozenTime` instances
      */
     protected function getStartAndEndDate(string $date): array
     {
@@ -39,18 +39,18 @@ trait GetStartAndEndDateTrait
 
         //Sets the start date
         if (in_array($date, ['today', 'yesterday'])) {
-            $start = Time::parse($date);
+            $start = FrozenTime::parse($date);
         } else {
             [$year, $month, $day] = array_replace([null, null, null], explode('/', $date));
-            $start = Time::now()->setDate((int)$year, (int)($month ?: 1), (int)($day ?: 1));
+            $start = FrozenTime::now()->setDate((int)$year, (int)($month ?: 1), (int)($day ?: 1));
         }
 
         $start = $start->setTime(0, 0, 0);
-        $end = Time::parse($start)->addYear(1);
+        $end = FrozenTime::parse($start)->addYear(1);
         if (($year && $month && $day) || in_array($date, ['today', 'yesterday'])) {
-            $end = Time::parse($start)->addDay(1);
+            $end = FrozenTime::parse($start)->addDay(1);
         } elseif ($year && $month) {
-            $end = Time::parse($start)->addMonth(1);
+            $end = FrozenTime::parse($start)->addMonth(1);
         }
 
         return [$start, $end];

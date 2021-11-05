@@ -48,7 +48,7 @@ class AddUserCommand extends Command
     {
         $this->loadModel('MeCms.Users');
 
-        $groups = $this->Users->Groups->find('list');
+        $groups = $this->Users->Groups->find('list')->all();
         if ($groups->isEmpty()) {
             return $io->error(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
         }

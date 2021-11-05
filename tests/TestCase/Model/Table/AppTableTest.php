@@ -18,7 +18,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 use BadMethodCallException;
 use Cake\Cache\Cache;
 use Cake\I18n\I18nDateTimeInterface;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use MeCms\ORM\Query;
 use MeCms\TestSuite\TableTestCase;
 
@@ -89,7 +89,7 @@ class AppTableTest extends TableTestCase
         $this->assertNotEmpty($entity->get('created'));
         $Table->delete($entity);
 
-        $now = new Time();
+        $now = new FrozenTime();
         /** @var \Cake\Datasource\EntityInterface $entity */
         $entity = $Table->save($Table->newEntity(['created' => $now] + $example));
         $this->assertEquals($now, $entity->get('created'));
@@ -104,7 +104,7 @@ class AppTableTest extends TableTestCase
 
         /** @var \Cake\Datasource\EntityInterface $entity */
         $entity = $Table->save($Table->newEntity(['created' => null] + $example));
-        $this->assertInstanceOf(Time::class, $entity->get('created'));
+        $this->assertInstanceOf(FrozenTime::class, $entity->get('created'));
         $Table->delete($entity);
     }
 
@@ -147,7 +147,7 @@ class AppTableTest extends TableTestCase
         $this->skipIf(!$this->isMySql());
         $this->assertStringEndsWith('FROM `posts` `Posts` WHERE (`Posts`.`active` = :c0 AND `Posts`.`created` <= :c1)', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
     }
 
     /**
@@ -165,7 +165,7 @@ class AppTableTest extends TableTestCase
         $this->skipIf(!$this->isMySql());
         $this->assertStringEndsWith('FROM `posts` `Posts` WHERE (`Posts`.`active` = :c0 OR `Posts`.`created` > :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
     }
 
     /**

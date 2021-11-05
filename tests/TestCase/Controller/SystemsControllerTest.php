@@ -18,7 +18,7 @@ namespace MeCms\Test\TestCase\Controller;
 use Cake\Cache\Cache;
 use Cake\Chronos\Chronos;
 use Cake\Core\Configure;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use MeCms\Form\ContactUsForm;
 use MeCms\TestSuite\ControllerTestCase;
 
@@ -27,12 +27,6 @@ use MeCms\TestSuite\ControllerTestCase;
  */
 class SystemsControllerTest extends ControllerTestCase
 {
-    /**
-     * Does not automatically load fixtures
-     * @var bool
-     */
-    public $autoFixtures = false;
-
     /**
      * Fixtures
      * @var array
@@ -52,7 +46,7 @@ class SystemsControllerTest extends ControllerTestCase
     {
         $this->get(['_name' => 'acceptCookies']);
         $this->assertRedirect(['_name' => 'homepage']);
-        $expires = Time::createFromTimestamp($this->_response->getCookie('cookies-policy')['expires']);
+        $expires = FrozenTime::createFromTimestamp($this->_response->getCookie('cookies-policy')['expires']);
         $this->assertCookie('1', 'cookies-policy');
         $this->assertTrue($expires->isWithinNext((string)Chronos::createFromDate(2038, 1, 1)));
     }
@@ -147,8 +141,6 @@ class SystemsControllerTest extends ControllerTestCase
      */
     public function testSitemap(): void
     {
-        $this->loadFixtures();
-
         //GET request. The sitemap will be created
         @unlink(SITEMAP);
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);

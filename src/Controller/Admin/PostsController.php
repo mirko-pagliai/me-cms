@@ -55,14 +55,14 @@ class PostsController extends AppController
                 $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
             }
         }
-        $users = $this->Users->$usersMethod();
+        $users = $this->Users->$usersMethod()->all();
         if ($users->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create an user'));
 
             return $this->redirect(['controller' => 'Users', 'action' => 'index']);
         }
 
-        $categories = $this->Categories->$categoriesMethod();
+        $categories = $this->Categories->$categoriesMethod()->all();
         if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 

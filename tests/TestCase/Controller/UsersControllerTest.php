@@ -19,7 +19,7 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Model\Entity\User;
 use MeCms\TestSuite\ControllerTestCase;
@@ -185,7 +185,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($url + ['id' => '2'] + compact('token'));
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertTrue($this->Table->findById(2)->extract('active')->first());
+        $this->assertTrue($this->Table->findById(2)->all()->extract('active')->first());
         $this->assertFalse($this->Token->check($token, $tokenOptions));
 
         //With an invalid token
@@ -262,7 +262,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertRedirect($this->Controller->Auth->redirectUrl());
         $this->assertSession($user->get('id'), 'Auth.User.id');
         $this->assertCookieEncrypted(['username' => $user->get('username')] + compact('password'), 'login');
-        $expires = Time::createFromTimestamp($this->_response->getCookie('login')['expires']);
+        $expires = FrozenTime::createFromTimestamp($this->_response->getCookie('login')['expires']);
         $this->assertTrue($expires->isWithinNext('1 year'));
 
         //POST request. The user is banned
@@ -360,7 +360,7 @@ class UsersControllerTest extends ControllerTestCase
 
         //The password has not been changed and the token still exists
         $this->assertTrue($this->Token->check($token, $tokenOptions));
-        $this->assertEmpty($this->Table->findById(1)->extract('password')->first());
+        $this->assertEmpty($this->Table->findById(1)->all()->extract('password')->first());
 
         //POST request again. Now data are valid
         $this->post($url, ['password' => 'newPassword1!', 'password_repeat' => 'newPassword1!']);
@@ -368,7 +368,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertFlashMessage('The password has been edited');
 
         //The password has changed and the token no longer exists
-        $this->assertNotEmpty($this->Table->findById(1)->extract('password')->first());
+        $this->assertNotEmpty($this->Table->findById(1)->all()->extract('password')->first());
         $this->assertFalse($this->Token->check($token, $tokenOptions));
 
         //With an invalid token

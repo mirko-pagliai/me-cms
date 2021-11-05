@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Model\Table\Traits;
 
 use Cake\Cache\Cache;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 
 /**
  * This trait provides methods to handle the next record to be published
@@ -44,9 +44,10 @@ trait NextToBePublishedTrait
         $next = $this->find()
             ->where([
                 sprintf('%s.active', $this->getAlias()) => true,
-                sprintf('%s.created >', $this->getAlias()) => new Time(),
+                sprintf('%s.created >', $this->getAlias()) => new FrozenTime(),
             ])
             ->orderAsc(sprintf('%s.created', $this->getAlias()))
+            ->all()
             ->extract('created')
             ->first();
 

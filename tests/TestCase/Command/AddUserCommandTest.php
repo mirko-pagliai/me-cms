@@ -46,7 +46,7 @@ class AddUserCommandTest extends TestCase
         $Users = TableRegistry::getTableLocator()->get('MeCms.Users');
         $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
 
-        $expectedUserId = $Users->find()->extract('id')->last() + 1;
+        $expectedUserId = $Users->find()->all()->extract('id')->last() + 1;
         $this->exec('me_cms.add_user', array_merge($example, ['3']));
         $this->assertExitWithSuccess();
         $this->assertOutputContains('<question>Group ID</question>');
@@ -55,7 +55,7 @@ class AddUserCommandTest extends TestCase
         $this->assertErrorEmpty();
 
         //Checks the user has been created
-        $this->assertEquals(3, $Users->findById($expectedUserId)->extract('group_id')->first());
+        $this->assertEquals(3, $Users->findById($expectedUserId)->all()->extract('group_id')->first());
         $Users->delete($Users->get($expectedUserId));
 
         //Tries using the `group` option
@@ -67,7 +67,7 @@ class AddUserCommandTest extends TestCase
         $this->assertErrorEmpty();
 
         //Checks the user has been created
-        $this->assertEquals(2, $Users->findById($expectedUserId)->extract('group_id')->first());
+        $this->assertEquals(2, $Users->findById($expectedUserId)->all()->extract('group_id')->first());
 
         //Tries with a no existing group
         $this->_in = null;

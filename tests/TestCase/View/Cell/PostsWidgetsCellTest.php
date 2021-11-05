@@ -121,7 +121,7 @@ class PostsWidgetsCellTest extends CellTestCase
     public function testLatest(): void
     {
         $widget = 'MeCms.Posts::latest';
-        $post = $this->Table->find('active')->last();
+        $post = $this->Table->find('active')->all()->last();
 
         //Tries with a limit of 1
         $expected = [

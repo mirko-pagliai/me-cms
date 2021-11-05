@@ -17,7 +17,7 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\Collection\CollectionInterface;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\Utility\Hash;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Entity\PostsTag;
@@ -32,11 +32,6 @@ use Tools\Exception\PropertyNotExistsException;
  */
 class PostsTableTest extends PostsAndPagesTablesTestCase
 {
-    /**
-     * @var bool
-     */
-    public $autoFixtures = false;
-
     /**
      * Fixtures
      * @var array
@@ -123,7 +118,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      */
     public function testAssociations(): void
     {
-        $tags = $this->Table->findById(2)->contain('Tags')->extract('tags')->first();
+        $tags = $this->Table->findById(2)->contain('Tags')->all()->extract('tags')->first();
         $this->assertContainsOnlyInstancesOf(Tag::class, $tags);
         foreach ($tags as $tag) {
             $this->assertInstanceOf(PostsTag::class, $tag->_joinData);
@@ -150,8 +145,6 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      */
     public function testGetRelated(): void
     {
-        $this->loadFixtures();
-
         //Gets a post from which to search the related posts.
         //Note that the tags of this post are sorted in ascending order
         $post = $this->Table->findById(1)->contain(['Tags' => ['sort' => ['post_count' => 'ASC']]])->first();
@@ -212,19 +205,18 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     public function testQueryForRelated(): void
     {
         $this->skipIf(!$this->isMySql());
-        $this->loadFixtures();
 
         $query = $this->Table->queryForRelated(4, true);
         $this->assertStringEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = `PostsTags`.`post_id` INNER JOIN `tags` `Tags` ON (`Tags`.`id` = :c0 AND `Tags`.`id` = `PostsTags`.`tag_id`) WHERE (`Posts`.`active` = :c1 AND `Posts`.`created` <= :c2 AND (`Posts`.`preview`) IS NOT NULL AND `Posts`.`preview` != :c3)', $query->sql());
         $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
-        $this->assertInstanceof(Time::class, $query->getValueBinder()->bindings()[':c2']['value']);
+        $this->assertInstanceof(FrozenTime::class, $query->getValueBinder()->bindings()[':c2']['value']);
         $this->assertEquals([], $query->getValueBinder()->bindings()[':c3']['value']);
 
         $query = $this->Table->queryForRelated(4, false);
         $this->assertStringEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = `PostsTags`.`post_id` INNER JOIN `tags` `Tags` ON (`Tags`.`id` = :c0 AND `Tags`.`id` = `PostsTags`.`tag_id`) WHERE (`Posts`.`active` = :c1 AND `Posts`.`created` <= :c2)', $query->sql());
         $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
-        $this->assertInstanceof(Time::class, $query->getValueBinder()->bindings()[':c2']['value']);
+        $this->assertInstanceof(FrozenTime::class, $query->getValueBinder()->bindings()[':c2']['value']);
     }
 }

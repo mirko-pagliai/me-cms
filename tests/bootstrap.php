@@ -76,6 +76,10 @@ Configure::write('App', [
         'templates' => [APP . 'templates' . DS],
     ],
 ]);
+Configure::write('Error.ignoredDeprecationPaths', [
+    '*/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php',
+    '*/cakephp/cakephp/src/I18n/Time.php',
+]);
 Configure::write('Session', ['defaults' => 'php']);
 Configure::write('Assets.target', TMP . 'assets');
 Configure::write('Tokens.usersClassOptions', ['foreignKey' => 'user_id', 'className' => 'Users']);

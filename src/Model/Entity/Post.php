@@ -30,8 +30,8 @@ use MeCms\ORM\PostAndPageEntity;
  * @property string $text
  * @property string $preview
  * @property int $priority
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  * @property bool $active
  * @property \MeCms\Model\Entity\PostsCategory $category
  * @property \MeCms\Model\Entity\User $user

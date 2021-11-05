@@ -28,8 +28,8 @@ use Cake\Routing\Router;
  * @property string $slug
  * @property string $description
  * @property int $post_count
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  * @property \MeCms\Model\Entity\PostsCategory[] $child_posts_categories
  * @property \MeCms\Model\Entity\PostsCategory $parent_posts_category
  */

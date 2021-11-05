@@ -46,6 +46,7 @@ class GroupsCommandTest extends TestCase
 
         $expectedRows = $UsersGroups->find()
             ->select(['id', 'name', 'label', 'user_count'])
+            ->all()
             ->map(function (UsersGroup $group) {
                 return array_map('strval', $group->toArray());
             })

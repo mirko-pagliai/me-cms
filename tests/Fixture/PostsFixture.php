@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\Fixture;
 
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use Cake\TestSuite\Fixture\TestFixture;
 
@@ -157,7 +157,7 @@ class PostsFixture extends TestFixture
         ]]);
 
         //Adds a future post
-        $future = new Time('+999 days');
+        $future = new FrozenTime('+999 days');
         $this->records[] = [
             'category_id' => 1,
             'user_id' => 1,
