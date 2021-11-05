@@ -24,11 +24,6 @@ use MeTools\TestSuite\ComponentTestCase;
 class AuthComponentTest extends ComponentTestCase
 {
     /**
-     * @var bool
-     */
-    public $autoFixtures = false;
-
-    /**
      * Fixtures
      * @var array
      */
@@ -91,7 +86,6 @@ class AuthComponentTest extends ComponentTestCase
      */
     public function testIdentify(): void
     {
-        $this->loadFixtures();
         $this->Component->constructAuthenticate();
         $request = $this->Component->getController()->getRequest()->withData('username', 'zeta')
             ->withData('password', 'zeta');

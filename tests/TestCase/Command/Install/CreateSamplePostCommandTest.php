@@ -61,7 +61,7 @@ class CreateSamplePostCommandTest extends TestCase
         $this->exec('me_cms.create_sample_post -v');
         $this->assertExitWithSuccess();
         $this->assertOutputContains('The sample post has been created');
-        $this->assertFalse($Posts->find()->isEmpty());
+        $this->assertFalse($Posts->find()->all()->isEmpty());
 
         $Posts->deleteAll(['id is NOT' => null]);
 

@@ -51,6 +51,6 @@ if (!$routes->nameExists('offline')) {
 
 //Sitemap
 if (!$routes->nameExists('sitemap')) {
-    $routes->connect('/sitemap:ext', ['controller' => 'Systems', 'action' => 'sitemap'], ['_name' => 'sitemap', ])
+    $routes->connect('/sitemap{ext}', ['controller' => 'Systems', 'action' => 'sitemap'], ['_name' => 'sitemap', ])
         ->setPatterns(['ext' => '\.xml(\.gz)?']);
 }

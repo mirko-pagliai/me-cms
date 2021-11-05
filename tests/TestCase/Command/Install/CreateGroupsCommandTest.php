@@ -15,13 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command\Install;
 
-use Cake\Console\Arguments;
-use Cake\Console\ConsoleIo;
-use Cake\Database\Connection;
-use Cake\Database\Driver\Postgres;
-use Cake\Database\Driver\Sqlite;
-use Cake\ORM\Query;
-use Cake\ORM\Table;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
@@ -71,54 +64,6 @@ class CreateGroupsCommandTest extends TestCase
         $this->assertErrorEmpty();
 
         //Checks the user groups exist
-        $this->assertEquals([1, 2, 3], $UsersGroups->find()->extract('id')->toList());
-    }
-
-    /**
-     * Provider for `testExecuteOtherDrivers()`
-     * @return array
-     */
-    public function driverProvider(): array
-    {
-        return [
-            'postgres' => [Postgres::class],
-            'sqlite' => [Sqlite::class],
-        ];
-    }
-
-    /**
-     * Test for `execute()` method
-     * @param class-string<\Cake\Database\DriverInterface> $driver
-     * @dataProvider driverProvider
-     * @test
-     */
-    public function testExecuteOtherDrivers($driver): void
-    {
-        $this->skipIf(IS_WIN);
-
-        /** @var \MeCms\Model\Table\UsersGroupsTable&\PHPUnit\Framework\MockObject\MockObject $UsersGroups */
-        $UsersGroups = $this->getMockBuilder(Table::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $UsersGroups->method('find')->will($this->returnCallback(function () {
-            $query = $this->getMockBuilder(Query::class)
-                ->disableOriginalConstructor()
-                ->setMethods(array_merge(get_class_methods(Query::class), ['isEmpty']))
-                ->getMock();
-            $query->method('isEmpty')->will($this->returnValue(true));
-
-            return $query;
-        }));
-        $this->Command->UsersGroups = $UsersGroups;
-
-        $driver = $this->getMockBuilder($driver)->getMock();
-        $driver->method('enabled')->will($this->returnValue(true));
-        $connection = $this->getMockBuilder(Connection::class)
-            ->setConstructorArgs([compact('driver')])
-            ->setMethods(['execute'])
-            ->getMock();
-        $this->Command->UsersGroups->method('getConnection')->will($this->returnValue($connection));
-
-        $this->assertNull($this->Command->execute(new Arguments([], [], []), new ConsoleIo()));
+        $this->assertEquals([1, 2, 3], $UsersGroups->find()->all()->extract('id')->toList());
     }
 }

@@ -52,7 +52,7 @@ class ViewTest extends TestCase
         $this->assertNull($this->View->getTheme());
 
         //Loads the `TestPlugin` and sets it as a theme
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
         Configure::write('MeCms.default.theme', 'TestPlugin');
         $this->assertEquals('TestPlugin', (new View())->getTheme());
     }

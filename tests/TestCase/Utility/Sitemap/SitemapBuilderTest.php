@@ -34,12 +34,6 @@ class SitemapBuilderTest extends TestCase
     protected $SitemapBuilder;
 
     /**
-     * Does not automatically load fixtures
-     * @var bool
-     */
-    public $autoFixtures = false;
-
-    /**
      * Fixtures
      * @var array
      */
@@ -77,12 +71,12 @@ class SitemapBuilderTest extends TestCase
             'systems',
         ], $methods->extract('name')->toArray());
 
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
         $methods = $this->SitemapBuilder->getMethods('TestPlugin');
         $this->assertEquals(['urlMethod1', 'urlMethod2'], $methods->extract('name')->toArray());
 
         //This plugin does not have the `Sitemap` class
-        $this->loadPlugins(['TestPluginTwo']);
+        $this->loadPlugins(['TestPluginTwo' => []]);
         $methods = $this->SitemapBuilder->getMethods('TestPluginTwo');
         $this->assertCount(0, $methods);
     }
@@ -93,7 +87,6 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGenerate(): void
     {
-        $this->loadFixtures();
         $map = Xml::toArray(Xml::build($this->SitemapBuilder->generate()))['urlset']['url'];
         $this->assertNotEmpty($map);
         $this->assertSame(['loc' => 'http://localhost/', 'priority' => '0.5'], array_value_first($map));
@@ -107,8 +100,7 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGenerateWithPlugin(): void
     {
-        $this->loadFixtures();
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
         $map = $this->SitemapBuilder->generate();
         $this->assertStringContainsString('first-folder/page-on-first-from-plugin', $map);
         $this->assertStringContainsString('first-folder/second_folder/page_on_second_from_plugin', $map);

@@ -28,8 +28,8 @@ use MeCms\ORM\PostAndPageEntity;
  * @property string $text
  * @property int $priority
  * @property bool $active
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  * @property \MeCms\Model\Entity\PagesCategory $category
  */
 class Page extends PostAndPageEntity

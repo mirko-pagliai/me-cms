@@ -117,18 +117,18 @@ class UsersGroupsControllerTest extends ControllerTestCase
         $this->post($url + [5]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertTrue($this->Table->findById(5)->isEmpty());
+        $this->assertTrue($this->Table->findById(5)->all()->isEmpty());
 
         //Cannot delete a default group
         $this->post($url + [2]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('You cannot delete this users group');
-        $this->assertFalse($this->Table->findById(2)->isEmpty());
+        $this->assertFalse($this->Table->findById(2)->all()->isEmpty());
 
         //Cannot delete a group with users
         $this->post($url + [4]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
-        $this->assertFalse($this->Table->findById(4)->isEmpty());
+        $this->assertFalse($this->Table->findById(4)->all()->isEmpty());
     }
 }

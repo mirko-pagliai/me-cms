@@ -34,7 +34,7 @@ class TopbarTest extends TestCase
         $result = $View->element('MeCms.topbar');
         $this->assertStringContainsString('<a href="/" class="nav-link" title="Home"><i class="fas fa-home"> </i> Home</a>', $result);
 
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
         $result = $View->element('MeCms.topbar');
         $this->assertStringContainsString('<a href="/" class="nav-link" title="Home"><i class="fas fa-home"> </i> Home</a>', $result);
         $this->assertStringContainsString('<a href="http://localhost" title="A link from plugin">A link from plugin</a>', $result);

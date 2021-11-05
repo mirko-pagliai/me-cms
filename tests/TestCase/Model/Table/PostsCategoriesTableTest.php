@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Model\Table;
 
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use MeCms\Model\Entity\PostsCategory;
 use MeCms\Model\Validation\PostsCategoryValidator;
 use MeCms\TestSuite\TableTestCase;
@@ -26,11 +26,6 @@ use MeCms\TestSuite\TableTestCase;
  */
 class PostsCategoriesTableTest extends TableTestCase
 {
-    /**
-     * @var bool
-     */
-    public $autoFixtures = false;
-
     /**
      * Fixtures
      * @var array
@@ -107,12 +102,12 @@ class PostsCategoriesTableTest extends TableTestCase
         $this->assertInstanceOf(PostsCategory::class, $category->get('parent'));
         $this->assertEquals(1, $category->get('parent')->get('id'));
 
-        $childs = $this->Table->find()->contain('Childs')->extract('childs')->first();
+        $childs = $this->Table->find()->contain('Childs')->all()->extract('childs')->first();
         $this->assertContainsOnlyInstancesOf(PostsCategory::class, $childs);
 
         foreach ($childs as $children) {
             $this->assertEquals(1, $children->get('parent_id'));
-            $childs = $this->Table->findById($children->get('id'))->contain('Childs')->extract('childs')->first();
+            $childs = $this->Table->findById($children->get('id'))->contain('Childs')->all()->extract('childs')->first();
             $this->assertContainsOnlyInstancesOf(PostsCategory::class, $childs);
             $this->assertEquals(3, array_value_first($childs)->get('parent_id'));
         }
@@ -124,10 +119,12 @@ class PostsCategoriesTableTest extends TableTestCase
      */
     public function testFindMethods(): void
     {
-        $this->skipIf(!$this->isMySql());
         $query = $this->Table->find('active');
-        $this->assertStringEndsWith('FROM `posts_categories` `PostsCategories` INNER JOIN `posts` `Posts` ON (`Posts`.`active` = :c0 AND `Posts`.`created` <= :c1 AND `PostsCategories`.`id` = `Posts`.`category_id`)', $query->sql());
+        $sql = $query->sql();
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
+
+        $this->skipIfCakeIsLessThan('4.3');
+        $this->assertSqlEndsWith('FROM posts_categories PostsCategories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND PostsCategories.id = Posts.category_id)', $sql);
     }
 }

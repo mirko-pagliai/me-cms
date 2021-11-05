@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Model\Table;
 
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use MeCms\Model\Entity\PagesCategory;
 use MeCms\Model\Validation\PagesCategoryValidator;
 use MeCms\TestSuite\TableTestCase;
@@ -26,11 +26,6 @@ use MeCms\TestSuite\TableTestCase;
  */
 class PagesCategoriesTableTest extends TableTestCase
 {
-    /**
-     * @var bool
-     */
-    public $autoFixtures = false;
-
     /**
      * Fixtures
      * @var array
@@ -99,11 +94,11 @@ class PagesCategoriesTableTest extends TableTestCase
      */
     public function testAssociations(): void
     {
-        $childs = $this->Table->findById(1)->contain('Childs')->extract('childs')->first();
+        $childs = $this->Table->findById(1)->contain('Childs')->all()->extract('childs')->first();
         $this->assertContainsOnlyInstancesOf(PagesCategory::class, $childs);
         foreach ($childs as $children) {
             $this->assertEquals(1, $children->get('parent_id'));
-            $childs = $this->Table->findById($children->get('id'))->contain('Childs')->extract('childs')->first();
+            $childs = $this->Table->findById($children->get('id'))->contain('Childs')->all()->extract('childs')->first();
             $this->assertContainsOnlyInstancesOf(PagesCategory::class, $childs);
             $this->assertEquals(3, array_value_first($childs)->get('parent_id'));
         }
@@ -115,10 +110,12 @@ class PagesCategoriesTableTest extends TableTestCase
      */
     public function testFindMethods(): void
     {
-        $this->skipIf(!$this->isMySql());
         $query = $this->Table->find('active');
-        $this->assertStringEndsWith('FROM `pages_categories` `Categories` INNER JOIN `pages` `Pages` ON (`Pages`.`active` = :c0 AND `Pages`.`created` <= :c1 AND `Categories`.`id` = `Pages`.`category_id`)', $query->sql());
+        $sql = $query->sql();
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertInstanceOf(Time::class, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
+
+        $this->skipIfCakeIsLessThan('4.3');
+        $this->assertSqlEndsWith('FROM pages_categories Categories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND Categories.id = Pages.category_id)', $sql);
     }
 }

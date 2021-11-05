@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use donatj\UserAgent\UserAgentParser;
 use InvalidArgumentException;
@@ -117,14 +117,14 @@ class LoginRecorderComponent extends Component
         //Removes the first record (last in order of time), if it has been saved
         //  less than an hour ago and if the user agent data are the same
         if ($last
-            && (new Time($last->get('time')))->modify('+1 hour')->isFuture()
+            && (new FrozenTime($last->get('time')))->modify('+1 hour')->isFuture()
             && $last->extract(['agent', 'browser', 'ip', 'platform', 'version']) == $current
         ) {
             $this->getFileArray()->delete(0);
         }
 
         //Adds the current request, takes only a specified number of records and writes
-        return $this->getFileArray()->prepend(new Entity($current + ['time' => new Time()]))
+        return $this->getFileArray()->prepend(new Entity($current + ['time' => new FrozenTime()]))
             ->take((int)getConfig('users.login_log'))
             ->write();
     }

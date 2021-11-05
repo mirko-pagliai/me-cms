@@ -17,7 +17,7 @@ namespace MeCms\Controller;
 
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Response;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use MeCms\Controller\AppController;
 use MeCms\Form\ContactUsForm;
 use MeCms\Utility\Sitemap\SitemapBuilder;
@@ -116,7 +116,7 @@ class SystemsController extends AppController
     {
         //Checks if the sitemap exist and is not expired
         if (is_readable(SITEMAP)) {
-            $time = Time::createFromTimestamp((int)filemtime(SITEMAP));
+            $time = FrozenTime::createFromTimestamp((int)filemtime(SITEMAP));
 
             if (!$time->modify(getConfigOrFail('main.sitemap_expiration'))->isPast()) {
                 $sitemap = file_get_contents(SITEMAP);

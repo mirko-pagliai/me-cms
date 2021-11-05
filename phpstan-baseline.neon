@@ -16,7 +16,7 @@ parameters:
 			path: src/Controller/PostsCategoriesController.php
 
 		-
-			message: "#^Parameter \\#1 \\$input of function array_values expects array, iterable given\\.$#"
+			message: "#^Parameter \\#1 \\$array of function array_values expects array, iterable given\\.$#"
 			count: 1
 			path: src/Controller/PostsCategoriesController.php
 
@@ -36,7 +36,7 @@ parameters:
 			path: src/Controller/PostsController.php
 
 		-
-			message: "#^Parameter \\#1 \\$input of function array_values expects array, iterable given\\.$#"
+			message: "#^Parameter \\#1 \\$array of function array_values expects array, iterable given\\.$#"
 			count: 3
 			path: src/Controller/PostsController.php
 
@@ -56,7 +56,7 @@ parameters:
 			path: src/Controller/PostsTagsController.php
 
 		-
-			message: "#^Parameter \\#1 \\$input of function array_values expects array, iterable given\\.$#"
+			message: "#^Parameter \\#1 \\$array of function array_values expects array, iterable given\\.$#"
 			count: 2
 			path: src/Controller/PostsTagsController.php
 
@@ -1066,7 +1066,7 @@ parameters:
 			path: tests/TestCase/Controller/PagesControllerTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$input of function array_values expects array, iterable given\\.$#"
+			message: "#^Parameter \\#1 \\$array of function array_values expects array, iterable given\\.$#"
 			count: 1
 			path: tests/TestCase/Controller/PostsCategoriesControllerTest.php
 
@@ -1081,7 +1081,7 @@ parameters:
 			path: tests/TestCase/Controller/PostsCategoriesControllerTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$input of function array_values expects array, iterable given\\.$#"
+			message: "#^Parameter \\#1 \\$array of function array_values expects array, iterable given\\.$#"
 			count: 3
 			path: tests/TestCase/Controller/PostsControllerTest.php
 
@@ -1096,7 +1096,7 @@ parameters:
 			path: tests/TestCase/Controller/PostsControllerTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$input of function array_values expects array, iterable given\\.$#"
+			message: "#^Parameter \\#1 \\$array of function array_values expects array, iterable given\\.$#"
 			count: 2
 			path: tests/TestCase/Controller/PostsTagsControllerTest.php
 
@@ -1116,8 +1116,13 @@ parameters:
 			path: tests/TestCase/Controller/UsersControllerTest.php
 
 		-
+			message: "#^Binary operation \"\\.\" between 'ORDER BY ' and array\\<string\\>\\|string\\|null results in an error\\.$#"
+			count: 1
+			path: tests/TestCase/Model/Table/AppTableTest.php
+
+		-
 			message: "#^Binary operation \"\\.\" between 'ORDER BY `' and array\\<string\\>\\|string\\|null results in an error\\.$#"
-			count: 2
+			count: 1
 			path: tests/TestCase/Model/Table/AppTableTest.php
 
 		-

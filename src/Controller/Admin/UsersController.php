@@ -49,7 +49,7 @@ class UsersController extends AppController
         }
 
         if ($this->getRequest()->is('action', ['index', 'add', 'edit'])) {
-            $groups = $this->Groups->getList();
+            $groups = $this->Groups->getList()->all();
             if ($groups->isEmpty()) {
                 $this->Flash->alert(__d('me_cms', 'You must first create an user group'));
 

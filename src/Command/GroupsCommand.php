@@ -48,7 +48,7 @@ class GroupsCommand extends Command
     {
         $this->loadModel('MeCms.UsersGroups');
 
-        $rows = $this->UsersGroups->find()->select(['id', 'name', 'label', 'user_count']);
+        $rows = $this->UsersGroups->find()->select(['id', 'name', 'label', 'user_count'])->all();
         if ($rows->isEmpty()) {
             return $io->error(__d('me_cms', 'There are no user groups'));
         }

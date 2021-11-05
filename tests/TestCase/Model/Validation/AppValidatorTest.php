@@ -39,11 +39,6 @@ class AppValidatorTest extends TestCase
     protected $Users;
 
     /**
-     * @var bool
-     */
-    public $autoFixtures = false;
-
-    /**
      * @var array
      */
     protected $example = [
@@ -94,7 +89,6 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForUserId(): void
     {
-        $this->loadFixtures('Posts');
         $errors = $this->Posts->newEntity(['user_id' => 'string'] + $this->example['Posts'])->getErrors();
         $this->assertEquals(['user_id' => ['naturalNumber' => I18N_SELECT_VALID_OPTION]], $errors);
     }
@@ -105,8 +99,6 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForEmail(): void
     {
-        $this->loadFixtures('Users');
-
         foreach (['string', 'invalid@test', '@test.com', 'invalid@.com'] as $email) {
             $errors = $this->Users->newEntity(compact('email') + $this->example['Users'])->getErrors();
             $this->assertEquals(['email' => ['email' => I18N_ENTER_VALID_VALUE]], $errors);
@@ -125,8 +117,6 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForFirstNameAndLastName(): void
     {
-        $this->loadFixtures('Users');
-
         foreach (['first_name', 'last_name'] as $field) {
             foreach (['abc', 'Ab-c', 'Ab$', 'abC'] as $value) {
                 $expected = [$field => ['personName' => 'Allowed chars: letters, apostrophe, space. Has to begin with a capital letter']];
@@ -152,8 +142,6 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForTitle(): void
     {
-        $this->loadFixtures('Posts');
-
         foreach (['ab', str_repeat('a', 101)] as $title) {
             $errors = $this->Posts->newEntity(compact('title') + $this->example['Posts'])->getErrors();
             $this->assertEquals(['title' => ['lengthBetween' => 'Must be between 3 and 100 chars']], $errors);
@@ -171,8 +159,6 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForSubtitle(): void
     {
-        $this->loadFixtures('Posts');
-
         foreach (['ab', str_repeat('a', 151)] as $subtitle) {
             $errors = $this->Posts->newEntity(compact('subtitle') + $this->example['Posts'])->getErrors();
             $this->assertEquals(['subtitle' => ['lengthBetween' => 'Must be between 3 and 150 chars']], $errors);
@@ -190,8 +176,6 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForSlug(): void
     {
-        $this->loadFixtures('Posts');
-
         foreach (['Abc', 'ab_c', 'ab$'] as $slug) {
             $errors = $this->Posts->newEntity(compact('slug') + $this->example['Posts'])->getErrors();
             $this->assertEquals(['slug' => ['slug' => sprintf('%s: %s', I18N_ALLOWED_CHARS, I18N_LOWERCASE_NUMBERS_DASH)]], $errors);
@@ -212,8 +196,6 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForPriority(): void
     {
-        $this->loadFixtures('Posts');
-
         foreach ([0, 6, 'string'] as $priority) {
             $errors = $this->Posts->newEntity(compact('priority') + $this->example['Posts'])->getErrors();
             $this->assertEquals(['priority' => ['range' => I18N_SELECT_VALID_OPTION]], $errors);
@@ -231,7 +213,6 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForDescription(): void
     {
-        $this->loadFixtures('PostsCategories');
         $data = ['title' => 'A title', 'slug' => 'a-slug'];
 
         $errors = $this->PostsCategories->newEntity(['description' => str_repeat('a', 256)] + $data)->getErrors();
@@ -247,8 +228,6 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForActive(): void
     {
-        $this->loadFixtures('Posts');
-
         $errors = $this->Posts->newEntity(['active' => 'str'] + $this->example['Posts'])->getErrors();
         $this->assertEquals(['active' => ['boolean' => I18N_SELECT_VALID_OPTION]], $errors);
 
@@ -264,8 +243,6 @@ class AppValidatorTest extends TestCase
      */
     public function testValidationForCreated(): void
     {
-        $this->loadFixtures('Posts');
-
         $errors = $this->Posts->newEntity(['created' => '2016-01-16 19:09aaaa'] + $this->example['Posts'])->getErrors();
         $this->assertEquals(['created' => ['datetime' => I18N_ENTER_VALID_VALUE]], $errors);
 

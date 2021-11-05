@@ -34,11 +34,6 @@ class VersionUpdatesCommandTest extends TestCase
     /**
      * @var bool
      */
-    public $autoFixtures = false;
-
-    /**
-     * @var bool
-     */
     protected $autoInitializeClass = true;
 
     /**
@@ -63,7 +58,6 @@ class VersionUpdatesCommandTest extends TestCase
 
         [$Posts, $Pages] = $getTables();
         $this->skipIf($Posts->getConnection()->getDriver() instanceof Sqlite);
-        $this->loadFixtures('Pages', 'Posts');
 
         foreach ([$Posts, $Pages] as $Table) {
             $connection = $Table->getConnection();
@@ -89,7 +83,6 @@ class VersionUpdatesCommandTest extends TestCase
         $Table = $this->getTable('MeCms.Tags');
         $connection = $Table->getConnection();
         $this->skipIf($connection->getDriver() instanceof Sqlite);
-        $this->loadFixtures('Tags');
 
         $command = 'ALTER TABLE ' . $Table->getTable() . ' MODIFY tag varchar(254) NOT NULL';
         if ($connection->getDriver() instanceof Postgres) {

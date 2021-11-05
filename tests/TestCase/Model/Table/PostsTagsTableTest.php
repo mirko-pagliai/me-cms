@@ -25,11 +25,6 @@ use MeCms\TestSuite\TableTestCase;
 class PostsTagsTableTest extends TableTestCase
 {
     /**
-     * @var bool
-     */
-    public $autoFixtures = false;
-
-    /**
      * Fixtures
      * @var array
      */

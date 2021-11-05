@@ -223,25 +223,25 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url + [2]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertTrue($this->Table->findById(2)->isEmpty());
+        $this->assertTrue($this->Table->findById(2)->all()->isEmpty());
 
         //Cannot delete the admin founder
         $this->post($url + [1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('You cannot delete the admin founder');
-        $this->assertFalse($this->Table->findById(1)->isEmpty());
+        $this->assertFalse($this->Table->findById(1)->all()->isEmpty());
 
         //Cannot delete an user with posts
         $this->post($url + [4]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);
-        $this->assertFalse($this->Table->findById(4)->isEmpty());
+        $this->assertFalse($this->Table->findById(4)->all()->isEmpty());
 
         //Only the admin founder can delete others admin users
         $this->post($url + [5]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('Only the admin founder can do this');
-        $this->assertFalse($this->Table->findById(5)->isEmpty());
+        $this->assertFalse($this->Table->findById(5)->all()->isEmpty());
     }
 
     /**
@@ -253,7 +253,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($this->url + ['action' => 'activate', 2]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertTrue($this->Table->findById(2)->extract('active')->first());
+        $this->assertTrue($this->Table->findById(2)->all()->extract('active')->first());
     }
 
     /**
@@ -285,7 +285,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertFlashMessage(I18N_OPERATION_OK);
 
         //The password has changed
-        $this->assertNotEquals($user->get('password'), $this->Table->findById(1)->extract('password')->first());
+        $this->assertNotEquals($user->get('password'), $this->Table->findById(1)->all()->extract('password')->first());
 
         //Saves the password for the first user
         $user = $this->Table->get(1);
@@ -302,7 +302,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertInstanceof(User::class, $this->viewVariable('user'));
 
         //The password has not changed
-        $this->assertEquals($user->get('password'), $this->Table->findById(1)->extract('password')->first());
+        $this->assertEquals($user->get('password'), $this->Table->findById(1)->all()->extract('password')->first());
     }
 
     /**

@@ -185,7 +185,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
-        $this->assertTrue($this->Table->findById(1)->isEmpty());
+        $this->assertTrue($this->Table->findById(1)->all()->isEmpty());
     }
 
     /**
@@ -203,7 +203,7 @@ class PostsControllerTest extends ControllerTestCase
                 $this->assertRedirect(['action' => 'index']);
                 $this->assertFlashMessage(I18N_OPERATION_OK);
 
-                $post = $this->Table->find()->last();
+                $post = $this->Table->find()->all()->last();
                 $this->assertEquals($userId, $post->get('user_id'));
 
                 //Edits record, adding +1 to the `user_id`
@@ -234,7 +234,7 @@ class PostsControllerTest extends ControllerTestCase
             $this->assertRedirect(['action' => 'index']);
             $this->assertFlashMessage(I18N_OPERATION_OK);
 
-            $post = $this->Table->find()->last();
+            $post = $this->Table->find()->all()->last();
             $this->assertEquals(3, $post->get('user_id'));
 
             //Edits record, adding +1 to the `user_id`

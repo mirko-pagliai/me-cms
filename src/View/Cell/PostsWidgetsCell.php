@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\View\Cell;
 
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\ResultSet;
 use Cake\View\Cell;
 use MeCms\Model\Entity\Post;
@@ -106,7 +106,7 @@ class PostsWidgetsCell extends Cell
                     })
                     ->map(function (int $countBy, string $month): array {
                         return [
-                            'created' => Time::createFromFormat('Y/m/d H:i:s', $month . '/01 00:00:00'),
+                            'created' => FrozenTime::createFromFormat('Y/m/d H:i:s', $month . '/01 00:00:00'),
                             'post_count' => $countBy,
                         ];
                     });

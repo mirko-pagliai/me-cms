@@ -31,7 +31,7 @@ class MenuBuilderHelperTest extends HelperTestCase
     {
         parent::setUp();
 
-        $this->loadPlugins(['TestPlugin', 'TestPluginTwo']);
+        $this->loadPlugins(['TestPlugin' => [], 'TestPluginTwo' => []]);
     }
 
     /**

@@ -37,7 +37,8 @@ class PostsCategoriesController extends AppController
         $categories = $this->PostsCategories->find('active')
             ->select(['title', 'slug'])
             ->orderAsc(sprintf('%s.title', $this->PostsCategories->getAlias()))
-            ->cache('categories_index');
+            ->cache('categories_index')
+            ->all();
 
         $this->set(compact('categories'));
     }
@@ -73,11 +74,11 @@ class PostsCategoriesController extends AppController
         if (empty($posts) || empty($paging)) {
             $query = $this->Posts->find('active')
                 ->find('forIndex')
-                ->innerJoinWith($this->PostsCategories->getAlias(), function (Query $query) use ($slug) {
+                ->innerJoinWith($this->PostsCategories->getAlias(), function (Query $query) use ($slug): Query {
                     return $query->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]);
                 });
 
-            Exceptionist::isTrue(!$query->isEmpty(), I18N_NOT_FOUND, RecordNotFoundException::class);
+            Exceptionist::isTrue(!$query->all()->isEmpty(), I18N_NOT_FOUND, RecordNotFoundException::class);
 
             [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 

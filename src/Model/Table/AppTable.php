@@ -20,7 +20,6 @@ use Cake\Cache\Cache;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\I18n\FrozenTime;
-use Cake\I18n\Time;
 use Cake\ORM\Association;
 use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\Table;
@@ -79,11 +78,11 @@ abstract class AppTable extends Table
         if (array_key_exists('created', $data->getArrayCopy())) {
             if (is_string($data['created'])) {
                 try {
-                    $data['created'] = new Time($data['created']);
+                    $data['created'] = new FrozenTime($data['created']);
                 } catch (Exception $e) {
                 }
             } elseif (empty($data['created'])) {
-                $data['created'] = new Time();
+                $data['created'] = new FrozenTime();
             }
         }
     }
@@ -120,7 +119,7 @@ abstract class AppTable extends Table
     public function findActive(Query $query): Query
     {
         return $query->where([sprintf('%s.active', $this->getAlias()) => true])
-            ->andWhere([sprintf('%s.created <=', $this->getAlias()) => new Time()]);
+            ->andWhere([sprintf('%s.created <=', $this->getAlias()) => new FrozenTime()]);
     }
 
     /**
@@ -132,7 +131,7 @@ abstract class AppTable extends Table
     {
         return $query->where(['OR' => [
             sprintf('%s.active', $this->getAlias()) => false,
-            sprintf('%s.created >', $this->getAlias()) => new Time(),
+            sprintf('%s.created >', $this->getAlias()) => new FrozenTime(),
         ]]);
     }
 
