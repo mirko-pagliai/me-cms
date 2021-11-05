@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use MeTools\TestSuite\TestCase as BaseTestCase;
 
@@ -66,5 +67,17 @@ abstract class TestCase extends BaseTestCase
     protected function isMySql(): bool
     {
         return ConnectionManager::get('test')->config()['scheme'] == 'mysql';
+    }
+
+    /**
+     * Skips the test if the CakePHP version is less than the one being compared
+     * @param string $version Version of CakePHP to compare
+     * @param string $message The message to display
+     * @return bool
+     * @since 2.30.4-RC1
+     */
+    protected function skipIfCakeIsLessThan(string $version, string $message = ''): bool
+    {
+        return $this->skipIf(version_compare(Configure::version(), $version, '<'), $message);
     }
 }

@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.4-RC1
-* fixed a large number of deprecations introduced by CakePHP 4.3.
+* fixed a large number of deprecations introduced by CakePHP 4.3;
+* added `TestCase::skipIfCakeIsLessThan()` method.
 
 ### 2.30.3-beta
 * removed the files that interacted with the `cakephp-database-backup` plugin.
