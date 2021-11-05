@@ -18,7 +18,6 @@ namespace MeCms\TestSuite;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Datasource\ConnectionManager;
 use MeTools\TestSuite\TestCase as BaseTestCase;
 
 /**
