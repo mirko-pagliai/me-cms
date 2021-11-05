@@ -17,7 +17,7 @@ namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
 use Cake\Http\ServerRequest;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\Routing\Router;
 use MeCms\TestSuite\CellTestCase;
 
@@ -269,7 +269,7 @@ class PostsWidgetsCellTest extends CellTestCase
         $fromCache = Cache::read('widget_months', $this->Table->getCacheName());
         $this->assertEquals(2, $fromCache->count());
         foreach ($fromCache as $key => $month) {
-            $this->assertInstanceOf(Time::class, $month['created']);
+            $this->assertInstanceOf(FrozenTime::class, $month['created']);
             $this->assertEquals($key, $month['created']->i18nFormat('yyyy/MM'));
             $this->assertGreaterThanOrEqual(1, $month['post_count']);
         }
@@ -307,8 +307,9 @@ class PostsWidgetsCellTest extends CellTestCase
             'input' => [
                 'type' => 'text',
                 'name' => 'p',
-                'placeholder' => 'Search...',
                 'class' => 'form-control',
+                'placeholder' => 'Search...',
+                'aria-label' => 'Search...',
             ],
             ['div' => ['class' => 'input-group-append']],
             'button' => ['class' => 'btn btn-primary', 'type' => 'submit'],
