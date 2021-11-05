@@ -60,16 +60,6 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Checks if the current `test` scheme is `mysql`
-     * @return bool
-     * @since 2.30.3
-     */
-    protected function isMySql(): bool
-    {
-        return ConnectionManager::get('test')->config()['scheme'] == 'mysql';
-    }
-
-    /**
      * Skips the test if the CakePHP version is less than the one being compared
      * @param string $version Version of CakePHP to compare
      * @param string $message The message to display

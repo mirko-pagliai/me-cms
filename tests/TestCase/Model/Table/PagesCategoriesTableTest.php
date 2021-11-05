@@ -116,6 +116,6 @@ class PagesCategoriesTableTest extends TableTestCase
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
 
         $this->skipIfCakeIsLessThan('4.3');
-        $this->assertSqlEndsWith('FROM `pages_categories` `Categories` INNER JOIN `pages` `Pages` ON (`Pages`.`active` = :c0 AND `Pages`.`created` <= :c1 AND `Categories`.`id` = `Pages`.`category_id`)', $sql);
+        $this->assertStringEndsWith('FROM pages_categories Categories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND Categories.id = Pages.category_id)', $sql);
     }
 }

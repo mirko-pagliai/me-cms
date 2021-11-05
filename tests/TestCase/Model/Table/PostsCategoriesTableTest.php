@@ -125,6 +125,6 @@ class PostsCategoriesTableTest extends TableTestCase
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
 
         $this->skipIfCakeIsLessThan('4.3');
-        $this->assertSqlEndsWith('FROM `posts_categories` `PostsCategories` INNER JOIN `posts` `Posts` ON (`Posts`.`active` = :c0 AND `Posts`.`created` <= :c1 AND `PostsCategories`.`id` = `Posts`.`category_id`)', $sql);
+        $this->assertStringEndsWith('FROM posts_categories PostsCategories INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND PostsCategories.id = Posts.category_id)', $sql);
     }
 }

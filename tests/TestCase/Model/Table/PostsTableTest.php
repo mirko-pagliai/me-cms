@@ -136,7 +136,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertArrayKeysEqual(['Categories', 'Tags', 'Users'], $query->getContain());
 
         $this->skipIfCakeIsLessThan('4.3');
-        $this->assertSqlEndsWith('FROM `posts` `Posts` INNER JOIN `posts_categories` `Categories` ON `Categories`.`id` = `Posts`.`category_id` INNER JOIN `users` `Users` ON `Users`.`id` = `Posts`.`user_id` ORDER BY `Posts`.`created` DESC', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_categories Categories ON Categories.id = Posts.category_id INNER JOIN users Users ON Users.id = Posts.user_id ORDER BY Posts.created DESC', $query->sql());
     }
 
     /**
@@ -194,7 +194,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     {
         $this->skipIfCakeIsLessThan('4.3');
         $query = $this->Table->queryFromFilter($this->Table->find(), ['tag' => 'test']);
-        $this->assertSqlEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = `PostsTags`.`post_id` INNER JOIN `tags` `Tags` ON (`tag` = :c0 AND `Tags`.`id` = `PostsTags`.`tag_id`)', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = PostsTags.post_id INNER JOIN tags Tags ON (tag = :c0 AND Tags.id = PostsTags.tag_id)', $query->sql());
         $this->assertEquals('test', $query->getValueBinder()->bindings()[':c0']['value']);
     }
 
@@ -212,7 +212,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertEquals([], $query->getValueBinder()->bindings()[':c3']['value']);
 
         $this->skipIfCakeIsLessThan('4.3');
-        $this->assertSqlEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = `PostsTags`.`post_id` INNER JOIN `tags` `Tags` ON (`Tags`.`id` = :c0 AND `Tags`.`id` = `PostsTags`.`tag_id`) WHERE (`Posts`.`active` = :c1 AND `Posts`.`created` <= :c2 AND (`Posts`.`preview`) IS NOT NULL AND `Posts`.`preview` != :c3)', $sql);
+        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = PostsTags.post_id INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = PostsTags.tag_id) WHERE (Posts.active = :c1 AND Posts.created <= :c2 AND (Posts.preview) IS NOT NULL AND Posts.preview != :c3)', $sql);
     }
 
     /**
@@ -228,6 +228,6 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertInstanceof(FrozenTime::class, $query->getValueBinder()->bindings()[':c2']['value']);
 
         $this->skipIfCakeIsLessThan('4.3');
-        $this->assertSqlEndsWith('FROM `posts` `Posts` INNER JOIN `posts_tags` `PostsTags` ON `Posts`.`id` = `PostsTags`.`post_id` INNER JOIN `tags` `Tags` ON (`Tags`.`id` = :c0 AND `Tags`.`id` = `PostsTags`.`tag_id`) WHERE (`Posts`.`active` = :c1 AND `Posts`.`created` <= :c2)', $sql);
+        $this->assertStringEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = PostsTags.post_id INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = PostsTags.tag_id) WHERE (Posts.active = :c1 AND Posts.created <= :c2)', $sql);
     }
 }

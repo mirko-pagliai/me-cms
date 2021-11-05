@@ -144,7 +144,7 @@ class AppTableTest extends TableTestCase
             $this->assertTrue($entity->get('active') && !$entity->get('created')->isFuture());
         }
 
-        $this->assertSqlEndsWith('FROM `posts` `Posts` WHERE (`Posts`.`active` = :c0 AND `Posts`.`created` <= :c1)', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 AND Posts.created <= :c1)', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
     }
@@ -161,7 +161,7 @@ class AppTableTest extends TableTestCase
             $this->assertTrue(!$entity->get('active') || $entity->get('created')->isFuture());
         }
 
-        $this->assertSqlEndsWith('FROM `posts` `Posts` WHERE (`Posts`.`active` = :c0 OR `Posts`.`created` > :c1)', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts WHERE (Posts.active = :c0 OR Posts.created > :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
     }
@@ -173,10 +173,10 @@ class AppTableTest extends TableTestCase
     public function testFindRandomMethod(): void
     {
         $query = $this->Posts->find('random');
-        $this->assertSqlEndsWith('FROM `posts` `Posts` ORDER BY rand() LIMIT 1', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts ORDER BY rand() LIMIT 1', $query->sql());
 
         $query = $this->Posts->find('random')->limit(2);
-        $this->assertSqlEndsWith('FROM `posts` `Posts` ORDER BY rand() LIMIT 2', $query->sql());
+        $this->assertStringEndsWith('FROM posts Posts ORDER BY rand() LIMIT 2', $query->sql());
     }
 
     /**
@@ -199,7 +199,7 @@ class AppTableTest extends TableTestCase
         $this->assertNotEmpty($query->toArray());
         $fromCache = Cache::read('posts_list', $this->Posts->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
-        $this->assertSqlEndsWith('ORDER BY `' . $this->Posts->getDisplayField() . '` ASC', $query->sql());
+        $this->assertStringEndsWith('ORDER BY ' . $this->Posts->getDisplayField() . ' ASC', $query->sql());
     }
 
     /**
@@ -215,7 +215,7 @@ class AppTableTest extends TableTestCase
             2 => 'Another post category',
         ];
         $query = $this->PostsCategories->getTreeList();
-        $this->assertSqlEndsNotWith('ORDER BY `' . $this->PostsCategories->getDisplayField() . '` ASC', $query->sql());
+        $this->assertStringEndsNotWith('ORDER BY `' . $this->PostsCategories->getDisplayField() . '` ASC', $query->sql());
         $this->assertEquals($expected, $query->toArray());
         $fromCache = Cache::read('posts_categories_tree_list', $this->PostsCategories->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
@@ -248,7 +248,7 @@ class AppTableTest extends TableTestCase
      */
     public function testQueryFromFilter(): void
     {
-        $expectedSql = 'FROM `posts` `Posts` WHERE (`Posts`.`id` = :c0 AND `Posts`.`title` like :c1 AND `Posts`.`user_id` = :c2 AND `Posts`.`category_id` = :c3 AND `Posts`.`active` = :c4 AND `Posts`.`priority` = :c5 AND `Posts`.`created` >= :c6 AND `Posts`.`created` < :c7)';
+        $expectedSql = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
         $expectedParams = [
             2,
             '%Title%',
@@ -269,7 +269,7 @@ class AppTableTest extends TableTestCase
             'created' => '2016-12',
         ];
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
-        $this->assertSqlEndsWith($expectedSql, $query->sql());
+        $this->assertStringEndsWith($expectedSql, $query->sql());
 
         $params = array_map(function ($value) {
             return $value instanceof I18nDateTimeInterface ? $value->i18nFormat() : $value;
@@ -277,7 +277,7 @@ class AppTableTest extends TableTestCase
         $this->assertEquals($expectedParams, $params);
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['active' => I18N_NO] + $data);
-        $this->assertSqlEndsWith($expectedSql, $query->sql());
+        $this->assertStringEndsWith($expectedSql, $query->sql());
         $this->assertEquals(false, $query->getValueBinder()->bindings()[':c4']['value']);
 
         //With some invalid datas
