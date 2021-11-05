@@ -17,8 +17,8 @@ namespace MeCms\Test\TestCase\Model\Table;
 
 use BadMethodCallException;
 use Cake\Cache\Cache;
-use Cake\I18n\I18nDateTimeInterface;
 use Cake\I18n\FrozenTime;
+use Cake\I18n\I18nDateTimeInterface;
 use MeCms\ORM\Query;
 use MeCms\TestSuite\TableTestCase;
 
