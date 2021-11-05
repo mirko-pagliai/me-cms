@@ -288,6 +288,7 @@ class PostsWidgetsCellTest extends CellTestCase
      */
     public function testSearch(): void
     {
+        $this->skipIfCakeIsLessThan('4.3');
         $widget = 'MeCms.Posts::search';
 
         $expected = [
