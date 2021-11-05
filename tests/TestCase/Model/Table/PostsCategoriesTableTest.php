@@ -121,8 +121,11 @@ class PostsCategoriesTableTest extends TableTestCase
     {
         $this->skipIf(!$this->isMySql());
         $query = $this->Table->find('active');
-        $this->assertStringEndsWith('FROM `posts_categories` `PostsCategories` INNER JOIN `posts` `Posts` ON (`Posts`.`active` = :c0 AND `Posts`.`created` <= :c1 AND `PostsCategories`.`id` = `Posts`.`category_id`)', $query->sql());
+        $sql = $query->sql();
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
+
+        $this->skipIfCakeIsLessThan('4.3');
+        $this->assertStringEndsWith('FROM `posts_categories` `PostsCategories` INNER JOIN `posts` `Posts` ON (`Posts`.`active` = :c0 AND `Posts`.`created` <= :c1 AND `PostsCategories`.`id` = `Posts`.`category_id`)', $sql);
     }
 }

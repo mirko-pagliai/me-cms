@@ -79,9 +79,12 @@ class TagsTableTest extends TableTestCase
     {
         $this->skipIf(!$this->isMySql());
         $query = $this->Table->find('active');
-        $this->assertStringEndsWith('FROM `tags` `Tags` INNER JOIN `posts_tags` `PostsTags` ON `Tags`.`id` = `PostsTags`.`tag_id` INNER JOIN `posts` `Posts` ON (`Posts`.`active` = :c0 AND `Posts`.`created` <= :c1 AND `Posts`.`id` = `PostsTags`.`post_id`)', $query->sql());
+        $sql = $query->sql();
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
+
+        $this->skipIfCakeIsLessThan('4.3');
+        $this->assertStringEndsWith('FROM `tags` `Tags` INNER JOIN `posts_tags` `PostsTags` ON `Tags`.`id` = `PostsTags`.`tag_id` INNER JOIN `posts` `Posts` ON (`Posts`.`active` = :c0 AND `Posts`.`created` <= :c1 AND `Posts`.`id` = `PostsTags`.`post_id`)', $sql);
     }
 
     /**
