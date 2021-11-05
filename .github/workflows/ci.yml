@@ -85,7 +85,7 @@ jobs:
         - name: Run PHPUnit
           run: |
             if [[ ${{ matrix.db-type }} == 'mysql' ]]; then export db_dsn='mysql://root:root@127.0.0.1/test?encoding=utf8&quoteIdentifiers=true'; fi
-            if [[ ${{ matrix.db-type }} == 'pgsql' ]]; then export db_dsn='postgres://postgres:postgres@127.0.0.1/test?encoding=utf8&quoteIdentifiers=true'; fi
+            if [[ ${{ matrix.db-type }} == 'pgsql' ]]; then export db_dsn='postgres://postgres:postgres@127.0.0.1/test?encoding=utf8'; fi
 
             if [[ ${{ matrix.php-version }} == '8.0' ]]; then
               export CODECOVERAGE=1 && vendor/bin/phpunit --verbose --coverage-clover=coverage.xml

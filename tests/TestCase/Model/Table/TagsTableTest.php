@@ -83,7 +83,7 @@ class TagsTableTest extends TableTestCase
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
 
         $this->skipIfCakeIsLessThan('4.3');
-        $this->assertSqlEndsWith('FROM `tags` `Tags` INNER JOIN `posts_tags` `PostsTags` ON `Tags`.`id` = `PostsTags`.`tag_id` INNER JOIN `posts` `Posts` ON (`Posts`.`active` = :c0 AND `Posts`.`created` <= :c1 AND `Posts`.`id` = `PostsTags`.`post_id`)', $sql);
+        $this->assertSqlEndsWith('FROM tags Tags INNER JOIN posts_tags PostsTags ON Tags.id = PostsTags.tag_id INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Posts.id = PostsTags.post_id)', $sql);
     }
 
     /**
@@ -93,7 +93,7 @@ class TagsTableTest extends TableTestCase
     public function testQueryFromFilter(): void
     {
         $query = $this->Table->queryFromFilter($this->Table->find(), ['name' => 'test']);
-        $this->assertSqlEndsWith('FROM `tags` `Tags` WHERE `tag` like :c0', $query->sql());
+        $this->assertSqlEndsWith('FROM tags Tags WHERE tag like :c0', $query->sql());
         $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
     }
 }

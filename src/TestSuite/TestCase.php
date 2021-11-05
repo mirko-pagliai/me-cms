@@ -18,7 +18,6 @@ namespace MeCms\TestSuite;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Datasource\ConnectionManager;
 use MeTools\TestSuite\TestCase as BaseTestCase;
 
 /**
@@ -57,16 +56,6 @@ abstract class TestCase extends BaseTestCase
             Cache::getConfig($cacheKey) ?: $this->fail('Cache key `' . $cacheKey . '` does not exist');
             Cache::clear($cacheKey);
         }
-    }
-
-    /**
-     * Checks if the current `test` scheme is `mysql`
-     * @return bool
-     * @since 2.30.3
-     */
-    protected function isMySql(): bool
-    {
-        return ConnectionManager::get('test')->config()['scheme'] == 'mysql';
     }
 
     /**
