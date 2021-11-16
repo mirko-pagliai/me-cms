@@ -22,6 +22,7 @@ To choose another driver to use, you can set the `driver_test` environment varia
 For example:
 ```
 driver_test=postgres vendor/bin/phpunit
+driver_test=sqlite vendor/bin/phpunit
 ```
 
 Alternatively, you can set the `db_dsn` environment variable, indicating the connection parameters. In this case, the driver type will still be detected automatically.
