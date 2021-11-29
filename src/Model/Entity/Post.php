@@ -52,7 +52,7 @@ class Post extends PostAndPageEntity
      */
     protected function _getUrl(): ?string
     {
-        return $this->has('slug') ? Router::url(['_name' => 'post', $this->get('slug')], true) : null;
+        return $this->hasValue('slug') ? Router::url(['_name' => 'post', $this->get('slug')], true) : null;
     }
 
     /**
@@ -61,6 +61,6 @@ class Post extends PostAndPageEntity
      */
     protected function _getTagsAsString(): ?string
     {
-        return $this->has('tags') ? implode(', ', (array)Hash::extract($this->get('tags'), '{*}.tag')) : '';
+        return $this->hasValue('tags') ? implode(', ', (array)Hash::extract($this->get('tags'), '{*}.tag')) : '';
     }
 }

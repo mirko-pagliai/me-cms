@@ -139,7 +139,7 @@ class PostsTable extends PostsAndPagesTables
         return Cache::remember($cache, function () use ($images, $limit, $post) {
             $related = [];
 
-            if ($post->has('tags')) {
+            if ($post->hasValue('tags')) {
                 //Sorts and takes tags by `post_count` field
                 $tags = collection($post->get('tags'))->sortBy('post_count')->take($limit)->toList();
 

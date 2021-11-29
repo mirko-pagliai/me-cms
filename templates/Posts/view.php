@@ -56,7 +56,7 @@ $this->Breadcrumbs->add($post->get('title'), ['_name' => 'post', $post->get('slu
 if ($this->getRequest()->is('action', 'view', 'Posts')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
 
-    if ($post->has('modified')) {
+    if ($post->hasValue('modified')) {
         $this->Html->meta(['content' => $post->get('modified')->toUnixString(), 'property' => 'og:updated_time']);
     }
 
@@ -65,7 +65,7 @@ if ($this->getRequest()->is('action', 'view', 'Posts')) {
         $this->Html->meta('keywords', preg_replace('/,\s/', ',', $post->get('tags_as_string')));
     }
 
-    if ($post->has('preview')) {
+    if ($post->hasValue('preview')) {
         foreach ($post->get('preview') as $preview) {
             $this->Html->meta(['href' => $preview->get('url'), 'rel' => 'image_src']);
             $this->Html->meta(['content' => $preview->get('url'), 'property' => 'og:image']);

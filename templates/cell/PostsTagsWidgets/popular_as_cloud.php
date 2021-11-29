@@ -22,7 +22,7 @@ $this->assign('title', __d('me_cms', 'Popular tags'));
 foreach ($tags as $tag) {
     $text = empty($prefix) ? $tag->get('tag') : $prefix . $tag->get('tag');
     $options = ['title' => $tag->get('tag')];
-    if ($tag->has('size')) {
+    if ($tag->hasValue('size')) {
         $options['style'] = sprintf('font-size:%spx;', $tag->get('size'));
     }
 

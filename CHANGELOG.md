@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.30 branch
+### 2.30.5-RC2
+* 'entities preferably use `hasValue()` instead of `has()`.
+
 ### 2.30.4-RC1
 * fixed a large number of deprecations introduced by CakePHP 4.3;
 * updated for `me-tools` 2.20.7, now uses `assertSqlEndsNotWith()` and

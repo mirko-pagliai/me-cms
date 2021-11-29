@@ -47,6 +47,6 @@ class Page extends PostAndPageEntity
      */
     protected function _getUrl(): ?string
     {
-        return $this->has('slug') ? Router::url(['_name' => 'page', $this->get('slug')], true) : null;
+        return $this->hasValue('slug') ? Router::url(['_name' => 'page', $this->get('slug')], true) : null;
     }
 }

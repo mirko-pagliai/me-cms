@@ -39,7 +39,7 @@ $user = $post->get('user');
                 <?= $this->Html->link($post->get('title'), $post->get('url')) ?>
             </h2>
 
-            <?php if ($post->has('subtitle')) : ?>
+            <?php if ($post->hasValue('subtitle')) : ?>
                 <h4 class="subtitle mb-2">
                     <?= $this->Html->link($post->get('subtitle'), $post->get('url')) ?>
                 </h4>

@@ -73,7 +73,7 @@ $this->append('actions', $this->Html->button(
                 </td>
                 <td class="text-nowrap text-center">
                     <?php
-                    if ($category->has('parent') && $category->get('parent')->has('title')) {
+                    if ($category->hasValue('parent') && $category->get('parent')->hasValue('title')) {
                         echo $category->get('parent')->get('title');
                     }
                     ?>

@@ -59,6 +59,6 @@ class PagesCategory extends Entity
      */
     protected function _getUrl(): ?string
     {
-        return $this->has('slug') ? Router::url(['_name' => 'pagesCategory', $this->get('slug')], true) : null;
+        return $this->hasValue('slug') ? Router::url(['_name' => 'pagesCategory', $this->get('slug')], true) : null;
     }
 }
