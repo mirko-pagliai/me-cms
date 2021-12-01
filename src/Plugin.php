@@ -63,17 +63,15 @@ class Plugin extends BasePlugin
             Thumber::class,
             Tokens::class,
         ], getConfig('default.theme') ? [getConfig('default.theme')] : [], !$this->isCli() ? ['WyriHaximus/MinifyHtml'] : []);
-        foreach ($pluginsToLoad as $className) {
+        foreach ($pluginsToLoad as $plugin) {
             /** @var \Cake\Http\BaseApplication $app */
-            if (!$app->getPlugins()->has($className)) {
-                if ($className == 'WyriHaximus/MinifyHtml') {
-                    $app->addPlugin($className);
-                    continue;
+            if (!$app->getPlugins()->has($plugin)) {
+                if (method_exists($plugin, 'bootstrap')) {
+                    $plugin = new $plugin();
+                    $plugin->bootstrap($app);
+                    $plugin->disable('bootstrap');
                 }
 
-                $plugin = new $className();
-                $plugin->bootstrap($app);
-                $plugin->disable('bootstrap');
                 $app->addPlugin($plugin);
             }
         }
