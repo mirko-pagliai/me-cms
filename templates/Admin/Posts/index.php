@@ -109,7 +109,7 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
                     }
                     ?>
 
-                    <?php if ($post->has('tags')) : ?>
+                    <?php if ($post->hasValue('tags')) : ?>
                         <div class="mt-1 small d-none d-lg-block">
                             <?php
                             foreach ($post->get('tags') as $tag) {

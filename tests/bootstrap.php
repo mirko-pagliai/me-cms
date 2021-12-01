@@ -76,6 +76,10 @@ Configure::write('App', [
         'templates' => [APP . 'templates' . DS],
     ],
 ]);
+Configure::write('Error.ignoredDeprecationPaths', [
+    '*/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php',
+    '*/cakephp/cakephp/src/I18n/Time.php',
+]);
 Configure::write('Session', ['defaults' => 'php']);
 Configure::write('Assets.target', TMP . 'assets');
 Configure::write('Tokens.usersClassOptions', ['foreignKey' => 'user_id', 'className' => 'Users']);
@@ -103,7 +107,9 @@ Cache::setConfig([
 
 if (!getenv('db_dsn')) {
     putenv('db_dsn=mysql://travis@localhost/test?encoding=utf8&quoteIdentifiers=true');
-    if (getenv('db_driver') == 'postgres') {
+    if (getenv('driver_test') == 'sqlite') {
+        putenv('db_dsn=sqlite:///' . TMP . 'test.sq3');
+    } elseif (getenv('driver_test') == 'postgres') {
         putenv('db_dsn=postgres://postgres@localhost/travis_ci_test');
     }
 }

@@ -28,7 +28,7 @@ $category = $page->get('category');
             <?= $this->Html->link($page->get('title'), $page->get('url')) ?>
         </h3>
 
-        <?php if ($page->has('subtitle')) : ?>
+        <?php if ($page->hasValue('subtitle')) : ?>
             <h4 class="subtitle mb-2">
                 <?= $this->Html->link($page->get('subtitle'), $page->get('url')) ?>
             </h4>

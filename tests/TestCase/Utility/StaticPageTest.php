@@ -51,7 +51,7 @@ class StaticPageTest extends TestCase
      */
     public function testAll(): void
     {
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
         $TestPluginPath = Filesystem::instance()->rtr(Plugin::templatePath('TestPlugin')) . DS . 'StaticPages' . DS;
 
         $pages = StaticPage::all();
@@ -105,7 +105,7 @@ class StaticPageTest extends TestCase
      */
     public function testGet(): void
     {
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
 
         //Gets all pages from slugs
         $pages = array_map([StaticPage::class, 'get'], StaticPage::all()->extract('slug')->toArray());
@@ -146,7 +146,7 @@ class StaticPageTest extends TestCase
      */
     public function testGetPaths(): void
     {
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
         $result = StaticPage::getPaths();
         $this->assertSame([
             'App' => APP . 'templates' . DS . 'StaticPages',
@@ -214,7 +214,7 @@ class StaticPageTest extends TestCase
             }, $pathsOrSlugs);
         };
 
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
         $this->assertSame($expected, $getTitles(StaticPage::all()->extract('path')->toArray()));
         $this->assertSame($expected, $getTitles(StaticPage::all()->extract('slug')->toArray()));
     }

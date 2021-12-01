@@ -30,8 +30,8 @@ use MeCms\ORM\PostAndPageEntity;
  * @property string $text
  * @property string $preview
  * @property int $priority
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  * @property bool $active
  * @property \MeCms\Model\Entity\PostsCategory $category
  * @property \MeCms\Model\Entity\User $user
@@ -52,7 +52,7 @@ class Post extends PostAndPageEntity
      */
     protected function _getUrl(): ?string
     {
-        return $this->has('slug') ? Router::url(['_name' => 'post', $this->get('slug')], true) : null;
+        return $this->hasValue('slug') ? Router::url(['_name' => 'post', $this->get('slug')], true) : null;
     }
 
     /**
@@ -61,6 +61,6 @@ class Post extends PostAndPageEntity
      */
     protected function _getTagsAsString(): ?string
     {
-        return $this->has('tags') ? implode(', ', (array)Hash::extract($this->get('tags'), '{*}.tag')) : '';
+        return $this->hasValue('tags') ? implode(', ', (array)Hash::extract($this->get('tags'), '{*}.tag')) : '';
     }
 }

@@ -50,11 +50,11 @@ $this->Breadcrumbs->add($page->get('title'), $page->get('url'));
 if ($this->getRequest()->is('action', 'view', 'Pages')) {
     $this->Html->meta(['content' => 'article', 'property' => 'og:type']);
 
-    if ($page->has('modified')) {
+    if ($page->hasValue('modified')) {
         $this->Html->meta(['content' => $page->get('modified')->toUnixString(), 'property' => 'og:updated_time']);
     }
 
-    if ($page->has('preview')) {
+    if ($page->hasValue('preview')) {
         foreach ($page->get('preview') as $preview) {
             $this->Html->meta(['href' => $preview->get('url'), 'rel' => 'image_src']);
             $this->Html->meta(['content' => $preview->get('url'), 'property' => 'og:image']);

@@ -24,11 +24,6 @@ use MeCms\TestSuite\PostsAndPagesTablesTestCase;
 class PagesTableTest extends PostsAndPagesTablesTestCase
 {
     /**
-     * @var bool
-     */
-    public $autoFixtures = false;
-
-    /**
      * Fixtures
      * @var array
      */

@@ -57,6 +57,7 @@ class UsersCommand extends Command
     {
         return $this->Users->find()
             ->contain('Groups')
+            ->all()
             ->map(function (User $user): array {
                 $status = $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending');
                 if ($user->get('banned')) {

@@ -58,7 +58,7 @@ class CreateGroupsCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        if (!$this->UsersGroups->find()->isEmpty()) {
+        if (!$this->UsersGroups->find()->all()->isEmpty()) {
             return $io->error(__d('me_cms', 'Some user groups already exist'));
         }
 

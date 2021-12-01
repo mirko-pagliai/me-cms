@@ -31,8 +31,8 @@ use Symfony\Component\Finder\Finder;
  * @property bool $active
  * @property bool $banned
  * @property int $post_count
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  * @property \MeCms\Model\Entity\Group $group
  * @property \MeCms\Model\Entity\Post[] $posts
  * @property \MeCms\Model\Entity\Token[] $tokens
@@ -62,7 +62,7 @@ class User extends Entity
      */
     protected function _getFullName(): string
     {
-        return $this->has('first_name') && $this->has('last_name') ? $this->get('first_name') . ' ' . $this->get('last_name') : '';
+        return $this->hasValue('first_name') && $this->hasValue('last_name') ? $this->get('first_name') . ' ' . $this->get('last_name') : '';
     }
 
     /**
@@ -71,7 +71,7 @@ class User extends Entity
      */
     protected function _getPicture(): string
     {
-        if ($this->has('id')) {
+        if ($this->hasValue('id')) {
             $finder = new Finder();
             $finder->files()->name('/^' . $this->get('id') . '\..+/')->in(USER_PICTURES);
             $files = objects_map(iterator_to_array($finder), 'getFilename');

@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Http\ServerRequest;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use InvalidArgumentException;
 use MeCms\Controller\Component\LoginRecorderComponent;
@@ -173,7 +173,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $this->assertEquals(1, count($first));
         $this->assertInstanceOf(Entity::class, $first[0]);
         $this->assertEquals(false, $first[0]->ip);
-        $this->assertInstanceOf(Time::class, $first[0]->time);
+        $this->assertInstanceOf(FrozenTime::class, $first[0]->time);
         $this->assertEquals('Linux', $first[0]->platform);
         $this->assertEquals('Chrome', $first[0]->browser);
         $this->assertEquals('55.0.2883.87', $first[0]->version);

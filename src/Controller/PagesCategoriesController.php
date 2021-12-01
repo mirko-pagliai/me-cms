@@ -34,7 +34,8 @@ class PagesCategoriesController extends AppController
         $categories = $this->PagesCategories->find('active')
             ->select(['title', 'slug'])
             ->orderAsc(sprintf('%s.title', $this->PagesCategories->getAlias()))
-            ->cache('categories_index');
+            ->cache('categories_index')
+            ->all();
 
         $this->set(compact('categories'));
     }

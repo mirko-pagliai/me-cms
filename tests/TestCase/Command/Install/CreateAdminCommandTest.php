@@ -45,7 +45,7 @@ class CreateAdminCommandTest extends TestCase
         /** @var \MeCms\Model\Table\UsersTable $Users */
         $Users = TableRegistry::getTableLocator()->get('MeCms.Users');
 
-        $expectedUserId = $Users->find()->extract('id')->last() + 1;
+        $expectedUserId = $Users->find()->all()->extract('id')->last() + 1;
         $this->exec('me_cms.create_admin', $example);
         $this->assertExitWithSuccess();
         $this->assertOutputContains('<success>The operation has been performed correctly</success>');
@@ -53,6 +53,6 @@ class CreateAdminCommandTest extends TestCase
         $this->assertErrorEmpty();
 
         //Checks the user has been created
-        $this->assertEquals(1, $Users->findById($expectedUserId)->extract('group_id')->first());
+        $this->assertEquals(1, $Users->findById($expectedUserId)->all()->extract('group_id')->first());
     }
 }

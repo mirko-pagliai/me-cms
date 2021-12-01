@@ -25,11 +25,6 @@ use MeCms\TestSuite\TableTestCase;
 class UsersGroupsTableTest extends TableTestCase
 {
     /**
-     * @var bool
-     */
-    public $autoFixtures = false;
-
-    /**
      * Fixtures
      * @var array
      */

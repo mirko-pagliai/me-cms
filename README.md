@@ -15,6 +15,23 @@ To create migrations:
 $ bin/cake bake migration_snapshot -f --require-table --no-lock --plugin MeCms Initial
 ```
 
+## Testing
+Tests are run for only one driver at a time, by default `mysql`.
+To choose another driver to use, you can set the `driver_test` environment variable before running `phpunit`.
+
+For example:
+```
+driver_test=postgres vendor/bin/phpunit
+driver_test=sqlite vendor/bin/phpunit
+```
+
+Alternatively, you can set the `db_dsn` environment variable, indicating the connection parameters. In this case, the driver type will still be detected automatically.
+
+For example:
+```bash
+db_dsn=sqlite:///' . TMP . 'example.sq3 vendor/bin/phpunit
+```
+
 ## Versioning
 For transparency and insight into our release cycle and to maintain backward compatibility,
 Reflection will be maintained under the [Semantic Versioning guidelines](http://semver.org).

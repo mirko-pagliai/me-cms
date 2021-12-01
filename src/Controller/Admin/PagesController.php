@@ -53,7 +53,7 @@ class PagesController extends AppController
         }
 
         $methodToCall = $this->getRequest()->is('action', ['add', 'edit']) ? 'getTreeList' : 'getList';
-        $categories = $this->Categories->$methodToCall();
+        $categories = $this->Categories->$methodToCall()->all();
         if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 

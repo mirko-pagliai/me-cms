@@ -23,7 +23,7 @@ declare(strict_types=1);
     }
     echo $this->Html->link($title, $post->get('url'), ['class' => 'card-header card-title p-2 text-truncate']);
 
-    if ($post->has('preview')) {
+    if ($post->hasValue('preview')) {
         echo $this->Thumb->fit(
             $post->get('preview')[0]->get('url'),
             ['width' => 205],

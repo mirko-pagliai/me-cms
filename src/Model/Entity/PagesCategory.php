@@ -28,8 +28,8 @@ use Cake\Routing\Router;
  * @property string $slug
  * @property string $description
  * @property int $page_count
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  * @property \MeCms\Model\Entity\PagesCategory[] $child_pages_categories
  * @property \MeCms\Model\Entity\PagesCategory $parent_pages_category
  */
@@ -59,6 +59,6 @@ class PagesCategory extends Entity
      */
     protected function _getUrl(): ?string
     {
-        return $this->has('slug') ? Router::url(['_name' => 'pagesCategory', $this->get('slug')], true) : null;
+        return $this->hasValue('slug') ? Router::url(['_name' => 'pagesCategory', $this->get('slug')], true) : null;
     }
 }

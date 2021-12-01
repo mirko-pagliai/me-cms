@@ -33,11 +33,6 @@ class AppControllerTest extends ControllerTestCase
     protected $Controller;
 
     /**
-     * @var bool
-     */
-    public $autoFixtures = false;
-
-    /**
      * Fixtures
      * @var array
      */
@@ -84,7 +79,6 @@ class AppControllerTest extends ControllerTestCase
         $this->assertNull($this->Controller->beforeFilter(new Event('myEvent')));
 
         $url = ['controller' => 'Pages', 'action' => 'index'] + $this->url;
-        $this->loadFixtures();
 
         $this->get(['action' => 'add'] + $url);
         $this->assertSessionNotHasKey('referer');

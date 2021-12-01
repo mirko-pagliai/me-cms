@@ -1,6 +1,17 @@
 # 2.x branch
 ## 2.30 branch
-### 2.30.3
+### 2.30.5-RC2
+* fixed bootstrap, for loading other plugins;
+* 'entities preferably use `hasValue()` instead of `has()`.
+
+### 2.30.4-RC1
+* fixed a large number of deprecations introduced by CakePHP 4.3;
+* updated for `me-tools` 2.20.7, now uses `assertSqlEndsNotWith()` and
+    `assertSqlEndsWith()` methods to properly test sql syntax.
+    `TestCase::isMySql()` method has been removed;
+* added `TestCase::skipIfCakeIsLessThan()` method.
+
+### 2.30.3-beta
 * removed the files that interacted with the `cakephp-database-backup` plugin.
     Now that is a new plugin, `me-cms-database-backup`;
 * removed `mirko-pagliai/cakephp-entity-file-log` and files that interacted with

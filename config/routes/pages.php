@@ -26,7 +26,7 @@ if (!$routes->nameExists('pagesCategories')) {
 //Category
 if (!$routes->nameExists('pagesCategory')) {
     $routes->connect(
-        '/pages/category/:slug',
+        '/pages/category/{slug}',
         ['controller' => 'PagesCategories', 'action' => 'view'],
         ['_name' => 'pagesCategory']
     )->setPatterns(['slug' => '[\d\w\-]+'])->setPass(['slug']);
@@ -34,14 +34,14 @@ if (!$routes->nameExists('pagesCategory')) {
 
 //Page
 if (!$routes->nameExists('page')) {
-    $routes->connect('/page/:slug', ['controller' => 'Pages', 'action' => 'view'], ['_name' => 'page'])
+    $routes->connect('/page/{slug}', ['controller' => 'Pages', 'action' => 'view'], ['_name' => 'page'])
         ->setPatterns(['slug' => '[\d\w\-\/]+'])
         ->setPass(['slug']);
 }
 
 //Page preview
 if (!$routes->nameExists('pagesPreview')) {
-    $routes->connect('/page/preview/:slug', ['controller' => 'Pages', 'action' => 'preview'], ['_name' => 'pagesPreview'])
+    $routes->connect('/page/preview/{slug}', ['controller' => 'Pages', 'action' => 'preview'], ['_name' => 'pagesPreview'])
         ->setPatterns(['slug' => '[\d\w\-]+'])
         ->setPass(['slug']);
 }
