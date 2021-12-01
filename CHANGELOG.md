@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.5-RC2
+* fixed bootstrap, for loading other plugins;
 * 'entities preferably use `hasValue()` instead of `has()`.
 
 ### 2.30.4-RC1
