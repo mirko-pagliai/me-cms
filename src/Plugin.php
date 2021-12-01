@@ -29,8 +29,8 @@ use MeTools\Command\Install\CreateVendorsLinksCommand;
 use MeTools\Command\Install\SetPermissionsCommand;
 use MeTools\Plugin as MeTools;
 use RecaptchaMailhide\Plugin as RecaptchaMailhide;
-use Symfony\Component\Finder\Finder;
 use StopSpam\Plugin as StopSpam;
+use Symfony\Component\Finder\Finder;
 use Thumber\Cake\Plugin as Thumber;
 use Tokens\Plugin as Tokens;
 
