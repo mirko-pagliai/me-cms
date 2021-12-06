@@ -66,10 +66,10 @@ class Plugin extends BasePlugin
         foreach ($pluginsToLoad as $plugin) {
             /** @var \Cake\Http\BaseApplication $app */
             if (!$app->getPlugins()->has($plugin)) {
+                //Initializes bootstrapped plugins
                 if (method_exists($plugin, 'bootstrap')) {
                     $plugin = new $plugin();
                     $plugin->bootstrap($app);
-                    $plugin->disable('bootstrap');
                 }
 
                 $app->addPlugin($plugin);
