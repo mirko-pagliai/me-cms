@@ -35,7 +35,7 @@ class SetPermissionsCommandTest extends TestCase
     {
         $expected = array_map(function (string $path): string {
             return 'Setted permissions on `' . Filesystem::instance()->rtr($path) . '`';
-        }, Configure::read('WRITABLE_DIRS'));
+        }, array_unique(Configure::read('WRITABLE_DIRS')));
         $this->exec('me_cms.set_permissions -v');
         $this->assertSame($expected, $this->_out->messages());
     }
