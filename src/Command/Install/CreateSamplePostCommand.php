@@ -30,18 +30,6 @@ use MeTools\Console\Command;
 class CreateSamplePostCommand extends Command
 {
     /**
-     * Hook method invoked by CakePHP when a command is about to be executed
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->loadModel('MeCms.Posts');
-        $this->loadModel('MeCms.Users');
-    }
-
-    /**
      * Hook method for defining this command's option parser
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
      * @return \Cake\Console\ConsoleOptionParser
@@ -59,6 +47,9 @@ class CreateSamplePostCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
+        $this->loadModel('MeCms.Posts');
+        $this->loadModel('MeCms.Users');
+
         if (!$this->Posts->find()->all()->isEmpty()) {
             $io->verbose(__d('me_cms', 'At least one post already exists'));
 

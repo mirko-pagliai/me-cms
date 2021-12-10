@@ -52,7 +52,7 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAddEnableCommentsField(): void
     {
-        $getTables = function () {
+        $getTables = function (): array {
             return [$this->getTable('MeCms.Posts'), $this->getTable('MeCms.Pages')];
         };
 
