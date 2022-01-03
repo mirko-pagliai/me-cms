@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Model\Validation;
 
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -79,7 +78,7 @@ class AppValidatorTest extends TestCase
         parent::setUp();
 
         foreach (['Posts', 'PostsCategories', 'Users'] as $table) {
-            $this->$table = TableRegistry::getTableLocator()->get('MeCms.' . $table);
+            $this->$table = $this->getTable('MeCms.' . $table);
         }
     }
 

@@ -17,7 +17,6 @@ namespace MeCms\Test\TestCase\View\Cell;
 
 use Cake\Cache\Cache;
 use Cake\Http\ServerRequest;
-use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use InvalidArgumentException;
 use MeCms\TestSuite\CellTestCase;
@@ -55,7 +54,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      */
     public function setUp(): void
     {
-        $this->Table = $this->Table ?: TableRegistry::getTableLocator()->get('MeCms.Tags');
+        $this->Table = $this->Table ?: $this->getTable('MeCms.Tags');
 
         parent::setUp();
     }
