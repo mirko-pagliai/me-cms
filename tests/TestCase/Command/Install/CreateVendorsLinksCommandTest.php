@@ -33,8 +33,6 @@ class CreateVendorsLinksCommandTest extends TestCase
      */
     public function testExecute(): void
     {
-        $this->exec('me_cms.create_vendors_links -v');
-        $this->assertExitWithSuccess();
         $expected = array_clean(array_map(function (string $target, string $origin): string {
             $target = WWW_ROOT . 'vendor' . DS . $target;
             $relTarget = Filesystem::instance()->rtr($target);
@@ -44,6 +42,8 @@ class CreateVendorsLinksCommandTest extends TestCase
 
             return file_exists(ROOT . 'vendor' . DS . $origin) ? 'Link `' . $relTarget . '` has been created' : '';
         }, Configure::read('VENDOR_LINKS'), array_keys(Configure::read('VENDOR_LINKS'))));
+        $this->exec('me_cms.create_vendors_links -v');
+        $this->assertExitWithSuccess();
         $this->assertSame($expected, $this->_out->messages());
     }
 }
