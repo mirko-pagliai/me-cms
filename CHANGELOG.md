@@ -3,7 +3,8 @@
 ### 2.30.5-RC2
 * fixed bootstrap, for loading other plugins;
 * fixed commands and their tests;
-* 'entities preferably use `hasValue()` instead of `has()`.
+* 'entities preferably use `hasValue()` instead of `has()`;
+* some little fixes.
 
 ### 2.30.4-RC1
 * fixed a large number of deprecations introduced by CakePHP 4.3;
