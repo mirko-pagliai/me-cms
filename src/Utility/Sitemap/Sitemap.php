@@ -42,7 +42,7 @@ class Sitemap extends SitemapBase
         }
 
         /** @var \MeCms\Model\Table\PagesCategoriesTable $table */
-        $table = TableRegistry::get('MeCms.PagesCategories');
+        $table = TableRegistry::getTableLocator()->get('MeCms.PagesCategories');
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if (!$url) {
@@ -93,7 +93,7 @@ class Sitemap extends SitemapBase
         }
 
         /** @var \MeCms\Model\Table\PostsCategoriesTable $table */
-        $table = TableRegistry::get('MeCms.PostsCategories');
+        $table = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if (!$url) {
@@ -154,7 +154,7 @@ class Sitemap extends SitemapBase
         }
 
         /** @var \MeCms\Model\Table\TagsTable $table */
-        $table = TableRegistry::get('MeCms.Tags');
+        $table = TableRegistry::getTableLocator()->get('MeCms.Tags');
         $url = Cache::read('sitemap', $table->getCacheName());
 
         if (!$url) {

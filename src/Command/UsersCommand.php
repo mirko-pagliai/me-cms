@@ -29,17 +29,6 @@ use MeTools\Console\Command;
 class UsersCommand extends Command
 {
     /**
-     * Hook method invoked by CakePHP when a command is about to be executed
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->loadModel('MeCms.Users');
-    }
-
-    /**
      * Hook method for defining this command's option parser
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
      * @return \Cake\Console\ConsoleOptionParser
@@ -55,6 +44,8 @@ class UsersCommand extends Command
      */
     protected function getUsersRows(): array
     {
+        $this->loadModel('MeCms.Users');
+
         return $this->Users->find()
             ->contain('Groups')
             ->all()

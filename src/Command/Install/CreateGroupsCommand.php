@@ -30,17 +30,6 @@ use MeTools\Console\Command;
 class CreateGroupsCommand extends Command
 {
     /**
-     * Hook method invoked by CakePHP when a command is about to be executed
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->loadModel('MeCms.UsersGroups');
-    }
-
-    /**
      * Hook method for defining this command's option parser
      * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
      * @return \Cake\Console\ConsoleOptionParser
@@ -58,6 +47,8 @@ class CreateGroupsCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
+        $this->loadModel('MeCms.UsersGroups');
+
         if (!$this->UsersGroups->find()->all()->isEmpty()) {
             return $io->error(__d('me_cms', 'Some user groups already exist'));
         }

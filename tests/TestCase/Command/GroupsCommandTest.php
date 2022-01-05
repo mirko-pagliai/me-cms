@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command;
 
-use Cake\ORM\TableRegistry;
 use MeCms\Model\Entity\UsersGroup;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
@@ -42,12 +41,12 @@ class GroupsCommandTest extends TestCase
      */
     public function testExecute(): void
     {
-        $UsersGroups = TableRegistry::getTableLocator()->get('MeCms.UsersGroups');
+        $UsersGroups = $this->getTable('MeCms.UsersGroups');
 
         $expectedRows = $UsersGroups->find()
             ->select(['id', 'name', 'label', 'user_count'])
             ->all()
-            ->map(function (UsersGroup $group) {
+            ->map(function (UsersGroup $group): array {
                 return array_map('strval', $group->toArray());
             })
             ->toList();

@@ -62,8 +62,6 @@ class CreateGroupsCommandTest extends TestCase
         $this->assertExitWithSuccess();
         $this->assertOutputContains('The user groups have been created');
         $this->assertErrorEmpty();
-
-        //Checks the user groups exist
-        $this->assertEquals([1, 2, 3], $UsersGroups->find()->all()->extract('id')->toList());
+        $this->assertCount(3, $UsersGroups->find()->all());
     }
 }

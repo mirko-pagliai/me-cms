@@ -18,7 +18,6 @@ namespace MeCms\Test\TestCase\Utility\Sitemap;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\TableRegistry;
 use MeCms\TestSuite\TestCase;
 use MeCms\Utility\Sitemap\Sitemap;
 
@@ -60,7 +59,7 @@ class SitemapTest extends TestCase
     public function testPages(): void
     {
         /** @var \MeCms\Model\Table\PagesCategoriesTable $table */
-        $table = TableRegistry::getTableLocator()->get('MeCms.PagesCategories');
+        $table = $this->getTable('MeCms.PagesCategories');
 
         $expected = [
             [
@@ -107,7 +106,7 @@ class SitemapTest extends TestCase
     public function testPosts(): void
     {
         /** @var \MeCms\Model\Table\PostsCategoriesTable $table */
-        $table = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
+        $table = $this->getTable('MeCms.PostsCategories');
 
         $expected = [
             [
@@ -183,7 +182,7 @@ class SitemapTest extends TestCase
     public function testPostsTags(): void
     {
         /** @var \MeCms\Model\Table\TagsTable $table */
-        $table = TableRegistry::getTableLocator()->get('MeCms.Tags');
+        $table = $this->getTable('MeCms.Tags');
 
         $expected = [
             [

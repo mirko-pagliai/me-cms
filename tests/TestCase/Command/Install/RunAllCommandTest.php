@@ -34,8 +34,10 @@ class RunAllCommandTest extends TestCase
     {
         $questions = (new RunAllCommand())->questions;
         $this->exec('me_cms.install -v', array_fill(0, count($questions), 'n'));
+        $this->assertExitWithSuccess();
 
         $expectedQuestions = array_column($questions, 'question');
+        /** @var array<array-key, string> $outputQuestions **/
         $outputQuestions = array_map(function (string $output): string {
             return preg_match('/\<question\>([\w\s\.]+\?)\<\/question\>/', $output, $matches) ? $matches[1] : '';
         }, $this->_out->messages());

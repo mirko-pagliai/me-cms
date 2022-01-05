@@ -48,7 +48,7 @@ class CopyConfigCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $Filesystem = new Filesystem();
-        foreach (Configure::read('CONFIG_FILES') as $file) {
+        foreach (array_unique(Configure::readOrFail('CONFIG_FILES')) as $file) {
             [$plugin, $file] = pluginSplit($file);
             $file .= '.php';
             $this->copyFile($io, Plugin::path($plugin, 'config' . DS . $file), $Filesystem->concatenate(CONFIG, $file));
