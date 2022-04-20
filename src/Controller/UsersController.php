@@ -208,8 +208,10 @@ class UsersController extends AppController
         }
 
         if ($this->getRequest()->is('post')) {
-            $user = $this->Auth->identify();
+            $username = $this->getRequest()->getData('username');
+            $password = $this->getRequest()->getData('password');
 
+            $user = $this->Auth->identify();
             if ($user) {
                 //Checks if the user is banned or if is disabled (the account
                 //  should still be enabled)
@@ -235,16 +237,12 @@ class UsersController extends AppController
                 return $this->redirect($this->Auth->redirectUrl());
             }
 
-            $username = $this->getRequest()->getData('username');
-            $password = $this->getRequest()->getData('password');
-            if ($username && $password) {
-                Log::error(sprintf(
-                    '%s - Failed login: username `%s`, password `%s`',
-                    $this->getRequest()->clientIp(),
-                    $username,
-                    $password
-                ), 'users');
-            }
+            Log::error(sprintf(
+                '%s - Failed login: username `%s`, password `%s`',
+                $this->getRequest()->clientIp(),
+                $username,
+                $password
+            ), 'users');
 
             $this->Flash->error(__d('me_cms', 'Invalid username or password'));
         }
