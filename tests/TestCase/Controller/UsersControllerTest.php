@@ -106,48 +106,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Test for `loginWithCookie()` method
-     * @test
-     */
-    public function testLoginWithCookie(): void
-    {
-        $url = ['_name' => 'login'];
-
-        //No user data on cookies
-        $this->get($url);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertSessionEmpty('Auth');
-
-        //Writes wrong data on cookies
-        $this->cookie('login', ['username' => 'a', 'password' => 'b']);
-        $this->get($url);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertSessionEmpty('Auth');
-
-        //Gets an user and sets a password, then writes right data on cookies
-        $password = 'mypassword1!';
-        $user = $this->Table->findByActiveAndBanned(true, false)->first();
-        $this->Table->save($user->set(compact('password') + ['password_repeat' => $password]));
-        $this->cookieEncrypted('login', ['username' => $user->username] + compact('password'));
-        $this->get($url);
-        $this->assertRedirect(['_name' => 'dashboard']);
-        $this->assertSession($user->get('id'), 'Auth.User.id');
-
-        //"pending" and "banned" users
-        foreach ([
-            ['active' => false],
-            ['active' => true, 'banned' => true],
-        ] as $userData) {
-            $this->Table->save($user->set($userData));
-            $this->cookieEncrypted('login', ['username' => $user->username] + compact('password'));
-            $this->get($url);
-            $this->assertRedirect(['_name' => 'homepage']);
-            $this->assertSessionEmpty('Auth');
-            $this->assertCookieNotSet('login');
-        }
-    }
-
-    /**
      * Test for `beforeFilter()` method
      * @test
      */
@@ -280,6 +238,48 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertCookieNotSet('login');
         $this->assertSessionEmpty('Auth');
         $this->assertFlashMessage('Your account has not been activated yet');
+    }
+
+    /**
+     * Test for `login()` method, with cookies
+     * @test
+     */
+    public function testLoginWithCookies(): void
+    {
+        $url = ['_name' => 'login'];
+
+        //No user data on cookies
+        $this->get($url);
+        $this->assertResponseOkAndNotEmpty();
+        $this->assertSessionEmpty('Auth');
+
+        //Writes wrong data on cookies
+        $this->cookie('login', ['username' => 'a', 'password' => 'b']);
+        $this->get($url);
+        $this->assertResponseOkAndNotEmpty();
+        $this->assertSessionEmpty('Auth');
+
+        //Gets an user and sets a password, then writes right data on cookies
+        $password = 'mypassword1!';
+        $user = $this->Table->findByActiveAndBanned(true, false)->first();
+        $this->Table->save($user->set(compact('password') + ['password_repeat' => $password]));
+        $this->cookieEncrypted('login', ['username' => $user->username] + compact('password'));
+        $this->get($url);
+        $this->assertRedirect(['_name' => 'dashboard']);
+        $this->assertSession($user->get('id'), 'Auth.User.id');
+
+        //"pending" and "banned" users
+        foreach ([
+            ['active' => false],
+            ['active' => true, 'banned' => true],
+        ] as $userData) {
+            $this->Table->save($user->set($userData));
+            $this->cookieEncrypted('login', ['username' => $user->username] + compact('password'));
+            $this->get($url);
+            $this->assertRedirect(['_name' => 'homepage']);
+            $this->assertSessionEmpty('Auth');
+            $this->assertCookieNotSet('login');
+        }
     }
 
     /**
