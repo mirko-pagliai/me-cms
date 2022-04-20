@@ -45,9 +45,7 @@ class UsersController extends AppController
      */
     protected function buildLogout(): ?Response
     {
-        $request = $this->getRequest();
-        $cookies = $request->getCookieCollection()->remove('login');
-        $this->setRequest($request->withCookieCollection($cookies));
+        $this->setResponse($this->getResponse()->withExpiredCookie(new Cookie('login')));
 
         return $this->redirect($this->Auth->logout());
     }
@@ -177,11 +175,9 @@ class UsersController extends AppController
     public function login()
     {
         //Tries to get login data from cookies, if the login with cookies is enabled
-        if (getConfig('users.cookies_login')) {
-            $data = (array)$this->getRequest()->getCookie('login');
-            if ($data) {
-                $this->setRequest($this->getRequest()->withParsedBody($data));
-            }
+        $data = $this->getRequest()->getCookie('login');
+        if (getConfig('users.cookies_login') && $data) {
+            $this->setRequest($this->getRequest()->withParsedBody((array)$data));
         }
 
         $username = $this->getRequest()->getData('username');

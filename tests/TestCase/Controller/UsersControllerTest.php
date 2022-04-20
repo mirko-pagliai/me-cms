@@ -227,7 +227,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->Table->save($user->set('banned', true));
         $this->post($url, ['username' => $user->get('username'), 'remember_me' => true] + compact('password'));
         $this->assertRedirect($this->Controller->Auth->logout());
-        $this->assertCookieNotSet('login');
+        $this->assertTrue($this->_response->getCookieCollection()->get('login')->isExpired());
         $this->assertSessionEmpty('Auth');
         $this->assertFlashMessage('Your account has been banned by an admin');
 
@@ -235,7 +235,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->Table->save($user->set(['active' => false, 'banned' => false]));
         $this->post($url, ['username' => $user->get('username'), 'remember_me' => true] + compact('password'));
         $this->assertRedirect($this->Controller->Auth->logout());
-        $this->assertCookieNotSet('login');
+        $this->assertTrue($this->_response->getCookieCollection()->get('login')->isExpired());
         $this->assertSessionEmpty('Auth');
         $this->assertFlashMessage('Your account has not been activated yet');
     }
@@ -278,7 +278,7 @@ class UsersControllerTest extends ControllerTestCase
             $this->get($url);
             $this->assertRedirect(['_name' => 'homepage']);
             $this->assertSessionEmpty('Auth');
-            $this->assertCookieNotSet('login');
+            $this->assertTrue($this->_response->getCookieCollection()->get('login')->isExpired());
         }
     }
 
@@ -291,7 +291,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->cookie('login', 'value');
         $this->get(['_name' => 'logout']);
         $this->assertRedirect($this->Controller->Auth->logout());
-        $this->assertCookieNotSet('login');
+        $this->assertTrue($this->_response->getCookieCollection()->get('login')->isExpired());
         $this->assertFlashMessage('You are successfully logged out');
     }
 
