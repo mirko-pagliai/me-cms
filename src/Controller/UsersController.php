@@ -42,18 +42,16 @@ class UsersController extends AppController
      * Internal method to login with cookie
      * @return \Cake\Http\Response|null
      * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
-     * @uses buildLogout()
      */
     protected function loginWithCookie(): ?Response
     {
-        $username = $this->getRequest()->getCookie('login.username');
-        $password = $this->getRequest()->getCookie('login.password');
-        if (!$username || !$password) {
+        $login = $this->getRequest()->getCookie('login');
+        if (!$login || empty($login['username']) || empty($login['password'])) {
             return null;
         }
 
         //Tries to login
-        $this->setRequest($this->getRequest()->withParsedBody(compact('username', 'password')));
+        $this->setRequest($this->getRequest()->withParsedBody($login));
         $user = $this->Auth->identify();
         if (!$user || !$user['active'] || $user['banned']) {
             return $this->buildLogout();
@@ -211,8 +209,6 @@ class UsersController extends AppController
 
         if ($this->getRequest()->is('post')) {
             $user = $this->Auth->identify();
-            $username = $this->getRequest()->getData('username');
-            $password = $this->getRequest()->getData('password');
 
             if ($user) {
                 //Checks if the user is banned or if is disabled (the account
@@ -239,6 +235,8 @@ class UsersController extends AppController
                 return $this->redirect($this->Auth->redirectUrl());
             }
 
+            $username = $this->getRequest()->getData('username');
+            $password = $this->getRequest()->getData('password');
             if ($username && $password) {
                 Log::error(sprintf(
                     '%s - Failed login: username `%s`, password `%s`',
