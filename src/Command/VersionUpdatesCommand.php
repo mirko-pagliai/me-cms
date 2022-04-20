@@ -36,10 +36,28 @@ class VersionUpdatesCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
-        return $parser->setDescription(__d(
-            'me_cms',
-            'Performs some updates to the database or files needed for versioning'
-        ));
+        return $parser->setDescription(__d('me_cms', 'Performs some updates to the database or files needed for versioning'));
+    }
+
+    /**
+     * Adds the `last_logins` field to `Users` table
+     * @return void
+     * @since 2.30.7-RC4
+     */
+    public function addLastLoginsField(): void
+    {
+        Cache::clear('_cake_model_');
+
+        /** @var \MeCms\Model\Table\AppTable $Table **/
+        $Table = $this->loadModel('MeCms.Users');
+        if (!$Table->getSchema()->hasColumn('last_logins')) {
+            $connection = $Table->getConnection();
+            $command = 'ALTER TABLE `' . $Table->getTable() . '` ADD `last_logins` TEXT NULL DEFAULT NULL AFTER `last_name`;';
+            if ($connection->getDriver() instanceof Postgres) {
+                $command = 'ALTER TABLE ' . $Table->getTable() . ' ADD COLUMN last_logins TEXT NULL DEFAULT NULL';
+            }
+            $connection->execute($command);
+        }
     }
 
     /**
@@ -98,13 +116,11 @@ class VersionUpdatesCommand extends Command
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
-     * @uses addEnableCommentsField()
-     * @uses alterTagColumnSize()
-     * @uses deleteOldDirectories()
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $this->addEnableCommentsField();
+        $this->addLastLoginsField();
         $this->alterTagColumnSize();
         $this->deleteOldDirectories();
 
