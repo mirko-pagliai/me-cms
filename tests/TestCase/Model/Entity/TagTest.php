@@ -35,7 +35,7 @@ class TagTest extends EntityTestCase
      * Test for `_getSlug()` method
      * @test
      */
-    public function testSlugGetMutator(): void
+    public function testGetSlugVirtualField(): void
     {
         foreach ([
             'This is a tag' => 'this-is-a-tag',
@@ -49,7 +49,7 @@ class TagTest extends EntityTestCase
      * Test for `_getUrl()` method
      * @test
      */
-    public function testUrl(): void
+    public function testGetUrlVirtualField(): void
     {
         $this->Entity->set('tag', 'a-tag');
         $this->assertStringEndsWith('/posts/tag/a-tag', $this->Entity->get('url'));
