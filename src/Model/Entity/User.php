@@ -66,7 +66,7 @@ class User extends Entity
     protected function _getFullName(): string
     {
         return $this->hasValue('first_name') && $this->hasValue('last_name') ? $this->get('first_name') . ' ' . $this->get('last_name') : '';
-}
+    }
 
     /**
      * Gets the picture (virtual field)
