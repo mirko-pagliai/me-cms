@@ -15,17 +15,15 @@ declare(strict_types=1);
 
 namespace MeCms\Controller\Component;
 
+use Cake\Collection\Collection;
 use Cake\Controller\Component;
+use Cake\Datasource\FactoryLocator;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use donatj\UserAgent\UserAgentParser;
-use InvalidArgumentException;
-use Tools\Exceptionist;
-use Tools\FileArray;
 
 /**
- * This component allows you to save and retrieve user logins, through a special
- *  register for each user.
+ * This component allows you to save and retrieve user logins.
  *
  * You must first set the user ID with the `config()` method and the `user`
  *  value, then you can execute `read()` and `write()` methods.
@@ -39,9 +37,25 @@ use Tools\FileArray;
 class LoginRecorderComponent extends Component
 {
     /**
-     * @var \Tools\FileArray
+     * @var \MeCms\Model\Table\UsersTable
      */
-    protected $FileArray;
+    protected $UsersTable;
+
+    /**
+     * Constructor hook method
+     * @param array<string, mixed> $config The configuration settings provided to this component
+     * @return void
+     */
+    public function initialize($config): void
+    {
+        parent::initialize($config);
+
+        /** @var \Cake\ORM\Locator\TableLocator $Locator */
+        $Locator = FactoryLocator::get('Table');
+        /** @var \MeCms\Model\Table\UsersTable $UsersTable */
+        $UsersTable = $Locator->get('MeCms.Users');
+        $this->UsersTable = $UsersTable;
+    }
 
     /**
      * Internal method to get the client ip
@@ -52,23 +66,6 @@ class LoginRecorderComponent extends Component
         $ip = $this->getController()->getRequest()->clientIp();
 
         return $ip === '::1' ? '127.0.0.1' : $ip;
-    }
-
-    /**
-     * Gets the `FileArray` instance
-     * @return \Tools\FileArray
-     * @throws \InvalidArgumentException
-     * @uses $FileArray
-     */
-    public function getFileArray(): FileArray
-    {
-        if (!$this->FileArray) {
-            $user = $this->getConfig('user');
-            Exceptionist::isPositive($user, __d('me_cms', 'You have to set a valid user id'), InvalidArgumentException::class);
-            $this->FileArray = new FileArray(LOGIN_RECORDS . 'user_' . $user . '.log');
-        }
-
-        return $this->FileArray;
     }
 
     /**
@@ -91,41 +88,39 @@ class LoginRecorderComponent extends Component
 
     /**
      * Reads data
-     * @return array
-     * @uses getFileArray()
+     * @return \Cake\Collection\Collection
      */
-    public function read(): array
+    public function read(): Collection
     {
-        return $this->getFileArray()->read();
+        return $this->UsersTable->get($this->getConfig('user'))->get('last_logins');
     }
 
     /**
      * Saves data
      * @return bool
-     * @uses getClientIp()
-     * @uses getFileArray()
-     * @uses getUserAgent()
      */
     public function write(): bool
     {
+        $User = $this->UsersTable->get($this->getConfig('user'));
+        $lastLogins = $User->get('last_logins');
+
+        //Removes the first record, if it has been saved less than an hour ago
+        //  and if the user agent data are the same
         $current = $this->getUserAgent() + [
             'agent' => filter_input(INPUT_SERVER, 'HTTP_USER_AGENT'),
             'ip' => $this->getClientIp(),
         ];
-        $last = $this->getFileArray()->exists(0) ? $this->getFileArray()->get(0) : [];
-
-        //Removes the first record (last in order of time), if it has been saved
-        //  less than an hour ago and if the user agent data are the same
-        if ($last
-            && (new FrozenTime($last->get('time')))->modify('+1 hour')->isFuture()
-            && $last->extract(['agent', 'browser', 'ip', 'platform', 'version']) == $current
-        ) {
-            $this->getFileArray()->delete(0);
+        $first = $lastLogins->first();
+        if ($first && (new FrozenTime($first->get('time')))->modify('+1 hour')->isFuture() && $first->extract(['agent', 'browser', 'ip', 'platform', 'version']) == $current) {
+            $lastLogins = $lastLogins->skip(1);
         }
 
         //Adds the current request, takes only a specified number of records and writes
-        return $this->getFileArray()->prepend(new Entity($current + ['time' => new FrozenTime()]))
-            ->take((int)getConfig('users.login_log'))
-            ->write();
+        $lastLogins = $lastLogins->prependItem(new Entity($current + ['time' => new FrozenTime()]));
+        $lastLogins = $lastLogins->take((int)getConfig('users.login_log'));
+
+        $User = $User->set('last_logins', $lastLogins->toList());
+
+        return (bool)$this->UsersTable->save($User);
     }
 }
