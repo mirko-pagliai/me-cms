@@ -121,11 +121,12 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testDeleteOldDirectories(): void
     {
-        $dir = WWW_ROOT . 'fonts';
-        @mkdir($dir);
-        $this->assertFileExists($dir);
+        $dirs = [WWW_ROOT . 'fonts', TMP . 'login'];
+        foreach ($dirs as $dir) {
+            @mkdir($dir);
+        }
         $this->Command->deleteOldDirectories();
-        $this->assertFileDoesNotExist($dir);
+        @array_walk($dirs, [$this, 'assertFileDoesNotExist']);
     }
 
     /**
