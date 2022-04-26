@@ -48,7 +48,7 @@ class UserTest extends EntityTestCase
      * Test for `_getFullName()` method
      * @test
      */
-    public function testFullNameGetMutator(): void
+    public function testGetFullNameVirtualField(): void
     {
         $this->Entity->set(['first_name' => 'Alfa', 'last_name' => 'Beta']);
         $this->assertEquals('Alfa Beta', $this->Entity->get('full_name'));
@@ -58,7 +58,7 @@ class UserTest extends EntityTestCase
      * Test for `_getPicture()` method
      * @test
      */
-    public function testPictureGetMutator(): void
+    public function testGetPictureVirtualField(): void
     {
         $this->assertEquals('MeCms.no-avatar.jpg', $this->Entity->set('id', 1)->get('picture'));
 
