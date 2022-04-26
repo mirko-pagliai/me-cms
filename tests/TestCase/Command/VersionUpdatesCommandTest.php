@@ -54,8 +54,10 @@ class VersionUpdatesCommandTest extends TestCase
     public function testAddLastLoginsField(): void
     {
         $Table = $this->getTable('MeCms.Users');
-
         $connection = $Table->getConnection();
+
+        $this->skipIf($connection->getDriver() instanceof Sqlite);
+
         $command = 'ALTER TABLE `' . $Table->getTable() . '` DROP `last_logins`';
         if ($connection->getDriver() instanceof Postgres) {
             $command = 'ALTER TABLE ' . $Table->getTable() . ' DROP COLUMN last_logins;';
