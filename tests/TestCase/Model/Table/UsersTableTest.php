@@ -74,6 +74,15 @@ class UsersTableTest extends TableTestCase
     }
 
     /**
+     * Test for `_initializeSchema()` method
+     * @test
+     */
+    public function testInitializeSchema(): void
+    {
+        $this->assertSame('json', $this->Table->getSchema()->getColumnType('last_logins'));
+    }
+
+    /**
      * Test for `buildRules()` method
      * @test
      */

@@ -16,6 +16,8 @@ declare(strict_types=1);
 namespace MeCms\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\Collection\Collection;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use Symfony\Component\Finder\Finder;
 
@@ -28,14 +30,15 @@ use Symfony\Component\Finder\Finder;
  * @property string $password
  * @property string $first_name
  * @property string $last_name
+ * @property array|null $last_logins
  * @property bool $active
  * @property bool $banned
  * @property int $post_count
  * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $modified
- * @property \MeCms\Model\Entity\Group $group
+ * @property \Cake\I18n\FrozenTime|null $modified
+ * @property \MeCms\Model\Entity\UsersGroup $group
  * @property \MeCms\Model\Entity\Post[] $posts
- * @property \MeCms\Model\Entity\Token[] $tokens
+ * @property \Tokens\Model\Entity\Token[] $tokens
  */
 class User extends Entity
 {
@@ -63,7 +66,7 @@ class User extends Entity
     protected function _getFullName(): string
     {
         return $this->hasValue('first_name') && $this->hasValue('last_name') ? $this->get('first_name') . ' ' . $this->get('last_name') : '';
-    }
+}
 
     /**
      * Gets the picture (virtual field)
@@ -84,6 +87,23 @@ class User extends Entity
         $path = 'no-avatar.jpg';
 
         return is_readable(WWW_ROOT . 'img' . DS . $path) ? $path : 'MeCms.' . $path;
+    }
+
+    /**
+     * Gets the last logins (accessor)
+     * @param array|null $lastLogins Last logins
+     * @return \Cake\Collection\Collection Last logins as `Collection`
+     * @since 2.30.7-RC4
+     */
+    protected function _getLastLogins(?array $lastLogins): Collection
+    {
+        $lastLogins = array_map(function ($row): Entity {
+            $row = $row instanceof Entity ? $row : new Entity($row);
+
+            return $row->set('time', new FrozenTime($row->get('time')));
+        }, $lastLogins ?: []);
+
+        return new Collection($lastLogins);
     }
 
     /**
