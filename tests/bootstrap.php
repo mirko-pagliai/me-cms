@@ -79,6 +79,8 @@ Configure::write('App', [
 Configure::write('Error.ignoredDeprecationPaths', [
     '*/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php',
     '*/cakephp/cakephp/src/I18n/Time.php',
+    '*/mirko-pagliai/*/config/routes.php',
+    '*/cakephp/cakephp/src/Routing/Router.php',
 ]);
 Configure::write('Session', ['defaults' => 'php']);
 Configure::write('Assets.target', TMP . 'assets');
