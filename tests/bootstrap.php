@@ -81,6 +81,7 @@ Configure::write('Error.ignoredDeprecationPaths', [
     '*/cakephp/cakephp/src/I18n/Time.php',
     '*/mirko-pagliai/*/config/routes.php',
     '*/cakephp/cakephp/src/Routing/Router.php',
+    '*/cakephp/cakephp/src/Routing/Route/Route.php',
 ]);
 Configure::write('Session', ['defaults' => 'php']);
 Configure::write('Assets.target', TMP . 'assets');
