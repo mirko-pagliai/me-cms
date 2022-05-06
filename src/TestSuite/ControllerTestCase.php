@@ -114,7 +114,7 @@ abstract class ControllerTestCase extends TestCase
     {
         parent::setUp();
 
-        $isAdmin = string_contains(get_class($this), 'Controller\\Admin');
+        $isAdmin = str_contains(get_class($this), 'Controller\\Admin');
 
         //Tries to retrieve controller and table from the class name
         if (!$this->Controller && $this->autoInitializeClass) {

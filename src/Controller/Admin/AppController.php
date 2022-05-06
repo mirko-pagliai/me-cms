@@ -84,7 +84,7 @@ abstract class AppController extends BaseAppController
         if (is_array($url)) {
             $referer = $this->getRequest()->getSession()->read('referer');
             $expectedRedirect = '/' . ltrim(Router::url($url, true), Router::url('/', true));
-            if ($referer && string_starts_with($referer, $expectedRedirect)) {
+            if ($referer && str_starts_with($referer, $expectedRedirect)) {
                 $url = $referer;
             }
         }
