@@ -15,6 +15,9 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Model\Entity;
 
+use Cake\Collection\Collection;
+use Cake\I18n\FrozenTime;
+use Cake\ORM\Entity;
 use MeCms\TestSuite\EntityTestCase;
 use Tools\Filesystem;
 
@@ -52,6 +55,28 @@ class UserTest extends EntityTestCase
     {
         $this->Entity->set(['first_name' => 'Alfa', 'last_name' => 'Beta']);
         $this->assertEquals('Alfa Beta', $this->Entity->get('full_name'));
+    }
+
+    /**
+     * Test for `_getLastLogins()` method
+     * @test
+     */
+    public function testLastLoginsGetAccessor(): void
+    {
+        $entity = new Entity([
+            'platform' => 'Linux',
+            'browser' => 'Chrome',
+            'version' => '55.0.2883.87',
+            'agent' => null,
+            'ip' => '',
+            'time' => new FrozenTime(),
+        ]);
+
+        $result = $this->Entity->set('last_logins', [$entity])
+            ->get('last_logins');
+        $this->assertInstanceof(Collection::class, $result);
+        $this->assertCount(1, $result);
+        $this->assertSame($entity, $result->first());
     }
 
     /**

@@ -6,11 +6,6 @@ parameters:
 			path: src/Command/Install/CreateSamplePostCommand.php
 
 		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: src/Controller/Component/LoginRecorderComponent.php
-
-		-
 			message: "#^Cannot cast array\\|string\\|null to string\\.$#"
 			count: 1
 			path: src/Controller/PostsCategoriesController.php

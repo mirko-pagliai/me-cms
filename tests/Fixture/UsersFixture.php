@@ -25,7 +25,7 @@ class UsersFixture extends TestFixture
 {
     /**
      * Fields
-     * @var array
+     * @var array<string, mixed>
      */
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => null, 'autoIncrement' => true],
@@ -35,6 +35,7 @@ class UsersFixture extends TestFixture
         'password' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null],
         'first_name' => ['type' => 'string', 'length' => 40, 'null' => false, 'default' => null],
         'last_name' => ['type' => 'string', 'length' => 40, 'null' => false, 'default' => null],
+        'last_logins' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null],
         'active' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1'],
         'banned' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '0'],
         'post_count' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => '0', 'autoIncrement' => null],
@@ -101,7 +102,7 @@ class UsersFixture extends TestFixture
             'banned' => 0,
             'post_count' => 1,
             'created' => '2016-12-24 17:03:10',
-        ],
+            ],
         [
             'group_id' => 1,
             'username' => 'delta',
@@ -114,7 +115,7 @@ class UsersFixture extends TestFixture
             'post_count' => 0,
             'created' => '2016-12-24 17:04:10',
         ],
-    ];
+        ];
 
     /**
      * Initialize the fixture

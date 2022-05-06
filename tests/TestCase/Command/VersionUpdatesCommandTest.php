@@ -43,8 +43,30 @@ class VersionUpdatesCommandTest extends TestCase
     public $fixtures = [
         'plugin.MeCms.Pages',
         'plugin.MeCms.Posts',
+        'plugin.MeCms.Users',
         'plugin.MeCms.Tags',
     ];
+
+    /**
+     * Test for `addLastLoginsField()` method
+     * @test
+     */
+    public function testAddLastLoginsField(): void
+    {
+        $Table = $this->getTable('MeCms.Users');
+        $connection = $Table->getConnection();
+
+        $this->skipIf($connection->getDriver() instanceof Sqlite);
+
+        $command = 'ALTER TABLE `' . $Table->getTable() . '` DROP `last_logins`';
+        if ($connection->getDriver() instanceof Postgres) {
+            $command = 'ALTER TABLE ' . $Table->getTable() . ' DROP COLUMN last_logins;';
+        }
+        $connection->execute($command);
+
+        $this->Command->addLastLoginsField();
+        $this->assertTrue($this->getTable('MeCms.Users')->getSchema()->hasColumn('last_logins'));
+    }
 
     /**
      * Test for `addEnableCommentsField()` method
@@ -101,11 +123,12 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testDeleteOldDirectories(): void
     {
-        $dir = WWW_ROOT . 'fonts';
-        @mkdir($dir);
-        $this->assertFileExists($dir);
+        $dirs = [WWW_ROOT . 'fonts', TMP . 'login'];
+        foreach ($dirs as $dir) {
+            @mkdir($dir);
+        }
         $this->Command->deleteOldDirectories();
-        $this->assertFileDoesNotExist($dir);
+        @array_walk($dirs, [$this, 'assertFileDoesNotExist']);
     }
 
     /**
@@ -117,12 +140,12 @@ class VersionUpdatesCommandTest extends TestCase
         $this->exec('me_cms.version_updates -h');
         $this->assertNotEmpty($this->_out->messages());
 
-        $methods = get_child_methods(VersionUpdatesCommand::class);
+        $expectedMethods = get_child_methods(VersionUpdatesCommand::class);
         $Command = $this->getMockBuilder(VersionUpdatesCommand::class)
-            ->setMethods($methods)
+            ->setMethods($expectedMethods)
             ->getMock();
 
-        foreach ($methods as $method) {
+        foreach ($expectedMethods as $method) {
             $Command->expects($this->once())->method($method);
         }
 

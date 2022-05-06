@@ -27,11 +27,6 @@ if (!defined('FORMAT_FOR_MYSQL')) {
     define('FORMAT_FOR_MYSQL', 'yyyy-MM-dd HH:mm');
 }
 
-//Sets the default login log directory
-if (!defined('LOGIN_RECORDS')) {
-    define('LOGIN_RECORDS', TMP . 'login' . DS);
-}
-
 //Sets the default sitemap path
 if (!defined('SITEMAP')) {
     define('SITEMAP', TMP . 'sitemap.xml.gz');

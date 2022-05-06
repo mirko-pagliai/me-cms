@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Model\Table;
 
 use ArrayObject;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\ResultSet;
@@ -30,9 +31,9 @@ use MeCms\ORM\Query;
 
 /**
  * Users model
- * @property \Cake\ORM\Association\BelongsTo $Groups
- * @property \Cake\ORM\Association\HasMany $Posts
- * @property \Cake\ORM\Association\HasMany $Tokens
+ * @property \MeCms\Model\Table\UsersGroupsTable&\Cake\ORM\Association\BelongsTo $Groups
+ * @property \MeCms\Model\Table\PostsTable&\Cake\ORM\Association\HasMany $Posts
+ * @property \MeCms\Model\Table\TokensTable&\Cake\ORM\Association\HasMany $Tokens
  * @method findByActiveAndBanned(bool $isActive, bool $isBanned)
  * @method findActiveByEmail(string $email)
  * @method findByUsername(string $username)
@@ -45,6 +46,19 @@ class UsersTable extends AppTable
      * @var string
      */
     protected $cache = 'users';
+
+    /**
+     * Alters the schema used by this table.
+     *
+     * This function is only called after fetching the schema out of the database.
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema The table definition fetched from database
+     * @return \Cake\Database\Schema\TableSchemaInterface the altered schema
+     * @since 2.30.7-RC4
+     */
+    protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
+    {
+        return $schema->setColumnType('last_logins', 'json');
+    }
 
     /**
      * Called before request data is converted into entities

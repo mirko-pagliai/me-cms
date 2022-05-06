@@ -31,7 +31,6 @@ Configure::write('CONFIG_FILES', array_merge(Configure::read('CONFIG_FILES', [])
 //Sets directories to be created and must be writable
 Configure::write('WRITABLE_DIRS', array_merge(Configure::read('WRITABLE_DIRS', []), [
     getConfigOrFail('Assets.target'),
-    LOGIN_RECORDS,
     THUMBER_TARGET,
     UPLOADED,
     UPLOADED . '.trash',
