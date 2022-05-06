@@ -27,7 +27,7 @@ class PostTest extends PostAndPageEntityTestCase
      * Test for `_getUrl()` method
      * @test
      */
-    public function testUrl(): void
+    public function testGetUrlVirtualField(): void
     {
         $this->assertStringEndsWith('/post/a-slug', $this->Entity->get('url'));
     }
@@ -36,11 +36,11 @@ class PostTest extends PostAndPageEntityTestCase
      * Test for `_getTagsAsString()` method
      * @test
      */
-    public function testTagsAsStringGetMutator(): void
+    public function testGetTagsAsStringVirtualField(): void
     {
-        foreach (['cat', 'dog', 'bird'] as $tag) {
-            $tags[] = new Tag(compact('tag'));
-        }
+        $tags = array_map(function (string $tag): Tag {
+            return new Tag(compact('tag'));
+        }, ['cat', 'dog', 'bird']);
 
         $this->assertEquals('cat, dog, bird', $this->Entity->set(compact('tags'))->get('tags_as_string'));
 

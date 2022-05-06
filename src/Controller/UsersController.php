@@ -39,42 +39,13 @@ class UsersController extends AppController
     use MailerAwareTrait;
 
     /**
-     * Internal method to login with cookie
-     * @return \Cake\Http\Response|null
-     * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
-     * @uses buildLogout()
-     */
-    protected function loginWithCookie(): ?Response
-    {
-        $username = $this->getRequest()->getCookie('login.username');
-        $password = $this->getRequest()->getCookie('login.password');
-        if (!$username || !$password) {
-            return null;
-        }
-
-        //Tries to login
-        $this->setRequest($this->getRequest()->withParsedBody(compact('username', 'password')));
-        $user = $this->Auth->identify();
-        if (!$user || !$user['active'] || $user['banned']) {
-            return $this->buildLogout();
-        }
-
-        $this->Auth->setUser($user);
-        $this->LoginRecorder->setConfig('user', $user['id'])->write();
-
-        return $this->redirect($this->Auth->redirectUrl());
-    }
-
-    /**
      * Internal method to logout.
      * Deletes some cookies.
      * @return \Cake\Http\Response|null
      */
     protected function buildLogout(): ?Response
     {
-        $request = $this->getRequest();
-        $cookies = $request->getCookieCollection()->remove('login');
-        $this->setRequest($request->withCookieCollection($cookies));
+        $this->setResponse($this->getResponse()->withExpiredCookie(new Cookie('login')));
 
         return $this->redirect($this->Auth->logout());
     }
@@ -200,20 +171,19 @@ class UsersController extends AppController
      * Login
      * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
-     * @uses loginWithCookie()
      */
     public function login()
     {
-        //Tries to login with cookies, if the login with cookies is enabled
-        if (getConfig('users.cookies_login')) {
-            $this->loginWithCookie();
+        //Tries to get login data from cookies, if the login with cookies is enabled
+        $data = $this->getRequest()->getCookie('login');
+        if (getConfig('users.cookies_login') && $data) {
+            $this->setRequest($this->getRequest()->withParsedBody((array)$data));
         }
 
-        if ($this->getRequest()->is('post')) {
+        $username = $this->getRequest()->getData('username');
+        $password = $this->getRequest()->getData('password');
+        if ($username && $password) {
             $user = $this->Auth->identify();
-            $username = $this->getRequest()->getData('username');
-            $password = $this->getRequest()->getData('password');
-
             if ($user) {
                 //Checks if the user is banned or if is disabled (the account
                 //  should still be enabled)
@@ -232,21 +202,19 @@ class UsersController extends AppController
 
                 //Saves the login data as cookies, if requested
                 if ($this->getRequest()->getData('remember_me')) {
-                    $cookie = new Cookie('login', compact('username', 'password'), new DateTime('+1 year'));
-                    $this->setResponse($this->getResponse()->withCookie($cookie));
+                    $Cookie = new Cookie('login', compact('username', 'password'), new DateTime('+1 year'));
+                    $this->setResponse($this->getResponse()->withCookie($Cookie));
                 }
 
                 return $this->redirect($this->Auth->redirectUrl());
             }
 
-            if ($username && $password) {
-                Log::error(sprintf(
-                    '%s - Failed login: username `%s`, password `%s`',
-                    $this->getRequest()->clientIp(),
-                    $username,
-                    $password
-                ), 'users');
-            }
+            Log::error(sprintf(
+                '%s - Failed login: username `%s`, password `%s`',
+                $this->getRequest()->clientIp(),
+                $username,
+                $password
+            ), 'users');
 
             $this->Flash->error(__d('me_cms', 'Invalid username or password'));
         }

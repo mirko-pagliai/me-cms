@@ -26,7 +26,7 @@ class PageTest extends PostAndPageEntityTestCase
      * Test for `_getUrl()` method
      * @test
      */
-    public function testUrl(): void
+    public function testGetUrlVirtualField(): void
     {
         $this->assertStringEndsWith('/page/a-slug', $this->Entity->get('url'));
     }

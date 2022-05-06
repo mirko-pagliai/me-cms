@@ -22,6 +22,10 @@ use RuntimeException;
 
 /**
  * Application controller class
+ * @method \Cake\Http\ServerRequest getRequest() Gets the request instance
+ * @method \Cake\Http\Response getResponse() Gets the response instance
+ * @method $this setRequest(\Cake\Http\ServerRequest $request) Sets the request objects and configures a number of controller properties based on the contents of the request
+ * @method $this setResponse(\Cake\Http\Response $response) Sets the response instance
  * @property \MeCms\Controller\Component\AuthComponent $Auth
  * @property \MeTools\Controller\Component\FlashComponent $Flash
  */

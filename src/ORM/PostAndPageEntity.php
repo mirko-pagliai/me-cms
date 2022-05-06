@@ -51,7 +51,7 @@ abstract class PostAndPageEntity extends Entity
     }
 
     /**
-     * Gets text
+     * Gets text (accessor)
      * @param string|null $text Text
      * @return string
      * @since 2.27.2

@@ -376,6 +376,11 @@ class Initial extends AbstractMigration
                 'limit' => 40,
                 'null' => false,
             ])
+            ->addColumn('last_logins', 'text', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
             ->addColumn('active', 'boolean', [
                 'default' => true,
                 'limit' => null,

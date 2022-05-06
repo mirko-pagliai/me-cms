@@ -50,7 +50,7 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
      * @return void
      * @test
      */
-    public function testPlainTextGetMutator(): void
+    public function testGetPlainTextVirtualField(): void
     {
         $this->assertEquals('A text', $this->Entity->get('plain_text'));
     }
@@ -60,7 +60,7 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
      * @return void
      * @test
      */
-    public function testTextGetMutator(): void
+    public function testGetTextAccessor(): void
     {
         $this->assertEquals('<b>A</b> <!-- read-more -->text', $this->Entity->get('text'));
     }
@@ -70,5 +70,5 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
      * @return void
      * @test
      */
-    abstract public function testUrl(): void;
+    abstract public function testGetUrlVirtualField(): void;
 }

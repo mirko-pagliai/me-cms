@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Controller\Admin;
 
+use Cake\Collection\Collection;
 use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use MeCms\Controller\Component\LoginRecorderComponent;
@@ -376,7 +377,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Users' . DS . 'last_login.php');
         $this->assertNotEmpty($this->viewVariable('loginLog'));
-        $this->assertIsArray($this->viewVariable('loginLog'));
+        $this->assertInstanceOf(Collection::class, $this->viewVariable('loginLog'));
 
         //Disabled
         Configure::write('MeCms.users.login_log', false);
