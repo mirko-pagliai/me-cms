@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "cakephp/cakephp": "^4.3",
         "dereuromark/cakephp-feed": "^2.0",
         "donatj/phpuseragentparser": "^v1",
