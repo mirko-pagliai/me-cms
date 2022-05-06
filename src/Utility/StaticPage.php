@@ -64,7 +64,7 @@ class StaticPage
      */
     public static function getSlug(string $path, string $relativePath): string
     {
-        if (string_starts_with($path, $relativePath)) {
+        if (str_starts_with($path, $relativePath)) {
             $path = substr($path, strlen(Filesystem::instance()->addSlashTerm($relativePath)));
         }
         $path = preg_replace(sprintf('/\.[^\.]+$/'), '', $path);

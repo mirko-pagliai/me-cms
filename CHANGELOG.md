@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.30 branch
+### 2.30.7-RC4
+* updated for PHP 8.1.
+
 ### 2.30.6-RC3
 * the login process, via post form and cookies, has been improved and simplified;
 * fixed commands and their tests;
