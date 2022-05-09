@@ -2,7 +2,8 @@
 ## 2.30 branch
 ### 2.30.7-RC4
 * added `last_logins` field to user table. This field is used instead of files.
-    So the `LoginRecorderComponent` no longer uses files, but the database.
+    So the `LoginRecorderComponent` no longer uses files, but the database;
+* updated for PHP 8.1 Requires at least PHP 7.4.
 
 ### 2.30.6-RC3
 * the login process, via post form and cookies, has been improved and simplified;

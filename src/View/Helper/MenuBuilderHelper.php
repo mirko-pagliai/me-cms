@@ -67,7 +67,7 @@ class MenuBuilderHelper extends Helper
         $childMethods = get_child_methods(App::className($plugin . '.MenuHelper', 'View/Helper') ?? '') ?: [];
 
         return array_values(array_filter($childMethods, function (string $childMethod): bool {
-            return !string_starts_with($childMethod, '_');
+            return !str_starts_with($childMethod, '_');
         }));
     }
 

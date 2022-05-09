@@ -12,29 +12,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.2', '7.3', '7.4', '8.0']
+        php-version: ['7.4', '8.0', '8.1']
         db-type: [mysql, pgsql, sqlite]
         prefer-lowest: ['']
-        exclude:
-          - php-version: '7.2'
-            db-type: 'pgsql'
-          - php-version: '7.3'
-            db-type: 'pgsql'
-          - php-version: '7.2'
-            db-type: 'sqlite'
-          - php-version: '7.3'
-            db-type: 'sqlite'
         include:
-          - php-version: '7.2'
-            db-type: 'mysql'
-            prefer-lowest: 'prefer-lowest'
-          - php-version: '7.3'
-            db-type: 'mysql'
-            prefer-lowest: 'prefer-lowest'
           - php-version: '7.4'
             db-type: 'mysql'
             prefer-lowest: 'prefer-lowest'
           - php-version: '8.0'
+            db-type: 'mysql'
+            prefer-lowest: 'prefer-lowest'
+          - php-version: '8.1'
             db-type: 'mysql'
             prefer-lowest: 'prefer-lowest'
 
