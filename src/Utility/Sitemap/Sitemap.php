@@ -48,11 +48,7 @@ class Sitemap extends SitemapBase
         if (!$url) {
             $categories = $table->find('active')
                 ->select(['id', 'lft', 'slug'])
-                ->contain($table->Pages->getAlias(), function (Query $query) {
-                    return $query->find('active')
-                        ->select(['category_id', 'slug', 'modified'])
-                        ->orderDesc('modified');
-                })
+                ->contain($table->Pages->getAlias(), fn(Query $query): Query => $query->find('active')->select(['category_id', 'slug', 'modified'])->orderDesc('modified'))
                 ->orderAsc(sprintf('%s.lft', $table->getAlias()))
                 ->all();
 
@@ -99,11 +95,7 @@ class Sitemap extends SitemapBase
         if (!$url) {
             $categories = $table->find('active')
                 ->select(['id', 'lft', 'slug'])
-                ->contain($table->Posts->getAlias(), function (Query $query) {
-                    return $query->find('active')
-                        ->select(['category_id', 'slug', 'modified'])
-                        ->orderDesc('modified');
-                })
+                ->contain($table->Posts->getAlias(), fn(Query $query): Query => $query->find('active')->select(['category_id', 'slug', 'modified'])->orderDesc('modified'))
                 ->orderAsc(sprintf('%s.lft', $table->getAlias()))
                 ->all();
 
@@ -197,9 +189,7 @@ class Sitemap extends SitemapBase
             return [];
         }
 
-        return StaticPage::all()->map(function (Entity $page) {
-            return self::parse(['_name' => 'page', $page->get('slug')], ['lastmod' => $page->get('modified')]);
-        })->toArray();
+        return StaticPage::all()->map(fn(Entity $page): array => self::parse(['_name' => 'page', $page->get('slug')], ['lastmod' => $page->get('modified')]))->toArray();
     }
 
     /**

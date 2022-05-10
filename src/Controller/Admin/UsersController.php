@@ -39,7 +39,6 @@ class UsersController extends AppController
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
-     * @uses \MeCms\Model\Table\UsersGroupsTable::getList()
      */
     public function beforeFilter(EventInterface $event)
     {
@@ -97,7 +96,6 @@ class UsersController extends AppController
     /**
      * Lists users
      * @return void
-     * @uses \MeCms\Model\Table\UsersTable::queryFromFilter()
      */
     public function index(): void
     {
@@ -114,7 +112,6 @@ class UsersController extends AppController
      * Views user
      * @param string $id User ID
      * @return void
-     * @uses \MeCms\Controller\Component\LoginRecorderComponent::read()
      */
     public function view(string $id): void
     {
@@ -226,7 +223,7 @@ class UsersController extends AppController
     /**
      * Changes the user's password
      * @return \Cake\Http\Response|null|void
-     * @uses \MeCms\Mailer\UserMailer::changePassword()
+     * @see \MeCms\Mailer\UserMailer::changePassword()
      */
     public function changePassword()
     {
@@ -251,8 +248,6 @@ class UsersController extends AppController
     /**
      * Changes the user's picture
      * @return void
-     * @uses \MeCms\Controller\Admin\AppController::setUploadError()
-     * @uses \MeTools\Controller\Component\UploaderComponent
      */
     public function changePicture(): void
     {
@@ -285,7 +280,6 @@ class UsersController extends AppController
     /**
      * Displays the login log
      * @return \Cake\Http\Response|null|void
-     * @uses \MeCms\Controller\Component\LoginRecorderComponent::read()
      */
     public function lastLogin()
     {

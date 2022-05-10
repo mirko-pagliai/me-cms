@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\View\Cell;
 
+use Cake\Collection\CollectionInterface;
 use Cake\ORM\ResultSet;
 use Cake\View\Cell;
 
@@ -50,9 +51,7 @@ class PagesWidgetsCell extends Cell
         $categories = $this->Pages->Categories->find('active')
             ->select(['title', 'slug', 'page_count'])
             ->orderAsc(sprintf('%s.title', $this->Pages->Categories->getAlias()))
-            ->formatResults(function (ResultSet $results) {
-                return $results->indexBy('slug');
-            })
+            ->formatResults(fn(ResultSet $results): CollectionInterface => $results->indexBy('slug'))
             ->cache('widget_categories')
             ->all();
 

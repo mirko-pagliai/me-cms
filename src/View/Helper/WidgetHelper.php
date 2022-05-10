@@ -49,8 +49,6 @@ class WidgetHelper extends Helper
     /**
      * Renders all widgets
      * @return string Html code
-     * @uses getAll()
-     * @uses widget()
      */
     public function all(): string
     {
@@ -77,6 +75,7 @@ class WidgetHelper extends Helper
         $parts = explode('::', $name);
         $name = $parts[0] . 'Widgets';
         $name .= empty($parts[1]) ? '' : '::' . $parts[1];
+        ksort($data, SORT_STRING);
 
         return $this->getView()->cell($name, $data, $options);
     }

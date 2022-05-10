@@ -21,6 +21,8 @@ namespace MeCms;
  *
  * Provides some methods for classes that need to verify the data of the logged
  *  in user
+ * @see \Cake\Controller\Component\AuthComponent::user()
+ * @see \MeCms\View\Helper\AuthHelper::user()
  */
 trait AuthTrait
 {
@@ -30,7 +32,6 @@ trait AuthTrait
      * If you pass an array of IDs, it will check that at least one matches.
      * @param string|int|array<int|string> $id User ID as string or array
      * @return bool
-     * @uses user()
      */
     public function hasId($id): bool
     {
@@ -40,7 +41,6 @@ trait AuthTrait
     /**
      * Checks whether the logged user is the admin founder (ID 1)
      * @return bool
-     * @uses user()
      */
     public function isFounder(): bool
     {
@@ -53,7 +53,6 @@ trait AuthTrait
      * If you pass an array of groups, it will check that at least one matches.
      * @param string|array $group User group as string or array
      * @return bool
-     * @uses user()
      */
     public function isGroup($group): bool
     {
@@ -63,7 +62,6 @@ trait AuthTrait
     /**
      * Checks whether the user is logged in
      * @return bool
-     * @uses user()
      */
     public function isLogged(): bool
     {

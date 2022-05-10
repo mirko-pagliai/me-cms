@@ -86,7 +86,7 @@ class SystemsControllerTest extends ControllerTestCase
     {
         Cache::clearAll();
 
-        array_map([new Filesystem(), 'unlinkRecursive'], [getConfigOrFail('Assets.target'), THUMBER_TARGET]);
+        array_map([Filesystem::instance(), 'unlinkRecursive'], [getConfigOrFail('Assets.target'), THUMBER_TARGET]);
 
         parent::tearDown();
     }

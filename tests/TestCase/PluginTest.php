@@ -34,9 +34,7 @@ class PluginTest extends TestCase
         /**
          * Internal functions. Returns an array of loaded plugins
          */
-        $getLoadedPlugins = function (BaseApplication $app): array {
-            return array_keys(iterator_to_array($app->getPlugins()));
-        };
+        $getLoadedPlugins = fn(BaseApplication $app): array => array_keys(iterator_to_array($app->getPlugins()));
 
         Configure::write('MeCms.default.theme', 'MyTheme');
         $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);

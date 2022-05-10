@@ -19,6 +19,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Response;
 use Cake\Routing\Router;
+use MeCms\Controller\AppController;
 use MeCms\TestSuite\ControllerTestCase;
 
 /**
@@ -27,13 +28,11 @@ use MeCms\TestSuite\ControllerTestCase;
 class AppControllerTest extends ControllerTestCase
 {
     /**
-     * Controller instance
      * @var \MeCms\Controller\Admin\AppController&\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $Controller;
+    protected AppController $Controller;
 
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [

@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\View\Cell;
 
+use Cake\Collection\CollectionInterface;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\ResultSet;
 use Cake\View\Cell;
@@ -52,9 +53,7 @@ class PostsWidgetsCell extends Cell
         $categories = $this->Posts->Categories->find('active')
             ->select(['title', 'slug', 'post_count'])
             ->orderAsc(sprintf('%s.title', $this->Posts->Categories->getAlias()))
-            ->formatResults(function (ResultSet $results) {
-                return $results->indexBy('slug');
-            })
+            ->formatResults(fn(ResultSet $results): CollectionInterface => $results->indexBy('slug'))
             ->cache('widget_categories')
             ->all();
 
@@ -99,18 +98,12 @@ class PostsWidgetsCell extends Cell
 
         $months = $this->Posts->find('active')
             ->select('created')
-            ->formatResults(function (ResultSet $results) {
-                return $results->sortBy('created', SORT_DESC)
-                    ->countBy(function (Post $post): string {
-                        return $post->get('created')->i18nFormat('yyyy/MM');
-                    })
-                    ->map(function (int $countBy, string $month): array {
-                        return [
-                            'created' => FrozenTime::createFromFormat('Y/m/d H:i:s', $month . '/01 00:00:00'),
-                            'post_count' => $countBy,
-                        ];
-                    });
-            })
+            ->formatResults(fn(ResultSet $results): CollectionInterface => $results->sortBy('created', SORT_DESC)
+                ->countBy(fn(Post $post): string => $post->get('created')->i18nFormat('yyyy/MM'))
+                ->map(fn(int $countBy, string $month): array => [
+                    'created' => FrozenTime::createFromFormat('Y/m/d H:i:s', $month . '/01 00:00:00'),
+                    'post_count' => $countBy,
+                ]))
             ->cache('widget_months')
             ->all();
 

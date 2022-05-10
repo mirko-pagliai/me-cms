@@ -31,7 +31,7 @@ abstract class TableTestCase extends TestCase
      * If `true`, a mock instance of the table will be created
      * @var bool
      */
-    protected $autoInitializeClass = true;
+    protected bool $autoInitializeClass = true;
 
     /**
      * Asserts that the table has a "belogs to" association
@@ -57,7 +57,6 @@ abstract class TableTestCase extends TestCase
      * Asserts that the table has a behavior
      * @param string|array $behavior Behavior name as string or array
      * @return void
-     * @uses $Table
      */
     public function assertHasBehavior($behavior): void
     {
@@ -81,15 +80,12 @@ abstract class TableTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
-     * @uses $Table
-     * @uses $autoInitializeClass
-     * @uses $cacheToClear
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        if (!$this->Table && $this->autoInitializeClass) {
+        if (empty($this->Table) && $this->autoInitializeClass) {
             $this->Table = $this->getTable($this->getAlias($this), ['className' => $this->getOriginClassNameOrFail($this)]);
         }
     }

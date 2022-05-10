@@ -28,7 +28,7 @@ class PostsControllerTest extends ControllerTestCase
     /**
      * @var array
      */
-    protected static $example = [
+    protected static array $example = [
         'user_id' => 1,
         'category_id' => 1,
         'title' => 'new post title',
@@ -37,7 +37,6 @@ class PostsControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [

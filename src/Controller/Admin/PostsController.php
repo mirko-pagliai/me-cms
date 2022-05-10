@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Controller\Admin;
 
+use Cake\Collection\CollectionInterface;
 use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\ORM\ResultSet;
@@ -34,10 +35,6 @@ class PostsController extends AppController
      *  each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
-     * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
-     * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
-     * @uses \MeCms\Model\Table\UsersTable::getActiveList()
-     * @uses \MeCms\Model\Table\UsersTable::getList()
      */
     public function beforeFilter(EventInterface $event)
     {
@@ -79,7 +76,6 @@ class PostsController extends AppController
      * @param array|\ArrayAccess|null $user The user to check the authorization
      *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      * @uses \MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
      */
     public function isAuthorized($user = null): bool
@@ -115,9 +111,7 @@ class PostsController extends AppController
         $this->paginate['order'] = ['created' => 'DESC'];
 
         $posts = $this->paginate($this->Posts->queryFromFilter($query, $this->getRequest()->getQueryParams()))
-            ->map(function (Post $post): Post {
-                return $post->set('tags', collection($post->get('tags'))->extract('tag')->toList());
-            });
+            ->map(fn(Post $post): Post => $post->set('tags', collection($post->get('tags'))->extract('tag')->toList()));
 
         $this->set(compact('posts'));
     }
@@ -152,17 +146,12 @@ class PostsController extends AppController
      * Edits post
      * @param string $id Post ID
      * @return \Cake\Http\Response|null|void
-     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function edit(string $id)
     {
         $post = $this->Posts->findById($id)
             ->contain(['Tags' => ['sort' => ['tag' => 'ASC']]])
-            ->formatResults(function (ResultSet $results) {
-                return $results->map(function (Post $post): Post {
-                    return $post->set('created', $post->get('created')->i18nFormat(FORMAT_FOR_MYSQL));
-                });
-            })
+            ->formatResults(fn(ResultSet $results): CollectionInterface => $results->map(fn(Post $post): Post => $post->set('created', $post->get('created')->i18nFormat(FORMAT_FOR_MYSQL))))
             ->firstOrFail();
 
         if ($this->getRequest()->is(['patch', 'post', 'put'])) {

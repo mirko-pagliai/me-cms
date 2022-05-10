@@ -40,7 +40,7 @@ class PagesTable extends PostsAndPagesTables
      * Cache configuration name
      * @var string
      */
-    protected $cache = 'pages';
+    protected string $cache = 'pages';
 
     /**
      * Returns a rules checker object that will be used for validating

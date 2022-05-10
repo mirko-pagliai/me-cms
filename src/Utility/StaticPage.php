@@ -39,7 +39,6 @@ class StaticPage
     /**
      * Gets all the existing paths
      * @return array
-     * @uses \MeCms\Core\Plugin::all()
      */
     public static function getPaths(): array
     {
@@ -75,9 +74,6 @@ class StaticPage
     /**
      * Gets all static pages
      * @return \Cake\Collection\CollectionInterface Collection of static pages
-     * @uses getPaths()
-     * @uses getSlug()
-     * @uses getTitle()
      */
     public static function all(): CollectionInterface
     {

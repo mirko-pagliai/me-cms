@@ -24,7 +24,6 @@ use MeCms\Model\Entity\User;
 class UsersFixture extends TestFixture
 {
     /**
-     * Fields
      * @var array<string, mixed>
      */
     public $fields = [
@@ -51,7 +50,6 @@ class UsersFixture extends TestFixture
     ];
 
     /**
-     * Records
      * @var array
      */
     public $records = [

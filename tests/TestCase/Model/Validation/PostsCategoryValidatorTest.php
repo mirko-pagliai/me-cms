@@ -25,7 +25,7 @@ class PostsCategoryValidatorTest extends ValidationTestCase
     /**
      * @var array
      */
-    protected $example = ['title' => 'My title', 'slug' => 'my-slug'];
+    protected array $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
     /**
      * Fixtures

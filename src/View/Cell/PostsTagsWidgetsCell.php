@@ -63,7 +63,6 @@ class PostsTagsWidgetsCell extends Cell
      * @param array|bool $style Style for tags. Array with `maxFont` and
      *  `minFont` keys or `false` to disable
      * @return void
-     * @uses getFontSizes()
      */
     public function popular(
         int $limit = 10,

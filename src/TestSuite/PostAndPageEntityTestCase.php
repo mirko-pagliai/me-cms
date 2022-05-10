@@ -35,8 +35,7 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
     }
 
     /**
-     * Test for fields that cannot be mass assigned using newEntity() or
-     *  patchEntity()
+     * Test for fields that cannot be mass assigned using newEntity() or patchEntity()
      * @return void
      * @test
      */

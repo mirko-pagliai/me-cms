@@ -27,12 +27,11 @@ class AppView extends View
      * Internal property to set the userbar elements
      * @var array
      */
-    protected $userbar = [];
+    protected array $userbar = [];
 
     /**
      * Internal method to set some blocks
      * @return void
-     * @uses \MeCms\View\View::getTitleForLayout()
      */
     protected function setBlocks(): void
     {
@@ -85,23 +84,18 @@ class AppView extends View
     /**
      * Renders a layout. Returns output from _render(). Returns false on
      *  error. Several variables are created for use in layout
-     * @param string $content Content to render in a view, wrapped by the
-     *  surrounding layout
+     * @param string $content Content to render in a template, wrapped by the surrounding layout
      * @param string|null $layout Layout name
      * @return string Rendered output
-     * @uses setBlocks()
-     * @uses userbar()
      */
-    public function renderLayout($content, $layout = null): string
+    public function renderLayout(string $content, ?string $layout = null): string
     {
         $this->plugin = 'MeCms';
 
         $this->setBlocks();
 
         //Assign the userbar
-        $this->assign('userbar', implode(PHP_EOL, array_map(function ($element): string {
-            return $this->Html->li($element);
-        }, $this->userbar)));
+        $this->assign('userbar', implode(PHP_EOL, array_map(fn($element): string => $this->Html->li($element), $this->userbar)));
 
         return parent::renderLayout($content, $layout);
     }
@@ -114,6 +108,6 @@ class AppView extends View
      */
     public function addToUserbar($content): void
     {
-        $this->userbar = array_merge($this->userbar, (array)$content);
+        $this->userbar = [...$this->userbar, ...(array)$content];
     }
 }

@@ -35,10 +35,9 @@ class UsersControllerTest extends ControllerTestCase
     /**
      * @var \Tokens\Controller\Component\TokenComponent&\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $Token;
+    protected TokenComponent $Token;
 
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [
@@ -55,7 +54,11 @@ class UsersControllerTest extends ControllerTestCase
     {
         parent::setUp();
 
-        $this->Token = $this->Token ?: $this->getMockForComponent(TokenComponent::class, null);
+        if (empty($this->Token)) {
+            /** @var \Tokens\Controller\Component\TokenComponent&\PHPUnit\Framework\MockObject\MockObject $Token */
+            $Token = $this->getMockForComponent(TokenComponent::class, null);
+            $this->Token = $Token;
+        }
     }
 
     /**

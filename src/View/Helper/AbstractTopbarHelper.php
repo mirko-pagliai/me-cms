@@ -36,7 +36,7 @@ abstract class AbstractTopbarHelper extends Helper
 
     /**
      * Returns an array with the links to put in the topbar
-     * @return array
+     * @return array<string>
      */
     abstract public function build(): array;
 }

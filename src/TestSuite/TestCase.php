@@ -18,6 +18,7 @@ namespace MeCms\TestSuite;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use MeCms\Model\Table\AppTable;
 use MeTools\TestSuite\TestCase as BaseTestCase;
 
 /**
@@ -29,26 +30,24 @@ abstract class TestCase extends BaseTestCase
     /**
      * @var \MeCms\Model\Table\AppTable
      */
-    protected $Table;
+    protected AppTable $Table;
 
     /**
      * Cache keys to clear for each test
      * @var array
      */
-    protected $cacheToClear = [];
+    protected array $cacheToClear = [];
 
     /**
      * Called after every test method
      * @return void
-     * @uses $Table
-     * @uses $cacheToClear
      */
     public function tearDown(): void
     {
         parent::tearDown();
 
         //Clears all cache keys
-        if ($this->Table && method_exists($this->Table, 'getCacheName')) {
+        if (!empty($this->Table) && method_exists($this->Table, 'getCacheName')) {
             $this->cacheToClear = array_merge($this->cacheToClear, (array)$this->Table->getCacheName(true));
         }
 

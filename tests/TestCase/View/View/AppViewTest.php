@@ -17,7 +17,7 @@ namespace MeCms\Test\TestCase\View\View;
 
 use Cake\Core\Configure;
 use MeCms\TestSuite\TestCase;
-use MeCms\View\View\AppView as View;
+use MeCms\View\View\AppView;
 
 /**
  * AppViewTest class
@@ -27,7 +27,7 @@ class AppViewTest extends TestCase
     /**
      * @var \MeCms\View\View\AppView
      */
-    protected $View;
+    protected AppView $View;
 
     /**
      * Called before every test method
@@ -41,7 +41,7 @@ class AppViewTest extends TestCase
         Configure::write('Widgets.general', []);
         Configure::write('MeCms.default.theme', false);
 
-        $this->View = new View();
+        $this->View = new AppView();
         $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
         $this->View->setPlugin('MeCms');
     }
@@ -90,7 +90,7 @@ class AppViewTest extends TestCase
         Configure::write('MeCms.default.theme', 'TestPlugin');
 
         //Reloads the View
-        $this->View = new View();
+        $this->View = new AppView();
         $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
         $this->assertEquals('This is a layout from TestPlugin', $this->View->render('StaticPages/page-from-app'));
         $this->assertEquals('default', $this->View->getLayout());

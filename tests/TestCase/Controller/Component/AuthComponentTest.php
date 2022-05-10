@@ -24,7 +24,6 @@ use MeTools\TestSuite\ComponentTestCase;
 class AuthComponentTest extends ComponentTestCase
 {
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [

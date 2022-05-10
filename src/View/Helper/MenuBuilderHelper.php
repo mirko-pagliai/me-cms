@@ -49,11 +49,7 @@ class MenuBuilderHelper extends Helper
      */
     protected function buildLinks(array $links, array $options = []): array
     {
-        return array_map(function (array $link) use ($options): string {
-            [$title, $url] = $link;
-
-            return $this->Html->link($title, $url, $options);
-        }, $links);
+        return array_map(fn(array $link): string => $this->Html->link($link[0], $link[1], $options), $links);
     }
 
     /**
@@ -66,9 +62,7 @@ class MenuBuilderHelper extends Helper
     {
         $childMethods = get_child_methods(App::className($plugin . '.MenuHelper', 'View/Helper') ?? '') ?: [];
 
-        return array_values(array_filter($childMethods, function (string $childMethod): bool {
-            return !str_starts_with($childMethod, '_');
-        }));
+        return array_values(array_filter($childMethods, fn(string $childMethod): bool => !str_starts_with($childMethod, '_')));
     }
 
     /**
@@ -94,11 +88,7 @@ class MenuBuilderHelper extends Helper
                     continue;
                 }
 
-                Exceptionist::isTrue(
-                    count($args) >= 3,
-                    __d('me_cms', 'Method `{0}::{1}()` returned only {2} values', $className, $method, count($args)),
-                    BadMethodCallException::class
-                );
+                Exceptionist::isTrue(count($args) >= 3, __d('me_cms', 'Method `{0}::{1}()` returned only {2} values', $className, $method, count($args)), BadMethodCallException::class);
 
                 [$links, $title, $titleOptions, $handledControllers] = $args + [[], [], [], []];
                 $menus[$plugin . '.' . $method] = compact('links', 'title', 'titleOptions', 'handledControllers');
@@ -149,17 +139,9 @@ class MenuBuilderHelper extends Helper
      * @param string $plugin Plugin name
      * @param array $titleOptions HTML attributes of the title
      * @return array
-     * @uses buildLinks()
-     * @uses generate()
      */
     public function renderAsDropdown(string $plugin, array $titleOptions = []): array
     {
-        return array_map(function (array $menu) use ($titleOptions): ?string {
-            return $this->Dropdown->menu(
-                $menu['title'],
-                $this->buildLinks($menu['links'], ['class' => 'dropdown-item']),
-                optionsParser($menu['titleOptions'], $titleOptions)->toArray()
-            );
-        }, $this->generate($plugin));
+        return array_map(fn(array $menu): ?string => $this->Dropdown->menu($menu['title'], $this->buildLinks($menu['links'], ['class' => 'dropdown-item']), optionsParser($menu['titleOptions'], $titleOptions)->toArray()), $this->generate($plugin));
     }
 }

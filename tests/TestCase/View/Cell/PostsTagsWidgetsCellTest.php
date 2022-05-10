@@ -29,7 +29,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     /**
      * @var array
      */
-    protected $example = [
+    protected array $example = [
         'limit' => 2,
         'prefix' => '#',
         'render' => 'cloud',
@@ -41,7 +41,6 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     ];
 
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [
@@ -54,7 +53,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      */
     public function setUp(): void
     {
-        $this->Table = $this->Table ?: $this->getTable('MeCms.Tags');
+        $this->Table ??= $this->getTable('MeCms.Tags');
 
         parent::setUp();
     }
@@ -66,9 +65,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     public function testGetFontSizes(): void
     {
         $widget = $this->Widget->widget('MeCms.PostsTags::popular');
-        $getFontSizesMethod = function ($style) use ($widget) {
-            return $this->invokeMethod($widget, 'getFontSizes', [$style]);
-        };
+        $getFontSizesMethod = fn($style) => $this->invokeMethod($widget, 'getFontSizes', [$style]);
 
         $this->assertEquals([40, 12], $getFontSizesMethod([]));
         $this->assertEquals([20, 12], $getFontSizesMethod(['maxFont' => 20]));
@@ -131,10 +128,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, array_merge($this->example, [
-            'prefix' => '-',
-            'style' => false,
-        ]))->render();
+        $result = $this->Widget->widget($widget, ['prefix' => '-', 'style' => false] + $this->example)->render();
         $this->assertHtml($expected, $result);
 
         //Tries to render as form
@@ -161,10 +155,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, array_merge($this->example, [
-            'render' => 'form',
-            'style' => false,
-        ]))->render();
+        $result = $this->Widget->widget($widget, ['render' => 'form', 'style' => false] + $this->example)->render();
         $this->assertHtml($expected, $result);
 
         $expected = [
@@ -197,10 +188,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
         ];
         //Tries to render as list
-        $result = $this->Widget->widget($widget, array_merge($this->example, [
-            'render' => 'list',
-            'style' => false,
-        ]))->render();
+        $result = $this->Widget->widget($widget, ['render' => 'list', 'style' => false] + $this->example)->render();
         $this->assertHtml($expected, $result);
 
         $expected = [
@@ -223,10 +211,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
         ];
         //Tries with shuffle
-        $result = $this->Widget->widget($widget, array_merge($this->example, [
-            'shuffle' => true,
-            'style' => false,
-        ]))->render();
+        $result = $this->Widget->widget($widget, ['shuffle' => true, 'style' => false] + $this->example)->render();
         $this->assertHtml($expected, $result);
 
         //Empty on tags index
@@ -249,9 +234,9 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
         $this->Widget->getView()->setRequest($request);
         $this->assertEmpty($this->Widget->widget($widget, $this->example)->render());
-        $this->assertEmpty($this->Widget->widget($widget, array_merge($this->example, ['render' => 'form']))->render());
-        $this->assertEmpty($this->Widget->widget($widget, array_merge($this->example, ['render' => 'list']))->render());
-        $this->assertEmpty($this->Widget->widget($widget, array_merge($this->example, ['shuffle' => true]))->render());
+        $this->assertEmpty($this->Widget->widget($widget, ['render' => 'form'] + $this->example)->render());
+        $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'] + $this->example)->render());
+        $this->assertEmpty($this->Widget->widget($widget, ['shuffle' => true] + $this->example)->render());
     }
 
     /**
@@ -264,11 +249,8 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $widget = 'MeCms.PostsTags::popular';
 
         //Adds some tag, with the same `post_count`
-        foreach ([
-            ['tag' => 'example1', 'post_count' => 999],
-            ['tag' => 'example2', 'post_count' => 999],
-        ] as $data) {
-            $entity = $this->Table->newEntity($data, ['accessibleFields' => ['post_count' => true]]);
+        foreach (['example1', 'example2'] as $tag) {
+            $entity = $this->Table->newEntity(compact('tag') + ['post_count' => 999], ['accessibleFields' => ['post_count' => true]]);
             $this->assertNotFalse($this->Table->save($entity));
         }
 

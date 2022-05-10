@@ -101,7 +101,6 @@ abstract class PostsAndPagesTables extends AppTable
      * @return \Cake\ORM\Query The query builder
      * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
      * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
-     * @uses clearCache()
      */
     public function find(string $type = 'all', array $options = []): Query
     {

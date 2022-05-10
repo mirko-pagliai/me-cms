@@ -21,6 +21,7 @@ use Cake\Datasource\FactoryLocator;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use donatj\UserAgent\UserAgentParser;
+use MeCms\Model\Table\UsersTable;
 
 /**
  * This component allows you to save and retrieve user logins.
@@ -39,14 +40,14 @@ class LoginRecorderComponent extends Component
     /**
      * @var \MeCms\Model\Table\UsersTable
      */
-    protected $UsersTable;
+    protected UsersTable $UsersTable;
 
     /**
      * Constructor hook method
      * @param array<string, mixed> $config The configuration settings provided to this component
      * @return void
      */
-    public function initialize($config): void
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 

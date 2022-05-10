@@ -86,7 +86,6 @@ class PagesController extends AppController
     /**
      * Lists pages
      * @return void
-     * @uses \MeCms\Model\Table\PagesTable::queryFromFilter()
      */
     public function index(): void
     {
@@ -104,7 +103,6 @@ class PagesController extends AppController
      *
      * Static pages must be located in `APP/View/StaticPages/`.
      * @return void
-     * @uses \MeCms\Utility\StaticPage::all()
      */
     public function indexStatics(): void
     {

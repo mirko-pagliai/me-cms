@@ -41,7 +41,7 @@ class AppTableTest extends TableTestCase
      * If `true`, a mock instance of the table will be created
      * @var bool
      */
-    protected $autoInitializeClass = false;
+    protected bool $autoInitializeClass = false;
 
     /**
      * Fixtures

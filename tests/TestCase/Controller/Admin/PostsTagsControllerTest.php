@@ -24,7 +24,6 @@ use MeCms\TestSuite\ControllerTestCase;
 class PostsTagsControllerTest extends ControllerTestCase
 {
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [

@@ -227,11 +227,7 @@ class PostsController extends AppController
 
         //Checks the last search
         if ($pattern && !$this->checkLastSearch($pattern)) {
-            $this->Flash->alert(__d(
-                'me_cms',
-                'You have to wait {0} seconds to perform a new search',
-                getConfigOrFail('security.search_interval')
-            ));
+            $this->Flash->alert(__d('me_cms', 'You have to wait {0} seconds to perform a new search', getConfigOrFail('security.search_interval')));
 
             return $this->redirect(['action' => $this->getRequest()->getParam('action')]);
         }
@@ -306,7 +302,6 @@ class PostsController extends AppController
      * It uses the `view` template.
      * @param string $slug Post slug
      * @return \Cake\Http\Response
-     * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
     public function preview(string $slug): Response
     {

@@ -37,8 +37,6 @@ class JsonEntityType extends JsonType
     {
         $value = parent::toPHP($value, $driver);
 
-        return is_array($value) ? array_map(function ($value): Entity {
-            return is_array($value) ? new Entity($value) : $value;
-        }, $value) : $value;
+        return is_array($value) ? array_map(fn($value): Entity => is_array($value) ? new Entity($value) : $value, $value) : $value;
     }
 }

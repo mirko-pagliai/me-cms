@@ -23,8 +23,7 @@ use Cake\TestSuite\Fixture\TestFixture;
 class PagesFixture extends TestFixture
 {
     /**
-     * Fields
-     * @var array
+     * @var array<string, mixed>
      */
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => null, 'autoIncrement' => true],
@@ -45,7 +44,6 @@ class PagesFixture extends TestFixture
     ];
 
     /**
-     * Records
      * @var array
      */
     public $records = [

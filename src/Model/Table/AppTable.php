@@ -39,14 +39,13 @@ abstract class AppTable extends Table
      * Cache configuration name
      * @var string
      */
-    protected $cache;
+    protected string $cache;
 
     /**
      * Called after an entity has been deleted
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
-     * @uses clearCache()
      */
     public function afterDelete(Event $event, EntityInterface $entity): void
     {
@@ -58,7 +57,6 @@ abstract class AppTable extends Table
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
-     * @uses clearCache()
      */
     public function afterSave(Event $event, EntityInterface $entity): void
     {
@@ -90,7 +88,6 @@ abstract class AppTable extends Table
     /**
      * Delete all keys from the cache
      * @return bool `true` if the cache was successfully cleared, `false` otherwise
-     * @uses getCacheName()
      */
     public function clearCache(): bool
     {
@@ -102,7 +99,6 @@ abstract class AppTable extends Table
      * @param mixed $conditions Conditions to be used, accepts anything
      *  `Query::where()` can take
      * @return int Returns the number of affected rows
-     * @uses clearCache()
      */
     public function deleteAll($conditions): int
     {
@@ -166,9 +162,7 @@ abstract class AppTable extends Table
         }
 
         $values = collection($this->associations()->getIterator())
-            ->filter(function (Association $association) {
-                return method_exists($association->getTarget(), 'getCacheName');
-            })
+            ->filter(fn(Association $association): bool => method_exists($association->getTarget(), 'getCacheName'))
             ->map(function (Association $association) {
                 /** @var \MeCms\Model\Table\AppTable $target */
                 $target = $association->getTarget();

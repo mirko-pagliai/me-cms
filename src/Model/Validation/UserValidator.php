@@ -70,10 +70,7 @@ class UserValidator extends AppValidator
             ],
             'passwordIsStrong' => [
                 'message' => __d('me_cms', 'The password should contain letters, numbers and symbols'),
-                'rule' => function (string $value) {
-                    return preg_match('/[A-z]/', $value) && preg_match('/\d/', $value) &&
-                        preg_match('/[^A-z\d]/', $value);
-                },
+                'rule' => fn(string $value): bool => preg_match('/[A-z]/', $value) && preg_match('/\d/', $value) && preg_match('/[^A-z\d]/', $value),
             ],
         ])->requirePresence('password', 'create')->notEmptyString('password');
 
@@ -92,10 +89,10 @@ class UserValidator extends AppValidator
                     /** @var \MeCms\Model\Table\UsersTable $Users */
                     $Users = TableRegistry::getTableLocator()->get('MeCms.Users');
 
-                    $user = $Users->findById($context['data']['id'])->select(['password'])->firstOrFail();
+                    $User = $Users->findById($context['data']['id'])->select(['password'])->firstOrFail();
 
                     //Checks if the password matches
-                    return (new DefaultPasswordHasher())->check($value, $user->get('password'));
+                    return (new DefaultPasswordHasher())->check($value, $User->get('password'));
                 },
             ],
         ]);

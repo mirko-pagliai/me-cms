@@ -170,7 +170,6 @@ class UsersController extends AppController
     /**
      * Login
      * @return \Cake\Http\Response|null|void
-     * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
      */
     public function login()
     {
@@ -225,7 +224,6 @@ class UsersController extends AppController
     /**
      * Logout
      * @return \Cake\Http\Response|null
-     * @uses buildLogout()
      */
     public function logout(): ?Response
     {
@@ -317,7 +315,6 @@ class UsersController extends AppController
     /**
      * Sign up
      * @return \Cake\Http\Response|null|void
-     * @uses sendActivationMail()
      */
     public function signup()
     {

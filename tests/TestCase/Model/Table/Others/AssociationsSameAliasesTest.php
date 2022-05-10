@@ -25,7 +25,7 @@ class AssociationsSameAliasesTest extends TableTestCase
     /**
      * @var bool
      */
-    protected $autoInitializeClass = false;
+    protected bool $autoInitializeClass = false;
 
     /**
      * Fixtures

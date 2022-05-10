@@ -29,7 +29,6 @@ class PostsTagsController extends AppController
      * @param array|\ArrayAccess|null $user The user to check the authorization
      *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function isAuthorized($user = null): bool
     {
@@ -40,7 +39,6 @@ class PostsTagsController extends AppController
     /**
      * Lists tags
      * @return void
-     * @uses \MeCms\Model\Table\Tags::queryFromFilter()
      */
     public function index(): void
     {

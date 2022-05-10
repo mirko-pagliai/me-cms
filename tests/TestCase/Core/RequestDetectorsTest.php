@@ -27,7 +27,7 @@ class RequestDetectorsTest extends TestCase
     /**
      * @var \Cake\Http\ServerRequest&\PHPUnit\Framework\MockObject\MockObject
      */
-    public $Request;
+    public ServerRequest $Request;
 
     /**
      * Internal method to mock a request
@@ -48,7 +48,7 @@ class RequestDetectorsTest extends TestCase
     {
         parent::setUp();
 
-        $this->Request = $this->getMockForRequest()
+        $this->Request ??= $this->getMockForRequest()
             ->withParam('action', 'add')
             ->withParam('controller', 'myController')
             ->withParam('prefix', 'myPrefix');

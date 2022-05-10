@@ -27,12 +27,12 @@ class ContactUsMailerTest extends TestCase
     /**
      * @var \MeCms\Mailer\ContactUsMailer
      */
-    public $Mailer;
+    public ContactUsMailer $Mailer;
 
     /**
      * @var array
      */
-    protected $example = [
+    protected array $example = [
         'first_name' => 'James',
         'email' => 'mymail@example.com',
         'last_name' => 'Blue',
@@ -47,7 +47,7 @@ class ContactUsMailerTest extends TestCase
     {
         parent::setUp();
 
-        $this->Mailer = new ContactUsMailer();
+        $this->Mailer ??= new ContactUsMailer();
         $this->Mailer->viewBuilder()->setLayout(null);
     }
 

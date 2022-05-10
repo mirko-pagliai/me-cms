@@ -27,7 +27,6 @@ class GroupsCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [
@@ -46,9 +45,7 @@ class GroupsCommandTest extends TestCase
         $expectedRows = $UsersGroups->find()
             ->select(['id', 'name', 'label', 'user_count'])
             ->all()
-            ->map(function (UsersGroup $group): array {
-                return array_map('strval', $group->toArray());
-            })
+            ->map(fn(UsersGroup $group): array => array_map('strval', $group->toArray()))
             ->toList();
         $expectedRows[] = ['<info>ID</info>', '<info>Name</info>', '<info>Label</info>', '<info>Users</info>'];
 

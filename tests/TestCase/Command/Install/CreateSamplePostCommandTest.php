@@ -33,10 +33,9 @@ class CreateSamplePostCommandTest extends TestCase
     /**
      * @var bool
      */
-    public $autoInitializeClass = true;
+    public bool $autoInitializeClass = true;
 
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [

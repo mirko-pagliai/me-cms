@@ -34,9 +34,7 @@ class SitemapBuilder
     {
         $class = $plugin . '\Utility\Sitemap\Sitemap';
 
-        return collection(get_child_methods($class) ?: [])->map(function (string $name) use ($class) {
-            return compact('class', 'name');
-        });
+        return collection(get_child_methods($class) ?: [])->map(fn(string $name): array => ['class' => $class] + compact('name'));
     }
 
     /**

@@ -46,9 +46,7 @@ class WidgetHelperTest extends HelperTestCase
      */
     public function testGetAll(): void
     {
-        $getAllMethod = function () {
-            return $this->invokeMethod($this->Helper, 'getAll');
-        };
+        $getAllMethod = fn() => $this->invokeMethod($this->Helper, 'getAll');
 
         $widgets = array_map('array_value_first', array_map('array_keys', $getAllMethod()));
         $this->assertSame([

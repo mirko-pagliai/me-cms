@@ -28,12 +28,12 @@ class UserMailerTest extends TestCase
     /**
      * @var \MeCms\Mailer\UserMailer
      */
-    public $Mailer;
+    public UserMailer $Mailer;
 
     /**
      * @var \MeCms\Model\Entity\User
      */
-    protected $example;
+    protected User $example;
 
     /**
      * Called before every test method
@@ -49,7 +49,7 @@ class UserMailerTest extends TestCase
             'last_name' => 'Blue',
         ]);
 
-        $this->Mailer = new UserMailer();
+        $this->Mailer ??= new UserMailer();
         $this->Mailer->viewBuilder()->setLayout(null);
     }
 

@@ -52,7 +52,6 @@ class Plugin extends BasePlugin
      * Load all the application configuration and bootstrap logic
      * @param \Cake\Core\PluginApplicationInterface $app The host application
      * @return void
-     * @uses isCli()
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {

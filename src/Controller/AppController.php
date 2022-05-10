@@ -22,10 +22,6 @@ use RuntimeException;
 
 /**
  * Application controller class
- * @method \Cake\Http\ServerRequest getRequest() Gets the request instance
- * @method \Cake\Http\Response getResponse() Gets the response instance
- * @method $this setRequest(\Cake\Http\ServerRequest $request) Sets the request objects and configures a number of controller properties based on the contents of the request
- * @method $this setResponse(\Cake\Http\Response $response) Sets the response instance
  * @property \MeCms\Controller\Component\AuthComponent $Auth
  * @property \MeTools\Controller\Component\FlashComponent $Flash
  */
@@ -56,7 +52,6 @@ abstract class AppController extends BaseAppController
      * Called before the controller action
      * @param \Cake\Event\EventInterface $event EventInterface
      * @return \Cake\Http\Response|null|void
-     * @uses isSpammer()
      */
     public function beforeFilter(EventInterface $event)
     {
@@ -130,7 +125,6 @@ abstract class AppController extends BaseAppController
      * @param array|\ArrayAccess|null $user The user to check the authorization
      *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
     public function isAuthorized($user = null): bool
     {

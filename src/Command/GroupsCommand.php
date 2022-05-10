@@ -53,9 +53,7 @@ class GroupsCommand extends Command
             return $io->error(__d('me_cms', 'There are no user groups'));
         }
 
-        $rows = $rows->map(function (UsersGroup $group): array {
-            return array_map('strval', $group->toArray());
-        });
+        $rows = $rows->map(fn(UsersGroup $group): array => array_map('strval', $group->toArray()));
 
         $io->helper('table')->output(array_merge([[I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS]], $rows->toList()));
 

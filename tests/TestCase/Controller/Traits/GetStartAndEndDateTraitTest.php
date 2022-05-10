@@ -15,7 +15,8 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Controller\Traits;
 
-use MeCms\Controller\PostsController;
+use MeCms\Controller\AppController;
+use MeCms\Controller\Traits\GetStartAndEndDateTrait;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -29,10 +30,10 @@ class GetStartAndEndDateTraitTest extends TestCase
      */
     public function testGetStartAndEndDate(): void
     {
-        $controller = $this->getMockForController(PostsController::class, null);
-        $getStartAndEndDateMethod = function ($date) use ($controller) {
-            return $this->invokeMethod($controller, 'getStartAndEndDate', [$date]);
+        $controller = new class extends AppController {
+            use GetStartAndEndDateTrait;
         };
+        $getStartAndEndDateMethod = fn($date): array => $this->invokeMethod($controller, 'getStartAndEndDate', [$date]);
 
         //"today" special word
         [$start, $end] = $getStartAndEndDateMethod('today');

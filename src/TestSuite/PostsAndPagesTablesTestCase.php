@@ -31,7 +31,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     /**
      * @var array
      */
-    protected static $example = [
+    protected static array $example = [
         'category_id' => 1,
         'title' => 'My title',
         'slug' => 'my-slug',
