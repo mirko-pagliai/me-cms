@@ -55,7 +55,7 @@ class GroupsCommand extends Command
 
         $rows = $rows->map(fn(UsersGroup $group): array => array_map('strval', $group->toArray()));
 
-        $io->helper('table')->output(array_merge([[I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS]], $rows->toList()));
+        $io->helper('table')->output([[I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS], ...$rows->toList()]);
 
         return null;
     }

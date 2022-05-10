@@ -37,7 +37,8 @@ class RunAllCommand extends BaseRunAllCommand
     {
         parent::__construct();
 
-        $this->questions = array_merge($this->questions, [
+        $this->questions = [
+            ...$this->questions,
             [
                 'question' => __d('me_tools', 'Copy configuration files?'),
                 'default' => 'Y',
@@ -68,6 +69,6 @@ class RunAllCommand extends BaseRunAllCommand
                 'default' => 'N',
                 'command' => CreateSamplePostCommand::class,
             ],
-        ]);
+        ];
     }
 }

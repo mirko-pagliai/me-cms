@@ -272,7 +272,7 @@ class UsersController extends AppController
             }
 
             //Updates the authentication data and clears similar thumbnails
-            $this->Auth->setUser(array_merge($this->Auth->user(), ['picture' => $uploaded]));
+            $this->Auth->setUser(['picture' => $uploaded] + $this->Auth->user());
             (new ThumbManager())->clear($uploaded);
         }
     }

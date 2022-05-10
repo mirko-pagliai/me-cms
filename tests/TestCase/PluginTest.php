@@ -57,6 +57,6 @@ class PluginTest extends TestCase
 
         //In the second call is not cli
         $Plugin->bootstrap($app);
-        $this->assertEquals(array_merge($loadedPlugins, ['WyriHaximus/MinifyHtml']), $getLoadedPlugins($app));
+        $this->assertEquals([...$loadedPlugins, 'WyriHaximus/MinifyHtml'], $getLoadedPlugins($app));
     }
 }

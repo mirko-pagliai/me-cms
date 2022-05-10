@@ -57,7 +57,7 @@ class SitemapBuilder
             foreach (self::getMethods($plugin) as $method) {
                 $callable = [$method['class'], $method['name']];
                 if (is_callable($callable)) {
-                    $url = array_merge($url, (array)call_user_func($callable));
+                    $url = [...$url, ...(array)call_user_func($callable)];
                 }
             }
         }

@@ -76,7 +76,7 @@ class AddUserCommand extends Command
             }
 
             //Sets headers and prints as table
-            $io->helper('table')->output(array_merge([['ID', 'Name']], $groups));
+            $io->helper('table')->output([['ID', 'Name'], ...$groups]);
             $user['group_id'] = $io->ask(__d('me_cms', 'Group ID'));
         }
 
