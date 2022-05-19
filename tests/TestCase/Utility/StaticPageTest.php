@@ -157,43 +157,6 @@ class StaticPageTest extends TestCase
     }
 
     /**
-     * Test for `getSlug()` method
-     * @requires OS Linux
-     * @test
-     */
-    public function testGetSlug(): void
-    {
-        foreach (['my-file', '/first/second/my-file'] as $file) {
-            $this->assertEquals('my-file', StaticPage::getSlug($file, '/first/second'));
-            $this->assertEquals('my-file', StaticPage::getSlug($file, '/first/second/'));
-            $this->assertEquals('my-file', StaticPage::getSlug($file . '.' . StaticPage::EXTENSION, '/first/second'));
-        }
-
-        $this->assertEquals('first/my-file', StaticPage::getSlug('first/my-file.' . StaticPage::EXTENSION, '/first/second'));
-        $this->assertEquals('third/my-file', StaticPage::getSlug('/first/second/third/my-file.' . StaticPage::EXTENSION, '/first/second'));
-    }
-
-    /**
-     * Test for `getSlug()` method on Windows
-     * @requires OS WIN32|WINNT
-     * @test
-     */
-    public function testGetSlugWin(): void
-    {
-        foreach ([
-            '\\first\\second' => '\\first\\second\\my-file',
-            '\\first\\second\\' => '\\first\\second\\my-file',
-            'C:\\\\first' => 'C:\\\\first\\my-file',
-        ] as $relativePath => $absolutePath) {
-            $this->assertEquals('my-file', StaticPage::getSlug($absolutePath, $relativePath));
-            $this->assertEquals('my-file', StaticPage::getSlug($absolutePath . '.' . StaticPage::EXTENSION, $relativePath));
-        }
-
-        $this->assertEquals('second/my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first'));
-        $this->assertEquals('second/my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\'));
-    }
-
-    /**
      * Test for `getTitle()` method
      * @test
      */

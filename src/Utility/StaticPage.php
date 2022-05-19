@@ -54,36 +54,20 @@ class StaticPage
     }
 
     /**
-     * Gets the slug for a page.
-     *
-     * It takes the full path and removes relative path and extension.
-     * @param string $path Path
-     * @param string $relativePath Relative path
-     * @return string
-     */
-    public static function getSlug(string $path, string $relativePath): string
-    {
-        if (str_starts_with($path, $relativePath)) {
-            $path = substr($path, strlen(Filesystem::instance()->addSlashTerm($relativePath)));
-        }
-        $path = preg_replace(sprintf('/\.[^\.]+$/'), '', $path);
-
-        return IS_WIN ? str_replace(DS, '/', $path) : $path;
-    }
-
-    /**
      * Gets all static pages
      * @return \Cake\Collection\CollectionInterface Collection of static pages
      */
     public static function all(): CollectionInterface
     {
+        $getSlug = fn(string $relativePathname): string => Filesystem::instance()->normalizePath(preg_replace(sprintf('/\.[^\.]+$/'), '', $relativePathname));
+
         foreach (self::getPaths() as $path) {
-            $finder = (new Finder())->files()->name('/^.+\.' . self::EXTENSION . '$/')->sortByName();
+            $finder = (new Finder())->name('/^.+\.' . self::EXTENSION . '$/')->sortByName();
             foreach ($finder->in($path) as $file) {
                 $pages[] = new Entity([
                     'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
                     'path' => Filesystem::instance()->rtr($file->getPathname()),
-                    'slug' => self::getSlug($file->getPathname(), $path),
+                    'slug' => $getSlug($file->getRelativePathname()),
                     'title' => self::getTitle(pathinfo($file->getPathname(), PATHINFO_FILENAME)),
                     'modified' => new FrozenTime($file->getMTime()),
                 ]);
