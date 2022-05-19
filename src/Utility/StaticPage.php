@@ -24,6 +24,7 @@ use Cake\ORM\Entity;
 use Cake\Utility\Inflector;
 use MeCms\Core\Plugin;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Tools\Filesystem;
 
 /**
@@ -38,18 +39,15 @@ class StaticPage
 
     /**
      * Gets all the existing paths
-     * @return array
+     * @return array<array-key, string>
      */
     public static function getPaths(): array
     {
         return Cache::remember('paths', function (): array {
-            $paths['App'] = array_value_first(App::path('templates')) . 'StaticPages';
+            $paths = array_map(fn(string $plugin): array => [$plugin, Plugin::templatePath($plugin) . 'StaticPages'], Plugin::all(['mecms_core' => false]));
+            array_unshift($paths, ['App', array_value_first(App::path('templates')) . 'StaticPages']);
 
-            foreach (Plugin::all(['mecms_core' => false]) as $plugin) {
-                $paths[$plugin] = Plugin::templatePath($plugin) . 'StaticPages';
-            }
-
-            return array_clean($paths, 'file_exists');
+            return array_combine(array_column($paths, 0), array_column($paths, 1));
         }, 'static_pages');
     }
 
@@ -59,22 +57,18 @@ class StaticPage
      */
     public static function all(): CollectionInterface
     {
-        $getSlug = fn(string $relativePathname): string => Filesystem::instance()->normalizePath(preg_replace(sprintf('/\.[^\.]+$/'), '', $relativePathname));
+        $getSlug = fn(string $relativePathname): string => Filesystem::instance()->normalizePath(substr($relativePathname, 0, strrpos($relativePathname, '.' . self::EXTENSION)));
 
-        foreach (self::getPaths() as $path) {
-            $finder = (new Finder())->name('/^.+\.' . self::EXTENSION . '$/')->sortByName();
-            foreach ($finder->in($path) as $file) {
-                $pages[] = new Entity([
-                    'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
-                    'path' => Filesystem::instance()->rtr($file->getPathname()),
-                    'slug' => $getSlug($file->getRelativePathname()),
-                    'title' => self::getTitle(pathinfo($file->getPathname(), PATHINFO_FILENAME)),
-                    'modified' => new FrozenTime($file->getMTime()),
-                ]);
-            }
-        }
+        /** @var array<\Symfony\Component\Finder\SplFileInfo> $files */
+        $files = iterator_to_array((new Finder())->in(self::getPaths())->name('*.' . self::EXTENSION));
 
-        return collection($pages ?? []);
+        return collection(array_values(array_map(fn(SplFileInfo $file): Entity => new Entity([
+            'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
+            'path' => Filesystem::instance()->rtr($file->getPathname()),
+            'slug' => $getSlug($file->getRelativePathname()),
+            'title' => self::getTitle($file->getPathname()),
+            'modified' => new FrozenTime($file->getMTime()),
+        ]), $files)));
     }
 
     /**
@@ -116,11 +110,6 @@ class StaticPage
      */
     public static function getTitle(string $slugOrPath): string
     {
-        //Gets only the filename (without extension), then turns dashes into
-        //  underscores (because `Inflector::humanize` will remove only underscores)
-        $slugOrPath = pathinfo($slugOrPath, PATHINFO_FILENAME);
-        $slugOrPath = str_replace('-', '_', $slugOrPath);
-
-        return Inflector::humanize($slugOrPath);
+        return Inflector::humanize(str_replace('-', '_', pathinfo($slugOrPath, PATHINFO_FILENAME)));
     }
 }

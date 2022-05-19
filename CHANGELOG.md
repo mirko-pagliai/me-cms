@@ -3,7 +3,8 @@
 ### 2.30.7-RC4
 * added `last_logins` field to user table. This field is used instead of files.
     So the `LoginRecorderComponent` no longer uses files, but the database;
-* removed `StaticPage::getSlug()` method, it has become a simpler anonymous function;
+* important improvement of the `StaticPage::all()` method;
+* removed `StaticPage::getSlug()` method, it has become simpler anonymous function;
 * numerous code adjustments for improvement and adaptation to PHP 7.4 new features;
 * updated for PHP 8.1 Requires at least PHP 7.4.
 
