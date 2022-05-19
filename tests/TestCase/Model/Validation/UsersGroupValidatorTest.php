@@ -25,7 +25,7 @@ class UsersGroupValidatorTest extends ValidationTestCase
     /**
      * @var array
      */
-    protected $example = ['name' => 'group', 'label' => 'Group label'];
+    protected array $example = ['name' => 'group', 'label' => 'Group label'];
 
     /**
      * Fixtures

@@ -86,7 +86,7 @@ class UsersCommand extends Command
             return $io->error(__d('me_cms', 'There are no users'));
         }
 
-        $rows = array_merge([[I18N_ID, I18N_USERNAME, I18N_GROUP, I18N_NAME, I18N_EMAIL, I18N_POSTS, I18N_STATUS, I18N_DATE]], $rows);
+        $rows = [[I18N_ID, I18N_USERNAME, I18N_GROUP, I18N_NAME, I18N_EMAIL, I18N_POSTS, I18N_STATUS, I18N_DATE], ...$rows];
         $io->helper('table')->output($rows);
 
         return null;

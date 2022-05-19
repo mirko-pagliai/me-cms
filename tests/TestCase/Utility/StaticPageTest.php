@@ -32,7 +32,7 @@ class StaticPageTest extends TestCase
      * Cache keys to clear for each test
      * @var array
      */
-    protected $cacheToClear = ['static_pages'];
+    protected array $cacheToClear = ['static_pages'];
 
     /**
      * Called after every test method

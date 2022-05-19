@@ -29,10 +29,9 @@ class PagesControllerTest extends ControllerTestCase
      * Cache keys to clear for each test
      * @var array
      */
-    protected $cacheToClear = ['static_pages'];
+    protected array $cacheToClear = ['static_pages'];
 
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [

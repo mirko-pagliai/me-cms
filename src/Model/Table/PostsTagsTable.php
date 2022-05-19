@@ -32,7 +32,7 @@ class PostsTagsTable extends AppTable
      * Cache configuration name
      * @var string
      */
-    protected $cache = 'posts';
+    protected string $cache = 'posts';
 
     /**
      * Returns a rules checker object that will be used for validating

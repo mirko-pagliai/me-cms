@@ -22,8 +22,6 @@ if (empty($tags) || $tags->isEmpty()) {
 $this->extend('MeCms./common/widget');
 $this->assign('title', __d('me_cms', 'Popular tags'));
 
-$tags = $tags->map(function (Tag $tag) {
-    return $this->Html->link($tag->get('tag'), ['_name' => 'postsTag', $tag->get('slug')]);
-})->toArray();
+$tags = $tags->map(fn(Tag $tag): string => $this->Html->link($tag->get('tag'), ['_name' => 'postsTag', $tag->get('slug')]))->toArray();
 
 echo $this->Html->ul($tags, ['icon' => 'caret-right']);

@@ -48,7 +48,7 @@ class MenuHelper extends Helper
      * Default parameters for routers
      * @var array
      */
-    protected $defaultParams = ['plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
+    protected array $defaultParams = ['plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
 
     /**
      * Internal function to generate the menu for "posts" actions

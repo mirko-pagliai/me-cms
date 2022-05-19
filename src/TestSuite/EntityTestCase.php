@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace MeCms\TestSuite;
 
+use Cake\ORM\Entity;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -24,22 +25,20 @@ use MeCms\TestSuite\TestCase;
 abstract class EntityTestCase extends TestCase
 {
     /**
-     * Entity instance
      * @var \Cake\ORM\Entity&\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $Entity;
+    protected Entity $Entity;
 
     /**
      * If `true`, a mock instance of the shell will be created
      * @var bool
      */
-    protected $autoInitializeClass = true;
+    protected bool $autoInitializeClass = true;
 
     /**
      * Asserts that the entity has a "no accessible" property
      * @param string|array $property Property name
      * @return void
-     * @uses $Entity
      */
     public function assertHasNoAccessibleProperty($property): void
     {
@@ -53,14 +52,12 @@ abstract class EntityTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
-     * @uses $Entity
-     * @uses $autoInitializeClass
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        if (!$this->Entity && $this->autoInitializeClass) {
+        if (empty($this->Entity) && $this->autoInitializeClass) {
             /** @var class-string<\Cake\ORM\Entity> $className */
             $className = $this->getOriginClassNameOrFail($this);
             $this->Entity = $this->getMockBuilder($className)

@@ -25,7 +25,7 @@ class UserValidatorTest extends ValidationTestCase
     /**
      * @var array
      */
-    protected $example = [
+    protected array $example = [
         'group_id' => 1,
         'email' => 'example@test.com',
         'first_name' => 'Alfa',

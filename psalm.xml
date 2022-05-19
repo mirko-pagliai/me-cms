@@ -6,6 +6,7 @@
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     autoloader="tests/bootstrap.php"
+    errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
         <directory name="config" />
@@ -21,50 +22,13 @@
     </projectFiles>
 
     <issueHandlers>
-        <ImplementedReturnTypeMismatch>
-            <errorLevel type="suppress">
-                <directory name="src/Model/Table" />
-            </errorLevel>
-        </ImplementedReturnTypeMismatch>
+        <DuplicateArrayKey errorLevel="suppress" />
 
         <InternalMethod>
             <errorLevel type="suppress">
-                <directory name="src/TestSuite" />
                 <directory name="tests/TestCase" />
             </errorLevel>
         </InternalMethod>
-
-        <InvalidArgument>
-            <errorLevel type="suppress">
-                <directory name="src/Controller" />
-                <directory name="tests/TestCase/Controller" />
-                <directory name="tests/TestCase/Model/Table" />
-            </errorLevel>
-        </InvalidArgument>
-
-        <InvalidArrayOffset>
-            <errorLevel type="suppress">
-                <file name="src/View/Helper/WidgetHelper.php" />
-            </errorLevel>
-        </InvalidArrayOffset>
-
-        <InvalidDocblock>
-            <errorLevel type="suppress">
-                <file name="tests/TestCase/Model/Table/Others/AssociationsSameAliasesTest.php" />
-            </errorLevel>
-        </InvalidDocblock>
-
-        <InvalidPassByReference>
-            <errorLevel type="suppress">
-                <file name="templates/element/admin/sidebar.php" />
-            </errorLevel>
-        </InvalidPassByReference>
-
-        <InvalidScalarArgument>
-            <errorLevel type="suppress">
-                <file name="src/Command/AddUserCommand.php" />
-            </errorLevel>
-        </InvalidScalarArgument>
 
         <InvalidScope>
             <errorLevel type="suppress">
@@ -72,88 +36,16 @@
             </errorLevel>
         </InvalidScope>
 
-        <LessSpecificImplementedReturnType>
-            <errorLevel type="suppress">
-                <file name="src/Database/Type/JsonEntityType.php" />
-            </errorLevel>
-        </LessSpecificImplementedReturnType>
-
-        <MethodSignatureMismatch>
-            <errorLevel type="suppress">
-                <file name="src/Model/Table/TokensTable.php" />
-            </errorLevel>
-        </MethodSignatureMismatch>
-
-        <MissingFile>
-            <errorLevel type="suppress">
-                <file name="tests/TestCase/Template/Element/TopbarTest.php" />
-            </errorLevel>
-        </MissingFile>
-
-        <NoInterfaceProperties>
-            <errorLevel type="suppress">
-                <directory name="src/TestSuite" />
-                <directory name="tests/TestCase" />
-            </errorLevel>
-        </NoInterfaceProperties>
-
-        <NullableReturnStatement>
-            <errorLevel type="suppress">
-                <file name="src/View/Helper/MenuBuilderHelper.php" />
-                <file name="src/View/View/AppView.php" />
-            </errorLevel>
-        </NullableReturnStatement>
-
-        <RedundantCast>
-            <errorLevel type="suppress">
-                <file name="src/Controller/Traits/GetStartAndEndDateTrait.php" />
-            </errorLevel>
-        </RedundantCast>
-
-        <RedundantCondition>
-            <errorLevel type="suppress">
-                <file name="src/Controller/Traits/GetStartAndEndDateTrait.php" />
-            </errorLevel>
-        </RedundantCondition>
+        <RedundantPropertyInitializationCheck errorLevel="suppress" />
 
         <TypeDoesNotContainType>
             <errorLevel type="suppress">
                 <file name="src/Controller/Traits/GetStartAndEndDateTrait.php" />
-                <file name="src/Utility/StaticPage.php" />
                 <file name="templates/Posts/index_by_date.php" />
             </errorLevel>
         </TypeDoesNotContainType>
 
-        <UndefinedPropertyAssignment>
-            <errorLevel type="suppress">
-                <directory name="tests/TestCase/Command" />
-            </errorLevel>
-        </UndefinedPropertyAssignment>
-
-        <UndefinedPropertyFetch>
-            <errorLevel type="suppress">
-                <directory name="tests/TestCase/Command" />
-            </errorLevel>
-        </UndefinedPropertyFetch>
-
-        <UndefinedMagicPropertyAssignment>
-            <errorLevel type="suppress">
-                <directory name="tests/TestCase" />
-            </errorLevel>
-        </UndefinedMagicPropertyAssignment>
-
-        <UndefinedMagicPropertyFetch>
-            <errorLevel type="suppress">
-                <directory name="tests/TestCase" />
-            </errorLevel>
-        </UndefinedMagicPropertyFetch>
-
-        <UndefinedGlobalVariable>
-            <errorLevel type="suppress">
-                <directory name="templates" />
-            </errorLevel>
-        </UndefinedGlobalVariable>
-
+        <UndefinedGlobalVariable errorLevel="suppress" />
         <UndefinedConstant errorLevel="suppress" />
         <UndefinedMagicMethod errorLevel="suppress" />
         <UndefinedMethod errorLevel="suppress" />

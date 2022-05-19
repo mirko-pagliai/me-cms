@@ -22,8 +22,6 @@ if (empty($posts) || $posts->isEmpty()) {
 $this->extend('MeCms./common/widget');
 $this->assign('title', __dn('me_cms', 'Latest post', 'Latest {0} posts', $posts->count(), $posts->count()));
 
-$posts = $posts->map(function (Post $post) {
-    return $this->Html->link($post->get('title'), ['_name' => 'post', $post->get('slug')]);
-})->toArray();
+$posts = $posts->map(fn(Post $post): string => $this->Html->link($post->get('title'), ['_name' => 'post', $post->get('slug')]))->toArray();
 
 echo $this->Html->ul($posts, ['icon' => 'caret-right']);

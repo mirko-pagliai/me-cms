@@ -29,15 +29,13 @@ class View extends AppView
     /**
      * Title for layout.
      * To get the title, you should use the `getTitleForLayout()` method
-     * @see getTitleForLayout()
      * @var string
      */
-    protected $titleForLayout;
+    protected string $titleForLayout;
 
     /**
      * Gets the title for layout
      * @return string Title
-     * @uses $titleForLayout
      */
     protected function getTitleForLayout(): string
     {
@@ -92,16 +90,13 @@ class View extends AppView
     }
 
     /**
-     * Renders a layout. Returns output from _render(). Returns false on error.
-     *  Several variables are created for use in layout
-     * @param string $content Content to render in a view, wrapped by the
-     *  surrounding layout
+     * Renders a layout. Returns output from _render(). Returns false on
+     *  error. Several variables are created for use in layout
+     * @param string $content Content to render in a template, wrapped by the surrounding layout
      * @param string|null $layout Layout name
      * @return string Rendered output
-     * @uses \MeTools\View\Helper\HtmlHelper::meta()
-     * @uses getTitleForLayout()
      */
-    public function renderLayout($content, $layout = null): string
+    public function renderLayout(string $content, ?string $layout = null): string
     {
         //Sets the title for layout
         $this->assign('title', $this->getTitleForLayout());

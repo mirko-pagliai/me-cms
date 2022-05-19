@@ -94,13 +94,16 @@ jobs:
     name: Coding Standard & Static Analysis
     runs-on: ubuntu-latest
 
+    env:
+      PHP_VERSION: '8.0'
+
     steps:
         - uses: actions/checkout@v2
 
         - name: Setup PHP
           uses: shivammathur/setup-php@v2
           with:
-            php-version: '8.0'
+            php-version: ${{ env.PHP_VERSION }}
             coverage: none
             tools: cs2pr
 
@@ -125,7 +128,7 @@ jobs:
 
         - name: Run psalm
           if: success() || failure()
-          run: vendor/bin/psalm.phar --output-format=github
+          run: vendor/bin/psalm.phar --output-format=github --php-version=${{ env.PHP_VERSION }}
 
         - name: Run phpstan
           if: success() || failure()

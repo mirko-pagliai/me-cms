@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Controller\Admin;
 
+use Cake\Collection\CollectionInterface;
 use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\ORM\ResultSet;
@@ -65,20 +66,14 @@ class PostsCategoriesController extends AppController
     /**
      * Lists posts categories
      * @return void
-     * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      */
     public function index(): void
     {
+        $treeList = $this->PostsCategories->getTreeList()->toArray();
         $categories = $this->PostsCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
             ->orderAsc(sprintf('%s.lft', $this->PostsCategories->getAlias()))
-            ->formatResults(function (ResultSet $results) {
-                $treeList = $this->PostsCategories->getTreeList()->toArray();
-
-                return $results->map(function (PostsCategory $category) use ($treeList): PostsCategory {
-                    return $category->set('title', $treeList[$category->get('id')]);
-                });
-            });
+            ->formatResults(fn(ResultSet $results): CollectionInterface => $results->map(fn(PostsCategory $category): PostsCategory => $category->set('title', $treeList[$category->get('id')])));
 
         $this->set(compact('categories'));
     }

@@ -49,9 +49,7 @@ class ContactUsForm extends Form
         $validator->add('email', [
             'notSpammer' => [
                 'message' => __d('me_cms', 'This email address has been reported as a spammer'),
-                'rule' => function (string $value): bool {
-                    return (new SpamDetector())->email($value)->verify();
-                },
+                'rule' => fn(string $value): bool => (new SpamDetector())->email($value)->verify(),
             ],
         ])->requirePresence('email');
 

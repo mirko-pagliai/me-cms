@@ -37,7 +37,6 @@ trait NextToBePublishedTrait
      * Sets to cache the timestamp of the next record to be published.
      * This value can be used to check if the cache is valid
      * @return string|null Timestamp
-     * @uses $cache
      */
     public function setNextToBePublished(): ?string
     {

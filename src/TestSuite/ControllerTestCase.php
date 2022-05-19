@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use Cake\Event\Event;
+use MeCms\Controller\AppController;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\IntegrationTestTrait;
 
@@ -31,29 +32,26 @@ abstract class ControllerTestCase extends TestCase
     use IntegrationTestTrait;
 
     /**
-     * Controller instance
      * @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $Controller;
+    protected AppController $Controller;
 
     /**
      * If `true`, a mock instance of the shell will be created
      * @var bool
      */
-    protected $autoInitializeClass = true;
+    protected bool $autoInitializeClass = true;
 
     /**
      * @var array
      */
-    protected $url;
+    protected array $url;
 
     /**
      * Asserts that groups are authorized
      * @param array $values Group name as key and boolean as value
      * @param string|null $action Optional action for this assert
      * @return void
-     * @uses $Controller
-     * @uses setUserGroup()
      */
     public function assertGroupsAreAuthorized(array $values, ?string $action = null): void
     {
@@ -79,8 +77,6 @@ abstract class ControllerTestCase extends TestCase
      * @param array $values UserID as key and boolean as value
      * @param string|null $action Optional action for this assert
      * @return void
-     * @uses $Controller
-     * @uses setUserId()
      */
     public function assertUsersAreAuthorized(array $values, ?string $action = null): void
     {
@@ -104,11 +100,6 @@ abstract class ControllerTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
-     * @uses getControllerAlias()
-     * @uses getMockForController()
-     * @uses getOriginClassNameOrFail()
-     * @uses getPluginName()
-     * @uses setUserGroup()
      */
     public function setUp(): void
     {
@@ -117,7 +108,7 @@ abstract class ControllerTestCase extends TestCase
         $isAdmin = str_contains(get_class($this), 'Controller\\Admin');
 
         //Tries to retrieve controller and table from the class name
-        if (!$this->Controller && $this->autoInitializeClass) {
+        if (empty($this->Controller) && $this->autoInitializeClass) {
             /** @var class-string<\MeCms\Controller\AppController> $originClassName */
             $originClassName = $this->getOriginClassNameOrFail($this);
             $alias = $this->getAlias($originClassName);
@@ -128,7 +119,10 @@ abstract class ControllerTestCase extends TestCase
 
             $className = $this->getTableClassNameFromAlias($alias, $plugin);
             if (class_exists($className)) {
-                $this->Table = $this->getTable($alias, compact('className'));
+                $Table = $this->getTable($alias, compact('className'));
+                if ($Table) {
+                    $this->Table = $Table;
+                }
             }
         }
 
@@ -162,7 +156,6 @@ abstract class ControllerTestCase extends TestCase
      * Internal method to set the user ID
      * @param int $id User ID
      * @return void
-     * @uses $Controller
      */
     protected function setUserId(int $id): void
     {
@@ -177,7 +170,6 @@ abstract class ControllerTestCase extends TestCase
      * Internal method to set the user group
      * @param string $name Group name
      * @return void
-     * @uses $Controller
      */
     protected function setUserGroup(string $name): void
     {

@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Model\Table;
 
 use ArrayObject;
+use Cake\Collection\CollectionInterface;
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query as CakeQuery;
@@ -45,7 +46,7 @@ class UsersTable extends AppTable
      * Cache configuration name
      * @var string
      */
-    protected $cache = 'users';
+    protected string $cache = 'users';
 
     /**
      * Alters the schema used by this table.
@@ -142,11 +143,7 @@ class UsersTable extends AppTable
             ->select(['id', 'first_name', 'last_name'])
             ->where(['active' => true])
             ->orderAsc('username')
-            ->formatResults(function (ResultSet $results) {
-                return $results->indexBy('id')->map(function (User $user): string {
-                    return $user->get('first_name') . ' ' . $user->get('last_name');
-                });
-            })
+            ->formatResults(fn(ResultSet $results): CollectionInterface => $results->indexBy('id')->map(fn(User $user): string => $user->get('first_name') . ' ' . $user->get('last_name')))
             ->cache(sprintf('active_%s_list', $this->getTable()));
     }
 

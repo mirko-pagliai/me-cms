@@ -52,17 +52,23 @@ class Plugin extends BasePlugin
      * Load all the application configuration and bootstrap logic
      * @param \Cake\Core\PluginApplicationInterface $app The host application
      * @return void
-     * @uses isCli()
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
-        $pluginsToLoad = array_merge([
+        $pluginsToLoad = [
             MeTools::class,
             RecaptchaMailhide::class,
             StopSpam::class,
             Thumber::class,
             Tokens::class,
-        ], getConfig('default.theme') ? [getConfig('default.theme')] : [], !$this->isCli() ? ['WyriHaximus/MinifyHtml'] : []);
+        ];
+        if (getConfig('default.theme')) {
+            $pluginsToLoad[] = getConfig('default.theme');
+        }
+        if (!$this->isCli()) {
+            $pluginsToLoad[] = 'WyriHaximus/MinifyHtml';
+        }
+
         foreach ($pluginsToLoad as $plugin) {
             /** @var \Cake\Http\BaseApplication $app */
             if (!$app->getPlugins()->has($plugin)) {

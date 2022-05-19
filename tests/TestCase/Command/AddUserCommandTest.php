@@ -20,14 +20,12 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * AddUserCommandTest class
- * @property \Cake\Console\ConsoleInput|null $_in
  */
 class AddUserCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
 
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [
@@ -46,7 +44,7 @@ class AddUserCommandTest extends TestCase
         $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
 
         $expectedUserId = $Users->find()->all()->extract('id')->last() + 1;
-        $this->exec('me_cms.add_user', array_merge($example, ['3']));
+        $this->exec('me_cms.add_user', [...$example, '3']);
         $this->assertExitWithSuccess();
         $this->assertOutputContains('<question>Group ID</question>');
         $this->assertOutputContains('<success>The operation has been performed correctly</success>');

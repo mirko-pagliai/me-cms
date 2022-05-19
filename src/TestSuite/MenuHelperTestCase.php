@@ -52,15 +52,13 @@ abstract class MenuHelperTestCase extends HelperTestCase
         $Helper = $this->getMockForHelper($className, $methods);
 
         foreach ($methods as $method) {
-            $Helper->method($method)->will($this->returnCallback(function () use ($className, $method) {
+            $Helper->method($method)->will($this->returnCallback(function () use ($className, $method): array {
                 $originalHelper = new $className($this->Helper->getView());
                 $returned = $originalHelper->$method();
 
                 if (!empty($returned[0])) {
                     $HtmlHelper = new HtmlHelper($this->Helper->getView());
-                    $returned[0] = implode(PHP_EOL, array_map(function (array $link) use ($HtmlHelper) {
-                        return call_user_func_array([$HtmlHelper, 'link'], $link);
-                    }, $returned[0]));
+                    $returned[0] = implode(PHP_EOL, array_map(fn(array $link): string => call_user_func_array([$HtmlHelper, 'link'], $link), $returned[0]));
                 }
 
                 return $returned;

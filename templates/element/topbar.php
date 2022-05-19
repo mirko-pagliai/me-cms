@@ -43,7 +43,7 @@ use MeCms\Core\Plugin;
             //Builds links with any other plugin helper
             foreach (Plugin::all(['core' => false, 'exclude' => ['MeCms']]) as $plugin) {
                 if (App::className($plugin . '.TopbarHelper', 'View/Helper')) {
-                    $links = array_merge($links, $this->loadHelper($plugin . '.Topbar')->build());
+                    $links = [...$links, ...$this->loadHelper($plugin . '.Topbar')->build()];
                     $this->helpers()->unload('Topbar');
                 }
             }

@@ -25,7 +25,7 @@ class PageValidatorTest extends ValidationTestCase
     /**
      * @var array
      */
-    protected $example = [
+    protected array $example = [
         'category_id' => 1,
         'title' => 'My title',
         'slug' => 'my-slug',

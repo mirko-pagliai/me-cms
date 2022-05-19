@@ -28,8 +28,6 @@ echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'sendForm(this)',
-    'options' => $months->map(function (array $month) {
-        return sprintf('%s (%s)', $month['created']->i18nFormat('MMMM yyyy'), $month['post_count']);
-    }),
+    'options' => $months->map(fn(array $month): string => sprintf('%s (%s)', $month['created']->i18nFormat('MMMM yyyy'), $month['post_count'])),
 ]);
 echo $this->Form->end();

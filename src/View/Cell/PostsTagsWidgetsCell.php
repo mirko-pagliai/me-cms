@@ -63,7 +63,6 @@ class PostsTagsWidgetsCell extends Cell
      * @param array|bool $style Style for tags. Array with `maxFont` and
      *  `minFont` keys or `false` to disable
      * @return void
-     * @uses getFontSizes()
      */
     public function popular(
         int $limit = 10,
@@ -108,11 +107,7 @@ class PostsTagsWidgetsCell extends Cell
                 $diffCount = $results->first()->get('post_count') - $minCount;
                 $diffFont = $maxFont - $minFont;
 
-                return $results->map(function (Tag $tag) use ($minCount, $diffCount, $maxFont, $minFont, $diffFont): Tag {
-                    $size = $diffCount ? round((($tag->get('post_count') - $minCount) / $diffCount * $diffFont) + $minFont) : $maxFont;
-
-                    return $tag->set('size', $size);
-                });
+                return $results->map(fn(Tag $tag): Tag => $tag->set('size', $diffCount ? round((($tag->get('post_count') - $minCount) / $diffCount * $diffFont) + $minFont) : $maxFont));
             })
             ->cache($cache)
             ->all();

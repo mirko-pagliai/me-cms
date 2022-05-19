@@ -28,7 +28,6 @@ use MeCms\TestSuite\ControllerTestCase;
 class SystemsControllerTest extends ControllerTestCase
 {
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [

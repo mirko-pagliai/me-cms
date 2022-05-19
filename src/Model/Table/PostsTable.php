@@ -56,7 +56,7 @@ class PostsTable extends PostsAndPagesTables
      * Cache configuration name
      * @var string
      */
-    protected $cache = 'posts';
+    protected string $cache = 'posts';
 
     /**
      * Called before request data is converted into entities
@@ -136,7 +136,7 @@ class PostsTable extends PostsAndPagesTables
         $cache = sprintf('related_%s_posts_for_%s', $limit, $post->get('id'));
         $cache .= $images ? '_with_images' : '';
 
-        return Cache::remember($cache, function () use ($images, $limit, $post) {
+        return Cache::remember($cache, function () use ($images, $limit, $post): CollectionInterface {
             $related = [];
 
             if ($post->hasValue('tags')) {
@@ -155,12 +155,14 @@ class PostsTable extends PostsAndPagesTables
                         ->where([sprintf('%s.id NOT IN', $this->getAlias()) => $exclude])
                         ->first();
 
+                    if (!$post) {
+                        continue;
+                    }
+
                     //Adds the current post to the related posts and its ID to the
                     //  IDs to be excluded for the next query
-                    if ($post) {
-                        $related[] = $post;
-                        $exclude[] = $post->get('id');
-                    }
+                    $related[] = $post;
+                    $exclude[] = $post->get('id');
                 }
             }
 
@@ -216,9 +218,8 @@ class PostsTable extends PostsAndPagesTables
     {
         $query = $this->find('active')
             ->select(['id', 'title', 'preview', 'slug', 'text'])
-            ->innerJoinWith('Tags', function (Query $query) use ($tagId) {
-                return $query->where([sprintf('%s.id', $this->Tags->getAlias()) => $tagId]);
-            })->distinct();
+            ->innerJoinWith('Tags', fn(Query $query): Query => $query->where([sprintf('%s.id', $this->Tags->getAlias()) => $tagId]))
+            ->distinct();
 
         if ($onlyWithImages) {
             $query->where([sprintf('%s.preview IS NOT', $this->getAlias()) => null])
@@ -239,11 +240,8 @@ class PostsTable extends PostsAndPagesTables
         $query = parent::queryFromFilter($query, $data);
 
         //"Tag" field
-        $tag = !empty($data['tag']) && strlen($data['tag']) > 2 ? $data['tag'] : false;
-        if ($tag) {
-            $query->innerJoinWith($this->Tags->getAlias(), function (Query $query) use ($tag) {
-                return $query->where(compact('tag'));
-            });
+        if (isset($data['tag']) && strlen($data['tag']) > 2) {
+            $query->innerJoinWith($this->Tags->getAlias(), fn(Query $query): Query => $query->where(['tag' => $data['tag']]));
         }
 
         return $query;

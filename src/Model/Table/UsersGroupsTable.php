@@ -30,7 +30,7 @@ class UsersGroupsTable extends AppTable
      * Cache configuration name
      * @var string
      */
-    protected $cache = 'users';
+    protected string $cache = 'users';
 
     /**
      * Returns a rules checker object that will be used for validating

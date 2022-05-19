@@ -26,7 +26,6 @@ class CreateAdminCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [

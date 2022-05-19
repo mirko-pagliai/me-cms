@@ -54,9 +54,7 @@ class PagesCategoriesController extends AppController
 
         $category = $this->PagesCategories->findActiveBySlug($slug)
             ->select(['id', 'title'])
-            ->contain($this->Pages->getAlias(), function (Query $query) {
-                return $query->find('active')->select(['category_id', 'slug', 'title']);
-            })
+            ->contain($this->Pages->getAlias(), fn(Query $query): Query => $query->find('active')->select(['category_id', 'slug', 'title']))
             ->cache('category_' . md5($slug))
             ->firstOrFail();
 

@@ -23,9 +23,7 @@ $this->assign('title', $title = __d('me_cms', 'Posts tags'));
  */
 $this->Breadcrumbs->add($title, ['_name' => 'postsTags']);
 
-$tags = $tags->map(function (Tag $tag) {
-    return $this->Html->link($tag->get('tag'), $tag->get('url'));
-})->toList();
+$tags = $tags->map(fn(Tag $tag): string => $this->Html->link($tag->get('tag'), $tag->get('url')))->toList();
 
 echo $this->Html->ul($tags, ['icon' => 'caret-right']);
 

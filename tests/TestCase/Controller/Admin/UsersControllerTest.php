@@ -32,7 +32,7 @@ class UsersControllerTest extends ControllerTestCase
     /**
      * @var array
      */
-    protected static $example = [
+    protected static array $example = [
         'group_id' => 1,
         'username' => 'new-username',
         'email' => 'new-test-email@example.com',
@@ -44,7 +44,6 @@ class UsersControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [

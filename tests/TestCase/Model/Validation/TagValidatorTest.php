@@ -25,7 +25,7 @@ class TagValidatorTest extends ValidationTestCase
     /**
      * @var array
      */
-    protected $example = ['tag' => 'my tag'];
+    protected array $example = ['tag' => 'my tag'];
 
     /**
      * Fixtures

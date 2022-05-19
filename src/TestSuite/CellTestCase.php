@@ -21,35 +21,30 @@ use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
 
 /**
- * Abstract class for test entities
+ * Abstract class for test cells
  */
 abstract class CellTestCase extends TestCase
 {
     /**
-     * Entity instance
      * @var \MeCms\View\Helper\WidgetHelper&\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $Widget;
+    protected WidgetHelper $Widget;
 
     /**
      * If `true`, a mock instance of the shell will be created
      * @var bool
      */
-    protected $autoInitializeClass = true;
+    protected bool $autoInitializeClass = true;
 
     /**
      * Called before every test method
      * @return void
-     * @uses $Table
-     * @uses $Widget
-     * @uses $autoInitializeClass
-     * @uses $cacheToClear
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        if (!$this->Widget && $this->autoInitializeClass) {
+        if (empty($this->Widget) && $this->autoInitializeClass) {
             $this->Widget = $this->getMockBuilder(WidgetHelper::class)
                 ->setMethods(null)
                 ->setConstructorArgs([new View()])
@@ -59,7 +54,7 @@ abstract class CellTestCase extends TestCase
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');
         $this->Widget->getView()->setRequest($request);
 
-        if (!$this->Table && $this->autoInitializeClass) {
+        if (empty($this->Table) && $this->autoInitializeClass) {
             $alias = substr($this->getAlias($this), 0, -7);
             $className = $this->getTableClassNameFromAlias($alias);
             if (class_exists($className)) {

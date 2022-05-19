@@ -41,7 +41,7 @@ class AppTableTest extends TableTestCase
      * If `true`, a mock instance of the table will be created
      * @var bool
      */
-    protected $autoInitializeClass = false;
+    protected bool $autoInitializeClass = false;
 
     /**
      * Fixtures
@@ -271,9 +271,7 @@ class AppTableTest extends TableTestCase
         $query = $this->Posts->queryFromFilter($this->Posts->find(), $data);
         $this->assertSqlEndsWith($expectedSql, $query->sql());
 
-        $params = array_map(function ($value) {
-            return $value instanceof I18nDateTimeInterface ? $value->i18nFormat() : $value;
-        }, collection($query->getValueBinder()->bindings())->extract('value')->toList());
+        $params = array_map(fn($value) => $value instanceof I18nDateTimeInterface ? $value->i18nFormat() : $value, collection($query->getValueBinder()->bindings())->extract('value')->toList());
         $this->assertEquals($expectedParams, $params);
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['active' => I18N_NO] + $data);

@@ -38,9 +38,7 @@ class PostTest extends PostAndPageEntityTestCase
      */
     public function testGetTagsAsStringVirtualField(): void
     {
-        $tags = array_map(function (string $tag): Tag {
-            return new Tag(compact('tag'));
-        }, ['cat', 'dog', 'bird']);
+        $tags = array_map(fn(string $tag): Tag => new Tag(compact('tag')), ['cat', 'dog', 'bird']);
 
         $this->assertEquals('cat, dog, bird', $this->Entity->set(compact('tags'))->get('tags_as_string'));
 

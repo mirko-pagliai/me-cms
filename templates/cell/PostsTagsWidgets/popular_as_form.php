@@ -30,8 +30,6 @@ echo $this->Form->control('q', [
     'id' => false,
     'label' => false,
     'onchange' => 'sendForm(this)',
-    'options' => $tags->map(function (Tag $tag) {
-        return sprintf('%s (%d)', $tag->get('tag'), $tag->get('post_count'));
-    })->toArray(),
+    'options' => $tags->map(fn(Tag $tag): string => sprintf('%s (%d)', $tag->get('tag'), $tag->get('post_count')))->toArray(),
 ]);
 echo $this->Form->end();

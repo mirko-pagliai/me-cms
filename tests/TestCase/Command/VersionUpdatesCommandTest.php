@@ -34,10 +34,9 @@ class VersionUpdatesCommandTest extends TestCase
     /**
      * @var bool
      */
-    protected $autoInitializeClass = true;
+    protected bool $autoInitializeClass = true;
 
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [
@@ -74,9 +73,7 @@ class VersionUpdatesCommandTest extends TestCase
      */
     public function testAddEnableCommentsField(): void
     {
-        $getTables = function (): array {
-            return [$this->getTable('MeCms.Posts'), $this->getTable('MeCms.Pages')];
-        };
+        $getTables = fn(): array => [$this->getTable('MeCms.Posts'), $this->getTable('MeCms.Pages')];
 
         [$Posts, $Pages] = $getTables();
         $this->skipIf($Posts->getConnection()->getDriver() instanceof Sqlite);
@@ -124,9 +121,7 @@ class VersionUpdatesCommandTest extends TestCase
     public function testDeleteOldDirectories(): void
     {
         $dirs = [WWW_ROOT . 'fonts', TMP . 'login'];
-        foreach ($dirs as $dir) {
-            @mkdir($dir);
-        }
+        @array_map('mkdir', $dirs);
         $this->Command->deleteOldDirectories();
         @array_walk($dirs, [$this, 'assertFileDoesNotExist']);
     }

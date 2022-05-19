@@ -88,16 +88,14 @@ trait GetPreviewsFromTextTrait
      * @return \Cake\Collection\CollectionInterface Collection of entities.
      *  Each `Entity` has `url`, `width` and `height` properties
      * @since 2.23.0
-     * @uses extractImages()
-     * @uses getPreviewSize()
      */
     public function getPreviews(string $html): CollectionInterface
     {
-        $images = array_map(function (string $url) {
+        $images = array_map(function (string $url): ?Entity {
             if (!is_url($url)) {
                 $url = Filesystem::instance()->makePathAbsolute($url, WWW_ROOT . 'img');
                 if (!file_exists($url)) {
-                    return false;
+                    return null;
                 }
 
                 $thumber = new ThumbCreator($url);

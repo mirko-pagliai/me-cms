@@ -34,7 +34,7 @@ class TagsTable extends AppTable
      * Cache configuration name
      * @var string
      */
-    protected $cache = 'posts';
+    protected string $cache = 'posts';
 
     /**
      * Returns a rules checker object that will be used for validating
@@ -54,9 +54,7 @@ class TagsTable extends AppTable
      */
     public function findActive(Query $query): Query
     {
-        return $query->innerJoinWith('Posts', function (Query $query) {
-            return $query->find('active');
-        })->distinct();
+        return $query->innerJoinWith('Posts', fn(Query $query): Query => $query->find('active'))->distinct();
     }
 
     /**

@@ -26,7 +26,6 @@ use MeCms\TestSuite\CellTestCase;
 class PagesWidgetsCellTest extends CellTestCase
 {
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [

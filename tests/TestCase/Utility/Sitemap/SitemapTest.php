@@ -27,7 +27,6 @@ use MeCms\Utility\Sitemap\Sitemap;
 class SitemapTest extends TestCase
 {
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [

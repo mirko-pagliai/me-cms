@@ -71,7 +71,7 @@ parameters:
 			path: src/Model/Table/AppTable.php
 
 		-
-			message: "#^If condition is always true\\.$#"
+			message: "#^Negated boolean expression is always false\\.$#"
 			count: 1
 			path: src/Model/Table/PostsTable.php
 
@@ -91,44 +91,14 @@ parameters:
 			path: src/ORM/PostsAndPagesTables.php
 
 		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 2
-			path: src/TestSuite/CellTestCase.php
-
-		-
-			message: "#^Result of && is always false\\.$#"
-			count: 2
-			path: src/TestSuite/CellTestCase.php
-
-		-
 			message: "#^If condition is always true\\.$#"
-			count: 2
-			path: src/TestSuite/ControllerTestCase.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: src/TestSuite/ControllerTestCase.php
-
-		-
-			message: "#^Result of && is always false\\.$#"
-			count: 1
+			count: 3
 			path: src/TestSuite/ControllerTestCase.php
 
 		-
 			message: "#^Ternary operator condition is always true\\.$#"
 			count: 2
 			path: src/TestSuite/ControllerTestCase.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: src/TestSuite/EntityTestCase.php
-
-		-
-			message: "#^Result of && is always false\\.$#"
-			count: 1
-			path: src/TestSuite/EntityTestCase.php
 
 		-
 			message: "#^Ternary operator condition is always true\\.$#"
@@ -146,34 +116,9 @@ parameters:
 			path: src/TestSuite/PostsAndPagesTablesTestCase.php
 
 		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: src/TestSuite/TableTestCase.php
-
-		-
-			message: "#^Result of && is always false\\.$#"
-			count: 1
-			path: src/TestSuite/TableTestCase.php
-
-		-
 			message: "#^Ternary operator condition is always true\\.$#"
 			count: 1
 			path: src/TestSuite/TableTestCase.php
-
-		-
-			message: "#^Left side of && is always true\\.$#"
-			count: 1
-			path: src/TestSuite/TestCase.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: src/TestSuite/ValidationTestCase.php
-
-		-
-			message: "#^Result of && is always false\\.$#"
-			count: 1
-			path: src/TestSuite/ValidationTestCase.php
 
 		-
 			message: "#^Ternary operator condition is always true\\.$#"
@@ -1046,11 +991,6 @@ parameters:
 			path: templates/layout/rss/default.php
 
 		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
-			path: tests/TestCase/Controller/Component/LoginRecorderComponentTest.php
-
-		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:read\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 2
 			path: tests/TestCase/Controller/PagesCategoriesControllerTest.php
@@ -1104,11 +1044,6 @@ parameters:
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:readMany\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 2
 			path: tests/TestCase/Controller/PostsTagsControllerTest.php
-
-		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
-			path: tests/TestCase/Controller/UsersControllerTest.php
 
 		-
 			message: "#^Binary operation \"\\.\" between 'ORDER BY ' and array\\<string\\>\\|string\\|null results in an error\\.$#"
@@ -1166,11 +1101,6 @@ parameters:
 			path: tests/TestCase/ORM/QueryTest.php
 
 		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
-			path: tests/TestCase/Utility/Sitemap/SitemapBuilderTest.php
-
-		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:read\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 3
 			path: tests/TestCase/Utility/Sitemap/SitemapTest.php
@@ -1183,11 +1113,6 @@ parameters:
 		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:read\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 3
-			path: tests/TestCase/View/Cell/PostsTagsWidgetsCellTest.php
-
-		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
 			path: tests/TestCase/View/Cell/PostsTagsWidgetsCellTest.php
 
 		-

@@ -56,7 +56,6 @@ class PagesController extends AppController
      * Static pages must be located in `APP/View/StaticPages/`.
      * @param string $slug Page slug
      * @return \Cake\Http\Response|null|void
-     * @uses \MeCms\Utility\StaticPage
      */
     public function view(string $slug)
     {

@@ -31,10 +31,9 @@ class SitemapBuilderTest extends TestCase
     /**
      * @var \MeCms\Utility\Sitemap\SitemapBuilder
      */
-    protected $SitemapBuilder;
+    protected SitemapBuilder $SitemapBuilder;
 
     /**
-     * Fixtures
      * @var array
      */
     public $fixtures = [
@@ -53,7 +52,7 @@ class SitemapBuilderTest extends TestCase
     {
         parent::setUp();
 
-        $this->SitemapBuilder = $this->SitemapBuilder ?: new SitemapBuilder();
+        $this->SitemapBuilder ??= new SitemapBuilder();
     }
 
     /**

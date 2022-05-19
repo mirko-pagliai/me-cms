@@ -35,9 +35,7 @@ class CopyConfigCommandTest extends TestCase
     {
         $this->exec('me_cms.copy_config -v');
         $this->assertExitWithSuccess();
-        $expected = array_map(function (string $path): string {
-            return 'File or directory `' . Filesystem::instance()->rtr(CONFIG . pluginSplit($path)[1] . '.php') . '` already exists';
-        }, array_clean(Configure::read('CONFIG_FILES')));
+        $expected = array_map(fn(string $path): string => 'File or directory `' . Filesystem::instance()->rtr(CONFIG . pluginSplit($path)[1] . '.php') . '` already exists', array_clean(Configure::read('CONFIG_FILES')));
         $this->assertSame($expected, $this->_out->messages());
     }
 }

@@ -28,7 +28,7 @@ class ViewTest extends TestCase
     /**
      * @var \MeCms\View\View
      */
-    protected $View;
+    protected View $View;
 
     /**
      * Called before every test method
@@ -63,9 +63,7 @@ class ViewTest extends TestCase
      */
     public function testGetTitleForLayout(): void
     {
-        $getTitleForLayoutMethod = function () {
-            return $this->invokeMethod($this->View, 'getTitleForLayout');
-        };
+        $getTitleForLayoutMethod = fn () => $this->invokeMethod($this->View, 'getTitleForLayout');
 
         //Writes the main title on configuration
         $mainTitle = 'main title';
@@ -74,13 +72,13 @@ class ViewTest extends TestCase
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), $mainTitle);
 
         //Tests the title as if it had been set by the view
-        $this->setProperty($this->View, 'titleForLayout', null);
+        $this->setProperty($this->View, 'titleForLayout', '');
         $this->View->assign('title', 'title from view');
         $this->assertEquals($getTitleForLayoutMethod(), 'title from view - ' . $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), 'title from view - ' . $mainTitle);
 
         //Tests the title as if it had been set by the controller
-        $this->setProperty($this->View, 'titleForLayout', null);
+        $this->setProperty($this->View, 'titleForLayout', '');
         $this->View->set('title', 'title from controller');
         $this->assertEquals($getTitleForLayoutMethod(), 'title from controller - ' . $mainTitle);
         $this->assertEquals($this->getProperty($this->View, 'titleForLayout'), 'title from controller - ' . $mainTitle);

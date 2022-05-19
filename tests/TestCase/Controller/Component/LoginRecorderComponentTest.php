@@ -68,7 +68,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      */
     public function setUp(): void
     {
-        $this->Component = $this->Component ?: $this->getMockForLoginRecorder();
+        $this->Component ??= $this->getMockForLoginRecorder();
 
         parent::setUp();
     }

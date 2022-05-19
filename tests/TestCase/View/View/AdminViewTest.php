@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\View\View;
 
 use MeCms\TestSuite\TestCase;
-use MeCms\View\View\AdminView as View;
+use MeCms\View\View\AdminView;
 
 /**
  * AdminViewTest class
@@ -26,7 +26,7 @@ class AdminViewTest extends TestCase
     /**
      * @var \MeCms\View\View\AdminView
      */
-    protected $View;
+    protected AdminView $View;
 
     /**
      * Called before every test method
@@ -36,7 +36,7 @@ class AdminViewTest extends TestCase
     {
         parent::setUp();
 
-        $this->View = new View();
+        $this->View = new AdminView();
         $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
     }
 

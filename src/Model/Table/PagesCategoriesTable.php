@@ -34,7 +34,7 @@ class PagesCategoriesTable extends AppTable
      * Cache configuration name
      * @var string
      */
-    protected $cache = 'pages';
+    protected string $cache = 'pages';
 
     /**
      * Returns a rules checker object that will be used for validating
@@ -56,9 +56,7 @@ class PagesCategoriesTable extends AppTable
      */
     public function findActive(Query $query): Query
     {
-        return $query->innerJoinWith($this->Pages->getAlias(), function (Query $query) {
-            return $query->find('active');
-        })->distinct();
+        return $query->innerJoinWith($this->Pages->getAlias(), fn(Query $query): Query => $query->find('active'))->distinct();
     }
 
     /**

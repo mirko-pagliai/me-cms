@@ -16,7 +16,8 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Traits;
 
 use Cake\Core\Configure;
-use MeCms\Controller\PostsController;
+use MeCms\Controller\AppController;
+use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -30,10 +31,10 @@ class CheckLastSearchTraitTest extends TestCase
      */
     public function testCheckLastSearch(): void
     {
-        $controller = $this->getMockForController(PostsController::class, null);
-        $checkLastSearchMethod = function ($queryId = false) use ($controller) {
-            return $this->invokeMethod($controller, 'checkLastSearch', [$queryId]);
+        $controller = new class extends AppController {
+            use CheckLastSearchTrait;
         };
+        $checkLastSearchMethod = fn($queryId = false): bool => $this->invokeMethod($controller, 'checkLastSearch', [$queryId]);
 
         $this->assertTrue($checkLastSearchMethod('my-query'));
         $firstSession = $controller->getRequest()->getSession()->read('last_search.id');

@@ -29,12 +29,12 @@ class ContactUsFormTest extends TestCase
     /**
      * @var \MeCms\Form\ContactUsForm&\PHPUnit\Framework\MockObject\MockObject
      */
-    public $Form;
+    public ContactUsForm $Form;
 
     /**
      * @var array
      */
-    protected $example = [
+    protected array $example = [
         'email' => 'mymail@example.com',
         'first_name' => 'First name',
         'last_name' => 'Last name',

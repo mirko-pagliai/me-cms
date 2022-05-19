@@ -85,9 +85,9 @@ echo $this->element('views/post', compact('post'));
 
 <?php if (!empty($related)) : ?>
     <?php
-        $relatedAsArray = collection($related)->map(function (Post $post) {
-            return $this->Html->link($post->get('title'), ['_name' => 'post', $post->get('slug')]);
-        })->toArray();
+        $relatedAsArray = collection($related)
+            ->map(fn(Post $post): string => $this->Html->link($post->get('title'), ['_name' => 'post', $post->get('slug')]))
+            ->toArray();
     ?>
     <div class="related-contents mb-4">
         <?= $this->Html->h5(__d('me_cms', 'Related posts')) ?>

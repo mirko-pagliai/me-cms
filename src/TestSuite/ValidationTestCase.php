@@ -28,12 +28,12 @@ abstract class ValidationTestCase extends TestCase
      * If `true`, a mock instance of the table will be created
      * @var bool
      */
-    protected $autoInitializeClass = true;
+    protected bool $autoInitializeClass = true;
 
     /**
      * @var array
      */
-    protected $example;
+    protected array $example;
 
     /**
      * Assert that all data are required.
@@ -77,7 +77,7 @@ abstract class ValidationTestCase extends TestCase
     {
         parent::setUp();
 
-        if (!$this->Table && $this->autoInitializeClass) {
+        if (empty($this->Table) && $this->autoInitializeClass) {
             $alias = Inflector::pluralize($this->getAlias($this));
             $className = $this->getTableClassNameFromAlias($alias);
             $this->_classExistsOrFail($className);

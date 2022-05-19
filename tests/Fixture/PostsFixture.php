@@ -25,8 +25,7 @@ use Cake\TestSuite\Fixture\TestFixture;
 class PostsFixture extends TestFixture
 {
     /**
-     * Fields
-     * @var array
+     * @var array<string, mixed>
      */
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => null, 'autoIncrement' => true],
@@ -48,7 +47,6 @@ class PostsFixture extends TestFixture
     ];
 
     /**
-     * Records
      * @var array
      */
     public $records = [

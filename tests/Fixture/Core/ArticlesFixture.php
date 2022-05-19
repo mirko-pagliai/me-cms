@@ -23,7 +23,7 @@ use Cake\TestSuite\Fixture\TestFixture;
 class ArticlesFixture extends TestFixture
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     public $fields = [
         'id' => ['type' => 'integer'],

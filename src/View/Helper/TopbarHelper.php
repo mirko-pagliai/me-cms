@@ -27,7 +27,7 @@ class TopbarHelper extends AbstractTopbarHelper
 {
     /**
      * Returns an array with the links to put in the topbar
-     * @return array
+     * @return array<string>
      */
     public function build(): array
     {
