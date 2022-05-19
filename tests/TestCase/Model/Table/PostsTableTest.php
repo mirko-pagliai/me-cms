@@ -61,12 +61,14 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     {
         parent::testEventMethods();
 
+        /** @var array<\MeCms\Model\Entity\Tag> $tags */
         $tags = $this->Table->newEntity(self::$example)->get('tags');
         $this->assertContainsOnlyInstancesOf(Tag::class, $tags);
         $this->assertEquals(['first tag', 'second tag'], Hash::extract($tags, '{n}.tag'));
 
         //In this case, the `dog` tag already exists
         self::$example['tags_as_string'] = 'first tag, dog';
+        /** @var array<\MeCms\Model\Entity\Tag> $tags */
         $tags = $this->Table->newEntity(self::$example)->get('tags');
         $this->assertContainsOnlyInstancesOf(Tag::class, $tags);
         $this->assertEquals([2], Hash::extract($tags, '{n}.id'));

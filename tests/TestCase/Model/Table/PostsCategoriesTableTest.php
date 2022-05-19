@@ -107,6 +107,7 @@ class PostsCategoriesTableTest extends TableTestCase
 
         foreach ($childs as $children) {
             $this->assertEquals(1, $children->get('parent_id'));
+            /** @var array<\MeCms\Model\Entity\PostsCategory> $childs */
             $childs = $this->Table->findById($children->get('id'))->contain('Childs')->all()->extract('childs')->first();
             $this->assertContainsOnlyInstancesOf(PostsCategory::class, $childs);
             $this->assertEquals(3, array_value_first($childs)->get('parent_id'));

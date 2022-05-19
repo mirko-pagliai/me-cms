@@ -98,6 +98,7 @@ class PagesCategoriesTableTest extends TableTestCase
         $this->assertContainsOnlyInstancesOf(PagesCategory::class, $childs);
         foreach ($childs as $children) {
             $this->assertEquals(1, $children->get('parent_id'));
+            /** @var array<\MeCms\Model\Entity\PagesCategory> $childs */
             $childs = $this->Table->findById($children->get('id'))->contain('Childs')->all()->extract('childs')->first();
             $this->assertContainsOnlyInstancesOf(PagesCategory::class, $childs);
             $this->assertEquals(3, array_value_first($childs)->get('parent_id'));

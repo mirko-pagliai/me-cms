@@ -42,6 +42,7 @@ class WidgetHelper extends Helper
                 [$name, $args] = [array_key_first($args), array_value_first($args)];
             }
 
+            /** @var array-key $name */
             return is_int($name) && is_string($args) ? [$args => []] : [$name => $args];
         })->toList() : [];
     }

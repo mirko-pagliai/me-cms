@@ -22,6 +22,7 @@ use League\CommonMark\CommonMarkConverter;
 use MeCms\Controller\Admin\AppController;
 use MeCms\Core\Plugin;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Thumber\Cake\Utility\ThumbManager;
 use Tools\Exceptionist;
 use Tools\Filesystem;
@@ -178,14 +179,7 @@ class SystemsController extends AppController
      */
     public function tmpViewer(): void
     {
-        $getDirSize = function ($path) {
-            $size = 0;
-            foreach ((new Finder())->in($path) as $file) {
-                $size += $file->getSize();
-            }
-
-            return $size;
-        };
+        $getDirSize = fn(string $path): int => array_sum(array_map(fn(SplFileInfo $file): int => $file->getSize(), iterator_to_array((new Finder())->in($path))));
 
         $assetsSize = $getDirSize(getConfigOrFail('Assets.target'));
         $cacheSize = $getDirSize(CACHE);

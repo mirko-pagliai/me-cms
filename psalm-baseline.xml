@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.x-dev@">
+  <file src="src/Controller/PostsCategoriesController.php">
+    <InvalidArgument occurrences="1"/>
+  </file>
+  <file src="src/Controller/PostsController.php">
+    <InvalidArgument occurrences="3"/>
+  </file>
+  <file src="src/Controller/PostsTagsController.php">
+    <InvalidArgument occurrences="2"/>
+  </file>
+  <file src="src/Controller/Traits/GetStartAndEndDateTrait.php">
+    <RedundantCast occurrences="2">
+      <code>(int)($day ?: 1)</code>
+      <code>(int)($month ?: 1)</code>
+    </RedundantCast>
+    <RedundantCondition occurrences="2">
+      <code>1</code>
+      <code>1</code>
+    </RedundantCondition>
+  </file>
+  <file src="src/Model/Table/PagesTable.php">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>\MeCms\Model\Entity\Page|bool</code>
+    </ImplementedReturnTypeMismatch>
+  </file>
+  <file src="src/Model/Table/PostsTable.php">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>\MeCms\Model\Entity\Post|bool</code>
+    </ImplementedReturnTypeMismatch>
+  </file>
+  <file src="src/TestSuite/CellTestCase.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($this-&gt;Table)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="src/TestSuite/TableTestCase.php">
+    <RedundantCondition occurrences="2">
+      <code>$this-&gt;Table</code>
+      <code>$this-&gt;Table</code>
+    </RedundantCondition>
+    <TypeDoesNotContainType occurrences="2">
+      <code>$this-&gt;fail('The property `$this-&gt;Table` has not been set')</code>
+      <code>empty($this-&gt;Table)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="src/TestSuite/ValidationTestCase.php">
+    <RedundantCondition occurrences="2">
+      <code>$this-&gt;Table</code>
+      <code>$this-&gt;Table</code>
+    </RedundantCondition>
+    <TypeDoesNotContainType occurrences="2">
+      <code>$this-&gt;fail('The property `$this-&gt;Table` has not been set')</code>
+      <code>empty($this-&gt;Table)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="src/Utility/StaticPage.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>IS_WIN</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="tests/TestCase/Command/Install/CreateSamplePostCommandTest.php">
+    <UndefinedPropertyAssignment occurrences="1">
+      <code>$this-&gt;Command-&gt;Posts</code>
+    </UndefinedPropertyAssignment>
+  </file>
+  <file src="tests/TestCase/Command/UsersCommandTest.php">
+    <UndefinedPropertyAssignment occurrences="1">
+      <code>$this-&gt;Command-&gt;Users</code>
+    </UndefinedPropertyAssignment>
+  </file>
+  <file src="tests/TestCase/Controller/AppControllerTest.php">
+    <UndefinedMagicPropertyFetch occurrences="3">
+      <code>$PostsController-&gt;Categories</code>
+      <code>$PostsController-&gt;Foo</code>
+      <code>$PostsController-&gt;Users</code>
+    </UndefinedMagicPropertyFetch>
+  </file>
+  <file src="tests/TestCase/Controller/PostsCategoriesControllerTest.php">
+    <InvalidArgument occurrences="1"/>
+  </file>
+  <file src="tests/TestCase/Controller/PostsControllerTest.php">
+    <InvalidArgument occurrences="3"/>
+  </file>
+  <file src="tests/TestCase/Controller/PostsTagsControllerTest.php">
+    <InvalidArgument occurrences="2"/>
+  </file>
+</files>
