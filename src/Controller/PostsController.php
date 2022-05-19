@@ -169,29 +169,27 @@ class PostsController extends AppController
         $posts = $this->Posts->find('active')
             ->limit(getConfigOrFail('default.records_for_rss'))
             ->orderDesc('created')
-            ->formatResults(function (ResultSet $results) {
-                return $results->map(function (Post $post): array {
-                    //Truncates the description if the "<!-- read-more -->" tag is
-                    //  present or if requested by the configuration
-                    $description = $text = $post->get('text');
-                    $length = $options = false;
-                    $strpos = strpos($description, '<!-- read-more -->');
-                    if ($strpos) {
-                        [$length, $options] = [$strpos, ['exact' => true, 'html' => false]];
-                    } elseif (getConfig('default.truncate_to')) {
-                        [$length, $options] = [getConfig('default.truncate_to'), ['exact' => false, 'html' => true]];
-                    }
-                    $description = $length && $options ? Text::truncate($description, $length, $options) : $description;
+            ->formatResults(fn(ResultSet $results) => $results->map(function (Post $post): array {
+                //Truncates the description if the "<!-- read-more -->" tag is
+                //  present or if requested by the configuration
+                $description = $text = $post->get('text');
+                $length = $options = false;
+                $strpos = strpos($description, '<!-- read-more -->');
+                if ($strpos) {
+                    [$length, $options] = [$strpos, ['exact' => true, 'html' => false]];
+                } elseif (getConfig('default.truncate_to')) {
+                    [$length, $options] = [getConfig('default.truncate_to'), ['exact' => false, 'html' => true]];
+                }
+                $description = $length && $options ? Text::truncate($description, $length, $options) : $description;
 
-                    return [
-                        'title' => $post->get('title'),
-                        'link' => $post->get('url'),
-                        'description' => strip_tags($description),
-                        'content:encoded' => $text,
-                        'pubDate' => $post->get('created'),
-                    ];
-                });
-            })
+                return [
+                    'title' => $post->get('title'),
+                    'link' => $post->get('url'),
+                    'description' => strip_tags($description),
+                    'content:encoded' => $text,
+                    'pubDate' => $post->get('created'),
+                ];
+            }))
             ->cache('rss');
 
         $data = [

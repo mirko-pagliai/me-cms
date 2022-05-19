@@ -163,7 +163,7 @@ abstract class AppTable extends Table
 
         $values = collection($this->associations()->getIterator())
             ->filter(fn(Association $association): bool => method_exists($association->getTarget(), 'getCacheName'))
-            ->map(function (Association $association) {
+            ->map(function (Association $association): string {
                 /** @var \MeCms\Model\Table\AppTable $target */
                 $target = $association->getTarget();
 
