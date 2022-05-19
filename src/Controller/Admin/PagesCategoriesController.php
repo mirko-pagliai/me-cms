@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Controller\Admin;
 
+use Cake\Collection\CollectionInterface;
 use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\ORM\ResultSet;
@@ -69,17 +70,11 @@ class PagesCategoriesController extends AppController
      */
     public function index(): void
     {
+        $treeList = $this->PagesCategories->getTreeList()->toArray();
         $categories = $this->PagesCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
             ->orderAsc(sprintf('%s.lft', $this->PagesCategories->getAlias()))
-            ->formatResults(function (ResultSet $results) {
-                //Gets categories as tree list
-                $treeList = $this->PagesCategories->getTreeList()->toArray();
-
-                return $results->map(function (PagesCategory $category) use ($treeList) {
-                    return $category->set('title', $treeList[$category->get('id')]);
-                });
-            });
+            ->formatResults(fn(ResultSet $results): CollectionInterface => $results->map(fn(PagesCategory $category): PagesCategory => $category->set('title', $treeList[$category->get('id')])));
 
         $this->set(compact('categories'));
     }

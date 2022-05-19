@@ -19,7 +19,7 @@ use Cake\Routing\RouteBuilder;
 /** @var \Cake\Routing\RouteBuilder $routes */
 $routes->setRouteClass(DashedRoute::class);
 
-$routes->scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
+$routes->scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes): void {
     $routes->setExtensions(['rss']);
 
     //Requires other routes
@@ -43,11 +43,11 @@ $routes->scope('/', ['plugin' => 'MeCms'], function (RouteBuilder $routes) {
     $routes->fallbacks('DashedRoute');
 });
 
-$routes->plugin('MeCms', function (RouteBuilder $routes) {
+$routes->plugin('MeCms', function (RouteBuilder $routes): void {
     $routes->setExtensions(['json']);
 
     //Admin routes
-    $routes->prefix(ADMIN_PREFIX, function (RouteBuilder $routes) {
+    $routes->prefix(ADMIN_PREFIX, function (RouteBuilder $routes): void {
         $routes->fallbacks('DashedRoute');
     });
 });

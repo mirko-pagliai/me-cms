@@ -22,8 +22,6 @@ if (empty($pages) || $pages->isEmpty()) {
 $this->extend('MeCms./common/widget');
 $this->assign('title', I18N_PAGES);
 
-$pages = $pages->map(function (Page $page) {
-    return $this->Html->link($page->get('title'), ['_name' => 'page', $page->get('slug')]);
-})->toArray();
+$pages = $pages->map(fn(Page $page): string => $this->Html->link($page->get('title'), ['_name' => 'page', $page->get('slug')]))->toArray();
 
 echo $this->Html->ul($pages, ['icon' => 'caret-right']);

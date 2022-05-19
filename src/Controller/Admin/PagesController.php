@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Controller\Admin;
 
+use Cake\Collection\CollectionInterface;
 use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\ORM\ResultSet;
@@ -142,11 +143,7 @@ class PagesController extends AppController
     public function edit(string $id)
     {
         $page = $this->Pages->findById($id)
-            ->formatResults(function (ResultSet $results) {
-                return $results->map(function (Page $page): Page {
-                    return $page->set('created', $page->get('created')->i18nFormat(FORMAT_FOR_MYSQL));
-                });
-            })
+            ->formatResults(fn(ResultSet $results): CollectionInterface => $results->map(fn(Page $page): Page => $page->set('created', $page->get('created')->i18nFormat(FORMAT_FOR_MYSQL))))
             ->firstOrFail();
 
         if ($this->getRequest()->is(['patch', 'post', 'put'])) {

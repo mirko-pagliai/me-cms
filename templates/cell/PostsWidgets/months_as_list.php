@@ -20,11 +20,6 @@ if (empty($months) || $months->count() < 2) {
 $this->extend('MeCms./common/widget');
 $this->assign('title', __d('me_cms', 'Posts by month'));
 
-$months = $months->map(function (array $month) {
-    return $this->Html->link($month['created']->i18nFormat('MMMM yyyy'), [
-        '_name' => 'postsByDate',
-        sprintf('%s/%s', $month['created']->i18nFormat('yyyy'), $month['created']->i18nFormat('MM')),
-    ]);
-})->toArray();
+$months = $months->map(fn(array $month): string => $this->Html->link($month['created']->i18nFormat('MMMM yyyy'), ['_name' => 'postsByDate', $month['created']->i18nFormat('yyyy') . '/' . $month['created']->i18nFormat('MM')]))->toArray();
 
 echo $this->Html->ul($months, ['icon' => 'caret-right']);

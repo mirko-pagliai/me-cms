@@ -22,8 +22,6 @@ if (empty($categories) || $categories->count() < 2) {
 $this->extend('MeCms./common/widget');
 $this->assign('title', I18N_POSTS_CATEGORIES);
 
-$categories = $categories->map(function (PostsCategory $category) {
-    return $this->Html->link($category->get('title'), ['_name' => 'postsCategory', $category->get('slug')]);
-})->toArray();
+$categories = $categories->map(fn(PostsCategory $category): string => $this->Html->link($category->get('title'), ['_name' => 'postsCategory', $category->get('slug')]))->toArray();
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);

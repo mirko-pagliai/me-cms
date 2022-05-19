@@ -22,8 +22,6 @@ if (empty($categories) || $categories->count() < 2) {
 $this->extend('MeCms./common/widget');
 $this->assign('title', __d('me_cms', 'Pages categories'));
 
-$categories = $categories->map(function (PagesCategory $category) {
-    return $this->Html->link($category->get('title'), ['_name' => 'pagesCategory', $category->get('slug')]);
-})->toArray();
+$categories = $categories->map(fn(PagesCategory $category): string => $this->Html->link($category->get('title'), ['_name' => 'pagesCategory', $category->get('slug')]))->toArray();
 
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);
