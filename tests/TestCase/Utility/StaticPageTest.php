@@ -59,7 +59,7 @@ class StaticPageTest extends TestCase
         $this->assertContainsOnlyInstancesOf(FrozenTime::class, $pages->extract('modified'));
 
         //Checks filenames
-        $this->assertEquals([
+        $this->assertEqualsCanonicalizing([
             'page-from-app',
             'cookies-policy',
             'cookies-policy-it',
@@ -69,7 +69,7 @@ class StaticPageTest extends TestCase
         ], $pages->extract('filename')->toArray());
 
         //Checks paths
-        $this->assertEquals([
+        $this->assertEqualsCanonicalizing([
             'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'templates' . DS . 'StaticPages' . DS . 'page-from-app.' . StaticPage::EXTENSION,
             'templates' . DS . 'StaticPages' . DS . 'cookies-policy.' . StaticPage::EXTENSION,
             'templates' . DS . 'StaticPages' . DS . 'cookies-policy-it.' . StaticPage::EXTENSION,
@@ -79,7 +79,7 @@ class StaticPageTest extends TestCase
         ], $pages->extract('path')->toArray());
 
         //Checks slugs
-        $this->assertEquals([
+        $this->assertEqualsCanonicalizing([
             'page-from-app',
             'cookies-policy',
             'cookies-policy-it',
@@ -89,7 +89,7 @@ class StaticPageTest extends TestCase
         ], $pages->extract('slug')->toArray());
 
         //Checks titles
-        $this->assertEquals([
+        $this->assertEqualsCanonicalizing([
             'Page From App',
             'Cookies Policy',
             'Cookies Policy It',
@@ -109,7 +109,7 @@ class StaticPageTest extends TestCase
 
         //Gets all pages from slugs
         $pages = array_map([StaticPage::class, 'get'], StaticPage::all()->extract('slug')->toArray());
-        $this->assertEquals([
+        $this->assertEqualsCanonicalizing([
             DS . 'StaticPages' . DS . 'page-from-app',
             'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy',
             'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy-it',
