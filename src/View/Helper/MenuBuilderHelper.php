@@ -22,7 +22,7 @@ use Cake\View\Helper;
 use Tools\Exceptionist;
 
 /**
- * MenuBuilder Helper
+ * MenuBuilder Helper.
  *
  * An helper to generate the admin menus.
  * @property \MeTools\View\Helper\DropdownHelper $Dropdown
@@ -45,7 +45,7 @@ class MenuBuilderHelper extends Helper
      * @param array $links Array of links parameters
      * @param array $options Array of options and HTML attributes. These will be
      *  applied to all generated links
-     * @return array Array of links as html string
+     * @return array<string> Array of links as html string
      */
     protected function buildLinks(array $links, array $options = []): array
     {
@@ -55,20 +55,20 @@ class MenuBuilderHelper extends Helper
     /**
      * Gets all valid methods from the `MenuHelper` provided by a plugin
      * @param string $plugin Plugin name
-     * @return array
+     * @return array<string>
      * @since 2.30.0
      */
     public function getMethods(string $plugin): array
     {
-        $childMethods = get_child_methods(App::className($plugin . '.MenuHelper', 'View/Helper') ?? '') ?: [];
+        $class = App::className($plugin . '.MenuHelper', 'View/Helper');
 
-        return array_values(array_filter($childMethods, fn(string $childMethod): bool => !str_starts_with($childMethod, '_')));
+        return array_clean($class ? get_child_methods($class) : [], fn(string $method): bool => !str_starts_with($method, '_'));
     }
 
     /**
      * Generates all menus for a plugin
      * @param string $plugin Plugin name
-     * @return array Menus
+     * @return array<string, array> Menus
      */
     public function generate(string $plugin): array
     {
@@ -76,12 +76,11 @@ class MenuBuilderHelper extends Helper
         if (!$className) {
             return [];
         }
-        $helper = $this->getView()->loadHelper($plugin . '.Menu', compact('className'));
+        $Helper = $this->getView()->loadHelper($plugin . '.Menu', compact('className'));
 
         //Calls dynamically each method
-        $menus = [];
         foreach ($this->getMethods($plugin) as $method) {
-            $callable = [$helper, $method];
+            $callable = [$Helper, $method];
             if (is_callable($callable)) {
                 $args = call_user_func($callable);
                 if (!$args) {
@@ -95,7 +94,7 @@ class MenuBuilderHelper extends Helper
             }
         }
 
-        return $menus;
+        return $menus ?? [];
     }
 
     /**

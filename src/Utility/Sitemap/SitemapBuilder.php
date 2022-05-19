@@ -33,8 +33,9 @@ class SitemapBuilder
     public static function getMethods(string $plugin): CollectionInterface
     {
         $class = $plugin . '\Utility\Sitemap\Sitemap';
+        $methods = class_exists($class) ? get_child_methods($class) : [];
 
-        return collection(get_child_methods($class) ?: [])->map(fn(string $name): array => ['class' => $class] + compact('name'));
+        return collection($methods)->map(fn(string $name): array => ['class' => $class] + compact('name'));
     }
 
     /**
