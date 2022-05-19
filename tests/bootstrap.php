@@ -75,6 +75,9 @@ Configure::write('App', [
         'templates' => [APP . 'templates' . DS],
     ],
 ]);
+/**
+ * @todo these are to be removed as soon as possible
+ */
 Configure::write('Error.ignoredDeprecationPaths', [
     '*/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php',
     '*/cakephp/cakephp/src/I18n/Time.php',
