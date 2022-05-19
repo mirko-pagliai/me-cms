@@ -47,7 +47,7 @@ class StaticPage
             $paths = array_map(fn(string $plugin): array => [$plugin, Plugin::templatePath($plugin) . 'StaticPages'], Plugin::all(['mecms_core' => false]));
             array_unshift($paths, ['App', array_value_first(App::path('templates')) . 'StaticPages']);
 
-            return array_combine(array_column($paths, 0), array_column($paths, 1));
+            return array_clean(array_combine(array_column($paths, 0), array_column($paths, 1), 'file_exists'));
         }, 'static_pages');
     }
 
