@@ -57,7 +57,7 @@ class StaticPage
      */
     public static function all(): CollectionInterface
     {
-        $getSlug = fn(string $relativePathname): string => Filesystem::instance()->normalizePath(substr($relativePathname, 0, strrpos($relativePathname, '.' . self::EXTENSION)));
+        $getSlug = fn(string $relativePathname): string => str_replace('\\', '/', substr($relativePathname, 0, strrpos($relativePathname, '.' . self::EXTENSION)));
 
         /** @var array<\Symfony\Component\Finder\SplFileInfo> $files */
         $files = iterator_to_array((new Finder())->in(self::getPaths())->name('*.' . self::EXTENSION));
