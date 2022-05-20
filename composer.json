@@ -23,7 +23,7 @@
         "mirko-pagliai/cakephp-stop-spam": "^1.1.5",
         "mirko-pagliai/cakephp-thumber": "^1.10",
         "mirko-pagliai/cakephp-tokens": "^1.3.4",
-        "mirko-pagliai/me-tools": "^2.20.9",
+        "mirko-pagliai/me-tools": "^2.21",
         "mirko-pagliai/php-tools": "^1.5.9",
         "mirko-pagliai/php-thumber": "^1.4.1",
         "thecodingmachine/safe": "^1.1.3",
@@ -80,7 +80,7 @@
         "test": "rm -f -r /tmp/cake* && phpunit",
         "coverage": "XDEBUG_MODE=coverage phpunit --coverage-html=coverage",
         "phpstan": "phpstan.phar analyse",
-        "psalm": "psalm.phar",
+        "psalm": "psalm.phar --php-version=8.0",
         "stan": [
             "@stan-setup",
             "@phpstan",
