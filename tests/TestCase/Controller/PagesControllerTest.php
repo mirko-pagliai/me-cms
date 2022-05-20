@@ -57,7 +57,9 @@ class PagesControllerTest extends ControllerTestCase
         Cache::clear('static_pages');
         $slug = 'page-from-app';
         $url = ['_name' => 'page', $slug];
+//        $this->disableErrorHandlerMiddleware();
         $this->get($url);
+//        dd($this->_getBodyAsString());
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page');
         $this->assertTemplate('StaticPages' . DS . $slug . '.php');

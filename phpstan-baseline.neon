@@ -136,7 +136,7 @@ parameters:
 			path: src/Utility/Sitemap/Sitemap.php
 
 		-
-			message: "#^Ternary operator condition is always false\\.$#"
+			message: "#^Parameter \\#3 \\$length of function substr expects int\\|null, int\\|false given\\.$#"
 			count: 1
 			path: src/Utility/StaticPage.php
 
