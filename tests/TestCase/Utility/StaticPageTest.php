@@ -59,43 +59,43 @@ class StaticPageTest extends TestCase
         $this->assertContainsOnlyInstancesOf(FrozenTime::class, $pages->extract('modified'));
 
         //Checks filenames
-        $this->assertEquals([
+        $this->assertEqualsCanonicalizing([
             'page-from-app',
-            'cookies-policy-it',
             'cookies-policy',
+            'cookies-policy-it',
+            'test-from-plugin',
             'page-on-first-from-plugin',
             'page_on_second_from_plugin',
-            'test-from-plugin',
         ], $pages->extract('filename')->toArray());
 
         //Checks paths
-        $this->assertEquals([
+        $this->assertEqualsCanonicalizing([
             'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'templates' . DS . 'StaticPages' . DS . 'page-from-app.' . StaticPage::EXTENSION,
-            'templates' . DS . 'StaticPages' . DS . 'cookies-policy-it.' . StaticPage::EXTENSION,
             'templates' . DS . 'StaticPages' . DS . 'cookies-policy.' . StaticPage::EXTENSION,
+            'templates' . DS . 'StaticPages' . DS . 'cookies-policy-it.' . StaticPage::EXTENSION,
+            $TestPluginPath . 'test-from-plugin.' . StaticPage::EXTENSION,
             $TestPluginPath . 'first-folder' . DS . 'page-on-first-from-plugin.' . StaticPage::EXTENSION,
             $TestPluginPath . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin.' . StaticPage::EXTENSION,
-            $TestPluginPath . 'test-from-plugin.' . StaticPage::EXTENSION,
         ], $pages->extract('path')->toArray());
 
         //Checks slugs
-        $this->assertEquals([
+        $this->assertEqualsCanonicalizing([
             'page-from-app',
-            'cookies-policy-it',
             'cookies-policy',
+            'cookies-policy-it',
+            'test-from-plugin',
             'first-folder/page-on-first-from-plugin',
             'first-folder/second_folder/page_on_second_from_plugin',
-            'test-from-plugin',
         ], $pages->extract('slug')->toArray());
 
         //Checks titles
-        $this->assertEquals([
+        $this->assertEqualsCanonicalizing([
             'Page From App',
-            'Cookies Policy It',
             'Cookies Policy',
+            'Cookies Policy It',
+            'Test From Plugin',
             'Page On First From Plugin',
             'Page On Second From Plugin',
-            'Test From Plugin',
         ], $pages->extract('title')->toArray());
     }
 
@@ -109,13 +109,13 @@ class StaticPageTest extends TestCase
 
         //Gets all pages from slugs
         $pages = array_map([StaticPage::class, 'get'], StaticPage::all()->extract('slug')->toArray());
-        $this->assertEquals([
+        $this->assertEqualsCanonicalizing([
             DS . 'StaticPages' . DS . 'page-from-app',
-            'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy-it',
             'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy',
+            'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy-it',
+            'TestPlugin.' . DS . 'StaticPages' . DS . 'test-from-plugin',
             'TestPlugin.' . DS . 'StaticPages' . DS . 'first-folder' . DS . 'page-on-first-from-plugin',
             'TestPlugin.' . DS . 'StaticPages' . DS . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin',
-            'TestPlugin.' . DS . 'StaticPages' . DS . 'test-from-plugin',
         ], $pages);
 
         //Tries to get a no existing page
@@ -154,68 +154,5 @@ class StaticPageTest extends TestCase
             'TestPlugin' => Plugin::templatePath('TestPlugin') . 'StaticPages',
         ], $result);
         $this->assertEquals(Cache::read('paths', 'static_pages'), $result);
-    }
-
-    /**
-     * Test for `getSlug()` method
-     * @requires OS Linux
-     * @test
-     */
-    public function testGetSlug(): void
-    {
-        foreach (['my-file', '/first/second/my-file'] as $file) {
-            $this->assertEquals('my-file', StaticPage::getSlug($file, '/first/second'));
-            $this->assertEquals('my-file', StaticPage::getSlug($file, '/first/second/'));
-            $this->assertEquals('my-file', StaticPage::getSlug($file . '.' . StaticPage::EXTENSION, '/first/second'));
-        }
-
-        $this->assertEquals('first/my-file', StaticPage::getSlug('first/my-file.' . StaticPage::EXTENSION, '/first/second'));
-        $this->assertEquals('third/my-file', StaticPage::getSlug('/first/second/third/my-file.' . StaticPage::EXTENSION, '/first/second'));
-    }
-
-    /**
-     * Test for `getSlug()` method on Windows
-     * @requires OS WIN32|WINNT
-     * @test
-     */
-    public function testGetSlugWin(): void
-    {
-        foreach ([
-            '\\first\\second' => '\\first\\second\\my-file',
-            '\\first\\second\\' => '\\first\\second\\my-file',
-            'C:\\\\first' => 'C:\\\\first\\my-file',
-        ] as $relativePath => $absolutePath) {
-            $this->assertEquals('my-file', StaticPage::getSlug($absolutePath, $relativePath));
-            $this->assertEquals('my-file', StaticPage::getSlug($absolutePath . '.' . StaticPage::EXTENSION, $relativePath));
-        }
-
-        $this->assertEquals('second/my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first'));
-        $this->assertEquals('second/my-file', StaticPage::getSlug('\\first\\second\\my-file.' . StaticPage::EXTENSION, '\\first\\'));
-    }
-
-    /**
-     * Test for `getTitle()` method
-     * @test
-     */
-    public function testGetTitle(): void
-    {
-        $expected = [
-            'Page From App',
-            'Cookies Policy It',
-            'Cookies Policy',
-            'Page On First From Plugin',
-            'Page On Second From Plugin',
-            'Test From Plugin',
-        ];
-
-        $getTitles = function (array $pathsOrSlugs): array {
-            return array_map(function (string $pathOrSlug): string {
-                return StaticPage::getTitle($pathOrSlug);
-            }, $pathsOrSlugs);
-        };
-
-        $this->loadPlugins(['TestPlugin' => []]);
-        $this->assertSame($expected, $getTitles(StaticPage::all()->extract('path')->toArray()));
-        $this->assertSame($expected, $getTitles(StaticPage::all()->extract('slug')->toArray()));
     }
 }

@@ -81,11 +81,7 @@ Configure::write('App', [
 Configure::write('Error.ignoredDeprecationPaths', [
     '*/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php',
     '*/cakephp/cakephp/src/I18n/Time.php',
-    '*/cakephp/cakephp/src/Routing/Router.php',
-    '*/cakephp/cakephp/src/Routing/Route/Route.php',
     '*/crabstudio/recaptcha/src/Controller/Component/RecaptchaComponent.php',
-    '*/mirko-pagliai/*/config/routes.php',
-    '*/mirko-pagliai/cakephp-tokens/src/Utility/TokenTrait.php',
 ]);
 Configure::write('Session', ['defaults' => 'php']);
 Configure::write('Assets.target', TMP . 'assets');
