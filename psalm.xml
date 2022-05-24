@@ -45,8 +45,8 @@
             </errorLevel>
         </TypeDoesNotContainType>
 
-        <UndefinedGlobalVariable errorLevel="suppress" />
         <UndefinedConstant errorLevel="suppress" />
+        <UndefinedGlobalVariable errorLevel="suppress" />
         <UndefinedMagicMethod errorLevel="suppress" />
         <UndefinedMethod errorLevel="suppress" />
         <UndefinedThisPropertyFetch errorLevel="suppress" />
