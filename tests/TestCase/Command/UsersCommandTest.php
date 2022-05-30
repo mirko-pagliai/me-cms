@@ -40,6 +40,18 @@ class UsersCommandTest extends TestCase
     ];
 
     /**
+     * Test for `getUsersRows()` method
+     * @test
+     */
+    public function testGetUsersRows(): void
+    {
+        $result = $this->Command->getUsersRows();
+        $this->assertSame('Active', $result[0]['status']);
+        $this->assertSame('Pending', $result[1]['status']);
+        $this->assertSame('Banned', $result[2]['status']);
+    }
+
+    /**
      * Test for `execute()` method
      * @test
      */

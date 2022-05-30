@@ -39,10 +39,10 @@ class UsersCommand extends Command
     }
 
     /**
-     * Internal method to get formatted users data rows
-     * @return array
+     * Get formatted users data as rows
+     * @return array<string, string>
      */
-    protected function getUsersRows(): array
+    public function getUsersRows(): array
     {
         $this->loadModel('MeCms.Users');
 
@@ -61,16 +61,16 @@ class UsersCommand extends Command
                 }
 
                 return [
-                    (string)$user->get('id'),
-                    $user->get('username'),
-                    $user->get('group')->get('label') ?: $user->get('group'),
-                    $user->get('full_name'),
-                    $user->get('email'),
-                    (string)$user->get('post_count'),
-                    $status,
-                    $created,
+                    'id' => (string)$user->get('id'),
+                    'username' => $user->get('username'),
+                    'group' => $user->get('group')->get('label') ?: $user->get('group'),
+                    'full_name' => $user->get('full_name'),
+                    'email' => $user->get('email'),
+                    'post_count' => (string)$user->get('post_count'),
+                    'status' => $status,
+                    'created' => $created,
                 ];
-            })->toList();
+            })->toArray();
     }
 
     /**
