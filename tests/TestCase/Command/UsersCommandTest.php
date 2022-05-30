@@ -60,8 +60,7 @@ class UsersCommandTest extends TestCase
         /** @var \MeCms\Model\Table\UsersTable $Users */
         $Users = $this->getTable('MeCms.Users');
         $this->Command->Users = $Users;
-        $expectedRows = $this->invokeMethod($this->Command, 'getUsersRows');
-        array_unshift($expectedRows, ['<info>ID</info>', '<info>Username</info>', '<info>Group</info>', '<info>Name</info>', '<info>Email</info>', '<info>Posts</info>', '<info>Status</info>', '<info>Date</info>']);
+        $expectedRows = [['<info>ID</info>', '<info>Username</info>', '<info>Group</info>', '<info>Name</info>', '<info>Email</info>', '<info>Posts</info>', '<info>Status</info>', '<info>Date</info>'], ...$this->Command->getUsersRows()];
 
         $this->exec('me_cms.users');
         $this->assertExitWithSuccess();
