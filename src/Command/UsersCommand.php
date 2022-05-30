@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace MeCms\Command;
 
+use Cake\Collection\CollectionInterface;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
@@ -48,29 +49,18 @@ class UsersCommand extends Command
 
         return $this->Users->find()
             ->contain('Groups')
+            ->formatResults(fn(CollectionInterface $results): CollectionInterface => $results->map(fn(User $user): array => [
+                'id' => (string)$user->get('id'),
+                'username' => $user->get('username'),
+                'group' => $user->get('group')->get('label') ?: $user->get('group'),
+                'full_name' => $user->get('full_name'),
+                'email' => $user->get('email'),
+                'post_count' => (string)$user->get('post_count'),
+                'status' => $user->get('banned') ? __d('me_cms', 'Banned') : ($user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending')),
+                (string)$user->get('created'),
+            ]))
             ->all()
-            ->map(function (User $user): array {
-                $status = $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending');
-                if ($user->get('banned')) {
-                    $status = __d('me_cms', 'Banned');
-                }
-
-                $created = $user->get('created');
-                if (is_object($created) && method_exists($created, 'i18nFormat')) {
-                    $created = $created->i18nFormat(FORMAT_FOR_MYSQL);
-                }
-
-                return [
-                    'id' => (string)$user->get('id'),
-                    'username' => $user->get('username'),
-                    'group' => $user->get('group')->get('label') ?: $user->get('group'),
-                    'full_name' => $user->get('full_name'),
-                    'email' => $user->get('email'),
-                    'post_count' => (string)$user->get('post_count'),
-                    'status' => $status,
-                    'created' => $created,
-                ];
-            })->toList();
+            ->toList();
     }
 
     /**
