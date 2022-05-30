@@ -40,7 +40,7 @@ class UsersCommand extends Command
 
     /**
      * Get formatted users data as rows
-     * @return array<string, string>
+     * @return string[][]
      */
     public function getUsersRows(): array
     {
@@ -70,7 +70,7 @@ class UsersCommand extends Command
                     'status' => $status,
                     'created' => $created,
                 ];
-            })->toArray();
+            })->toList();
     }
 
     /**
