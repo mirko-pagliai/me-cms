@@ -59,6 +59,7 @@ class UsersCommand extends Command
                 'status' => $user->get('banned') ? __d('me_cms', 'Banned') : ($user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending')),
                 (string)$user->get('created'),
             ]))
+            ->orderAsc('Users.id')
             ->all()
             ->toList();
     }
