@@ -24,7 +24,6 @@ $this->append('actions', $this->Html->button(
     ['controller' => 'PostsCategories', 'action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
-$this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'years']);
 ?>
 
 <?= $this->Form->createInline(null, ['class' => 'filter-form', 'type' => 'get']) ?>
@@ -58,11 +57,11 @@ $this->Library->datepicker('#created', ['format' => 'MM-YYYY', 'viewMode' => 'ye
             'default' => $this->getRequest()->getQuery('priority'),
             'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
         ]);
-        echo $this->Form->datepicker('created', [
-            'data-date-format' => 'YYYY-MM',
+        echo $this->Form->control('created', [
             'default' => $this->getRequest()->getQuery('created'),
             'placeholder' => __d('me_cms', 'month'),
             'size' => 3,
+            'type' => 'month',
         ]);
         echo $this->Form->control('tag', [
             'default' => $this->getRequest()->getQuery('tag'),

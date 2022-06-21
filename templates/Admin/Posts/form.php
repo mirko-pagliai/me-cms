@@ -14,7 +14,6 @@ declare(strict_types=1);
  */
 $this->extend('MeCms./common/form');
 $this->Library->ckeditor();
-$this->Library->datetimepicker();
 $this->Library->slugify();
 $this->Asset->script('MeCms.admin/tags', ['block' => 'script_bottom']);
 
@@ -40,7 +39,7 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
             'empty' => $emptyCategory,
             'label' => I18N_CATEGORY,
         ]);
-        echo $this->Form->datetimepicker('created', [
+        echo $this->Form->control('created', [
             'help' => [I18N_USE_CURRENT_DATETIME, I18N_DELAY_PUBLICATION],
             'label' => I18N_DATE,
         ]);

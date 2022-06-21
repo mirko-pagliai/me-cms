@@ -68,8 +68,6 @@ class PostsTable extends PostsAndPagesTables
      */
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
     {
-        parent::beforeMarshal($event, $data, $options);
-
         if (!empty($data['tags_as_string'])) {
             $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']) ?: []);
 

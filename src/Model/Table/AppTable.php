@@ -64,28 +64,6 @@ abstract class AppTable extends Table
     }
 
     /**
-     * Called before request data is converted into entities
-     * @param \Cake\Event\Event $event Event object
-     * @param \ArrayObject $data Request data
-     * @param \ArrayObject $options Options
-     * @return void
-     * @since 2.26.6
-     */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
-    {
-        if (array_key_exists('created', $data->getArrayCopy())) {
-            if (is_string($data['created'])) {
-                try {
-                    $data['created'] = new FrozenTime($data['created']);
-                } catch (Exception $e) {
-                }
-            } elseif (empty($data['created'])) {
-                $data['created'] = new FrozenTime();
-            }
-        }
-    }
-
-    /**
      * Delete all keys from the cache
      * @return bool `true` if the cache was successfully cleared, `false` otherwise
      */

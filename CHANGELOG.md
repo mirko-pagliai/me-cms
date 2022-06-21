@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.8
+* external "datetimepicker" libraries are no longer used, but the functions of
+    modern browsers are used;
 * improved the `UserCommand`.
 
 ### 2.30.7-RC4
