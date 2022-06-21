@@ -35,7 +35,7 @@ jobs:
                 docker run --rm --name=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=test -p 5432:5432 -d postgres:9.6
             fi
 
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
 
         - name: Validate composer.json and composer.lock
           run: composer validate --strict
@@ -98,7 +98,7 @@ jobs:
       PHP_VERSION: '8.0'
 
     steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
 
         - name: Setup PHP
           uses: shivammathur/setup-php@v2
@@ -144,7 +144,7 @@ jobs:
       PHP_VERSION: '8.0'
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
