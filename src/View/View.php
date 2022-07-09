@@ -77,8 +77,8 @@ class View extends AppView
             $this->setTheme(getConfig('default.theme'));
         }
 
-        $this->loadHelper('Html', ['className' => 'MeTools.Html']);
-        $this->loadHelper('Form', ['className' => 'MeTools.Form']);
+        $this->loadHelper('Html', ['className' => 'MeTools.BootstrapHtml']);
+        $this->loadHelper('Form', ['className' => 'MeTools.BootstrapForm']);
         $this->loadHelper('MeTools.Dropdown');
         $this->loadHelper('MeTools.Icon');
         $this->loadHelper('MeTools.Library');
