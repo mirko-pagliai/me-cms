@@ -139,18 +139,8 @@ body {
 form.filter-form {
     background: #f5f5f5;
     border-radius: .5rem;
-    margin-bottom: 1.5rem;
+    margin: .25rem 0 1rem;
     padding: .75rem;
-}
-
-/* Filter forms, fieldsets */
-form.filter-form fieldset {
-    width: 100%;
-}
-
-/* Filter forms, fieldsets, children except the legend */
-form.filter-form fieldset > :not(legend) {
-    margin-top: .75rem;
 }
 
 /* Filter forms, legends */
@@ -160,9 +150,10 @@ form.filter-form legend {
     font-family: Arial, sans-serif;
     font-size: .875rem;
     font-weight: bold;
-    margin-bottom: 0;
+    margin: .25rem 0;
     padding: 0 .25rem;
     text-transform: uppercase;
+    width: 100%;
 }
 
 /* Filter forms, legends on hover */
@@ -178,6 +169,27 @@ form.filter-form legend .far,
 form.filter-form legend .fas {
     font-size: 1rem;
     margin-right: .3rem;
+}
+
+/* Filter forms, columns */
+form.filter-form .col-12 {
+    margin-top: .75rem;
+}
+
+/* Filter forms, form controls */
+form.filter-form .form-control {
+    min-height: calc(1.5em + .5rem + 2px);
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    border-radius: .25rem;
+}
+
+/* Filter forms, button */
+form.filter-form .btn {
+    --bs-btn-padding-y: .25rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .875rem;
+    --bs-btn-border-radius: .25rem;
 }
 
 /* -------------------------------- */
@@ -212,7 +224,7 @@ ul.actions li:last-child {
     background-color: #777;
     color: #fff;
     font-size: .75rem;
-    line-height: 1.2rem;
+    line-height: 1.1rem;
     margin-left: .4rem;
     vertical-align: bottom;
 }
