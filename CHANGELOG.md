@@ -3,7 +3,8 @@
 ### 2.30.8
 * external "datetimepicker" libraries are no longer used, but the functions of
     modern browsers are used;
-* improved the `UserCommand`.
+* improved the `UserCommand`;
+* some i18n constants were incorporated by `me-tools`.
 
 ### 2.30.7-RC4
 * added `last_logins` field to user table. This field is used instead of files.
