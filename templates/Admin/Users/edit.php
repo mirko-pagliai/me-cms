@@ -18,7 +18,7 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
 
 <?= $this->Form->create($user); ?>
 <div class="row">
-    <div class="col-lg-3 order-12">
+    <div class="col-lg-3 order-1">
         <div class="float-form">
         <?= $this->Form->control('group_id', ['label' => __d('me_cms', 'User group')]) ?>
         </div>

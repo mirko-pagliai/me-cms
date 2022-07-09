@@ -22,7 +22,7 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
 
 <?= $this->Form->create($page); ?>
 <div class="row">
-    <div class="col-lg-3 order-12">
+    <div class="col-lg-3 order-1">
         <div class="float-form">
         <?php
         echo $this->Form->control('category_id', [
