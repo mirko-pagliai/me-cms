@@ -79,7 +79,7 @@ class View extends AppView
 
         $this->loadHelper('Html', ['className' => 'MeTools.BootstrapHtml']);
         $this->loadHelper('Form', ['className' => 'MeTools.BootstrapForm']);
-        $this->loadHelper('MeTools.Dropdown');
+        $this->loadHelper('Dropdown', ['className' => 'MeTools.BootstrapDropdown']);
         $this->loadHelper('MeTools.Icon');
         $this->loadHelper('MeTools.Library');
         $this->loadHelper('Paginator', ['className' => 'MeTools.Paginator']);
