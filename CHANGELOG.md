@@ -2,7 +2,8 @@
 ## 2.30 branch
 ### 2.30.9
 * `MenuBuilderHelper::renderAsDropdown()` method no longer exists. The html code
-    should be generated directly from the template.
+    should be generated directly from the template;
+* `userbar.css` no longer exists.
 
 ### 2.30.8
 * external "datetimepicker" libraries are no longer used, but the functions of
