@@ -17,7 +17,7 @@ declare(strict_types=1);
  */
 ?>
 
-<nav id="userbar" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav id="userbar" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow border-bottom border-white fw-semibold fs-6">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#userbarNav" aria-controls="userbarNav" aria-expanded="false" aria-label="<?= __d('me_cms', 'Toggle navigation') ?>">
           <span class="navbar-toggler-icon"></span>
@@ -29,6 +29,7 @@ declare(strict_types=1);
             <ul class="navbar-nav">
                 <li class="nav-item dropwdown">
                 <?php
+                    $params = ['controller' => 'Users', 'plugin' => 'MeCms'];
                     $text = $this->Auth->user('full_name');
                     if ($this->Auth->user('picture')) {
                         $text = $this->Thumb->fit($this->Auth->user('picture'), ['height' => 23], ['class' => 'me-2 rounded-circle']) . $text;
@@ -37,11 +38,11 @@ declare(strict_types=1);
                     $this->Dropdown->start($text, ['class' => 'nav-link']);
 
                     if (getConfig('users.login_log')) {
-                        $this->Dropdown->link(I18N_LAST_LOGIN, ['controller' => 'Users', 'action' => 'lastLogin', 'plugin' => 'MeCms']);
+                        $this->Dropdown->link(I18N_LAST_LOGIN, $params + ['action' => 'lastLogin']);
                     }
 
-                    $this->Dropdown->link(__d('me_cms', 'Change picture'), ['controller' => 'Users', 'action' => 'changePicture', 'plugin' => 'MeCms']);
-                    $this->Dropdown->link(__d('me_cms', 'Change password'), ['controller' => 'Users', 'action' => 'changePassword', 'plugin' => 'MeCms']);
+                    $this->Dropdown->link(__d('me_cms', 'Change picture'), $params + ['action' => 'changePicture',]);
+                    $this->Dropdown->link(__d('me_cms', 'Change password'), $params + ['action' => 'changePassword']);
                     $this->Dropdown->link(__d('me_cms', 'Logout'), ['_name' => 'logout']);
 
                     echo $this->Dropdown->end(['class' => 'dropdown-menu-end']);
