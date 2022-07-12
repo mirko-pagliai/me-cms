@@ -17,15 +17,16 @@ use MeCms\Core\Plugin;
 
 $this->extend('MeCms.common/userbar');
 
-$menus[] = $this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], [
-    'class' => 'nav-link',
-    'icon' => 'home',
-    'target' => '_blank',
-]);
+$list[] = $this->Html->li($this->Html->link(__d('me_cms', 'Homepage'), ['_name' => 'homepage'], ['class' => 'nav-link', 'icon' => 'home', 'target' => '_blank']), ['class' => 'nav-item']);
 
-//Renders menus for each plugin
 foreach (Plugin::all(['mecms_core' => false]) as $plugin) {
-    $menus += $this->MenuBuilder->renderAsDropdown($plugin, ['class' => 'nav-link d-lg-none']);
+    //Creates a `<li>` tag with a dropdown for each menu of each plugin
+    foreach ($this->MenuBuilder->generate($plugin) as $menu) {
+        $titleOptions = optionsParser($menu['titleOptions'])->append('class', 'nav-link');
+        $this->Dropdown->start($menu['title'], $titleOptions->toArray());
+        array_map(fn(array $link) => call_user_func_array([$this->Dropdown, 'link'], $link), $menu['links']);
+        $list[] = $this->Html->li($this->Dropdown->end(), ['class' => 'nav-item dropdown']);
+    }
 }
 
-echo $this->Html->ul($menus, ['class' => 'navbar-nav mr-auto'], ['class' => 'dropdown nav-item']);
+echo $this->Html->ul($list, ['class' => 'navbar-nav me-auto']);
