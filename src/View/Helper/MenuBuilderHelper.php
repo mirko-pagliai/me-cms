@@ -132,15 +132,4 @@ class MenuBuilderHelper extends Helper
 
         return $this->Html->div('card', $title . PHP_EOL . $links);
     }
-
-    /**
-     * Renders a menu as "dropdown"
-     * @param string $plugin Plugin name
-     * @param array $titleOptions HTML attributes of the title
-     * @return array
-     */
-    public function renderAsDropdown(string $plugin, array $titleOptions = []): array
-    {
-        return array_map(fn(array $menu): ?string => $this->Dropdown->menu($menu['title'], $this->buildLinks($menu['links'], ['class' => 'dropdown-item']), optionsParser($menu['titleOptions'], $titleOptions)->toArray()), $this->generate($plugin));
-    }
 }
