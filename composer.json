@@ -16,7 +16,7 @@
         "dereuromark/cakephp-feed": "^2.0",
         "donatj/phpuseragentparser": "^v1",
         "enyo/dropzone": "^5.1",
-        "fortawesome/font-awesome": "^5.1",
+        "fortawesome/font-awesome": ">5.1",
         "league/commonmark": "^1",
         "mirko-pagliai/cakephp-assets": "^1.5.7",
         "mirko-pagliai/cakephp-recaptcha-mailhide": "^1.4.6",
