@@ -17,7 +17,7 @@ declare(strict_types=1);
  */
 ?>
 
-<nav id="userbar" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm border-bottom border-white fw-semibold fs-6">
+<nav id="userbar" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm border-bottom border-white fs-6">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#userbarNav" aria-controls="userbarNav" aria-expanded="false" aria-label="<?= __d('me_cms', 'Toggle navigation') ?>">
           <span class="navbar-toggler-icon"></span>
