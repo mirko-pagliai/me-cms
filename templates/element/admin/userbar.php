@@ -30,7 +30,7 @@ foreach ($pluginMenus as $menu) {
     $titleOptions = optionsParser($menu['titleOptions'])->append('class', 'nav-link');
     $this->Dropdown->start($menu['title'], $titleOptions->toArray());
     array_map(fn(array $link) => call_user_func_array([$this->Dropdown, 'link'], $link), $menu['links']);
-    echo $this->Html->li($this->Dropdown->end(), ['class' => 'nav-item dropdown']);
+    echo $this->Html->li($this->Dropdown->end(), ['class' => 'd-lg-none nav-item dropdown']);
 }
 ?>
 </ul>
