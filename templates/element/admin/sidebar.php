@@ -35,7 +35,7 @@ $pluginsMenus = array_merge(...array_map(fn(string $plugin): array => $this->Men
         <div class="collapse" data-bs-parent="#sidebar-cards" id="collapse-sidebar-<?= slug($plugin) ?>">
             <div class="card-body p-0">
             <?php
-                $list = array_map(fn($link): string => call_user_func_array([$this->Html, 'link'], [...$link, ['class' => 'd-block px-3 py-2 text-decoration-none']]), $menu['links']);
+                $list = array_map(fn($link): string => call_user_func_array([$this->Html, 'link'], [...$link, ['class' => 'd-block px-3 py-2']]), $menu['links']);
 
                 echo $this->Html->ul($list, ['class' => 'list-group list-group-flush'], ['class' => 'list-group-item p-0']);
             ?>
