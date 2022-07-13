@@ -58,11 +58,6 @@ body {
 /* -------------------------------- */
 /*              Content             */
 /* -------------------------------- */
-/* Content */
-#content {
-    padding: 1.25rem;
-}
-
 /* Content, title */
 #content > div > h2 {
     font-size: 1.5rem;
