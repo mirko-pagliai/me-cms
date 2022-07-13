@@ -49,7 +49,7 @@ declare(strict_types=1);
         <?= $this->element('MeCms.admin/userbar') ?>
         <div class="container-fluid">
             <div class="row">
-                <nav id="sidebar" class="col d-none d-lg-block">
+                <nav id="sidebar" class="col d-none d-lg-block border-end p-3">
                     <?php
                     //Sidebar is cached only if debugging is disabled
                     $sidebarCache = getConfig('debug') ? null : [

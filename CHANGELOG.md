@@ -1,8 +1,8 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.9
-* `MenuBuilderHelper::renderAsDropdown()` method no longer exists. The html code
-    should be generated directly from the template;
+* `MenuBuilderHelper::renderAsDropdown()` and `renderAsCollapse()` methods no
+    longer exist. The html code should be generated directly from the template;
 * `userbar.css` no longer exists.
 
 ### 2.30.8
