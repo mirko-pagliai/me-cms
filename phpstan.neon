@@ -19,7 +19,7 @@ parameters:
     checkMissingIterableValueType: false
     treatPhpDocTypesAsCertain: false
 
-    excludes_analyse:
+    excludePaths:
         - config/Migrations/
         - config/elfinder/
         - tests/test_app/
