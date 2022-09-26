@@ -222,7 +222,7 @@
 * added a basic style sheet for printing;
 * fixed bug for some no existing photos;
 * improved code for `PostsTable::queryForRelated()` method;
-* `add` and` edit` template files for `Posts`, `PostsCategories`, ` Pages` and
+* `add` and `edit` template files for `Posts`, `PostsCategories`, `Pages` and
     `PagesCategories` have been merged into the `form` templates respectively;
 * added `admin/priority-badge` template element;
 * updated for `php-tools` `1.2.8` and `me-tools` `2.18.11`.
@@ -593,7 +593,7 @@
 * `LoginRecorder` is now a component and returns the correct IP on localhost.
     You must first set the user ID with the `config()` method and the `user`
     value;
-* fixed bug https://github.com/cakephp/cakephp/pull/10417;
+* fixed bug <https://github.com/cakephp/cakephp/pull/10417>;
 * added `AppTable::beforeSave()`. It checks if the `created` property is an
     instance of `Time`;
 * static pages uses cache. `StaticPage::all()` returns an array of `Entity`;
