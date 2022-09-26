@@ -34,12 +34,12 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
         'label' => I18N_EMAIL,
     ]);
     echo $this->Form->control('password', [
-        'autocomplete' => 'off',
-        'button' => $this->Html->button('', '#', [
+        'append-text' => $this->Html->button('', '#', [
             'class' => 'display-password',
             'icon' => 'eye',
             'title' => I18N_SHOW_HIDE_PASSWORD,
          ]),
+        'autocomplete' => 'off',
         'help' => __d('me_cms', 'If you want to change the password just ' .
             'type a new one. Otherwise, leave the field empty'),
         'label' => I18N_PASSWORD,
@@ -47,12 +47,12 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
         'value' => '',
     ]);
     echo $this->Form->control('password_repeat', [
-        'autocomplete' => 'off',
-        'button' => $this->Html->button('', '#', [
+        'append-text' => $this->Html->button('', '#', [
             'class' => 'display-password',
             'icon' => 'eye',
             'title' => I18N_SHOW_HIDE_PASSWORD,
          ]),
+        'autocomplete' => 'off',
         'help' => __d('me_cms', 'If you want to change the password just ' .
             'type a new one. Otherwise, leave the field empty'),
         'label' => I18N_REPEAT_PASSWORD,

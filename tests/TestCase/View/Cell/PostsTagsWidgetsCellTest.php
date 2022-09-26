@@ -27,7 +27,7 @@ use MeCms\TestSuite\CellTestCase;
 class PostsTagsWidgetsCellTest extends CellTestCase
 {
     /**
-     * @var array
+     * @var array<string, string|int|array>
      */
     protected array $example = [
         'limit' => 2,
@@ -41,7 +41,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     ];
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Tags',
@@ -139,8 +139,8 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/h4',
             ['div' => ['class' => 'widget-content']],
             'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/posts/tag/tag'],
-            ['div' => ['class' => 'form-group input select']],
-            'select' => ['name' => 'q', 'onchange' => 'sendForm(this)', 'class' => 'form-control'],
+            ['div' => ['class' => 'input mb-3 select']],
+            'select' => ['name' => 'q', 'class' => 'form-control form-select', 'onchange' => 'sendForm(this)'],
             ['option' => ['value' => '']],
             '/option',
             ['option' => ['value' => 'cat']],
@@ -158,6 +158,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $result = $this->Widget->widget($widget, ['render' => 'form', 'style' => false] + $this->example)->render();
         $this->assertHtml($expected, $result);
 
+        //Tries to render as list
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -187,7 +188,6 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        //Tries to render as list
         $result = $this->Widget->widget($widget, ['render' => 'list', 'style' => false] + $this->example)->render();
         $this->assertHtml($expected, $result);
 

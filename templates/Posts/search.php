@@ -22,7 +22,7 @@ $this->Breadcrumbs->add($title, ['_name' => 'postsSearch']);
 
 echo $this->Form->create(null, ['type' => 'get', 'url' => ['_name' => 'postsSearch']]);
 echo $this->Form->control('p', [
-    'button' => $this->Form->submit(__d('me_cms', 'Search'), ['class' => 'btn-primary', 'icon' => 'search']),
+    'append-text' => $this->Form->submit(__d('me_cms', 'Search'), ['class' => 'btn-primary', 'icon' => 'search']),
     'default' => $this->getRequest()->getQuery('p'),
     'label' => false,
     'placeholder' => sprintf('%s...', __d('me_cms', 'Search')),

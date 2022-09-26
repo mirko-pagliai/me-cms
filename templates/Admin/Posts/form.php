@@ -88,7 +88,7 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
         </div>
         <?php
         echo $this->Form->control('add_tags', [
-            'button' => $this->Form->button('', [
+            'append-text' => $this->Form->button('', [
                 'class' => 'btn-success',
                 'icon' => 'plus',
                 'id' => 'tags-input-button',

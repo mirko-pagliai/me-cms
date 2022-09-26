@@ -48,22 +48,22 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
         'label' => I18N_REPEAT_EMAIL,
     ]);
     echo $this->Form->control('password', [
-        'autocomplete' => 'off',
-        'button' => $this->Html->button('', '#', [
+        'append-text' => $this->Html->button('', '#', [
             'class' => 'display-password',
             'icon' => 'eye',
             'title' => I18N_SHOW_HIDE_PASSWORD,
          ]),
+        'autocomplete' => 'off',
         'label' => I18N_PASSWORD,
         'value' => '',
     ]);
     echo $this->Form->control('password_repeat', [
-        'autocomplete' => 'off',
-        'button' => $this->Html->button('', '#', [
+        'append-text' => $this->Html->button('', '#', [
             'class' => 'display-password',
             'icon' => 'eye',
             'title' => I18N_SHOW_HIDE_PASSWORD,
          ]),
+        'autocomplete' => 'off',
         'label' => I18N_REPEAT_PASSWORD,
         'value' => '',
     ]);

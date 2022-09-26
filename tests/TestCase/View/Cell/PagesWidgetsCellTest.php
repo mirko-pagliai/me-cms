@@ -48,8 +48,8 @@ class PagesWidgetsCellTest extends CellTestCase
             '/h4',
             ['div' => ['class' => 'widget-content']],
             'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/pages/category/category'],
-            ['div' => ['class' => 'form-group input select']],
-            'select' => ['name' => 'q', 'onchange' => 'sendForm(this)', 'class' => 'form-control'],
+            ['div' => ['class' => 'input mb-3 select']],
+            'select' => ['name' => 'q', 'class' => 'form-control form-select', 'onchange' => 'sendForm(this)'],
             ['option' => ['value' => '']],
             '/option',
             ['option' => ['value' => 'first-page-category']],
@@ -64,7 +64,8 @@ class PagesWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget)->render());
+        $result = $this->Widget->widget($widget)->render();
+        $this->assertHtml($expected, $result);
 
         //Renders as list
         $expected = [
@@ -94,7 +95,8 @@ class PagesWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget, ['render' => 'list'])->render());
+        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
+        $this->assertHtml($expected, $result);
 
         //Empty on categories index
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));
@@ -146,7 +148,8 @@ class PagesWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget)->render());
+        $result = $this->Widget->widget($widget)->render();
+        $this->assertHtml($expected, $result);
 
         //Empty on categories index
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'pagesCategories']));

@@ -3,7 +3,8 @@
 ### 2.30.9
 * `MenuBuilderHelper::renderAsDropdown()` and `renderAsCollapse()` methods no
     longer exist. The html code should be generated directly from the template;
-* `userbar.css` no longer exists.
+* `userbar.css` no longer exists;
+* several changes for new `BootstrapHtml` and `BootstrapForm` helpers.
 
 ### 2.30.8
 * external "datetimepicker" libraries are no longer used, but the functions of
