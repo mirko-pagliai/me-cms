@@ -36,6 +36,7 @@ class PostsWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `categories()` method
+     * @uses \MeCms\View\Cell\PostsWidgetsCell::categories()
      * @test
      */
     public function testCategories(): void
@@ -116,6 +117,7 @@ class PostsWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `latest()` method
+     * @uses \MeCms\View\Cell\PostsWidgetsCell::latest()
      * @test
      */
     public function testLatest(): void
@@ -136,8 +138,8 @@ class PostsWidgetsCellTest extends CellTestCase
             ' ',
             '/i',
             ' ',
-            ['a' => ['href' => '/post/' . $post->slug, 'title' => $post->title]],
-            $post->title,
+            ['a' => ['href' => '/post/' . $post->get('slug'), 'title' => $post->get('title')]],
+            $post->get('title'),
             '/a',
             '/li',
             '/ul',
@@ -161,8 +163,8 @@ class PostsWidgetsCellTest extends CellTestCase
             ' ',
             '/i',
             ' ',
-            ['a' => ['href' => '/post/' . $post->slug, 'title' => $post->title]],
-            $post->title,
+            ['a' => ['href' => '/post/' . $post->get('slug'), 'title' => $post->get('title')]],
+            $post->get('title'),
             '/a',
             '/li',
             ['li' => true],
@@ -170,8 +172,8 @@ class PostsWidgetsCellTest extends CellTestCase
             ' ',
             '/i',
             ' ',
-            ['a' => ['href' => '/post/' . $otherPost->slug, 'title' => $otherPost->title]],
-            $otherPost->title,
+            ['a' => ['href' => '/post/' . $otherPost->get('slug'), 'title' => $otherPost->get('title')]],
+            $otherPost->get('title'),
             '/a',
             '/li',
             '/ul',
@@ -200,6 +202,7 @@ class PostsWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `months()` method
+     * @uses \MeCms\View\Cell\PostsWidgetsCell::months()
      * @test
      */
     public function testMonths(): void
@@ -288,6 +291,7 @@ class PostsWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `search()` method
+     * @uses \MeCms\View\Cell\PostsWidgetsCell::search()
      * @test
      */
     public function testSearch(): void

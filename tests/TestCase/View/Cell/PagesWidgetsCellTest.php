@@ -35,6 +35,7 @@ class PagesWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `categories()` method
+     * @uses \MeCms\View\Cell\PagesWidgetsCell::categories()
      * @test
      */
     public function testCategories(): void
@@ -115,6 +116,7 @@ class PagesWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `pages()` method
+     * @uses \MeCms\View\Cell\PagesWidgetsCell::pages()
      * @test
      */
     public function testPages(): void

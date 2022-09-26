@@ -60,6 +60,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `getFontSizes()` method
+     * @uses \MeCms\View\Cell\PostsTagsWidgetsCell::getFontSizes()
      * @test
      */
     public function testGetFontSizes(): void
@@ -80,6 +81,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `popular()` method
+     * @uses \MeCms\View\Cell\PostsTagsWidgetsCell::popular()
      * @test
      */
     public function testPopular(): void
@@ -106,7 +108,8 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget, $this->example)->render());
+        $result = $this->Widget->widget($widget, $this->example)->render();
+        $this->assertHtml($expected, $result);
 
         //Tries with a custom prefix
         $expected = [
@@ -242,6 +245,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     /**
      * Test for `popular()` method, with tags that have the same `post_count`
      *  value
+     * @uses \MeCms\View\Cell\PostsTagsWidgetsCell::popular()
      * @test
      */
     public function testPopularWithTagsSamePostCount(): void
@@ -273,7 +277,8 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget, $this->example)->render());
+        $result = $this->Widget->widget($widget, $this->example)->render();
+        $this->assertHtml($expected, $result);
 
         //Tests cache
         $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->getCacheName());
