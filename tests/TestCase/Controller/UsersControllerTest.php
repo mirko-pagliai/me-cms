@@ -38,7 +38,7 @@ class UsersControllerTest extends ControllerTestCase
     protected TokenComponent $Token;
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Tokens',

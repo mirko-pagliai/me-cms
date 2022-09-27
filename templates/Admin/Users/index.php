@@ -78,6 +78,9 @@ $this->append('actions', $this->Html->button(
     </thead>
     <tbody>
         <?php foreach ($users as $user) : ?>
+            <?php
+			    /** @var \MeCms\Model\Entity\User $user */
+            ?>
             <tr>
                 <td class="text-nowrap text-center">
                     <code><?= $user->get('id') ?></code>
@@ -137,7 +140,7 @@ $this->append('actions', $this->Html->button(
                 </td>
                 <td class="text-nowrap text-center">
                     <?php
-                    if ($user->get('post_count')) {
+                    if ($user->hasValue('post_count')) {
                         echo $this->Html->link(
                             (string)$user->get('post_count'),
                             ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->get('id')]],

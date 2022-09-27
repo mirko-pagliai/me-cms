@@ -41,7 +41,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     ];
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Tags',

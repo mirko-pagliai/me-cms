@@ -26,7 +26,7 @@ class AddUserCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Users',

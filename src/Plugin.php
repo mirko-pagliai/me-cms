@@ -74,6 +74,7 @@ class Plugin extends BasePlugin
             if (!$app->getPlugins()->has($plugin)) {
                 //Initializes bootstrapped plugins
                 if (method_exists($plugin, 'bootstrap')) {
+					/** @var \Cake\Core\PluginInterface $plugin */
                     $plugin = new $plugin();
                     $plugin->bootstrap($app);
                 }

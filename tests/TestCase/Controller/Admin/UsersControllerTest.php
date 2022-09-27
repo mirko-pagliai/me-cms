@@ -30,7 +30,7 @@ use Tools\Filesystem;
 class UsersControllerTest extends ControllerTestCase
 {
     /**
-     * @var array
+     * @var array<string, int|string>
      */
     protected static array $example = [
         'group_id' => 1,
@@ -44,7 +44,7 @@ class UsersControllerTest extends ControllerTestCase
     ];
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Users',

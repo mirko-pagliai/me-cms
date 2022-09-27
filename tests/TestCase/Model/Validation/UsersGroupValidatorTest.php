@@ -29,7 +29,7 @@ class UsersGroupValidatorTest extends ValidationTestCase
 
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.UsersGroups',

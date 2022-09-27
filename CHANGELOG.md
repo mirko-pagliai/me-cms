@@ -5,7 +5,8 @@
     modern browsers are used;
 * added `ContactUsForm::verifyEmail()`. This also simplifies testing;
 * improved the `UserCommand`;
-* some i18n constants were incorporated by `me-tools`.
+* some i18n constants were incorporated by `me-tools`;
+* large improvements suggested by phpstan.
 
 ### 2.30.7-RC4
 * added `last_logins` field to user table. This field is used instead of files.

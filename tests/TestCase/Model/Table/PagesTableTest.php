@@ -25,7 +25,7 @@ class PagesTableTest extends PostsAndPagesTablesTestCase
 {
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',

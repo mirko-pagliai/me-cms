@@ -32,7 +32,7 @@ class UsersCommandTest extends TestCase
     public bool $autoInitializeClass = true;
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Users',

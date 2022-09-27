@@ -31,7 +31,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
 {
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Users',

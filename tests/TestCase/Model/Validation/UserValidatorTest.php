@@ -37,7 +37,7 @@ class UserValidatorTest extends ValidationTestCase
 
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Users',

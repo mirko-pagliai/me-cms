@@ -28,7 +28,7 @@ use MeCms\TestSuite\ControllerTestCase;
 class SystemsControllerTest extends ControllerTestCase
 {
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',

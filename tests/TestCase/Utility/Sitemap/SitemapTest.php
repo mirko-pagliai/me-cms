@@ -27,7 +27,7 @@ use MeCms\Utility\Sitemap\Sitemap;
 class SitemapTest extends TestCase
 {
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',
