@@ -1,5 +1,4 @@
-<?php /** @noinspection ALL */
-/** @noinspection PhpClassNamingConventionInspection */
+<?php
 declare(strict_types=1);
 
 /**

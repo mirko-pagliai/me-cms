@@ -16,9 +16,9 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
+use Cake\Console\TestSuite\StubConsoleOutput;
 use Cake\Database\Driver\Postgres;
 use Cake\Database\Driver\Sqlite;
-use Cake\Console\TestSuite\StubConsoleOutput;
 use MeCms\Command\VersionUpdatesCommand;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;

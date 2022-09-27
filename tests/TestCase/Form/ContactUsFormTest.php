@@ -49,12 +49,12 @@ class ContactUsFormTest extends TestCase
     {
         parent::setUp();
 
-		$this->Form = $this->getMockBuilder(ContactUsForm::class)
-			->onlyMethods(['verifyEmail'])
-			->getMock();
+        $this->Form = $this->getMockBuilder(ContactUsForm::class)
+            ->onlyMethods(['verifyEmail'])
+            ->getMock();
 
-		//`ContactUsForm::verifyEmail()` will return `false` only for `spammer@example.com` value
-		$this->Form->method('verifyEmail')->willReturnCallback(fn(string $email): bool => $email !== 'spammer@example.com');
+        //`ContactUsForm::verifyEmail()` will return `false` only for `spammer@example.com` value
+        $this->Form->method('verifyEmail')->willReturnCallback(fn(string $email): bool => $email !== 'spammer@example.com');
     }
 
     /**
