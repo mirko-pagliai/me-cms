@@ -78,9 +78,6 @@ $this->append('actions', $this->Html->button(
     </thead>
     <tbody>
         <?php foreach ($users as $user) : ?>
-            <?php
-			    /** @var \MeCms\Model\Entity\User $user */
-            ?>
             <tr>
                 <td class="text-nowrap text-center">
                     <code><?= $user->get('id') ?></code>
