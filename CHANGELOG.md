@@ -3,6 +3,7 @@
 ### 2.30.8
 * external "datetimepicker" libraries are no longer used, but the functions of
     modern browsers are used;
+* added `ContactUsForm::verifyEmail()`. This also simplifies testing;
 * improved the `UserCommand`;
 * some i18n constants were incorporated by `me-tools`.
 
