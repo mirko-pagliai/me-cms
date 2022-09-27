@@ -34,7 +34,7 @@ class SitemapBuilderTest extends TestCase
     protected SitemapBuilder $SitemapBuilder;
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',

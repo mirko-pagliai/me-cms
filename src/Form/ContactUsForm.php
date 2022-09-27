@@ -1,4 +1,5 @@
 <?php
+/** @noinspection ALL */
 declare(strict_types=1);
 
 /**
@@ -30,6 +31,18 @@ class ContactUsForm extends Form
 {
     use MailerAwareTrait;
 
+	/**
+	 * Internal method to check, via `SpamDetector`, if an email address
+	 * 	has been reported as a spammer
+	 * @param string $email Email to check
+	 * @return bool
+	 * @throws \Exception
+	 */
+	protected function verifyEmail(string $email): bool
+	{
+		return (new SpamDetector())->email($email)->verify();
+	}
+
     /**
      * @todo to be implemented
      */
@@ -57,7 +70,7 @@ class ContactUsForm extends Form
         $validator->add('email', [
             'notSpammer' => [
                 'message' => __d('me_cms', 'This email address has been reported as a spammer'),
-                'rule' => fn(string $value): bool => (new SpamDetector())->email($value)->verify(),
+				'rule' => fn(string $value): bool => $this->verifyEmail($value),
             ],
         ])->requirePresence('email');
 

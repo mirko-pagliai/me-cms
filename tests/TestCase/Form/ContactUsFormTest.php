@@ -32,7 +32,7 @@ class ContactUsFormTest extends TestCase
     public ContactUsForm $Form;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected array $example = [
         'email' => 'mymail@example.com',
@@ -49,9 +49,12 @@ class ContactUsFormTest extends TestCase
     {
         parent::setUp();
 
-        $this->Form = $this->getMockBuilder(ContactUsForm::class)
-            ->setMethods(null)
-            ->getMock();
+		$this->Form = $this->getMockBuilder(ContactUsForm::class)
+			->onlyMethods(['verifyEmail'])
+			->getMock();
+
+		//`ContactUsForm::verifyEmail()` will return `false` only for `spammer@example.com` value
+		$this->Form->method('verifyEmail')->willReturnCallback(fn(string $email): bool => $email !== 'spammer@example.com');
     }
 
     /**

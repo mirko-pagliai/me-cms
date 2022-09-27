@@ -33,7 +33,7 @@ class AppControllerTest extends ControllerTestCase
     protected AppController $Controller;
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',

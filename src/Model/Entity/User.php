@@ -44,7 +44,7 @@ class User extends Entity
 {
     /**
      * Fields that can be mass assigned
-     * @var array
+     * @var array<string, bool>
      */
     protected $_accessible = [
         '*' => true,
@@ -55,7 +55,7 @@ class User extends Entity
 
     /**
      * Virtual fields that should be exposed
-     * @var array
+     * @var array<string>
      */
     protected $_virtual = ['full_name', 'picture'];
 

@@ -26,7 +26,7 @@ use MeCms\TestSuite\ControllerTestCase;
 class PostsControllerTest extends ControllerTestCase
 {
     /**
-     * @var array
+     * @var array<string, int|string>
      */
     protected static array $example = [
         'user_id' => 1,
@@ -37,7 +37,7 @@ class PostsControllerTest extends ControllerTestCase
     ];
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Posts',

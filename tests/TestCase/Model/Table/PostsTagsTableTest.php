@@ -26,7 +26,7 @@ class PostsTagsTableTest extends TableTestCase
 {
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Posts',

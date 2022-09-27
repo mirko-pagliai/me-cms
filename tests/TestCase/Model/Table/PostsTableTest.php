@@ -34,7 +34,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
 {
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Posts',

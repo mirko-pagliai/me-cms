@@ -18,7 +18,7 @@ namespace MeCms\Test\TestCase\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Database\Driver\Postgres;
 use Cake\Database\Driver\Sqlite;
-use Cake\TestSuite\Stub\ConsoleOutput;
+use Cake\Console\TestSuite\StubConsoleOutput;
 use MeCms\Command\VersionUpdatesCommand;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
@@ -37,7 +37,7 @@ class VersionUpdatesCommandTest extends TestCase
     protected bool $autoInitializeClass = true;
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',
@@ -137,13 +137,13 @@ class VersionUpdatesCommandTest extends TestCase
 
         $expectedMethods = get_child_methods(VersionUpdatesCommand::class);
         $Command = $this->getMockBuilder(VersionUpdatesCommand::class)
-            ->setMethods($expectedMethods)
+            ->onlyMethods($expectedMethods)
             ->getMock();
 
         foreach ($expectedMethods as $method) {
             $Command->expects($this->once())->method($method);
         }
 
-        $this->assertNull($Command->run([], new ConsoleIo(new ConsoleOutput(), new ConsoleOutput())));
+        $this->assertNull($Command->run([], new ConsoleIo(new StubConsoleOutput(), new StubConsoleOutput())));
     }
 }

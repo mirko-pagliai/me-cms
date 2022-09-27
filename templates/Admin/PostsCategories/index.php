@@ -80,7 +80,7 @@ $this->append('actions', $this->Html->button(
                 </td>
                 <td class="text-nowrap text-center">
                     <?php
-                    if ($category->get('post_count')) {
+                    if ($category->hasValue('post_count')) {
                         echo $this->Html->link(
                             (string)$category->get('post_count'),
                             ['controller' => 'Posts', 'action' => 'index', '?' => ['category' => $category->get('id')]],

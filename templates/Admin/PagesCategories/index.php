@@ -80,7 +80,7 @@ $this->append('actions', $this->Html->button(
                 </td>
                 <td class="text-nowrap text-center">
                     <?php
-                    if ($category->get('page_count')) {
+                    if ($category->hasValue('page_count')) {
                         echo $this->Html->link(
                             (string)$category->get('page_count'),
                             ['controller' => 'Pages', 'action' => 'index', '?' => ['category' => $category->get('id')]],

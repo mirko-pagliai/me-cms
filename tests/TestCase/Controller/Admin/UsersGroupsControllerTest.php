@@ -24,7 +24,7 @@ use MeCms\TestSuite\ControllerTestCase;
 class UsersGroupsControllerTest extends ControllerTestCase
 {
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.UsersGroups',

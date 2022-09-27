@@ -31,7 +31,7 @@ class UsersGroup extends Entity
 {
     /**
      * Fields that can be mass assigned
-     * @var array
+     * @var array<string, bool>
      */
     protected $_accessible = [
         '*' => true,

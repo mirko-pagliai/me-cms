@@ -16,15 +16,14 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Command\Install;
 
 use Cake\Console\ConsoleIo;
-use Cake\TestSuite\Stub\ConsoleOutput;
+use Cake\Console\TestSuite\StubConsoleOutput;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * CreateSamplePostCommandTest class
  * @property \MeCms\Command\Install\CreateSamplePostCommand $Command
- * @property \Cake\TestSuite\Stub\ConsoleOutput|null $_err
- * @property \Cake\TestSuite\Stub\ConsoleOutput|null $_out
+ * @property \Cake\Console\TestSuite\StubConsoleOutput|null $_out
  */
 class CreateSamplePostCommandTest extends TestCase
 {
@@ -36,7 +35,7 @@ class CreateSamplePostCommandTest extends TestCase
     public bool $autoInitializeClass = true;
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Posts',
@@ -81,9 +80,9 @@ class CreateSamplePostCommandTest extends TestCase
         $Posts->method('save')->will($this->returnValue(false));
         $Posts->deleteAll(['id is NOT' => null]);
 
-        $this->_err = new ConsoleOutput();
+        $this->_err = new StubConsoleOutput();
         $this->Command->Posts = $Posts;
-        $this->assertSame(0, $this->Command->run(['-v'], new ConsoleIo(new ConsoleOutput(), $this->_err)));
+        $this->assertSame(0, $this->Command->run(['-v'], new ConsoleIo(new StubConsoleOutput(), $this->_err)));
         $this->assertErrorContains(I18N_OPERATION_NOT_OK);
     }
 }

@@ -17,9 +17,9 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
-use Cake\Mailer\Email;
 use Cake\Mailer\TransportFactory;
 use Cake\Utility\Security;
+use MeCms\Mailer\Mailer;
 
 ini_set('intl.default_locale', 'en_US');
 date_default_timezone_set('UTC');
@@ -132,7 +132,14 @@ Log::setConfig('error', [
 ]);
 
 TransportFactory::setConfig('debug', ['className' => 'Debug']);
-Email::setConfig('default', ['transport' => 'debug', 'log' => true]);
+Mailer::setConfig('default', ['transport' => 'debug', 'log' => true]);
+
+/**
+ * @todo To be removed in a later version
+ */
+if (!class_exists('Cake\Console\TestSuite\StubConsoleOutput')) {
+	class_alias('Cake\TestSuite\Stub\ConsoleOutput', 'Cake\Console\TestSuite\StubConsoleOutput');
+}
 
 $_SERVER['PHP_SELF'] = '/';
 

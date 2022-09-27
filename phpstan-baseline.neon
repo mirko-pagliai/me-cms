@@ -11,11 +11,6 @@ parameters:
 			path: src/Controller/PostsCategoriesController.php
 
 		-
-			message: "#^Parameter \\#1 \\$array of function array_values expects array, iterable given\\.$#"
-			count: 1
-			path: src/Controller/PostsCategoriesController.php
-
-		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:readMany\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 1
 			path: src/Controller/PostsCategoriesController.php
@@ -31,11 +26,6 @@ parameters:
 			path: src/Controller/PostsController.php
 
 		-
-			message: "#^Parameter \\#1 \\$array of function array_values expects array, iterable given\\.$#"
-			count: 3
-			path: src/Controller/PostsController.php
-
-		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:readMany\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 3
 			path: src/Controller/PostsController.php
@@ -47,11 +37,6 @@ parameters:
 
 		-
 			message: "#^Cannot cast array\\|string\\|null to string\\.$#"
-			count: 2
-			path: src/Controller/PostsTagsController.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_values expects array, iterable given\\.$#"
 			count: 2
 			path: src/Controller/PostsTagsController.php
 
@@ -141,11 +126,6 @@ parameters:
 			path: src/Utility/StaticPage.php
 
 		-
-			message: "#^Cannot unset offset 'class' on array\\('aria\\-expanded' \\=\\> 'true'\\)\\.$#"
-			count: 1
-			path: src/View/Helper/MenuBuilderHelper.php
-
-		-
 			message: "#^Variable \\$categories might not be defined\\.$#"
 			count: 2
 			path: templates/Admin/Pages/form.php
@@ -153,11 +133,6 @@ parameters:
 		-
 			message: "#^Variable \\$page might not be defined\\.$#"
 			count: 1
-			path: templates/Admin/Pages/form.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 18
 			path: templates/Admin/Pages/form.php
 
 		-
@@ -171,33 +146,13 @@ parameters:
 			path: templates/Admin/Pages/index.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 41
-			path: templates/Admin/Pages/index.php
-
-		-
 			message: "#^Variable \\$pages might not be defined\\.$#"
 			count: 1
 			path: templates/Admin/Pages/index_statics.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 5
-			path: templates/Admin/Pages/index_statics.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 1
-			path: templates/Admin/PagesCategories/form.php
-
-		-
 			message: "#^Variable \\$categories might not be defined\\.$#"
 			count: 1
-			path: templates/Admin/PagesCategories/index.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 13
 			path: templates/Admin/PagesCategories/index.php
 
 		-
@@ -211,11 +166,6 @@ parameters:
 			path: templates/Admin/Posts/form.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 28
-			path: templates/Admin/Posts/form.php
-
-		-
 			message: "#^Variable \\$title might not be defined\\.$#"
 			count: 1
 			path: templates/Admin/Posts/form.php
@@ -226,18 +176,8 @@ parameters:
 			path: templates/Admin/Posts/index.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 49
-			path: templates/Admin/Posts/index.php
-
-		-
 			message: "#^Variable \\$category might not be defined\\.$#"
 			count: 1
-			path: templates/Admin/PostsCategories/form.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 9
 			path: templates/Admin/PostsCategories/form.php
 
 		-
@@ -251,18 +191,8 @@ parameters:
 			path: templates/Admin/PostsCategories/index.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 13
-			path: templates/Admin/PostsCategories/index.php
-
-		-
 			message: "#^Variable \\$tag might not be defined\\.$#"
 			count: 1
-			path: templates/Admin/PostsTags/edit.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 6
 			path: templates/Admin/PostsTags/edit.php
 
 		-
@@ -271,24 +201,9 @@ parameters:
 			path: templates/Admin/PostsTags/index.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 20
-			path: templates/Admin/PostsTags/index.php
-
-		-
 			message: "#^Variable \\$explorer might not be defined\\.$#"
 			count: 1
 			path: templates/Admin/Systems/browser.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 4
-			path: templates/Admin/Systems/browser.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 8
-			path: templates/Admin/Systems/changelogs.php
 
 		-
 			message: "#^Variable \\$assetsSize might not be defined\\.$#"
@@ -316,11 +231,6 @@ parameters:
 			path: templates/Admin/Systems/tmp_viewer.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 17
-			path: templates/Admin/Systems/tmp_viewer.php
-
-		-
 			message: "#^Variable \\$thumbsSize might not be defined\\.$#"
 			count: 2
 			path: templates/Admin/Systems/tmp_viewer.php
@@ -331,19 +241,9 @@ parameters:
 			path: templates/Admin/Systems/tmp_viewer.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 16
-			path: templates/Admin/Users/add.php
-
-		-
 			message: "#^Variable \\$user might not be defined\\.$#"
 			count: 1
 			path: templates/Admin/Users/add.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 11
-			path: templates/Admin/Users/change_password.php
 
 		-
 			message: "#^Variable \\$user might not be defined\\.$#"
@@ -351,24 +251,9 @@ parameters:
 			path: templates/Admin/Users/change_password.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 3
-			path: templates/Admin/Users/change_picture.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 14
-			path: templates/Admin/Users/edit.php
-
-		-
 			message: "#^Variable \\$user might not be defined\\.$#"
 			count: 1
 			path: templates/Admin/Users/edit.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 41
-			path: templates/Admin/Users/index.php
 
 		-
 			message: "#^Variable \\$users might not be defined\\.$#"
@@ -376,16 +261,6 @@ parameters:
 			path: templates/Admin/Users/index.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 3
-			path: templates/Admin/Users/last_login.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 13
-			path: templates/Admin/Users/view.php
-
-		-
 			message: "#^Variable \\$user might not be defined\\.$#"
 			count: 16
 			path: templates/Admin/Users/view.php
@@ -396,39 +271,14 @@ parameters:
 			path: templates/Admin/UsersGroups/add.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 8
-			path: templates/Admin/UsersGroups/add.php
-
-		-
 			message: "#^Variable \\$group might not be defined\\.$#"
 			count: 1
-			path: templates/Admin/UsersGroups/edit.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 8
 			path: templates/Admin/UsersGroups/edit.php
 
 		-
 			message: "#^Variable \\$groups might not be defined\\.$#"
 			count: 1
 			path: templates/Admin/UsersGroups/index.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 16
-			path: templates/Admin/UsersGroups/index.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 7
-			path: templates/Admin/common/index.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 5
-			path: templates/Admin/common/view.php
 
 		-
 			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$page\\.$#"
@@ -441,29 +291,9 @@ parameters:
 			path: templates/Pages/view.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 22
-			path: templates/Pages/view.php
-
-		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 1
-			path: templates/PagesCategories/index.php
-
-		-
 			message: "#^Variable \\$categories might not be defined\\.$#"
 			count: 1
 			path: templates/PagesCategories/index.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 4
-			path: templates/PagesCategories/index.php
-
-		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 1
-			path: templates/PagesCategories/view.php
 
 		-
 			message: "#^Variable \\$category might not be defined\\.$#"
@@ -471,18 +301,8 @@ parameters:
 			path: templates/PagesCategories/view.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 8
-			path: templates/PagesCategories/view.php
-
-		-
 			message: "#^Variable \\$posts might not be defined\\.$#"
 			count: 1
-			path: templates/Posts/index.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 3
 			path: templates/Posts/index.php
 
 		-
@@ -492,11 +312,6 @@ parameters:
 
 		-
 			message: "#^Variable \\$start might not be defined\\.$#"
-			count: 3
-			path: templates/Posts/index_by_date.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
 			count: 3
 			path: templates/Posts/index_by_date.php
 
@@ -511,17 +326,7 @@ parameters:
 			path: templates/Posts/search.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 12
-			path: templates/Posts/search.php
-
-		-
 			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$post\\.$#"
-			count: 1
-			path: templates/Posts/view.php
-
-		-
-			message: "#^Undefined variable\\: \\$this$#"
 			count: 1
 			path: templates/Posts/view.php
 
@@ -531,23 +336,8 @@ parameters:
 			path: templates/Posts/view.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 27
-			path: templates/Posts/view.php
-
-		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 1
-			path: templates/PostsCategories/index.php
-
-		-
 			message: "#^Variable \\$categories might not be defined\\.$#"
 			count: 1
-			path: templates/PostsCategories/index.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 4
 			path: templates/PostsCategories/index.php
 
 		-
@@ -556,23 +346,8 @@ parameters:
 			path: templates/PostsCategories/view.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 7
-			path: templates/PostsCategories/view.php
-
-		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 1
-			path: templates/PostsTags/index.php
-
-		-
 			message: "#^Variable \\$tags might not be defined\\.$#"
 			count: 1
-			path: templates/PostsTags/index.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 5
 			path: templates/PostsTags/index.php
 
 		-
@@ -581,11 +356,6 @@ parameters:
 			path: templates/PostsTags/view.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 6
-			path: templates/PostsTags/view.php
-
-		-
 			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$page\\.$#"
 			count: 1
 			path: templates/StaticPages/cookies-policy-it.php
@@ -596,11 +366,6 @@ parameters:
 			path: templates/StaticPages/cookies-policy-it.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 5
-			path: templates/StaticPages/cookies-policy-it.php
-
-		-
 			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$page\\.$#"
 			count: 1
 			path: templates/StaticPages/cookies-policy.php
@@ -608,11 +373,6 @@ parameters:
 		-
 			message: "#^Variable \\$page might not be defined\\.$#"
 			count: 2
-			path: templates/StaticPages/cookies-policy.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 5
 			path: templates/StaticPages/cookies-policy.php
 
 		-
@@ -621,39 +381,9 @@ parameters:
 			path: templates/Systems/contact_us.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 10
-			path: templates/Systems/contact_us.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 2
-			path: templates/Systems/ip_not_allowed.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 1
-			path: templates/Systems/offline.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 9
-			path: templates/Users/activation_resend.php
-
-		-
 			message: "#^Variable \\$user might not be defined\\.$#"
 			count: 1
 			path: templates/Users/activation_resend.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 9
-			path: templates/Users/login.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 9
-			path: templates/Users/password_forgot.php
 
 		-
 			message: "#^Variable \\$user might not be defined\\.$#"
@@ -661,139 +391,14 @@ parameters:
 			path: templates/Users/password_forgot.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 10
-			path: templates/Users/password_reset.php
-
-		-
 			message: "#^Variable \\$user might not be defined\\.$#"
 			count: 1
 			path: templates/Users/password_reset.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 16
-			path: templates/Users/signup.php
-
-		-
 			message: "#^Variable \\$user might not be defined\\.$#"
 			count: 1
 			path: templates/Users/signup.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 5
-			path: templates/cell/PagesWidgets/categories_as_form.php
-
-		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 1
-			path: templates/cell/PagesWidgets/categories_as_list.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 3
-			path: templates/cell/PagesWidgets/categories_as_list.php
-
-		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 1
-			path: templates/cell/PagesWidgets/pages.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 3
-			path: templates/cell/PagesWidgets/pages.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 4
-			path: templates/cell/PostsTagsWidgets/popular_as_cloud.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 5
-			path: templates/cell/PostsTagsWidgets/popular_as_form.php
-
-		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 1
-			path: templates/cell/PostsTagsWidgets/popular_as_list.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 3
-			path: templates/cell/PostsTagsWidgets/popular_as_list.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 5
-			path: templates/cell/PostsWidgets/categories_as_form.php
-
-		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 1
-			path: templates/cell/PostsWidgets/categories_as_list.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 3
-			path: templates/cell/PostsWidgets/categories_as_list.php
-
-		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 1
-			path: templates/cell/PostsWidgets/latest.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 3
-			path: templates/cell/PostsWidgets/latest.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 5
-			path: templates/cell/PostsWidgets/months_as_form.php
-
-		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 1
-			path: templates/cell/PostsWidgets/months_as_list.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 3
-			path: templates/cell/PostsWidgets/months_as_list.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 7
-			path: templates/cell/PostsWidgets/search.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 5
-			path: templates/common/form.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 1
-			path: templates/common/index.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 1
-			path: templates/common/view.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 6
-			path: templates/common/widget.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 1
-			path: templates/element/admin/bbcode.php
 
 		-
 			message: "#^Variable \\$loginLog might not be defined\\.$#"
@@ -801,74 +406,9 @@ parameters:
 			path: templates/element/admin/last-logins.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 1
-			path: templates/element/admin/last-logins.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 4
-			path: templates/element/admin/list-grid-buttons.php
-
-		-
 			message: "#^Variable \\$priority might not be defined\\.$#"
 			count: 1
 			path: templates/element/admin/priority-badge.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 1
-			path: templates/element/admin/priority-badge.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 4
-			path: templates/element/admin/sidebar.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 12
-			path: templates/element/admin/uploader.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 4
-			path: templates/element/admin/userbar.php
-
-		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 10
-			path: templates/element/common/userbar.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 4
-			path: templates/element/common/userbar.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 3
-			path: templates/element/cookies_policy.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 6
-			path: templates/element/footer.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 9
-			path: templates/element/login/menu.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 7
-			path: templates/element/topbar.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 4
-			path: templates/element/userbar.php
 
 		-
 			message: "#^Variable \\$page might not be defined\\.$#"
@@ -876,28 +416,13 @@ parameters:
 			path: templates/element/views/page.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 12
-			path: templates/element/views/page.php
-
-		-
 			message: "#^Variable \\$post might not be defined\\.$#"
-			count: 6
-			path: templates/element/views/post-preview.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
 			count: 6
 			path: templates/element/views/post-preview.php
 
 		-
 			message: "#^Variable \\$post might not be defined\\.$#"
 			count: 15
-			path: templates/element/views/post.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 16
 			path: templates/element/views/post.php
 
 		-
@@ -926,11 +451,6 @@ parameters:
 			path: templates/email/html/Users/activation.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 1
-			path: templates/email/html/Users/activation.php
-
-		-
 			message: "#^Variable \\$url might not be defined\\.$#"
 			count: 1
 			path: templates/email/html/Users/activation.php
@@ -946,49 +466,9 @@ parameters:
 			path: templates/email/html/Users/password_forgot.php
 
 		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 1
-			path: templates/email/html/Users/password_forgot.php
-
-		-
 			message: "#^Variable \\$url might not be defined\\.$#"
 			count: 1
 			path: templates/email/html/Users/password_forgot.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 17
-			path: templates/layout/admin.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 1
-			path: templates/layout/ajax/ajax.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 27
-			path: templates/layout/default.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 6
-			path: templates/layout/email/html/default.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 1
-			path: templates/layout/json/ajax.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 17
-			path: templates/layout/login.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 4
-			path: templates/layout/rss/default.php
 
 		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:read\\(\\) expects string, array\\|string\\|null given\\.$#"
@@ -1001,11 +481,6 @@ parameters:
 			path: tests/TestCase/Controller/PagesControllerTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$array of function array_values expects array, iterable given\\.$#"
-			count: 1
-			path: tests/TestCase/Controller/PostsCategoriesControllerTest.php
-
-		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:read\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 1
 			path: tests/TestCase/Controller/PostsCategoriesControllerTest.php
@@ -1016,11 +491,6 @@ parameters:
 			path: tests/TestCase/Controller/PostsCategoriesControllerTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$array of function array_values expects array, iterable given\\.$#"
-			count: 3
-			path: tests/TestCase/Controller/PostsControllerTest.php
-
-		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:read\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 1
 			path: tests/TestCase/Controller/PostsControllerTest.php
@@ -1029,11 +499,6 @@ parameters:
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:readMany\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 3
 			path: tests/TestCase/Controller/PostsControllerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_values expects array, iterable given\\.$#"
-			count: 2
-			path: tests/TestCase/Controller/PostsTagsControllerTest.php
 
 		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:read\\(\\) expects string, array\\|string\\|null given\\.$#"

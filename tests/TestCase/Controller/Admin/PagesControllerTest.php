@@ -27,12 +27,12 @@ class PagesControllerTest extends ControllerTestCase
 {
     /**
      * Cache keys to clear for each test
-     * @var array
+     * @var array<string>
      */
     protected array $cacheToClear = ['static_pages'];
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',

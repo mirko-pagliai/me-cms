@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Command\Install;
 
 use Cake\Console\ConsoleIo;
-use Cake\TestSuite\Stub\ConsoleOutput;
+use Cake\Console\TestSuite\StubConsoleOutput;
 use MeCms\Command\Install\FixElFinderCommand;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
@@ -75,13 +75,13 @@ class FixElFinderCommandTest extends TestCase
     public function testExecuteNotReadableFile(): void
     {
         $Command = $this->getMockBuilder(FixElFinderCommand::class)
-            ->setMethods(['createElfinderCke'])
+            ->onlyMethods(['createElfinderCke'])
             ->getMock();
 
         $Command->method('createElfinderCke')->will($this->throwException(new NotReadableException()));
 
-        $this->_err = new ConsoleOutput();
-        $this->assertSame(0, $Command->run([], new ConsoleIo(new ConsoleOutput(), $this->_err)));
+        $this->_err = new StubConsoleOutput();
+        $this->assertSame(0, $Command->run([], new ConsoleIo(new StubConsoleOutput(), $this->_err)));
         $this->assertErrorContains('Filename is not readable');
     }
 }

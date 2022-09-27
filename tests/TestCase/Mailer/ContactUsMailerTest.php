@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection ALL */
+/** @noinspection PhpClassNamingConventionInspection */
 declare(strict_types=1);
 
 /**
@@ -30,7 +31,7 @@ class ContactUsMailerTest extends TestCase
     public ContactUsMailer $Mailer;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected array $example = [
         'first_name' => 'James',

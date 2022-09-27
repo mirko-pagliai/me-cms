@@ -36,7 +36,7 @@ class Page extends PostAndPageEntity
 {
     /**
      * Virtual fields that should be exposed
-     * @var array
+     * @var array<string>
      */
     protected $_virtual = ['plain_text', 'url'];
 

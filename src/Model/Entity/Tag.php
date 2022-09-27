@@ -33,7 +33,7 @@ class Tag extends Entity
 {
     /**
      * Fields that can be mass assigned
-     * @var array
+     * @var array<string, bool>
      */
     protected $_accessible = [
         '*' => true,
@@ -44,7 +44,7 @@ class Tag extends Entity
 
     /**
      * Virtual fields that should be exposed
-     * @var array
+     * @var array<string>
      */
     protected $_virtual = ['slug', 'url'];
 
