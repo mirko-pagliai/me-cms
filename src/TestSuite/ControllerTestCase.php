@@ -18,7 +18,6 @@ namespace MeCms\TestSuite;
 
 use Cake\Event\Event;
 use MeCms\Controller\AppController;
-use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\IntegrationTestTrait;
 
 /**

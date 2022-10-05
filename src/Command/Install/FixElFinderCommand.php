@@ -45,8 +45,6 @@ class FixElFinderCommand extends Command
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return void
      * @since 2.29.2
-     * @throws \Tools\Exception\FileNotExistsException
-     * @throws \Tools\Exception\NotReadableException
      */
     protected function createConnectorMinimal(ConsoleIo $io): void
     {
@@ -65,8 +63,6 @@ class FixElFinderCommand extends Command
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return void
      * @since 2.29.2
-     * @throws \Tools\Exception\FileNotExistsException
-     * @throws \Tools\Exception\NotReadableException
      */
     protected function createElfinderCke(ConsoleIo $io): void
     {
