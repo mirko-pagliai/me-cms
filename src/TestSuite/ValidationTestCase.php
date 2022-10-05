@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use Cake\Utility\Inflector;
-use MeCms\TestSuite\TestCase;
 
 /**
  * Abstract class for test validation classes
@@ -47,7 +46,7 @@ abstract class ValidationTestCase extends TestCase
      * @param array $exclude Key to be excluded
      * @return void
      */
-    public function assertAllDataAreRequired($data, $exclude = [])
+    public function assertAllDataAreRequired(array $data, array $exclude = [])
     {
         $this->Table ?: $this->fail('The property `$this->Table` has not been set');
         $this->example ?: $this->fail('The property `$this->example` has not been set');
