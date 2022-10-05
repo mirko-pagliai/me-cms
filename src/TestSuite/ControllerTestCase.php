@@ -108,7 +108,10 @@ abstract class ControllerTestCase extends TestCase
 
         //Tries to retrieve controller and table from the class name
         if (empty($this->Controller) && $this->autoInitializeClass) {
-            /** @var class-string<\MeCms\Controller\AppController> $originClassName */
+            /**
+             * @var class-string<\MeCms\Controller\AppController> $originClassName
+             * @noinspection PhpRedundantVariableDocTypeInspection
+             */
             $originClassName = $this->getOriginClassNameOrFail($this);
             $alias = $this->getAlias($originClassName);
             $plugin = $this->getPluginName($this);

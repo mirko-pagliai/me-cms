@@ -57,7 +57,10 @@ abstract class EntityTestCase extends TestCase
         parent::setUp();
 
         if (empty($this->Entity) && $this->autoInitializeClass) {
-            /** @var class-string<\Cake\ORM\Entity> $className */
+            /**
+             * @var class-string<\Cake\ORM\Entity> $className
+             * @noinspection PhpRedundantVariableDocTypeInspection
+             */
             $className = $this->getOriginClassNameOrFail($this);
             $this->Entity = $this->getMockBuilder($className)
                 ->onlyMethods([])
