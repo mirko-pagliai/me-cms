@@ -12,6 +12,10 @@
     ],
     "require": {
         "php": ">=7.4",
+        "ext-dom": "*",
+        "ext-fileinfo": "*",
+        "ext-libxml": "*",
+        "ext-zlib": "*",
         "cakephp/cakephp": "^4.4",
         "dereuromark/cakephp-feed": "^2.0",
         "donatj/phpuseragentparser": "^v1",
