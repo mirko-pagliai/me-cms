@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use Cake\ORM\Entity;
-use MeCms\TestSuite\TestCase;
 
 /**
  * Abstract class for test entities
@@ -61,7 +60,7 @@ abstract class EntityTestCase extends TestCase
             /** @var class-string<\Cake\ORM\Entity> $className */
             $className = $this->getOriginClassNameOrFail($this);
             $this->Entity = $this->getMockBuilder($className)
-                ->setMethods(null)
+                ->onlyMethods([])
                 ->getMock();
         }
     }

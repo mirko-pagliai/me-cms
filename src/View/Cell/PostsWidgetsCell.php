@@ -98,7 +98,7 @@ class PostsWidgetsCell extends Cell
 
         $months = $this->Posts->find('active')
             ->select('created')
-            ->formatResults(fn(ResultSet $results): CollectionInterface => $results->sortBy('created', SORT_DESC)
+            ->formatResults(fn(ResultSet $results): CollectionInterface => $results->sortBy('created')
                 ->countBy(fn(Post $post): string => $post->get('created')->i18nFormat('yyyy/MM'))
                 ->map(fn(int $countBy, string $month): array => [
                     'created' => FrozenTime::createFromFormat('Y/m/d H:i:s', $month . '/01 00:00:00'),

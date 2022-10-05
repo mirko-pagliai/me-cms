@@ -19,7 +19,6 @@ use Cake\Cache\Cache;
 use Cake\Http\Response;
 use Cake\Routing\Router;
 use League\CommonMark\CommonMarkConverter;
-use MeCms\Controller\Admin\AppController;
 use MeCms\Core\Plugin;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -85,7 +84,7 @@ class SystemsController extends AppController
         $files = [];
 
         foreach (Plugin::all() as $plugin) {
-            $file = Plugin::path($plugin, 'CHANGELOG.md', false);
+            $file = Plugin::path($plugin, 'CHANGELOG.md');
 
             if (is_readable($file)) {
                 $files[strtolower($plugin)] = $Filesystem->rtr($file);
