@@ -19,7 +19,6 @@ use Cake\Collection\CollectionInterface;
 use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\ORM\ResultSet;
-use MeCms\Controller\Admin\AppController;
 use MeCms\Model\Entity\Post;
 
 /**
@@ -88,7 +87,7 @@ class PostsController extends AppController
         if ($this->getRequest()->is('edit')) {
             [$postId, $userId] = [$this->getRequest()->getParam('pass.0'), $this->Auth->user('id')];
 
-            return $postId && $userId ? $this->Posts->isOwnedBy((int)$postId, $userId) : false;
+            return $postId && $userId && $this->Posts->isOwnedBy((int)$postId, $userId);
         }
 
         //Only admins and managers can delete posts

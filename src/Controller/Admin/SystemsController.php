@@ -123,7 +123,7 @@ class SystemsController extends AppController
      */
     protected function clearSitemap(): bool
     {
-        return is_readable(SITEMAP) ? @unlink(SITEMAP) : true;
+        return !is_readable(SITEMAP) || @unlink(SITEMAP);
     }
 
     /**
