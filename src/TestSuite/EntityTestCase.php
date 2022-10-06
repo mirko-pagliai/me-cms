@@ -58,8 +58,8 @@ abstract class EntityTestCase extends TestCase
 
         if (empty($this->Entity) && $this->autoInitializeClass) {
             /**
-             * @var class-string<\Cake\ORM\Entity> $className
              * @noinspection PhpRedundantVariableDocTypeInspection
+             * @var class-string<\Cake\ORM\Entity> $className
              */
             $className = $this->getOriginClassNameOrFail($this);
             $this->Entity = $this->getMockBuilder($className)

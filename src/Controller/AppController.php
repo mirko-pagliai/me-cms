@@ -82,11 +82,11 @@ abstract class AppController extends BaseAppController
     }
 
     /**
-     * Gets the the `paging` request attribute and parameter
+     * Gets the `paging` request attribute and parameter
      * @return array
      * @since 2.27.1
      */
-    public function getPaging()
+    public function getPaging(): array
     {
         return $this->getRequest()->getAttribute('paging') ?? $this->getRequest()->getParam('paging', []);
     }

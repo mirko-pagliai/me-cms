@@ -109,14 +109,14 @@ abstract class ControllerTestCase extends TestCase
         //Tries to retrieve controller and table from the class name
         if (empty($this->Controller) && $this->autoInitializeClass) {
             /**
-             * @var class-string<\MeCms\Controller\AppController> $originClassName
              * @noinspection PhpRedundantVariableDocTypeInspection
+             * @var class-string<\MeCms\Controller\AppController> $originClassName
              */
             $originClassName = $this->getOriginClassNameOrFail($this);
             $alias = $this->getAlias($originClassName);
             $plugin = $this->getPluginName($this);
 
-            $this->Controller = $this->getMockForController($originClassName, null, $alias);
+            $this->Controller = $this->getMockForController($originClassName, [], $alias);
             $this->url = ['controller' => $alias, 'prefix' => $isAdmin ? ADMIN_PREFIX : null] + compact('plugin');
 
             $className = $this->getTableClassNameFromAlias($alias, $plugin);
