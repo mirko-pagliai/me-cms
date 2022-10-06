@@ -31,7 +31,7 @@
         "mirko-pagliai/php-tools": "^1.5.9",
         "mirko-pagliai/php-thumber": "^1.4.1",
         "thecodingmachine/safe": "^1.1.3",
-        "twbs/bootstrap": "5.2.0-beta1",
+        "twbs/bootstrap": "^5.2.2",
         "wyrihaximus/minify-html": "^2.0"
     },
     "require-dev": {
