@@ -24,7 +24,6 @@ use Cake\Log\Log;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Routing\Router;
 use DateTime;
-use MeCms\Controller\AppController;
 use Tools\Exceptionist;
 
 /**
@@ -197,7 +196,8 @@ class UsersController extends AppController
                 }
 
                 $this->Auth->setUser($user);
-                $this->LoginRecorder->setConfig('user', $user['id'])->write();
+                $this->LoginRecorder->setConfig('user', $user['id']);
+                $this->LoginRecorder->write();
 
                 //Saves the login data as cookies, if requested
                 if ($this->getRequest()->getData('remember_me')) {

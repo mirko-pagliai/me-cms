@@ -22,18 +22,18 @@ $this->append('actions', $this->Html->button(
 
 echo $this->Form->createInline(null, ['class' => 'filter-form', 'type' => 'get']);
 echo $this->Html->legend(I18N_FILTER, ['icon' => 'eye']);
-    echo $this->Form->control('id', [
-        'default' => $this->getRequest()->getQuery('id'),
-        'placeholder' => I18N_ID,
-        'size' => 1,
-    ]);
-    echo $this->Form->control('name', [
-        'default' => $this->getRequest()->getQuery('name'),
-        'placeholder' => I18N_NAME,
-        'size' => 13,
-    ]);
-    echo $this->Form->submit(null, ['icon' => 'search']);
-    echo $this->Form->end();
+echo $this->Form->control('id', [
+    'default' => $this->getRequest()->getQuery('id'),
+    'placeholder' => I18N_ID,
+    'size' => 1,
+]);
+echo $this->Form->control('name', [
+    'default' => $this->getRequest()->getQuery('name'),
+    'placeholder' => I18N_NAME,
+    'size' => 13,
+]);
+echo $this->Form->submit(null, ['icon' => 'search']);
+echo $this->Form->end();
 ?>
 
 <div class="row">
@@ -55,7 +55,7 @@ echo $this->Html->legend(I18N_FILTER, ['icon' => 'eye']);
                         ['controller' => 'Posts', 'action' => 'index', '?' => ['tag' => $tag->get('tag')]],
                         ['title' => I18N_BELONG_ELEMENT]
                     )) ?>
-                    </div>
+                </div>
                 <?php
                 $actions = [];
 

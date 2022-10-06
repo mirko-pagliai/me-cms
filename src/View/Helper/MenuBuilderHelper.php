@@ -17,7 +17,6 @@ namespace MeCms\View\Helper;
 
 use BadMethodCallException;
 use Cake\Core\App;
-use Cake\Utility\Text;
 use Cake\View\Helper;
 use Tools\Exceptionist;
 

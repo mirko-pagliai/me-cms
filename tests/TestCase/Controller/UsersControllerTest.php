@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Controller;
 
+use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -33,7 +34,7 @@ use Tokens\Controller\Component\TokenComponent;
 class UsersControllerTest extends ControllerTestCase
 {
     /**
-     * @var \Tokens\Controller\Component\TokenComponent&\PHPUnit\Framework\MockObject\MockObject
+     * @var \Tokens\Controller\Component\TokenComponent
      */
     protected TokenComponent $Token;
 
@@ -54,11 +55,7 @@ class UsersControllerTest extends ControllerTestCase
     {
         parent::setUp();
 
-        if (empty($this->Token)) {
-            /** @var \Tokens\Controller\Component\TokenComponent&\PHPUnit\Framework\MockObject\MockObject $Token */
-            $Token = $this->getMockForComponent(TokenComponent::class, null);
-            $this->Token = $Token;
-        }
+        $this->Token ??= new TokenComponent(new ComponentRegistry());
     }
 
     /**
@@ -102,14 +99,14 @@ class UsersControllerTest extends ControllerTestCase
     {
         parent::controllerSpy($event, $controller);
 
-        /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $LoginRecorder */
-        $LoginRecorder = $this->getMockForComponent(LoginRecorderComponent::class);
-        $LoginRecorder->method('setConfig')->will($this->returnSelf());
+        /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\Stub $LoginRecorder */
+        $LoginRecorder = $this->createStub(LoginRecorderComponent::class);
         $this->_controller->LoginRecorder = $LoginRecorder;
     }
 
     /**
      * Test for `beforeFilter()` method
+     * @uses \MeCms\Controller\UsersController::beforeFilter()
      * @test
      */
     public function testBeforeFilter(): void
@@ -123,6 +120,7 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Test for `activation()` method
+     * @uses \MeCms\Controller\UsersController::activation()
      * @test
      */
     public function testActivation(): void
@@ -158,6 +156,7 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Test for `activationResend()` method
+     * @uses \MeCms\Controller\UsersController::activationResend()
      * @test
      */
     public function testActivationResend(): void
@@ -197,6 +196,7 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Test for `login()` method
+     * @uses \MeCms\Controller\UsersController::login()
      * @test
      */
     public function testLogin(): void
@@ -245,6 +245,7 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Test for `login()` method, with cookies
+     * @uses \MeCms\Controller\UsersController::login()
      * @test
      */
     public function testLoginWithCookies(): void
@@ -262,8 +263,8 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertSessionEmpty('Auth');
 
-        //Gets an user and sets a password, then writes right data on cookies
-        $password = 'mypassword1!';
+        //Gets a user and sets a password, then writes right data on cookies
+        $password = 'my-password-1!';
         $user = $this->Table->findByActiveAndBanned(true, false)->first();
         $this->Table->save($user->set(compact('password') + ['password_repeat' => $password]));
         $this->cookieEncrypted('login', ['username' => $user->username] + compact('password'));
@@ -287,6 +288,7 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Test for `logout()` method
+     * @uses \MeCms\Controller\UsersController::logout()
      * @test
      */
     public function testLogout(): void
@@ -300,6 +302,7 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Test for `passwordForgot()` method
+     * @uses \MeCms\Controller\UsersController::passwordForgot()
      * @test
      */
     public function testPasswordForgot(): void
@@ -341,6 +344,7 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Test for `passwordReset()` method
+     * @uses \MeCms\Controller\UsersController::passwordReset()
      * @test
      */
     public function testPasswordReset(): void
@@ -378,11 +382,12 @@ class UsersControllerTest extends ControllerTestCase
         $this->expectException(RecordNotFoundException::class);
         $this->expectExceptionMessage('Invalid token');
         $this->disableErrorHandlerMiddleware();
-        $this->get($url + ['id' => '1'] + ['token' => 'invalidToken']);
+        $this->get($url + ['token' => 'invalidToken']);
     }
 
     /**
      * Test for `signup()` method
+     * @uses \MeCms\Controller\UsersController::signup()
      * @test
      */
     public function testSignup(): void

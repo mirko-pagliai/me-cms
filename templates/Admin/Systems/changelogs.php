@@ -17,7 +17,7 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
 ?>
 
 <div class="card card-body bg-light border-0 mb-4">
-<?php
+    <?php
     echo $this->Form->createInline(null, ['type' => 'get']);
     echo $this->Form->label('file', __d('me_cms', 'Changelog'));
     echo $this->Form->control('file', [
@@ -28,11 +28,11 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
     ]);
     echo $this->Form->submit(I18N_SELECT);
     echo $this->Form->end();
-?>
+    ?>
 </div>
 
 <?php if (!empty($changelog)) : ?>
-<div id="changelog">
-    <?= $changelog ?>
-</div>
+    <div id="changelog">
+        <?= $changelog ?>
+    </div>
 <?php endif; ?>

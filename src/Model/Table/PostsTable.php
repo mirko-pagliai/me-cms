@@ -23,11 +23,7 @@ use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
-use MeCms\Model\Table\PostsCategoriesTable;
-use MeCms\Model\Table\PostsTagsTable;
-use MeCms\Model\Table\TagsTable;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
-use MeCms\Model\Table\UsersTable;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\ORM\PostsAndPagesTables;
 use MeCms\ORM\Query;
@@ -113,8 +109,7 @@ class PostsTable extends PostsAndPagesTables
             $this->Categories->getAlias() => ['fields' => ['id', 'title', 'slug']],
             $this->Tags->getAlias() => ['sort' => ['tag' => 'ASC']],
             $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
-        ])
-        ->orderDesc(sprintf('%s.created', $this->getAlias()));
+        ])->orderDesc(sprintf('%s.created', $this->getAlias()));
     }
 
     /**

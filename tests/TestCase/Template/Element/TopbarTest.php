@@ -46,7 +46,7 @@ class TopbarTest extends TestCase
      */
     public function testTopbarFromApp(): void
     {
-$content = <<<HEREDOC
+        $content = <<<HEREDOC
 <?php
 namespace App\View\Helper;
 
