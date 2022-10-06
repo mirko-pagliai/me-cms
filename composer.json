@@ -75,14 +75,13 @@
         "check": [
             "@cs-check",
             "@update-lowest",
-            "@test",
+            "phpunit",
             "@composer update",
-            "@test",
+            "phpunit",
             "@stan"
         ],
         "cs-check": "phpcs --standard=phpcs.xml.dist",
         "cs-fix": "phpcbf --standard=phpcs.xml.dist",
-        "test": "rm -f -r /tmp/cake* && phpunit",
         "coverage": "XDEBUG_MODE=coverage phpunit --coverage-html=coverage",
         "phpstan": "phpstan.phar analyse",
         "psalm": "psalm.phar --php-version=8.0",
