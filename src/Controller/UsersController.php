@@ -196,8 +196,7 @@ class UsersController extends AppController
                 }
 
                 $this->Auth->setUser($user);
-                $this->LoginRecorder->setConfig('user', $user['id']);
-                $this->LoginRecorder->write();
+                $this->LoginRecorder->setConfig('user', $user['id'])->write();
 
                 //Saves the login data as cookies, if requested
                 if ($this->getRequest()->getData('remember_me')) {
