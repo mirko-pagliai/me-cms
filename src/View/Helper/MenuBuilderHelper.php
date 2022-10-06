@@ -35,8 +35,8 @@ class MenuBuilderHelper extends Helper
      * @var array
      */
     public $helpers = [
-        'MeTools.Dropdown',
-        'Html' => ['className' => 'MeTools.Html'],
+        'Dropdown' => ['className' => 'MeTools.BootstrapDropdown'],
+        'Html' => ['className' => 'MeTools.BootstrapHtml'],
     ];
 
     /**
@@ -95,52 +95,5 @@ class MenuBuilderHelper extends Helper
         }
 
         return $menus ?? [];
-    }
-
-    /**
-     * Renders a menu as "collapse".
-     *
-     * The menu can be previously generated with the `generate()` method.
-     * @param array $menu The menu
-     * @param string|null $idContainer Container ID
-     * @return string
-     */
-    public function renderAsCollapse(array $menu, ?string $idContainer = null): string
-    {
-        $collapseName = 'collapse-' . strtolower(Text::slug($menu['title']));
-        $titleOptions = [
-            'aria-controls' => $collapseName,
-            'aria-expanded' => 'false',
-            'class' => 'collapsed',
-            'data-toggle' => 'collapse',
-        ] + $menu['titleOptions'];
-        $divOptions = ['class' => 'collapse', 'id' => $collapseName];
-
-        if ($idContainer) {
-            $divOptions['data-parent'] = '#' . $idContainer;
-        }
-
-        //If the current controller is handled by this menu, marks the menu as open
-        if (in_array($this->getView()->getRequest()->getParam('controller'), $menu['handledControllers'])) {
-            $titleOptions['aria-expanded'] = 'true';
-            unset($titleOptions['class']);
-            $divOptions['class'] .= ' show';
-        }
-
-        $title = $this->Html->link($menu['title'], '#' . $collapseName, $titleOptions);
-        $links = $this->Html->div(null, implode(PHP_EOL, $this->buildLinks($menu['links'])), $divOptions);
-
-        return $this->Html->div('card', $title . PHP_EOL . $links);
-    }
-
-    /**
-     * Renders a menu as "dropdown"
-     * @param string $plugin Plugin name
-     * @param array $titleOptions HTML attributes of the title
-     * @return array
-     */
-    public function renderAsDropdown(string $plugin, array $titleOptions = []): array
-    {
-        return array_map(fn(array $menu): ?string => $this->Dropdown->menu($menu['title'], $this->buildLinks($menu['links'], ['class' => 'dropdown-item']), optionsParser($menu['titleOptions'], $titleOptions)->toArray()), $this->generate($plugin));
     }
 }

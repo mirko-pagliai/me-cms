@@ -36,6 +36,7 @@ class PostsWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `categories()` method
+     * @uses \MeCms\View\Cell\PostsWidgetsCell::categories()
      * @test
      */
     public function testCategories(): void
@@ -49,8 +50,8 @@ class PostsWidgetsCellTest extends CellTestCase
             '/h4',
             ['div' => ['class' => 'widget-content']],
             'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/posts/category/category'],
-            ['div' => ['class' => 'form-group input select']],
-            'select' => ['name' => 'q', 'onchange' => 'sendForm(this)', 'class' => 'form-control'],
+            ['div' => ['class' => 'input mb-3 select']],
+            'select' => ['name' => 'q', 'class' => 'form-control form-select', 'onchange' => 'sendForm(this)'],
             ['option' => ['value' => '']],
             '/option',
             ['option' => ['value' => 'first-post-category']],
@@ -96,7 +97,8 @@ class PostsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget, ['render' => 'list'])->render());
+        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
+        $this->assertHtml($expected, $result);
 
         //Empty on categories index
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'postsCategories']));
@@ -115,6 +117,7 @@ class PostsWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `latest()` method
+     * @uses \MeCms\View\Cell\PostsWidgetsCell::latest()
      * @test
      */
     public function testLatest(): void
@@ -135,15 +138,16 @@ class PostsWidgetsCellTest extends CellTestCase
             ' ',
             '/i',
             ' ',
-            ['a' => ['href' => '/post/' . $post->slug, 'title' => $post->title]],
-            $post->title,
+            ['a' => ['href' => '/post/' . $post->get('slug'), 'title' => $post->get('title')]],
+            $post->get('title'),
             '/a',
             '/li',
             '/ul',
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget, ['limit' => 1])->render());
+        $result = $this->Widget->widget($widget, ['limit' => 1])->render();
+        $this->assertHtml($expected, $result);
 
         //Tries with a limit of 2
         [$post, $otherPost] = $this->Table->find('active')->orderDesc('created')->limit(2)->toArray();
@@ -159,8 +163,8 @@ class PostsWidgetsCellTest extends CellTestCase
             ' ',
             '/i',
             ' ',
-            ['a' => ['href' => '/post/' . $post->slug, 'title' => $post->title]],
-            $post->title,
+            ['a' => ['href' => '/post/' . $post->get('slug'), 'title' => $post->get('title')]],
+            $post->get('title'),
             '/a',
             '/li',
             ['li' => true],
@@ -168,15 +172,16 @@ class PostsWidgetsCellTest extends CellTestCase
             ' ',
             '/i',
             ' ',
-            ['a' => ['href' => '/post/' . $otherPost->slug, 'title' => $otherPost->title]],
-            $otherPost->title,
+            ['a' => ['href' => '/post/' . $otherPost->get('slug'), 'title' => $otherPost->get('title')]],
+            $otherPost->get('title'),
             '/a',
             '/li',
             '/ul',
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget, ['limit' => 2])->render());
+        $result = $this->Widget->widget($widget, ['limit' => 2])->render();
+        $this->assertHtml($expected, $result);
 
         //Empty on posts index
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'posts']));
@@ -197,6 +202,7 @@ class PostsWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `months()` method
+     * @uses \MeCms\View\Cell\PostsWidgetsCell::months()
      * @test
      */
     public function testMonths(): void
@@ -210,8 +216,8 @@ class PostsWidgetsCellTest extends CellTestCase
             '/h4',
             ['div' => ['class' => 'widget-content']],
             'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/posts/' . date('Y/m')],
-            ['div' => ['class' => 'form-group input select']],
-            'select' => ['name' => 'q', 'onchange' => 'sendForm(this)', 'class' => 'form-control'],
+            ['div' => ['class' => 'input mb-3 select']],
+            'select' => ['name' => 'q', 'class' => 'form-control form-select', 'onchange' => 'sendForm(this)'],
             ['option' => ['value' => '']],
             '/option',
             ['option' => ['value' => '2016/12']],
@@ -226,7 +232,8 @@ class PostsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget)->render());
+        $result = $this->Widget->widget($widget)->render();
+        $this->assertHtml($expected, $result);
 
         //Renders as list
         $expected = [
@@ -256,7 +263,8 @@ class PostsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget, ['render' => 'list'])->render());
+        $result = $this->Widget->widget($widget, ['render' => 'list'])->render();
+        $this->assertHtml($expected, $result);
 
         //Empty on posts index
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'posts']));
@@ -283,11 +291,11 @@ class PostsWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `search()` method
+     * @uses \MeCms\View\Cell\PostsWidgetsCell::search()
      * @test
      */
     public function testSearch(): void
     {
-        $this->skipIfCakeIsLessThan('4.3');
         $widget = 'MeCms.Posts::search';
 
         $expected = [
@@ -299,10 +307,10 @@ class PostsWidgetsCellTest extends CellTestCase
             'form' => [
                 'method' => 'get',
                 'accept-charset' => 'utf-8',
-                'class' => 'form-inline',
+                'class' => 'align-items-center g-3 row row-cols-lg-auto',
                 'action' => '/posts/search',
             ],
-            ['div' => ['class' => 'form-group input text']],
+            ['div' => ['class' => 'input mb-3 text']],
             ['div' => ['class' => 'input-group']],
             'input' => [
                 'type' => 'text',
@@ -311,8 +319,8 @@ class PostsWidgetsCellTest extends CellTestCase
                 'placeholder' => 'Search...',
                 'aria-label' => 'Search...',
             ],
-            ['div' => ['class' => 'input-group-append']],
-            'button' => ['class' => 'btn btn-primary', 'type' => 'submit'],
+            ['div' => ['class' => 'submit']],
+            'button' => ['class' => 'btn btn-primary', 'value' => 'Submit'],
             'i' => ['class' => 'fas fa-search'],
             ' ',
             '/i',
@@ -324,7 +332,8 @@ class PostsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget)->render());
+        $result = $this->Widget->widget($widget)->render();
+        $this->assertHtml($expected, $result);
 
         //Empty on search
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', Router::url(['_name' => 'postsSearch']));

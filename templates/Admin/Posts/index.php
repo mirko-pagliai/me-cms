@@ -24,54 +24,50 @@ $this->append('actions', $this->Html->button(
     ['controller' => 'PostsCategories', 'action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
-?>
 
-<?= $this->Form->createInline(null, ['class' => 'filter-form', 'type' => 'get']) ?>
-    <fieldset>
-        <?= $this->Html->legend(I18N_FILTER, ['icon' => 'eye']) ?>
-        <?php
-        echo $this->Form->control('id', [
-            'default' => $this->getRequest()->getQuery('id'),
-            'placeholder' => I18N_ID,
-            'size' => 1,
-        ]);
-        echo $this->Form->control('title', [
-            'default' => $this->getRequest()->getQuery('title'),
-            'placeholder' => I18N_TITLE,
-            'size' => 13,
-        ]);
-        echo $this->Form->control('active', [
-            'default' => $this->getRequest()->getQuery('active'),
-            'empty' => I18N_ALL_STATUS,
-            'options' => [I18N_YES => I18N_ONLY_PUBLISHED, I18N_NO => I18N_ONLY_NOT_PUBLISHED],
-        ]);
-        echo $this->Form->control('user', [
-            'default' => $this->getRequest()->getQuery('user'),
-            'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
-        ]);
-        echo $this->Form->control('category', [
-            'default' => $this->getRequest()->getQuery('category'),
-            'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
-        ]);
-        echo $this->Form->control('priority', [
-            'default' => $this->getRequest()->getQuery('priority'),
-            'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
-        ]);
-        echo $this->Form->control('created', [
-            'default' => $this->getRequest()->getQuery('created'),
-            'placeholder' => __d('me_cms', 'month'),
-            'size' => 3,
-            'type' => 'month',
-        ]);
-        echo $this->Form->control('tag', [
-            'default' => $this->getRequest()->getQuery('tag'),
-            'placeholder' => __d('me_cms', 'tag'),
-            'size' => 8,
-        ]);
-        echo $this->Form->submit(null, ['icon' => 'search']);
-        ?>
-    </fieldset>
-<?= $this->Form->end() ?>
+echo $this->Form->createInline(null, ['class' => 'filter-form', 'type' => 'get']);
+echo $this->Html->legend(I18N_FILTER, ['icon' => 'eye']);
+echo $this->Form->control('id', [
+    'default' => $this->getRequest()->getQuery('id'),
+    'placeholder' => I18N_ID,
+    'size' => 1,
+]);
+echo $this->Form->control('title', [
+    'default' => $this->getRequest()->getQuery('title'),
+    'placeholder' => I18N_TITLE,
+    'size' => 13,
+]);
+echo $this->Form->control('active', [
+    'default' => $this->getRequest()->getQuery('active'),
+    'empty' => I18N_ALL_STATUS,
+    'options' => [I18N_YES => I18N_ONLY_PUBLISHED, I18N_NO => I18N_ONLY_NOT_PUBLISHED],
+]);
+echo $this->Form->control('user', [
+    'default' => $this->getRequest()->getQuery('user'),
+    'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
+]);
+echo $this->Form->control('category', [
+    'default' => $this->getRequest()->getQuery('category'),
+    'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
+]);
+echo $this->Form->control('priority', [
+    'default' => $this->getRequest()->getQuery('priority'),
+    'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
+]);
+echo $this->Form->control('created', [
+    'default' => $this->getRequest()->getQuery('created'),
+    'placeholder' => __d('me_cms', 'month'),
+    'size' => 3,
+    'type' => 'month',
+]);
+echo $this->Form->control('tag', [
+    'default' => $this->getRequest()->getQuery('tag'),
+    'placeholder' => __d('me_cms', 'tag'),
+    'size' => 8,
+]);
+echo $this->Form->submit(null, ['icon' => 'search']);
+echo $this->Form->end();
+?>
 
 <table class="table table-hover">
     <thead>

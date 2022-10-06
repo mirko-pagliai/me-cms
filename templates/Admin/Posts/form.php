@@ -23,7 +23,7 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
 
 <?= $this->Form->create($post); ?>
 <div class="row">
-    <div class="col-lg-3 order-12">
+    <div class="col-lg-3 order-1">
         <div class="float-form">
         <?php
         //Only admins and managers can add posts on behalf of other users
@@ -88,7 +88,7 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
         </div>
         <?php
         echo $this->Form->control('add_tags', [
-            'button' => $this->Form->button('', [
+            'append-text' => $this->Form->button('', [
                 'class' => 'btn-success',
                 'icon' => 'plus',
                 'id' => 'tags-input-button',

@@ -19,9 +19,5 @@ if (!getConfig('users.userbar') || !$this->Auth->isLogged()) {
 $this->extend('MeCms.common/userbar');
 
 echo $this->Html->ul([
-    $this->Html->link(
-        __d('me_cms', 'Dashboard'),
-        ['_name' => 'dashboard'],
-        ['class' => 'nav-link', 'icon' => 'dashboard']
-    ),
-], ['class' => 'navbar-nav mr-auto'], ['class' => 'nav-item']);
+    $this->Html->link(__d('me_cms', 'Dashboard'), ['_name' => 'dashboard'], ['class' => 'nav-link', 'icon' => 'dashboard']),
+], ['class' => 'navbar-nav me-auto'], ['class' => 'nav-item']);

@@ -42,6 +42,14 @@ class ContactUsForm extends Form
     }
 
     /**
+     * @todo to be implemented
+     */
+    protected function getSpamDetector(): SpamDetector
+    {
+
+    }
+
+    /**
      * Returns the default validator object
      * @param \Cake\Validation\Validator $validator Validator instance
      * @return \Cake\Validation\Validator

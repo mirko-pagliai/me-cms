@@ -1,5 +1,12 @@
 # 2.x branch
 ## 2.30 branch
+### 2.30.9
+* `MenuBuilderHelper::renderAsDropdown()` and `renderAsCollapse()` methods no
+    longer exist. The html code should be generated directly from the template;
+* `userbar.css` no longer exists;
+* several changes for new `BootstrapHtml` and `BootstrapForm` helpers;
+* tests for cells (`MeCms\Test\TestCase\View\Cell`) have been made more readable.
+
 ### 2.30.8
 * external "datetimepicker" libraries are no longer used, but the functions of
     modern browsers are used;
@@ -24,7 +31,7 @@
 
 ### 2.30.5-RC2
 * fixed bootstrap, for loading other plugins;
-* 'entities preferably use `hasValue()` instead of `has()`.
+* entities preferably use `hasValue()` instead of `has()`.
 
 ### 2.30.4-RC1
 * fixed a large number of deprecations introduced by CakePHP 4.3;
@@ -48,7 +55,7 @@
 * fixed a small bug in the localization of static pages.
 
 ### 2.30.1
-* if Recaptcha is not used, an exception is no longer throwned when configuration
+* if Recaptcha is not used, an exception is no longer throw when configuration
     keys are missing;
 * added `CreateSamplePostCommand`, this creates a sample post during installation;
 * fixed the `MenuBuilderHelper` and the admin sidebar, menus are now better displayed;
@@ -61,15 +68,15 @@
 
 ### 2.30.0
 * starting from this release, it no longer contains the code for banners and photos,
-    which has been split into [me-cms-banners](//github.com/mirko-pagliai/me-cms-banners)
-    and [me-cms-photos](//github.com/mirko-pagliai/me-cms-photos) suggested plugins;
+    which has been split into [me-cms-banners](https://github.com/mirko-pagliai/me-cms-banners)
+    and [me-cms-photos](https://github.com/mirko-pagliai/me-cms-photos) suggested plugins;
 * `MeCms\Controller\Admin\AppController` class: the last valid referer is saved
     in session by the `beforeFilter()` event and no longer by the `beforeRender()`
     event (which has been removed). The `referer()` method was removed (this
     will directly call the method provided by CakePHP) and the
     `redirectMatchingReferer()` method was added instead;
 * the topbar element will use the `TopbarHelper` from APP to build links, if
-    that helper exists. Otherwise it will use the helper provided by MeCms, with
+    that helper exists. Otherwise, it will use the helper provided by MeCms, with
     the helper of any other plugin;
 * the sitemap classes have been moved into the `MeCms\Utility\Sitemap` namespace.
     Added the `SitemapBase` abstract class, that provides the `parse()` method
@@ -88,7 +95,7 @@
 * fixed bug in the formatting of some dates when editing posts and pages;
 * updated for `cakephp-recaptcha-mailhide` `1.4.6`; no longer needs extra repositories;
 * removed `js-cookie` as package, added static asset;
-* fixed little bug for the fronend topbar;
+* fixed little bug for the frontend topbar;
 * fixed all template files for them to use the `get()` method to access properties.
 
 ### 2.29.4
@@ -123,8 +130,7 @@
 * `KcFinder` has been completely replaced with `ElFinder` and all its classes
     have been removed. `\MeCms\Command\Install\FixElFinderCommand` and
     `\MeCms\Utility\Checkups\ElFinder` classes have been added;
-* uses and suggests `npm-asset/fancyapps-fancybox` [github](https://github.com/fancyapps/fancybox)
-    instead of `newerton/fancy-box`.
+* uses and suggests `npm-asset/fancyapps-fancybox` instead of `newerton/fancy-box`.
 * admin "checkup" function and all its classes have been removed.
 
 ## 2.28 branch
@@ -161,7 +167,7 @@
 ### 2.27.4
 * added Fancybox photo preview in the admin panel;
 * fixed bug, the album view now correctly shows the title and the number of
-    photos contained in each album;
+    photos contained on each album;
 * fixed bug for changelogs reader;
 * fixed little bug for the admin sidebar.
 
@@ -183,7 +189,7 @@
     redirects;
 * added `AppController::getPaging()` method.
 * added `\MeCms\Controller\AppController::__get()` method. In addition to the
-    method provided by CakePHP, it can also auto-load the associated tables;
+    method provided by CakePHP, it can also autoload the associated tables;
 * added `\MeCms\ORM\Query` class. The tables that extend
     `\MeCms\Model\Table\AppModel` will use this query class as default. This
     class overrides the `cache()` method and uses the `getCacheName()` table
@@ -219,7 +225,7 @@
 * added a basic style sheet for printing;
 * fixed bug for some no existing photos;
 * improved code for `PostsTable::queryForRelated()` method;
-* `add` and` edit` template files for `Posts`, `PostsCategories`, ` Pages` and
+* `add` and `edit` template files for `Posts`, `PostsCategories`, `Pages` and
     `PagesCategories` have been merged into the `form` templates respectively;
 * added `admin/priority-badge` template element;
 * updated for `php-tools` `1.2.8` and `me-tools` `2.18.11`.
@@ -242,7 +248,7 @@
 * improved validation rules. Removed some useless validation methods;
 * uses `league/commonmark` package instead of `gourmet/common-mark`;
 * added `MeCms\AuthTrait`. It provides some methods for classes that need to
-    verify the data of the logged in user;
+    verify the data of the logged-in user;
 * added `BannerAndPhotoValidator`, `PageAndPostValidator` and `CategoryValidator`
     abstract classes;
 * updated for `php-tools` `1.2.7`.
@@ -263,7 +269,7 @@
 * fixed a little bug for pages slug;
 * improved and updated cookie writing/reading;
 * `ControllerTestCase::assertHasComponent()` can take an array as argument;
-* it suggest the `mirko-pagliai/me-cms-link-scanner` package;
+* it suggests the `mirko-pagliai/me-cms-link-scanner` package;
 * updated for `php-tools` 1.2.
 
 ### 2.26.3
@@ -299,7 +305,7 @@
 * fixed bug for `MeCms\Controller\Admin\PostsController::isAuthorized()` method;
 * the `$cache` property for tables is now protected. Added `AppTable::getCacheName()`
     method to get the cache configuration name used by the table. It can also
-    returns the names for the associated tables;
+    return the names for the associated tables;
 * removed `SerializedLog` class. Use instead `EntityFileLog\Log\Engine\EntityFileLog`;
 * `IntegrationTestCase` has been removed and its methods have been moved to
     `ControllerTestCase`. You can also use `IntegrationTestTrait` provided by MeTools;
@@ -462,7 +468,7 @@
 ## 2.20 branch
 ### 2.20.2
 * only one bootstrap file is used. Deleted `config/bootstrap_base.php`;
-* fixed bug for traslating i18n constants;
+* fixed bug for translating i18n constants;
 * fixed bug for creating thumbnails.
 
 ### 2.20.1
@@ -590,7 +596,7 @@
 * `LoginRecorder` is now a component and returns the correct IP on localhost.
     You must first set the user ID with the `config()` method and the `user`
     value;
-* fixed bug https://github.com/cakephp/cakephp/pull/10417;
+* fixed bug <https://github.com/cakephp/cakephp/pull/10417>;
 * added `AppTable::beforeSave()`. It checks if the `created` property is an
     instance of `Time`;
 * static pages uses cache. `StaticPage::all()` returns an array of `Entity`;
@@ -817,7 +823,7 @@
 ### 2.12.0
 * added autolinks for posts and pages;
 * the view will automatically choose which layout is to be used;
-* splitted some frontend (default) css files;
+* split some frontend (default) css files;
 * from now, "frontend" is "default" and "backend" is "admin".
 
 ## 2.11 branch
@@ -829,7 +835,7 @@
 ## 2.10 branch
 ### 2.10.1
 * now pages have categories, with category widget;
-* now the install shell can create user groups;
+* now the installer shell can create user groups;
 * added links on userbar for posts categories and tags;
 * added `userbar()` method for `AppViews`. This simplifies the code to add
 	elements to the userbar;
@@ -928,7 +934,7 @@
 * updated Facebook's tags.
 
 ### 2.6.1
-* added userbar for frontend. It allows to edit an delete posts, pages and
+* added userbar for frontend. It allows to edit and delete posts, pages and
 	photos.
 
 ### 2.6.0
@@ -1118,7 +1124,7 @@
 * it automatically adds the meta tag for RSS resources;
 * the backend menus are generated fully automatically. You no longer need any
 	configuration;
-* now you can choise which post details display using the configuration file;
+* now you can choose which post details display using the configuration file;
 * now you can set the timezone using the configuration file;
 * fixed bug with the posts date.
 
@@ -1151,7 +1157,7 @@
 
 ### 1.2.1
 * full support for reCAPTCHA. It's used for signup and to reset passwords;
-* users can signup. You can set up as an account should be activated;
+* users can sign up. You can set up as an account should be activated;
 * users can reset their own password;
 * an email is sent when the user changes his password;
 * administrators can manually activate accounts;

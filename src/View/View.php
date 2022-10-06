@@ -21,8 +21,8 @@ use App\View\AppView;
  * Base view class.
  * This class contains common methods, so you should not use it directly.
  * Instead, use `AppView` or `AdminView`.
+ * @property \MeTools\View\Helper\BootstrapHtmlHelper $Html
  * @property \MeTools\View\Helper\LibraryHelper $Library
- * @property \MeTools\View\Helper\HtmlHelper $Html
  */
 class View extends AppView
 {
@@ -77,9 +77,9 @@ class View extends AppView
             $this->setTheme(getConfig('default.theme'));
         }
 
-        $this->loadHelper('Html', ['className' => 'MeTools.Html']);
-        $this->loadHelper('Form', ['className' => 'MeTools.Form']);
-        $this->loadHelper('MeTools.Dropdown');
+        $this->loadHelper('Html', ['className' => 'MeTools.BootstrapHtml']);
+        $this->loadHelper('Form', ['className' => 'MeTools.BootstrapForm']);
+        $this->loadHelper('Dropdown', ['className' => 'MeTools.BootstrapDropdown']);
         $this->loadHelper('MeTools.Icon');
         $this->loadHelper('MeTools.Library');
         $this->loadHelper('Paginator', ['className' => 'MeTools.Paginator']);

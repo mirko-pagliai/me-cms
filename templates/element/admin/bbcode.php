@@ -15,12 +15,14 @@ declare(strict_types=1);
 ?>
 
 <div class="border border-light rounded mb-3">
-    <?= $this->Html->link(__d('me_cms', 'BBCode'), '#collapseBBCode', [
+    <?php
+    echo $this->Html->link(__d('me_cms', 'BBCode'), '#collapseBBCode', [
+        'class' => 'h6 m-0 text-dark bg-light px-3 py-3 d-block rounded-top',
         'aria-controls' => 'collapseBBCode',
         'aria-expanded' => 'false',
-        'class' => 'h6 m-0 text-dark bg-light px-3 py-3 d-block rounded-top',
-        'data-toggle' => 'collapse',
-    ]) ?>
+        'data-bs-toggle' => 'collapse',
+    ]);
+    ?>
     <div class="collapse" id="collapseBBCode">
         <table class="table table-sm m-0">
             <tbody>

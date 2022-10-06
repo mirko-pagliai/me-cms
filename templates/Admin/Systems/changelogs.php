@@ -17,20 +17,18 @@ $this->assign('title', __d('me_cms', 'Changelogs'));
 ?>
 
 <div class="card card-body bg-light border-0 mb-4">
-    <?= $this->Form->createInline(null, ['type' => 'get']) ?>
-    <fieldset>
-        <?php
-        echo $this->Form->label('file', __d('me_cms', 'Changelog'));
-        echo $this->Form->control('file', [
-            'default' => $this->getRequest()->getQuery('file'),
-            'label' => __d('me_cms', 'Changelog'),
-            'name' => 'file',
-            'onchange' => 'sendForm(this)',
-        ]);
-        echo $this->Form->submit(I18N_SELECT);
-        ?>
-    </fieldset>
-    <?= $this->Form->end() ?>
+<?php
+    echo $this->Form->createInline(null, ['type' => 'get']);
+    echo $this->Form->label('file', __d('me_cms', 'Changelog'));
+    echo $this->Form->control('file', [
+        'default' => $this->getRequest()->getQuery('file'),
+        'label' => __d('me_cms', 'Changelog'),
+        'name' => 'file',
+        'onchange' => 'sendForm(this)',
+    ]);
+    echo $this->Form->submit(I18N_SELECT);
+    echo $this->Form->end();
+?>
 </div>
 
 <?php if (!empty($changelog)) : ?>
