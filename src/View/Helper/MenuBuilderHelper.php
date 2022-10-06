@@ -39,19 +39,6 @@ class MenuBuilderHelper extends Helper
     ];
 
     /**
-     * Internal method to build links, converting them from array of parameters
-     *  (title and url) to html string
-     * @param array $links Array of links parameters
-     * @param array $options Array of options and HTML attributes. These will be
-     *  applied to all generated links
-     * @return array<string> Array of links as html string
-     */
-    protected function buildLinks(array $links, array $options = []): array
-    {
-        return array_map(fn(array $link): string => $this->Html->link($link[0], $link[1], $options), $links);
-    }
-
-    /**
      * Gets all valid methods from the `MenuHelper` provided by a plugin
      * @param string $plugin Plugin name
      * @return array<string>
