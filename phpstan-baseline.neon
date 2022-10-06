@@ -411,6 +411,16 @@ parameters:
 			path: templates/element/admin/priority-badge.php
 
 		-
+			message: "#^Parameter \\#1 \\$callback of function call_user_func_array expects callable\\(\\)\\: mixed, array\\{mixed, 'link'\\} given\\.$#"
+			count: 1
+			path: templates/element/admin/sidebar.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of function call_user_func_array expects callable\\(\\)\\: mixed, array\\{mixed, 'link'\\} given\\.$#"
+			count: 1
+			path: templates/element/admin/userbar.php
+
+		-
 			message: "#^Variable \\$page might not be defined\\.$#"
 			count: 13
 			path: templates/element/views/page.php

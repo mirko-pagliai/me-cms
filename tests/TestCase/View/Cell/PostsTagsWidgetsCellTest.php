@@ -27,7 +27,7 @@ use MeCms\TestSuite\CellTestCase;
 class PostsTagsWidgetsCellTest extends CellTestCase
 {
     /**
-     * @var array<string, string|int|array>
+     * @var array<string, string|int|bool|array>
      */
     protected array $example = [
         'limit' => 2,
