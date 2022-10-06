@@ -101,6 +101,7 @@ class UsersControllerTest extends ControllerTestCase
 
         /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\Stub $LoginRecorder */
         $LoginRecorder = $this->createStub(LoginRecorderComponent::class);
+        $LoginRecorder->method('setConfig')->willReturnSelf();
         $this->_controller->LoginRecorder = $LoginRecorder;
     }
 
