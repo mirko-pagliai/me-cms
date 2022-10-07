@@ -42,11 +42,11 @@ class NextToBePublishedTraitTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->Posts = $this->Posts ?: $this->getTable('MeCms.Posts');
+        $this->Posts ??= $this->getTable('MeCms.Posts');
     }
 
     /**

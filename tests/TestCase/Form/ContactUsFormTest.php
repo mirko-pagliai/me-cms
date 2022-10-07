@@ -45,16 +45,18 @@ class ContactUsFormTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->Form = $this->getMockBuilder(ContactUsForm::class)
-            ->onlyMethods(['verifyEmail'])
-            ->getMock();
+        if (empty($this->Form)) {
+            $this->Form = $this->getMockBuilder(ContactUsForm::class)
+                ->onlyMethods(['verifyEmail'])
+                ->getMock();
 
-        //`ContactUsForm::verifyEmail()` will return `false` only for `spammer@example.com` value
-        $this->Form->method('verifyEmail')->willReturnCallback(fn(string $email): bool => $email !== 'spammer@example.com');
+            //`ContactUsForm::verifyEmail()` will return `false` only for `spammer@example.com` value
+            $this->Form->method('verifyEmail')->willReturnCallback(fn(string $email): bool => $email !== 'spammer@example.com');
+        }
     }
 
     /**

@@ -33,7 +33,7 @@ class AppViewTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -41,9 +41,11 @@ class AppViewTest extends TestCase
         Configure::write('Widgets.general', []);
         Configure::write('MeCms.default.theme', false);
 
-        $this->View = new AppView();
-        $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
-        $this->View->setPlugin('MeCms');
+        if (empty($this->View)) {
+            $this->View = new AppView();
+            $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
+            $this->View->setPlugin('MeCms');
+        }
     }
 
     /**

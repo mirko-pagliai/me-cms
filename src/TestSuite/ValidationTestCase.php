@@ -72,7 +72,7 @@ abstract class ValidationTestCase extends TestCase
      * @return void
      * @throw \PHPUnit\Framework\AssertionFailedError
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

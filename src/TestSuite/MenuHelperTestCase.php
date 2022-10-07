@@ -40,35 +40,37 @@ abstract class MenuHelperTestCase extends HelperTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
-        /**
-         * @var class-string<\Cake\View\Helper> $className
-         * @noinspection PhpRedundantVariableDocTypeInspection
-         */
-        $className = $this->getOriginClassNameOrFail($this);
-        $methods = get_child_methods($className);
+        if (empty($this->Helper)) {
+            /**
+             * @var class-string<\Cake\View\Helper> $className
+             * @noinspection PhpRedundantVariableDocTypeInspection
+             */
+            $className = $this->getOriginClassNameOrFail($this);
+            $methods = get_child_methods($className);
 
-        //Mocks the helper. Each method returns its original value, but the
-        //  links are already built and returned as an HTML string
-        /** @var \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper */
-        $Helper = $this->getMockForHelper($className, $methods);
+            //Mocks the helper. Each method returns its original value, but the
+            //  links are already built and returned as an HTML string
+            /** @var \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper */
+            $Helper = $this->getMockForHelper($className, $methods);
 
-        foreach ($methods as $method) {
-            $Helper->method($method)->willReturnCallback(function () use ($className, $method): array {
-                $originalHelper = new $className($this->Helper->getView());
-                $returned = $originalHelper->$method();
+            foreach ($methods as $method) {
+                $Helper->method($method)->willReturnCallback(function () use ($className, $method): array {
+                    $originalHelper = new $className($this->Helper->getView());
+                    $returned = $originalHelper->$method();
 
-                if (!empty($returned[0])) {
-                    $HtmlHelper = new HtmlHelper($this->Helper->getView());
-                    $returned[0] = implode(PHP_EOL, array_map(fn(array $link): string => call_user_func_array([$HtmlHelper, 'link'], $link), $returned[0]));
-                }
+                    if (!empty($returned[0])) {
+                        $HtmlHelper = new HtmlHelper($this->Helper->getView());
+                        $returned[0] = implode(PHP_EOL, array_map(fn(array $link): string => call_user_func_array([$HtmlHelper, 'link'], $link), $returned[0]));
+                    }
 
-                return $returned;
-            });
+                    return $returned;
+                });
+            }
+
+            $this->Helper = $Helper;
         }
-
-        $this->Helper = $Helper;
 
         parent::setUp();
     }

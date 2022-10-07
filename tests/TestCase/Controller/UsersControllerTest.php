@@ -51,7 +51,7 @@ class UsersControllerTest extends ControllerTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

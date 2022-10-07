@@ -100,7 +100,7 @@ abstract class ControllerTestCase extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -136,8 +136,7 @@ abstract class ControllerTestCase extends TestCase
     /**
      * Internal method to create an image to upload.
      *
-     * It returns an array, similar to the `$_FILE` array that is created after
-     *  a upload
+     * Returns an array, similar to the `$_FILE` array that is created after an upload
      * @return array
      */
     protected function createImageToUpload(): array

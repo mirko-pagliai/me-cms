@@ -58,12 +58,12 @@ class AppTableTest extends TableTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->Posts = $this->Posts ?: $this->getTable('MeCms.Posts');
-        $this->PostsCategories = $this->PostsCategories ?: $this->getTable('MeCms.PostsCategories');
+        $this->Posts ??= $this->getTable('MeCms.Posts');
+        $this->PostsCategories ??= $this->getTable('MeCms.PostsCategories');
     }
 
     /**
@@ -273,7 +273,7 @@ class AppTableTest extends TableTestCase
         $this->assertSqlEndsWith($expectedSql, $query->sql());
         $this->assertEquals(false, $query->getValueBinder()->bindings()[':c4']['value']);
 
-        //With some invalid datas
+        //With some invalid data
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['title' => 'ab', 'priority' => 6, 'created' => '2016-12-30']);
         $this->assertEmpty($query->getValueBinder()->bindings());
     }

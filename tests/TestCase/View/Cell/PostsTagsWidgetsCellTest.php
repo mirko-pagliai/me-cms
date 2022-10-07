@@ -51,7 +51,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->Table ??= $this->getTable('MeCms.Tags');
 
