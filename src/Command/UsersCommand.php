@@ -49,16 +49,13 @@ class UsersCommand extends Command
 
         return $this->Users->find()
             ->contain('Groups')
-            ->formatResults(fn(CollectionInterface $results): CollectionInterface => $results->map(fn(User $user): array => [
-                'id' => (string)$user->get('id'),
-                'username' => $user->get('username'),
-                'group' => $user->get('group')->get('label') ?: $user->get('group'),
-                'full_name' => $user->get('full_name'),
-                'email' => $user->get('email'),
-                'post_count' => (string)$user->get('post_count'),
-                'status' => $user->get('banned') ? __d('me_cms', 'Banned') : ($user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending')),
-                (string)$user->get('created'),
-            ]))
+            ->formatResults(fn(CollectionInterface $results): CollectionInterface => $results->map(function (User $user): array {
+                $result = array_map(fn(string $key): string => (string)$user->get($key), ['id', 'username', 'full_name', 'email', 'post_count', 'created']);
+                $result['group'] = $user->get('group')->get('label') ?: $user->get('group');
+                $result['status'] = $user->get('banned') ? __d('me_cms', 'Banned') : ($user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending'));
+
+                return $result;
+            }))
             ->orderAsc('Users.id')
             ->all()
             ->toList();
