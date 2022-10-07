@@ -1,21 +1,20 @@
 # 2.x branch
 ## 2.30 branch
-### 2.30.9
+### 2.30.8-RC5
+* improved the `UserCommand`;
+* added `ContactUsForm::verifyEmail()`. This also simplifies testing;
+* several changes for new `BootstrapHtml` and `BootstrapForm` helpers;
 * `MenuBuilderHelper::renderAsDropdown()` and `renderAsCollapse()` methods no
   longer exist. The html code should be generated directly from the template;
-* `userbar.css` no longer exists;
-* several changes for new `BootstrapHtml` and `BootstrapForm` helpers;
-* tests for cells (`MeCms\Test\TestCase\View\Cell`) have been made more readable;
-* updated for me-tools 2.21.4.
-
-### 2.30.8
-* external "datetimepicker" libraries are no longer used, but the functions of
-  modern browsers are used;
-* added `ContactUsForm::verifyEmail()`. This also simplifies testing;
-* improved the `UserCommand`;
-* some i18n constants were incorporated by `me-tools`;
-* large improvements suggested by phpstan;
+* external "datetimepicker" libraries are no longer used;
+* `AppTable::beforeMarshal()` no longer exists;
 * requires at least CakePHP 4.4.
+* updated for me-tools 2.21.4. some i18n constants were incorporated by
+  `me-tools`;
+* tests for cells (`MeCms\Test\TestCase\View\Cell`) have been made more readable;
+* removed many unnecessary css rules`userbar.css` no longer exists;
+* small and numerous improvements of descriptions, tags and code suggested
+  by PhpStorm.
 
 ### 2.30.7-RC4
 * added `last_logins` field to user table. This field is used instead of files.
