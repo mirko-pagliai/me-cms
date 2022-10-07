@@ -33,7 +33,7 @@ class AppViewTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -41,13 +41,16 @@ class AppViewTest extends TestCase
         Configure::write('Widgets.general', []);
         Configure::write('MeCms.default.theme', false);
 
-        $this->View = new AppView();
-        $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
-        $this->View->setPlugin('MeCms');
+        if (empty($this->View)) {
+            $this->View = new AppView();
+            $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
+            $this->View->setPlugin('MeCms');
+        }
     }
 
     /**
      * Tests for `setBlocks()` method
+     * @uses \MeCms\View\View\AppView::setBlocks()
      * @test
      */
     public function testSetBlocks(): void
@@ -65,7 +68,7 @@ class AppViewTest extends TestCase
         $this->assertStringContainsString('<meta content="http://localhost/" property="og:url"/>', $result);
         $this->assertStringContainsString('<meta content="facebook-id" property="fb:app_id"/>', $result);
         $this->assertStringContainsString('<script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","analytics-id","auto"),ga("send","pageview");</script>', $result);
-        $this->assertStringContainsString('<script src="//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js" async="async" data-cfasync="false" data-shr-siteid="shareaholic-id"></script>', $result);
+        $this->assertStringContainsString('<script src="https://dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js" async="async" data-cfasync="false" data-shr-siteid="shareaholic-id"></script>', $result);
     }
 
     /**

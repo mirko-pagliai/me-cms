@@ -12,6 +12,7 @@ parameters:
 
     bootstrapFiles:
         - tests/bootstrap.php
+        - vendor/mirko-pagliai/me-tools/config/i18n_constants.php
         - config/i18n_constants.php
         - vendor/mirko-pagliai/cakephp-thumber/config/bootstrap.php
 
@@ -19,7 +20,18 @@ parameters:
     checkMissingIterableValueType: false
     treatPhpDocTypesAsCertain: false
 
-    excludes_analyse:
+    ignoreErrors:
+        - '#^Parameter \#[12] \$callback of function array_(map|walk) expects \(?callable\([^\)]+\): mixed\)?(\|null)?, (array{[^}]+}|Closure\([^\)]+\))(: string)? given\.$#'
+        - '#^Parameter \#1 \$array of function array_values expects array, iterable given\.$#'
+        -
+            message: '#^Variable \$this might not be defined\.$#'
+            path: templates/
+
+        -
+            message: '#^Undefined variable: \$this$#'
+            path: templates/
+
+    excludePaths:
         - config/Migrations/
         - config/elfinder/
         - tests/test_app/

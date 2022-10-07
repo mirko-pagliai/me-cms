@@ -44,9 +44,8 @@ class FixElFinderCommand extends Command
      * Internal method to create the `php/connector.minimal.php` file
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return void
+     * @throws \Throwable
      * @since 2.29.2
-     * @throws \Tools\Exception\FileNotExistsException
-     * @throws \Tools\Exception\NotReadableException
      */
     protected function createConnectorMinimal(ConsoleIo $io): void
     {
@@ -64,9 +63,8 @@ class FixElFinderCommand extends Command
      * Internal method to create the `elfinder-cke.html` file
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return void
+     * @throws \Throwable
      * @since 2.29.2
-     * @throws \Tools\Exception\FileNotExistsException
-     * @throws \Tools\Exception\NotReadableException
      */
     protected function createElfinderCke(ConsoleIo $io): void
     {

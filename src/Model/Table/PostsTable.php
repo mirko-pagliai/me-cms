@@ -23,11 +23,7 @@ use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\Post;
-use MeCms\Model\Table\PostsCategoriesTable;
-use MeCms\Model\Table\PostsTagsTable;
-use MeCms\Model\Table\TagsTable;
 use MeCms\Model\Table\Traits\IsOwnedByTrait;
-use MeCms\Model\Table\UsersTable;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\ORM\PostsAndPagesTables;
 use MeCms\ORM\Query;
@@ -62,14 +58,11 @@ class PostsTable extends PostsAndPagesTables
      * Called before request data is converted into entities
      * @param \Cake\Event\Event $event Event object
      * @param \ArrayObject $data Request data
-     * @param \ArrayObject $options Options
      * @return void
      * @since 2.15.2
      */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
+    public function beforeMarshal(Event $event, ArrayObject $data): void
     {
-        parent::beforeMarshal($event, $data, $options);
-
         if (!empty($data['tags_as_string'])) {
             $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']) ?: []);
 
@@ -115,8 +108,7 @@ class PostsTable extends PostsAndPagesTables
             $this->Categories->getAlias() => ['fields' => ['id', 'title', 'slug']],
             $this->Tags->getAlias() => ['sort' => ['tag' => 'ASC']],
             $this->Users->getAlias() => ['fields' => ['id', 'first_name', 'last_name']],
-        ])
-        ->orderDesc(sprintf('%s.created', $this->getAlias()));
+        ])->orderDesc(sprintf('%s.created', $this->getAlias()));
     }
 
     /**
@@ -143,7 +135,7 @@ class PostsTable extends PostsAndPagesTables
                 //Sorts and takes tags by `post_count` field
                 $tags = collection($post->get('tags'))->sortBy('post_count')->take($limit)->toList();
 
-                //This array will be contain the ID to be excluded
+                //This array will be contained the ID to be excluded
                 $exclude[] = $post->get('id');
 
                 //For each tag, gets a related post.

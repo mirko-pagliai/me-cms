@@ -27,21 +27,21 @@ use MeCms\TestSuite\TableTestCase;
 class UsersTableTest extends TableTestCase
 {
     /**
-     * @var array
+     * @var array<string, string|int>
      */
     protected static $example = [
         'group_id' => 1,
         'email' => 'example@test.com',
         'first_name' => 'Alfa',
         'last_name' => 'Beta',
-        'username' => 'myusername',
-        'password' => 'mypassword1!',
-        'password_repeat' => 'mypassword1!',
+        'username' => 'my-username',
+        'password' => 'my-password1!',
+        'password_repeat' => 'my-password1!',
     ];
 
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Posts',

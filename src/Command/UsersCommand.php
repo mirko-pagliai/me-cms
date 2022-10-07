@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace MeCms\Command;
 
+use Cake\Collection\CollectionInterface;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
@@ -39,38 +40,25 @@ class UsersCommand extends Command
     }
 
     /**
-     * Internal method to get formatted users data rows
-     * @return array
+     * Get formatted users data as rows
+     * @return string[][]
      */
-    protected function getUsersRows(): array
+    public function getUsersRows(): array
     {
         $this->loadModel('MeCms.Users');
 
         return $this->Users->find()
             ->contain('Groups')
+            ->formatResults(fn(CollectionInterface $results): CollectionInterface => $results->map(function (User $user): array {
+                $result = array_map(fn(string $key): string => (string)$user->get($key), ['id', 'username', 'full_name', 'email', 'post_count', 'created']);
+                $result['group'] = $user->get('group')->get('label') ?: $user->get('group');
+                $result['status'] = $user->get('banned') ? __d('me_cms', 'Banned') : ($user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending'));
+
+                return $result;
+            }))
+            ->orderAsc('Users.id')
             ->all()
-            ->map(function (User $user): array {
-                $status = $user->get('active') ? __d('me_cms', 'Active') : __d('me_cms', 'Pending');
-                if ($user->get('banned')) {
-                    $status = __d('me_cms', 'Banned');
-                }
-
-                $created = $user->get('created');
-                if (is_object($created) && method_exists($created, 'i18nFormat')) {
-                    $created = $created->i18nFormat(FORMAT_FOR_MYSQL);
-                }
-
-                return [
-                    (string)$user->get('id'),
-                    $user->get('username'),
-                    $user->get('group')->get('label') ?: $user->get('group'),
-                    $user->get('full_name'),
-                    $user->get('email'),
-                    (string)$user->get('post_count'),
-                    $status,
-                    $created,
-                ];
-            })->toList();
+            ->toList();
     }
 
     /**

@@ -21,8 +21,8 @@ use App\View\AppView;
  * Base view class.
  * This class contains common methods, so you should not use it directly.
  * Instead, use `AppView` or `AdminView`.
+ * @property \MeTools\View\Helper\BootstrapHtmlHelper $Html
  * @property \MeTools\View\Helper\LibraryHelper $Library
- * @property \MeTools\View\Helper\HtmlHelper $Html
  */
 class View extends AppView
 {
@@ -43,7 +43,7 @@ class View extends AppView
             return $this->titleForLayout;
         }
 
-        //Gets the main title setted by the configuration
+        //Gets the main title set by the configuration
         $title = getConfigOrFail('main.title');
 
         //For homepage, it returns only the main title
@@ -51,12 +51,12 @@ class View extends AppView
             return $title;
         }
 
-        //If exists, it adds the title setted by the controller, as if it has
+        //If exists, it adds the title set by the controller, as if it has
         //  been set via `$this->View->set()`
         if ($this->get('title')) {
             $title = sprintf('%s - %s', $this->get('title'), $title);
-        //Else, if exists, it adds the title setted by the current view, as if
-        //  it has been set via `$this->View->Blocks->set()`
+            //Else, if exists, it adds the title set by the current view, as if
+            //  it has been set via `$this->View->Blocks->set()`
         } elseif ($this->fetch('title')) {
             $title = sprintf('%s - %s', $this->fetch('title'), $title);
         }
@@ -77,12 +77,12 @@ class View extends AppView
             $this->setTheme(getConfig('default.theme'));
         }
 
-        $this->loadHelper('Html', ['className' => 'MeTools.Html']);
-        $this->loadHelper('MeTools.Dropdown');
-        $this->loadHelper('MeTools.Form');
+        $this->loadHelper('Html', ['className' => 'MeTools.BootstrapHtml']);
+        $this->loadHelper('Form', ['className' => 'MeTools.BootstrapForm']);
+        $this->loadHelper('Dropdown', ['className' => 'MeTools.BootstrapDropdown']);
         $this->loadHelper('MeTools.Icon');
         $this->loadHelper('MeTools.Library');
-        $this->loadHelper('MeTools.Paginator');
+        $this->loadHelper('Paginator', ['className' => 'MeTools.Paginator']);
         $this->loadHelper('Assets.Asset');
         $this->loadHelper('Thumber/Cake.Thumb');
         $this->loadHelper('MeCms.Auth');

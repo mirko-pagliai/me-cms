@@ -30,7 +30,6 @@ declare(strict_types=1);
             '/vendor/bootstrap/css/bootstrap.min',
             'MeTools.default',
             'MeTools.forms',
-            'MeCms.userbar',
             'MeCms.admin/layout',
         ], ['block' => true]);
         echo $this->fetch('css');
@@ -50,7 +49,7 @@ declare(strict_types=1);
         <?= $this->element('MeCms.admin/userbar') ?>
         <div class="container-fluid">
             <div class="row">
-                <nav id="sidebar" class="col d-none d-lg-block">
+                <nav id="sidebar" class="col d-none d-lg-block border-end py-4 p-3">
                     <?php
                     //Sidebar is cached only if debugging is disabled
                     $sidebarCache = getConfig('debug') ? null : [
@@ -61,7 +60,7 @@ declare(strict_types=1);
                     echo $this->element('MeCms.admin/sidebar', [], ['cache' => $sidebarCache]);
                     ?>
                 </nav>
-                <main id="content" class="col-lg-10">
+                <main id="content" class="col-lg-10 py-4 p-3">
                     <?= $this->Flash->render() ?>
                     <?= $this->fetch('content') ?>
                 </main>

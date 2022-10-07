@@ -30,7 +30,7 @@ class ContactUsMailerTest extends TestCase
     public ContactUsMailer $Mailer;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected array $example = [
         'first_name' => 'James',
@@ -43,7 +43,7 @@ class ContactUsMailerTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

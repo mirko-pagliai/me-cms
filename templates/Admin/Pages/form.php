@@ -14,7 +14,6 @@ declare(strict_types=1);
  */
 $this->extend('MeCms./common/form');
 $this->Library->ckeditor();
-$this->Library->datetimepicker();
 $this->Library->slugify();
 
 $defaultCategory = $categories->count() < 2 ? $categories->first() : false;
@@ -23,7 +22,7 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
 
 <?= $this->Form->create($page); ?>
 <div class="row">
-    <div class="col-lg-3 order-12">
+    <div class="col-lg-3 order-1">
         <div class="float-form">
         <?php
         echo $this->Form->control('category_id', [
@@ -31,7 +30,7 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
             'empty' => $emptyCategory,
             'label' => I18N_CATEGORY,
         ]);
-        echo $this->Form->datetimepicker('created', [
+        echo $this->Form->control('created', [
             'help' => [I18N_USE_CURRENT_DATETIME, I18N_DELAY_PUBLICATION],
             'label' => I18N_DATE,
         ]);

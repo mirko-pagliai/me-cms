@@ -16,7 +16,7 @@ $this->Asset->css('MeCms.admin/uploader', ['block' => 'css_bottom']);
 $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
 ?>
 
-<?= $this->Html->scriptStart(); ?>
+<?= $this->Html->scriptStart(['block' => 'script_bottom']); ?>
     Dropzone.autoDiscover = false;
     $(function() {
         $('.dropzone').dropzone({

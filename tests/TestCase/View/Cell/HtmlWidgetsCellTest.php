@@ -24,6 +24,7 @@ class HtmlWidgetsCellTest extends CellTestCase
 {
     /**
      * Test for `display()` method
+     * @uses \MeCms\View\Cell\HtmlWidgetsCell::display()
      * @test
      */
     public function testDisplay(): void
@@ -31,7 +32,8 @@ class HtmlWidgetsCellTest extends CellTestCase
         $widget = 'MeCms.Html';
 
         $expected = 'A custom widget';
-        $this->assertEquals($expected, $this->Widget->widget($widget, ['template' => 'custom_html'])->render());
+        $result = $this->Widget->widget($widget, ['template' => 'custom_html'])->render();
+        $this->assertEquals($expected, $result);
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -40,7 +42,8 @@ class HtmlWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget, ['template' => 'custom_html2'])->render());
+        $result = $this->Widget->widget($widget, ['template' => 'custom_html2'])->render();
+        $this->assertHtml($expected, $result);
 
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
@@ -52,6 +55,7 @@ class HtmlWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget, ['template' => 'custom_html3'])->render());
+        $result = $this->Widget->widget($widget, ['template' => 'custom_html3'])->render();
+        $this->assertHtml($expected, $result);
     }
 }

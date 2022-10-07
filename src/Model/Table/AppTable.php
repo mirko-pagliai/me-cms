@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Model\Table;
 
-use ArrayObject;
 use Cake\Cache\Cache;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
@@ -23,7 +22,6 @@ use Cake\I18n\FrozenTime;
 use Cake\ORM\Association;
 use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\Table;
-use Exception;
 use MeCms\ORM\Query;
 use Tools\Exceptionist;
 
@@ -61,28 +59,6 @@ abstract class AppTable extends Table
     public function afterSave(Event $event, EntityInterface $entity): void
     {
         $this->clearCache();
-    }
-
-    /**
-     * Called before request data is converted into entities
-     * @param \Cake\Event\Event $event Event object
-     * @param \ArrayObject $data Request data
-     * @param \ArrayObject $options Options
-     * @return void
-     * @since 2.26.6
-     */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
-    {
-        if (array_key_exists('created', $data->getArrayCopy())) {
-            if (is_string($data['created'])) {
-                try {
-                    $data['created'] = new FrozenTime($data['created']);
-                } catch (Exception $e) {
-                }
-            } elseif (empty($data['created'])) {
-                $data['created'] = new FrozenTime();
-            }
-        }
     }
 
     /**
@@ -243,7 +219,7 @@ abstract class AppTable extends Table
         if (!empty($data['created']) && preg_match('/^[1-9]\d{3}\-[01]\d$/', $data['created'])) {
             $start = new FrozenTime(sprintf('%s-01', $data['created']));
             $query->where([sprintf('%s.created >=', $this->getAlias()) => $start])
-                ->andWhere([sprintf('%s.created <', $this->getAlias()) => $start->addMonth(1)]);
+                ->andWhere([sprintf('%s.created <', $this->getAlias()) => $start->addMonth()]);
         }
 
         return $query;

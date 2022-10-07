@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use Cake\ORM\Entity;
-use MeCms\TestSuite\TestCase;
 
 /**
  * Abstract class for test entities
@@ -52,17 +51,20 @@ abstract class EntityTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
+     * @noinspection PhpRedundantVariableDocTypeInspection
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         if (empty($this->Entity) && $this->autoInitializeClass) {
             /** @var class-string<\Cake\ORM\Entity> $className */
             $className = $this->getOriginClassNameOrFail($this);
-            $this->Entity = $this->getMockBuilder($className)
-                ->setMethods(null)
+            /** @var \Cake\ORM\Entity&\PHPUnit\Framework\MockObject\MockObject $Entity */
+            $Entity = $this->getMockBuilder($className)
+                ->onlyMethods([])
                 ->getMock();
+            $this->Entity = $Entity;
         }
     }
 }

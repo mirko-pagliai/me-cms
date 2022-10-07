@@ -18,7 +18,6 @@ namespace MeCms\Controller;
 use Cake\Cache\Cache;
 use Cake\ORM\Query;
 use Cake\Utility\Text;
-use MeCms\Controller\AppController;
 
 /**
  * PostsTags controller

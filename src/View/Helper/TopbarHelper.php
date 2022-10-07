@@ -16,8 +16,6 @@ declare(strict_types=1);
 
 namespace MeCms\View\Helper;
 
-use MeCms\View\Helper\AbstractTopbarHelper;
-
 /**
  * Topbar Helper.
  *

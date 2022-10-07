@@ -16,8 +16,6 @@ declare(strict_types=1);
 
 namespace MeCms\Validation;
 
-use MeCms\Validation\AppValidator;
-
 /**
  * Abstract class for `PageValidator` and `PostValidator` classes.
  *

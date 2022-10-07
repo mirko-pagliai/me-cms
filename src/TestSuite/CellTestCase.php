@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace MeCms\TestSuite;
 
-use MeCms\TestSuite\TestCase;
 use MeCms\View\Helper\WidgetHelper;
 use MeCms\View\View\AppView as View;
 
@@ -39,14 +38,15 @@ abstract class CellTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
+     * @throws \ReflectionException
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         if (empty($this->Widget) && $this->autoInitializeClass) {
             $this->Widget = $this->getMockBuilder(WidgetHelper::class)
-                ->setMethods(null)
+                ->onlyMethods([])
                 ->setConstructorArgs([new View()])
                 ->getMock();
         }

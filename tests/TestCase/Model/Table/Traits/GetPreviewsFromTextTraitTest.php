@@ -34,7 +34,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -100,8 +100,8 @@ class GetPreviewsFromTextTraitTest extends TestCase
             'image.JPG',
             'IMAGE.JPG',
             '/image.jpg',
-            'subdir/image.jpg',
-            '/subdir/image.jpg',
+            'sub-dir/image.jpg',
+            '/sub-dir/image.jpg',
         ] as $filename) {
             $this->assertEquals([$filename], $extractImagesMethod('<img src=\'' . $filename . '\'>'));
         }

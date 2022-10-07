@@ -24,7 +24,6 @@ use Cake\Log\Log;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Routing\Router;
 use DateTime;
-use MeCms\Controller\AppController;
 use Tools\Exceptionist;
 
 /**
@@ -68,6 +67,7 @@ class UsersController extends AppController
     /**
      * Initialization hook method
      * @return void
+     * @throws \Exception
      */
     public function initialize(): void
     {

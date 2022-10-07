@@ -30,7 +30,7 @@ use Tools\Filesystem;
 class UsersControllerTest extends ControllerTestCase
 {
     /**
-     * @var array
+     * @var array<string, int|string>
      */
     protected static array $example = [
         'group_id' => 1,
@@ -44,7 +44,7 @@ class UsersControllerTest extends ControllerTestCase
     ];
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Users',
@@ -231,7 +231,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertFlashMessage('You cannot delete the admin founder');
         $this->assertFalse($this->Table->findById(1)->all()->isEmpty());
 
-        //Cannot delete an user with posts
+        //Cannot delete a user with posts
         $this->post($url + [4]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);

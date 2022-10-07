@@ -79,15 +79,18 @@ class AppControllerTest extends ControllerTestCase
 
     /**
      * Tests for `getPaging()` and `setPaging()` methods
+     * @uses \MeCms\Controller\AppController::getPaging()
      * @test
      */
     public function testGetAndSetPaging(): void
     {
         $this->assertSame([], $this->Controller->getPaging());
-        $this->Controller->setPaging(['paging-example']);
-        $this->assertSame(['paging-example'], $this->Controller->getPaging());
-        $this->assertSame(['paging-example'], $this->Controller->getRequest()->getAttribute('paging'));
-        $this->assertSame(['paging-example'], $this->Controller->getRequest()->getParam('paging'));
+
+        $paging = ['Posts' => ['paging-key' => 'paging-value']];
+        $this->Controller->setPaging($paging);
+        $this->assertSame($paging, $this->Controller->getPaging());
+        $this->assertSame($paging, $this->Controller->getRequest()->getAttribute('paging'));
+        $this->assertSame($paging, $this->Controller->getRequest()->getParam('paging'));
     }
 
     /**

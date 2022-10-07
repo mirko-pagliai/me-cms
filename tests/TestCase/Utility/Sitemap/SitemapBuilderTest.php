@@ -34,7 +34,7 @@ class SitemapBuilderTest extends TestCase
     protected SitemapBuilder $SitemapBuilder;
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',
@@ -48,7 +48,7 @@ class SitemapBuilderTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

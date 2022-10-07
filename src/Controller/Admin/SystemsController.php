@@ -19,7 +19,6 @@ use Cake\Cache\Cache;
 use Cake\Http\Response;
 use Cake\Routing\Router;
 use League\CommonMark\CommonMarkConverter;
-use MeCms\Controller\Admin\AppController;
 use MeCms\Core\Plugin;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -85,7 +84,7 @@ class SystemsController extends AppController
         $files = [];
 
         foreach (Plugin::all() as $plugin) {
-            $file = Plugin::path($plugin, 'CHANGELOG.md', false);
+            $file = Plugin::path($plugin, 'CHANGELOG.md');
 
             if (is_readable($file)) {
                 $files[strtolower($plugin)] = $Filesystem->rtr($file);
@@ -124,15 +123,13 @@ class SystemsController extends AppController
      */
     protected function clearSitemap(): bool
     {
-        return is_readable(SITEMAP) ? @unlink(SITEMAP) : true;
+        return !is_readable(SITEMAP) || @unlink(SITEMAP);
     }
 
     /**
      * Temporary cleaner (assets, cache, logs, sitemap and thumbnails)
      * @param string $type Type
      * @return \Cake\Http\Response|null
-     * @uses clearCache()
-     * @uses clearSitemap()
      */
     public function tmpCleaner(string $type): ?Response
     {
@@ -174,12 +171,12 @@ class SystemsController extends AppController
     }
 
     /**
-     * Temporary files viewer (assets, cache, logs, sitemap and thumbnails)
+     * Temporary file viewer (assets, cache, logs, sitemap and thumbnails)
      * @return void
      */
     public function tmpViewer(): void
     {
-        $getDirSize = fn(string $path): int => array_sum(array_map(fn(SplFileInfo $file): int => $file->getSize(), iterator_to_array((new Finder())->in($path))));
+        $getDirSize = fn(string $path): int => (int)array_sum(array_map(fn(SplFileInfo $file): int => $file->getSize() ?: 0, iterator_to_array((new Finder())->in($path))));
 
         $assetsSize = $getDirSize(getConfigOrFail('Assets.target'));
         $cacheSize = $getDirSize(CACHE);

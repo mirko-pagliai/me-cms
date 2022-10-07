@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 /**
  * This file is part of me-cms.
- *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
- *
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
@@ -74,6 +72,7 @@ class Plugin extends BasePlugin
             if (!$app->getPlugins()->has($plugin)) {
                 //Initializes bootstrapped plugins
                 if (method_exists($plugin, 'bootstrap')) {
+                    /** @var \Cake\Core\PluginInterface $plugin */
                     $plugin = new $plugin();
                     $plugin->bootstrap($app);
                 }

@@ -19,8 +19,7 @@ namespace MeCms;
 /**
  * AuthTrait.
  *
- * Provides some methods for classes that need to verify the data of the logged
- *  in user
+ * Provides some methods for classes that need to verify the data of the logged-in user
  * @see \Cake\Controller\Component\AuthComponent::user()
  * @see \MeCms\View\Helper\AuthHelper::user()
  */

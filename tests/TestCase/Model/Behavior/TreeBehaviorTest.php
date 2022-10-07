@@ -24,7 +24,7 @@ class TreeBehaviorTest extends TestCase
 {
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.PostsCategories',

@@ -24,7 +24,7 @@ use MeCms\TestSuite\ControllerTestCase;
 class PostsCategoriesControllerTest extends ControllerTestCase
 {
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.PostsCategories',
@@ -134,7 +134,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertTrue($this->Table->findById(2)->all()->isEmpty());
 
-        //POST request. This category has some pages, so it cannot be delete
+        //POST request. This category has some pages, so it cannot be deleted
         $this->post($this->url + ['action' => 'delete', 1]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);

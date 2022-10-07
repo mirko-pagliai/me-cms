@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.x-dev@">
+  <file src="src/Controller/AppController.php">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>\Cake\Datasource\RepositoryInterface|\Cake\ORM\Association|null</code>
+    </ImplementedReturnTypeMismatch>
+  </file>
   <file src="src/Controller/PostsCategoriesController.php">
     <InvalidArgument occurrences="1"/>
   </file>
@@ -19,6 +24,11 @@
       <code>1</code>
     </RedundantCondition>
   </file>
+  <file src="src/Model/Table/AppTable.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>$this-&gt;associations()-&gt;getIterator()</code>
+    </TooManyTemplateParams>
+  </file>
   <file src="src/Model/Table/PagesTable.php">
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>\MeCms\Model\Entity\Page|bool</code>
@@ -28,6 +38,14 @@
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>\MeCms\Model\Entity\Post|bool</code>
     </ImplementedReturnTypeMismatch>
+  </file>
+  <file src="src/Model/Table/UsersTable.php">
+    <InvalidScalarArgument occurrences="1">
+      <code>$field</code>
+    </InvalidScalarArgument>
+    <TooManyTemplateParams occurrences="1">
+      <code>$validator-&gt;getIterator()</code>
+    </TooManyTemplateParams>
   </file>
   <file src="src/TestSuite/CellTestCase.php">
     <TypeDoesNotContainType occurrences="1">
@@ -54,15 +72,13 @@
       <code>empty($this-&gt;Table)</code>
     </TypeDoesNotContainType>
   </file>
-  <file src="src/Utility/StaticPage.php">
-    <TypeDoesNotContainType occurrences="1">
-      <code>IS_WIN</code>
-    </TypeDoesNotContainType>
-  </file>
   <file src="tests/TestCase/Command/Install/CreateSamplePostCommandTest.php">
     <UndefinedPropertyAssignment occurrences="1">
       <code>$this-&gt;Command-&gt;Posts</code>
     </UndefinedPropertyAssignment>
+  </file>
+  <file src="tests/TestCase/Command/Install/CreateVendorsLinksCommandTest.php">
+    <InvalidScalarArgument occurrences="1"/>
   </file>
   <file src="tests/TestCase/Command/UsersCommandTest.php">
     <UndefinedPropertyAssignment occurrences="1">
@@ -84,5 +100,20 @@
   </file>
   <file src="tests/TestCase/Controller/PostsTagsControllerTest.php">
     <InvalidArgument occurrences="2"/>
+  </file>
+  <file src="tests/TestCase/View/View/AdminViewTest.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($this-&gt;View)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="tests/TestCase/View/View/AppViewTest.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($this-&gt;View)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="tests/TestCase/View/ViewTest.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($this-&gt;View)</code>
+    </TypeDoesNotContainType>
   </file>
 </files>

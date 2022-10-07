@@ -18,7 +18,6 @@ namespace MeCms\Controller;
 use Cake\Cache\Cache;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\Query;
-use MeCms\Controller\AppController;
 use Tools\Exceptionist;
 
 /**

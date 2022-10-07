@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use Cake\Utility\Inflector;
-use MeCms\TestSuite\TestCase;
 
 /**
  * Abstract class for test validation classes
@@ -43,11 +42,11 @@ abstract class ValidationTestCase extends TestCase
      *
      * Then it removes one field at a time, verifying that the "this field is
      *  required" error is generated.
-     * @param array $data Valid data
-     * @param array $exclude Key to be excluded
+     * @param array<string, mixed> $data Valid data
+     * @param array<string> $exclude Key to be excluded
      * @return void
      */
-    public function assertAllDataAreRequired($data, $exclude = [])
+    public function assertAllDataAreRequired(array $data, array $exclude = [])
     {
         $this->Table ?: $this->fail('The property `$this->Table` has not been set');
         $this->example ?: $this->fail('The property `$this->example` has not been set');
@@ -72,8 +71,9 @@ abstract class ValidationTestCase extends TestCase
      * Called before every test method
      * @return void
      * @throw \PHPUnit\Framework\AssertionFailedError
+     * @throws \ReflectionException
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

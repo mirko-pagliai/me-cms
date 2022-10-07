@@ -30,7 +30,7 @@ use MeCms\TestSuite\ControllerTestCase;
 class PostsControllerTest extends ControllerTestCase
 {
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Posts',

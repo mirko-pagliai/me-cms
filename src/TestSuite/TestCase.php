@@ -23,7 +23,7 @@ use MeTools\TestSuite\TestCase as BaseTestCase;
 
 /**
  * TestCase class
- * @method \MeCms\Model\Table\AppTable getTable(string $alias, array $options = [])
+ * @method \MeCms\Model\Table\AppTable|null getTable(string $alias, array $options = [])
  */
 abstract class TestCase extends BaseTestCase
 {
@@ -42,7 +42,7 @@ abstract class TestCase extends BaseTestCase
      * Called after every test method
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 

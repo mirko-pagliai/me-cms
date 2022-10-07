@@ -19,7 +19,7 @@ namespace MeCms\Core;
 use MeTools\Core\Plugin as BasePlugin;
 
 /**
- * An utility to handle plugins
+ * A utility to handle plugins
  */
 class Plugin extends BasePlugin
 {

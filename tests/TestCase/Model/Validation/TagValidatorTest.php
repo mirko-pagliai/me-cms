@@ -29,7 +29,7 @@ class TagValidatorTest extends ValidationTestCase
 
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Tags',

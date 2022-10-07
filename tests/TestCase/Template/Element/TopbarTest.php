@@ -50,12 +50,10 @@ class TopbarTest extends TestCase
 <?php
 namespace App\View\Helper;
 
-use Cake\View\Helper;
+use MeCms\View\Helper\TopbarHelper as BaseTopbarHelper;
 
-class TopbarHelper extends Helper
+class TopbarHelper extends BaseTopbarHelper
 {
-    public \$helpers = ['Html' => ['className' => 'MeTools.Html']];
-
     public function build(): array
     {
         return [\$this->Html->link('A link from APP', 'http://localhost')];
