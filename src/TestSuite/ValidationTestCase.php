@@ -71,6 +71,7 @@ abstract class ValidationTestCase extends TestCase
      * Called before every test method
      * @return void
      * @throw \PHPUnit\Framework\AssertionFailedError
+     * @throws \ReflectionException
      */
     protected function setUp(): void
     {

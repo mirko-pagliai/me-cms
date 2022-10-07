@@ -16,8 +16,6 @@ declare(strict_types=1);
 
 namespace MeCms\TestSuite;
 
-use MeCms\TestSuite\EntityTestCase;
-
 /**
  * Abstract class for `PageTest` and `PostTest` classes
  */

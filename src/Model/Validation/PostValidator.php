@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace MeCms\Model\Validation;
 
 use Cake\Utility\Hash;
-use MeCms\Model\Validation\TagValidator;
 use MeCms\Validation\PageAndPostValidator;
 
 /**

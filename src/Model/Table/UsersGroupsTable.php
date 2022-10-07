@@ -16,8 +16,6 @@ declare(strict_types=1);
 namespace MeCms\Model\Table;
 
 use Cake\ORM\RulesChecker;
-use MeCms\Model\Table\AppTable;
-use MeCms\Model\Table\UsersTable;
 use MeCms\Model\Validation\UsersGroupValidator;
 
 /**

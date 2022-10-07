@@ -59,6 +59,7 @@ abstract class AppController extends BaseAppController
     /**
      * Initialization hook method
      * @return void
+     * @throws \Exception
      */
     public function initialize(): void
     {

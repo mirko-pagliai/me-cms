@@ -87,6 +87,7 @@ trait GetPreviewsFromTextTrait
      * @param string $html Html string
      * @return \Cake\Collection\CollectionInterface Collection of entities.
      *  Each `Entity` has `url`, `width` and `height` properties
+     * @throws \Tools\Exception\NotWritableException
      * @since 2.23.0
      */
     public function getPreviews(string $html): CollectionInterface

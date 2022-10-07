@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.x-dev@">
+  <file src="src/Controller/AppController.php">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>\Cake\Datasource\RepositoryInterface|\Cake\ORM\Association|null</code>
+    </ImplementedReturnTypeMismatch>
+  </file>
   <file src="src/Controller/PostsCategoriesController.php">
     <InvalidArgument occurrences="1"/>
   </file>

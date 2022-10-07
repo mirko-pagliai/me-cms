@@ -77,7 +77,7 @@ parameters:
 
 		-
 			message: "#^If condition is always true\\.$#"
-			count: 3
+			count: 2
 			path: src/TestSuite/ControllerTestCase.php
 
 		-
@@ -479,11 +479,6 @@ parameters:
 			message: "#^Variable \\$url might not be defined\\.$#"
 			count: 1
 			path: templates/email/html/Users/password_forgot.php
-
-		-
-			message: "#^Parameter \\#1 \\$paging of method MeCms\\\\Controller\\\\AppController\\:\\:setPaging\\(\\) expects array\\<string, array\\>, array\\<int, string\\> given\\.$#"
-			count: 1
-			path: tests/TestCase/Controller/AppControllerTest.php
 
 		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:read\\(\\) expects string, array\\|string\\|null given\\.$#"

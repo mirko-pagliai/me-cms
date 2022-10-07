@@ -20,7 +20,6 @@ use ArrayObject;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
-use MeCms\TestSuite\TableTestCase;
 
 /**
  * Abstract class for `PagesTableTest` and `PostsTableTest` classes

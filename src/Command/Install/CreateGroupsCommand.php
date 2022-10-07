@@ -44,6 +44,7 @@ class CreateGroupsCommand extends Command
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
+     * @throws \Exception
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
@@ -54,8 +55,8 @@ class CreateGroupsCommand extends Command
         }
 
         //Truncates the table (this resets IDs), then saves groups
-        $connection = $this->UsersGroups->getConnection();
         $command = 'TRUNCATE TABLE `%s`';
+        $connection = $this->UsersGroups->getConnection();
         if ($connection->getDriver() instanceof Sqlite) {
             $command = 'DELETE FROM "sqlite_sequence" WHERE "name"=\'%s\';';
         } elseif ($connection->getDriver() instanceof Postgres) {

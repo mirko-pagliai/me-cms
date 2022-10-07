@@ -99,6 +99,8 @@ abstract class ControllerTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
+     * @throws \ReflectionException
+     * @noinspection PhpRedundantVariableDocTypeInspection
      */
     protected function setUp(): void
     {
@@ -108,15 +110,14 @@ abstract class ControllerTestCase extends TestCase
 
         //Tries to retrieve controller and table from the class name
         if (empty($this->Controller) && $this->autoInitializeClass) {
-            /**
-             * @noinspection PhpRedundantVariableDocTypeInspection
-             * @var class-string<\MeCms\Controller\AppController> $originClassName
-             */
+            /** @var class-string<\MeCms\Controller\AppController> $originClassName */
             $originClassName = $this->getOriginClassNameOrFail($this);
             $alias = $this->getAlias($originClassName);
             $plugin = $this->getPluginName($this);
 
-            $this->Controller = $this->getMockForController($originClassName, [], $alias);
+            /** @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject $Controller */
+            $Controller = $this->getMockForController($originClassName, [], $alias);
+            $this->Controller = $Controller;
             $this->url = ['controller' => $alias, 'prefix' => $isAdmin ? ADMIN_PREFIX : null] + compact('plugin');
 
             $className = $this->getTableClassNameFromAlias($alias, $plugin);
@@ -187,6 +188,7 @@ abstract class ControllerTestCase extends TestCase
      * This is a default tests.
      * @return void
      * @test
+     * @throws \ReflectionException
      */
     public function testBeforeFilter(): void
     {

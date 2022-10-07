@@ -58,11 +58,10 @@ class PostsTable extends PostsAndPagesTables
      * Called before request data is converted into entities
      * @param \Cake\Event\Event $event Event object
      * @param \ArrayObject $data Request data
-     * @param \ArrayObject $options Options
      * @return void
      * @since 2.15.2
      */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
+    public function beforeMarshal(Event $event, ArrayObject $data): void
     {
         if (!empty($data['tags_as_string'])) {
             $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']) ?: []);

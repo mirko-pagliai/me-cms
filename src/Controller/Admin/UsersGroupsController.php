@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace MeCms\Controller\Admin;
 
 use Cake\Http\Response;
-use MeCms\Controller\Admin\AppController;
 
 /**
  * UsersGroups controller

@@ -38,6 +38,7 @@ abstract class CellTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
+     * @throws \ReflectionException
      */
     protected function setUp(): void
     {

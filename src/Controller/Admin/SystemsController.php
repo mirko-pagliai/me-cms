@@ -130,8 +130,6 @@ class SystemsController extends AppController
      * Temporary cleaner (assets, cache, logs, sitemap and thumbnails)
      * @param string $type Type
      * @return \Cake\Http\Response|null
-     * @uses clearCache()
-     * @uses clearSitemap()
      */
     public function tmpCleaner(string $type): ?Response
     {

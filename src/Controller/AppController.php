@@ -33,16 +33,19 @@ abstract class AppController extends BaseAppController
      * In addition to the method provided by CakePHP, it can also autoload the
      *  associated tables.
      * @param string $name Property name
-     * @return \Cake\Datasource\RepositoryInterface|null The model instance or null
+     * @return \Cake\Datasource\RepositoryInterface|\Cake\ORM\Association|null Instance or null
      * @see \Cake\Controller\Controller::__get()
      * @since 2.27.1
      */
     public function __get(string $name)
     {
-        [, $class] = pluginSplit($this->modelClass, true);
+        [, $class] = pluginSplit($this->defaultTable, true);
 
         if ($class !== $name && $this->{$class}->hasAssociation($name)) {
-            return $this->{$class}->getAssociation($name);
+            /** @var \MeCms\Model\Table\AppTable $Table */
+            $Table = $this->{$class};
+
+            return $Table->getAssociation($name);
         }
 
         return parent::__get($name);

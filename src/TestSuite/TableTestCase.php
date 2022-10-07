@@ -20,7 +20,6 @@ use Cake\ORM\Association;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\BelongsToMany;
 use Cake\ORM\Association\HasMany;
-use MeCms\TestSuite\TestCase;
 
 /**
  * Abstract class for test tables
@@ -80,6 +79,7 @@ abstract class TableTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
+     * @throws \ReflectionException
      */
     protected function setUp(): void
     {

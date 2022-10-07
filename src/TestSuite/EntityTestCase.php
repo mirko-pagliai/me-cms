@@ -51,20 +51,20 @@ abstract class EntityTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
+     * @noinspection PhpRedundantVariableDocTypeInspection
      */
     protected function setUp(): void
     {
         parent::setUp();
 
         if (empty($this->Entity) && $this->autoInitializeClass) {
-            /**
-             * @noinspection PhpRedundantVariableDocTypeInspection
-             * @var class-string<\Cake\ORM\Entity> $className
-             */
+            /** @var class-string<\Cake\ORM\Entity> $className */
             $className = $this->getOriginClassNameOrFail($this);
-            $this->Entity = $this->getMockBuilder($className)
+            /** @var \Cake\ORM\Entity&\PHPUnit\Framework\MockObject\MockObject $Entity */
+            $Entity = $this->getMockBuilder($className)
                 ->onlyMethods([])
                 ->getMock();
+            $this->Entity = $Entity;
         }
     }
 }

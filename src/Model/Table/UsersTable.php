@@ -23,10 +23,6 @@ use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\ResultSet;
 use Cake\ORM\RulesChecker;
 use MeCms\Model\Entity\User;
-use MeCms\Model\Table\AppTable;
-use MeCms\Model\Table\PostsTable;
-use MeCms\Model\Table\TokensTable;
-use MeCms\Model\Table\UsersGroupsTable;
 use MeCms\Model\Validation\UserValidator;
 use MeCms\ORM\Query;
 

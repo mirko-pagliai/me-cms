@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Mailer;
 
-use MeCms\Mailer\Mailer;
 use MeCms\Model\Entity\User;
 use Tools\Exceptionist;
 
