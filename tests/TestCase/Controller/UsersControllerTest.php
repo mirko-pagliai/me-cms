@@ -168,7 +168,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Users' . DS . 'activation_resend.php');
         $this->assertLayout('login.php');
-        $this->assertInstanceof(User::class, $this->viewVariable('user'));
+        $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. For now, data are invalid
         $wrongEmail = 'wrongEmail@example.com';
@@ -314,7 +314,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Users' . DS . 'password_forgot.php');
         $this->assertLayout('login.php');
-        $this->assertInstanceof(User::class, $this->viewVariable('user'));
+        $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. No existing mail address and user pending email
         foreach (['wrongMail@example.it', 'gamma@test.com'] as $wrongEmail) {
@@ -359,7 +359,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Users' . DS . 'password_reset.php');
         $this->assertLayout('login.php');
-        $this->assertInstanceof(User::class, $this->viewVariable('user'));
+        $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. Data are invalid
         $this->post($url, ['password' => '', 'password_repeat' => '']);
@@ -408,7 +408,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Users' . DS . 'signup.php');
         $this->assertLayout('login.php');
-        $this->assertInstanceof(User::class, $this->viewVariable('user'));
+        $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. For now, data are invalid
         $this->post($url, ['password' => 'anotherPassword'] + $data);

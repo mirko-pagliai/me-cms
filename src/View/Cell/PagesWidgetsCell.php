@@ -17,7 +17,6 @@ namespace MeCms\View\Cell;
 
 use Cake\Collection\CollectionInterface;
 use Cake\ORM\ResultSet;
-use Cake\ORM\Table;
 use Cake\View\Cell;
 use MeCms\Model\Table\PagesTable;
 
@@ -37,7 +36,9 @@ class PagesWidgetsCell extends Cell
      */
     public function initialize(): void
     {
-        $this->Pages = $this->fetchTable('MeCms.Pages');
+        /** @var \MeCms\Model\Table\PagesTable $Pages */
+        $Pages = $this->fetchTable('MeCms.Pages');
+        $this->Pages = $Pages;
     }
 
     /**

@@ -58,7 +58,7 @@ class PagesCategoriesControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('PagesCategories' . DS . 'view.php');
-        $this->assertInstanceof(PagesCategory::class, $this->viewVariable('category'));
+        $this->assertInstanceOf(PagesCategory::class, $this->viewVariable('category'));
         $this->assertContainsOnlyInstancesOf(Page::class, $this->viewVariable('category')->get('pages'));
         $cache = Cache::read('category_' . md5('first-page-category'), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('category'), $cache->first());

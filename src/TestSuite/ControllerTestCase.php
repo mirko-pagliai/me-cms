@@ -54,7 +54,7 @@ abstract class ControllerTestCase extends TestCase
      */
     public function assertGroupsAreAuthorized(array $values, ?string $action = null): void
     {
-        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
+        !empty($this->Controller) ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
         $this->Controller->getRequest()->clearDetectorCache();
@@ -79,7 +79,7 @@ abstract class ControllerTestCase extends TestCase
      */
     public function assertUsersAreAuthorized(array $values, ?string $action = null): void
     {
-        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
+        !empty($this->Controller) ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
         $controller->getRequest()->clearDetectorCache();
@@ -161,7 +161,7 @@ abstract class ControllerTestCase extends TestCase
      */
     protected function setUserId(int $id): void
     {
-        if ($this->Controller) {
+        if (!empty($this->Controller)) {
             $this->Controller->Auth->setUser(compact('id'));
         }
 
@@ -175,7 +175,7 @@ abstract class ControllerTestCase extends TestCase
      */
     protected function setUserGroup(string $name): void
     {
-        if ($this->Controller) {
+        if (!empty($this->Controller)) {
             $this->Controller->Auth->setUser(['group' => compact('name')]);
         }
 

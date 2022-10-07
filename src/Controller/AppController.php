@@ -28,7 +28,7 @@ use RuntimeException;
 abstract class AppController extends BaseAppController
 {
     /**
-     * Magic accessor for model autoloading.
+     * Magic accessor for model autoload.
      *
      * In addition to the method provided by CakePHP, it can also autoload the
      *  associated tables.

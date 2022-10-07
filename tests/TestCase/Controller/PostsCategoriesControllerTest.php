@@ -61,7 +61,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('PostsCategories' . DS . 'view.php');
-        $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
+        $this->assertInstanceOf(PostsCategory::class, $this->viewVariable('category'));
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
 
         $cache = sprintf('category_%s_limit_%s_page_%s', md5('first-post-category'), getConfigOrFail('default.records'), 1);

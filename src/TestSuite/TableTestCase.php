@@ -59,7 +59,7 @@ abstract class TableTestCase extends TestCase
      */
     public function assertHasBehavior($behavior): void
     {
-        $this->Table ?: $this->fail('The property `$this->Table` has not been set');
+        !empty($this->Table) ?: $this->fail('The property `$this->Table` has not been set');
 
         foreach ((array)$behavior as $name) {
             $this->assertTrue($this->Table->hasBehavior($name));

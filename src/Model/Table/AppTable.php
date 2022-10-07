@@ -216,7 +216,7 @@ abstract class AppTable extends Table
         }
 
         //"Created" field
-        if (!empty($data['created']) && preg_match('/^[1-9]\d{3}\-[01]\d$/', $data['created'])) {
+        if (!empty($data['created']) && preg_match('/^[1-9]\d{3}-[01]\d$/', $data['created'])) {
             $start = new FrozenTime(sprintf('%s-01', $data['created']));
             $query->where([sprintf('%s.created >=', $this->getAlias()) => $start])
                 ->andWhere([sprintf('%s.created <', $this->getAlias()) => $start->addMonth()]);

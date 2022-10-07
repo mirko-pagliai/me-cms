@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 //Widgets. You can use the plugin notation (eg., `PluginName.widgetName`)
 return ['Widgets' => [
     //General widgets

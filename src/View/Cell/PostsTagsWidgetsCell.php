@@ -51,7 +51,7 @@ class PostsTagsWidgetsCell extends Cell
      */
     protected function getFontSizes($style = []): array
     {
-        //Maximum and minimun font sizes we want to use
+        //Maximum and minimum font sizes we want to use
         $maxFont = is_array($style) && array_key_exists('maxFont', $style) ? $style['maxFont'] : 40;
         $minFont = is_array($style) && array_key_exists('minFont', $style) ? $style['minFont'] : 12;
         Exceptionist::isTrue($maxFont > $minFont, __d('me_cms', 'Invalid values'), InvalidArgumentException::class);

@@ -41,7 +41,7 @@ abstract class EntityTestCase extends TestCase
      */
     public function assertHasNoAccessibleProperty($property): void
     {
-        $this->Entity ?: $this->fail('The property `$this->Entity` has not been set');
+        !empty($this->Entity) ?: $this->fail('The property `$this->Entity` has not been set');
 
         foreach ((array)$property as $name) {
             $this->assertFalse($this->Entity->isAccessible($name));
@@ -51,14 +51,12 @@ abstract class EntityTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
-     * @noinspection PhpRedundantVariableDocTypeInspection
      */
     protected function setUp(): void
     {
         parent::setUp();
 
         if (empty($this->Entity) && $this->autoInitializeClass) {
-            /** @var class-string<\Cake\ORM\Entity> $className */
             $className = $this->getOriginClassNameOrFail($this);
             /** @var \Cake\ORM\Entity&\PHPUnit\Framework\MockObject\MockObject $Entity */
             $Entity = $this->getMockBuilder($className)

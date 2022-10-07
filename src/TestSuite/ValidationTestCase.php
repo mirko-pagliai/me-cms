@@ -48,7 +48,7 @@ abstract class ValidationTestCase extends TestCase
      */
     public function assertAllDataAreRequired(array $data, array $exclude = [])
     {
-        $this->Table ?: $this->fail('The property `$this->Table` has not been set');
+        !empty($this->Table) ?: $this->fail('The property `$this->Table` has not been set');
         $this->example ?: $this->fail('The property `$this->example` has not been set');
 
         $this->assertEmpty($this->Table->newEntity($this->example)->getErrors());

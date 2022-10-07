@@ -30,7 +30,7 @@ class MailerTest extends TestCase
     public function testConstruct(): void
     {
         $mailer = $this->getMockBuilder(Mailer::class)
-            ->setMethods([])
+            ->onlyMethods([])
             ->getMockForAbstractClass();
 
         $this->assertEquals(['MeTools.Html'], $mailer->viewBuilder()->getHelpers());

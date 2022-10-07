@@ -43,7 +43,7 @@ class PagesControllerTest extends ControllerTestCase
         $this->get(['_name' => 'page', 'first-page']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Pages' . DS . 'view.php');
-        $this->assertInstanceof(Page::class, $this->viewVariable('page'));
+        $this->assertInstanceOf(Page::class, $this->viewVariable('page'));
         $cache = Cache::read('view_' . md5('first-page'), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('page'), $cache->first());
     }
@@ -63,7 +63,7 @@ class PagesControllerTest extends ControllerTestCase
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page');
         $this->assertTemplate('StaticPages' . DS . $slug . '.php');
-        $this->assertInstanceof(Entity::class, $this->viewVariable('page'));
+        $this->assertInstanceOf(Entity::class, $this->viewVariable('page'));
         $this->assertEquals([
             'title' => 'Page From App',
             'url' => Router::url($url, true),
@@ -94,6 +94,6 @@ class PagesControllerTest extends ControllerTestCase
         $this->get(['_name' => 'pagesPreview', 'disabled-page']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Pages' . DS . 'view.php');
-        $this->assertInstanceof(Page::class, $this->viewVariable('page'));
+        $this->assertInstanceOf(Page::class, $this->viewVariable('page'));
     }
 }
