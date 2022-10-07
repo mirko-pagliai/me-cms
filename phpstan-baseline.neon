@@ -1,7 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Negated boolean expression is always false\\.$#"
+			message: "#^Cannot call method get\\(\\) on array\\|Cake\\\\Datasource\\\\EntityInterface\\.$#"
 			count: 1
 			path: src/Command/Install/CreateSamplePostCommand.php
 
@@ -124,6 +124,11 @@ parameters:
 			message: "#^Parameter \\#3 \\$length of function substr expects int\\|null, int\\|false given\\.$#"
 			count: 1
 			path: src/Utility/StaticPage.php
+
+		-
+			message: "#^Property MeCms\\\\View\\\\Cell\\\\PagesWidgetsCell\\:\\:\\$Pages \\(MeCms\\\\Model\\\\Table\\\\PagesTable\\) does not accept Cake\\\\ORM\\\\Table\\.$#"
+			count: 1
+			path: src/View/Cell/PagesWidgetsCell.php
 
 		-
 			message: "#^Variable \\$categories might not be defined\\.$#"

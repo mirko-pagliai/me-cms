@@ -17,21 +17,27 @@ namespace MeCms\View\Cell;
 
 use Cake\Collection\CollectionInterface;
 use Cake\ORM\ResultSet;
+use Cake\ORM\Table;
 use Cake\View\Cell;
+use MeCms\Model\Table\PagesTable;
 
 /**
  * PagesWidgets cell
- * @property \MeCms\Model\Table\PagesTable $Pages
  */
 class PagesWidgetsCell extends Cell
 {
+    /**
+     * @var \MeCms\Model\Table\PagesTable
+     */
+    protected PagesTable $Pages;
+
     /**
      * Initialization hook method
      * @return void
      */
     public function initialize(): void
     {
-        $this->loadModel('MeCms.Pages');
+        $this->Pages = $this->fetchTable('MeCms.Pages');
     }
 
     /**

@@ -17,6 +17,7 @@ namespace MeCms\View\Cell;
 
 use Cake\Collection\CollectionInterface;
 use Cake\ORM\ResultSet;
+use Cake\ORM\Table;
 use Cake\View\Cell;
 use InvalidArgumentException;
 use MeCms\Model\Entity\Tag;
@@ -24,22 +25,26 @@ use Tools\Exceptionist;
 
 /**
  * PostsTagsWidgets cell
- * @property \MeCms\Model\Table\TagsTable $Tags
  */
 class PostsTagsWidgetsCell extends Cell
 {
+    /**
+     * @var \Cake\ORM\Table
+     */
+    protected Table $Tags;
+
     /**
      * Initialization hook method
      * @return void
      */
     public function initialize(): void
     {
-        $this->loadModel('MeCms.Tags');
+        $this->Tags = $this->fetchTable('MeCms.Tags');
     }
 
     /**
      * Internal method to get the font sizes
-     * @param array|bool $style Style for tags. Array with `maxFont` and
+     * @param array<string, int>|bool $style Style for tags. Array with `maxFont` and
      *  `minFont` keys or `false` to disable
      * @return array
      * @throws \InvalidArgumentException

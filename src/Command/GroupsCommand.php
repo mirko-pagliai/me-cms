@@ -46,9 +46,9 @@ class GroupsCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $this->loadModel('MeCms.UsersGroups');
+        $Table = $this->fetchTable('MeCms.UsersGroups');
 
-        $rows = $this->UsersGroups->find()->select(['id', 'name', 'label', 'user_count'])->all();
+        $rows = $Table->find()->select(['id', 'name', 'label', 'user_count'])->all();
         if ($rows->isEmpty()) {
             return $io->error(__d('me_cms', 'There are no user groups'));
         }
