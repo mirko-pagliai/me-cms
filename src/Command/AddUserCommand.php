@@ -46,9 +46,10 @@ class AddUserCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $this->loadModel('MeCms.Users');
+        /** @var \MeCms\Model\Table\UsersTable $Users */
+        $Users = $this->fetchTable('MeCms.Users');
 
-        $groups = $this->Users->Groups->find('list')->all();
+        $groups = $Users->Groups->find('list')->all();
         if ($groups->isEmpty()) {
             return $io->error(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
         }
@@ -93,8 +94,8 @@ class AddUserCommand extends Command
         }
 
         //Saves the user
-        $user = $this->Users->newEntity($user);
-        if (!$this->Users->save($user)) {
+        $user = $Users->newEntity($user);
+        if (!$Users->save($user)) {
             $io->err(I18N_OPERATION_NOT_OK);
             $io->err(__d('me_cms', 'The user could not be saved'));
 

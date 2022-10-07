@@ -53,20 +53,12 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/TestSuite/TableTestCase.php">
-    <RedundantCondition occurrences="2">
-      <code>$this-&gt;Table</code>
-      <code>$this-&gt;Table</code>
-    </RedundantCondition>
     <TypeDoesNotContainType occurrences="2">
       <code>$this-&gt;fail('The property `$this-&gt;Table` has not been set')</code>
       <code>empty($this-&gt;Table)</code>
     </TypeDoesNotContainType>
   </file>
   <file src="src/TestSuite/ValidationTestCase.php">
-    <RedundantCondition occurrences="2">
-      <code>$this-&gt;Table</code>
-      <code>$this-&gt;Table</code>
-    </RedundantCondition>
     <TypeDoesNotContainType occurrences="2">
       <code>$this-&gt;fail('The property `$this-&gt;Table` has not been set')</code>
       <code>empty($this-&gt;Table)</code>
@@ -79,6 +71,11 @@
   </file>
   <file src="tests/TestCase/Command/Install/CreateVendorsLinksCommandTest.php">
     <InvalidScalarArgument occurrences="1"/>
+  </file>
+  <file src="tests/TestCase/Command/Install/RunAllCommandTest.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>assertSame</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="tests/TestCase/Command/UsersCommandTest.php">
     <UndefinedPropertyAssignment occurrences="1">

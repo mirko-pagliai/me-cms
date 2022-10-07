@@ -19,7 +19,7 @@ class MenuHelper extends Helper
     {
     }
 
-    public function articles()
+    public function articles(): array
     {
         $links = [
             ['First link', '/'],
@@ -29,7 +29,7 @@ class MenuHelper extends Helper
         return [$links, 'First menu', ['icon' => 'home'], ['Articles']];
     }
 
-    public function other_items()
+    public function other_items(): array
     {
         $links = [
             ['Third link', '/'],

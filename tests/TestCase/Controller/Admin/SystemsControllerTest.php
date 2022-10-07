@@ -73,7 +73,9 @@ class SystemsControllerTest extends ControllerTestCase
         parent::tearDownAfterClass();
 
         I18n::setLocale('en_US');
-        @unlink(SITEMAP);
+        if (is_writable(SITEMAP)) {
+            unlink(SITEMAP);
+        }
     }
 
     /**

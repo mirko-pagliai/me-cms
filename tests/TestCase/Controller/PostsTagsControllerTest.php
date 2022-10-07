@@ -75,7 +75,7 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('PostsTags' . DS . 'view.php');
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
-        $this->assertInstanceof(Tag::class, $this->viewVariable('tag'));
+        $this->assertInstanceOf(Tag::class, $this->viewVariable('tag'));
 
         $tagFromCache = Cache::read('tag_' . md5('cat'), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('tag'), $tagFromCache->first());

@@ -159,7 +159,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertContainsOnlyInstancesOf(Post::class, $related);
 
         //Gets related posts with image
-        $related = $this->Table->getRelated($post, 2, true);
+        $related = $this->Table->getRelated($post, 2);
         $this->assertInstanceOf(CollectionInterface::class, $related);
         $this->assertCount(1, $related);
         $this->assertEquals($related, Cache::read('related_2_posts_for_1_with_images', $this->Table->getCacheName()));
@@ -210,7 +210,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $sql = $query->sql();
         $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
-        $this->assertInstanceof(FrozenTime::class, $query->getValueBinder()->bindings()[':c2']['value']);
+        $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c2']['value']);
         $this->assertEquals([], $query->getValueBinder()->bindings()[':c3']['value']);
 
         $this->skipIfCakeIsLessThan('4.3');
@@ -227,7 +227,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $sql = $query->sql();
         $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
-        $this->assertInstanceof(FrozenTime::class, $query->getValueBinder()->bindings()[':c2']['value']);
+        $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c2']['value']);
 
         $this->skipIfCakeIsLessThan('4.3');
         $this->assertSqlEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = PostsTags.post_id INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = PostsTags.tag_id) WHERE (Posts.active = :c1 AND Posts.created <= :c2)', $sql);

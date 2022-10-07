@@ -1,7 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Negated boolean expression is always false\\.$#"
+			message: "#^Cannot call method get\\(\\) on array\\|Cake\\\\Datasource\\\\EntityInterface\\.$#"
 			count: 1
 			path: src/Command/Install/CreateSamplePostCommand.php
 
@@ -76,21 +76,6 @@ parameters:
 			path: src/ORM/PostsAndPagesTables.php
 
 		-
-			message: "#^If condition is always true\\.$#"
-			count: 2
-			path: src/TestSuite/ControllerTestCase.php
-
-		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 2
-			path: src/TestSuite/ControllerTestCase.php
-
-		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
-			path: src/TestSuite/EntityTestCase.php
-
-		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:read\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 2
 			path: src/TestSuite/PostsAndPagesTablesTestCase.php
@@ -99,16 +84,6 @@ parameters:
 			message: "#^Parameter \\#3 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:write\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 2
 			path: src/TestSuite/PostsAndPagesTablesTestCase.php
-
-		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
-			path: src/TestSuite/TableTestCase.php
-
-		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 1
-			path: src/TestSuite/ValidationTestCase.php
 
 		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:read\\(\\) expects string, array\\|string\\|null given\\.$#"
@@ -479,6 +454,16 @@ parameters:
 			message: "#^Variable \\$url might not be defined\\.$#"
 			count: 1
 			path: templates/email/html/Users/password_forgot.php
+
+		-
+			message: "#^Access to an undefined property MeCms\\\\Controller\\\\PostsController\\:\\:\\$Foo\\.$#"
+			count: 1
+			path: tests/TestCase/Controller/AppControllerTest.php
+
+		-
+			message: "#^Expression \"\\$PostsController\\-\\>Foo\" on a separate line does not do anything\\.$#"
+			count: 1
+			path: tests/TestCase/Controller/AppControllerTest.php
 
 		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:read\\(\\) expects string, array\\|string\\|null given\\.$#"

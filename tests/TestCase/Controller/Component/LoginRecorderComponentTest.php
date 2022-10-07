@@ -117,13 +117,13 @@ class LoginRecorderComponentTest extends ComponentTestCase
     {
         //For now is empty
         $result = $this->Component->read();
-        $this->assertInstanceof(Collection::class, $result);
+        $this->assertInstanceOf(Collection::class, $result);
         $this->assertTrue($result->isEmpty());
 
         //After save, is not empty
         $this->assertTrue($this->Component->write());
         $result = $this->Component->read();
-        $this->assertInstanceof(Collection::class, $result);
+        $this->assertInstanceOf(Collection::class, $result);
         $this->assertFalse($result->isEmpty());
 
         //Without the user ID

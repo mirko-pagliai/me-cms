@@ -1,4 +1,8 @@
-<?php $this->loadHelper('Html'); ?>
+<?php
+declare(strict_types=1);
+
+$this->loadHelper('Html');
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>

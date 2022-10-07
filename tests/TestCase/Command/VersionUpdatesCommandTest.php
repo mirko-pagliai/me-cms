@@ -121,9 +121,9 @@ class VersionUpdatesCommandTest extends TestCase
     public function testDeleteOldDirectories(): void
     {
         $dirs = [WWW_ROOT . 'fonts', TMP . 'login'];
-        @array_map('mkdir', $dirs);
+        array_map('mkdir', array_filter($dirs, 'is_writable'));
         $this->Command->deleteOldDirectories();
-        @array_walk($dirs, [$this, 'assertFileDoesNotExist']);
+        array_walk($dirs, [$this, 'assertFileDoesNotExist']);
     }
 
     /**

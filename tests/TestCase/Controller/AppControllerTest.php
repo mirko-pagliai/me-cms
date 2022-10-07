@@ -45,7 +45,7 @@ class AppControllerTest extends ControllerTestCase
 
         $this->expectNotice();
         $this->expectExceptionMessageMatches('/^Undefined property\: PostsController\:\:\$Foo in/');
-        /* @phpstan-ignore-next-line */
+        /** @noinspection PhpExpressionResultUnusedInspection */
         $PostsController->Foo;
     }
 

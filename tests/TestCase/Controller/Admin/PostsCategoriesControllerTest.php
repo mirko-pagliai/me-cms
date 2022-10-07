@@ -83,7 +83,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'form.php');
-        $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
+        $this->assertInstanceOf(PostsCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'new category', 'slug' => 'category-slug']);
@@ -94,7 +94,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $this->post($url, ['title' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
+        $this->assertInstanceOf(PostsCategory::class, $this->viewVariable('category'));
     }
 
     /**
@@ -108,7 +108,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'PostsCategories' . DS . 'form.php');
-        $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
+        $this->assertInstanceOf(PostsCategory::class, $this->viewVariable('category'));
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
@@ -119,7 +119,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $this->post($url, ['title' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertInstanceof(PostsCategory::class, $this->viewVariable('category'));
+        $this->assertInstanceOf(PostsCategory::class, $this->viewVariable('category'));
     }
 
     /**

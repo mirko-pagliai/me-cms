@@ -31,8 +31,6 @@ class GlobalFunctionsTest extends TestCase
     public function testGetConfig(): void
     {
         $this->assertNotEmpty(getConfig());
-        $this->assertNotEmpty(getConfig(null));
-        $this->assertNotEmpty(getConfig(null, null));
 
         $this->assertNull(getConfig('noExisting'));
         $this->assertEquals('defaultValue', getConfig('noExisting', 'defaultValue'));

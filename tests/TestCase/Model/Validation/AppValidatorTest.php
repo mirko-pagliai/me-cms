@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Model\Validation;
 
+use MeCms\Model\Table\AppTable;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -23,22 +24,22 @@ use MeCms\TestSuite\TestCase;
 class AppValidatorTest extends TestCase
 {
     /**
-     * @var \Cake\ORM\Table
+     * @var \MeCms\Model\Table\AppTable
      */
-    protected $Posts;
+    protected AppTable $Posts;
 
     /**
-     * @var \Cake\ORM\Table
+     * @var \MeCms\Model\Table\AppTable
      */
-    protected $PostsCategories;
+    protected AppTable $PostsCategories;
 
     /**
-     * @var \Cake\ORM\Table
+     * @var \MeCms\Model\Table\AppTable
      */
-    protected $Users;
+    protected AppTable $Users;
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected array $example = [
         'Posts' => [
@@ -78,7 +79,7 @@ class AppValidatorTest extends TestCase
         parent::setUp();
 
         foreach (['Posts', 'PostsCategories', 'Users'] as $table) {
-            $this->$table = $this->getTable('MeCms.' . $table);
+            $this->{$table} = $this->getTable('MeCms.' . $table);
         }
     }
 

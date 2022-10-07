@@ -97,12 +97,12 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertEquals($date, $this->viewVariable('date'));
 
         $startFromView = $this->viewVariable('start');
-        $this->assertInstanceof(FrozenTime::class, $startFromView);
+        $this->assertInstanceOf(FrozenTime::class, $startFromView);
         $this->assertEquals('2016-12-29 00:00:00', $startFromView->i18nFormat('yyyy-MM-dd HH:mm:ss'));
 
         $cache = sprintf(
             'index_date_%s_limit_%s_page_%s',
-            md5(serialize([$startFromView, FrozenTime::parse($startFromView)->addDay(1)])),
+            md5(serialize([$startFromView, FrozenTime::parse($startFromView)->addDay()])),
             getConfigOrFail('default.records'),
             1
         );
@@ -208,7 +208,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->get(['_name' => 'post', 'first-post']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Posts' . DS . 'view.php');
-        $this->assertInstanceof(Post::class, $this->viewVariable('post'));
+        $this->assertInstanceOf(Post::class, $this->viewVariable('post'));
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('related'));
         $cache = Cache::read('view_' . md5('first-post'), $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('post'), $cache->first());
@@ -224,7 +224,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->get(['_name' => 'postsPreview', 'inactive-post']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Posts' . DS . 'view.php');
-        $this->assertInstanceof(Post::class, $this->viewVariable('post'));
+        $this->assertInstanceOf(Post::class, $this->viewVariable('post'));
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('related'));
     }
 }

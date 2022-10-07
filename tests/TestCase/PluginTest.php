@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace MeCms\TestCase;
+namespace MeCms\Test\TestCase;
 
 use Cake\Core\Configure;
 use Cake\Http\BaseApplication;
@@ -41,7 +41,7 @@ class PluginTest extends TestCase
 
         //In the first call is cli
         $Plugin = $this->getMockBuilder(MeCms::class)
-            ->setMethods(['isCli'])
+            ->onlyMethods(['isCli'])
             ->getMock();
         $Plugin->method('isCli')->willReturn(true);
 
@@ -50,7 +50,7 @@ class PluginTest extends TestCase
         $this->assertContains('MyTheme', $loadedPlugins);
 
         $Plugin = $this->getMockBuilder(MeCms::class)
-            ->setMethods(['isCli'])
+            ->onlyMethods(['isCli'])
             ->getMock();
         $Plugin->method('isCli')->willReturn(false);
         $Plugin->bootstrap($app);

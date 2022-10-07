@@ -32,10 +32,11 @@ class FixElFinderCommandTest extends TestCase
     /**
      * @var string
      */
-    protected $command = 'me_cms.fix_el_finder -v';
+    protected string $command = 'me_cms.fix_el_finder -v';
 
     /**
      * Test for `execute()` method
+     * @uses \MeCms\Command\Install\FixElFinderCommand::execute()
      * @test
      */
     public function testExecute(): void
@@ -44,7 +45,7 @@ class FixElFinderCommandTest extends TestCase
             ELFINDER . 'php' . DS . 'connector.minimal.php',
             ELFINDER . 'elfinder-cke.html',
         ];
-        @array_map('unlink', $expectedFiles);
+        array_map('unlink', array_filter($expectedFiles, 'is_writable'));
         $this->exec($this->command);
         $this->assertExitWithSuccess();
         foreach ($expectedFiles as $expectedFile) {

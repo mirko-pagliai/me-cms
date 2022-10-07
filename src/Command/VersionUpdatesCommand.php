@@ -48,8 +48,7 @@ class VersionUpdatesCommand extends Command
     {
         Cache::clear('_cake_model_');
 
-        /** @var \MeCms\Model\Table\UsersTable $Table **/
-        $Table = $this->loadModel('MeCms.Users');
+        $Table = $this->fetchTable('MeCms.Users');
         if (!$Table->getSchema()->hasColumn('last_logins')) {
             $connection = $Table->getConnection();
             $command = 'ALTER TABLE `' . $Table->getTable() . '` ADD `last_logins` TEXT NULL DEFAULT NULL AFTER `last_name`;';
@@ -70,8 +69,7 @@ class VersionUpdatesCommand extends Command
         Cache::clear('_cake_model_');
 
         foreach (['Pages', 'Posts'] as $tableName) {
-            /** @var \MeCms\Model\Table\PagesTable|\MeCms\Model\Table\PostsTable $Table **/
-            $Table = $this->loadModel('MeCms.' . $tableName);
+            $Table = $this->fetchTable('MeCms.' . $tableName);
             if (!$Table->getSchema()->hasColumn('enable_comments')) {
                 $connection = $Table->getConnection();
                 $command = 'ALTER TABLE `' . $Table->getTable() . '` ADD `enable_comments` BOOLEAN NOT NULL DEFAULT TRUE';
@@ -89,8 +87,7 @@ class VersionUpdatesCommand extends Command
      */
     public function alterTagColumnSize(): void
     {
-        /** @var \MeCms\Model\Table\TagsTable $Table **/
-        $Table = $this->loadModel('MeCms.Tags');
+        $Table = $this->fetchTable('MeCms.Tags');
         if ($Table->getSchema()->getColumn('tag')['length'] < 255) {
             $connection = $Table->getConnection();
             $command = 'ALTER TABLE ' . $Table->getTable() . ' MODIFY tag varchar(255) NOT NULL';

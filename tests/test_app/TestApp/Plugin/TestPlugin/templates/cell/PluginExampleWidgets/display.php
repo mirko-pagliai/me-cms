@@ -1,2 +1,4 @@
 <?php
-    echo 'An example widget from a plugin';
+declare(strict_types=1);
+
+echo 'An example widget from a plugin';

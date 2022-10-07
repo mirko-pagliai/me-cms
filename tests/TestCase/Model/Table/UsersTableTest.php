@@ -29,7 +29,7 @@ class UsersTableTest extends TableTestCase
     /**
      * @var array<string, string|int>
      */
-    protected static $example = [
+    protected static array $example = [
         'group_id' => 1,
         'email' => 'example@test.com',
         'first_name' => 'Alfa',

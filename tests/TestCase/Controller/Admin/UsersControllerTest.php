@@ -142,7 +142,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Users' . DS . 'view.php');
-        $this->assertInstanceof(User::class, $this->viewVariable('user'));
+        $this->assertInstanceOf(User::class, $this->viewVariable('user'));
         $this->assertEmpty($this->viewVariable('loginLog'));
 
         Configure::write('MeCms.users.login_log', 1);
@@ -161,7 +161,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Users' . DS . 'add.php');
-        $this->assertInstanceof(User::class, $this->viewVariable('user'));
+        $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. Data are valid
         $this->post($url, self::$example);
@@ -172,7 +172,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, ['username' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertInstanceof(User::class, $this->viewVariable('user'));
+        $this->assertInstanceOf(User::class, $this->viewVariable('user'));
     }
 
     /**
@@ -186,7 +186,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Users' . DS . 'edit.php');
-        $this->assertInstanceof(User::class, $this->viewVariable('user'));
+        $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. Data are valid
         $this->post($url, ['first_name' => 'Gamma']);
@@ -197,7 +197,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, ['first_name' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertInstanceof(User::class, $this->viewVariable('user'));
+        $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         $url = $this->url + ['action' => 'edit', 1];
 
@@ -273,7 +273,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Users' . DS . 'change_password.php');
-        $this->assertInstanceof(User::class, $this->viewVariable('user'));
+        $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. Data are valid
         $this->post($url, [
@@ -299,7 +299,7 @@ class UsersControllerTest extends ControllerTestCase
         ]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertInstanceof(User::class, $this->viewVariable('user'));
+        $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //The password has not changed
         $this->assertEquals($user->get('password'), $this->Table->findById(1)->all()->extract('password')->first());
@@ -333,7 +333,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertFileExists($expectedPicture);
         array_map([$this, 'assertFileDoesNotExist'], [USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
 
-        @unlink($expectedPicture);
+        unlink($expectedPicture);
     }
 
     /**

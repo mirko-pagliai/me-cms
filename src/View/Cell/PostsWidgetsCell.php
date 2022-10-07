@@ -20,20 +20,27 @@ use Cake\I18n\FrozenTime;
 use Cake\ORM\ResultSet;
 use Cake\View\Cell;
 use MeCms\Model\Entity\Post;
+use MeCms\Model\Table\PostsTable;
 
 /**
  * PostsWidgets cell
- * @property \MeCms\Model\Table\PostsTable $Posts
  */
 class PostsWidgetsCell extends Cell
 {
+    /**
+     * @var \MeCms\Model\Table\PostsTable
+     */
+    protected PostsTable $Posts;
+
     /**
      * Initialization hook method
      * @return void
      */
     public function initialize(): void
     {
-        $this->loadModel('MeCms.Posts');
+        /** @var \MeCms\Model\Table\PostsTable $Posts */
+        $Posts = $this->fetchTable('MeCms.Posts');
+        $this->Posts = $Posts;
     }
 
     /**
