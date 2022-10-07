@@ -178,7 +178,7 @@ class SystemsController extends AppController
      */
     public function tmpViewer(): void
     {
-        $getDirSize = fn(string $path): int => array_sum(array_map(fn(SplFileInfo $file): int => $file->getSize(), iterator_to_array((new Finder())->in($path))));
+        $getDirSize = fn(string $path): int => (int)array_sum(array_map(fn(SplFileInfo $file): int => $file->getSize() ?: 0, iterator_to_array((new Finder())->in($path))));
 
         $assetsSize = $getDirSize(getConfigOrFail('Assets.target'));
         $cacheSize = $getDirSize(CACHE);

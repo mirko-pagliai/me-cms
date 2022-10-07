@@ -85,10 +85,12 @@ class AppControllerTest extends ControllerTestCase
     public function testGetAndSetPaging(): void
     {
         $this->assertSame([], $this->Controller->getPaging());
-        $this->Controller->setPaging(['paging-example']);
-        $this->assertSame(['paging-example'], $this->Controller->getPaging());
-        $this->assertSame(['paging-example'], $this->Controller->getRequest()->getAttribute('paging'));
-        $this->assertSame(['paging-example'], $this->Controller->getRequest()->getParam('paging'));
+
+        $paging = ['Posts' => ['paging-key' => 'paging-value']];
+        $this->Controller->setPaging($paging);
+        $this->assertSame($paging, $this->Controller->getPaging());
+        $this->assertSame($paging, $this->Controller->getRequest()->getAttribute('paging'));
+        $this->assertSame($paging, $this->Controller->getRequest()->getParam('paging'));
     }
 
     /**
