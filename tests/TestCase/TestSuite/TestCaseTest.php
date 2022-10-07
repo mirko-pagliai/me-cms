@@ -25,7 +25,7 @@ class TestCaseTest extends TestCase
 {
     /**
      * Test for `skipIfCakeIsLessThan()` method
-     * @ŧest
+     * @test
      */
     public function testSkipIfCakeIsLessThan(): void
     {

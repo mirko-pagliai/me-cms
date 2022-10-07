@@ -25,7 +25,7 @@ echo $this->Form->createInline(null, [
     'url' => ['_name' => 'postsSearch'],
 ]);
 echo $this->Form->control('p', [
-    'button' => $this->Form->submit(null, ['class' => 'btn-primary', 'icon' => 'search']),
+    'append-text' => $this->Form->submit(null, ['class' => 'btn-primary', 'icon' => 'search']),
     'id' => false,
     'label' => false,
     'placeholder' => sprintf('%s...', __d('me_cms', 'Search')),

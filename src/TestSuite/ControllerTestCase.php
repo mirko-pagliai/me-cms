@@ -18,7 +18,6 @@ namespace MeCms\TestSuite;
 
 use Cake\Event\Event;
 use MeCms\Controller\AppController;
-use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\IntegrationTestTrait;
 
 /**
@@ -55,7 +54,7 @@ abstract class ControllerTestCase extends TestCase
      */
     public function assertGroupsAreAuthorized(array $values, ?string $action = null): void
     {
-        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
+        !empty($this->Controller) ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
         $this->Controller->getRequest()->clearDetectorCache();
@@ -80,7 +79,7 @@ abstract class ControllerTestCase extends TestCase
      */
     public function assertUsersAreAuthorized(array $values, ?string $action = null): void
     {
-        $this->Controller ?: $this->fail('The property `$this->Controller` has not been set');
+        !empty($this->Controller) ?: $this->fail('The property `$this->Controller` has not been set');
 
         $controller = &$this->Controller;
         $controller->getRequest()->clearDetectorCache();
@@ -100,8 +99,10 @@ abstract class ControllerTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
+     * @throws \ReflectionException
+     * @noinspection PhpRedundantVariableDocTypeInspection
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -114,7 +115,9 @@ abstract class ControllerTestCase extends TestCase
             $alias = $this->getAlias($originClassName);
             $plugin = $this->getPluginName($this);
 
-            $this->Controller = $this->getMockForController($originClassName, null, $alias);
+            /** @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject $Controller */
+            $Controller = $this->getMockForController($originClassName, [], $alias);
+            $this->Controller = $Controller;
             $this->url = ['controller' => $alias, 'prefix' => $isAdmin ? ADMIN_PREFIX : null] + compact('plugin');
 
             $className = $this->getTableClassNameFromAlias($alias, $plugin);
@@ -134,8 +137,7 @@ abstract class ControllerTestCase extends TestCase
     /**
      * Internal method to create an image to upload.
      *
-     * It returns an array, similar to the `$_FILE` array that is created after
-     *  a upload
+     * Returns an array, similar to the `$_FILE` array that is created after an upload
      * @return array
      */
     protected function createImageToUpload(): array
@@ -159,7 +161,7 @@ abstract class ControllerTestCase extends TestCase
      */
     protected function setUserId(int $id): void
     {
-        if ($this->Controller) {
+        if (!empty($this->Controller)) {
             $this->Controller->Auth->setUser(compact('id'));
         }
 
@@ -173,7 +175,7 @@ abstract class ControllerTestCase extends TestCase
      */
     protected function setUserGroup(string $name): void
     {
-        if ($this->Controller) {
+        if (!empty($this->Controller)) {
             $this->Controller->Auth->setUser(['group' => compact('name')]);
         }
 
@@ -186,6 +188,7 @@ abstract class ControllerTestCase extends TestCase
      * This is a default tests.
      * @return void
      * @test
+     * @throws \ReflectionException
      */
     public function testBeforeFilter(): void
     {

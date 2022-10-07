@@ -45,7 +45,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Posts',
@@ -58,12 +58,12 @@ class AppTableTest extends TableTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->Posts = $this->Posts ?: $this->getTable('MeCms.Posts');
-        $this->PostsCategories = $this->PostsCategories ?: $this->getTable('MeCms.PostsCategories');
+        $this->Posts ??= $this->getTable('MeCms.Posts');
+        $this->PostsCategories ??= $this->getTable('MeCms.PostsCategories');
     }
 
     /**
@@ -101,11 +101,6 @@ class AppTableTest extends TableTestCase
             $this->assertEquals('2017-03-14 20:19:00', $entity->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'));
             $Table->delete($entity);
         }
-
-        /** @var \Cake\Datasource\EntityInterface $entity */
-        $entity = $Table->save($Table->newEntity(['created' => null] + $example));
-        $this->assertInstanceOf(FrozenTime::class, $entity->get('created'));
-        $Table->delete($entity);
     }
 
     /**
@@ -278,7 +273,7 @@ class AppTableTest extends TableTestCase
         $this->assertSqlEndsWith($expectedSql, $query->sql());
         $this->assertEquals(false, $query->getValueBinder()->bindings()[':c4']['value']);
 
-        //With some invalid datas
+        //With some invalid data
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['title' => 'ab', 'priority' => 6, 'created' => '2016-12-30']);
         $this->assertEmpty($query->getValueBinder()->bindings());
     }

@@ -25,7 +25,7 @@ $this->assign('title', $title = __d('me_cms', 'Login'));
             'placeholder' => I18N_USERNAME,
         ]);
         echo $this->Form->control('password', [
-            'button' => $this->Html->button('', '#', [
+            'append-text' => $this->Html->button('', '#', [
                 'class' => 'display-password',
                 'icon' => 'eye',
                 'title' => I18N_SHOW_HIDE_PASSWORD,

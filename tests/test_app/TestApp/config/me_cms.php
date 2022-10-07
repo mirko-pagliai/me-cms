@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 return ['MeCms' => [
     //Admin layout
     'admin' => [
@@ -76,7 +78,7 @@ return ['MeCms' => [
         ],
         //Forces debug on localhost (enabled or disabled)
         'debug_on_localhost' => true,
-        //Sitemap expiration. Must be a valid strtotime string
+        //Sitemap expiration. Must be a valid `strtotime()` string
         'sitemap_expiration' => '+24 hours',
         //Time formats
         //See: http://php.net/manual/it/datetime.formats.php
@@ -152,10 +154,10 @@ return ['MeCms' => [
     //Shareaholic
     'shareaholic' => [
         //App ID. Used for render the "share buttons" of Shareaholic.
-        //You can found it on the "Sharing: Edit Share Button Location"
+        //You can find it on the "Sharing: Edit Share Button Location"
         'app_id' => '',
         //Site ID. Used for render the "setup code" of Shareaholic.
-        //You can found it on the "Site Tools Dashboard"
+        //You can find it on the "Site Tools Dashboard"
         'site_id' => '',
     ],
     //Sitemap
@@ -173,7 +175,7 @@ return ['MeCms' => [
     ],
     //Users
     'users' => [
-        //How to activating accounts:
+        //How to activate accounts:
         //  `0` - No activation required, the account is immediately active;
         //  `1` - The account will be enabled by the user via email (default);
         //  `2` - The account will be enabled by an administrator.

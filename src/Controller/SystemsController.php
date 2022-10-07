@@ -18,7 +18,6 @@ namespace MeCms\Controller;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Response;
 use Cake\I18n\FrozenTime;
-use MeCms\Controller\AppController;
 use MeCms\Form\ContactUsForm;
 use MeCms\Utility\Sitemap\SitemapBuilder;
 use Tools\Filesystem;
@@ -40,14 +39,14 @@ class SystemsController extends AppController
         $cookie = (new Cookie('cookies-policy', '1'))->withNeverExpire();
         $this->setResponse($this->getResponse()->withCookie($cookie));
 
-        return $this->redirect($this->referer(['_name' => 'homepage'], true));
+        return $this->redirect($this->referer(['_name' => 'homepage']));
     }
 
     /**
      * "Contact us" form
      * @return \Cake\Http\Response|null|void
-     * @see MeCms\Form\ContactUsForm
-     * @see MeCms\Mailer\ContactUsMailer
+     * @see \MeCms\Form\ContactUsForm
+     * @see \MeCms\Mailer\ContactUsMailer
      */
     public function contactUs()
     {
@@ -86,7 +85,7 @@ class SystemsController extends AppController
     {
         //If the user's IP address is not reported as spammer
         if (!$this->getRequest()->is('spammer')) {
-            return $this->redirect($this->referer(['_name' => 'homepage'], true));
+            return $this->redirect($this->referer(['_name' => 'homepage']));
         }
 
         $this->viewBuilder()->setLayout('login');
@@ -100,7 +99,7 @@ class SystemsController extends AppController
     {
         //If the site has not been taken offline
         if (!getConfig('default.offline')) {
-            return $this->redirect($this->referer(['_name' => 'homepage'], true));
+            return $this->redirect($this->referer(['_name' => 'homepage']));
         }
 
         $this->viewBuilder()->setLayout('login');
@@ -124,7 +123,7 @@ class SystemsController extends AppController
         }
 
         if (empty($sitemap)) {
-            Filesystem::instance()->createFile(SITEMAP, gzencode(SitemapBuilder::generate(), 9), 0777);
+            Filesystem::instance()->createFile(SITEMAP, gzencode(SitemapBuilder::generate(), 9));
         }
 
         return $this->getResponse()->withFile(SITEMAP);

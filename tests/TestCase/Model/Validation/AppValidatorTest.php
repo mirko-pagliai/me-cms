@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Model\Validation;
 
+use MeCms\Model\Table\AppTable;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -23,22 +24,22 @@ use MeCms\TestSuite\TestCase;
 class AppValidatorTest extends TestCase
 {
     /**
-     * @var \Cake\ORM\Table
+     * @var \MeCms\Model\Table\AppTable
      */
-    protected $Posts;
+    protected AppTable $Posts;
 
     /**
-     * @var \Cake\ORM\Table
+     * @var \MeCms\Model\Table\AppTable
      */
-    protected $PostsCategories;
+    protected AppTable $PostsCategories;
 
     /**
-     * @var \Cake\ORM\Table
+     * @var \MeCms\Model\Table\AppTable
      */
-    protected $Users;
+    protected AppTable $Users;
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected array $example = [
         'Posts' => [
@@ -53,15 +54,15 @@ class AppValidatorTest extends TestCase
             'email' => 'example@test.com',
             'first_name' => 'Alfa',
             'last_name' => 'Beta',
-            'username' => 'myusername',
-            'password' => 'mypassword1!',
-            'password_repeat' => 'mypassword1!',
+            'username' => 'my-username',
+            'password' => 'my-password1!',
+            'password_repeat' => 'my-password1!',
         ],
     ];
 
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Posts',
@@ -73,12 +74,12 @@ class AppValidatorTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         foreach (['Posts', 'PostsCategories', 'Users'] as $table) {
-            $this->$table = $this->getTable('MeCms.' . $table);
+            $this->{$table} = $this->getTable('MeCms.' . $table);
         }
     }
 

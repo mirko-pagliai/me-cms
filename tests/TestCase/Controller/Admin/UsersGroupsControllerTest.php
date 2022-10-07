@@ -24,7 +24,7 @@ use MeCms\TestSuite\ControllerTestCase;
 class UsersGroupsControllerTest extends ControllerTestCase
 {
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.UsersGroups',
@@ -76,7 +76,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
         $this->post($url, ['name' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertInstanceof(UsersGroup::class, $this->viewVariable('group'));
+        $this->assertInstanceOf(UsersGroup::class, $this->viewVariable('group'));
     }
 
     /**
@@ -90,7 +90,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'UsersGroups' . DS . 'edit.php');
-        $this->assertInstanceof(UsersGroup::class, $this->viewVariable('group'));
+        $this->assertInstanceOf(UsersGroup::class, $this->viewVariable('group'));
 
         //POST request. Data are valid
         $this->post($url, ['description' => 'This is a description']);
@@ -102,7 +102,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
         $this->assertResponseOk();
         $this->assertResponseNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertInstanceof(UsersGroup::class, $this->viewVariable('group'));
+        $this->assertInstanceOf(UsersGroup::class, $this->viewVariable('group'));
     }
 
     /**

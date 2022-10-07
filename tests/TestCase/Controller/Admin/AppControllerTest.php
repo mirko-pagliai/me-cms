@@ -33,7 +33,7 @@ class AppControllerTest extends ControllerTestCase
     protected AppController $Controller;
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',
@@ -44,7 +44,7 @@ class AppControllerTest extends ControllerTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

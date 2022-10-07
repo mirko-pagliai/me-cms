@@ -27,7 +27,7 @@ class QueryTest extends TestCase
 {
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Core/Articles',
@@ -50,7 +50,7 @@ class QueryTest extends TestCase
 
         $Query = $this->getMockBuilder(Query::class)
             ->setConstructorArgs([$Table->getConnection(), $Table])
-            ->setMethods(['_cache'])
+            ->onlyMethods(['_cache'])
             ->getMock();
 
         $Query->expects($this->exactly(4))
@@ -74,7 +74,7 @@ class QueryTest extends TestCase
 
         $Query = $this->getMockBuilder(Query::class)
             ->setConstructorArgs([$Table->getConnection(), $Table])
-            ->setMethods(['_cache'])
+            ->onlyMethods(['_cache'])
             ->getMock();
 
         $Query->expects($this->exactly(4))

@@ -25,6 +25,11 @@ html {
     }
 }
 
+/* Links */
+a {
+    text-decoration: none;
+}
+
 /* Blockquote */
 blockquote {
     background: #f2f2f2;

@@ -20,7 +20,6 @@ use Cake\ORM\Association;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\BelongsToMany;
 use Cake\ORM\Association\HasMany;
-use MeCms\TestSuite\TestCase;
 
 /**
  * Abstract class for test tables
@@ -34,7 +33,7 @@ abstract class TableTestCase extends TestCase
     protected bool $autoInitializeClass = true;
 
     /**
-     * Asserts that the table has a "belogs to" association
+     * Asserts that the table has a "belongs to" association
      * @param \Cake\ORM\Association $association Association
      * @return void
      */
@@ -44,7 +43,7 @@ abstract class TableTestCase extends TestCase
     }
 
     /**
-     * Asserts that the table has a "belogs to many" association
+     * Asserts that the table has a "belongs to many" association
      * @param \Cake\ORM\Association $association Association
      * @return void
      */
@@ -60,7 +59,7 @@ abstract class TableTestCase extends TestCase
      */
     public function assertHasBehavior($behavior): void
     {
-        $this->Table ?: $this->fail('The property `$this->Table` has not been set');
+        !empty($this->Table) ?: $this->fail('The property `$this->Table` has not been set');
 
         foreach ((array)$behavior as $name) {
             $this->assertTrue($this->Table->hasBehavior($name));
@@ -80,8 +79,9 @@ abstract class TableTestCase extends TestCase
     /**
      * Called before every test method
      * @return void
+     * @throws \ReflectionException
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

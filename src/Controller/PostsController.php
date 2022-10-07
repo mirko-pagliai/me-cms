@@ -23,7 +23,6 @@ use Cake\I18n\I18n;
 use Cake\ORM\ResultSet;
 use Cake\Routing\Router;
 use Cake\Utility\Text;
-use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
 use MeCms\Model\Entity\Post;
@@ -277,6 +276,7 @@ class PostsController extends AppController
      * Views post
      * @param string $slug Post slug
      * @return void
+     * @throws \Tools\Exception\PropertyNotExistsException
      * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
     public function view(string $slug): void
@@ -300,6 +300,7 @@ class PostsController extends AppController
      * It uses the `view` template.
      * @param string $slug Post slug
      * @return \Cake\Http\Response
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     public function preview(string $slug): Response
     {

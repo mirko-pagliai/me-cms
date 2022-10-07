@@ -27,7 +27,7 @@ use MeCms\TestSuite\CellTestCase;
 class PostsTagsWidgetsCellTest extends CellTestCase
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected array $example = [
         'limit' => 2,
@@ -41,7 +41,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     ];
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Tags',
@@ -51,7 +51,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->Table ??= $this->getTable('MeCms.Tags');
 
@@ -60,6 +60,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `getFontSizes()` method
+     * @uses \MeCms\View\Cell\PostsTagsWidgetsCell::getFontSizes()
      * @test
      */
     public function testGetFontSizes(): void
@@ -80,6 +81,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
 
     /**
      * Test for `popular()` method
+     * @uses \MeCms\View\Cell\PostsTagsWidgetsCell::popular()
      * @test
      */
     public function testPopular(): void
@@ -106,7 +108,8 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget, $this->example)->render());
+        $result = $this->Widget->widget($widget, $this->example)->render();
+        $this->assertHtml($expected, $result);
 
         //Tries with a custom prefix
         $expected = [
@@ -139,8 +142,8 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/h4',
             ['div' => ['class' => 'widget-content']],
             'form' => ['method' => 'get', 'accept-charset' => 'utf-8', 'action' => '/posts/tag/tag'],
-            ['div' => ['class' => 'form-group input select']],
-            'select' => ['name' => 'q', 'onchange' => 'sendForm(this)', 'class' => 'form-control'],
+            ['div' => ['class' => 'input mb-3 select']],
+            'select' => ['name' => 'q', 'class' => 'form-control form-select', 'onchange' => 'sendForm(this)'],
             ['option' => ['value' => '']],
             '/option',
             ['option' => ['value' => 'cat']],
@@ -158,6 +161,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $result = $this->Widget->widget($widget, ['render' => 'form', 'style' => false] + $this->example)->render();
         $this->assertHtml($expected, $result);
 
+        //Tries to render as list
         $expected = [
             ['div' => ['class' => 'widget mb-4']],
             'h4' => ['class' => 'widget-title'],
@@ -187,7 +191,6 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        //Tries to render as list
         $result = $this->Widget->widget($widget, ['render' => 'list', 'style' => false] + $this->example)->render();
         $this->assertHtml($expected, $result);
 
@@ -242,6 +245,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     /**
      * Test for `popular()` method, with tags that have the same `post_count`
      *  value
+     * @uses \MeCms\View\Cell\PostsTagsWidgetsCell::popular()
      * @test
      */
     public function testPopularWithTagsSamePostCount(): void
@@ -273,7 +277,8 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $this->assertHtml($expected, $this->Widget->widget($widget, $this->example)->render());
+        $result = $this->Widget->widget($widget, $this->example)->render();
+        $this->assertHtml($expected, $result);
 
         //Tests cache
         $fromCache = Cache::read('widget_tags_popular_2_max_40_min_12', $this->Table->getCacheName());

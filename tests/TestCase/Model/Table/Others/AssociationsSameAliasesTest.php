@@ -29,7 +29,7 @@ class AssociationsSameAliasesTest extends TableTestCase
 
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',
@@ -50,9 +50,8 @@ class AssociationsSameAliasesTest extends TableTestCase
             $this->assertBelongsTo($Table->Categories);
             $this->assertEquals('Categories', $Table->Categories->getName());
             $this->assertEquals('MeCms\\Model\\Table\\' . $name . 'CategoriesTable', $Table->Categories->getClassName());
-            /** @var class-string<\MeCms\Model\Table\PagesTable>|class-string<\MeCms\Model\Table\PostsTable> $className */
             $className = '\\MeCms\\Model\\Entity\\' . $name . 'Category';
-            $this->assertInstanceof($className, $Table->Categories->find()->first());
+            $this->assertInstanceOf($className, $Table->Categories->find()->first());
         }
     }
 }

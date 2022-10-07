@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 /**
  * This file is part of me-cms.
- *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
- *
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
@@ -31,6 +29,18 @@ class ContactUsForm extends Form
     use MailerAwareTrait;
 
     /**
+     * Internal method to check, via `SpamDetector`, if an email address
+     *    has been reported as a spammer
+     * @param string $email Email to check
+     * @return bool
+     * @throws \Exception
+     */
+    protected function verifyEmail(string $email): bool
+    {
+        return (new SpamDetector())->email($email)->verify();
+    }
+
+    /**
      * Returns the default validator object
      * @param \Cake\Validation\Validator $validator Validator instance
      * @return \Cake\Validation\Validator
@@ -49,7 +59,7 @@ class ContactUsForm extends Form
         $validator->add('email', [
             'notSpammer' => [
                 'message' => __d('me_cms', 'This email address has been reported as a spammer'),
-                'rule' => fn(string $value): bool => (new SpamDetector())->email($value)->verify(),
+                'rule' => fn(string $value): bool => $this->verifyEmail($value),
             ],
         ])->requirePresence('email');
 
@@ -66,7 +76,6 @@ class ContactUsForm extends Form
 
     /**
      * Used by `execute()` to execute the form's action. This sends the email.
-     *
      * The `$data` array must contain the `email`, `first_name`, `last_name`
      *  and `message` keys.
      * @param array $data Form data

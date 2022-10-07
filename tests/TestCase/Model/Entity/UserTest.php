@@ -30,12 +30,14 @@ class UserTest extends EntityTestCase
      * Called after every test method
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
         Filesystem::instance()->unlinkRecursive(USER_PICTURES, 'empty', true);
-        @unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
+        if (is_writable(WWW_ROOT . 'img' . DS . 'no-avatar.jpg')) {
+            unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
+        }
     }
 
     /**
@@ -74,7 +76,7 @@ class UserTest extends EntityTestCase
 
         $result = $this->Entity->set('last_logins', [$entity])
             ->get('last_logins');
-        $this->assertInstanceof(Collection::class, $result);
+        $this->assertInstanceOf(Collection::class, $result);
         $this->assertCount(1, $result);
         $this->assertSame($entity, $result->first());
     }
@@ -89,7 +91,7 @@ class UserTest extends EntityTestCase
 
         $Filesystem = new Filesystem();
 
-        $Filesystem->createFile(WWW_ROOT . 'img' . DS . 'no-avatar.jpg', null);
+        $Filesystem->createFile(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
         $this->assertEquals('no-avatar.jpg', $this->Entity->get('picture'));
 
         $id = 0;

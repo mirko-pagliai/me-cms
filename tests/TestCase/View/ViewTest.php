@@ -34,13 +34,15 @@ class ViewTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->View = new View();
-        $this->View->setPlugin('MeCms');
-        $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
+        if (empty($this->View)) {
+            $this->View = new View();
+            $this->View->setPlugin('MeCms');
+            $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
+        }
     }
 
     /**
@@ -112,6 +114,6 @@ class ViewTest extends TestCase
         //Checks for title and favicon
         $this->assertStringContainsString('<title>title from controller - MeCms</title>', $result);
         $this->assertStringContainsString('<link href="/favicon.ico" type="image/x-icon" rel="icon"/><link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>', $result);
-        @unlink(WWW_ROOT . 'favicon.ico');
+        unlink(WWW_ROOT . 'favicon.ico');
     }
 }

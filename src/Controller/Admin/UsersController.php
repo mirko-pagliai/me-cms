@@ -18,7 +18,6 @@ namespace MeCms\Controller\Admin;
 use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\Mailer\MailerAwareTrait;
-use MeCms\Controller\Admin\AppController;
 use Symfony\Component\Finder\Finder;
 use Thumber\Cake\Utility\ThumbManager;
 
@@ -64,6 +63,7 @@ class UsersController extends AppController
     /**
      * Initialization hook method
      * @return void
+     * @throws \Exception
      */
     public function initialize(): void
     {

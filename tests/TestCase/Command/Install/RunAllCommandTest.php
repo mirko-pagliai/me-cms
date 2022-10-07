@@ -37,8 +37,8 @@ class RunAllCommandTest extends TestCase
         $this->assertExitWithSuccess();
 
         $expectedQuestions = array_column($questions, 'question');
-        /** @var array<array-key, string> $outputQuestions **/
-        $outputQuestions = array_map(fn(string $output): string => preg_match('/\<question\>([\w\s\.]+\?)\<\/question\>/', $output, $matches) ? $matches[1] : '', $this->_out->messages());
+        $matches = [];
+        $outputQuestions = array_map(fn(string $output): string => preg_match('/<question>([\w\s.]+\?)<\/question>/', $output, $matches) ? $matches[1] : '', $this->_out->messages());
         $this->assertSame($expectedQuestions, $outputQuestions);
     }
 }

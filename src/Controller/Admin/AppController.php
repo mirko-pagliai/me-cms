@@ -40,7 +40,7 @@ abstract class AppController extends BaseAppController
 
         $this->viewBuilder()->setClassName('MeCms.View/Admin');
 
-        //Sets the paginate limit and the maximum paginate limit
+        //Sets paginate limit and maximum paginate limit
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.records');
 
@@ -59,6 +59,7 @@ abstract class AppController extends BaseAppController
     /**
      * Initialization hook method
      * @return void
+     * @throws \Exception
      */
     public function initialize(): void
     {

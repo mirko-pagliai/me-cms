@@ -20,20 +20,27 @@ use Cake\I18n\FrozenTime;
 use Cake\ORM\ResultSet;
 use Cake\View\Cell;
 use MeCms\Model\Entity\Post;
+use MeCms\Model\Table\PostsTable;
 
 /**
  * PostsWidgets cell
- * @property \MeCms\Model\Table\PostsTable $Posts
  */
 class PostsWidgetsCell extends Cell
 {
+    /**
+     * @var \MeCms\Model\Table\PostsTable
+     */
+    protected PostsTable $Posts;
+
     /**
      * Initialization hook method
      * @return void
      */
     public function initialize(): void
     {
-        $this->loadModel('MeCms.Posts');
+        /** @var \MeCms\Model\Table\PostsTable $Posts */
+        $Posts = $this->fetchTable('MeCms.Posts');
+        $this->Posts = $Posts;
     }
 
     /**
@@ -98,7 +105,7 @@ class PostsWidgetsCell extends Cell
 
         $months = $this->Posts->find('active')
             ->select('created')
-            ->formatResults(fn(ResultSet $results): CollectionInterface => $results->sortBy('created', SORT_DESC)
+            ->formatResults(fn(ResultSet $results): CollectionInterface => $results->sortBy('created')
                 ->countBy(fn(Post $post): string => $post->get('created')->i18nFormat('yyyy/MM'))
                 ->map(fn(int $countBy, string $month): array => [
                     'created' => FrozenTime::createFromFormat('Y/m/d H:i:s', $month . '/01 00:00:00'),

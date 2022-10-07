@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Controller;
 
-use MeCms\Controller\AppController;
 use MeCms\ORM\Query;
 
 /**

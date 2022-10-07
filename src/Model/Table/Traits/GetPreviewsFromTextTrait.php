@@ -30,8 +30,8 @@ use Tools\Filesystem;
 trait GetPreviewsFromTextTrait
 {
     /**
-     * Internal method to extract all images from an html string, including the
-     *  previews of Youtube videos
+     * Internal method to extract all images from a html string, including the
+     *  previews of YouTube videos
      * @param string $html Html string
      * @return array
      * @since 2.23.0
@@ -82,11 +82,12 @@ trait GetPreviewsFromTextTrait
     }
 
     /**
-     * Gets all the available images from an html string, including the previews
-     *  of Youtube videos, and returns an array of `Entity`
+     * Gets all the available images from a html string, including the previews
+     *  of YouTube videos, and returns an array of `Entity`
      * @param string $html Html string
      * @return \Cake\Collection\CollectionInterface Collection of entities.
      *  Each `Entity` has `url`, `width` and `height` properties
+     * @throws \Tools\Exception\NotWritableException
      * @since 2.23.0
      */
     public function getPreviews(string $html): CollectionInterface

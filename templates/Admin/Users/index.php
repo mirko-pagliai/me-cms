@@ -24,46 +24,41 @@ $this->append('actions', $this->Html->button(
     ['controller' => 'UsersGroups', 'action' => 'add'],
     ['class' => 'btn-success', 'icon' => 'plus']
 ));
-$this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'years']);
-?>
 
-<?= $this->Form->createInline(null, ['class' => 'filter-form', 'type' => 'get']) ?>
-    <fieldset>
-        <?= $this->Html->legend(I18N_FILTER, ['icon' => 'eye']) ?>
-        <?php
-        echo $this->Form->control('id', [
-            'default' => $this->getRequest()->getQuery('id'),
-            'placeholder' => I18N_ID,
-            'size' => 1,
-        ]);
-        echo $this->Form->control('username', [
-            'default' => $this->getRequest()->getQuery('username'),
-            'placeholder' => __d('me_cms', 'username'),
-            'size' => 13,
-        ]);
-        echo $this->Form->control('status', [
-            'default' => $this->getRequest()->getQuery('status'),
-            'empty' => I18N_ALL_STATUS,
-            'options' => [
-                'active' => __d('me_cms', 'Only active'),
-                'pending' => __d('me_cms', 'Only pending'),
-                'banned' => __d('me_cms', 'Only banned'),
-            ],
-        ]);
-        echo $this->Form->control('group', [
-            'default' => $this->getRequest()->getQuery('group'),
-            'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
-        ]);
-        echo $this->Form->datepicker('created', [
-            'data-date-format' => 'YYYY-MM',
-            'default' => $this->getRequest()->getQuery('created'),
-            'placeholder' => __d('me_cms', 'month'),
-            'size' => 3,
-        ]);
-        echo $this->Form->submit(null, ['icon' => 'search']);
-        ?>
-    </fieldset>
-<?php echo $this->Form->end(); ?>
+echo $this->Form->createInline(null, ['class' => 'filter-form', 'type' => 'get']);
+echo $this->Html->legend(I18N_FILTER, ['icon' => 'eye']);
+echo $this->Form->control('id', [
+    'default' => $this->getRequest()->getQuery('id'),
+    'placeholder' => I18N_ID,
+    'size' => 1,
+]);
+echo $this->Form->control('username', [
+    'default' => $this->getRequest()->getQuery('username'),
+    'placeholder' => __d('me_cms', 'username'),
+    'size' => 13,
+]);
+echo $this->Form->control('status', [
+    'default' => $this->getRequest()->getQuery('status'),
+    'empty' => I18N_ALL_STATUS,
+    'options' => [
+        'active' => __d('me_cms', 'Only active'),
+        'pending' => __d('me_cms', 'Only pending'),
+        'banned' => __d('me_cms', 'Only banned'),
+    ],
+]);
+echo $this->Form->control('group', [
+    'default' => $this->getRequest()->getQuery('group'),
+    'empty' => sprintf('-- %s --', I18N_ALL_VALUES),
+]);
+echo $this->Form->control('created', [
+    'default' => $this->getRequest()->getQuery('created'),
+    'placeholder' => __d('me_cms', 'month'),
+    'size' => 3,
+    'type' => 'month',
+]);
+echo $this->Form->submit(null, ['icon' => 'search']);
+echo $this->Form->end();
+?>
 
 <table class="table table-hover">
     <thead>
@@ -138,7 +133,7 @@ $this->Library->datepicker('#created', ['format' => 'MM/YYYY', 'viewMode' => 'ye
                 </td>
                 <td class="text-nowrap text-center">
                     <?php
-                    if ($user->get('post_count')) {
+                    if ($user->hasValue('post_count')) {
                         echo $this->Html->link(
                             (string)$user->get('post_count'),
                             ['controller' => 'Posts', 'action' => 'index', '?' => ['user' => $user->get('id')]],

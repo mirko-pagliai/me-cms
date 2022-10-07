@@ -24,7 +24,7 @@ use MeCms\TestSuite\ControllerTestCase;
 class PostsTagsControllerTest extends ControllerTestCase
 {
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Posts',
@@ -75,7 +75,7 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'PostsTags' . DS . 'edit.php');
-        $this->assertInstanceof(Tag::class, $this->viewVariable('tag'));
+        $this->assertInstanceOf(Tag::class, $this->viewVariable('tag'));
 
         //POST request. Data are valid
         $this->post($url, ['tag' => 'another tag']);
@@ -86,6 +86,6 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->post($url, ['tag' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertInstanceof(Tag::class, $this->viewVariable('tag'));
+        $this->assertInstanceOf(Tag::class, $this->viewVariable('tag'));
     }
 }

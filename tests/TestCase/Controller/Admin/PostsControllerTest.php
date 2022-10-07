@@ -26,7 +26,7 @@ use MeCms\TestSuite\ControllerTestCase;
 class PostsControllerTest extends ControllerTestCase
 {
     /**
-     * @var array
+     * @var array<string, int|string>
      */
     protected static array $example = [
         'user_id' => 1,
@@ -37,7 +37,7 @@ class PostsControllerTest extends ControllerTestCase
     ];
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Posts',
@@ -93,7 +93,7 @@ class PostsControllerTest extends ControllerTestCase
             ], $action);
         }
 
-        //With `edit` action and an user who owns the record
+        //With `edit` action and a user who owns the record
         $this->Controller->setRequest($this->Controller->getRequest()->withParam('pass.0', 1));
         $this->assertUsersAreAuthorized([
             1 => true,
@@ -134,7 +134,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'form.php');
-        $this->assertInstanceof(Post::class, $this->viewVariable('post'));
+        $this->assertInstanceOf(Post::class, $this->viewVariable('post'));
 
         //POST request. Data are valid
         $this->post($url, self::$example);
@@ -145,7 +145,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->post($url, ['title' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertInstanceof(Post::class, $this->viewVariable('post'));
+        $this->assertInstanceOf(Post::class, $this->viewVariable('post'));
     }
 
     /**
@@ -159,7 +159,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'form.php');
-        $this->assertInstanceof(Post::class, $this->viewVariable('post'));
+        $this->assertInstanceOf(Post::class, $this->viewVariable('post'));
         $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('post')->get('tags'));
         $this->assertMatchesRegularExpression('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('post')->get('created'));
 
@@ -172,7 +172,7 @@ class PostsControllerTest extends ControllerTestCase
         $this->post($url, ['title' => 'aa']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertInstanceof(Post::class, $this->viewVariable('post'));
+        $this->assertInstanceOf(Post::class, $this->viewVariable('post'));
     }
 
     /**
@@ -188,7 +188,7 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests that the admins and manangers can add and edit as another user
+     * Tests that the admins and managers can add and edit as another user
      * @test
      */
     public function testAdminsAndManagersCanAddAndEditAsAnotherUser(): void

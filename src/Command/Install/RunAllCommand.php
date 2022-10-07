@@ -16,11 +16,6 @@ declare(strict_types=1);
 
 namespace MeCms\Command\Install;
 
-use MeCms\Command\Install\CopyConfigCommand;
-use MeCms\Command\Install\CreateAdminCommand;
-use MeCms\Command\Install\CreateGroupsCommand;
-use MeCms\Command\Install\CreateSamplePostCommand;
-use MeCms\Command\Install\FixElFinderCommand;
 use MeCms\Command\VersionUpdatesCommand;
 use MeTools\Command\Install\RunAllCommand as BaseRunAllCommand;
 

@@ -19,7 +19,6 @@ use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\ORM\Entity;
 use Cake\Routing\Router;
-use MeCms\Controller\AppController;
 use MeCms\Utility\StaticPage;
 
 /**

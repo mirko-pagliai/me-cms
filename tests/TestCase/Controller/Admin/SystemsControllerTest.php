@@ -29,7 +29,7 @@ class SystemsControllerTest extends ControllerTestCase
     /**
      * Asserts that the cache is empty.
      *
-     * If uses the same cache keys used by `createSomeTemporaryData()`.
+     * It uses the same cache keys used by `createSomeTemporaryData()`.
      * @see createSomeTemporaryData()
      * @return void
      */
@@ -73,14 +73,16 @@ class SystemsControllerTest extends ControllerTestCase
         parent::tearDownAfterClass();
 
         I18n::setLocale('en_US');
-        @unlink(SITEMAP);
+        if (is_writable(SITEMAP)) {
+            unlink(SITEMAP);
+        }
     }
 
     /**
      * Called after every test method
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Cache::clearAll();
 

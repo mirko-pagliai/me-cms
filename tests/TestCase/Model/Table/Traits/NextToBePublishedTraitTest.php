@@ -30,7 +30,7 @@ class NextToBePublishedTraitTest extends TestCase
 
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Posts',
@@ -42,11 +42,11 @@ class NextToBePublishedTraitTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->Posts = $this->Posts ?: $this->getTable('MeCms.Posts');
+        $this->Posts ??= $this->getTable('MeCms.Posts');
     }
 
     /**
@@ -69,7 +69,7 @@ class NextToBePublishedTraitTest extends TestCase
         $this->assertEquals($future->toUnixString(), $this->Posts->setNextToBePublished());
         $this->assertEquals($future->toUnixString(), $this->Posts->getNextToBePublished());
 
-        //Creates another record with a future publication time (30 minuts)
+        //Creates another record with a future publication time (30 minutes)
         //This record takes precedence over the previous
         $future = new FrozenTime('+30 minutes');
         $entity = $this->Posts->newEntity([

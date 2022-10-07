@@ -63,7 +63,7 @@ $this->append('actions', $this->Html->button(
                 </td>
                 <td class="text-nowrap text-center">
                     <?php
-                    if ($group->get('user_count')) {
+                    if ($group->hasValue('user_count')) {
                         echo $this->Html->link(
                             (string)$group->get('user_count'),
                             ['controller' => 'Users', 'action' => 'index', '?' => ['group' => $group->get('id')]],

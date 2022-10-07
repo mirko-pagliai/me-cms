@@ -18,7 +18,7 @@ $this->Library->slugify();
 
 <?= $this->Form->create($category); ?>
 <div class="row">
-    <div class="col-lg-3 order-12">
+    <div class="col-lg-3 order-1">
         <div class="float-form">
         <?php
         if (!empty($categories)) {

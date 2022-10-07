@@ -15,8 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Controller\Admin;
 
-use MeCms\Controller\Admin\AppController;
-
 /**
  * PostsTags controller
  * @property \MeCms\Model\Table\PostsTagsTable $PostsTags
@@ -33,7 +31,7 @@ class PostsTagsController extends AppController
     public function isAuthorized($user = null): bool
     {
         //Only admins and managers can edit tags
-        return $this->getRequest()->is('edit') ? $this->Auth->isGroup(['admin', 'manager']) : true;
+        return !$this->getRequest()->is('edit') || $this->Auth->isGroup(['admin', 'manager']);
     }
 
     /**

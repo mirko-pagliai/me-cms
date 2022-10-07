@@ -19,7 +19,6 @@ use Cake\Cache\Cache;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
-use MeCms\Utility\Sitemap\SitemapBase;
 use MeCms\Utility\StaticPage;
 
 /**

@@ -28,7 +28,7 @@ use MeCms\TestSuite\ControllerTestCase;
 class SystemsControllerTest extends ControllerTestCase
 {
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',
@@ -61,13 +61,13 @@ class SystemsControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Systems' . DS . 'contact_us.php');
-        $this->assertInstanceof(ContactUsForm::class, $this->viewVariable('contact'));
+        $this->assertInstanceOf(ContactUsForm::class, $this->viewVariable('contact'));
 
         //POST request. Data are invalid
         $this->post($url, ['first_name' => 'a']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains(I18N_OPERATION_NOT_OK);
-        $this->assertInstanceof(ContactUsForm::class, $this->viewVariable('contact'));
+        $this->assertInstanceOf(ContactUsForm::class, $this->viewVariable('contact'));
 
         //POST request. Now data are valid
         $this->post($url, [
@@ -84,7 +84,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->post($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('You must fill in the reCAPTCHA control correctly');
-        $this->assertInstanceof(ContactUsForm::class, $this->viewVariable('contact'));
+        $this->assertInstanceOf(ContactUsForm::class, $this->viewVariable('contact'));
 
         //Disabled
         Configure::write('MeCms.default.contact_us', false);
@@ -141,7 +141,9 @@ class SystemsControllerTest extends ControllerTestCase
     public function testSitemap(): void
     {
         //GET request. The sitemap will be created
-        @unlink(SITEMAP);
+        if (is_writable(SITEMAP)) {
+            unlink(SITEMAP);
+        }
         $this->get(['_name' => 'sitemap', 'ext' => '.xml']);
         $this->assertFileResponse(SITEMAP);
         $this->assertContentType('application/x-gzip');

@@ -32,12 +32,24 @@ class UsersCommandTest extends TestCase
     public bool $autoInitializeClass = true;
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Users',
         'plugin.MeCms.UsersGroups',
     ];
+
+    /**
+     * Test for `getUsersRows()` method
+     * @test
+     */
+    public function testGetUsersRows(): void
+    {
+        $result = $this->Command->getUsersRows();
+        $this->assertSame('Active', $result[0]['status']);
+        $this->assertSame('Pending', $result[1]['status']);
+        $this->assertSame('Banned', $result[2]['status']);
+    }
 
     /**
      * Test for `execute()` method
@@ -48,8 +60,7 @@ class UsersCommandTest extends TestCase
         /** @var \MeCms\Model\Table\UsersTable $Users */
         $Users = $this->getTable('MeCms.Users');
         $this->Command->Users = $Users;
-        $expectedRows = $this->invokeMethod($this->Command, 'getUsersRows');
-        array_unshift($expectedRows, ['<info>ID</info>', '<info>Username</info>', '<info>Group</info>', '<info>Name</info>', '<info>Email</info>', '<info>Posts</info>', '<info>Status</info>', '<info>Date</info>']);
+        $expectedRows = [['<info>ID</info>', '<info>Username</info>', '<info>Group</info>', '<info>Name</info>', '<info>Email</info>', '<info>Posts</info>', '<info>Status</info>', '<info>Date</info>'], ...$this->Command->getUsersRows()];
 
         $this->exec('me_cms.users');
         $this->assertExitWithSuccess();

@@ -32,12 +32,14 @@ class AdminViewTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->View = new AdminView();
-        $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
+        if (empty($this->View)) {
+            $this->View = new AdminView();
+            $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
+        }
     }
 
     /**

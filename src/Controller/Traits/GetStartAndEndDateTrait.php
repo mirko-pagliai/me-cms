@@ -45,12 +45,12 @@ trait GetStartAndEndDateTrait
             $start = FrozenTime::now()->setDate((int)$year, (int)($month ?: 1), (int)($day ?: 1));
         }
 
-        $start = $start->setTime(0, 0, 0);
-        $end = FrozenTime::parse($start)->addYear(1);
+        $start = $start->setTime(0, 0);
+        $end = FrozenTime::parse($start)->addYear();
         if (($year && $month && $day) || in_array($date, ['today', 'yesterday'])) {
-            $end = FrozenTime::parse($start)->addDay(1);
+            $end = FrozenTime::parse($start)->addDay();
         } elseif ($year && $month) {
-            $end = FrozenTime::parse($start)->addMonth(1);
+            $end = FrozenTime::parse($start)->addMonth();
         }
 
         return [$start, $end];

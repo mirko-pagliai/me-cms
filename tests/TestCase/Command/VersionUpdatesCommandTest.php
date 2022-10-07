@@ -16,9 +16,9 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Command;
 
 use Cake\Console\ConsoleIo;
+use Cake\Console\TestSuite\StubConsoleOutput;
 use Cake\Database\Driver\Postgres;
 use Cake\Database\Driver\Sqlite;
-use Cake\TestSuite\Stub\ConsoleOutput;
 use MeCms\Command\VersionUpdatesCommand;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
@@ -37,7 +37,7 @@ class VersionUpdatesCommandTest extends TestCase
     protected bool $autoInitializeClass = true;
 
     /**
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',
@@ -121,9 +121,9 @@ class VersionUpdatesCommandTest extends TestCase
     public function testDeleteOldDirectories(): void
     {
         $dirs = [WWW_ROOT . 'fonts', TMP . 'login'];
-        @array_map('mkdir', $dirs);
+        array_map('mkdir', array_filter($dirs, 'is_writable'));
         $this->Command->deleteOldDirectories();
-        @array_walk($dirs, [$this, 'assertFileDoesNotExist']);
+        array_walk($dirs, [$this, 'assertFileDoesNotExist']);
     }
 
     /**
@@ -137,13 +137,13 @@ class VersionUpdatesCommandTest extends TestCase
 
         $expectedMethods = get_child_methods(VersionUpdatesCommand::class);
         $Command = $this->getMockBuilder(VersionUpdatesCommand::class)
-            ->setMethods($expectedMethods)
+            ->onlyMethods($expectedMethods)
             ->getMock();
 
         foreach ($expectedMethods as $method) {
             $Command->expects($this->once())->method($method);
         }
 
-        $this->assertNull($Command->run([], new ConsoleIo(new ConsoleOutput(), new ConsoleOutput())));
+        $this->assertNull($Command->run([], new ConsoleIo(new StubConsoleOutput(), new StubConsoleOutput())));
     }
 }

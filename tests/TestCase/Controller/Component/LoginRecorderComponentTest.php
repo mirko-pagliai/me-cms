@@ -31,7 +31,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
 {
     /**
      * Fixtures
-     * @var array
+     * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Users',
@@ -40,21 +40,21 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
     /**
      * Internal method to get a `LoginRecorder` instance
-     * @param array|null $methods Methods you want to mock
-     * @param array $userAgent Data returned by the `getUserAgent()` method
+     * @param string[] $methods Methods you want to mock
+     * @param string[] $userAgent Data returned by the `getUserAgent()` method
      * @return \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockForLoginRecorder(?array $methods = ['getUserAgent'], array $userAgent = [])
+    protected function getMockForLoginRecorder(array $methods = ['getUserAgent'], array $userAgent = [])
     {
         /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $Component */
         $Component = $this->getMockForComponent(LoginRecorderComponent::class, $methods);
 
-        if (is_array($methods) && in_array('getUserAgent', $methods)) {
-            $Component->method('getUserAgent')->will($this->returnValue($userAgent ?: [
+        if (in_array('getUserAgent', $methods)) {
+            $Component->method('getUserAgent')->willReturn($userAgent ?: [
                 'platform' => 'Linux',
                 'browser' => 'Chrome',
                 'version' => '55.0.2883.87',
-            ]));
+            ]);
         }
 
         $Component->setConfig('user', 1);
@@ -66,7 +66,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->Component ??= $this->getMockForLoginRecorder();
 
@@ -75,6 +75,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
     /**
      * Test for `getClientIp()` method
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::getClientIp()
      * @test
      */
     public function testGetClientIp(): void
@@ -83,22 +84,23 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
         //On localhost
         $request = $this->getMockBuilder(ServerRequest::class)
-            ->setMethods(['clientIp'])
+            ->onlyMethods(['clientIp'])
             ->getMock();
         $request->expects($this->once())
             ->method('clientIp')
-            ->will($this->returnValue('::1'));
+            ->willReturn('::1');
         $this->Component->getController()->setRequest($request);
         $this->assertEquals('127.0.0.1', $this->invokeMethod($this->Component, 'getClientIp'));
     }
 
     /**
      * Test for `getUserAgent()` method
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::getUserAgent()
      * @test
      */
     public function testGetUserAgent(): void
     {
-        $result = $this->invokeMethod($this->getMockForLoginRecorder(null), 'getUserAgent', ['Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0']);
+        $result = $this->invokeMethod($this->getMockForLoginRecorder([]), 'getUserAgent', ['Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0']);
         $this->assertSame([
             'platform' => 'Windows',
             'browser' => 'Firefox',
@@ -108,28 +110,30 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
     /**
      * Test for `read()` method
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::read()
      * @test
      */
     public function testRead(): void
     {
         //For now is empty
         $result = $this->Component->read();
-        $this->assertInstanceof(Collection::class, $result);
+        $this->assertInstanceOf(Collection::class, $result);
         $this->assertTrue($result->isEmpty());
 
         //After save, is not empty
         $this->assertTrue($this->Component->write());
         $result = $this->Component->read();
-        $this->assertInstanceof(Collection::class, $result);
+        $this->assertInstanceOf(Collection::class, $result);
         $this->assertFalse($result->isEmpty());
 
         //Without the user ID
         $this->expectException(InvalidPrimaryKeyException::class);
-        $this->getMockForLoginRecorder()->setConfig('user', null)->read();
+        $this->getMockForLoginRecorder()->setConfig('user')->read();
     }
 
     /**
      * Test for `write()` method
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
      * @test
      */
     public function testWrite(): void
@@ -177,6 +181,6 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
         //Without the user ID
         $this->expectException(InvalidPrimaryKeyException::class);
-        $this->getMockForLoginRecorder()->setConfig('user', null)->write();
+        $this->getMockForLoginRecorder()->setConfig('user')->write();
     }
 }

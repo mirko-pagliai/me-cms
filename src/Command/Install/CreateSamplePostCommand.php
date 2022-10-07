@@ -19,6 +19,7 @@ namespace MeCms\Command\Install;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Model\Entity\Post;
 use MeTools\Console\Command;
 
@@ -47,18 +48,18 @@ class CreateSamplePostCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $this->loadModel('MeCms.Posts');
-        $this->loadModel('MeCms.Users');
+        $Posts = $this->fetchTable('MeCms.Posts');
+        $Users = $this->fetchTable('MeCms.Users');
 
-        if (!$this->Posts->find()->all()->isEmpty()) {
+        if (!$Posts->find()->all()->isEmpty()) {
             $io->verbose(__d('me_cms', 'At least one post already exists'));
 
             return null;
         }
 
-        /** @var \MeCms\Model\Entity\User $user */
-        $user = $this->Users->find('all', ['fields' => ['id']])->first();
-        if (!$user) {
+        try {
+            $user = $Users->find('all', ['fields' => ['id']])->firstOrFail();
+        } catch (RecordNotFoundException $e) {
             return $io->error(__d('me_cms', 'You must first create a user. Run the `{0}` command', 'bin/cake me_cms.create_admin'));
         }
 
@@ -69,7 +70,7 @@ class CreateSamplePostCommand extends Command
             'slug' => 'a-sample-post',
             'text' => 'Hi! This is just <strong>a sample post</strong>, automatically created during installation.<br />Welcome!',
         ]);
-        if (!$this->Posts->save($post)) {
+        if (!$Posts->save($post)) {
             return $io->error(I18N_OPERATION_NOT_OK);
         }
 

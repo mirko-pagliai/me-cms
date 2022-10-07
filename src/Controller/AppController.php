@@ -28,21 +28,24 @@ use RuntimeException;
 abstract class AppController extends BaseAppController
 {
     /**
-     * Magic accessor for model autoloading.
+     * Magic accessor for model autoload.
      *
-     * In addition to the method provided by CakePHP, it can also auto-load the
+     * In addition to the method provided by CakePHP, it can also autoload the
      *  associated tables.
      * @param string $name Property name
-     * @return \Cake\Datasource\RepositoryInterface|null The model instance or null
+     * @return \Cake\Datasource\RepositoryInterface|\Cake\ORM\Association|null Instance or null
      * @see \Cake\Controller\Controller::__get()
      * @since 2.27.1
      */
     public function __get(string $name)
     {
-        [, $class] = pluginSplit($this->modelClass, true);
+        [, $class] = pluginSplit($this->defaultTable, true);
 
         if ($class !== $name && $this->{$class}->hasAssociation($name)) {
-            return $this->{$class}->getAssociation($name);
+            /** @var \MeCms\Model\Table\AppTable $Table */
+            $Table = $this->{$class};
+
+            return $Table->getAssociation($name);
         }
 
         return parent::__get($name);
@@ -67,7 +70,7 @@ abstract class AppController extends BaseAppController
 
         $this->viewBuilder()->setClassName('MeCms.View/App');
 
-        //Sets the paginate limit and the maximum paginate limit
+        //Sets paginate limit and maximum paginate limit
         //See http://book.cakephp.org/4.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('default.records');
 
@@ -82,11 +85,11 @@ abstract class AppController extends BaseAppController
     }
 
     /**
-     * Gets the the `paging` request attribute and parameter
-     * @return array
+     * Gets the `paging` request attribute and parameter
+     * @return array<string, mixed>
      * @since 2.27.1
      */
-    public function getPaging()
+    public function getPaging(): array
     {
         return $this->getRequest()->getAttribute('paging') ?? $this->getRequest()->getParam('paging', []);
     }
@@ -94,6 +97,7 @@ abstract class AppController extends BaseAppController
     /**
      * Initialization hook method
      * @return void
+     * @throws \Exception
      */
     public function initialize(): void
     {
@@ -145,7 +149,7 @@ abstract class AppController extends BaseAppController
 
     /**
      * Sets the `paging` request attribute and parameter
-     * @param array $paging Paging value
+     * @param array<string, array> $paging Paging value
      * @return $this
      * @since 2.29.1
      */

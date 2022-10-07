@@ -30,7 +30,6 @@ declare(strict_types=1);
             '/vendor/bootstrap/css/bootstrap.min',
             'MeTools.default',
             'MeTools.forms',
-            'MeCms.userbar',
             'MeCms.cookies',
             'MeCms.layout',
             'MeCms.contents',

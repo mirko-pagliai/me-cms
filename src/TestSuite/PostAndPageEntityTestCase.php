@@ -16,8 +16,6 @@ declare(strict_types=1);
 
 namespace MeCms\TestSuite;
 
-use MeCms\TestSuite\EntityTestCase;
-
 /**
  * Abstract class for `PageTest` and `PostTest` classes
  */
@@ -27,7 +25,7 @@ abstract class PostAndPageEntityTestCase extends EntityTestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

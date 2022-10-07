@@ -17,9 +17,6 @@ namespace MeCms\Model\Table;
 
 use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\RulesChecker;
-use MeCms\Model\Table\AppTable;
-use MeCms\Model\Table\PostsTable;
-use MeCms\Model\Table\PostsTagsTable;
 use MeCms\Model\Validation\TagValidator;
 use MeCms\ORM\Query;
 
