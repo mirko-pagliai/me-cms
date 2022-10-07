@@ -481,6 +481,11 @@ parameters:
 			path: templates/email/html/Users/password_forgot.php
 
 		-
+			message: "#^Parameter \\#1 \\$paging of method MeCms\\\\Controller\\\\AppController\\:\\:setPaging\\(\\) expects array\\<string, array\\>, array\\<int, string\\> given\\.$#"
+			count: 1
+			path: tests/TestCase/Controller/AppControllerTest.php
+
+		-
 			message: "#^Parameter \\#2 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:read\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 2
 			path: tests/TestCase/Controller/PagesCategoriesControllerTest.php
@@ -541,8 +546,13 @@ parameters:
 			path: tests/TestCase/Model/Table/AppTableTest.php
 
 		-
-			message: "#^Ternary operator condition is always true\\.$#"
-			count: 2
+			message: "#^Property MeCms\\\\Test\\\\TestCase\\\\Model\\\\Table\\\\AppTableTest\\:\\:\\$Posts \\(MeCms\\\\Model\\\\Table\\\\PostsTable\\) on left side of \\?\\?\\= is not nullable\\.$#"
+			count: 1
+			path: tests/TestCase/Model/Table/AppTableTest.php
+
+		-
+			message: "#^Property MeCms\\\\Test\\\\TestCase\\\\Model\\\\Table\\\\AppTableTest\\:\\:\\$PostsCategories \\(MeCms\\\\Model\\\\Table\\\\PostsCategoriesTable\\) on left side of \\?\\?\\= is not nullable\\.$#"
+			count: 1
 			path: tests/TestCase/Model/Table/AppTableTest.php
 
 		-
@@ -556,12 +566,12 @@ parameters:
 			path: tests/TestCase/Model/Table/Traits/GetPreviewsFromTextTraitTest.php
 
 		-
-			message: "#^Ternary operator condition is always true\\.$#"
+			message: "#^Property MeCms\\\\Test\\\\TestCase\\\\Model\\\\Table\\\\Traits\\\\IsOwnedByTraitTest\\:\\:\\$Posts \\(MeCms\\\\Model\\\\Table\\\\PostsTable&PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\) on left side of \\?\\?\\= is not nullable\\.$#"
 			count: 1
 			path: tests/TestCase/Model/Table/Traits/IsOwnedByTraitTest.php
 
 		-
-			message: "#^Ternary operator condition is always true\\.$#"
+			message: "#^Property MeCms\\\\Test\\\\TestCase\\\\Model\\\\Table\\\\Traits\\\\NextToBePublishedTraitTest\\:\\:\\$Posts \\(MeCms\\\\Model\\\\Table\\\\PostsTable&PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\) on left side of \\?\\?\\= is not nullable\\.$#"
 			count: 1
 			path: tests/TestCase/Model/Table/Traits/NextToBePublishedTraitTest.php
 

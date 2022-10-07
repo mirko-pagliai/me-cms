@@ -83,7 +83,7 @@ abstract class AppController extends BaseAppController
 
     /**
      * Gets the `paging` request attribute and parameter
-     * @return array
+     * @return array<string, mixed>
      * @since 2.27.1
      */
     public function getPaging(): array
@@ -94,6 +94,7 @@ abstract class AppController extends BaseAppController
     /**
      * Initialization hook method
      * @return void
+     * @throws \Exception
      */
     public function initialize(): void
     {
@@ -145,7 +146,7 @@ abstract class AppController extends BaseAppController
 
     /**
      * Sets the `paging` request attribute and parameter
-     * @param array $paging Paging value
+     * @param array<string, array> $paging Paging value
      * @return $this
      * @since 2.29.1
      */

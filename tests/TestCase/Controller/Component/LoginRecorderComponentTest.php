@@ -40,8 +40,8 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
     /**
      * Internal method to get a `LoginRecorder` instance
-     * @param array $methods Methods you want to mock
-     * @param array $userAgent Data returned by the `getUserAgent()` method
+     * @param string[] $methods Methods you want to mock
+     * @param string[] $userAgent Data returned by the `getUserAgent()` method
      * @return \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockForLoginRecorder(array $methods = ['getUserAgent'], array $userAgent = [])

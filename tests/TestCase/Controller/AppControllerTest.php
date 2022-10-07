@@ -79,6 +79,7 @@ class AppControllerTest extends ControllerTestCase
 
     /**
      * Tests for `getPaging()` and `setPaging()` methods
+     * @uses \MeCms\Controller\AppController::getPaging()
      * @test
      */
     public function testGetAndSetPaging(): void
