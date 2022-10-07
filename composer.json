@@ -42,7 +42,8 @@
     "conflict": {
         "newerton/fancy-box": "*",
         "studio-42/elfinder": "<= 2.1.58",
-        "sunhater/kcfinder": "*"
+        "sunhater/kcfinder": "*",
+        "twbs/bootstrap": "< 5.2"
     },
     "suggest": {
         "cakephp/debug_kit": "Debug Toolbar for CakePHP applications",
