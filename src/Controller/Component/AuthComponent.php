@@ -55,7 +55,7 @@ class AuthComponent extends CakeAuthComponent
         ];
 
         //The authorization error is shown only if the user is already logged
-        //  in and he is trying to do something not allowed
+        //  in and is trying to do something not allowed
         $config += ['authError' => $this->user('id') ? __d('me_cms', 'You are not authorized for this action') : false];
 
         parent::initialize($config);

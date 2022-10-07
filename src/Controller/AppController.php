@@ -30,7 +30,7 @@ abstract class AppController extends BaseAppController
     /**
      * Magic accessor for model autoloading.
      *
-     * In addition to the method provided by CakePHP, it can also auto-load the
+     * In addition to the method provided by CakePHP, it can also autoload the
      *  associated tables.
      * @param string $name Property name
      * @return \Cake\Datasource\RepositoryInterface|null The model instance or null
@@ -67,7 +67,7 @@ abstract class AppController extends BaseAppController
 
         $this->viewBuilder()->setClassName('MeCms.View/App');
 
-        //Sets the paginate limit and the maximum paginate limit
+        //Sets paginate limit and maximum paginate limit
         //See http://book.cakephp.org/4.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('default.records');
 

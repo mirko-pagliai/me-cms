@@ -34,7 +34,7 @@ abstract class TableTestCase extends TestCase
     protected bool $autoInitializeClass = true;
 
     /**
-     * Asserts that the table has a "belogs to" association
+     * Asserts that the table has a "belongs to" association
      * @param \Cake\ORM\Association $association Association
      * @return void
      */
@@ -44,7 +44,7 @@ abstract class TableTestCase extends TestCase
     }
 
     /**
-     * Asserts that the table has a "belogs to many" association
+     * Asserts that the table has a "belongs to many" association
      * @param \Cake\ORM\Association $association Association
      * @return void
      */
@@ -81,7 +81,7 @@ abstract class TableTestCase extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -136,7 +136,7 @@ class PostsTable extends PostsAndPagesTables
                 //Sorts and takes tags by `post_count` field
                 $tags = collection($post->get('tags'))->sortBy('post_count')->take($limit)->toList();
 
-                //This array will be contain the ID to be excluded
+                //This array will be contained the ID to be excluded
                 $exclude[] = $post->get('id');
 
                 //For each tag, gets a related post.

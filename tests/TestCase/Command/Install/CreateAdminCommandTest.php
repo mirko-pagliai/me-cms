@@ -39,7 +39,7 @@ class CreateAdminCommandTest extends TestCase
      */
     public function testExecute(): void
     {
-        $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
+        $example = ['my-username', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
         /** @var \MeCms\Model\Table\UsersTable $Users */
         $Users = $this->getTable('MeCms.Users');
 

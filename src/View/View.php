@@ -43,7 +43,7 @@ class View extends AppView
             return $this->titleForLayout;
         }
 
-        //Gets the main title setted by the configuration
+        //Gets the main title set by the configuration
         $title = getConfigOrFail('main.title');
 
         //For homepage, it returns only the main title

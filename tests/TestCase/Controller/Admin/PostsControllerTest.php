@@ -93,7 +93,7 @@ class PostsControllerTest extends ControllerTestCase
             ], $action);
         }
 
-        //With `edit` action and an user who owns the record
+        //With `edit` action and a user who owns the record
         $this->Controller->setRequest($this->Controller->getRequest()->withParam('pass.0', 1));
         $this->assertUsersAreAuthorized([
             1 => true,
@@ -188,7 +188,7 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests that the admins and manangers can add and edit as another user
+     * Tests that the admins and managers can add and edit as another user
      * @test
      */
     public function testAdminsAndManagersCanAddAndEditAsAnotherUser(): void

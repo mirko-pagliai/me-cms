@@ -50,12 +50,12 @@ abstract class MenuHelperTestCase extends HelperTestCase
         $methods = get_child_methods($className);
 
         //Mocks the helper. Each method returns its original value, but the
-        //  links are already builded and returned as an HTML string
+        //  links are already built and returned as an HTML string
         /** @var \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper */
         $Helper = $this->getMockForHelper($className, $methods);
 
         foreach ($methods as $method) {
-            $Helper->method($method)->will($this->returnCallback(function () use ($className, $method): array {
+            $Helper->method($method)->willReturnCallback(function () use ($className, $method): array {
                 $originalHelper = new $className($this->Helper->getView());
                 $returned = $originalHelper->$method();
 
@@ -65,7 +65,7 @@ abstract class MenuHelperTestCase extends HelperTestCase
                 }
 
                 return $returned;
-            }));
+            });
         }
 
         $this->Helper = $Helper;

@@ -28,7 +28,7 @@ use Symfony\Component\Finder\SplFileInfo;
 use Tools\Filesystem;
 
 /**
- * An utility to handle static pages
+ * A utility to handle static pages
  */
 class StaticPage
 {

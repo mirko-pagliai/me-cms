@@ -78,14 +78,14 @@ class PostsTagsWidgetsCell extends Cell
             return;
         }
 
-        //Sets default maximum and minimun font sizes we want to use
+        //Sets default maximum and minimum font sizes we want to use
         $maxFont = $minFont = 0;
 
         //Sets the initial cache name
         $cache = sprintf('widget_tags_popular_%s', $limit);
 
         if ($style && is_array($style)) {
-            //Updates maximum and minimun font sizes we want to use
+            //Updates maximum and minimum font sizes we want to use
             [$maxFont, $minFont] = $this->getFontSizes($style);
 
             $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);

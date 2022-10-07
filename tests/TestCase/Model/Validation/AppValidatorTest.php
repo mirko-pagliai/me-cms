@@ -53,9 +53,9 @@ class AppValidatorTest extends TestCase
             'email' => 'example@test.com',
             'first_name' => 'Alfa',
             'last_name' => 'Beta',
-            'username' => 'myusername',
-            'password' => 'mypassword1!',
-            'password_repeat' => 'mypassword1!',
+            'username' => 'my-username',
+            'password' => 'my-password1!',
+            'password_repeat' => 'my-password1!',
         ],
     ];
 
@@ -73,7 +73,7 @@ class AppValidatorTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

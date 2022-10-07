@@ -231,7 +231,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertFlashMessage('You cannot delete the admin founder');
         $this->assertFalse($this->Table->findById(1)->all()->isEmpty());
 
-        //Cannot delete an user with posts
+        //Cannot delete a user with posts
         $this->post($url + [4]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_BEFORE_DELETE);

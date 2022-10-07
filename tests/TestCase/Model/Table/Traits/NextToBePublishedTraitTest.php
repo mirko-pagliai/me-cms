@@ -69,7 +69,7 @@ class NextToBePublishedTraitTest extends TestCase
         $this->assertEquals($future->toUnixString(), $this->Posts->setNextToBePublished());
         $this->assertEquals($future->toUnixString(), $this->Posts->getNextToBePublished());
 
-        //Creates another record with a future publication time (30 minuts)
+        //Creates another record with a future publication time (30 minutes)
         //This record takes precedence over the previous
         $future = new FrozenTime('+30 minutes');
         $entity = $this->Posts->newEntity([

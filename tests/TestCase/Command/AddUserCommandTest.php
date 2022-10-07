@@ -41,7 +41,7 @@ class AddUserCommandTest extends TestCase
     {
         /** @var \MeCms\Model\Table\UsersTable $Users */
         $Users = $this->getTable('MeCms.Users');
-        $example = ['myusername', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
+        $example = ['my-username', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
 
         $expectedUserId = $Users->find()->all()->extract('id')->last() + 1;
         $this->exec('me_cms.add_user', [...$example, '3']);

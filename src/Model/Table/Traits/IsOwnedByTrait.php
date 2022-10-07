@@ -16,12 +16,12 @@ declare(strict_types=1);
 namespace MeCms\Model\Table\Traits;
 
 /**
- * This trait provides a method to check if a record is owned by an user
+ * This trait provides a method to check if a record is owned by a user
  */
 trait IsOwnedByTrait
 {
     /**
-     * Checks if a record is owned by an user.
+     * Checks if a record is owned by a user.
      *
      * Example:
      * <code>
