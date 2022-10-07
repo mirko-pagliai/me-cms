@@ -63,6 +63,7 @@ class FixElFinderCommand extends Command
      * Internal method to create the `elfinder-cke.html` file
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return void
+     * @throws \Throwable
      * @since 2.29.2
      */
     protected function createElfinderCke(ConsoleIo $io): void
