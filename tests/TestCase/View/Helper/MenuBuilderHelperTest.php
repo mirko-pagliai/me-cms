@@ -32,7 +32,7 @@ class MenuBuilderHelperTest extends HelperTestCase
     {
         parent::setUp();
 
-        $this->loadPlugins(['TestPlugin']);
+        $this->loadPlugins(['TestPlugin' => []]);
     }
 
     /**
@@ -59,7 +59,7 @@ class MenuBuilderHelperTest extends HelperTestCase
      */
     public function testGenerate(): void
     {
-        $this->loadPlugins(['TestPlugin', 'TestPluginTwo']);
+        $this->loadPlugins(['TestPlugin' => [], 'TestPluginTwo' => []]);
 
         foreach (['MeCms', 'TestPlugin'] as $plugin) {
             $result = $this->Helper->generate($plugin);
