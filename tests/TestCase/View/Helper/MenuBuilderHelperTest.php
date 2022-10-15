@@ -37,6 +37,7 @@ class MenuBuilderHelperTest extends HelperTestCase
 
     /**
      * Tests for `getMethods()` method
+     * @uses \MeCms\View\Helper\MenuBuilderHelper::getMethods()
      * @test
      */
     public function testGetMethods(): void
@@ -53,6 +54,7 @@ class MenuBuilderHelperTest extends HelperTestCase
 
     /**
      * Tests for `generate()` method
+     * @uses \MeCms\View\Helper\MenuBuilderHelper::generate()
      * @test
      */
     public function testGenerate(): void
@@ -66,6 +68,7 @@ class MenuBuilderHelperTest extends HelperTestCase
             }
         }
 
-        $this->assertSame([], $this->Helper->generate('TestPluginTwo'));
+        $this->expectExceptionMessage('Method `TestPluginTwo\View\Helper\MenuHelper::badArticles()` returned only 1 values');
+        $this->Helper->generate('TestPluginTwo');
     }
 }
