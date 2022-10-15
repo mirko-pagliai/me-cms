@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.9-RC6
+* improved and simplified plugin loading;
 * improved `\MeCms\Controller\SystemsController` and `\MeCms\Form\ContactUsForm` classes;
 * updated for me-tools 2.21.5;
 * updated some template files;

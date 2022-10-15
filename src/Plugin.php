@@ -25,12 +25,7 @@ use MeCms\Command\Install\RunAllCommand;
 use MeTools\Command\Install\CreateDirectoriesCommand;
 use MeTools\Command\Install\CreateVendorsLinksCommand;
 use MeTools\Command\Install\SetPermissionsCommand;
-use MeTools\Plugin as MeTools;
-use RecaptchaMailhide\Plugin as RecaptchaMailhide;
-use StopSpam\Plugin as StopSpam;
 use Symfony\Component\Finder\Finder;
-use Thumber\Cake\Plugin as Thumber;
-use Tokens\Plugin as Tokens;
 
 /**
  * Plugin class
@@ -54,11 +49,11 @@ class Plugin extends BasePlugin
     public function bootstrap(PluginApplicationInterface $app): void
     {
         $pluginsToLoad = [
-            MeTools::class,
-            RecaptchaMailhide::class,
-            StopSpam::class,
-            Thumber::class,
-            Tokens::class,
+            'MeTools',
+            'RecaptchaMailhide',
+            'StopSpam',
+            'Thumber/Cake',
+            'Tokens',
         ];
         if (getConfig('default.theme')) {
             $pluginsToLoad[] = getConfig('default.theme');
@@ -69,17 +64,11 @@ class Plugin extends BasePlugin
 
         foreach ($pluginsToLoad as $plugin) {
             /** @var \Cake\Http\BaseApplication $app */
-            if (!$app->getPlugins()->has($plugin)) {
-                //Initializes bootstrapped plugins
-                if (method_exists($plugin, 'bootstrap')) {
-                    /** @var \Cake\Core\PluginInterface $plugin */
-                    $plugin = new $plugin();
-                    $plugin->bootstrap($app);
-                }
-
-                $app->addPlugin($plugin);
-            }
+            $app->addPlugin($plugin);
         }
+        $app->addPlugin('MeCms', ['bootstrap' => false]);
+
+        $app->pluginBootstrap();
 
         parent::bootstrap($app);
 
