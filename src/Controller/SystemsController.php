@@ -125,6 +125,7 @@ class SystemsController extends AppController
      * If the sitemap doesn't exist or has expired, it generates and writes
      *  the sitemap.
      * @return \Cake\Http\Response
+     * @throws \ErrorException
      */
     public function sitemap(): Response
     {

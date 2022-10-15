@@ -41,8 +41,8 @@ class MenuBuilderHelper extends Helper
      * Gets all valid methods from the `MenuHelper` provided by a plugin
      * @param string $plugin Plugin name
      * @return array<string>
-     * @since 2.30.0
      * @throws \ErrorException
+     * @since 2.30.0
      */
     public function getMethods(string $plugin): array
     {
