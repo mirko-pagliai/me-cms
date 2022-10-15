@@ -109,7 +109,7 @@ echo $this->Form->end();
                             <?php
                             foreach ($post->get('tags') as $tag) {
                                 echo $this->Html->link($tag, ['?' => compact('tag')], [
-                                    'class' => 'mr-1',
+                                    'class' => 'd-inline-block ms-2',
                                     'icon' => 'tag',
                                     'title' => I18N_BELONG_ELEMENT,
                                 ]);
