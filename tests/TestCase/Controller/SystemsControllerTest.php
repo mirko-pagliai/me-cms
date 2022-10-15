@@ -23,6 +23,7 @@ use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
 use MeCms\Form\ContactUsForm;
 use MeCms\TestSuite\ControllerTestCase;
+use StopSpam\SpamDetector;
 
 /**
  * SystemsControllerTest class
@@ -50,12 +51,11 @@ class SystemsControllerTest extends ControllerTestCase
     {
         parent::controllerSpy($event, $controller);
 
-        $this->_controller->ContactUsForm = $this->getMockBuilder(ContactUsForm::class)
-            ->onlyMethods(['verifyEmail'])
+        $this->_controller->ContactUsForm->SpamDetector = $this->getMockBuilder(SpamDetector::class)
+            ->onlyMethods(['verify'])
             ->getMock();
 
-        //`ContactUsForm::verifyEmail()` will return `false` only for `spammer@example.com` value
-        $this->_controller->ContactUsForm->method('verifyEmail')->willReturnCallback(fn(string $email): bool => $email !== 'spammer@example.com');
+        $this->_controller->ContactUsForm->SpamDetector->method('verify')->willReturn(true);
 
         $this->_controller->viewBuilder()->setLayout('with_flash');
     }
