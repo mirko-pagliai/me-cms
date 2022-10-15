@@ -32,7 +32,7 @@ class MenuBuilderHelperTest extends HelperTestCase
     {
         parent::setUp();
 
-        $this->loadPlugins(['TestPlugin' => [], 'TestPluginTwo' => []]);
+        $this->loadPlugins(['TestPlugin']);
     }
 
     /**
@@ -49,7 +49,7 @@ class MenuBuilderHelperTest extends HelperTestCase
             'systems',
         ], $this->Helper->getMethods('MeCms'));
         $this->assertEquals(['articles', 'other_items'], $this->Helper->getMethods('TestPlugin'));
-        $this->assertEquals([], $this->Helper->getMethods('TestPluginTwo'));
+        $this->assertEquals(['badArticles'], $this->Helper->getMethods('TestPluginTwo'));
     }
 
     /**
@@ -59,6 +59,8 @@ class MenuBuilderHelperTest extends HelperTestCase
      */
     public function testGenerate(): void
     {
+        $this->loadPlugins(['TestPlugin', 'TestPluginTwo']);
+
         foreach (['MeCms', 'TestPlugin'] as $plugin) {
             $result = $this->Helper->generate($plugin);
             $this->assertNotEmpty($result);
