@@ -29,6 +29,7 @@ class SitemapBuilder
      * Gets all executable methods for the `Sitemap` class of a plugin
      * @param string $plugin Plugin
      * @return \Cake\Collection\CollectionInterface Collection of classes and methods names
+     * @throws \ErrorException
      */
     public static function getMethods(string $plugin): CollectionInterface
     {
@@ -41,11 +42,11 @@ class SitemapBuilder
     /**
      * Generate the sitemap.
      *
-     * For each plugin, calls dynamically all executable methods for the
-     *  `Sitemap` class, if that exists.
+     * For each plugin, calls dynamically all executable methods for the `Sitemap` class, if that exists.
      *
      * Each method must return an array of url which will be added to the sitemap.
      * @return string
+     * @throws \ErrorException
      * @see \MeCms\Utility\Sitemap\Sitemap
      */
     public static function generate(): string
@@ -68,7 +69,6 @@ class SitemapBuilder
             'url' => $url,
         ]], ['pretty' => true]);
 
-        /** @phpstan-ignore-next-line */
         return trim($xml->asXML() ?: '');
     }
 }

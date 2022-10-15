@@ -85,8 +85,9 @@ abstract class PostsAndPagesTables extends AppTable
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
-     * @since 2.17.0
+     * @throws \Tools\Exception\NotWritableException
      * @uses \MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreviews()
+     * @since 2.17.0
      */
     public function beforeSave(Event $event, EntityInterface $entity): void
     {
@@ -94,8 +95,7 @@ abstract class PostsAndPagesTables extends AppTable
     }
 
     /**
-     * Creates a new Query for this repository and applies some defaults based
-     *  on the type of search that was selected
+     * Creates a new Query for this repository and applies some defaults based on the type of search that was selected
      * @param string $type The type of query to perform
      * @param array $options An array that will be passed to Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
@@ -107,8 +107,7 @@ abstract class PostsAndPagesTables extends AppTable
         //Gets from cache the timestamp of the next record to be published
         $next = $this->getNextToBePublished();
 
-        //If the cache is invalid, it clears the cache and sets the next record
-        //  to be published
+        //If the cache is invalid, it clears the cache and sets the next record to be published
         if ($next && time() >= $next) {
             $this->clearCache();
             $this->setNextToBePublished();

@@ -39,8 +39,7 @@ class PostsController extends AppController
 
     /**
      * Called before the controller action.
-     * You can use this method to perform logic that needs to happen before
-     *  each controller action
+     * You can use this method to perform logic that needs to happen before each controller action.
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
      */
@@ -95,8 +94,7 @@ class PostsController extends AppController
     /**
      * Lists posts for a specific date.
      *
-     * Month and day are optional and you can also use special keywords `today`
-     *  or `yesterday`.
+     * Month and day are optional and you can also use special keywords `today` or `yesterday`.
      *
      * Examples:
      * <pre>/posts/2016/06/11</pre>
@@ -104,8 +102,7 @@ class PostsController extends AppController
      * <pre>/posts/2016</pre>
      * <pre>/posts/today</pre>
      * <pre>/posts/yesterday</pre>
-     * @param string $date Date as `today`, `yesterday`, `YYYY/MM/dd`,
-     *  `YYYY/MM` or `YYYY`
+     * @param string $date Date as `today`, `yesterday`, `YYYY/MM/dd`, `YYYY/MM` or `YYYY`
      * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Controller\Traits\GetStartAndEndDateTrait::getStartAndEndDate()
      */
@@ -162,7 +159,9 @@ class PostsController extends AppController
     public function rss(): void
     {
         //This method works only for RSS
-        Exceptionist::isTrue($this->RequestHandler->prefers('rss'), '', ForbiddenException::class);
+        if (!$this->RequestHandler->prefers('rss')) {
+            throw new ForbiddenException();
+        }
         $this->viewBuilder()->setClassName('Feed.Rss');
 
         $posts = $this->Posts->find('active')

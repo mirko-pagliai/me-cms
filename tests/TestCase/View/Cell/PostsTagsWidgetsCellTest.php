@@ -18,7 +18,7 @@ namespace MeCms\Test\TestCase\View\Cell;
 use Cake\Cache\Cache;
 use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
-use InvalidArgumentException;
+use ErrorException;
 use MeCms\TestSuite\CellTestCase;
 
 /**
@@ -75,7 +75,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $this->assertEquals([40, 12], $getFontSizesMethod(false));
 
         //With invalid values
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(ErrorException::class);
         $getFontSizesMethod(['maxFont' => 10, 'minFont' => 20]);
     }
 
@@ -243,8 +243,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     }
 
     /**
-     * Test for `popular()` method, with tags that have the same `post_count`
-     *  value
+     * Test for `popular()` method, with tags that have the same `post_count` value
      * @uses \MeCms\View\Cell\PostsTagsWidgetsCell::popular()
      * @test
      */

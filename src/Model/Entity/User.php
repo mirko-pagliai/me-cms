@@ -71,6 +71,7 @@ class User extends Entity
     /**
      * Gets the picture (virtual field)
      * @return string
+     * @throws \Tools\Exception\MethodNotExistsException
      */
     protected function _getPicture(): string
     {

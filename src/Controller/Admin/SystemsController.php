@@ -77,6 +77,7 @@ class SystemsController extends AppController
     /**
      * Changelogs viewer
      * @return void
+     * @throws \Tools\Exception\FileNotExistsException|\Tools\Exception\KeyNotExistsException|\ErrorException
      */
     public function changelogs(): void
     {
@@ -130,6 +131,8 @@ class SystemsController extends AppController
      * Temporary cleaner (assets, cache, logs, sitemap and thumbnails)
      * @param string $type Type
      * @return \Cake\Http\Response|null
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
+     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
     public function tmpCleaner(string $type): ?Response
     {
