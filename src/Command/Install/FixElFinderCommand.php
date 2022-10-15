@@ -20,9 +20,9 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Routing\Router;
+use ErrorException;
 use MeCms\Core\Plugin;
 use MeTools\Console\Command;
-use Tools\Exception\NotReadableException;
 use Tools\Filesystem;
 
 /**
@@ -44,7 +44,7 @@ class FixElFinderCommand extends Command
      * Internal method to create the `php/connector.minimal.php` file
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return void
-     * @throws \Throwable
+     * @throws \ErrorException
      * @since 2.29.2
      */
     protected function createConnectorMinimal(ConsoleIo $io): void
@@ -63,7 +63,7 @@ class FixElFinderCommand extends Command
      * Internal method to create the `elfinder-cke.html` file
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return void
-     * @throws \Throwable
+     * @throws \ErrorException
      * @since 2.29.2
      */
     protected function createElfinderCke(ConsoleIo $io): void
@@ -88,7 +88,7 @@ class FixElFinderCommand extends Command
         try {
             $this->createConnectorMinimal($io);
             $this->createElfinderCke($io);
-        } catch (NotReadableException $e) {
+        } catch (ErrorException $e) {
             return $io->error($e->getMessage());
         }
 

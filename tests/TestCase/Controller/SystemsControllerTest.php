@@ -21,13 +21,12 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
-use MeCms\Controller\SystemsController;
 use MeCms\Form\ContactUsForm;
 use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * SystemsControllerTest class
- * @property SystemsController $_controller
+ * @property \MeCms\Controller\SystemsController $_controller
  */
 class SystemsControllerTest extends ControllerTestCase
 {
@@ -53,7 +52,7 @@ class SystemsControllerTest extends ControllerTestCase
 
         $this->_controller->ContactUsForm = $this->getMockBuilder(ContactUsForm::class)
             ->onlyMethods(['verifyEmail'])
-            ->getMock();;
+            ->getMock();
 
         //`ContactUsForm::verifyEmail()` will return `false` only for `spammer@example.com` value
         $this->_controller->ContactUsForm->method('verifyEmail')->willReturnCallback(fn(string $email): bool => $email !== 'spammer@example.com');
