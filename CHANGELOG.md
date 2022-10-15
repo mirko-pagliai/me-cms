@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.30 branch
+### 2.30.9-RC6
+* improved `\MeCms\Controller\SystemsController` class.
+
 ### 2.30.8-RC5
 * improved the `UserCommand`;
 * added `ContactUsForm::verifyEmail()`. This also simplifies testing;
