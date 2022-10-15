@@ -96,9 +96,9 @@ parameters:
 			path: src/Utility/Sitemap/Sitemap.php
 
 		-
-			message: "#^Parameter \\#3 \\$length of function substr expects int\\|null, int\\|false given\\.$#"
+			message: "#^Call to an undefined method DOMDocument\\|SimpleXMLElement\\:\\:asXML\\(\\)\\.$#"
 			count: 1
-			path: src/Utility/StaticPage.php
+			path: src/Utility/Sitemap/SitemapBuilder.php
 
 		-
 			message: "#^Variable \\$categories might not be defined\\.$#"

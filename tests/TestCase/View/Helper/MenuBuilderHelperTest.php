@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -31,11 +32,12 @@ class MenuBuilderHelperTest extends HelperTestCase
     {
         parent::setUp();
 
-        $this->loadPlugins(['TestPlugin' => [], 'TestPluginTwo' => []]);
+        $this->loadPlugins(['TestPlugin' => []]);
     }
 
     /**
      * Tests for `getMethods()` method
+     * @uses \MeCms\View\Helper\MenuBuilderHelper::getMethods()
      * @test
      */
     public function testGetMethods(): void
@@ -47,15 +49,18 @@ class MenuBuilderHelperTest extends HelperTestCase
             'systems',
         ], $this->Helper->getMethods('MeCms'));
         $this->assertEquals(['articles', 'other_items'], $this->Helper->getMethods('TestPlugin'));
-        $this->assertEquals([], $this->Helper->getMethods('TestPluginTwo'));
+        $this->assertEquals(['badArticles'], $this->Helper->getMethods('TestPluginTwo'));
     }
 
     /**
      * Tests for `generate()` method
+     * @uses \MeCms\View\Helper\MenuBuilderHelper::generate()
      * @test
      */
     public function testGenerate(): void
     {
+        $this->loadPlugins(['TestPlugin' => [], 'TestPluginTwo' => []]);
+
         foreach (['MeCms', 'TestPlugin'] as $plugin) {
             $result = $this->Helper->generate($plugin);
             $this->assertNotEmpty($result);
@@ -65,6 +70,7 @@ class MenuBuilderHelperTest extends HelperTestCase
             }
         }
 
-        $this->assertSame([], $this->Helper->generate('TestPluginTwo'));
+        $this->expectExceptionMessage('Method `TestPluginTwo\View\Helper\MenuHelper::badArticles()` returned only 1 values');
+        $this->Helper->generate('TestPluginTwo');
     }
 }

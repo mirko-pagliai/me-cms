@@ -7,7 +7,7 @@ use Cake\Console\Shell;
 
 class InstallShell extends Shell
 {
-    public function all()
+    public function all(): bool
     {
         return true;
     }

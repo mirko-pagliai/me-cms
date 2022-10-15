@@ -19,7 +19,6 @@ use Cake\Collection\CollectionInterface;
 use Cake\ORM\ResultSet;
 use Cake\ORM\Table;
 use Cake\View\Cell;
-use InvalidArgumentException;
 use MeCms\Model\Entity\Tag;
 use Tools\Exceptionist;
 
@@ -44,17 +43,16 @@ class PostsTagsWidgetsCell extends Cell
 
     /**
      * Internal method to get the font sizes
-     * @param array<string, int>|bool $style Style for tags. Array with `maxFont` and
-     *  `minFont` keys or `false` to disable
+     * @param array<string, int>|bool $style Style for tags. Array with `maxFont` and `minFont` keys or `false` to disable
      * @return array
-     * @throws \InvalidArgumentException
+     * @throws \ErrorException
      */
     protected function getFontSizes($style = []): array
     {
         //Maximum and minimum font sizes we want to use
         $maxFont = is_array($style) && array_key_exists('maxFont', $style) ? $style['maxFont'] : 40;
         $minFont = is_array($style) && array_key_exists('minFont', $style) ? $style['minFont'] : 12;
-        Exceptionist::isTrue($maxFont > $minFont, __d('me_cms', 'Invalid values'), InvalidArgumentException::class);
+        Exceptionist::isTrue($maxFont > $minFont, __d('me_cms', 'Invalid values'));
 
         return [$maxFont, $minFont];
     }
@@ -65,9 +63,9 @@ class PostsTagsWidgetsCell extends Cell
      * @param string $prefix Prefix for each tag. This works only with the cloud
      * @param string $render Render type (`cloud`, `form` or `list`)
      * @param bool $shuffle Shuffles tags
-     * @param array|bool $style Style for tags. Array with `maxFont` and
-     *  `minFont` keys or `false` to disable
+     * @param array|bool $style Style for tags. Array with `maxFont` and `minFont` keys or `false` to disable
      * @return void
+     * @throws \ErrorException
      */
     public function popular(
         int $limit = 10,

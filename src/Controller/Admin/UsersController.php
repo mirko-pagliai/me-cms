@@ -34,8 +34,7 @@ class UsersController extends AppController
 
     /**
      * Called before the controller action.
-     * You can use this method to perform logic that needs to happen before
-     *  each controller action
+     * You can use this method to perform logic that needs to happen before each controller action
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
      */
@@ -248,6 +247,7 @@ class UsersController extends AppController
     /**
      * Changes the user's picture
      * @return void
+     * @throws \Tools\Exception\ObjectWrongInstanceException|\ErrorException
      */
     public function changePicture(): void
     {

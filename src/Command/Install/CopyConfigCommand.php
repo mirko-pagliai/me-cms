@@ -44,6 +44,7 @@ class CopyConfigCommand extends Command
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
+     * @throws \Tools\Exception\FileNotExistsException|\ErrorException
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {

@@ -24,7 +24,6 @@ use Cake\Log\Log;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Routing\Router;
 use DateTime;
-use Tools\Exceptionist;
 
 /**
  * Users controller
@@ -104,8 +103,9 @@ class UsersController extends AppController
      */
     public function activation(string $id, string $token): ?Response
     {
-        $tokenExists = $this->Token->check($token, ['type' => 'signup', 'user_id' => $id]);
-        Exceptionist::isTrue($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
+        if (!$this->Token->check($token, ['type' => 'signup', 'user_id' => $id])) {
+            throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
+        }
         $this->Token->delete($token);
 
         $update = $this->Users->findPendingById($id)
@@ -126,8 +126,7 @@ class UsersController extends AppController
      */
     public function activationResend()
     {
-        //Checks if signup is enabled and if accounts will be enabled by the
-        //  user via email
+        //Checks if signup is enabled and if accounts will be enabled by the user via email
         if (!getConfig('users.signup') && getConfig('users.activation') === 1) {
             $this->Flash->error(I18N_DISABLED);
 
@@ -184,8 +183,7 @@ class UsersController extends AppController
         if ($username && $password) {
             $user = $this->Auth->identify();
             if ($user) {
-                //Checks if the user is banned or if is disabled (the account
-                //  should still be enabled)
+                //Checks if the user is banned or if is disabled (the account should still be enabled)
                 if ($user['banned'] || !$user['active']) {
                     if ($user['banned']) {
                         $this->Flash->error(__d('me_cms', 'Your account has been banned by an admin'));
@@ -290,8 +288,9 @@ class UsersController extends AppController
      */
     public function passwordReset(string $id, string $token)
     {
-        $tokenExists = $this->Token->check($token, ['type' => 'password_forgot', 'user_id' => $id]);
-        Exceptionist::isTrue($tokenExists, __d('me_cms', 'Invalid token'), RecordNotFoundException::class);
+        if (!$this->Token->check($token, ['type' => 'password_forgot', 'user_id' => $id])) {
+            throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
+        }
 
         $user = $this->Users->findActiveById($id)->firstOrFail();
 

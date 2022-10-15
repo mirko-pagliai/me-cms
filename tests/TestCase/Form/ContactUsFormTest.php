@@ -18,6 +18,7 @@ namespace MeCms\Test\TestCase\Form;
 use Cake\Mailer\MailerAwareTrait;
 use MeCms\Form\ContactUsForm;
 use MeCms\TestSuite\TestCase;
+use StopSpam\SpamDetector;
 
 /**
  * ContactUsFormTest class
@@ -27,7 +28,7 @@ class ContactUsFormTest extends TestCase
     use MailerAwareTrait;
 
     /**
-     * @var \MeCms\Form\ContactUsForm&\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Form\ContactUsForm
      */
     public ContactUsForm $Form;
 
@@ -50,12 +51,13 @@ class ContactUsFormTest extends TestCase
         parent::setUp();
 
         if (empty($this->Form)) {
-            $this->Form = $this->getMockBuilder(ContactUsForm::class)
-                ->onlyMethods(['verifyEmail'])
+            $this->Form = new ContactUsForm();
+
+            $this->Form->SpamDetector = $this->getMockBuilder(SpamDetector::class)
+                ->onlyMethods(['verify'])
                 ->getMock();
 
-            //`ContactUsForm::verifyEmail()` will return `false` only for `spammer@example.com` value
-            $this->Form->method('verifyEmail')->willReturnCallback(fn(string $email): bool => $email !== 'spammer@example.com');
+            $this->Form->SpamDetector->method('verify')->willReturn(true);
         }
     }
 
@@ -86,10 +88,16 @@ class ContactUsFormTest extends TestCase
      */
     public function testValidationForEmail(): void
     {
+        $SpamDetector = $this->getMockBuilder(SpamDetector::class)
+            ->onlyMethods(['verify'])
+            ->getMock();
+
+        $SpamDetector->method('verify')->willReturn(false);
+
+        $this->Form->SpamDetector = $SpamDetector;
+
         $this->assertFalse($this->Form->validate(['email' => 'spammer@example.com'] + $this->example));
-        $this->assertEquals([
-            'email' => ['notSpammer' => 'This email address has been reported as a spammer'],
-        ], $this->Form->getErrors());
+        $this->assertEquals(['email' => ['notSpammer' => 'This email address has been reported as a spammer']], $this->Form->getErrors());
     }
 
     /**
@@ -112,6 +120,7 @@ class ContactUsFormTest extends TestCase
 
     /**
      * Tests for `_execute()` method
+     * @uses \MeCms\Form\ContactUsForm::execute()
      * @test
      */
     public function testExecute(): void

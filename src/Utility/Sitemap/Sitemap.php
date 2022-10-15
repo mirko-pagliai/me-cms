@@ -180,7 +180,7 @@ class Sitemap extends SitemapBase
     /**
      * Returns static pages urls
      * @return array
-     * @uses \MeCms\Utility\StaticPage::all()
+     * @throws \ErrorException
      */
     public static function staticPages(): array
     {
