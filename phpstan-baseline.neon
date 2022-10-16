@@ -376,19 +376,9 @@ parameters:
 			path: templates/Users/signup.php
 
 		-
-			message: "#^Variable \\$loginLog might not be defined\\.$#"
-			count: 1
-			path: templates/element/admin/last-logins.php
-
-		-
 			message: "#^Variable \\$priority might not be defined\\.$#"
 			count: 1
 			path: templates/element/admin/priority-badge.php
-
-		-
-			message: "#^Parameter \\#1 \\$callback of function call_user_func_array expects callable\\(\\)\\: mixed, array\\{mixed, 'link'\\} given\\.$#"
-			count: 1
-			path: templates/element/admin/sidebar.php
 
 		-
 			message: "#^Parameter \\#1 \\$callback of function call_user_func_array expects callable\\(\\)\\: mixed, array\\{mixed, 'link'\\} given\\.$#"
