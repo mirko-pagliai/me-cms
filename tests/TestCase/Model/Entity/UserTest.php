@@ -85,11 +85,6 @@ class UserTest extends EntityTestCase
         $this->assertInstanceOf(FrozenTime::class, $row['time']);
         $row['time'] = (int)$row['time']->toUnixString();
         $this->assertSame($data, $row);
-
-        //With empty `time`
-        unset($data['time']);
-        $result = $this->Entity->set('last_logins', [$data])->get('last_logins');
-        $this->assertInstanceOf(FrozenTime::class, $result->first()['time']);
     }
 
     /**

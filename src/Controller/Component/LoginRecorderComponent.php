@@ -106,7 +106,7 @@ class LoginRecorderComponent extends Component
 
     /**
      * Reads data
-     * @return \Cake\Collection\Collection<array>
+     * @return \Cake\Collection\Collection
      */
     public function read(): Collection
     {

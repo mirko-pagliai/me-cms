@@ -93,7 +93,7 @@ class User extends Entity
     /**
      * Gets the last logins (accessor)
      * @param array|null $lastLogins Last logins
-     * @return \Cake\Collection\Collection<array> Last logins as `Collection`
+     * @return \Cake\Collection\Collection Last logins as `Collection`
      * @since 2.30.7-RC4
      */
     protected function _getLastLogins(?array $lastLogins): Collection
