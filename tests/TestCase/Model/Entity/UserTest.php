@@ -61,24 +61,36 @@ class UserTest extends EntityTestCase
 
     /**
      * Test for `_getLastLogins()` method
+     * @uses \MeCms\Model\Entity\User::_getLastLogins()
      * @test
      */
     public function testLastLoginsGetAccessor(): void
     {
-        $entity = new Entity([
+        $result = $this->Entity->get('last_logins');
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertTrue($result->isEmpty());
+
+        $data = [
             'platform' => 'Linux',
             'browser' => 'Chrome',
             'version' => '55.0.2883.87',
             'agent' => null,
             'ip' => '',
-            'time' => new FrozenTime(),
-        ]);
+            'time' => time(),
+        ];
 
-        $result = $this->Entity->set('last_logins', [$entity])
-            ->get('last_logins');
+        $result = $this->Entity->set('last_logins', [$data])->get('last_logins');
         $this->assertInstanceOf(Collection::class, $result);
         $this->assertCount(1, $result);
-        $this->assertSame($entity, $result->first());
+        $row = $result->first();
+        $this->assertInstanceOf(FrozenTime::class, $row['time']);
+        $row['time'] = (int)$row['time']->toUnixString();
+        $this->assertSame($data, $row);
+
+        //With empty `time`
+        unset($data['time']);
+        $result = $this->Entity->set('last_logins', [$data])->get('last_logins');
+        $this->assertInstanceOf(FrozenTime::class, $result->first()['time']);
     }
 
     /**

@@ -98,11 +98,8 @@ class User extends Entity
      */
     protected function _getLastLogins(?array $lastLogins): Collection
     {
-        $lastLogins = array_map(function ($row): Entity {
-            $row = $row instanceof Entity ? $row : new Entity($row);
-
-            return $row->set('time', new FrozenTime($row->get('time')));
-        }, $lastLogins ?: []);
+        //Turns `time` values into ` FrozenTime` instances
+        $lastLogins = array_map(fn(array $row): array => array_merge($row, ['time' => new FrozenTime($row['time'] ?? time())]), $lastLogins ?: []);
 
         return new Collection($lastLogins);
     }

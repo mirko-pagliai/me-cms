@@ -17,8 +17,6 @@ namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Collection\Collection;
 use Cake\Http\ServerRequest;
-use Cake\I18n\FrozenTime;
-use Cake\ORM\Entity;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeTools\TestSuite\ComponentTestCase;
 
@@ -28,6 +26,12 @@ use MeTools\TestSuite\ComponentTestCase;
  */
 class LoginRecorderComponentTest extends ComponentTestCase
 {
+    protected const DEFAULT_USER_AGENT = [
+        'platform' => 'Linux',
+        'browser' => 'Chrome',
+        'version' => '55.0.2883.87',
+    ];
+
     /**
      * Fixtures
      * @var array<string>
@@ -49,11 +53,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $Component = $this->getMockForComponent(LoginRecorderComponent::class, $methods);
 
         if (in_array('getUserAgent', $methods)) {
-            $Component->method('getUserAgent')->willReturn($userAgent ?: [
-                'platform' => 'Linux',
-                'browser' => 'Chrome',
-                'version' => '55.0.2883.87',
-            ]);
+            $Component->method('getUserAgent')->willReturn($userAgent ?: self::DEFAULT_USER_AGENT);
         }
 
         return $Component;
@@ -102,11 +102,11 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $this->assertInstanceOf(Collection::class, $result);
         $this->assertTrue($result->isEmpty());
 
-        //After save, is not empty
+        //After save
         $this->assertTrue($this->Component->write());
         $result = $this->Component->read();
         $this->assertInstanceOf(Collection::class, $result);
-        $this->assertFalse($result->isEmpty());
+        $this->assertCount(1, $result);
     }
 
     /**
@@ -129,46 +129,61 @@ class LoginRecorderComponentTest extends ComponentTestCase
     {
         $this->Component->setConfig('user', 1);
 
+        /**
+         * First write.
+         * Only one result is expected.
+         */
+        $timeFirstWrite = time();
+        $expected = self::DEFAULT_USER_AGENT + ['agent' => null, 'ip' => '', 'time' => $timeFirstWrite];
         $this->assertTrue($this->Component->write());
 
-        $firstResult = $this->Component->read();
-        $this->assertCount(1, $firstResult);
-        $firstRow = $firstResult->first();
-        $this->assertInstanceOf(Entity::class, $firstRow);
-        $this->assertEquals(false, $firstRow->get('ip'));
-        $this->assertInstanceOf(FrozenTime::class, $firstRow->get('time'));
-        $this->assertEquals('Linux', $firstRow->get('platform'));
-        $this->assertEquals('Chrome', $firstRow->get('browser'));
-        $this->assertEquals('55.0.2883.87', $firstRow->get('version'));
-        $this->assertEquals(null, $firstRow->get('agent'));
+        $this->assertCount(1, $this->Component->read());
+        $firstResultRow = $this->Component->read()->first();
+        $firstResultRow['time'] = (int)$firstResultRow['time']->toUnixString();
+        $this->assertSame($expected, $firstResultRow);
 
+        /**
+         * Second write.
+         * The user had logged in from the same client, so the previous record is deleted and a new one is written.
+         * Consequently, only one result is expected.
+         */
         sleep(1);
-
-        //Calls again, as if the user had logged in again from the same client.
-        //In this case, the previous record is deleted and a new one is written
+        $timeSecondWrite = time();
+        $expected['time'] = $timeSecondWrite;
         $this->assertTrue($this->Component->write());
 
-        $secondResult = $this->Component->read();
-        $this->assertCount(1, $secondResult);
-        $this->assertInstanceOf(Entity::class, $secondResult->first());
-        $this->assertNotEquals($secondResult->toList(), $firstResult->toList());
+        $this->assertCount(1, $this->Component->read());
+        $secondResultRow = $this->Component->read()->first();
+        $secondResultRow['time'] = (int)$secondResultRow['time']->toUnixString();
+        $this->assertSame($expected, $secondResultRow);
 
+        //`time` values are different
+        $this->assertNotEquals($firstResultRow['time'], $secondResultRow['time']);
+
+        /**
+         * Third write.
+         * The user had logged in, but from a different client. So the previous record is NOT deleted.
+         * Now two results are expected. The first is the one just added, the second is the one already present.
+         */
         sleep(1);
-
-        //Calls again, with different user agent data, as if the user had logged in again, but from a different client.
-        //In this case, the previous record is not deleted
-        $Component = $this->getMockForLoginRecorder(['getUserAgent'], [
-            'platform' => 'Windows',
-            'browser' => 'Firefox',
-            'version' => '1.2.3',
-        ]);
-        $Component->setConfig('user', 1);
+        $userAgent = ['platform' => 'Windows', 'browser' => 'Firefox', 'version' => '1.2.3'];
+        $Component = $this->getMockForLoginRecorder(['getUserAgent'], $userAgent)->setConfig('user', 1);
+        $timeThirdWrite = time();
+        $expected = $userAgent + ['agent' => null, 'ip' => '', 'time' => $timeThirdWrite];
         $this->assertTrue($Component->write());
 
-        $thirdResult = $Component->read();
-        $this->assertCount(2, $thirdResult);
-        $this->assertEquals($secondResult->first(), $thirdResult->take(1, 1)->first());
-        $this->assertGreaterThan($thirdResult->take(1, 1)->first()->get('time'), $thirdResult->first()->get('time'));
+        $this->assertCount(2, $Component->read());
+        $thirdResultFirstRow = $Component->read()->first();
+        $thirdResultFirstRow['time'] = (int)$thirdResultFirstRow['time']->toUnixString();
+        $this->assertSame($expected, $thirdResultFirstRow);
+
+        $thirdResultLastRow = $Component->read()->last();
+        $thirdResultLastRow['time'] = (int)$thirdResultLastRow['time']->toUnixString();
+
+        $this->assertGreaterThan($thirdResultLastRow['time'], $thirdResultFirstRow['time']);
+
+        //The last row the of third result is the second result row
+        $this->assertSame($thirdResultLastRow, $secondResultRow);
     }
 
     /**

@@ -19,8 +19,8 @@ use Cake\Collection\Collection;
 use Cake\Controller\Component;
 use Cake\Datasource\FactoryLocator;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\Entity;
 use donatj\UserAgent\UserAgentParser;
+use MeCms\Model\Entity\User;
 use MeCms\Model\Table\UsersTable;
 
 /**
@@ -37,6 +37,11 @@ use MeCms\Model\Table\UsersTable;
  */
 class LoginRecorderComponent extends Component
 {
+    /**
+     * @var \MeCms\Model\Entity\User
+     */
+    protected User $User;
+
     /**
      * @var \MeCms\Model\Table\UsersTable
      */
@@ -59,9 +64,24 @@ class LoginRecorderComponent extends Component
     }
 
     /**
+     * Internal method to get the `User` instance
+     * @return \MeCms\Model\Entity\User
+     */
+    protected function getUser(): User
+    {
+        if (empty($this->User)) {
+            /** @var \MeCms\Model\Entity\User $User */
+            $User = $this->UsersTable->get($this->getConfigOrFail('user'));
+            $this->User = $User;
+        }
+
+        return $this->User;
+    }
+
+    /**
      * Internal method to parses and gets the user agent
      * @param string|null $userAgent User agent string to parse or `null` to use `$_SERVER['HTTP_USER_AGENT']`
-     * @return array
+     * @return array<string, string|null>
      * @see https://github.com/donatj/PhpUserAgent
      */
     protected function getUserAgent(?string $userAgent = null): array
@@ -92,7 +112,7 @@ class LoginRecorderComponent extends Component
      */
     public function read(): Collection
     {
-        return $this->UsersTable->get($this->getConfigOrFail('user'))->get('last_logins');
+        return $this->getUser()->get('last_logins');
     }
 
     /**
@@ -101,25 +121,30 @@ class LoginRecorderComponent extends Component
      */
     public function write(): bool
     {
-        $User = $this->UsersTable->get($this->getConfigOrFail('user'));
-        $lastLogins = $User->get('last_logins');
-
-        //Removes the first record, if it has been saved less than an hour ago and if the user agent data are the same
+        $lastLogins = $this->read();
         $current = $this->getUserAgent() + [
             'agent' => filter_input(INPUT_SERVER, 'HTTP_USER_AGENT'),
             'ip' => $this->getClientIp(),
         ];
+
+        //Removes the first record, if it has been saved less than an hour ago and if the user agent data are the same
         $first = $lastLogins->first();
-        if ($first && (new FrozenTime($first->get('time')))->modify('+1 hour')->isFuture() && $first->extract(['agent', 'browser', 'ip', 'platform', 'version']) == $current) {
-            $lastLogins = $lastLogins->skip(1);
+        if ($first && (new FrozenTime($first['time']))->modify('+1 hour')->isFuture()) {
+            array_pop($first);
+            if ($first == $current) {
+                $lastLogins = $lastLogins->skip(1);
+            }
         }
 
-        //Adds the current request, takes only a specified number of records and writes
-        $lastLogins = $lastLogins->prependItem(new Entity($current + ['time' => new FrozenTime()]));
-        $lastLogins = $lastLogins->take((int)getConfig('users.login_log'));
+        //Adds the current request
+        $lastLogins = $lastLogins->prependItem($current + ['time' => time()]);
 
-        $User = $User->set('last_logins', $lastLogins->toList());
+        //Takes only a specified number of records and writes
+        $maxRows = getConfig('users.login_log');
+        if ($maxRows) {
+            $lastLogins = $lastLogins->take((int)$maxRows);
+        }
 
-        return (bool)$this->UsersTable->save($User);
+        return (bool)$this->UsersTable->save($this->getUser()->set('last_logins', $lastLogins->toList()));
     }
 }
