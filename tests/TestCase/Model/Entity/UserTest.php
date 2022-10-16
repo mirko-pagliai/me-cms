@@ -17,7 +17,6 @@ namespace MeCms\Test\TestCase\Model\Entity;
 
 use Cake\Collection\Collection;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\Entity;
 use MeCms\TestSuite\EntityTestCase;
 use Tools\Filesystem;
 

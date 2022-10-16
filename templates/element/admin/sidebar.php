@@ -41,7 +41,7 @@ $pluginsNames = array_map(fn($name): string => Inflector::camelize(str_replace([
         <div id="collapse<?= $name ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $name ?>" data-bs-parent="#accordionSidebar">
             <div class="accordion-body my-2 p-0">
                 <ul class="list-group list-group-flush">
-                <?php foreach ($menu['links'] as $link): ?>
+                <?php foreach ($menu['links'] as $link) : ?>
                     <li class="list-group-item p-0">
                         <?= $this->Html->link($link[0], $link[1], ['class' => 'd-block px-3 py-2']) ?>
                     </li>

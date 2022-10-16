@@ -11,9 +11,7 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- */
-
-/**
+ *
  * @var \MeCms\View\View\AdminView $this
  * @var array{platform: string, browser: string, version: string, agent: string, ip: string, time: \Cake\I18n\FrozenTime}[] $loginLog
  */
@@ -30,7 +28,7 @@ declare(strict_types=1);
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($loginLog as $log): ?>
+            <?php foreach ($loginLog as $log) : ?>
                 <tr>
                     <td class="text-center text-nowrap">
                         <div class="d-none d-lg-block">
