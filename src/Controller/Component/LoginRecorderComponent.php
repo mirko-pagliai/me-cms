@@ -17,7 +17,6 @@ namespace MeCms\Controller\Component;
 
 use Cake\Collection\Collection;
 use Cake\Controller\Component;
-use Cake\Datasource\FactoryLocator;
 use Cake\I18n\FrozenTime;
 use donatj\UserAgent\UserAgentParser;
 use MeCms\Model\Entity\User;
@@ -48,19 +47,18 @@ class LoginRecorderComponent extends Component
     protected UsersTable $UsersTable;
 
     /**
-     * Constructor hook method
-     * @param array<string, mixed> $config The configuration settings provided to this component
-     * @return void
+     * Internal method to get a `UsersTable` instance
+     * @return \MeCms\Model\Table\UsersTable
      */
-    public function initialize(array $config): void
+    protected function getUsersTable(): UsersTable
     {
-        parent::initialize($config);
+        if (empty($this->UsersTable)) {
+            /** @var \MeCms\Model\Table\UsersTable $UsersTable */
+            $UsersTable = $this->getController()->fetchTable('MeCms.Users');
+            $this->UsersTable = $UsersTable;
+        }
 
-        /** @var \Cake\ORM\Locator\TableLocator $Locator */
-        $Locator = FactoryLocator::get('Table');
-        /** @var \MeCms\Model\Table\UsersTable $UsersTable */
-        $UsersTable = $Locator->get('MeCms.Users');
-        $this->UsersTable = $UsersTable;
+        return $this->UsersTable;
     }
 
     /**
@@ -71,7 +69,7 @@ class LoginRecorderComponent extends Component
     {
         if (empty($this->User)) {
             /** @var \MeCms\Model\Entity\User $User */
-            $User = $this->UsersTable->get($this->getConfigOrFail('user'));
+            $User = $this->getUsersTable()->get($this->getConfigOrFail('user'));
             $this->User = $User;
         }
 
@@ -145,6 +143,6 @@ class LoginRecorderComponent extends Component
             $lastLogins = $lastLogins->take((int)$maxRows);
         }
 
-        return (bool)$this->UsersTable->save($this->getUser()->set('last_logins', $lastLogins->toList()));
+        return (bool)$this->getUsersTable()->save($this->getUser()->set('last_logins', $lastLogins->toList()));
     }
 }
