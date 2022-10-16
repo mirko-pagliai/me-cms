@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Collection\Collection;
-use Cake\Datasource\Exception\InvalidPrimaryKeyException;
 use Cake\Http\ServerRequest;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
@@ -108,10 +107,17 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $result = $this->Component->read();
         $this->assertInstanceOf(Collection::class, $result);
         $this->assertFalse($result->isEmpty());
+    }
 
-        //Without the user ID
-        $this->expectException(InvalidPrimaryKeyException::class);
-        $this->getMockForLoginRecorder()->setConfig('user')->read();
+    /**
+     * Test for `read()` method, without the user id
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::read()
+     * @test
+     */
+    public function testReadWithoutUserId(): void
+    {
+        $this->expectExceptionMessage('Expected configuration `user` not found.');
+        $this->getMockForLoginRecorder()->read();
     }
 
     /**
@@ -163,9 +169,16 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $this->assertCount(2, $thirdResult);
         $this->assertEquals($secondResult->first(), $thirdResult->take(1, 1)->first());
         $this->assertGreaterThan($thirdResult->take(1, 1)->first()->get('time'), $thirdResult->first()->get('time'));
+    }
 
-        //Without the user ID
-        $this->expectException(InvalidPrimaryKeyException::class);
-        $this->getMockForLoginRecorder()->setConfig('user')->write();
+    /**
+     * Test for `write()` method, without the user id
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
+     * @test
+     */
+    public function testWriteWithoutUserId(): void
+    {
+        $this->expectExceptionMessage('Expected configuration `user` not found.');
+        $this->getMockForLoginRecorder()->write();
     }
 }

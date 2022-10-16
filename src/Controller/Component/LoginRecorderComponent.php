@@ -92,7 +92,7 @@ class LoginRecorderComponent extends Component
      */
     public function read(): Collection
     {
-        return $this->UsersTable->get($this->getConfig('user'))->get('last_logins');
+        return $this->UsersTable->get($this->getConfigOrFail('user'))->get('last_logins');
     }
 
     /**
@@ -101,7 +101,7 @@ class LoginRecorderComponent extends Component
      */
     public function write(): bool
     {
-        $User = $this->UsersTable->get($this->getConfig('user'));
+        $User = $this->UsersTable->get($this->getConfigOrFail('user'));
         $lastLogins = $User->get('last_logins');
 
         //Removes the first record, if it has been saved less than an hour ago and if the user agent data are the same
