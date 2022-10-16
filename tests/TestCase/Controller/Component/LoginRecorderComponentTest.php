@@ -17,6 +17,7 @@ namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Collection\Collection;
 use Cake\Http\ServerRequest;
+use Cake\I18n\FrozenTime;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeTools\TestSuite\ComponentTestCase;
 
@@ -139,6 +140,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
         $this->assertCount(1, $this->Component->read());
         $firstResultRow = $this->Component->read()->first();
+        $this->assertInstanceOf(FrozenTime::class, $firstResultRow['time']);
         $firstResultRow['time'] = (int)$firstResultRow['time']->toUnixString();
         $this->assertSame($expected, $firstResultRow);
 
@@ -154,6 +156,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
         $this->assertCount(1, $this->Component->read());
         $secondResultRow = $this->Component->read()->first();
+        $this->assertInstanceOf(FrozenTime::class, $secondResultRow['time']);
         $secondResultRow['time'] = (int)$secondResultRow['time']->toUnixString();
         $this->assertSame($expected, $secondResultRow);
 
@@ -174,10 +177,12 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
         $this->assertCount(2, $Component->read());
         $thirdResultFirstRow = $Component->read()->first();
+        $this->assertInstanceOf(FrozenTime::class, $thirdResultFirstRow['time']);
         $thirdResultFirstRow['time'] = (int)$thirdResultFirstRow['time']->toUnixString();
         $this->assertSame($expected, $thirdResultFirstRow);
 
         $thirdResultLastRow = $Component->read()->last();
+        $this->assertInstanceOf(FrozenTime::class, $thirdResultLastRow['time']);
         $thirdResultLastRow['time'] = (int)$thirdResultLastRow['time']->toUnixString();
 
         $this->assertGreaterThan($thirdResultLastRow['time'], $thirdResultFirstRow['time']);

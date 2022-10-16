@@ -79,7 +79,7 @@ class LoginRecorderComponent extends Component
     /**
      * Internal method to parses and gets the user agent
      * @param string|null $userAgent User agent string to parse or `null` to use `$_SERVER['HTTP_USER_AGENT']`
-     * @return array<string, string|null>
+     * @return array{platform: string, browser: string, version: string}
      * @see https://github.com/donatj/PhpUserAgent
      */
     protected function getUserAgent(?string $userAgent = null): array
@@ -87,9 +87,9 @@ class LoginRecorderComponent extends Component
         $parser = (new UserAgentParser())->parse($userAgent);
 
         return [
-            'platform' => $parser->platform(),
-            'browser' => $parser->browser(),
-            'version' => $parser->browserVersion(),
+            'platform' => $parser->platform() ?: '',
+            'browser' => $parser->browser() ?: '',
+            'version' => $parser->browserVersion() ?: '',
         ];
     }
 
@@ -106,7 +106,7 @@ class LoginRecorderComponent extends Component
 
     /**
      * Reads data
-     * @return \Cake\Collection\Collection
+     * @return \Cake\Collection\Collection<array>
      */
     public function read(): Collection
     {
@@ -127,7 +127,7 @@ class LoginRecorderComponent extends Component
 
         //Removes the first record, if it has been saved less than an hour ago and if the user agent data are the same
         $first = $lastLogins->first();
-        if ($first && (new FrozenTime($first['time']))->modify('+1 hour')->isFuture()) {
+        if (isset($first['time']) && $first['time']->modify('+1 hour')->isFuture()) {
             array_pop($first);
             if ($first == $current) {
                 $lastLogins = $lastLogins->skip(1);
@@ -135,7 +135,7 @@ class LoginRecorderComponent extends Component
         }
 
         //Adds the current request
-        $lastLogins = $lastLogins->prependItem($current + ['time' => time()]);
+        $lastLogins = $lastLogins->prependItem($current + ['time' => FrozenTime::now()]);
 
         //Takes only a specified number of records and writes
         $maxRows = getConfig('users.login_log');
