@@ -57,8 +57,6 @@ class LoginRecorderComponentTest extends ComponentTestCase
             ]);
         }
 
-        $Component->setConfig('user', 1);
-
         return $Component;
     }
 
@@ -98,6 +96,8 @@ class LoginRecorderComponentTest extends ComponentTestCase
      */
     public function testRead(): void
     {
+        $this->Component->setConfig('user', 1);
+
         //For now is empty
         $result = $this->Component->read();
         $this->assertInstanceOf(Collection::class, $result);
@@ -121,6 +121,8 @@ class LoginRecorderComponentTest extends ComponentTestCase
      */
     public function testWrite(): void
     {
+        $this->Component->setConfig('user', 1);
+
         $this->assertTrue($this->Component->write());
 
         $firstResult = $this->Component->read();
@@ -147,14 +149,14 @@ class LoginRecorderComponentTest extends ComponentTestCase
 
         sleep(1);
 
-        //Calls again, with different user agent data, as if the user had logged
-        //  in again, but from a different client. In this case, the previous
-        //  record is not deleted
+        //Calls again, with different user agent data, as if the user had logged in again, but from a different client.
+        //In this case, the previous record is not deleted
         $Component = $this->getMockForLoginRecorder(['getUserAgent'], [
             'platform' => 'Windows',
             'browser' => 'Firefox',
             'version' => '1.2.3',
         ]);
+        $Component->setConfig('user', 1);
         $this->assertTrue($Component->write());
 
         $thirdResult = $Component->read();
