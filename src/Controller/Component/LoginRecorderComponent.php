@@ -26,8 +26,8 @@ use MeCms\Model\Table\UsersTable;
 /**
  * This component allows you to save and retrieve user logins.
  *
- * You must first set the user ID with the `config()` method and the `user`
- *  value, then you can execute `read()` and `write()` methods.
+ * You must first set the user ID with the `config()` method and the `user` value, then you can execute `read()` and
+ *  `write()` methods.
  *
  * Example:
  * <code>
@@ -59,20 +59,8 @@ class LoginRecorderComponent extends Component
     }
 
     /**
-     * Internal method to get the client ip
-     * @return string The client IP
-     */
-    protected function getClientIp(): string
-    {
-        $ip = $this->getController()->getRequest()->clientIp();
-
-        return $ip === '::1' ? '127.0.0.1' : $ip;
-    }
-
-    /**
      * Internal method to parses and gets the user agent
-     * @param string|null $userAgent User agent string to parse or `null` to
-     *  use `$_SERVER['HTTP_USER_AGENT']`
+     * @param string|null $userAgent User agent string to parse or `null` to use `$_SERVER['HTTP_USER_AGENT']`
      * @return array
      * @see https://github.com/donatj/PhpUserAgent
      */
@@ -85,6 +73,17 @@ class LoginRecorderComponent extends Component
             'browser' => $parser->browser(),
             'version' => $parser->browserVersion(),
         ];
+    }
+
+    /**
+     * Gets the client ip
+     * @return string The client IP
+     */
+    public function getClientIp(): string
+    {
+        $ip = $this->getController()->getRequest()->clientIp();
+
+        return $ip === '::1' ? '127.0.0.1' : $ip;
     }
 
     /**
@@ -105,8 +104,7 @@ class LoginRecorderComponent extends Component
         $User = $this->UsersTable->get($this->getConfig('user'));
         $lastLogins = $User->get('last_logins');
 
-        //Removes the first record, if it has been saved less than an hour ago
-        //  and if the user agent data are the same
+        //Removes the first record, if it has been saved less than an hour ago and if the user agent data are the same
         $current = $this->getUserAgent() + [
             'agent' => filter_input(INPUT_SERVER, 'HTTP_USER_AGENT'),
             'ip' => $this->getClientIp(),

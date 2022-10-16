@@ -39,9 +39,9 @@ class LoginRecorderComponentTest extends ComponentTestCase
     ];
 
     /**
-     * Internal method to get a `LoginRecorder` instance
+     * Internal method to get a `LoginRecorder` mock
      * @param string[] $methods Methods you want to mock
-     * @param string[] $userAgent Data returned by the `getUserAgent()` method
+     * @param array<string, string> $userAgent Data returned by the `getUserAgent()` method
      * @return \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockForLoginRecorder(array $methods = ['getUserAgent'], array $userAgent = [])
@@ -80,32 +80,15 @@ class LoginRecorderComponentTest extends ComponentTestCase
      */
     public function testGetClientIp(): void
     {
-        $this->assertEmpty($this->invokeMethod($this->Component, 'getClientIp'));
+        $this->assertEmpty($this->Component->getClientIp());
 
         //On localhost
         $request = $this->getMockBuilder(ServerRequest::class)
             ->onlyMethods(['clientIp'])
             ->getMock();
-        $request->expects($this->once())
-            ->method('clientIp')
-            ->willReturn('::1');
+        $request->method('clientIp')->willReturn('::1');
         $this->Component->getController()->setRequest($request);
-        $this->assertEquals('127.0.0.1', $this->invokeMethod($this->Component, 'getClientIp'));
-    }
-
-    /**
-     * Test for `getUserAgent()` method
-     * @uses \MeCms\Controller\Component\LoginRecorderComponent::getUserAgent()
-     * @test
-     */
-    public function testGetUserAgent(): void
-    {
-        $result = $this->invokeMethod($this->getMockForLoginRecorder([]), 'getUserAgent', ['Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0']);
-        $this->assertSame([
-            'platform' => 'Windows',
-            'browser' => 'Firefox',
-            'version' => '16.0',
-        ], $result);
+        $this->assertEquals('127.0.0.1', $this->Component->getClientIp());
     }
 
     /**
