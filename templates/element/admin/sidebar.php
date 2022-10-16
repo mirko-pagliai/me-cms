@@ -13,15 +13,16 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
+/** @var \MeCms\View\View\AdminView $this */
+
 use Cake\Utility\Inflector;
 use MeCms\Core\Plugin;
 
-$plugins = Plugin::all(['mecms_core' => false]);
-$pluginsMenus = array_merge(...array_map(fn(string $plugin): array => $this->MenuBuilder->generate($plugin), $plugins));
+$pluginsMenus = array_merge(...array_map(fn(string $plugin): array => $this->MenuBuilder->generate($plugin), Plugin::all(['mecms_core' => false])));
 $pluginsNames = array_map(fn($name): string => Inflector::camelize(str_replace(['/', '.'], '_', $name)), array_keys($pluginsMenus));
 ?>
 
-<div class="accordion" id="accordionSidebar">
+<div id="accordionSidebar" class="accordion accordion-flush">
     <?php foreach (array_combine($pluginsNames, $pluginsMenus) as $name => $menu) : ?>
     <div class="accordion-item">
         <h2 class="accordion-header" id="heading<?= $name ?>">
@@ -39,13 +40,13 @@ $pluginsNames = array_map(fn($name): string => Inflector::camelize(str_replace([
         </h2>
         <div id="collapse<?= $name ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $name ?>" data-bs-parent="#accordionSidebar">
             <div class="accordion-body my-2 p-0">
-                <?php
-                $list = array_map(function (array $link): string {
-                    return $this->Html->link($link[0], $link[1], ['class' => 'd-block px-3 py-2']);
-                }, $menu['links']);
-
-                echo $this->Html->ul($list, ['class' => 'list-group list-group-flush'], ['class' => 'list-group-item p-0']);
-                ?>
+                <ul class="list-group list-group-flush">
+                <?php foreach ($menu['links'] as $link): ?>
+                    <li class="list-group-item p-0">
+                        <?= $this->Html->link($link[0], $link[1], ['class' => 'd-block px-3 py-2']) ?>
+                    </li>
+                <?php endforeach; ?>
+                </ul>
             </div>
         </div>
     </div>
