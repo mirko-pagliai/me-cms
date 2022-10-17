@@ -40,6 +40,11 @@
       <code>\MeCms\Model\Entity\Post|bool</code>
     </ImplementedReturnTypeMismatch>
   </file>
+  <file src="src/Plugin.php">
+    <UndefinedClass occurrences="1">
+      <code>new $plugin()</code>
+    </UndefinedClass>
+  </file>
   <file src="src/TestSuite/CellTestCase.php">
     <TypeDoesNotContainType occurrences="1">
       <code>empty($this-&gt;Table)</code>

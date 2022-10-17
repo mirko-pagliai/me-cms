@@ -66,7 +66,7 @@ class Plugin extends BasePlugin
         $pluginsToLoad = array_filter($pluginsToLoad, fn(string $plugin): bool => !$app->getPlugins()->has($plugin));
         foreach ($pluginsToLoad as $plugin) {
             if (method_exists($plugin, 'bootstrap')) {
-                /** @var \Cake\Core\PluginInterface $plugin */
+                /** @var \Cake\Core\BasePlugin $plugin */
                 $plugin = new $plugin();
                 $plugin->bootstrap($app);
             }
