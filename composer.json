@@ -31,7 +31,8 @@
         "mirko-pagliai/php-tools": "^1.5.9",
         "mirko-pagliai/php-thumber": "^1.4.1",
         "twbs/bootstrap": "^5.2.2",
-        "wyrihaximus/minify-html": "^2.0"
+        "wyrihaximus/minify-html": "^2.0",
+        "components/jquery": "^3.6"
     },
     "require-dev": {
         "ext-json": "*",

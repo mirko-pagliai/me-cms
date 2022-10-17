@@ -62,4 +62,14 @@ $(function () {
     $(".filter-form legend").click(function () {
         toggleFilterForm();
     });
+
+    //If the `menuToBeOpen` cookie is present, opens the relative menu
+    if (Cookies.get("menuToBeOpen")) {
+        $("#accordionSidebar a[data-bs-target='#" + Cookies.get("menuToBeOpen") + "']")[0].click();
+    }
+
+    // When opening a menu, save the relative value in the `menuToBeOpen` cookie
+    $("#accordionSidebar").on("shown.bs.collapse", function () {
+        Cookies.set("menuToBeOpen", $(this).find(".collapse.show").attr("id"));
+    });
 });

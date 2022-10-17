@@ -17,17 +17,16 @@ namespace MeCms\Controller\Component;
 
 use Cake\Collection\Collection;
 use Cake\Controller\Component;
-use Cake\Datasource\FactoryLocator;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\Entity;
 use donatj\UserAgent\UserAgentParser;
+use MeCms\Model\Entity\User;
 use MeCms\Model\Table\UsersTable;
 
 /**
  * This component allows you to save and retrieve user logins.
  *
- * You must first set the user ID with the `config()` method and the `user`
- *  value, then you can execute `read()` and `write()` methods.
+ * You must first set the user ID with the `config()` method and the `user` value, then you can execute `read()` and
+ *  `write()` methods.
  *
  * Example:
  * <code>
@@ -38,53 +37,71 @@ use MeCms\Model\Table\UsersTable;
 class LoginRecorderComponent extends Component
 {
     /**
+     * @var \MeCms\Model\Entity\User
+     */
+    protected User $User;
+
+    /**
      * @var \MeCms\Model\Table\UsersTable
      */
     protected UsersTable $UsersTable;
 
     /**
-     * Constructor hook method
-     * @param array<string, mixed> $config The configuration settings provided to this component
-     * @return void
+     * Internal method to get a `UsersTable` instance
+     * @return \MeCms\Model\Table\UsersTable
      */
-    public function initialize(array $config): void
+    protected function getUsersTable(): UsersTable
     {
-        parent::initialize($config);
+        if (empty($this->UsersTable)) {
+            /** @var \MeCms\Model\Table\UsersTable $UsersTable */
+            $UsersTable = $this->getController()->fetchTable('MeCms.Users');
+            $this->UsersTable = $UsersTable;
+        }
 
-        /** @var \Cake\ORM\Locator\TableLocator $Locator */
-        $Locator = FactoryLocator::get('Table');
-        /** @var \MeCms\Model\Table\UsersTable $UsersTable */
-        $UsersTable = $Locator->get('MeCms.Users');
-        $this->UsersTable = $UsersTable;
+        return $this->UsersTable;
     }
 
     /**
-     * Internal method to get the client ip
-     * @return string The client IP
+     * Internal method to get the `User` instance
+     * @return \MeCms\Model\Entity\User
      */
-    protected function getClientIp(): string
+    protected function getUser(): User
     {
-        $ip = $this->getController()->getRequest()->clientIp();
+        if (empty($this->User)) {
+            /** @var \MeCms\Model\Entity\User $User */
+            $User = $this->getUsersTable()->get($this->getConfigOrFail('user'));
+            $this->User = $User;
+        }
 
-        return $ip === '::1' ? '127.0.0.1' : $ip;
+        return $this->User;
     }
 
     /**
      * Internal method to parses and gets the user agent
-     * @param string|null $userAgent User agent string to parse or `null` to
-     *  use `$_SERVER['HTTP_USER_AGENT']`
-     * @return array
+     * @param string|null $userAgent User agent string to parse or `null` to use `$_SERVER['HTTP_USER_AGENT']`
+     * @return array{platform: string, browser: string, version: string}
      * @see https://github.com/donatj/PhpUserAgent
      */
-    protected function getUserAgent(?string $userAgent = null): array
+    public function getUserAgent(?string $userAgent = null): array
     {
         $parser = (new UserAgentParser())->parse($userAgent);
 
         return [
-            'platform' => $parser->platform(),
-            'browser' => $parser->browser(),
-            'version' => $parser->browserVersion(),
+            'platform' => $parser->platform() ?: '',
+            'browser' => $parser->browser() ?: '',
+            'version' => $parser->browserVersion() ?: '',
         ];
+    }
+
+    /**
+     * Gets the client ip
+     * @return string The client IP
+     */
+    public function getClientIp(): string
+    {
+        $ip = $this->getController()->getRequest()->clientIp();
+
+        return $ip === '::1' ? '127.0.0.1' : $ip;
     }
 
     /**
@@ -93,7 +110,7 @@ class LoginRecorderComponent extends Component
      */
     public function read(): Collection
     {
-        return $this->UsersTable->get($this->getConfig('user'))->get('last_logins');
+        return $this->getUser()->get('last_logins');
     }
 
     /**
@@ -102,26 +119,30 @@ class LoginRecorderComponent extends Component
      */
     public function write(): bool
     {
-        $User = $this->UsersTable->get($this->getConfig('user'));
-        $lastLogins = $User->get('last_logins');
-
-        //Removes the first record, if it has been saved less than an hour ago
-        //  and if the user agent data are the same
+        $lastLogins = $this->read();
         $current = $this->getUserAgent() + [
             'agent' => filter_input(INPUT_SERVER, 'HTTP_USER_AGENT'),
             'ip' => $this->getClientIp(),
         ];
+
+        //Removes the first record, if it has been saved less than an hour ago and if the user agent data are the same
         $first = $lastLogins->first();
-        if ($first && (new FrozenTime($first->get('time')))->modify('+1 hour')->isFuture() && $first->extract(['agent', 'browser', 'ip', 'platform', 'version']) == $current) {
-            $lastLogins = $lastLogins->skip(1);
+        if (isset($first['time']) && $first['time']->modify('+1 hour')->isFuture()) {
+            array_pop($first);
+            if ($first == $current) {
+                $lastLogins = $lastLogins->skip(1);
+            }
         }
 
-        //Adds the current request, takes only a specified number of records and writes
-        $lastLogins = $lastLogins->prependItem(new Entity($current + ['time' => new FrozenTime()]));
-        $lastLogins = $lastLogins->take((int)getConfig('users.login_log'));
+        //Adds the current request
+        $lastLogins = $lastLogins->prependItem($current + ['time' => FrozenTime::now()]);
 
-        $User = $User->set('last_logins', $lastLogins->toList());
+        //Takes only a specified number of records and writes
+        $maxRows = getConfig('users.login_log');
+        if ($maxRows) {
+            $lastLogins = $lastLogins->take((int)$maxRows);
+        }
 
-        return (bool)$this->UsersTable->save($User);
+        return (bool)$this->getUsersTable()->save($this->getUser()->set('last_logins', $lastLogins->toList()));
     }
 }

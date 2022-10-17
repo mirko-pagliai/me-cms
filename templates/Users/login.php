@@ -12,6 +12,8 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+/** @var \MeCms\View\View $this */
 $this->assign('title', $title = __d('me_cms', 'Login'));
 ?>
 
@@ -25,7 +27,7 @@ $this->assign('title', $title = __d('me_cms', 'Login'));
             'placeholder' => I18N_USERNAME,
         ]);
         echo $this->Form->control('password', [
-            'append-text' => $this->Html->button('', '#', [
+            'append-text' => $this->Html->link('', '#', [
                 'class' => 'display-password',
                 'icon' => 'eye',
                 'title' => I18N_SHOW_HIDE_PASSWORD,

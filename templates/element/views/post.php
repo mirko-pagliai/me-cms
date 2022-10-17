@@ -17,18 +17,18 @@ $category = $post->get('category');
 $user = $post->get('user');
 ?>
 
-<article class="clearfix mb-4">
-    <header class="mb-3 media">
+<article class="clearfix mb-5">
+    <header class="mb-3 d-flex align-items-center">
         <?php
         if (getConfig('post.author_picture')) {
             echo $this->Thumb->fit($user->get('picture'), ['width' => 100], [
-                'class' => 'd-none d-sm-block mr-3 rounded-circle user-picture',
+                'class' => 'flex-shrink-0 mr-3 rounded-circle user-picture',
                 'title' => __d('me_cms', 'Posted by {0}', $user->get('full_name')),
             ]);
         }
         ?>
 
-        <div class="media-body">
+        <div class="flex-grow-1 ms-3">
             <?php if (getConfig('post.category') && $category) : ?>
                 <h5 class="category mb-2">
                     <?= $this->Html->link($category->get('title'), $category->get('url')) ?>

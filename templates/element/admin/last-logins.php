@@ -11,6 +11,9 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AdminView $this
+ * @var array{platform: string, browser: string, version: string, agent: string, ip: string, time: \Cake\I18n\FrozenTime}[] $loginLog
  */
 ?>
 
@@ -29,27 +32,27 @@ declare(strict_types=1);
                 <tr>
                     <td class="text-center text-nowrap">
                         <div class="d-none d-lg-block">
-                            <?= $log->get('time')->i18nFormat() ?>
+                            <?= $log['time']->i18nFormat() ?>
                         </div>
                         <div class="d-lg-none">
-                            <div><?= $log->get('time')->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
-                            <div><?= $log->get('time')->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
+                            <div><?= $log['time']->i18nFormat(getConfigOrFail('main.date.short')) ?></div>
+                            <div><?= $log['time']->i18nFormat(getConfigOrFail('main.time.short')) ?></div>
                         </div>
                     </td>
                     <td class="text-center text-nowrap">
-                        <?= $log->get('ip') ?>
+                        <?= $log['ip'] ?>
                         <small>(<?= $this->Html->link(
                             __d('me_cms', 'Who is'),
-                            str_replace('{IP}', $log->get('ip'), getConfigOrFail('security.ip_whois')),
+                            str_replace('{IP}', $log['ip'], getConfigOrFail('security.ip_whois')),
                             ['target' => '_blank']) ?>)</small>
                     </td>
                     <td class="text-center">
                         <samp>
-                            <?= __d('me_cms', '{0} {1} on {2}', $log->get('browser'), $log->get('version'), $log->get('platform')) ?>
+                            <?= __d('me_cms', '{0} {1} on {2}', $log['browser'], $log['version'], $log['platform']) ?>
                         </samp>
                     </td>
                     <td class="small">
-                        <samp><?= $log->get('agent') ?></samp>
+                        <samp><?= $log['agent'] ?></samp>
                     </td>
                 </tr>
             <?php endforeach; ?>

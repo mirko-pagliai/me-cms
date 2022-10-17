@@ -5,6 +5,12 @@
       <code>\Cake\Datasource\RepositoryInterface|\Cake\ORM\Association|null</code>
     </ImplementedReturnTypeMismatch>
   </file>
+  <file src="src/Controller/Component/LoginRecorderComponent.php">
+    <TypeDoesNotContainType occurrences="2">
+      <code>empty($this-&gt;User)</code>
+      <code>empty($this-&gt;UsersTable)</code>
+    </TypeDoesNotContainType>
+  </file>
   <file src="src/Controller/PostsCategoriesController.php">
     <InvalidArgument occurrences="1"/>
   </file>

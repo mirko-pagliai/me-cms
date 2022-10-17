@@ -21,8 +21,15 @@ use App\View\AppView;
  * Base view class.
  * This class contains common methods, so you should not use it directly.
  * Instead, use `AppView` or `AdminView`.
+ * @property \Assets\View\Helper\AssetHelper $Asset
+ * @property \MeCms\View\Helper\AuthHelper $Auth
+ * @property \MeTools\View\Helper\BootstrapDropdownHelper $Dropdown
+ * @property \MeTools\View\Helper\BootstrapFormHelper $Form
  * @property \MeTools\View\Helper\BootstrapHtmlHelper $Html
+ * @property \MeTools\View\Helper\IconHelper $Icon
  * @property \MeTools\View\Helper\LibraryHelper $Library
+ * @property \MeTools\View\Helper\PaginatorHelper $Paginator
+ * @property \Thumber\Cake\View\Helper\ThumbHelper $Thumb
  */
 class View extends AppView
 {
