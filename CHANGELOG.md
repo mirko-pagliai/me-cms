@@ -3,7 +3,6 @@
 ### 2.30.9-RC6
 * the `LoginComponent` has been totally revised and its bugs have been fixed. The 
   `User::_getLastLogins()` method has been fixed;
-* improved and simplified plugin loading;
 * improved `\MeCms\Controller\SystemsController` and `\MeCms\Form\ContactUsForm` classes;
 * updated for me-tools 2.21.5;
 * updated some template files;

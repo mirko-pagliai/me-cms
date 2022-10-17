@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace MeCms;
 
+use Assets\Plugin as Assets;
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
@@ -25,7 +26,12 @@ use MeCms\Command\Install\RunAllCommand;
 use MeTools\Command\Install\CreateDirectoriesCommand;
 use MeTools\Command\Install\CreateVendorsLinksCommand;
 use MeTools\Command\Install\SetPermissionsCommand;
+use MeTools\Plugin as MeTools;
+use RecaptchaMailhide\Plugin as RecaptchaMailhide;
+use StopSpam\Plugin as StopSpam;
 use Symfony\Component\Finder\Finder;
+use Thumber\Cake\Plugin as Thumber;
+use Tokens\Plugin as Tokens;
 
 /**
  * Plugin class
@@ -49,11 +55,12 @@ class Plugin extends BasePlugin
     public function bootstrap(PluginApplicationInterface $app): void
     {
         $pluginsToLoad = [
-            'MeTools',
-            'RecaptchaMailhide',
-            'StopSpam',
-            'Thumber/Cake',
-            'Tokens',
+            Assets::class,
+            MeTools::class,
+            RecaptchaMailhide::class,
+            StopSpam::class,
+            Thumber::class,
+            Tokens::class,
         ];
         if (getConfig('default.theme')) {
             $pluginsToLoad[] = getConfig('default.theme');
