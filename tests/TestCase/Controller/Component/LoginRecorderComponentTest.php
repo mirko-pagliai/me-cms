@@ -92,9 +92,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $this->assertEmpty($this->Component->getClientIp());
 
         //On localhost
-        $request = $this->getMockBuilder(ServerRequest::class)
-            ->onlyMethods(['clientIp'])
-            ->getMock();
+        $request = $this->getMockBuilder(ServerRequest::class)->onlyMethods(['clientIp'])->getMock();
         $request->method('clientIp')->willReturn('::1');
         $this->Component->getController()->setRequest($request);
         $this->assertEquals('127.0.0.1', $this->Component->getClientIp());
@@ -145,15 +143,13 @@ class LoginRecorderComponentTest extends ComponentTestCase
          * First write.
          * Only one result is expected.
          */
-        $timeFirstWrite = time();
-        $expected = self::DEFAULT_USER_AGENT + ['agent' => null, 'ip' => '', 'time' => $timeFirstWrite];
+        $expected = self::DEFAULT_USER_AGENT + ['agent' => null, 'ip' => '', 'time' => ''];
         $this->assertTrue($this->Component->write());
 
         $this->assertCount(1, $this->Component->read());
         $firstResultRow = $this->Component->read()->first();
         $this->assertInstanceOf(FrozenTime::class, $firstResultRow['time']);
-        $firstResultRow['time'] = (int)$firstResultRow['time']->toUnixString();
-        $this->assertSame($expected, $firstResultRow);
+        $this->assertEquals($expected, ['time' => ''] + $firstResultRow);
 
         /**
          * Second write.
@@ -161,18 +157,15 @@ class LoginRecorderComponentTest extends ComponentTestCase
          * Consequently, only one result is expected.
          */
         sleep(1);
-        $timeSecondWrite = time();
-        $expected['time'] = $timeSecondWrite;
         $this->assertTrue($this->Component->write());
 
         $this->assertCount(1, $this->Component->read());
         $secondResultRow = $this->Component->read()->first();
         $this->assertInstanceOf(FrozenTime::class, $secondResultRow['time']);
-        $secondResultRow['time'] = (int)$secondResultRow['time']->toUnixString();
-        $this->assertSame($expected, $secondResultRow);
+        $this->assertEquals($expected, ['time' => ''] + $secondResultRow);
 
         //`time` values are different
-        $this->assertNotEquals($firstResultRow['time'], $secondResultRow['time']);
+        $this->assertNotEquals($firstResultRow['time']->toUnixString(), $secondResultRow['time']->toUnixString());
 
         /**
          * Third write.
@@ -182,23 +175,21 @@ class LoginRecorderComponentTest extends ComponentTestCase
         sleep(1);
         $userAgent = ['platform' => 'Windows', 'browser' => 'Firefox', 'version' => '1.2.3'];
         $Component = $this->getMockForLoginRecorder(['getUserAgent'], $userAgent)->setConfig('user', 1);
-        $timeThirdWrite = time();
-        $expected = $userAgent + ['agent' => null, 'ip' => '', 'time' => $timeThirdWrite];
+        $expected = $userAgent + ['agent' => null, 'ip' => '', 'time' => ''];
         $this->assertTrue($Component->write());
 
         $this->assertCount(2, $Component->read());
         $thirdResultFirstRow = $Component->read()->first();
         $this->assertInstanceOf(FrozenTime::class, $thirdResultFirstRow['time']);
-        $thirdResultFirstRow['time'] = (int)$thirdResultFirstRow['time']->toUnixString();
-        $this->assertSame($expected, $thirdResultFirstRow);
+        $this->assertEquals($expected, ['time' => ''] + $thirdResultFirstRow);
 
         $thirdResultLastRow = $Component->read()->last();
         $this->assertInstanceOf(FrozenTime::class, $thirdResultLastRow['time']);
-        $thirdResultLastRow['time'] = (int)$thirdResultLastRow['time']->toUnixString();
-
-        $this->assertGreaterThan($thirdResultLastRow['time'], $thirdResultFirstRow['time']);
+        $thirdResultLastRow['time'] = $thirdResultLastRow['time']->toUnixString();
+        $this->assertGreaterThan($thirdResultLastRow['time'], $thirdResultFirstRow['time']->toUnixString());
 
         //The last row the of third result is the second result row
+        $secondResultRow['time'] = $secondResultRow['time']->toUnixString();
         $this->assertSame($thirdResultLastRow, $secondResultRow);
     }
 
