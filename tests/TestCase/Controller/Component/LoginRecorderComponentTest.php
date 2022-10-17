@@ -92,9 +92,7 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $this->assertEmpty($this->Component->getClientIp());
 
         //On localhost
-        $request = $this->getMockBuilder(ServerRequest::class)
-            ->onlyMethods(['clientIp'])
-            ->getMock();
+        $request = $this->getMockBuilder(ServerRequest::class)->onlyMethods(['clientIp'])->getMock();
         $request->method('clientIp')->willReturn('::1');
         $this->Component->getController()->setRequest($request);
         $this->assertEquals('127.0.0.1', $this->Component->getClientIp());
