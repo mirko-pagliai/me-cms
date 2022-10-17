@@ -72,6 +72,17 @@ class LoginRecorderComponentTest extends ComponentTestCase
     }
 
     /**
+     * Test for `getUserAgent()` method
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::getUserAgent()
+     * @test
+     */
+    public function testGetUserAgent(): void
+    {
+        $result = $this->getMockForLoginRecorder([])->getUserAgent('Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0');
+        $this->assertSame(['platform' => 'Windows', 'browser' => 'Firefox', 'version' => '16.0'], $result);
+    }
+
+    /**
      * Test for `getClientIp()` method
      * @uses \MeCms\Controller\Component\LoginRecorderComponent::getClientIp()
      * @test

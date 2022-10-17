@@ -82,7 +82,7 @@ class LoginRecorderComponent extends Component
      * @return array{platform: string, browser: string, version: string}
      * @see https://github.com/donatj/PhpUserAgent
      */
-    protected function getUserAgent(?string $userAgent = null): array
+    public function getUserAgent(?string $userAgent = null): array
     {
         $parser = (new UserAgentParser())->parse($userAgent);
 
