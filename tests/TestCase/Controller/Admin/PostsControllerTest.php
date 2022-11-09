@@ -162,7 +162,6 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertTemplate('Admin' . DS . 'Posts' . DS . 'form.php');
         $this->assertInstanceOf(Post::class, $this->viewVariable('post'));
         $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('post')->get('tags'));
-        $this->assertMatchesRegularExpression('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('post')->get('created'));
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);
