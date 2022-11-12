@@ -153,7 +153,7 @@ $scheme = ConnectionManager::getConfigOrFail('test')['scheme'];
 $migrator = new Migrator();
 $migrator->run(['plugin' => 'MeCms']);
 $loader = new SchemaLoader();
-$loader->loadSqlFiles(TESTS . $scheme == 'postgres' ? 'schema_postgres.sql' : 'schema.sql', 'test', false);
+$loader->loadSqlFiles(TESTS . ($scheme == 'postgres' ? 'schema_postgres' : 'schema') . '.sql', 'test', false);
 
 $_SERVER['PHP_SELF'] = '/';
 
