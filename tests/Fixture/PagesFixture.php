@@ -23,27 +23,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 class PagesFixture extends TestFixture
 {
     /**
-     * @var array<string, mixed>
-     */
-    public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => null, 'autoIncrement' => true],
-        'category_id' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => null, 'autoIncrement' => null],
-        'title' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null],
-        'subtitle' => ['type' => 'string', 'length' => 150, 'null' => true, 'default' => null],
-        'slug' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null],
-        'text' => ['type' => 'text', 'length' => null, 'null' => false, 'default' => null],
-        'preview' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null],
-        'enable_comments' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1'],
-        'priority' => ['type' => 'integer', 'length' => 1, 'null' => false, 'default' => '3', 'autoIncrement' => null],
-        'active' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1'],
-        'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null],
-        'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null],
-        '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-        ],
-    ];
-
-    /**
      * @var array
      */
     public $records = [

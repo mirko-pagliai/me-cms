@@ -18,8 +18,10 @@ use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
 use Cake\Mailer\TransportFactory;
+use Cake\TestSuite\Fixture\SchemaLoader;
 use Cake\Utility\Security;
 use MeCms\Mailer\Mailer;
+use Migrations\TestSuite\Migrator;
 
 ini_set('intl.default_locale', 'en_US');
 date_default_timezone_set('UTC');
@@ -146,6 +148,11 @@ Mailer::setConfig('default', ['transport' => 'debug', 'log' => true]);
 if (!class_exists('Cake\Console\TestSuite\StubConsoleOutput')) {
     class_alias('Cake\TestSuite\Stub\ConsoleOutput', 'Cake\Console\TestSuite\StubConsoleOutput');
 }
+
+$migrator = new Migrator();
+$migrator->run(['plugin' => 'MeCms']);
+$loader = new SchemaLoader();
+$loader->loadSqlFiles(TESTS . 'schema.sql', 'test', false);
 
 $_SERVER['PHP_SELF'] = '/';
 

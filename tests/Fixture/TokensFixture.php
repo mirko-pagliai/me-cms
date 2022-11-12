@@ -22,22 +22,4 @@ use Cake\TestSuite\Fixture\TestFixture;
  */
 class TokensFixture extends TestFixture
 {
-    /**
-     * @var array<string, mixed>
-     */
-    public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => null, 'autoIncrement' => true],
-        'user_id' => ['type' => 'integer', 'length' => 11, 'null' => true, 'default' => null, 'autoIncrement' => null],
-        'token' => ['type' => 'string', 'length' => 25, 'null' => false, 'default' => null],
-        'type' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null],
-        'extra' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null],
-        'expiry' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null],
-        '_indexes' => [
-            'user_id' => ['type' => 'index', 'columns' => ['user_id'], 'length' => []],
-            'type' => ['type' => 'index', 'columns' => ['type'], 'length' => []],
-        ],
-        '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-        ],
-    ];
 }
