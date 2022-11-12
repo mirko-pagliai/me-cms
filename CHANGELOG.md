@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.30 branch
+### 2.30.10
+* uses the new fixture system.
+
 ### 2.30.9-RC6
 * the `LoginComponent` has been totally revised and its bugs have been fixed. The 
   `User::_getLastLogins()` method has been fixed;

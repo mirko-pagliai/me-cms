@@ -23,25 +23,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 class PostsCategoriesFixture extends TestFixture
 {
     /**
-     * @var array<string, mixed>
-     */
-    public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => null, 'autoIncrement' => true],
-        'parent_id' => ['type' => 'integer', 'length' => 11, 'null' => true, 'default' => null, 'autoIncrement' => null],
-        'lft' => ['type' => 'integer', 'length' => 11, 'null' => true, 'default' => null, 'autoIncrement' => null],
-        'rght' => ['type' => 'integer', 'length' => 11, 'null' => true, 'default' => null, 'autoIncrement' => null],
-        'title' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null],
-        'slug' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null],
-        'description' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null],
-        'post_count' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => '0', 'autoIncrement' => null],
-        'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null],
-        'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null],
-        '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-        ],
-    ];
-
-    /**
      * @var array
      */
     public $records = [

@@ -56,11 +56,6 @@ parameters:
 			path: src/Model/Table/AppTable.php
 
 		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: src/Model/Table/PostsTable.php
-
-		-
 			message: "#^Parameter \\#3 \\$config of static method Cake\\\\Cache\\\\Cache\\:\\:remember\\(\\) expects string, array\\|string\\|null given\\.$#"
 			count: 1
 			path: src/Model/Table/PostsTable.php
