@@ -157,4 +157,4 @@ $loader->loadSqlFiles(TESTS . ($scheme == 'postgres' ? 'schema_postgres' : 'sche
 
 $_SERVER['PHP_SELF'] = '/';
 
-echo 'Running tests for "' .$scheme . '" driver ' . PHP_EOL;
+echo 'Running tests for "' . $scheme . '" driver ' . PHP_EOL;
