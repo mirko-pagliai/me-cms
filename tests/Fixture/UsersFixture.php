@@ -24,32 +24,6 @@ use MeCms\Model\Entity\User;
 class UsersFixture extends TestFixture
 {
     /**
-     * @var array<string, mixed>
-     */
-    public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => null, 'autoIncrement' => true],
-        'group_id' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => null, 'autoIncrement' => null],
-        'username' => ['type' => 'string', 'length' => 40, 'null' => false, 'default' => null],
-        'email' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null],
-        'password' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null],
-        'first_name' => ['type' => 'string', 'length' => 40, 'null' => false, 'default' => null],
-        'last_name' => ['type' => 'string', 'length' => 40, 'null' => false, 'default' => null],
-        'last_logins' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null],
-        'active' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1'],
-        'banned' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '0'],
-        'post_count' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => '0', 'autoIncrement' => null],
-        'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null],
-        'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null],
-        '_indexes' => [
-            'group_id' => ['type' => 'index', 'columns' => ['group_id'], 'length' => []],
-        ],
-        '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-            'username' => ['type' => 'unique', 'columns' => ['username', 'email'], 'length' => []],
-        ],
-    ];
-
-    /**
      * @var array
      */
     public $records = [
