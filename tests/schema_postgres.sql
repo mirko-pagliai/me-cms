@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS articles (
-    id INTEGER PRIMARY KEY DEFAULT nextval('serial'),
+    id serial PRIMARY KEY,
     author_id INTEGER,
     title VARCHAR(255),
     body TEXT,
