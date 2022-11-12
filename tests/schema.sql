@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS articles (
-    id INTEGER AUTO_INCREMENT,
+    id INTEGER,
     author_id INTEGER,
     title VARCHAR(255),
     body TEXT,
