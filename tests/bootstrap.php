@@ -148,11 +148,13 @@ if (!class_exists('Cake\Console\TestSuite\StubConsoleOutput')) {
     class_alias('Cake\TestSuite\Stub\ConsoleOutput', 'Cake\Console\TestSuite\StubConsoleOutput');
 }
 
+$scheme = ConnectionManager::getConfigOrFail('test')['scheme'];
+
 $migrator = new Migrator();
 $migrator->run(['plugin' => 'MeCms']);
 $loader = new SchemaLoader();
-$loader->loadSqlFiles(TESTS . 'schema.sql', 'test', false);
+$loader->loadSqlFiles(TESTS . $scheme == 'postgres' ? 'schema_postgres.sql' : 'schema.sql', 'test', false);
 
 $_SERVER['PHP_SELF'] = '/';
 
-echo 'Running tests for "' . ConnectionManager::getConfig('test')['scheme'] . '" driver ' . PHP_EOL;
+echo 'Running tests for "' .$scheme . '" driver ' . PHP_EOL;
