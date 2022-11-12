@@ -87,7 +87,6 @@ Configure::write('App', [
  * @todo these are to be removed as soon as possible
  */
 Configure::write('Error.ignoredDeprecationPaths', [
-    '*/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php',
     '*/cakephp/cakephp/src/I18n/Time.php',
     '*/crabstudio/recaptcha/src/Controller/Component/RecaptchaComponent.php',
 ]);
