@@ -1,4 +1,4 @@
-CREATE TABLE `articles` (
+CREATE TABLE IF NOT EXISTS `articles` (
     `id` INTEGER AUTO_INCREMENT,
     `author_id` INTEGER,
     `title` VARCHAR(255),
