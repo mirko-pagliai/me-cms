@@ -12,28 +12,17 @@
 /* -------------------------------- */
 /*              HTML                */
 /* -------------------------------- */
-/* Links */
-a {
-    text-decoration: none;
-}
-
 /* Blockquote */
 blockquote {
     background: #f2f2f2;
     border-left: .4rem solid #ddd;
     color: #333;
-    font-size: .95rem;
     padding: .6rem .9rem;
 }
 
 /* Body */
 body {
     font-family: Roboto, sans-serif;
-}
-
-/* Words with highlight */
-.highlight {
-    background: yellow;
 }
 
 /* -------------------------------- */
