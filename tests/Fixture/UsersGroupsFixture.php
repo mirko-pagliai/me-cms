@@ -23,23 +23,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 class UsersGroupsFixture extends TestFixture
 {
     /**
-     * @var array<string, mixed>
-     */
-    public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => null, 'autoIncrement' => true],
-        'name' => ['type' => 'string', 'length' => 20, 'null' => false, 'default' => null],
-        'label' => ['type' => 'string', 'length' => 20, 'null' => false, 'default' => null],
-        'description' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null],
-        'user_count' => ['type' => 'integer', 'length' => 11, 'null' => false, 'default' => '0', 'autoIncrement' => null],
-        'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null],
-        'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null],
-        '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-            'name' => ['type' => 'unique', 'columns' => ['name', 'label'], 'length' => []],
-        ],
-    ];
-
-    /**
      * @var array
      */
     public $records = [

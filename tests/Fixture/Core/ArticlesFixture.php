@@ -15,31 +15,11 @@ declare(strict_types=1);
 
 namespace MeCms\Test\Fixture\Core;
 
-use Cake\TestSuite\Fixture\TestFixture;
+use Cake\Test\Fixture\ArticlesFixture as BaseArticlesFixture;
 
 /**
  * Articles fixture
  */
-class ArticlesFixture extends TestFixture
+class ArticlesFixture extends BaseArticlesFixture
 {
-    /**
-     * @var array<string, mixed>
-     */
-    public $fields = [
-        'id' => ['type' => 'integer'],
-        'author_id' => ['type' => 'integer', 'null' => true],
-        'title' => ['type' => 'string', 'null' => true],
-        'body' => 'text',
-        'published' => ['type' => 'string', 'length' => 1, 'default' => 'N'],
-        '_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]],
-    ];
-
-    /**
-     * @var array
-     */
-    public $records = [
-        ['author_id' => 1, 'title' => 'First Article', 'body' => 'First Article Body', 'published' => 'Y'],
-        ['author_id' => 3, 'title' => 'Second Article', 'body' => 'Second Article Body', 'published' => 'Y'],
-        ['author_id' => 1, 'title' => 'Third Article', 'body' => 'Third Article Body', 'published' => 'Y'],
-    ];
 }
