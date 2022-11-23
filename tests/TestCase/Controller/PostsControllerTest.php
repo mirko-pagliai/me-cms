@@ -166,7 +166,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
+        $this->assertResponseContains('<mark>' . $pattern . '</mark>');
         $this->assertEquals($this->viewVariable('pattern'), $pattern);
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
         $this->assertStringContainsString($pattern, $this->viewVariable('posts')->first()->text);
@@ -182,7 +182,7 @@ class PostsControllerTest extends ControllerTestCase
         //GET request again. Now the data is in cache
         $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('<span class="highlight">' . $pattern . '</span>');
+        $this->assertResponseContains('<mark>' . $pattern . '</mark>');
         $this->assertNotEmpty($this->_controller->getPaging()['Posts']);
 
         $this->get($url + ['?' => ['p' => 'a']]);
