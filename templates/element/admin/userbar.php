@@ -15,10 +15,6 @@ declare(strict_types=1);
 
 use MeCms\Core\Plugin;
 
-/**
- * @property \MeTools\View\Helper\BootstrapDropdownHelper $Dropdown
- */
-
 $this->extend('MeCms.common/userbar');
 ?>
 

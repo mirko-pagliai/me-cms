@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.10
+* updated for me-tools 2.22.0;
 * uses the new fixture system.
 
 ### 2.30.9-RC6

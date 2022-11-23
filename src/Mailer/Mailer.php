@@ -31,7 +31,7 @@ abstract class Mailer extends CakeMailer
     {
         parent::__construct($config);
 
-        $this->viewBuilder()->setHelpers(['Html' => ['className' => 'MeTools.BootstrapHtml']], false);
+        $this->viewBuilder()->setHelpers(['Html' => ['className' => 'MeTools.Html']], false);
         $this->setFrom(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
             ->setSender(getConfigOrFail('email.webmaster'), getConfigOrFail('main.title'))
             ->setEmailFormat('html');

@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use MeTools\TestSuite\HelperTestCase;
-use MeTools\View\Helper\BootstrapHtmlHelper as HtmlHelper;
+use MeTools\View\Helper\HtmlHelper;
 
 /**
  * Abstract class for test `MenuHelper` classes

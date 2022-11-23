@@ -23,9 +23,9 @@ use App\View\AppView;
  * Instead, use `AppView` or `AdminView`.
  * @property \Assets\View\Helper\AssetHelper $Asset
  * @property \MeCms\View\Helper\AuthHelper $Auth
- * @property \MeTools\View\Helper\BootstrapDropdownHelper $Dropdown
- * @property \MeTools\View\Helper\BootstrapFormHelper $Form
- * @property \MeTools\View\Helper\BootstrapHtmlHelper $Html
+ * @property \MeTools\View\Helper\DropdownHelper $Dropdown
+ * @property \MeTools\View\Helper\FormHelper $Form
+ * @property \MeTools\View\Helper\HtmlHelper $Html
  * @property \MeTools\View\Helper\IconHelper $Icon
  * @property \MeTools\View\Helper\LibraryHelper $Library
  * @property \MeTools\View\Helper\PaginatorHelper $Paginator
@@ -84,15 +84,15 @@ class View extends AppView
             $this->setTheme(getConfig('default.theme'));
         }
 
-        $this->loadHelper('Html', ['className' => 'MeTools.BootstrapHtml']);
-        $this->loadHelper('Form', ['className' => 'MeTools.BootstrapForm']);
-        $this->loadHelper('Dropdown', ['className' => 'MeTools.BootstrapDropdown']);
+        $this->loadHelper('Assets.Asset');
+        $this->loadHelper('MeCms.Auth');
+        $this->loadHelper('MeTools.Dropdown');
+        $this->loadHelper('MeTools.Form');
+        $this->loadHelper('MeTools.Html');
         $this->loadHelper('MeTools.Icon');
         $this->loadHelper('MeTools.Library');
-        $this->loadHelper('Paginator', ['className' => 'MeTools.Paginator']);
-        $this->loadHelper('Assets.Asset');
+        $this->loadHelper('MeTools.Paginator');
         $this->loadHelper('Thumber/Cake.Thumb');
-        $this->loadHelper('MeCms.Auth');
         $this->loadHelper('WyriHaximus/MinifyHtml.MinifyHtml');
     }
 
