@@ -91,7 +91,7 @@ body {
 /*              Footer              */
 /* -------------------------------- */
 /* Footer */
-#footer {
+footer {
     background: #f2f2f2;
     color: #888;
     font-size: 80%;
@@ -100,47 +100,32 @@ body {
     text-align: center;
 }
 
-/* Footer, with `fixed` class. This class is added via javascript if there is a
-    difference between the height of the window and that of the body of the
-    document */
-#footer.fixed {
-    bottom: 0;
-    position: fixed;
-    width: 100%;
-    z-index: 1030;
-}
-
 /* Footer, links */
-#footer a {
+footer a {
     border-bottom: 1px dashed;
     color: #666;
     text-decoration: none;
 }
 
-/* Footer, links on hover */
-#footer a:hover {
-    text-decoration: none;
-}
-
 /* Footer, paragraphs */
-#footer p {
+footer p {
     margin: 0;
 }
 
 /* Footer, lists */
-#footer ul {
+footer ul {
     padding: 0;
 }
 
 /* Footer, lists, list elements */
-#footer ul li {
+footer ul li {
     border-right: 1px solid #aaa;
     display: inline-block;
     padding: 0 .75rem;
 }
 
 /* Footer, lists, last list elements */
-#footer ul li:last-child {
+footer ul li:last-child {
     border-right: 0;
 }
 

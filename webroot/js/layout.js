@@ -17,18 +17,16 @@
  */
 function setFooterClass()
 {
-    var footer = $("#footer");
-
-    if (!footer.length) {
+    if (!$("footer").length) {
         return;
     }
 
     //If there's a difference between the windows height and the body height,
     //  applies the `fixed` class
     if ($(window).height() - $("body").height() > 0) {
-        footer.addClass("fixed");
+        $("footer").addClass("fixed-bottom");
     } else {
-        footer.removeClass("fixed");
+        $("footer").removeClass("fixed-bottom");
     }
 }
 
