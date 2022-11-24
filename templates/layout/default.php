@@ -65,7 +65,7 @@ declare(strict_types=1);
                 echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);
                 ?>
             </div>
-            <?= $this->element('MeCms.topbar', [], ['cache' => getConfig('debug') ? null : ['key' => 'topbar']]) ?>
+            <?= $this->element('MeCms.topbar', [], getConfig('debug') ? [] : ['cache' => ['key' => 'topbar']]) ?>
         </header>
         <div class="container mb-4">
             <div class="row">
@@ -88,7 +88,7 @@ declare(strict_types=1);
             </div>
         </div>
         <?php
-        echo $this->element('MeCms.footer', [], ['cache' => getConfig('debug') ? null : ['key' => 'footer']]);
+        echo $this->element('MeCms.footer', [], getConfig('debug') ? [] : ['cache' => ['key' => 'footer']]);
         echo $this->fetch('css_bottom');
         echo $this->fetch('script_bottom');
         ?>

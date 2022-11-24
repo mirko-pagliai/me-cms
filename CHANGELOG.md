@@ -3,6 +3,7 @@
 ### 2.30.10
 * updated for me-tools 2.22.0;
 * uses the new fixture system;
+* fixed a small bug, some elements are now no longer cached if debug is active;
 * `MeCms\View\View` is now abstract.
 
 ### 2.30.9-RC6
