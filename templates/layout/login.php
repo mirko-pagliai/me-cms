@@ -11,6 +11,8 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AppView $this
  */
 ?>
 <!DOCTYPE html>
@@ -42,21 +44,20 @@ declare(strict_types=1);
         ?>
     </head>
     <body>
-        <div id="content" class="container">
+        <main class="container col-sm-7 col-md-6 col-lg-5 col-xl-4 my-sm-5 p-4 rounded-sm-4">
             <?php
-            $logo = $this->Html->h1(getConfigOrFail('main.title'), ['id' => 'logo']);
-
-            //Check if the logo image exists
+            $logoOptions = ['id' => 'logo', 'class' => 'mt-2 mb-4 text-center text-truncate'];
+            $logo = $this->Html->h1(getConfigOrFail('main.title'), $logoOptions);
             if (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {
-                $logo = $this->Html->img(getConfig('default.logo'), ['id' => 'logo']);
+                $logo = $this->Html->img(getConfig('default.logo'), $logoOptions);
             }
-
             echo $logo;
+
             echo $this->Flash->render();
             echo $this->Flash->render('auth');
             echo $this->fetch('content');
             ?>
-        </div>
+        </main>
         <?= $this->fetch('css_bottom') ?>
         <?= $this->fetch('script_bottom') ?>
     </body>

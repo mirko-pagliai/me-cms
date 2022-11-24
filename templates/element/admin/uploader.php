@@ -11,7 +11,10 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AdminView $this
  */
+
 $this->Asset->css('MeCms.admin/uploader', ['block' => 'css_bottom']);
 $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
 ?>

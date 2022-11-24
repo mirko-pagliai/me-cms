@@ -15,57 +15,35 @@
 /* -------------------------------- */
 /* Body */
 body {
-    background: #e2e2e2;
     font-family: Roboto, sans-serif;
-    padding: 60px 0 40px;
 }
 
-/* Extra small devices */
-@media (max-width: 767px) {
+/* Small devices and higher */
+@media (min-width: 576px) {
     /* Body */
     body {
-        background: #fff;
-        padding: 0;
+        background: #e2e2e2;
     }
 }
 
 /* -------------------------------- */
-/*              Content             */
+/*              Main                */
 /* -------------------------------- */
-/* Content */
-#content {
+/* Main */
+main {
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 3px 6px -6px #000;
-    margin: 20px auto;
-    padding: 20px;
-    width: 450px;
 }
 
-/* Extra small devices */
-@media (max-width: 767px) {
-    /* Content */
-    #content {
-        border-radius: 0;
-        box-shadow: none;
-        margin: 0 auto;
-        width: auto;
+/* Small devices and higher */
+@media (min-width: 576px) {
+    /* Main */
+    main {
+        box-shadow: 0 3px 6px -6px #000;
     }
 }
 
-/* Content, logo */
-#content > #logo {
-    margin: 10px auto 20px;
-    max-width: 100%;
-    text-align: center;
-    /* No wrap, text truncated with ellipses */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-/* Content, actions */
-#content > div > .actions {
+/* Main, actions */
+main > div > .actions {
     font-size: 90%;
     list-style: none;
     padding-left: 10px;
@@ -75,14 +53,14 @@ body {
 /*              Alerts              */
 /* -------------------------------- */
 /* Alert */
-#content .alert {
+main .alert {
     border: 0;
     border-radius: 0;
     font-size: 90%;
 }
 
 /* Alert, close button */
-#content .alert button.close {
+main .alert button.close {
     display: none;
 }
 

@@ -52,7 +52,7 @@ declare(strict_types=1);
     <body>
         <?= $this->element('MeCms.userbar') ?>
         <?= $this->element('MeCms.cookies_policy') ?>
-        <header id="header">
+        <header>
             <div class="container">
                 <?php
                 $logo = $this->Html->h1(getConfigOrFail('main.title'));
@@ -69,7 +69,7 @@ declare(strict_types=1);
         </header>
         <div class="container mb-4">
             <div class="row">
-                <main id="content" class="col-lg-9">
+                <main class="col-lg-9">
                     <?php
                     echo $this->Flash->render();
 

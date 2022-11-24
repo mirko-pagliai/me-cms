@@ -11,15 +11,16 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AppView $this
  */
 
 use Cake\Core\App;
 use MeCms\Core\Plugin;
 
 /**
- * The topbar element will use the `TopbarHelper` from APP to build links, if
- *  that helper exists. Otherwise it will use the helper provided by MeCms, with
- *  the helper of any other plugin.
+ * The topbar element will use the `TopbarHelper` from APP to build links, if that helper exists. Otherwise, it will use
+ *  the helper provided by MeCms, with the helper of any other plugin.
  */
 ?>
 

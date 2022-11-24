@@ -11,6 +11,8 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AppView $this
  */
 //Returns for logged user
 if ($this->Auth->isLogged()) {
@@ -27,16 +29,8 @@ if (!getConfig('default.cookies_policy') || !empty($_COOKIE['cookies-policy'])) 
     <div class="container">
         <?php
         echo __d('me_cms', 'If you continue, you agree to the use of cookies, ok?');
-        echo $this->Html->button(
-            __d('me_cms', 'Ok'),
-            ['_name' => 'acceptCookies'],
-            ['class' => 'btn-sm btn-success', 'id' => 'cookies-policy-accept']
-        );
-        echo $this->Html->button(
-            __d('me_cms', 'Read more'),
-            ['_name' => 'page', 'cookies-policy'],
-            ['class' => 'btn-sm btn-primary']
-        );
+        echo $this->Html->button(__d('me_cms', 'Ok'), ['_name' => 'acceptCookies'], ['class' => 'btn-sm btn-success', 'id' => 'cookies-policy-accept']);
+        echo $this->Html->button(__d('me_cms', 'Read more'), ['_name' => 'page', 'cookies-policy'], ['class' => 'btn-sm btn-primary']);
         ?>
     </div>
 </div>
