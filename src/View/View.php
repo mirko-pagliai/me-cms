@@ -19,6 +19,7 @@ use App\View\AppView;
 
 /**
  * Base view class.
+ *
  * This class contains common methods, so you should not use it directly.
  * Instead, use `AppView` or `AdminView`.
  * @property \Assets\View\Helper\AssetHelper $Asset
@@ -31,7 +32,7 @@ use App\View\AppView;
  * @property \MeTools\View\Helper\PaginatorHelper $Paginator
  * @property \Thumber\Cake\View\Helper\ThumbHelper $Thumb
  */
-class View extends AppView
+abstract class View extends AppView
 {
     /**
      * Title for layout.
@@ -97,8 +98,9 @@ class View extends AppView
     }
 
     /**
-     * Renders a layout. Returns output from _render(). Returns false on
-     *  error. Several variables are created for use in layout
+     * Renders a layout. Returns output from _render().
+     *
+     * Several variables are created for use in layout.
      * @param string $content Content to render in a template, wrapped by the surrounding layout
      * @param string|null $layout Layout name
      * @return string Rendered output
