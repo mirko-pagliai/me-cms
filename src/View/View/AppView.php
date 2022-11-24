@@ -20,6 +20,9 @@ use MeCms\View\View;
 
 /**
  * Application view class for all views, except the admin views
+ * @property \MeTools\View\Helper\BreadcrumbsHelper $Breadcrumbs
+ * @property \RecaptchaMailhide\View\Helper\MailhideHelper $mailhide
+ * @property \MeCms\View\Helper\WidgetHelper $Widget
  */
 class AppView extends View
 {
@@ -61,10 +64,7 @@ class AppView extends View
 
         //Sets the app ID for Facebook
         if (getConfig('default.facebook_app_id')) {
-            $this->Html->meta([
-                'content' => getConfig('default.facebook_app_id'),
-                'property' => 'fb:app_id',
-            ]);
+            $this->Html->meta(['content' => getConfig('default.facebook_app_id'), 'property' => 'fb:app_id']);
         }
     }
 
@@ -82,8 +82,9 @@ class AppView extends View
     }
 
     /**
-     * Renders a layout. Returns output from _render(). Returns false on
-     *  error. Several variables are created for use in layout
+     * Renders a layout. Returns output from _render().
+     *
+     * Several variables are created for use in layout.
      * @param string $content Content to render in a template, wrapped by the surrounding layout
      * @param string|null $layout Layout name
      * @return string Rendered output
