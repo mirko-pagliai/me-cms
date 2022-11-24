@@ -103,12 +103,12 @@ class AppView extends View
 
     /**
      * Adds content to the userbar
-     * @param string|array $content Contents as string or an array of contents
+     * @param string ...$content Contents as string or an array of contents
      * @return void
      * @since 2.29.5
      */
-    public function addToUserbar($content): void
+    public function addToUserbar(string ...$content): void
     {
-        $this->userbar = [...$this->userbar, ...(array)$content];
+        $this->userbar = [...$this->userbar, $content];
     }
 }
