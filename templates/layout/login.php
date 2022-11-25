@@ -49,7 +49,7 @@ declare(strict_types=1);
             $logoOptions = ['id' => 'logo', 'class' => 'mt-2 mb-4 text-center text-truncate'];
             $logo = $this->Html->h1(getConfigOrFail('main.title'), $logoOptions);
             if (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {
-                $logo = $this->Html->img(getConfig('default.logo'), $logoOptions);
+                $logo = $this->Html->image(getConfig('default.logo'), $logoOptions);
             }
             echo $logo;
 

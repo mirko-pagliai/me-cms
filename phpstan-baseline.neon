@@ -171,11 +171,6 @@ parameters:
 			path: templates/Admin/PostsTags/index.php
 
 		-
-			message: "#^Variable \\$explorer might not be defined\\.$#"
-			count: 1
-			path: templates/Admin/Systems/browser.php
-
-		-
 			message: "#^Variable \\$assetsSize might not be defined\\.$#"
 			count: 2
 			path: templates/Admin/Systems/tmp_viewer.php
@@ -286,16 +281,6 @@ parameters:
 			path: templates/Posts/index_by_date.php
 
 		-
-			message: "#^Variable \\$pattern might not be defined\\.$#"
-			count: 2
-			path: templates/Posts/search.php
-
-		-
-			message: "#^Variable \\$posts might not be defined\\.$#"
-			count: 1
-			path: templates/Posts/search.php
-
-		-
 			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$post\\.$#"
 			count: 1
 			path: templates/Posts/view.php
@@ -376,11 +361,6 @@ parameters:
 			path: templates/element/admin/priority-badge.php
 
 		-
-			message: "#^Parameter \\#1 \\$callback of function call_user_func_array expects callable\\(\\)\\: mixed, array\\{mixed, 'link'\\} given\\.$#"
-			count: 1
-			path: templates/element/admin/userbar.php
-
-		-
 			message: "#^Variable \\$page might not be defined\\.$#"
 			count: 13
 			path: templates/element/views/page.php
@@ -439,6 +419,21 @@ parameters:
 			message: "#^Variable \\$url might not be defined\\.$#"
 			count: 1
 			path: templates/email/html/Users/password_forgot.php
+
+		-
+			message: "#^Call to an undefined method MeTools\\\\View\\\\Helper\\\\HtmlHelper\\:\\:title\\(\\)\\.$#"
+			count: 1
+			path: templates/layout/admin.php
+
+		-
+			message: "#^Call to an undefined method MeTools\\\\View\\\\Helper\\\\HtmlHelper\\:\\:title\\(\\)\\.$#"
+			count: 1
+			path: templates/layout/default.php
+
+		-
+			message: "#^Call to an undefined method MeTools\\\\View\\\\Helper\\\\HtmlHelper\\:\\:title\\(\\)\\.$#"
+			count: 1
+			path: templates/layout/login.php
 
 		-
 			message: "#^Access to an undefined property MeCms\\\\Controller\\\\PostsController\\:\\:\\$Foo\\.$#"

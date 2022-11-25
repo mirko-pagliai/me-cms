@@ -37,14 +37,18 @@ use MeCms\Core\Plugin;
     <div class="container collapse navbar-collapse" id="topbarNav">
         <?php
         $app = (bool)App::className('TopbarHelper', 'View/Helper');
-        $links = $this->loadHelper($app ? 'Topbar' : 'MeCms.Topbar')->build();
+        /** @var \MeCms\View\Helper\TopbarHelper $TopbarHelper */
+        $TopbarHelper = $this->loadHelper($app ? 'Topbar' : 'MeCms.Topbar');
+        $links = $TopbarHelper->build();
         $this->helpers()->unload('Topbar');
 
         if (!$app) {
             //Builds links with any other plugin helper
             foreach (Plugin::all(['core' => false, 'exclude' => ['MeCms']]) as $plugin) {
                 if (App::className($plugin . '.TopbarHelper', 'View/Helper')) {
-                    $links = [...$links, ...$this->loadHelper($plugin . '.Topbar')->build()];
+                    /** @var \MeCms\View\Helper\TopbarHelper $TopbarHelper */
+                    $TopbarHelper = $this->loadHelper($plugin . '.Topbar');
+                    $links = [...$links, ...$TopbarHelper->build()];
                     $this->helpers()->unload('Topbar');
                 }
             }

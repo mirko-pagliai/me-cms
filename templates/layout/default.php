@@ -59,7 +59,7 @@ declare(strict_types=1);
 
                 //Check if the logo image exists
                 if (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {
-                    $logo = $this->Html->img(getConfig('default.logo'));
+                    $logo = $this->Html->image(getConfig('default.logo'));
                 }
 
                 echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);
