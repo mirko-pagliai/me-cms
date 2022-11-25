@@ -44,7 +44,7 @@ declare(strict_types=1);
         ?>
     </head>
     <body>
-        <main class="container col-sm-7 col-md-6 col-lg-5 col-xl-4 my-sm-5 p-4 rounded-sm-4">
+        <main class="container col-sm-7 col-md-6 col-lg-5 col-xl-3 my-sm-5 p-4 rounded rounded-sm-4">
             <?php
             $logoOptions = ['id' => 'logo', 'class' => 'mt-2 mb-4 text-center text-truncate'];
             $logo = $this->Html->h1(getConfigOrFail('main.title'), $logoOptions);
