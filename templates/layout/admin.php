@@ -51,7 +51,7 @@ declare(strict_types=1);
         <?= $this->element('MeCms.admin/userbar') ?>
         <div class="container-fluid">
             <div class="row">
-                <nav id="sidebar" class="col d-none d-lg-block border-end py-4 p-3">
+                <nav id="sidebar" class="col d-none d-lg-block border-end min-vh-100 py-4 p-3">
                     <?= $this->element('MeCms.admin/sidebar', [], getConfig('debug') ? [] : ['cache' => [
                         'config' => 'admin',
                         'key' => sprintf('sidebar_user_%s', $this->Auth->user('id')),
