@@ -23,8 +23,8 @@ use Cake\View\Helper;
  * MenuBuilder Helper.
  *
  * An helper to generate the admin menus.
- * @property \MeTools\View\Helper\BootstrapDropdownHelper $Dropdown
- * @property \MeTools\View\Helper\BootstrapHtmlHelper $Html
+ * @property \MeTools\View\Helper\DropdownHelper $Dropdown
+ * @property \MeTools\View\Helper\HtmlHelper $Html
  */
 class MenuBuilderHelper extends Helper
 {
@@ -33,8 +33,8 @@ class MenuBuilderHelper extends Helper
      * @var array
      */
     public $helpers = [
-        'Dropdown' => ['className' => 'MeTools.BootstrapDropdown'],
-        'Html' => ['className' => 'MeTools.BootstrapHtml'],
+        'MeTools.Dropdown',
+        'MeTools.Html',
     ];
 
     /**

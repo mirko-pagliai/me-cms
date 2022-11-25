@@ -11,12 +11,15 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AdminView $this
  */
+
 $this->Asset->css('MeCms.admin/uploader', ['block' => 'css_bottom']);
 $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
 ?>
 
-<?= $this->Html->scriptStart(['block' => 'script_bottom']); ?>
+<?php $this->Html->scriptStart(['block' => 'script_bottom']); ?>
     Dropzone.autoDiscover = false;
     $(function() {
         $('.dropzone').dropzone({
@@ -44,7 +47,7 @@ $this->Asset->script('/vendor/dropzone/dropzone', ['block' => 'script_bottom']);
             '</div>',
         });
     });
-<?= $this->Html->scriptEnd(); ?>
+<?php $this->Html->scriptEnd(); ?>
 
 <?php
 echo $this->Form->create(null, [

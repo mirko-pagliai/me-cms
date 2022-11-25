@@ -11,6 +11,8 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AdminView $this
  */
 ?>
 <!DOCTYPE html>
@@ -49,18 +51,13 @@ declare(strict_types=1);
         <?= $this->element('MeCms.admin/userbar') ?>
         <div class="container-fluid">
             <div class="row">
-                <nav id="sidebar" class="col d-none d-lg-block border-end py-4 p-3">
-                    <?php
-                    //Sidebar is cached only if debugging is disabled
-                    $sidebarCache = getConfig('debug') ? null : [
+                <nav id="sidebar" class="col d-none d-lg-block border-end min-vh-100 py-4 p-3">
+                    <?= $this->element('MeCms.admin/sidebar', [], getConfig('debug') ? [] : ['cache' => [
                         'config' => 'admin',
                         'key' => sprintf('sidebar_user_%s', $this->Auth->user('id')),
-                    ];
-
-                    echo $this->element('MeCms.admin/sidebar', [], ['cache' => $sidebarCache]);
-                    ?>
+                    ]]) ?>
                 </nav>
-                <main id="content" class="col-lg-10 py-4 p-3">
+                <main class="col-lg-10 py-4 p-3">
                     <?= $this->Flash->render() ?>
                     <?= $this->fetch('content') ?>
                 </main>

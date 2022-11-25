@@ -1,7 +1,11 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.10
-* uses the new fixture system.
+* updated for me-tools 2.22.0;
+* uses the new fixture system;
+* fixed a small bug, some elements are now no longer cached if debug is active;
+* removed useless css and js code;
+* `MeCms\View\View` is now abstract.
 
 ### 2.30.9-RC6
 * the `LoginComponent` has been totally revised and its bugs have been fixed. The 

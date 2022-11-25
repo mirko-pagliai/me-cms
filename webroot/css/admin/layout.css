@@ -54,32 +54,32 @@ body {
 /* -------------------------------- */
 /*              Content             */
 /* -------------------------------- */
-/* Content, title */
-#content > div > h2 {
+/* Main, title */
+main > div > h2 {
     font-size: 1.5rem;
     display: inline-block;
     margin-bottom: 1.25rem;
 }
 
-/* Content, buttons after page title ("add new", etc.) */
-#content > div > .btn {
+/* Main, buttons after page title ("add new", etc.) */
+main > div > .btn {
     font-size: .85rem;
     margin: 0 0 1.25rem .3rem;
     padding: .2rem .6rem .3rem .5rem;
     vertical-align: bottom;
 }
 
-/* Content, buttons after page title ("add new", etc.), first button */
-#content > div > .btn:first-of-type {
+/* Main, buttons after page title ("add new", etc.), first button */
+main > div > .btn:first-of-type {
     margin-left: 1rem;
 }
 
 /* Content, button after page title ("add new", etc.), icons */
-#content > div > .btn > .fa,
-#content > div > .btn > .fab,
-#content > div > .btn > .fal,
-#content > div > .btn > .far,
-#content > div > .btn > .fas {
+main > div > .btn > .fa,
+main > div > .btn > .fab,
+main > div > .btn > .fal,
+main > div > .btn > .far,
+main > div > .btn > .fas {
     font-size: .625rem;
     margin-right: .15rem;
 }

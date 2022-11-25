@@ -9,33 +9,6 @@
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-/**
- * Sets the footer class.
- *
- * It sets the footer to `fixed` position when needed, that is when the
- *  document body is lower than the window height.
- */
-function setFooterClass()
-{
-    var footer = $("#footer");
-
-    if (!footer.length) {
-        return;
-    }
-
-    //If there's a difference between the windows height and the body height,
-    //  applies the `fixed` class
-    if ($(window).height() - $("body").height() > 0) {
-        footer.addClass("fixed");
-    } else {
-        footer.removeClass("fixed");
-    }
-}
-
-//On windows load and resize, it sets the footer class
-$(window).on("load resize", function () {
-    setFooterClass();
-});
 
 $(function () {
     //On click on the "accept" button for cookies policy

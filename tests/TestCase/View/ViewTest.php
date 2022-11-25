@@ -39,7 +39,7 @@ class ViewTest extends TestCase
         parent::setUp();
 
         if (empty($this->View)) {
-            $this->View = new View();
+            $this->View = $this->getMockForAbstractClass(View::class);
             $this->View->setPlugin('MeCms');
             $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
         }
@@ -56,11 +56,12 @@ class ViewTest extends TestCase
         //Loads the `TestPlugin` and sets it as a theme
         $this->loadPlugins(['TestPlugin' => []]);
         Configure::write('MeCms.default.theme', 'TestPlugin');
-        $this->assertEquals('TestPlugin', (new View())->getTheme());
+        $this->assertEquals('TestPlugin', $this->getMockForAbstractClass(View::class)->getTheme());
     }
 
     /**
      * Tests for `getTitleForLayout()` method
+     * @uses \MeCms\View\View::getTitleForLayout()
      * @test
      */
     public function testGetTitleForLayout(): void
@@ -89,9 +90,8 @@ class ViewTest extends TestCase
         $this->View->assign('title', 'title from view');
         $this->assertEquals($getTitleForLayoutMethod(), 'title from controller - ' . $mainTitle);
 
-        //If this is the homepage, it only returns the main title from the
-        //  configuration, even if you have set another
-        $this->View = new View();
+        //If this is the homepage, it only returns the main title from the configuration, even if you have set another
+        $this->View = $this->getMockForAbstractClass(View::class);
         $request = $this->View->getRequest()->withEnv('REQUEST_URI', '/')->withParam('controller', 'Posts')->withParam('action', 'index');
         $this->View->setRequest($request);
         $this->assertEquals($getTitleForLayoutMethod(), $mainTitle);
@@ -99,6 +99,7 @@ class ViewTest extends TestCase
 
     /**
      * Tests for `renderLayout()` method
+     * @uses \MeCms\View\View::renderLayout()
      * @test
      */
     public function testRenderLayout(): void

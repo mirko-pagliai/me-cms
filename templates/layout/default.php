@@ -11,6 +11,8 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AppView $this
  */
 ?>
 <!DOCTYPE html>
@@ -50,24 +52,24 @@ declare(strict_types=1);
     <body>
         <?= $this->element('MeCms.userbar') ?>
         <?= $this->element('MeCms.cookies_policy') ?>
-        <header id="header">
+        <header>
             <div class="container">
                 <?php
                 $logo = $this->Html->h1(getConfigOrFail('main.title'));
 
                 //Check if the logo image exists
                 if (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {
-                    $logo = $this->Html->img(getConfig('default.logo'));
+                    $logo = $this->Html->image(getConfig('default.logo'));
                 }
 
                 echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);
                 ?>
             </div>
-            <?= $this->element('MeCms.topbar', [], ['cache' => getConfig('debug') ? null : ['key' => 'topbar']]) ?>
+            <?= $this->element('MeCms.topbar', [], getConfig('debug') ? [] : ['cache' => ['key' => 'topbar']]) ?>
         </header>
         <div class="container mb-4">
             <div class="row">
-                <main id="content" class="col-lg-9">
+                <main class="col-lg-9">
                     <?php
                     echo $this->Flash->render();
 
@@ -86,7 +88,7 @@ declare(strict_types=1);
             </div>
         </div>
         <?php
-        echo $this->element('MeCms.footer', [], ['cache' => getConfig('debug') ? null : ['key' => 'footer']]);
+        echo $this->element('MeCms.footer', [], getConfig('debug') ? [] : ['cache' => ['key' => 'footer']]);
         echo $this->fetch('css_bottom');
         echo $this->fetch('script_bottom');
         ?>

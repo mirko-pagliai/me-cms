@@ -73,6 +73,7 @@ class AppViewTest extends TestCase
 
     /**
      * Tests for `renderLayout()` method
+     * @uses \MeCms\View\View\AppView::renderLayout()
      * @test
      */
     public function testRenderLayout(): void
@@ -84,6 +85,7 @@ class AppViewTest extends TestCase
 
     /**
      * Tests for `renderLayout()` method, with a layout from a theme
+     * @uses \MeCms\View\View\AppView::renderLayout()
      * @test
      */
     public function testRenderLayoutFromTheme(): void
@@ -102,14 +104,14 @@ class AppViewTest extends TestCase
 
     /**
      * Tests for `addToUserbar()` method
+     * @uses \MeCms\View\View\AppView::addToUserbar()
      * @test
      */
     public function testAddToUserbar(): void
     {
         $this->View->addToUserbar('string');
-        $this->View->addToUserbar(['first', 'second']);
-        $this->View->addToUserbar([['nestled']]);
+        $this->View->addToUserbar('first', 'second');
         $this->View->render('StaticPages/page-from-app');
-        $this->assertEquals('<li>string</li>' . PHP_EOL . '<li>first</li>' . PHP_EOL . '<li>second</li>' . PHP_EOL . '<li>nestled</li>', $this->View->fetch('userbar'));
+        $this->assertEquals('<li>string</li>' . PHP_EOL . '<li>first</li>' . PHP_EOL . '<li>second</li>', $this->View->fetch('userbar'));
     }
 }
