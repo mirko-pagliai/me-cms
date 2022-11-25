@@ -56,7 +56,6 @@ class AppViewTest extends TestCase
     public function testSetBlocks(): void
     {
         //Writes some configuration values
-        Configure::write('MeCms.default.toolbar_color', '#ffffff');
         Configure::write('MeCms.default.analytics', 'analytics-id');
         Configure::write('MeCms.shareaholic.site_id', 'shareaholic-id');
         Configure::write('MeCms.default.facebook_app_id', 'facebook-id');

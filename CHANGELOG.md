@@ -5,6 +5,7 @@
 * uses the new fixture system;
 * fixed a small bug, some elements are now no longer cached if debug is active;
 * removed useless css and js code;
+* removed `toolbar_color` config key;
 * `MeCms\View\View` is now abstract.
 
 ### 2.30.9-RC6
