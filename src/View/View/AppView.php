@@ -38,11 +38,6 @@ class AppView extends View
      */
     protected function setBlocks(): void
     {
-        //Sets the "theme color" (the toolbar color for some mobile browser)
-        if (getConfig('default.toolbar_color')) {
-            $this->Html->meta('theme-color', getConfig('default.toolbar_color'));
-        }
-
         //Sets the meta tag for RSS posts
         if (getConfig('default.rss_meta')) {
             $this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);

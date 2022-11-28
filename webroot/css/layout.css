@@ -46,25 +46,15 @@ body {
 /*              Header              */
 /* -------------------------------- */
 /* Header */
-header {
+body > header {
     box-shadow: 0 .3rem .3rem 0 rgba(50, 50, 50, .3);
-    margin-bottom: 2rem;
 }
 
 /* -------------------------------- */
 /*          Header, logo            */
 /* -------------------------------- */
-/* Header, logo */
-header #logo {
-    display: inline-block;
-    margin: 3rem 0;
-    text-align: center;
-    text-decoration: none;
-    width: 100%;
-}
-
 /* Header, logo (as text) */
-header #logo h1 {
+body > header #logo h1 {
     color: #555;
     font-size: 3rem;
 }
@@ -91,41 +81,39 @@ header #logo h1 {
 /*              Footer              */
 /* -------------------------------- */
 /* Footer */
-footer {
+body > footer {
     background: #f2f2f2;
     color: #888;
     font-size: 80%;
     font-weight: 400;
-    padding: 1rem;
-    text-align: center;
 }
 
 /* Footer, links */
-footer a {
+body > footer a {
     border-bottom: 1px dashed;
     color: #666;
     text-decoration: none;
 }
 
 /* Footer, paragraphs */
-footer p {
+body > footer p {
     margin: 0;
 }
 
 /* Footer, lists */
-footer ul {
+body > footer ul {
     padding: 0;
 }
 
 /* Footer, lists, list elements */
-footer ul li {
+body > footer ul li {
     border-right: 1px solid #aaa;
     display: inline-block;
     padding: 0 .75rem;
 }
 
 /* Footer, lists, last list elements */
-footer ul li:last-child {
+body > footer ul li:last-child {
     border-right: 0;
 }
 

@@ -56,13 +56,11 @@ class AppViewTest extends TestCase
     public function testSetBlocks(): void
     {
         //Writes some configuration values
-        Configure::write('MeCms.default.toolbar_color', '#ffffff');
         Configure::write('MeCms.default.analytics', 'analytics-id');
         Configure::write('MeCms.shareaholic.site_id', 'shareaholic-id');
         Configure::write('MeCms.default.facebook_app_id', 'facebook-id');
 
         $result = $this->View->render('StaticPages/page-from-app');
-        $this->assertStringContainsString('<meta name="theme-color" content="#ffffff"/>', $result);
         $this->assertStringContainsString('<link href="/posts/rss" type="application/rss+xml" rel="alternate" title="Latest posts"/>', $result);
         $this->assertStringContainsString('<meta content="MeCms" property="og:title"/>', $result);
         $this->assertStringContainsString('<meta content="http://localhost/" property="og:url"/>', $result);
