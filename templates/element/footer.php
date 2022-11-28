@@ -14,23 +14,18 @@ declare(strict_types=1);
  *
  * @var \MeCms\View\View\AppView $this
  */
-?>
 
-<footer>
-    <?php
-    $links = [
-        $this->Html->link(__d('me_cms', 'Search'), ['_name' => 'postsSearch']),
-        $this->Html->link(__d('me_cms', 'Cookies policy'), ['_name' => 'page', 'cookies-policy']),
-        $this->Html->link(__d('me_cms', 'Feed RSS'), '/posts/rss'),
-    ];
+$links = [
+    $this->Html->link(__d('me_cms', 'Search'), ['_name' => 'postsSearch']),
+    $this->Html->link(__d('me_cms', 'Cookies policy'), ['_name' => 'page', 'cookies-policy']),
+    $this->Html->link(__d('me_cms', 'Feed RSS'), '/posts/rss'),
+];
 
-    if (getConfig('default.contact_us')) {
-        $links[] = $this->Html->link(__d('me_cms', 'Contact us'), ['_name' => 'contactUs']);
-    }
+if (getConfig('default.contact_us')) {
+    $links[] = $this->Html->link(__d('me_cms', 'Contact us'), ['_name' => 'contactUs']);
+}
 
-    echo $this->Html->ul($links);
+echo $this->Html->ul($links);
 
-    echo $this->Html->para('', __d('me_cms', 'Powered by {0}. Copyright {1}', 'MeCms', date('Y')));
-    echo $this->Html->para('', __d('me_cms', 'Developed by {0}', $this->Html->link('Mirko Pagliai', '//github.com/mirko-pagliai', ['target' => '_blank'])));
-    ?>
-</footer>
+echo $this->Html->para('', __d('me_cms', 'Powered by {0}. Copyright {1}', 'MeCms', date('Y')));
+echo $this->Html->para('', __d('me_cms', 'Developed by {0}', $this->Html->link('Mirko Pagliai', '//github.com/mirko-pagliai', ['target' => '_blank'])));
