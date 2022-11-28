@@ -48,21 +48,11 @@ body {
 /* Header */
 body > header {
     box-shadow: 0 .3rem .3rem 0 rgba(50, 50, 50, .3);
-    margin-bottom: 2rem;
 }
 
 /* -------------------------------- */
 /*          Header, logo            */
 /* -------------------------------- */
-/* Header, logo */
-body > header #logo {
-    display: inline-block;
-    margin: 3rem 0;
-    text-align: center;
-    text-decoration: none;
-    width: 100%;
-}
-
 /* Header, logo (as text) */
 body > header #logo h1 {
     color: #555;
@@ -96,8 +86,6 @@ body > footer {
     color: #888;
     font-size: 80%;
     font-weight: 400;
-    padding: 1rem;
-    text-align: center;
 }
 
 /* Footer, links */
