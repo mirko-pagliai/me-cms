@@ -17,14 +17,14 @@
 #sidebar,
 article #disqus_thread,
 article .user-picture,
-#footer,
+footer,
 script#__debug_kit + iframe, /* DebugKit */
 #shr-admin-badge {
     display: none !important;
 }
 
 /* Header, logo */
-#header #logo {
+header #logo {
     margin: 1.5rem auto !important;
 }
 

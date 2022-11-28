@@ -17,13 +17,17 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Chronos\Chronos;
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
 use MeCms\Form\ContactUsForm;
 use MeCms\TestSuite\ControllerTestCase;
+use StopSpam\SpamDetector;
 
 /**
  * SystemsControllerTest class
+ * @property \MeCms\Controller\SystemsController $_controller
  */
 class SystemsControllerTest extends ControllerTestCase
 {
@@ -36,6 +40,25 @@ class SystemsControllerTest extends ControllerTestCase
         'plugin.MeCms.Posts',
         'plugin.MeCms.PostsCategories',
     ];
+
+    /**
+     * Adds additional event spies to the controller/view event manager
+     * @param \Cake\Event\EventInterface $event A dispatcher event
+     * @param \Cake\Controller\Controller|null $controller Controller instance
+     * @return void
+     */
+    public function controllerSpy(EventInterface $event, ?Controller $controller = null): void
+    {
+        parent::controllerSpy($event, $controller);
+
+        $this->_controller->ContactUsForm->SpamDetector = $this->getMockBuilder(SpamDetector::class)
+            ->onlyMethods(['verify'])
+            ->getMock();
+
+        $this->_controller->ContactUsForm->SpamDetector->method('verify')->willReturn(true);
+
+        $this->_controller->viewBuilder()->setLayout('with_flash');
+    }
 
     /**
      * Tests for `acceptCookies()` method

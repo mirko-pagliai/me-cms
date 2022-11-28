@@ -25,18 +25,17 @@ class MailerTest extends TestCase
 {
     /**
      * Tests for `__construct()` method
+     * @uses \MeCms\Mailer\Mailer::__construct()
      * @test
      */
     public function testConstruct(): void
     {
-        $mailer = $this->getMockBuilder(Mailer::class)
-            ->onlyMethods([])
-            ->getMockForAbstractClass();
+        $Mailer = $this->getMockBuilder(Mailer::class)->getMockForAbstractClass();
 
-        $this->assertEquals(['MeTools.Html'], $mailer->viewBuilder()->getHelpers());
-        $this->assertEquals(['email@example.com' => 'MeCms'], $mailer->getSender());
-        $this->assertEquals(['email@example.com' => 'MeCms'], $mailer->getFrom());
-        $this->assertEquals('html', $mailer->getEmailFormat());
-        $this->assertEquals([], $mailer->getRenderer()->viewBuilder()->getVars());
+        $this->assertContains('Html', array_keys($Mailer->viewBuilder()->getHelpers()));
+        $this->assertEquals(['email@example.com' => 'MeCms'], $Mailer->getSender());
+        $this->assertEquals(['email@example.com' => 'MeCms'], $Mailer->getFrom());
+        $this->assertEquals('html', $Mailer->getEmailFormat());
+        $this->assertEquals([], $Mailer->getRenderer()->viewBuilder()->getVars());
     }
 }

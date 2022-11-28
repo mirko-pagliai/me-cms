@@ -18,7 +18,6 @@ namespace MeCms\View\Helper;
 use BadMethodCallException;
 use Cake\Core\App;
 use Cake\View\Helper;
-use Tools\Exceptionist;
 
 /**
  * MenuBuilder Helper.
@@ -34,14 +33,15 @@ class MenuBuilderHelper extends Helper
      * @var array
      */
     public $helpers = [
-        'Dropdown' => ['className' => 'MeTools.BootstrapDropdown'],
-        'Html' => ['className' => 'MeTools.BootstrapHtml'],
+        'MeTools.Dropdown',
+        'MeTools.Html',
     ];
 
     /**
      * Gets all valid methods from the `MenuHelper` provided by a plugin
      * @param string $plugin Plugin name
      * @return array<string>
+     * @throws \ErrorException
      * @since 2.30.0
      */
     public function getMethods(string $plugin): array
@@ -55,6 +55,7 @@ class MenuBuilderHelper extends Helper
      * Generates all menus for a plugin
      * @param string $plugin Plugin name
      * @return array<string, array> Menus
+     * @throws \ErrorException
      */
     public function generate(string $plugin): array
     {
@@ -73,7 +74,9 @@ class MenuBuilderHelper extends Helper
                     continue;
                 }
 
-                Exceptionist::isTrue(count($args) >= 3, __d('me_cms', 'Method `{0}::{1}()` returned only {2} values', $className, $method, count($args)), BadMethodCallException::class);
+                if (count($args) < 3) {
+                    throw new BadMethodCallException(__d('me_cms', 'Method `{0}::{1}()` returned only {2} values', $className, $method, count($args)));
+                }
 
                 [$links, $title, $titleOptions, $handledControllers] = $args + [[], [], [], []];
                 $menus[$plugin . '.' . $method] = compact('links', 'title', 'titleOptions', 'handledControllers');

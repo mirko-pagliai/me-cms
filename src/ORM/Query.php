@@ -27,21 +27,18 @@ use RuntimeException;
 class Query extends BaseQuery
 {
     use QueryTrait {
-        cache as protected _cache;
-        __call as private _call;
+        QueryTrait::cache as protected _cache;
+        QueryTrait::__call as private _call;
     }
 
     /**
      * Enable result caching for this query.
      *
-     * Unlike the method provided by CakePHP, it uses the `getCacheName()` table
-     *  method to get the default name of the cache config to use, if that method
-     *  exists.
-     * @param \Closure|string|false $key Either the cache key or a function to
-     *  generate the cache key. When using a function, this query instance will
-     *  be supplied as an argument
-     * @param string|\Cake\Cache\CacheEngine $config Either the name of the
-     *  cache config to use, or a cache config instance
+     * Unlike the method provided by CakePHP, it uses the `getCacheName()` table method to get the default name of the
+     *  cache config to use, if that method exists.
+     * @param \Closure|string|false $key Either the cache key or a function to generate the cache key. When using a
+     *  function, this query instance will be supplied as an argument
+     * @param string|\Cake\Cache\CacheEngine $config Either the name of the cache config to use, or a cache config instance
      * @return $this
      * @throws \RuntimeException
      * @uses \MeCms\Model\Table\AppModel::getCacheName()

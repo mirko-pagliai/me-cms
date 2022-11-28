@@ -13,9 +13,8 @@
 /* -------------------------------- */
 /*              HTML                */
 /* -------------------------------- */
-/* Links on hover and on focus */
-a:focus,
-a:hover {
+/* Links */
+a {
     text-decoration: none;
 }
 
@@ -35,55 +34,52 @@ body {
     box-shadow: -.15rem 0 .2rem -.3rem rgba(50, 50, 50, .75) inset;
 }
 
-/* Sidebar, cards, main links */
-#sidebar .card > a {
-    background: #fff;
+/* Sidebar, accordion, accordion button */
+#sidebar #accordionSidebar .accordion-button {
     color: #337ab7;
     font-size: .95rem;
-    margin: -2px;
+    font-weight: bold;
 }
 
-/* Sidebar, cards, main links on hover and main links expanded */
-#sidebar .card > a:hover,
-#sidebar .card > a[aria-expanded="true"] {
-    background: #337ab7;
-    color: #fff;
+/* Sidebar, accordion, accordion button, icon */
+#sidebar #accordionSidebar .accordion-button i {
+    margin-right: .3em;
 }
 
-/* Sidebar, cards, collapsed wrap, links on hover */
-#sidebar .card > .collapse a:hover {
+/* Sidebar, accordion, accordion body, links on hover */
+#sidebar #accordionSidebar .accordion-body a:hover {
     background: #e9e9e9;
 }
 
 /* -------------------------------- */
 /*              Content             */
 /* -------------------------------- */
-/* Content, title */
-#content > div > h2 {
+/* Main, title */
+main > div > h2 {
     font-size: 1.5rem;
     display: inline-block;
     margin-bottom: 1.25rem;
 }
 
-/* Content, buttons after page title ("add new", etc.) */
-#content > div > .btn {
+/* Main, buttons after page title ("add new", etc.) */
+main > div > .btn {
     font-size: .85rem;
     margin: 0 0 1.25rem .3rem;
     padding: .2rem .6rem .3rem .5rem;
     vertical-align: bottom;
 }
 
-/* Content, buttons after page title ("add new", etc.), first button */
-#content > div > .btn:first-of-type {
+/* Main, buttons after page title ("add new", etc.), first button */
+main > div > .btn:first-of-type {
     margin-left: 1rem;
 }
 
 /* Content, button after page title ("add new", etc.), icons */
-#content > div > .btn > .fa,
-#content > div > .btn > .fab,
-#content > div > .btn > .fal,
-#content > div > .btn > .far,
-#content > div > .btn > .fas {
+main > div > .btn > .fa,
+main > div > .btn > .fab,
+main > div > .btn > .fal,
+main > div > .btn > .far,
+main > div > .btn > .fas {
     font-size: .625rem;
     margin-right: .15rem;
 }

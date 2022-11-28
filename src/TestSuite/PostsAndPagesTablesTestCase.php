@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -28,7 +29,7 @@ use Cake\ORM\Entity;
 abstract class PostsAndPagesTablesTestCase extends TableTestCase
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected static array $example = [
         'category_id' => 1,

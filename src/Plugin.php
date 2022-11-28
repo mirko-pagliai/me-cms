@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace MeCms;
 
+use Assets\Plugin as Assets;
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
@@ -54,6 +55,7 @@ class Plugin extends BasePlugin
     public function bootstrap(PluginApplicationInterface $app): void
     {
         $pluginsToLoad = [
+            Assets::class,
             MeTools::class,
             RecaptchaMailhide::class,
             StopSpam::class,
@@ -67,18 +69,16 @@ class Plugin extends BasePlugin
             $pluginsToLoad[] = 'WyriHaximus/MinifyHtml';
         }
 
+        /** @var \Cake\Http\BaseApplication $app */
+        $pluginsToLoad = array_filter($pluginsToLoad, fn(string $plugin): bool => !$app->getPlugins()->has($plugin));
         foreach ($pluginsToLoad as $plugin) {
-            /** @var \Cake\Http\BaseApplication $app */
-            if (!$app->getPlugins()->has($plugin)) {
-                //Initializes bootstrapped plugins
-                if (method_exists($plugin, 'bootstrap')) {
-                    /** @var \Cake\Core\PluginInterface $plugin */
-                    $plugin = new $plugin();
-                    $plugin->bootstrap($app);
-                }
-
-                $app->addPlugin($plugin);
+            if (method_exists($plugin, 'bootstrap')) {
+                /** @var \Cake\Core\BasePlugin $plugin */
+                $plugin = new $plugin();
+                $plugin->bootstrap($app);
             }
+
+            $app->addPlugin($plugin);
         }
 
         parent::bootstrap($app);

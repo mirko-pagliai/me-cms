@@ -19,6 +19,7 @@ use MeCms\View\View;
 
 /**
  * Application view class for admin views
+ * @property \MeCms\View\Helper\MenuBuilderHelper $MenuBuilder
  */
 class AdminView extends View
 {

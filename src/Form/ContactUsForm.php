@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace MeCms\Form;
 
+use Cake\Event\EventManager;
 use Cake\Form\Form;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Validation\Validator;
@@ -29,15 +30,21 @@ class ContactUsForm extends Form
     use MailerAwareTrait;
 
     /**
-     * Internal method to check, via `SpamDetector`, if an email address
-     *    has been reported as a spammer
-     * @param string $email Email to check
-     * @return bool
-     * @throws \Exception
+     * @var \StopSpam\SpamDetector
      */
-    protected function verifyEmail(string $email): bool
+    public SpamDetector $SpamDetector;
+
+    /**
+     * Constructor
+     *
+     * @param \Cake\Event\EventManager|null $eventManager The event manager.
+     *  Defaults to a new instance.
+     */
+    public function __construct(?EventManager $eventManager = null)
     {
-        return (new SpamDetector())->email($email)->verify();
+        parent::__construct($eventManager);
+
+        $this->SpamDetector ??= new SpamDetector();
     }
 
     /**
@@ -59,7 +66,7 @@ class ContactUsForm extends Form
         $validator->add('email', [
             'notSpammer' => [
                 'message' => __d('me_cms', 'This email address has been reported as a spammer'),
-                'rule' => fn(string $value): bool => $this->verifyEmail($value),
+                'rule' => fn(string $email): bool => $this->SpamDetector->email($email)->verify(),
             ],
         ])->requirePresence('email');
 
@@ -76,8 +83,7 @@ class ContactUsForm extends Form
 
     /**
      * Used by `execute()` to execute the form's action. This sends the email.
-     * The `$data` array must contain the `email`, `first_name`, `last_name`
-     *  and `message` keys.
+     * The `$data` array must contain the `email`, `first_name`, `last_name` and `message` keys.
      * @param array $data Form data
      * @return bool
      */

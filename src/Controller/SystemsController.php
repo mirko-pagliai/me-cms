@@ -29,6 +29,23 @@ use Tools\Filesystem;
 class SystemsController extends AppController
 {
     /**
+     * @var \MeCms\Form\ContactUsForm
+     */
+    public ContactUsForm $ContactUsForm;
+
+    /**
+     * Initialization hook method
+     * @return void
+     * @throws \Exception
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->ContactUsForm ??= new ContactUsForm();
+    }
+
+    /**
      * Accept cookies policy.
      * It sets the cookie to remember the user accepted the cookie policy and
      *  redirects
@@ -57,15 +74,13 @@ class SystemsController extends AppController
             return $this->redirect(['_name' => 'homepage']);
         }
 
-        $contact = new ContactUsForm();
-
         if ($this->getRequest()->is('post')) {
             //Checks for reCAPTCHA, if requested
             $message = __d('me_cms', 'You must fill in the {0} control correctly', 'reCAPTCHA');
             if (!getConfig('security.recaptcha') || (isset($this->Recaptcha) && $this->Recaptcha->verify())) {
                 //Sends the email
                 $message = I18N_OPERATION_NOT_OK;
-                if ($contact->execute($this->getRequest()->getData())) {
+                if ($this->ContactUsForm->execute($this->getRequest()->getData())) {
                     $this->Flash->success(I18N_OPERATION_OK);
 
                     return $this->redirect(['_name' => 'homepage']);
@@ -74,7 +89,7 @@ class SystemsController extends AppController
             $this->Flash->error($message);
         }
 
-        $this->set(compact('contact'));
+        $this->set('contact', $this->ContactUsForm);
     }
 
     /**
@@ -110,6 +125,7 @@ class SystemsController extends AppController
      * If the sitemap doesn't exist or has expired, it generates and writes
      *  the sitemap.
      * @return \Cake\Http\Response
+     * @throws \ErrorException
      */
     public function sitemap(): Response
     {

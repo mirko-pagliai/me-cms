@@ -173,7 +173,7 @@ return ['MeCms' => [
     ],
     //Users
     'users' => [
-        //How to activating accounts:
+        //How to activate accounts:
         //  `0` - No activation required, the account is immediately active;
         //  `1` - The account will be enabled by the user via email (default);
         //  `2` - The account will be enabled by an administrator.

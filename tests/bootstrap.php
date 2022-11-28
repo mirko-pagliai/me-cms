@@ -18,12 +18,18 @@ use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
 use Cake\Mailer\TransportFactory;
+use Cake\TestSuite\Fixture\SchemaLoader;
 use Cake\Utility\Security;
 use MeCms\Mailer\Mailer;
+use Migrations\TestSuite\Migrator;
 
 ini_set('intl.default_locale', 'en_US');
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
+
+if (!defined('DS')) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
 
 define('ROOT', dirname(__DIR__) . DS);
 define('VENDOR', ROOT . 'vendor' . DS);
@@ -81,14 +87,13 @@ Configure::write('App', [
  * @todo these are to be removed as soon as possible
  */
 Configure::write('Error.ignoredDeprecationPaths', [
-    '*/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php',
     '*/cakephp/cakephp/src/I18n/Time.php',
     '*/crabstudio/recaptcha/src/Controller/Component/RecaptchaComponent.php',
 ]);
 Configure::write('Session', ['defaults' => 'php']);
 Configure::write('Assets.target', TMP . 'assets');
 Configure::write('Tokens.usersClassOptions', ['foreignKey' => 'user_id', 'className' => 'Users']);
-Configure::write('pluginsToLoad', ['MeCms']);
+Configure::write('pluginsToLoad', ['Thumber/Cake', 'MeCms']);
 Security::setSalt('a-long-but-not-random-value');
 define('THUMBER_DRIVER', 'gd');
 
@@ -143,6 +148,13 @@ if (!class_exists('Cake\Console\TestSuite\StubConsoleOutput')) {
     class_alias('Cake\TestSuite\Stub\ConsoleOutput', 'Cake\Console\TestSuite\StubConsoleOutput');
 }
 
+$scheme = ConnectionManager::getConfigOrFail('test')['scheme'];
+
+$migrator = new Migrator();
+$migrator->run(['plugin' => 'MeCms']);
+$loader = new SchemaLoader();
+$loader->loadSqlFiles(TESTS . ($scheme == 'postgres' ? 'schema_postgres' : 'schema') . '.sql', 'test', false);
+
 $_SERVER['PHP_SELF'] = '/';
 
-echo 'Running tests for "' . ConnectionManager::getConfig('test')['scheme'] . '" driver ' . PHP_EOL;
+echo 'Running tests for "' . $scheme . '" driver ' . PHP_EOL;

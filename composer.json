@@ -24,18 +24,20 @@
         "league/commonmark": "^1",
         "mirko-pagliai/cakephp-assets": "^1.5.7",
         "mirko-pagliai/cakephp-recaptcha-mailhide": "^1.4.6",
-        "mirko-pagliai/cakephp-stop-spam": "^1.1.5",
+        "mirko-pagliai/cakephp-stop-spam": "^1.1.7",
         "mirko-pagliai/cakephp-thumber": "^1.10",
         "mirko-pagliai/cakephp-tokens": "^1.3.4",
-        "mirko-pagliai/me-tools": "~2.21.4",
+        "mirko-pagliai/me-tools": "~2.22",
         "mirko-pagliai/php-tools": "^1.5.9",
         "mirko-pagliai/php-thumber": "^1.4.1",
         "twbs/bootstrap": "^5.2.2",
-        "wyrihaximus/minify-html": "^2.0"
+        "wyrihaximus/minify-html": "^2.0",
+        "components/jquery": "^3.6"
     },
     "require-dev": {
         "ext-json": "*",
         "cakephp/cakephp-codesniffer": "^4.0",
+        "cakephp/migrations": "^3.2",
         "phpunit/phpunit": "^9.1|^9.5",
         "phpstan/phpstan": "^1.7",
         "psalm/phar": "^4.24"
@@ -65,7 +67,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "MeCms\\Test\\": "tests",
+            "MeCms\\Test\\": "tests/",
+            "Cake\\Test\\": "vendor/cakephp/cakephp/tests/",
             "App\\": "tests/test_app/TestApp/",
             "MyTheme\\": "tests/test_app/TestApp/Plugin/MyTheme/src",
             "TestPlugin\\": "tests/test_app/TestApp/Plugin/TestPlugin/src",

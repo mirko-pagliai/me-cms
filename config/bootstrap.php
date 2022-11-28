@@ -89,7 +89,7 @@ if (!Log::getConfig('users')) {
         'levels' => [],
         'file' => 'users.log',
         'scopes' => ['users'],
-        'url' => env('LOG_DEBUG_URL', null),
+        'url' => env('LOG_DEBUG_URL'),
     ]);
 }
 

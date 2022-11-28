@@ -20,6 +20,8 @@ use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use MeCms\Plugin as MeCms;
+use RecaptchaMailhide\Plugin as RecaptchaMailhide;
+use Thumber\Cake\Plugin as Thumber;
 
 /**
  * Application setup class.
@@ -35,6 +37,8 @@ class Application extends BaseApplication
      */
     public function bootstrap(): void
     {
+        $this->addPlugin(RecaptchaMailhide::class);
+        $this->addPlugin(Thumber::class);
         $this->addPlugin(MeCms::class, ['bootstrap' => false, 'routes' => false]);
     }
 

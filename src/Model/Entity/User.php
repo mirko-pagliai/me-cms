@@ -71,6 +71,7 @@ class User extends Entity
     /**
      * Gets the picture (virtual field)
      * @return string
+     * @throws \Tools\Exception\MethodNotExistsException
      */
     protected function _getPicture(): string
     {
@@ -97,13 +98,14 @@ class User extends Entity
      */
     protected function _getLastLogins(?array $lastLogins): Collection
     {
-        $lastLogins = array_map(function ($row): Entity {
-            $row = $row instanceof Entity ? $row : new Entity($row);
+        //Turns `time` values into `FrozenTime` instances
+        return new Collection(array_map(function (array $row): array {
+            if (!$row['time'] instanceof FrozenTime) {
+                $row['time'] = new FrozenTime($row['time']);
+            }
 
-            return $row->set('time', new FrozenTime($row->get('time')));
-        }, $lastLogins ?: []);
-
-        return new Collection($lastLogins);
+            return $row;
+        }, $lastLogins ?: []));
     }
 
     /**

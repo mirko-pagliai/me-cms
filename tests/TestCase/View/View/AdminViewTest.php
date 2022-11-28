@@ -53,10 +53,13 @@ class AdminViewTest extends TestCase
 
     /**
      * Tests for `render()` method
+     * @uses \MeCms\View\View\AdminView::render()
      * @test
      */
     public function testRender(): void
     {
+        $this->removePlugins(['TestPluginTwo']);
+
         $this->View->render('StaticPages/page-from-app');
         $this->assertEquals([
             1 => '1 - Very low',

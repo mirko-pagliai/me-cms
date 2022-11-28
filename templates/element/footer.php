@@ -11,9 +11,12 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AppView $this
  */
 ?>
-<footer id="footer">
+
+<footer>
     <?php
     $links = [
         $this->Html->link(__d('me_cms', 'Search'), ['_name' => 'postsSearch']),
@@ -26,10 +29,8 @@ declare(strict_types=1);
     }
 
     echo $this->Html->ul($links);
-    ?>
 
-    <p><?= __d('me_cms', 'Powered by {0}. Copyright {1}', 'MeCms', date('Y')) ?></p>
-    <p>
-        <?= __d('me_cms', 'Developed by {0}', $this->Html->link('Mirko Pagliai', '//github.com/mirko-pagliai', ['target' => '_blank'])) ?>
-    </p>
+    echo $this->Html->para('', __d('me_cms', 'Powered by {0}. Copyright {1}', 'MeCms', date('Y')));
+    echo $this->Html->para('', __d('me_cms', 'Developed by {0}', $this->Html->link('Mirko Pagliai', '//github.com/mirko-pagliai', ['target' => '_blank'])));
+    ?>
 </footer>

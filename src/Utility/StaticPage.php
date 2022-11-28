@@ -54,10 +54,11 @@ class StaticPage
     /**
      * Gets all static pages
      * @return \Cake\Collection\CollectionInterface Collection of static pages
+     * @throws \ErrorException
      */
     public static function all(): CollectionInterface
     {
-        $getSlug = fn(string $relativePathname): string => str_replace('\\', '/', substr($relativePathname, 0, strrpos($relativePathname, '.' . self::EXTENSION)));
+        $getSlug = fn(string $relativePathname): string => str_replace('\\', '/', substr($relativePathname, 0, strrpos($relativePathname, '.' . self::EXTENSION) ?: null));
 
         /** @var array<\Symfony\Component\Finder\SplFileInfo> $files */
         $files = iterator_to_array((new Finder())->in(self::getPaths())->name('*.' . self::EXTENSION));

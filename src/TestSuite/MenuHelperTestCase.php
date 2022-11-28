@@ -39,6 +39,7 @@ abstract class MenuHelperTestCase extends HelperTestCase
     /**
      * Called before every test method
      * @return void
+     * @throws \ErrorException
      */
     protected function setUp(): void
     {
@@ -55,13 +56,13 @@ abstract class MenuHelperTestCase extends HelperTestCase
             /** @var \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper */
             $Helper = $this->getMockForHelper($className, $methods);
 
+            $originalHelper = new $className($Helper->getView());
+            $HtmlHelper = new HtmlHelper($Helper->getView());
             foreach ($methods as $method) {
-                $Helper->method($method)->willReturnCallback(function () use ($className, $method): array {
-                    $originalHelper = new $className($this->Helper->getView());
+                $Helper->method($method)->willReturnCallback(function () use ($method, $originalHelper, $HtmlHelper): array {
                     $returned = $originalHelper->$method();
 
                     if (!empty($returned[0])) {
-                        $HtmlHelper = new HtmlHelper($this->Helper->getView());
                         $returned[0] = implode(PHP_EOL, array_map(fn(array $link): string => call_user_func_array([$HtmlHelper, 'link'], $link), $returned[0]));
                     }
 

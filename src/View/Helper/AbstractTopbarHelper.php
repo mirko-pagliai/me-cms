@@ -31,7 +31,7 @@ abstract class AbstractTopbarHelper extends Helper
      * @var array
      */
     public $helpers = [
-        'Html' => ['className' => 'MeTools.BootstrapHtml'],
+        'MeTools.Html',
     ];
 
     /**

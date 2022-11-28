@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -164,7 +165,6 @@ class PagesControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Pages' . DS . 'form.php');
         $this->assertInstanceOf(Page::class, $this->viewVariable('page'));
-        $this->assertMatchesRegularExpression('/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}$/', $this->viewVariable('page')->created);
 
         //POST request. Data are valid
         $this->post($url, ['title' => 'another title']);

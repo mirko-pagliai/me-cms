@@ -17,10 +17,11 @@ namespace MeCms\Test\TestCase\Command\Install;
 
 use Cake\Console\ConsoleIo;
 use Cake\Console\TestSuite\StubConsoleOutput;
+use ErrorException;
 use MeCms\Command\Install\FixElFinderCommand;
 use MeCms\TestSuite\TestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
-use Tools\Exception\NotReadableException;
+use Tools\Filesystem;
 
 /**
  * FixElFinderCommandTest class
@@ -28,6 +29,11 @@ use Tools\Exception\NotReadableException;
 class FixElFinderCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
+
+    protected const EXPECTED_FILES = [
+        ELFINDER . 'php' . DS . 'connector.minimal.php',
+        ELFINDER . 'elfinder-cke.html',
+    ];
 
     /**
      * @var string
@@ -41,48 +47,48 @@ class FixElFinderCommandTest extends TestCase
      */
     public function testExecute(): void
     {
-        $expectedFiles = [
-            ELFINDER . 'php' . DS . 'connector.minimal.php',
-            ELFINDER . 'elfinder-cke.html',
-        ];
-        array_map('unlink', array_filter($expectedFiles, 'is_writable'));
+        array_map('unlink', array_filter(self::EXPECTED_FILES, 'is_writable'));
         $this->exec($this->command);
         $this->assertExitWithSuccess();
-        foreach ($expectedFiles as $expectedFile) {
+        foreach (self::EXPECTED_FILES as $expectedFile) {
             $this->assertOutputContains('Creating file ' . $expectedFile);
             $this->assertOutputContains('<success>Wrote</success> `' . $expectedFile . '`');
         }
         $this->assertErrorEmpty();
 
-        $this->assertStringContainsString('\'path\' => \'' . UPLOADED . '\'', file_get_contents($expectedFiles[0]) ?: '');
-        $this->assertStringContainsString('getFileCallback', file_get_contents($expectedFiles[1]) ?: '');
+        $this->assertStringContainsString('\'path\' => \'' . UPLOADED . '\'', file_get_contents(self::EXPECTED_FILES[0]) ?: '');
+        $this->assertStringContainsString('getFileCallback', file_get_contents(self::EXPECTED_FILES[1]) ?: '');
     }
 
     /**
      * Test for `execute()` method, file already exists
+     * @uses \MeCms\Command\Install\FixElFinderCommand::execute()
      * @test
      */
     public function testExecuteFileAlreadyExists(): void
     {
         $this->exec($this->command);
         $this->assertExitWithSuccess();
-        $this->assertOutputRegExp('/already exists$/');
+        foreach (self::EXPECTED_FILES as $expectedFile) {
+            $this->assertOutputContains('File or directory `' . Filesystem::instance()->rtr($expectedFile) . '` already exists');
+        }
     }
 
     /**
-     * Test for `execute()` method, not readable file
+     * Test for `execute()` method, with an exception
+     * @uses \MeCms\Command\Install\FixElFinderCommand::execute()
      * @test
      */
-    public function testExecuteNotReadableFile(): void
+    public function testExecuteWithException(): void
     {
         $Command = $this->getMockBuilder(FixElFinderCommand::class)
             ->onlyMethods(['createElfinderCke'])
             ->getMock();
 
-        $Command->method('createElfinderCke')->will($this->throwException(new NotReadableException()));
+        $Command->method('createElfinderCke')->willThrowException(new ErrorException('Exception message'));
 
         $this->_err = new StubConsoleOutput();
         $this->assertSame(0, $Command->run([], new ConsoleIo(new StubConsoleOutput(), $this->_err)));
-        $this->assertErrorContains('Filename is not readable');
+        $this->assertErrorContains('Exception message');
     }
 }
