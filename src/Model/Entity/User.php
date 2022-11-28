@@ -20,6 +20,7 @@ use Cake\Collection\Collection;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use Symfony\Component\Finder\Finder;
+use Tools\Exceptionist;
 
 /**
  * User entity
@@ -72,16 +73,19 @@ class User extends Entity
      * Gets the picture (virtual field)
      * @return string
      * @throws \Tools\Exception\MethodNotExistsException
+     * @throws \Tools\Exception\NotReadableException
      */
     protected function _getPicture(): string
     {
         if ($this->hasValue('id')) {
             $finder = new Finder();
-            $finder->files()->name('/^' . $this->get('id') . '\..+/')->in(USER_PICTURES);
-            $files = objects_map(iterator_to_array($finder), 'getFilename');
+            /** @var \Symfony\Component\Finder\SplFileInfo[] $files */
+            $files = iterator_to_array($finder->files()->name('/^' . $this->get('id') . '\..+/')->in(USER_PICTURES));
 
-            if (!empty($files)) {
-                return 'users' . DS . array_value_first($files);
+            if ($files) {
+                $filename = array_value_first($files)->getFilename();
+
+                return 'users' . DS . basename(Exceptionist::isReadable(USER_PICTURES . $filename));
             }
         }
 
@@ -100,9 +104,7 @@ class User extends Entity
     {
         //Turns `time` values into `FrozenTime` instances
         return new Collection(array_map(function (array $row): array {
-            if (!$row['time'] instanceof FrozenTime) {
-                $row['time'] = new FrozenTime($row['time']);
-            }
+            $row['time'] = $row['time'] instanceof FrozenTime ? $row['time'] : new FrozenTime($row['time']);
 
             return $row;
         }, $lastLogins ?: []));
