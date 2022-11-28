@@ -11,31 +11,29 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\Model\Entity\Post $post
+ * @var \MeCms\View\View\AppView $this
  */
 ?>
 
-<div class="card">
-    <?php
-    $title = $post->get('title');
-    if (!isset($truncate['title']) || $truncate['title']) {
-        $truncate['title'] = $truncate['title'] ?? 40;
-        $title = $this->Text->truncate($title, $truncate['title'], ['exact' => false]);
-    }
-    echo $this->Html->link($title, $post->get('url'), ['class' => 'card-header card-title p-2 text-truncate']);
+<div class="card mb-4">
+    <?php if ($post->hasValue('preview')): ?>
+    <?= $this->Thumb->fit($post->get('preview')[0]->get('url'), ['width' => 205],  ['class' => 'card-img-top', 'url' => $post->get('url')]) ?>
+    <?php endif; ?>
 
-    if ($post->hasValue('preview')) {
-        echo $this->Thumb->fit(
-            $post->get('preview')[0]->get('url'),
-            ['width' => 205],
-            ['class' => 'card-img rounded-0', 'url' => $post->get('url')]
-        );
-    }
-
-    $text = $post->get('plain_text');
-    if (!isset($truncate['text']) || $truncate['text']) {
-        $truncate['text'] = $truncate['text'] ?? 80;
-        $text = $this->Text->truncate($text, $truncate['text'], ['exact' => false]);
-    }
-    echo $this->Html->div('card-body small p-2', $this->Html->para('card-text', $text));
-    ?>
+    <div class="card-body">
+        <h5 class="card-title text-truncate">
+            <?= $this->Html->link($post->get('title'), $post->get('url'), ['class' => 'card-title text-decoration-none text-truncate']) ?>
+        </h5>
+        <p class="card-text small">
+            <?php
+            if (!isset($truncate['text']) || $truncate['text']) {
+                echo $this->Text->truncate($post->get('plain_text'), $truncate['text'] ?? 80, ['exact' => false]);
+            } else {
+                echo $post->get('plain_text');
+            }
+            ?>
+        </p>
+    </div>
 </div>

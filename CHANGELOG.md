@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.30 branch
+### 2.30.11
+* fixed little bugs for posts preview.
+
 ### 2.30.10
 * updated for me-tools 2.22.0;
 * uses the new fixture system;
