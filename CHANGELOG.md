@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.11
-* fixed little bugs for posts preview.
+* fixed little bugs for posts preview;
+* removed a lot of useless css code and optimized the layout and its elements.
 
 ### 2.30.10
 * updated for me-tools 2.22.0;

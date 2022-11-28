@@ -62,7 +62,7 @@ declare(strict_types=1);
                     $logo = $this->Html->image(getConfig('default.logo'));
                 }
 
-                echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);
+                echo $this->Html->link($logo, '/', ['title' => __d('me_cms', 'Homepage')]);
                 ?>
             </div>
             <?= $this->element('MeCms.topbar', [], getConfig('debug') ? [] : ['cache' => ['key' => 'topbar']]) ?>
@@ -87,10 +87,10 @@ declare(strict_types=1);
                 </nav>
             </div>
         </div>
-        <?php
-        echo $this->element('MeCms.footer', [], getConfig('debug') ? [] : ['cache' => ['key' => 'footer']]);
-        echo $this->fetch('css_bottom');
-        echo $this->fetch('script_bottom');
-        ?>
+        <footer class="p-4 small text-center">
+            <?= $this->element('MeCms.footer', [], getConfig('debug') ? [] : ['cache' => ['key' => 'footer']]) ?>
+        </footer>
+        <?= $this->fetch('css_bottom') ?>
+        <?= $this->fetch('script_bottom') ?>
     </body>
 </html>
