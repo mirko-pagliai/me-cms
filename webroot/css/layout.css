@@ -43,23 +43,6 @@ body {
 }
 
 /* -------------------------------- */
-/*              Header              */
-/* -------------------------------- */
-/* Header */
-body > header {
-    box-shadow: 0 .3rem .3rem 0 rgba(50, 50, 50, .3);
-}
-
-/* -------------------------------- */
-/*          Header, logo            */
-/* -------------------------------- */
-/* Header, logo (as text) */
-body > header #logo h1 {
-    color: #555;
-    font-size: 3rem;
-}
-
-/* -------------------------------- */
 /*           Breadcrumb             */
 /* -------------------------------- */
 /* Extra small and small devices */
@@ -84,8 +67,6 @@ body > header #logo h1 {
 body > footer {
     background: #f2f2f2;
     color: #888;
-    font-size: 80%;
-    font-weight: 400;
 }
 
 /* Footer, links */
@@ -93,16 +74,6 @@ body > footer a {
     border-bottom: 1px dashed;
     color: #666;
     text-decoration: none;
-}
-
-/* Footer, paragraphs */
-body > footer p {
-    margin: 0;
-}
-
-/* Footer, lists */
-body > footer ul {
-    padding: 0;
 }
 
 /* Footer, lists, list elements */
