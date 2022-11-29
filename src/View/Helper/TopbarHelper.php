@@ -30,7 +30,7 @@ class TopbarHelper extends AbstractTopbarHelper
     public function build(): array
     {
         return [
-            $this->Html->link(__d('me_cms', 'Home'), ['_name' => 'homepage'], ['class' => 'nav-link', 'icon' => 'home']),
+            $this->Html->link(__d('me_cms', 'Home'), ['_name' => 'homepage'], ['class' => 'nav-link']),
             $this->Html->link(__d('me_cms', 'Categories'), ['_name' => 'postsCategories'], ['class' => 'nav-link']),
             $this->Html->link(I18N_PAGES, ['_name' => 'pagesCategories'], ['class' => 'nav-link']),
         ];
