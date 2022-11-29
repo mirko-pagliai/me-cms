@@ -33,6 +33,7 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
             '/vendor/font-awesome/css/all.min',
         ], ['block' => true]);
 
+        //Default css and css files from the application (`layout.css` and `contents.css`)
         $css = array_filter(['layout', 'contents'], fn(string $name): bool => is_readable(Configure::read('App.wwwRoot') . Configure::read('App.cssBaseUrl') . $name . '.css'));
         echo $this->Asset->css([
             '/vendor/bootstrap/css/bootstrap.min',
@@ -44,6 +45,7 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
             ...$css,
         ], ['block' => true]);
 
+        //Other css files
         echo $this->Asset->css('MeCms.print', ['block' => true, 'media' => 'print']);
         echo $this->fetch('css');
 
