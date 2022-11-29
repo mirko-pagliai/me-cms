@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.11
+* the topbar has been made permanently compatible with the new bootstrap;
 * fixed little bugs for posts preview;
 * removed a lot of useless css code and optimized the layout and its elements.
 

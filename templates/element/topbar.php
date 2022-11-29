@@ -22,39 +22,47 @@ use MeCms\Core\Plugin;
  * The topbar element will use the `TopbarHelper` from APP to build links, if that helper exists. Otherwise, it will use
  *  the helper provided by MeCms, with the helper of any other plugin.
  */
+$app = (bool)App::className('TopbarHelper', 'View/Helper');
+/** @var \MeCms\View\Helper\TopbarHelper $TopbarHelper */
+$TopbarHelper = $this->loadHelper($app ? 'Topbar' : 'MeCms.Topbar');
+$links = $TopbarHelper->build();
+$this->helpers()->unload('Topbar');
+
+if (!$app) {
+    //Builds links with any other plugin helper
+    foreach (Plugin::all(['core' => false, 'exclude' => ['MeCms']]) as $plugin) {
+        if (App::className($plugin . '.TopbarHelper', 'View/Helper')) {
+            /** @var \MeCms\View\Helper\TopbarHelper $TopbarHelper */
+            $TopbarHelper = $this->loadHelper($plugin . '.Topbar');
+            $links = [...$links, ...$TopbarHelper->build()];
+            $this->helpers()->unload('Topbar');
+        }
+    }
+}
 ?>
 
-<nav id="topbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <?= $this->Html->button($this->Html->span(null, ['class' => 'navbar-toggler-icon']), null, [
-        'class' => 'navbar-toggler',
-        'data-toggle' => 'collapse',
-        'data-target' => '#topbarNav',
-        'aria-controls' => 'topbarNav',
-        'aria-expanded' => 'false',
-        'aria-label' => __d('me_cms', 'Toggle navigation'),
-    ]) ?>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="container collapse navbar-collapse" id="topbarNav">
-        <?php
-        $app = (bool)App::className('TopbarHelper', 'View/Helper');
-        /** @var \MeCms\View\Helper\TopbarHelper $TopbarHelper */
-        $TopbarHelper = $this->loadHelper($app ? 'Topbar' : 'MeCms.Topbar');
-        $links = $TopbarHelper->build();
-        $this->helpers()->unload('Topbar');
-
-        if (!$app) {
-            //Builds links with any other plugin helper
-            foreach (Plugin::all(['core' => false, 'exclude' => ['MeCms']]) as $plugin) {
-                if (App::className($plugin . '.TopbarHelper', 'View/Helper')) {
-                    /** @var \MeCms\View\Helper\TopbarHelper $TopbarHelper */
-                    $TopbarHelper = $this->loadHelper($plugin . '.Topbar');
-                    $links = [...$links, ...$TopbarHelper->build()];
-                    $this->helpers()->unload('Topbar');
-                }
-            }
-        }
-
-        echo $this->Html->ul($links, ['class' => 'navbar-nav mr-auto'], ['class' => 'nav-item mr-3']);
-        ?>
+        <ul class="navbar-nav d-none d-lg-flex me-auto mb-2 mb-lg-0">
+            <?php foreach ($links as $link): ?>
+                <li class="nav-item"><?= $link ?></li>
+            <?php endforeach; ?>
+        </ul>
     </div>
 </nav>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header">
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="<?= __d('me_cms', 'Close') ?>"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="navbar-nav flex-grow-1 pe-3">
+            <?php foreach ($links as $link): ?>
+                <li class="nav-item"><?= $link ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</div>
