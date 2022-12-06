@@ -11,8 +11,11 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\Model\Entity\Post $post
+ * @var \MeCms\View\View\AppView $this
  */
-$isView = $this->getRequest()->is('action', 'view', 'Posts') && !$this->getRequest()->isAjax();
+$isView = $this->getRequest()->is('action', 'view', 'Posts') && !$this->getRequest()->is('ajax');
 $category = $post->get('category');
 $user = $post->get('user');
 ?>
@@ -22,13 +25,13 @@ $user = $post->get('user');
         <?php
         if (getConfig('post.author_picture')) {
             echo $this->Thumb->fit($user->get('picture'), ['width' => 100], [
-                'class' => 'flex-shrink-0 mr-3 rounded-circle user-picture',
+                'class' => 'flex-shrink-0 me-3 rounded-circle user-picture',
                 'title' => __d('me_cms', 'Posted by {0}', $user->get('full_name')),
             ]);
         }
         ?>
 
-        <div class="flex-grow-1 ms-3">
+        <div class="flex-grow-1">
             <?php if (getConfig('post.category') && $category) : ?>
                 <h5 class="category mb-2">
                     <?= $this->Html->link($category->get('title'), $category->get('url')) ?>
@@ -73,9 +76,8 @@ $user = $post->get('user');
 
     <main class="text-justify">
         <?php
-        //Truncates the text when necessary. The text will be truncated to the
-        //  location of the `<!-- readmore -->` tag. If the tag is not present,
-        //  the value in the configuration will be used
+        //Truncates the text when necessary. The text will be truncated to the location of the `<!-- readmore -->` tag.
+        //  If the tag is not present, the value in the configuration will be used
         $text = $post->get('text');
         if (!$this->getRequest()->is('action', ['view', 'preview'])) {
             $strpos = strpos($text, '<!-- read-more -->');

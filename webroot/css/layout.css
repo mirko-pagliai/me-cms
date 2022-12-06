@@ -43,23 +43,6 @@ body {
 }
 
 /* -------------------------------- */
-/*              Header              */
-/* -------------------------------- */
-/* Header */
-body > header {
-    box-shadow: 0 .3rem .3rem 0 rgba(50, 50, 50, .3);
-}
-
-/* -------------------------------- */
-/*          Header, logo            */
-/* -------------------------------- */
-/* Header, logo (as text) */
-body > header #logo h1 {
-    color: #555;
-    font-size: 3rem;
-}
-
-/* -------------------------------- */
 /*           Breadcrumb             */
 /* -------------------------------- */
 /* Extra small and small devices */
@@ -82,39 +65,20 @@ body > header #logo h1 {
 /* -------------------------------- */
 /* Footer */
 body > footer {
-    background: #f2f2f2;
-    color: #888;
-    font-size: 80%;
-    font-weight: 400;
+    background-color: #f8f9fa;
+    color: #6c757d;
 }
 
 /* Footer, links */
 body > footer a {
     border-bottom: 1px dashed;
-    color: #666;
+    color: inherit;
     text-decoration: none;
-}
-
-/* Footer, paragraphs */
-body > footer p {
-    margin: 0;
-}
-
-/* Footer, lists */
-body > footer ul {
-    padding: 0;
-}
-
-/* Footer, lists, list elements */
-body > footer ul li {
-    border-right: 1px solid #aaa;
-    display: inline-block;
-    padding: 0 .75rem;
 }
 
 /* Footer, lists, last list elements */
 body > footer ul li:last-child {
-    border-right: 0;
+    border-right: 0 !important;
 }
 
 /* -------------------------------- */

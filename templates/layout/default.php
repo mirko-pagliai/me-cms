@@ -14,6 +14,10 @@ declare(strict_types=1);
  *
  * @var \MeCms\View\View\AppView $this
  */
+
+use Cake\Core\Configure;
+
+$sidebar = $this->fetch('sidebar') . $this->Widget->all();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +32,9 @@ declare(strict_types=1);
             'https://fonts.googleapis.com/css?family=Roboto|Abel',
             '/vendor/font-awesome/css/all.min',
         ], ['block' => true]);
+
+        //Default css and css files from the application (`layout.css` and `contents.css`)
+        $css = array_filter(['layout', 'contents'], fn(string $name): bool => is_readable(Configure::read('App.wwwRoot') . Configure::read('App.cssBaseUrl') . $name . '.css'));
         echo $this->Asset->css([
             '/vendor/bootstrap/css/bootstrap.min',
             'MeTools.default',
@@ -35,7 +42,10 @@ declare(strict_types=1);
             'MeCms.cookies',
             'MeCms.layout',
             'MeCms.contents',
+            ...$css,
         ], ['block' => true]);
+
+        //Other css files
         echo $this->Asset->css('MeCms.print', ['block' => true, 'media' => 'print']);
         echo $this->fetch('css');
 
@@ -49,27 +59,23 @@ declare(strict_types=1);
         echo $this->fetch('script');
         ?>
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <?= $this->element('MeCms.userbar') ?>
         <?= $this->element('MeCms.cookies_policy') ?>
-        <header>
-            <div class="container">
-                <?php
-                $logo = $this->Html->h1(getConfigOrFail('main.title'));
+        <header class="container">
+            <?php
+            $logo = $this->Html->h1(getConfigOrFail('main.title'));
+            if (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {
+                $logo = $this->Html->image(getConfig('default.logo'));
+            }
+            echo $this->Html->link($logo, '/', ['class' => 'd-block my-5 text-center', 'title' => __d('me_cms', 'Homepage')]);
 
-                //Check if the logo image exists
-                if (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {
-                    $logo = $this->Html->image(getConfig('default.logo'));
-                }
-
-                echo $this->Html->link($logo, '/', ['id' => 'logo', 'title' => __d('me_cms', 'Homepage')]);
-                ?>
-            </div>
-            <?= $this->element('MeCms.topbar', [], getConfig('debug') ? [] : ['cache' => ['key' => 'topbar']]) ?>
+            echo $this->element('MeCms.topbar', [], getConfig('debug') ? [] : ['cache' => ['key' => 'topbar']]);
+            ?>
         </header>
-        <div class="container mb-4">
+        <div class="container flex-grow-1 my-5">
             <div class="row">
-                <main class="col-lg-9">
+                <main class="col">
                     <?php
                     echo $this->Flash->render();
 
@@ -81,16 +87,18 @@ declare(strict_types=1);
                     echo $this->fetch('content');
                     ?>
                 </main>
-                <nav id="sidebar" class="col">
+            <?php if ($sidebar) : ?>
+                <nav id="sidebar" class="col-lg-3">
                     <?= $this->fetch('sidebar') ?>
                     <?= $this->Widget->all() ?>
                 </nav>
+            <?php endif; ?>
             </div>
         </div>
-        <?php
-        echo $this->element('MeCms.footer', [], getConfig('debug') ? [] : ['cache' => ['key' => 'footer']]);
-        echo $this->fetch('css_bottom');
-        echo $this->fetch('script_bottom');
-        ?>
+        <footer class="p-4 small text-center">
+            <?= $this->element('MeCms.footer', [], getConfig('debug') ? [] : ['cache' => ['key' => 'footer']]) ?>
+        </footer>
+        <?= $this->fetch('css_bottom') ?>
+        <?= $this->fetch('script_bottom') ?>
     </body>
 </html>

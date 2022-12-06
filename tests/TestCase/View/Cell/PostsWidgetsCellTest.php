@@ -307,7 +307,6 @@ class PostsWidgetsCellTest extends CellTestCase
             'form' => [
                 'method' => 'get',
                 'accept-charset' => 'utf-8',
-                'class' => 'align-items-center g-3 row row-cols-lg-auto',
                 'action' => '/posts/search',
             ],
             ['div' => ['class' => 'input mb-3 text']],

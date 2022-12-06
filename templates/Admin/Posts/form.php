@@ -11,6 +11,11 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \Cake\Collection\Collection<string> $categories
+ * @var \MeCms\Model\Entity\Post $post
+ * @var \MeCms\View\View\AdminView $this
+ * @var string $title
  */
 $this->extend('MeCms./common/form');
 $this->Library->ckeditor();
@@ -23,7 +28,7 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
 
 <?= $this->Form->create($post); ?>
 <div class="row">
-    <div class="col-lg-3 order-1">
+    <div class="col-lg-3 order-last">
         <div class="float-form">
         <?php
         //Only admins and managers can add posts on behalf of other users
@@ -58,7 +63,7 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
         ?>
         </div>
     </div>
-    <fieldset class="col-lg-9">
+    <fieldset class="col">
     <?php
     echo $this->Form->control('title', [
         'id' => 'title',

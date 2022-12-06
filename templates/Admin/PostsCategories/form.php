@@ -11,6 +11,11 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var string[] $categories
+ * @var \MeCms\Model\Entity\PostsCategory $category
+ * @var \MeCms\View\View\AdminView $this
+ * @var string $title
  */
 $this->extend('MeCms./common/form');
 $this->Library->slugify();
@@ -18,7 +23,7 @@ $this->Library->slugify();
 
 <?= $this->Form->create($category); ?>
 <div class="row">
-    <div class="col-lg-3 order-1">
+    <div class="col-lg-3 order-last">
         <div class="float-form">
         <?php
         if (!empty($categories)) {
@@ -31,7 +36,7 @@ $this->Library->slugify();
         ?>
         </div>
     </div>
-    <fieldset class="col-lg-9">
+    <fieldset class="col">
     <?php
     echo $this->Form->control('title', [
         'id' => 'title',

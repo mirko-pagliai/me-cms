@@ -96,21 +96,6 @@ parameters:
 			path: src/Utility/Sitemap/SitemapBuilder.php
 
 		-
-			message: "#^Variable \\$categories might not be defined\\.$#"
-			count: 2
-			path: templates/Admin/Pages/form.php
-
-		-
-			message: "#^Variable \\$page might not be defined\\.$#"
-			count: 1
-			path: templates/Admin/Pages/form.php
-
-		-
-			message: "#^Variable \\$title might not be defined\\.$#"
-			count: 1
-			path: templates/Admin/Pages/form.php
-
-		-
 			message: "#^Variable \\$pages might not be defined\\.$#"
 			count: 1
 			path: templates/Admin/Pages/index.php
@@ -126,34 +111,9 @@ parameters:
 			path: templates/Admin/PagesCategories/index.php
 
 		-
-			message: "#^Variable \\$categories might not be defined\\.$#"
-			count: 2
-			path: templates/Admin/Posts/form.php
-
-		-
-			message: "#^Variable \\$post might not be defined\\.$#"
-			count: 1
-			path: templates/Admin/Posts/form.php
-
-		-
-			message: "#^Variable \\$title might not be defined\\.$#"
-			count: 1
-			path: templates/Admin/Posts/form.php
-
-		-
 			message: "#^Variable \\$posts might not be defined\\.$#"
 			count: 1
 			path: templates/Admin/Posts/index.php
-
-		-
-			message: "#^Variable \\$category might not be defined\\.$#"
-			count: 1
-			path: templates/Admin/PostsCategories/form.php
-
-		-
-			message: "#^Variable \\$title might not be defined\\.$#"
-			count: 1
-			path: templates/Admin/PostsCategories/form.php
 
 		-
 			message: "#^Variable \\$categories might not be defined\\.$#"
@@ -208,17 +168,7 @@ parameters:
 		-
 			message: "#^Variable \\$user might not be defined\\.$#"
 			count: 1
-			path: templates/Admin/Users/add.php
-
-		-
-			message: "#^Variable \\$user might not be defined\\.$#"
-			count: 1
 			path: templates/Admin/Users/change_password.php
-
-		-
-			message: "#^Variable \\$user might not be defined\\.$#"
-			count: 1
-			path: templates/Admin/Users/edit.php
 
 		-
 			message: "#^Variable \\$users might not be defined\\.$#"
@@ -279,16 +229,6 @@ parameters:
 			message: "#^Variable \\$start might not be defined\\.$#"
 			count: 3
 			path: templates/Posts/index_by_date.php
-
-		-
-			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$post\\.$#"
-			count: 1
-			path: templates/Posts/view.php
-
-		-
-			message: "#^Variable \\$post might not be defined\\.$#"
-			count: 15
-			path: templates/Posts/view.php
 
 		-
 			message: "#^Variable \\$categories might not be defined\\.$#"
@@ -366,16 +306,6 @@ parameters:
 			path: templates/element/views/page.php
 
 		-
-			message: "#^Variable \\$post might not be defined\\.$#"
-			count: 6
-			path: templates/element/views/post-preview.php
-
-		-
-			message: "#^Variable \\$post might not be defined\\.$#"
-			count: 15
-			path: templates/element/views/post.php
-
-		-
 			message: "#^Variable \\$email might not be defined\\.$#"
 			count: 1
 			path: templates/email/html/Systems/contact_us.php
@@ -419,21 +349,6 @@ parameters:
 			message: "#^Variable \\$url might not be defined\\.$#"
 			count: 1
 			path: templates/email/html/Users/password_forgot.php
-
-		-
-			message: "#^Call to an undefined method MeTools\\\\View\\\\Helper\\\\HtmlHelper\\:\\:title\\(\\)\\.$#"
-			count: 1
-			path: templates/layout/admin.php
-
-		-
-			message: "#^Call to an undefined method MeTools\\\\View\\\\Helper\\\\HtmlHelper\\:\\:title\\(\\)\\.$#"
-			count: 1
-			path: templates/layout/default.php
-
-		-
-			message: "#^Call to an undefined method MeTools\\\\View\\\\Helper\\\\HtmlHelper\\:\\:title\\(\\)\\.$#"
-			count: 1
-			path: templates/layout/login.php
 
 		-
 			message: "#^Access to an undefined property MeCms\\\\Controller\\\\PostsController\\:\\:\\$Foo\\.$#"
