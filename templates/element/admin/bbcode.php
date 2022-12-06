@@ -15,17 +15,23 @@ declare(strict_types=1);
 ?>
 
 <div class="border border-light rounded mb-3">
-    <?php
-    echo $this->Html->link(__d('me_cms', 'BBCode'), '#collapseBBCode', [
-        'class' => 'h6 m-0 text-dark bg-light px-3 py-3 d-block rounded-top',
+    <?= $this->Html->link(__d('me_cms', 'BBCode'), '#collapseBBCode', [
+        'class' => 'h6 m-0 text-dark bg-light p-3 d-block rounded-top',
         'aria-controls' => 'collapseBBCode',
         'aria-expanded' => 'false',
         'data-bs-toggle' => 'collapse',
-    ]);
-    ?>
+    ]) ?>
     <div class="collapse" id="collapseBBCode">
         <table class="table table-sm m-0">
             <tbody>
+                <tr>
+                    <td class="text-nowrap">
+                        <code>[hr /]</code>
+                    </td>
+                    <td>
+                        <?= __d('me_cms', 'Creates a horizontal line') ?>
+                    </td>
+                </tr>
                 <tr>
                     <td class="text-nowrap">
                         <code>[readmore /]</code>
@@ -37,8 +43,9 @@ declare(strict_types=1);
                 </tr>
                 <tr>
                     <td class="text-nowrap">
-                        <p><code>[img]mypic.gif[/img]</code></p>
-                        <p><code>[img]http://example.com/mypic.gif[/img]</code></p>
+                        <code>[img]mypic.gif[/img]</code>
+                        <br />
+                        <code>[img]http://example.com/mypic.gif[/img]</code>
                     </td>
                     <td>
                         <?= __d('me_cms', 'Adds an image') ?>
@@ -54,8 +61,9 @@ declare(strict_types=1);
                 </tr>
                 <tr>
                     <td class="text-nowrap">
-                        <p><code>[youtube]https://youtu.be/bL_CJKq9rIw[/youtube]</code></p>
-                        <p><code>[youtube]bL_CJKq9rIw[/youtube]</code></p>
+                        <code>[youtube]https://youtu.be/bL_CJKq9rIw[/youtube]</code>
+                        <br />
+                        <code>[youtube]bL_CJKq9rIw[/youtube]</code>
                     </td>
                     <td>
                         <?= __d('me_cms', 'Adds a {0} video. You may indicate the ID or the url of the video', 'YouTube') ?>
