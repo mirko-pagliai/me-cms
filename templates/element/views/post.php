@@ -25,13 +25,13 @@ $user = $post->get('user');
         <?php
         if (getConfig('post.author_picture')) {
             echo $this->Thumb->fit($user->get('picture'), ['width' => 100], [
-                'class' => 'flex-shrink-0 mr-3 rounded-circle user-picture',
+                'class' => 'flex-shrink-0 me-3 rounded-circle user-picture',
                 'title' => __d('me_cms', 'Posted by {0}', $user->get('full_name')),
             ]);
         }
         ?>
 
-        <div class="flex-grow-1 ms-3">
+        <div class="flex-grow-1">
             <?php if (getConfig('post.category') && $category) : ?>
                 <h5 class="category mb-2">
                     <?= $this->Html->link($category->get('title'), $category->get('url')) ?>
