@@ -48,7 +48,7 @@ if (!$app) {
         </button>
 
         <ul class="navbar-nav d-none d-lg-flex me-auto">
-            <?php foreach ($links as $link): ?>
+            <?php foreach ($links as $link) : ?>
                 <li class="nav-item"><?= $link ?></li>
             <?php endforeach; ?>
         </ul>
@@ -61,7 +61,7 @@ if (!$app) {
     </div>
     <div class="offcanvas-body">
         <ul class="navbar-nav flex-grow-1 pe-3">
-            <?php foreach ($links as $link): ?>
+            <?php foreach ($links as $link) : ?>
                 <li class="nav-item"><?= $link ?></li>
             <?php endforeach; ?>
         </ul>

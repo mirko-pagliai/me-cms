@@ -18,9 +18,11 @@ declare(strict_types=1);
 ?>
 
 <div class="card mb-4">
-    <?php if ($post->hasValue('preview')): ?>
-    <?= $this->Thumb->fit($post->get('preview')[0]->get('url'), ['width' => 205],  ['class' => 'card-img-top', 'url' => $post->get('url')]) ?>
-    <?php endif; ?>
+    <?php
+    if ($post->hasValue('preview')) {
+        echo $this->Thumb->fit($post->get('preview')[0]->get('url'), ['width' => 205], ['class' => 'card-img-top', 'url' => $post->get('url')]);
+    }
+    ?>
 
     <div class="card-body">
         <h5 class="card-title text-truncate">

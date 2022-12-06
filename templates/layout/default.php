@@ -87,7 +87,7 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
                     echo $this->fetch('content');
                     ?>
                 </main>
-            <?php if ($sidebar): ?>
+            <?php if ($sidebar) : ?>
                 <nav id="sidebar" class="col-lg-3">
                     <?= $this->fetch('sidebar') ?>
                     <?= $this->Widget->all() ?>
