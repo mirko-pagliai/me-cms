@@ -46,9 +46,12 @@ declare(strict_types=1);
     <body>
         <main class="container col-sm-7 col-md-6 col-lg-5 col-xl-3 my-sm-5 p-4 rounded rounded-sm-4">
             <?php
-            $logoOptions = ['id' => 'logo', 'class' => 'mt-2 mb-4 text-center text-truncate'];
+            $logoOptions = ['id' => 'logo', 'class' => 'd-block m-auto mt-2 mb-5 text-center text-truncate'];
             $logo = $this->Html->h1(getConfigOrFail('main.title'), $logoOptions);
-            if (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {
+            //First checks if the `logo_login.png` file exists, otherwise it uses the default logo
+            if (is_readable(WWW_ROOT . 'img' . DS . 'logo_login.png')) {
+                $logo = $this->Html->image('logo_login.png', $logoOptions);
+            } elseif (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {
                 $logo = $this->Html->image(getConfig('default.logo'), $logoOptions);
             }
             echo $logo;

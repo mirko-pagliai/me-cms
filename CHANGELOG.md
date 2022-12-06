@@ -4,6 +4,7 @@
 * the topbar has been made permanently compatible with the new bootstrap;
 * the default layout can automatically establish whether to use a sidebar and whether to directly use the 
   css files (`layout.css` and `contents.css`) from the application webroot;
+* the `login` layout first checks if the `logo_login.png` file exists, otherwise it uses the default logo;
 * fixed little bugs for posts preview;
 * fixed a small bug in the sorting of columns in the admin form;
 * removed a lot of useless css code and optimized the layout and its elements.
