@@ -62,6 +62,16 @@
       <code>empty($this-&gt;Table)</code>
     </TypeDoesNotContainType>
   </file>
+  <file src="templates/Admin/Pages/form.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>$this-&gt;extend('MeCms./common/form');</code>
+    </TooManyTemplateParams>
+  </file>
+  <file src="templates/Admin/Posts/form.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>$this-&gt;extend('MeCms./common/form');</code>
+    </TooManyTemplateParams>
+  </file>
   <file src="tests/TestCase/Command/Install/CreateSamplePostCommandTest.php">
     <UndefinedPropertyAssignment occurrences="1">
       <code>$this-&gt;Command-&gt;Posts</code>
