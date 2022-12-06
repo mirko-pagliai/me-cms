@@ -1,8 +1,8 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.11
-* the topbar has been made permanently compatible with the new bootstrap;
-* the default layout can automatically establish whether to use a sidebar and whether to directly use the 
+* the `topbar` element has been made permanently compatible with the new bootstrap;
+* the `default` layout can automatically establish whether to use a sidebar and whether to directly use the 
   css files (`layout.css` and `contents.css`) from the application webroot;
 * the `login` layout first checks if the `logo_login.png` file exists, otherwise it uses the default logo;
 * fixed little bugs for posts preview;
