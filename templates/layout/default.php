@@ -70,7 +70,16 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
             }
             echo $this->Html->link($logo, '/', ['class' => 'd-block my-5 text-center', 'title' => __d('me_cms', 'Homepage')]);
 
-            echo $this->element('MeCms.topbar', [], getConfig('debug') ? [] : ['cache' => ['key' => 'topbar']]);
+            //It uses the cache only if debugging is disabled.
+            //It will use the `topbar.php` element if it is present in the app, otherwise it will use the plugin one
+            $topbarOptions = getConfig('debug') ? [] : ['cache' => ['key' => 'topbar']];
+            foreach (iterator_to_array($this->getElementPaths(null)) as $path) {
+                if (is_readable($path . 'topbar.php')) {
+                    $topbarOptions += ['plugin' => false];
+                    break;
+                }
+            }
+            echo $this->element('topbar', [], $topbarOptions);
             ?>
         </header>
         <div class="container flex-grow-1 my-5">
@@ -96,7 +105,18 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
             </div>
         </div>
         <footer class="p-4 small text-center">
-            <?= $this->element('MeCms.footer', [], getConfig('debug') ? [] : ['cache' => ['key' => 'footer']]) ?>
+            <?php
+            //It uses the cache only if debugging is disabled.
+            //It will use the `footer.php` element if it is present in the app, otherwise it will use the plugin one
+            $footerOptions = getConfig('debug') ? [] : ['cache' => ['key' => 'footer']];
+            foreach (iterator_to_array($this->getElementPaths(null)) as $path) {
+                if (is_readable($path . 'footer.php')) {
+                    $footerOptions += ['plugin' => false];
+                    break;
+                }
+            }
+            echo $this->element('MeCms.footer', [], $footerOptions);
+            ?>
         </footer>
         <?= $this->fetch('css_bottom') ?>
         <?= $this->fetch('script_bottom') ?>
