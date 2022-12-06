@@ -11,6 +11,9 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AdminView $this
+ * @var \MeCms\Model\Entity\User $user
  */
 $this->extend('MeCms./common/form');
 $this->assign('title', $title = __d('me_cms', 'Add user'));
@@ -18,7 +21,7 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
 
 <?= $this->Form->create($user); ?>
 <div class="row">
-    <div class="col-lg-3 order-1">
+    <div class="col-lg-3 order-last">
         <div class="float-form">
         <?php
         echo $this->Form->control('group_id', [
@@ -33,7 +36,7 @@ $this->assign('title', $title = __d('me_cms', 'Add user'));
         ?>
         </div>
     </div>
-    <fieldset class="col-lg-9">
+    <fieldset class="col">
     <?php
     echo $this->Form->control('username', [
         'autocomplete' => 'off',

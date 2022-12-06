@@ -5,6 +5,7 @@
 * the default layout can automatically establish whether to use a sidebar and whether to directly use the 
   css files (`layout.css` and `contents.css`) from the application webroot;
 * fixed little bugs for posts preview;
+* fixed a small bug in the sorting of columns in the admin form;
 * removed a lot of useless css code and optimized the layout and its elements.
 
 ### 2.30.10
