@@ -12,8 +12,8 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
- * @var string[] $categories
- * @var \App\Model\Entity\Post $post
+ * @var \Cake\Collection\Collection<string> $categories
+ * @var \MeCms\Model\Entity\Post $post
  * @var \MeCms\View\View\AdminView $this
  * @var string $title
  */

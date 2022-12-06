@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
- * @var string[] $categories
+ * @var \Cake\Collection\Collection<string> $categories
  * @var \MeCms\Model\Entity\Page $page
  * @var \MeCms\View\View\AdminView $this
  * @var string $title
