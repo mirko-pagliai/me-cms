@@ -95,7 +95,7 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
             <?php endif; ?>
             </div>
         </div>
-        <footer class="bg-light p-4 small text-center text-muted">
+        <footer class="p-4 small text-center">
             <?= $this->element('MeCms.footer', [], getConfig('debug') ? [] : ['cache' => ['key' => 'footer']]) ?>
         </footer>
         <?= $this->fetch('css_bottom') ?>

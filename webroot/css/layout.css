@@ -63,6 +63,12 @@ body {
 /* -------------------------------- */
 /*              Footer              */
 /* -------------------------------- */
+/* Footer */
+body > footer {
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
 /* Footer, links */
 body > footer a {
     border-bottom: 1px dashed;

@@ -47,13 +47,14 @@ if (!$app) {
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <ul class="navbar-nav d-none d-lg-flex me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav d-none d-lg-flex me-auto">
             <?php foreach ($links as $link): ?>
                 <li class="nav-item"><?= $link ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
 </nav>
+
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
     <div class="offcanvas-header">
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="<?= __d('me_cms', 'Close') ?>"></button>
