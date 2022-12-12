@@ -62,13 +62,13 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
     <body class="d-flex flex-column min-vh-100">
         <?= $this->element('MeCms.userbar') ?>
         <?= $this->element('MeCms.cookies_policy') ?>
-        <header class="container">
+        <header>
             <?php
             $logo = $this->Html->h1(getConfigOrFail('main.title'));
             if (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {
                 $logo = $this->Html->image(getConfig('default.logo'));
             }
-            echo $this->Html->link($logo, '/', ['class' => 'd-block my-5 text-center', 'title' => __d('me_cms', 'Homepage')]);
+            echo $this->Html->link($logo, '/', ['class' => 'd-block mx-4 my-5 text-center', 'title' => __d('me_cms', 'Homepage')]);
 
             //It uses the cache only if debugging is disabled.
             //It will use the `topbar.php` element if it is present in the app, otherwise it will use the plugin one

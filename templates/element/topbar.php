@@ -42,28 +42,34 @@ if (!$app) {
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
+    <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <ul class="navbar-nav d-none d-lg-flex me-auto">
-            <?php foreach ($links as $link) : ?>
-                <li class="nav-item"><?= $link ?></li>
-            <?php endforeach; ?>
-        </ul>
+        <div class="collapse navbar-collapse d-none d-lg-block">
+            <ul class="navbar-nav me-auto gap-3">
+                <?php foreach ($links as $link) : ?>
+                    <li class="nav-item fs-5">
+                        <?= $link ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="<?= __d('me_cms', 'Close') ?>"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="navbar-nav flex-grow-1 pe-3">
+                <?php foreach ($links as $link) : ?>
+                    <li class="nav-item fs-5">
+                        <?= $link ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     </div>
 </nav>
-
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-    <div class="offcanvas-header">
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="<?= __d('me_cms', 'Close') ?>"></button>
-    </div>
-    <div class="offcanvas-body">
-        <ul class="navbar-nav flex-grow-1 pe-3">
-            <?php foreach ($links as $link) : ?>
-                <li class="nav-item"><?= $link ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-</div>
