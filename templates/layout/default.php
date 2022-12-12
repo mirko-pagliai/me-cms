@@ -62,15 +62,22 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
     <body class="d-flex flex-column min-vh-100">
         <?= $this->element('MeCms.userbar') ?>
         <?= $this->element('MeCms.cookies_policy') ?>
-        <header class="container">
+        <header>
             <?php
             $logo = $this->Html->h1(getConfigOrFail('main.title'));
             if (is_readable(WWW_ROOT . 'img' . DS . getConfig('default.logo'))) {
                 $logo = $this->Html->image(getConfig('default.logo'));
             }
-            echo $this->Html->link($logo, '/', ['class' => 'd-block my-5 text-center', 'title' => __d('me_cms', 'Homepage')]);
+            echo $this->Html->link($logo, '/', ['class' => 'd-block mx-4 my-5 text-center', 'title' => __d('me_cms', 'Homepage')]);
 
-            echo $this->element('MeCms.topbar', [], getConfig('debug') ? [] : ['cache' => ['key' => 'topbar']]);
+            //It uses the cache only if debugging is disabled.
+            //It will use the `topbar.php` element if it is present in the app, otherwise it will use the plugin one
+            $topbarOptions = getConfig('debug') ? [] : ['cache' => ['key' => 'topbar']];
+            if ($this->elementExistsInApp('topbar')) {
+                $topbarName = 'topbar';
+                $topbarOptions += ['plugin' => false];
+            }
+            echo $this->element($topbarName ?? 'MeCms.topbar', [], $topbarOptions);
             ?>
         </header>
         <div class="container flex-grow-1 my-5">
@@ -96,7 +103,16 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
             </div>
         </div>
         <footer class="p-4 small text-center">
-            <?= $this->element('MeCms.footer', [], getConfig('debug') ? [] : ['cache' => ['key' => 'footer']]) ?>
+            <?php
+            //It uses the cache only if debugging is disabled.
+            //It will use the `footer.php` element if it is present in the app, otherwise it will use the plugin one
+            $footerOptions = getConfig('debug') ? [] : ['cache' => ['key' => 'footer']];
+            if ($this->elementExistsInApp('footer')) {
+                $footerName = 'footer';
+                $footerOptions += ['plugin' => false];
+            }
+            echo $this->element($footerName ?? 'MeCms.footer', [], $footerOptions);
+            ?>
         </footer>
         <?= $this->fetch('css_bottom') ?>
         <?= $this->fetch('script_bottom') ?>
