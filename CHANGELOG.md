@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.11
+* added `View::elementExistsInApp()` method;
 * the `topbar` element has been made permanently compatible with the new bootstrap;
 * the `default` layout will correctly use the `topbar.php` and `footer.php` elements if they are present in the app,
   otherwise it will use the plugin ones;

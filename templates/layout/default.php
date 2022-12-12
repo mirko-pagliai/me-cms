@@ -72,16 +72,12 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
 
             //It uses the cache only if debugging is disabled.
             //It will use the `topbar.php` element if it is present in the app, otherwise it will use the plugin one
-            $topbarName = 'MeCms.topbar';
             $topbarOptions = getConfig('debug') ? [] : ['cache' => ['key' => 'topbar']];
-            foreach (iterator_to_array($this->getElementPaths(null)) as $path) {
-                if (is_readable($path . 'topbar.php')) {
-                    $topbarName = 'topbar';
-                    $topbarOptions += ['plugin' => false];
-                    break;
-                }
+            if ($this->elementExistsInApp('topbar')) {
+                $topbarName = 'topbar';
+                $topbarOptions += ['plugin' => false];
             }
-            echo $this->element($topbarName, [], $topbarOptions);
+            echo $this->element($topbarName ?? 'MeCms.topbar', [], $topbarOptions);
             ?>
         </header>
         <div class="container flex-grow-1 my-5">
@@ -110,16 +106,12 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
             <?php
             //It uses the cache only if debugging is disabled.
             //It will use the `footer.php` element if it is present in the app, otherwise it will use the plugin one
-            $footerName = 'MeCms.footer';
             $footerOptions = getConfig('debug') ? [] : ['cache' => ['key' => 'footer']];
-            foreach (iterator_to_array($this->getElementPaths(null)) as $path) {
-                if (is_readable($path . 'footer.php')) {
-                    $footerName = 'footer';
-                    $footerOptions += ['plugin' => false];
-                    break;
-                }
+            if ($this->elementExistsInApp('footer')) {
+                $footerName = 'footer';
+                $footerOptions += ['plugin' => false];
             }
-            echo $this->element($footerName, [], $footerOptions);
+            echo $this->element($footerName ?? 'MeCms.footer', [], $footerOptions);
             ?>
         </footer>
         <?= $this->fetch('css_bottom') ?>

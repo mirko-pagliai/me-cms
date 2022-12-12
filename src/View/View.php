@@ -98,6 +98,19 @@ abstract class View extends AppView
     }
 
     /**
+     * Checks if an element exists in app.
+     *
+     * Unlike `elementExists()` method, it excludes plugins.
+     * @param string $name Name of template file in the `templates/element/` folder
+     * @return bool
+     * @since 2.30.11
+     */
+    public function elementExistsInApp(string $name): bool
+    {
+        return (bool)$this->_getElementFileName($name, false);
+    }
+
+    /**
      * Renders a layout. Returns output from _render().
      *
      * Several variables are created for use in layout.

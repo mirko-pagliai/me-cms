@@ -98,6 +98,21 @@ class ViewTest extends TestCase
     }
 
     /**
+     * Tests for `elementExistsInApp()` method
+     * @uses \MeCms\View\View::elementExistsInApp()
+     * @test
+     */
+    public function testElementExistsInApp(): void
+    {
+        $this->assertFalse($this->View->elementExistsInApp('topbar'));
+
+        $file = APP . 'templates' . DS . 'element' . DS . 'topbar.php';
+        Filesystem::instance()->createFile($file);
+        $this->assertTrue($this->View->elementExistsInApp('topbar'));
+        unlink($file);
+    }
+
+    /**
      * Tests for `renderLayout()` method
      * @uses \MeCms\View\View::renderLayout()
      * @test
