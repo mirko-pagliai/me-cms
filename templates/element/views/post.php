@@ -80,9 +80,9 @@ $user = $post->get('user');
                 $strpos = getConfigOrFail('default.truncate_to');
                 $truncatedOptions = ['html' => true];
             }
-            $text = $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
+            $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
         }
-        echo $text;
+        echo $truncatedText ?? $text;
         ?>
     </div>
 
@@ -95,7 +95,7 @@ $user = $post->get('user');
     <?php endif; ?>
 
     <?php if (isset($truncatedText) && $truncatedText !== $text) : ?>
-    <div class="buttons mt-2 text-right">
+    <div class="buttons mt-2 text-end">
         <?= $this->Html->button(__d('me_cms', 'Read more'), $post->get('url'), ['class' => ' readmore']) ?>
     </div>
     <?php endif; ?>
