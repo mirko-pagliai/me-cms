@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @var \MeCms\Model\Entity\Post $post
  * @var \MeCms\View\View\AppView $this
  */
-$isView = $this->getRequest()->is('action', 'view', 'Posts') && !$this->getRequest()->is('ajax');
+$isView = $this->getRequest()->is('action', 'view') && !$this->getRequest()->is('ajax');
 $category = $post->get('category');
 $user = $post->get('user');
 ?>
@@ -33,22 +33,22 @@ $user = $post->get('user');
 
         <div class="flex-grow-1">
             <?php if (getConfig('post.category') && $category) : ?>
-                <h5 class="category mb-2">
-                    <?= $this->Html->link($category->get('title'), $category->get('url')) ?>
+                <h5 class="category fw-semibold lh-1 mb-1 text-uppercase">
+                    <?= $this->Html->link($category->get('title'), $category->get('url'), ['class' => 'text-decoration-none']) ?>
                 </h5>
             <?php endif; ?>
 
-            <h2 class="title mb-2">
-                <?= $this->Html->link($post->get('title'), $post->get('url')) ?>
+            <h2 class="title lh-sm">
+                <?= $this->Html->link($post->get('title'), $post->get('url'), ['class' => 'text-decoration-none']) ?>
             </h2>
 
             <?php if ($post->hasValue('subtitle')) : ?>
-                <h4 class="subtitle mb-2">
-                    <?= $this->Html->link($post->get('subtitle'), $post->get('url')) ?>
+                <h4 class="subtitle lh-1">
+                    <?= $this->Html->link($post->get('subtitle'), $post->get('url'), ['class' => 'text-decoration-none']) ?>
                 </h4>
             <?php endif; ?>
 
-            <div class="info">
+            <div class="info text-muted">
                 <?php
                 if (getConfig('post.author')) {
                     echo $this->Html->div('author', __d('me_cms', 'Posted by {0}', $user->get('full_name')), ['icon' => 'user']);
@@ -56,30 +56,24 @@ $user = $post->get('user');
 
                 $created = $post->get('created');
                 if (getConfig('post.created')) {
-                    echo $this->Html->div('created', $this->Html->time(
-                        __d('me_cms', 'Posted on {0}', $created->i18nFormat()),
-                        ['class' => 'date', 'icon' => 'clock']
-                    ));
+                    echo $this->Html->div('created', $this->Html->time(__d('me_cms', 'Posted on {0}', $created->i18nFormat())));
                 }
 
                 $modified = $post->get('modified');
                 if (getConfig('post.modified') && $modified != $created) {
-                    echo $this->Html->div('modified small', $this->Html->time(
-                        __d('me_cms', 'Updated on {0}', $modified->i18nFormat()),
-                        ['class' => 'date', 'icon' => 'clock']
-                    ));
+                    echo $this->Html->div('modified small', $this->Html->time(__d('me_cms', 'Updated on {0}', $modified->i18nFormat())));
                 }
                 ?>
             </div>
         </div>
     </header>
 
-    <main class="text-justify">
+    <div class="body text-justify">
         <?php
         //Truncates the text when necessary. The text will be truncated to the location of the `<!-- readmore -->` tag.
         //  If the tag is not present, the value in the configuration will be used
         $text = $post->get('text');
-        if (!$this->getRequest()->is('action', ['view', 'preview'])) {
+        if (!$isView && !$this->getRequest()->is('action', 'preview')) {
             $strpos = strpos($text, '<!-- read-more -->');
             $truncatedOptions = ['ellipsis' => ''];
             if (!$strpos) {
@@ -90,12 +84,12 @@ $user = $post->get('user');
         }
         echo $text;
         ?>
-    </main>
+    </div>
 
     <?php if (getConfig('post.tags')) : ?>
         <div class="tags mt-2">
             <?php foreach ($post->get('tags') as $tag) : ?>
-                <?= $this->Html->link($tag->get('tag'), $tag->get('url'), ['icon' => 'tags']) ?>
+                <?= $this->Html->link($tag->get('tag'), $tag->get('url'), ['class' => 'd-inline-block mb-2 me-1 p-1 small text-decoration-none', 'icon' => 'tags']) ?>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>

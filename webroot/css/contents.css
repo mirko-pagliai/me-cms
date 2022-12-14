@@ -15,7 +15,6 @@
 /* Header, links */
 article header a {
     color: #555;
-    text-decoration: none;
 }
 
 /* Header, links on hover */
@@ -23,54 +22,30 @@ article header a:hover {
     color: #333;
 }
 
-/* Header, category */
-article header .category {
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-/* Header, title */
-article header .title {
-    line-height: 1;
-}
-
-/* Header, info (author, date, etc) */
-article header .info {
-    color: #868e96;
-}
-
-/* Header, info (author, date, etc), icons */
-article header .info .fa,
-article header .info .fab,
-article header .info .fal,
-article header .info .far,
-article header .info .fas {
-    min-width: .95rem;
+/* Header, time, icon */
+article header time::before {
+    content: "\f017";
+    font-family: "Font Awesome 6 Free";
+    margin-right: .25rem;
 }
 
 /* -------------------------------- */
-/*          Main content            */
+/*          Body content            */
 /* -------------------------------- */
-/* Main content */
-article main,
-.article {
-    line-height: 1.6;
-}
-
-/* Main content, images */
-article main img,
+/* Body content, images */
+article .body img,
 .article img {
     height: auto;
     max-width: 100%;
 }
 
-/* Main content, images pulled on left or right */
-article main img.float-left,
-article main img.pull-left,
-article main img[style~="float:left"],
-article main img.float-right,
-article main img.pull-right,
-article main img[style~="float:right"],
+/* Body content, images pulled on left or right */
+article .body img.float-left,
+article .body img.pull-left,
+article .body img[style~="float:left"],
+article .body img.float-right,
+article .body img.pull-right,
+article .body img[style~="float:right"],
 .article img.float-left,
 .article img.pull-left,
 .article img[style~="float:left"],
@@ -80,47 +55,36 @@ article main img[style~="float:right"],
     margin: .6rem 0;
 }
 
-/* Main content, images pulled on left */
-article main img.float-left,
-article main img.pull-left,
-article main img[style~="float:left"],
+/* Body content, images pulled on left */
+article .body img.float-left,
+article .body img.pull-left,
+article .body img[style~="float:left"],
 .article img.float-left,
 .article img.pull-left,
 .article img[style~="float:left"] {
     margin-right: 1rem;
 }
 
-/* Main content, images pulled on right */
-article main img.float-right,
-article main img.pull-right,
-article main img[style~="float:right"],
+/* Body content, images pulled on right */
+article .body img.float-right,
+article .body img.pull-right,
+article .body img[style~="float:right"],
 .article img.float-right,
 .article img.pull-right,
 .article img[style~="float:right"] {
     margin-left: 1rem;
 }
 
-/* Main content, last paragraph */
-article main p:last-child,
+/* Body content, last paragraph */
+article .body p:last-child,
 .article p:last-child {
     margin-bottom: 0;
 }
 
-/* Main content, tables */
-article main table,
+/* Body content, tables */
+article .body table,
 .article table {
     max-width: 100%;
-}
-
-/* -------------------------------- */
-/*              Tags                */
-/* -------------------------------- */
-/* Tags, each tag */
-article .tags a {
-    display: inline-block;
-    font-size: .9rem;
-    margin-right: .2rem;
-    text-decoration: none;
 }
 
 /* -------------------------------- */
