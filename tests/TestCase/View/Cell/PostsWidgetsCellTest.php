@@ -44,7 +44,7 @@ class PostsWidgetsCellTest extends CellTestCase
         $widget = 'MeCms.Posts::categories';
 
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Posts categories',
             '/h4',
@@ -71,7 +71,7 @@ class PostsWidgetsCellTest extends CellTestCase
 
         //Renders as list
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Posts categories',
             '/h4',
@@ -127,7 +127,7 @@ class PostsWidgetsCellTest extends CellTestCase
 
         //Tries with a limit of 1
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Latest post',
             '/h4',
@@ -152,7 +152,7 @@ class PostsWidgetsCellTest extends CellTestCase
         //Tries with a limit of 2
         [$post, $otherPost] = $this->Table->find('active')->orderDesc('created')->limit(2)->toArray();
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Latest 2 posts',
             '/h4',
@@ -210,7 +210,7 @@ class PostsWidgetsCellTest extends CellTestCase
         $widget = 'MeCms.Posts::months';
 
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Posts by month',
             '/h4',
@@ -237,7 +237,7 @@ class PostsWidgetsCellTest extends CellTestCase
 
         //Renders as list
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Posts by month',
             '/h4',
@@ -299,7 +299,7 @@ class PostsWidgetsCellTest extends CellTestCase
         $widget = 'MeCms.Posts::search';
 
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Search posts',
             '/h4',

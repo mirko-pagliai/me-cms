@@ -43,7 +43,7 @@ class PagesWidgetsCellTest extends CellTestCase
         $widget = 'MeCms.Pages::categories';
 
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Pages categories',
             '/h4',
@@ -70,7 +70,7 @@ class PagesWidgetsCellTest extends CellTestCase
 
         //Renders as list
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Pages categories',
             '/h4',
@@ -124,7 +124,7 @@ class PagesWidgetsCellTest extends CellTestCase
         $widget = 'MeCms.Pages::pages';
 
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Pages',
             '/h4',
