@@ -104,7 +104,7 @@ article .readmore:hover {
 }
 
 /* Buttons, "read more" button, icon */
-article .readmore:after {
+article .readmore::after {
     font-family: "Font Awesome 5 Free", sans-serif, Arial;
     content: "\f30b";
     display: inline-block;
