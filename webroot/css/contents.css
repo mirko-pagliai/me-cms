@@ -91,23 +91,20 @@ article .body table,
 /*              Buttons             */
 /* -------------------------------- */
 /* Buttons, links */
-article .buttons a {
+article .readmore {
     background: #ddd;
     border-color: #bbb;
     border-width: 0 0 .2rem;
     color: #777;
-    font-size: .85rem;
-    font-weight: bold;
-    padding: .6rem .7rem;
 }
 
 /* Buttons, links on hover */
-article .buttons a:hover {
+article .readmore:hover {
     border-color: #666;
 }
 
 /* Buttons, "read more" button, icon */
-article .buttons .readmore:after {
+article .readmore:after {
     font-family: "Font Awesome 5 Free", sans-serif, Arial;
     content: "\f30b";
     display: inline-block;
