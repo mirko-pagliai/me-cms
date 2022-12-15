@@ -36,7 +36,7 @@ class HtmlWidgetsCellTest extends CellTestCase
         $this->assertEquals($expected, $result);
 
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             ['div' => ['class' => 'widget-content']],
             'A custom widget',
             '/div',
@@ -46,7 +46,7 @@ class HtmlWidgetsCellTest extends CellTestCase
         $this->assertHtml($expected, $result);
 
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Custom title',
             '/h4',

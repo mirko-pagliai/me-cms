@@ -196,16 +196,6 @@ parameters:
 			path: templates/Admin/UsersGroups/index.php
 
 		-
-			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$page\\.$#"
-			count: 1
-			path: templates/Pages/view.php
-
-		-
-			message: "#^Variable \\$page might not be defined\\.$#"
-			count: 14
-			path: templates/Pages/view.php
-
-		-
 			message: "#^Variable \\$categories might not be defined\\.$#"
 			count: 1
 			path: templates/PagesCategories/index.php
@@ -299,11 +289,6 @@ parameters:
 			message: "#^Variable \\$priority might not be defined\\.$#"
 			count: 1
 			path: templates/element/admin/priority-badge.php
-
-		-
-			message: "#^Variable \\$page might not be defined\\.$#"
-			count: 13
-			path: templates/element/views/page.php
 
 		-
 			message: "#^Variable \\$email might not be defined\\.$#"

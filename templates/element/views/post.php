@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @var \MeCms\Model\Entity\Post $post
  * @var \MeCms\View\View\AppView $this
  */
-$isView = $this->getRequest()->is('action', 'view', 'Posts') && !$this->getRequest()->is('ajax');
+$isView = $this->getRequest()->is('action', 'view') && !$this->getRequest()->is('ajax');
 $category = $post->get('category');
 $user = $post->get('user');
 ?>
@@ -33,84 +33,72 @@ $user = $post->get('user');
 
         <div class="flex-grow-1">
             <?php if (getConfig('post.category') && $category) : ?>
-                <h5 class="category mb-2">
-                    <?= $this->Html->link($category->get('title'), $category->get('url')) ?>
+                <h5 class="category fw-semibold lh-1 mb-1 text-uppercase">
+                    <?= $this->Html->link($category->get('title'), $category->get('url'), ['class' => 'text-decoration-none']) ?>
                 </h5>
             <?php endif; ?>
 
-            <h2 class="title mb-2">
-                <?= $this->Html->link($post->get('title'), $post->get('url')) ?>
+            <h2 class="title lh-sm">
+                <?= $this->Html->link($post->get('title'), $post->get('url'), ['class' => 'text-decoration-none']) ?>
             </h2>
 
             <?php if ($post->hasValue('subtitle')) : ?>
-                <h4 class="subtitle mb-2">
-                    <?= $this->Html->link($post->get('subtitle'), $post->get('url')) ?>
+                <h4 class="subtitle lh-1">
+                    <?= $this->Html->link($post->get('subtitle'), $post->get('url'), ['class' => 'text-decoration-none']) ?>
                 </h4>
             <?php endif; ?>
 
-            <div class="info">
-                <?php
-                if (getConfig('post.author')) {
-                    echo $this->Html->div('author', __d('me_cms', 'Posted by {0}', $user->get('full_name')), ['icon' => 'user']);
-                }
+            <?php
+            if (getConfig('post.author')) {
+                echo $this->Html->div('author text-muted', __d('me_cms', 'Posted by {0}', $user->get('full_name')), ['icon' => 'user']);
+            }
 
-                $created = $post->get('created');
-                if (getConfig('post.created')) {
-                    echo $this->Html->div('created', $this->Html->time(
-                        __d('me_cms', 'Posted on {0}', $created->i18nFormat()),
-                        ['class' => 'date', 'icon' => 'clock']
-                    ));
-                }
+            if (getConfig('post.created')) {
+                echo $this->Html->div('created text-muted', $this->Html->time(__d('me_cms', 'Posted on {0}', $post->get('created')->i18nFormat())));
+            }
 
-                $modified = $post->get('modified');
-                if (getConfig('post.modified') && $modified != $created) {
-                    echo $this->Html->div('modified small', $this->Html->time(
-                        __d('me_cms', 'Updated on {0}', $modified->i18nFormat()),
-                        ['class' => 'date', 'icon' => 'clock']
-                    ));
-                }
-                ?>
-            </div>
+            if (getConfig('post.modified') && $post->get('modified') != $post->get('created')) {
+                echo $this->Html->div('modified small text-muted', $this->Html->time(__d('me_cms', 'Updated on {0}', $post->get('modified')->i18nFormat())));
+            }
+            ?>
         </div>
     </header>
 
-    <main class="text-justify">
+    <div class="body text-justify">
         <?php
         //Truncates the text when necessary. The text will be truncated to the location of the `<!-- readmore -->` tag.
         //  If the tag is not present, the value in the configuration will be used
-        $text = $post->get('text');
-        if (!$this->getRequest()->is('action', ['view', 'preview'])) {
-            $strpos = strpos($text, '<!-- read-more -->');
-            $truncatedOptions = ['ellipsis' => ''];
+        if (!$isView && !$this->getRequest()->is('action', 'preview')) {
+            $strpos = strpos($post->get('text'), '<!-- read-more -->');
             if (!$strpos) {
                 $strpos = getConfigOrFail('default.truncate_to');
                 $truncatedOptions = ['html' => true];
             }
-            $text = $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
+            $truncatedText = $this->Text->truncate($post->get('text'), $strpos, $truncatedOptions ?? ['ellipsis' => '']);
         }
-        echo $text;
+        echo $truncatedText ?? $post->get('text');
         ?>
-    </main>
+    </div>
 
     <?php if (getConfig('post.tags')) : ?>
-        <div class="tags mt-2">
-            <?php foreach ($post->get('tags') as $tag) : ?>
-                <?= $this->Html->link($tag->get('tag'), $tag->get('url'), ['icon' => 'tags']) ?>
-            <?php endforeach; ?>
-        </div>
+        <ul class="tags list-inline mt-3">
+        <?php foreach ($post->get('tags') as $tag) : ?>
+            <li class="list-inline-item me-0 mb-2 small">
+                <?= $this->Html->link($tag->get('tag'), $tag->get('url'), ['class' => 'p-1 text-decoration-none', 'icon' => 'tags']) ?>
+            </li>
+        <?php endforeach; ?>
+        </ul>
     <?php endif; ?>
 
-    <?php if (isset($truncatedText) && $truncatedText !== $text) : ?>
-    <div class="buttons mt-2 text-right">
-        <?= $this->Html->button(__d('me_cms', 'Read more'), $post->get('url'), ['class' => ' readmore']) ?>
-    </div>
-    <?php endif; ?>
+    <?php
+    if (isset($truncatedText) && $truncatedText !== $post->get('text')) {
+        echo $this->Html->button(__d('me_cms', 'Read more'), $post->get('url'), ['class' => 'fw-bold float-end mt-2 readmore small text-end']);
+    }
 
-    <?php if (getConfig('post.shareaholic') && $isView) : ?>
-    <div class="mt-3">
-        <?= $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id')) ?>
-    </div>
-    <?php endif; ?>
+    if (getConfig('post.shareaholic') && $isView) {
+        echo $this->Html->div('mt-3', $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id')));
+    }
+    ?>
 
     <?php if (getConfig('disqus.shortname') && getConfig('post.enable_comments') && $post->get('enable_comments') && $isView) : ?>
     <div id="disqus_thread" class="mt-3"></div>

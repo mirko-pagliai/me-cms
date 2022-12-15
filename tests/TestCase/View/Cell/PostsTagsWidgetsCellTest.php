@@ -91,7 +91,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
 
         //Tries using the style (`maxFont` and `minFont`)
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Popular tags',
             '/h4',
@@ -114,7 +114,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
 
         //Tries with a custom prefix
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Popular tags',
             '/h4',
@@ -137,7 +137,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
 
         //Tries to render as form
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Popular tags',
             '/h4',
@@ -164,7 +164,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
 
         //Tries to render as list
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Popular tags',
             '/h4',
@@ -196,7 +196,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $this->assertHtml($expected, $result);
 
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Popular tags',
             '/h4',
@@ -259,7 +259,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         }
 
         $expected = [
-            ['div' => ['class' => 'widget mb-4']],
+            ['div' => ['class' => 'widget mb-5']],
             'h4' => ['class' => 'widget-title'],
             'Popular tags',
             '/h4',

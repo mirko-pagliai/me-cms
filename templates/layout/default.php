@@ -16,11 +16,12 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
 $sidebar = $this->fetch('sidebar') . $this->Widget->all();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= substr(I18n::getLocale(), 0, 2) ?>">
     <head>
         <?php
         echo $this->Html->charset();
@@ -80,7 +81,7 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
             echo $this->element($topbarName ?? 'MeCms.topbar', [], $topbarOptions);
             ?>
         </header>
-        <div class="container flex-grow-1 my-5">
+        <div class="container flex-grow-1 mt-5">
             <div class="row">
                 <main class="col">
                     <?php

@@ -11,80 +11,68 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\Model\Entity\Page $page
+ * @var \MeCms\View\View\AppView $this
  */
-$isView = $this->getRequest()->is('action', 'view', 'Pages') && !$this->getRequest()->isAjax();
+$isView = $this->getRequest()->is('action', 'view') && !$this->getRequest()->is('ajax');
 $category = $page->get('category');
 ?>
 
-<article class="clearfix mb-4">
+<article class="clearfix mb-5">
     <header class="mb-3">
         <?php if (getConfig('page.category') && $category) : ?>
-            <h5 class="category mb-2">
-                <?= $this->Html->link($category->get('title'), $category->get('url')) ?>
+            <h5 class="category fw-semibold lh-1 mb-1 text-uppercase">
+                <?= $this->Html->link($category->get('title'), $category->get('url'), ['class' => 'text-decoration-none']) ?>
             </h5>
         <?php endif; ?>
 
-        <h3 class="title mb-2">
-            <?= $this->Html->link($page->get('title'), $page->get('url')) ?>
-        </h3>
+        <h2 class="title lh-sm">
+            <?= $this->Html->link($page->get('title'), $page->get('url'), ['class' => 'text-decoration-none']) ?>
+        </h2>
 
         <?php if ($page->hasValue('subtitle')) : ?>
-            <h4 class="subtitle mb-2">
-                <?= $this->Html->link($page->get('subtitle'), $page->get('url')) ?>
+            <h4 class="subtitle lh-1">
+                <?= $this->Html->link($page->get('subtitle'), $page->get('url'), ['class' => 'text-decoration-none']) ?>
             </h4>
         <?php endif; ?>
 
-        <div class="info">
-            <?php
-            $created = $page->get('created');
-            if (getConfig('page.created')) {
-                echo $this->Html->time(
-                    __d('me_cms', 'Posted on {0}', $created->i18nFormat()),
-                    ['class' => 'date', 'icon' => 'clock']
-                );
-            }
+        <?php
+        if (getConfig('page.created')) {
+            echo $this->Html->div('created text-muted', $this->Html->time(__d('me_cms', 'Posted on {0}', $page->get('created')->i18nFormat())));
+        }
 
-            $modified = $page->get('modified');
-            if (getConfig('page.modified') && $modified != $created) {
-                echo $this->Html->div('modified small', $this->Html->time(
-                    __d('me_cms', 'Updated on {0}', $modified->i18nFormat()),
-                    ['class' => 'date', 'icon' => 'clock']
-                ));
-            }
-            ?>
-        </div>
+        if (getConfig('page.modified') && $page->get('modified') != $page->get('created')) {
+            echo $this->Html->div('modified small text-muted', $this->Html->time(__d('me_cms', 'Updated on {0}', $page->get('modified')->i18nFormat())));
+        }
+        ?>
     </header>
 
-    <main class="text-justify">
+    <div class="body text-justify">
         <?php
-        //Truncates the text when necessary. The text will be truncated to the
-        //  location of the `<!-- readmore -->` tag. If the tag is not present,
-        //  the value in the configuration will be used
-        $text = $page->get('text');
-        if (!$this->getRequest()->is('action', ['view', 'preview'])) {
-            $strpos = strpos($text, '<!-- read-more -->');
-            $truncatedOptions = ['ellipsis' => ''];
+        //Truncates the text when necessary. The text will be truncated to the location of the `<!-- readmore -->` tag.
+        //  If the tag is not present, the value in the configuration will be used
+        if (!$isView && !$this->getRequest()->is('action', 'preview')) {
+            $strpos = strpos($page->get('text'), '<!-- read-more -->');
             if (!$strpos) {
                 $strpos = getConfigOrFail('default.truncate_to');
                 $truncatedOptions = ['html' => true];
             }
-            $text = $truncatedText = $this->Text->truncate($text, $strpos, $truncatedOptions);
+            $truncatedText = $this->Text->truncate($page->get('text'), $strpos, $truncatedOptions ?? ['ellipsis' => '']);
         }
-        echo $text;
+        echo $truncatedText ?? $page->get('text');
         ?>
-    </main>
-
-    <?php if (isset($truncatedText) && $truncatedText !== $text) : ?>
-    <div class="buttons mt-2 text-right">
-        <?= $this->Html->button(__d('me_cms', 'Read more'), $page->get('url'), ['class' => ' readmore']) ?>
     </div>
-    <?php endif; ?>
 
-    <?php if (getConfig('page.shareaholic') && $isView) : ?>
-    <div class="mt-3">
-        <?= $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id')) ?>
-    </div>
-    <?php endif; ?>
+    <?php
+    if (isset($truncatedText) && $truncatedText !== $page->get('text')) {
+        echo $this->Html->button(__d('me_cms', 'Read more'), $page->get('url'), ['class' => 'fw-bold float-end mt-2 readmore small text-end']);
+    }
+
+    if (getConfig('page.shareaholic') && $isView) {
+        echo $this->Html->div('mt-3', $this->Html->shareaholic(getConfigOrFail('shareaholic.app_id')));
+    }
+    ?>
 
     <?php if (getConfig('disqus.shortname') && getConfig('page.enable_comments') && $page->get('enable_comments') && $isView) : ?>
     <div id="disqus_thread" class="mt-3"></div>

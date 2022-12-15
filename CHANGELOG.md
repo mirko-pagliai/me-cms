@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.30 branch
+### 2.30.12
+* fixed a bug that caused the "read more" button to disappear;
+* numerous and important improvements of templates and css.
+
 ### 2.30.11
 * added `View::elementExistsInApp()` method;
 * the `topbar` element has been made permanently compatible with the new bootstrap;
