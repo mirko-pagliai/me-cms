@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Model\Table;
 
+use App\Model\Table\ArticlesTable;
 use BadMethodCallException;
 use Cake\Cache\Cache;
 use Cake\I18n\FrozenTime;
@@ -106,6 +107,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `clearCache()` method
+     * @uses \MeCms\Model\Table\AppTable::clearCache()
      * @test
      */
     public function testClearCache(): void
@@ -117,6 +119,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `deleteAll()` method
+     * @uses \MeCms\Model\Table\AppTable::deleteAll()
      * @test
      */
     public function testDeleteAll(): void
@@ -130,6 +133,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `findActive()` method
+     * @uses \MeCms\Model\Table\AppTable::findActive()
      * @test
      */
     public function testFindActiveMethod(): void
@@ -147,6 +151,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `findPending()` method
+     * @uses \MeCms\Model\Table\AppTable::findPending()
      * @test
      */
     public function testFindPendingMethod(): void
@@ -164,6 +169,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `findRandom()` method
+     * @uses \MeCms\Model\Table\AppTable::findRandom()
      * @test
      */
     public function testFindRandomMethod(): void
@@ -177,16 +183,19 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `getCacheName()` method
+     * @uses \MeCms\Model\Table\AppTable::getCacheName()
      * @test
      */
     public function testGetCacheName(): void
     {
-        $this->assertEquals('posts', $this->Posts->getCacheName());
-        $this->assertEquals(['posts', 'users'], $this->Posts->getCacheName(true));
+        $this->assertSame('', $this->getTable('ArticlesTable', ['className' => ArticlesTable::class])->getCacheName());
+        $this->assertSame('posts', $this->Posts->getCacheName());
+        $this->assertSame(['posts', 'users'], $this->Posts->getCacheName(true));
     }
 
     /**
      * Test for `getList()` method
+     * @uses \MeCms\Model\Table\AppTable::getList()
      * @test
      */
     public function testGetList(): void
@@ -200,6 +209,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `getTreeList()` method
+     * @uses \MeCms\Model\Table\AppTable::getTreeList()
      * @test
      */
     public function testGetTreeList(): void
@@ -215,15 +225,8 @@ class AppTableTest extends TableTestCase
         $this->assertEquals($expected, $query->toArray());
         $fromCache = Cache::read('posts_categories_tree_list', $this->PostsCategories->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
-    }
 
-    /**
-     * Test for `getTreeList()` method
-     * @test
-     */
-    public function testGetTreeListOnFailure(): void
-    {
-        //With a model that does not have a tree
+        //On failure, With a model that does not have a tree
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Unknown finder method "treeList"');
         $this->Posts->getTreeList();
@@ -231,6 +234,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `query()` method
+     * @uses \MeCms\Model\Table\AppTable::query()
      * @test
      */
     public function testQuery(): void

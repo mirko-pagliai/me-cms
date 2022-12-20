@@ -125,29 +125,24 @@ abstract class AppTable extends Table
 
     /**
      * Gets the cache configuration name used by this table
-     * @param bool $associations If `true`, it returns an array that contains
-     *  also the names of the associated tables
-     * @return string|array|null
+     * @param bool $associations If `true`, it returns an array that contains also the names of the associated tables
+     * @return string|string[]
      * @since 2.26.0
-     * @uses $cache
      */
     public function getCacheName(bool $associations = false)
     {
         if (!$associations) {
-            return $this->cache ?: null;
+            return $this->cache ?? '';
         }
 
-        $values = collection($this->associations()->getIterator())
-            ->filter(fn(Association $association): bool => method_exists($association->getTarget(), 'getCacheName'))
-            ->map(function (Association $association) {
-                /** @var \MeCms\Model\Table\AppTable $target */
-                $target = $association->getTarget();
+        $values = array_map(function (string $name): string {
+            /** @var \MeCms\Model\Table\AppTable $table */
+            $table = $this->$name->getTarget();
 
-                return $target->getCacheName();
-            })
-            ->prependItem($this->cache ?: null);
+            return method_exists($table, 'getCacheName') ? $table->getCacheName() : '';
+        }, $this->associations()->keys());
 
-        return array_values(array_unique($values->toList()));
+        return array_clean([$this->cache, ...$values]);
     }
 
     /**

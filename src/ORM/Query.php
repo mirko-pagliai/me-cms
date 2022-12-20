@@ -49,13 +49,12 @@ class Query extends BaseQuery
             throw new RuntimeException('You cannot cache the results of non-select queries.');
         }
 
-        if ($config === '') {
-            $config = 'default';
-            if (method_exists($this->getRepository(), 'getCacheName')) {
-                $config = $this->getRepository()->getCacheName();
-            }
+        if (!$config && method_exists($this->getRepository(), 'getCacheName')) {
+            /** @var \MeCms\Model\Table\AppTable $table */
+            $table = $this->getRepository();
+            $config = $table->getCacheName();
         }
 
-        return $this->_cache($key, $config);
+        return $this->_cache($key, $config ?: 'default');
     }
 }
