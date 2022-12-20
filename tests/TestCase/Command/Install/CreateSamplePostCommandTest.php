@@ -52,6 +52,7 @@ class CreateSamplePostCommandTest extends TestCase
         $this->assertExitWithSuccess();
         $this->assertOutputContains('At least one post already exists');
 
+        /** @var \MeCms\Model\Table\PostsTable $Posts */
         $Posts = $this->getTable('MeCms.Posts');
         $Posts->deleteAll(['id is NOT' => null]);
 
@@ -64,7 +65,7 @@ class CreateSamplePostCommandTest extends TestCase
         $Posts->deleteAll(['id is NOT' => null]);
 
         $this->_out = $this->_err = null;
-        $this->getTable('MeCms.Users')->deleteAll(['id is NOT' => null]);
+        $Posts->Users->deleteAll(['id is NOT' => null]);
         $this->exec('me_cms.create_sample_post -v');
         $this->assertErrorContains('You must first create a user. Run the `bin/cake me_cms.create_admin` command');
     }
@@ -81,7 +82,6 @@ class CreateSamplePostCommandTest extends TestCase
         $Posts->deleteAll(['id is NOT' => null]);
 
         $this->_err = new StubConsoleOutput();
-        $this->Command->Posts = $Posts;
         $this->assertSame(0, $this->Command->run(['-v'], new ConsoleIo(new StubConsoleOutput(), $this->_err)));
         $this->assertErrorContains(I18N_OPERATION_NOT_OK);
     }

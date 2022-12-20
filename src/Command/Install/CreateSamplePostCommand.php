@@ -20,13 +20,10 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use MeCms\Model\Entity\Post;
 use MeTools\Console\Command;
 
 /**
  * Creates a sample post
- * @property \MeCms\Model\Table\PostsTable $Posts
- * @property \MeCms\Model\Table\UsersTable $Users
  */
 class CreateSamplePostCommand extends Command
 {
@@ -48,8 +45,8 @@ class CreateSamplePostCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
+        /** @var \MeCms\Model\Table\PostsTable $Posts */
         $Posts = $this->fetchTable('MeCms.Posts');
-        $Users = $this->fetchTable('MeCms.Users');
 
         if (!$Posts->find()->all()->isEmpty()) {
             $io->verbose(__d('me_cms', 'At least one post already exists'));
@@ -58,20 +55,28 @@ class CreateSamplePostCommand extends Command
         }
 
         try {
-            /** @var \MeCms\Model\Entity\User $user */
-            $user = $Users->find('all', ['fields' => ['id']])->firstOrFail();
+            /** @var \MeCms\Model\Entity\User $User */
+            $User = $Posts->Users->find()->firstOrFail();
         } catch (RecordNotFoundException $e) {
             return $io->error(__d('me_cms', 'You must first create a user. Run the `{0}` command', 'bin/cake me_cms.create_admin'));
         }
 
-        $post = $Posts->newEntity([
-            'user_id' => $user->get('id'),
+        /** @var \MeCms\Model\Entity\PostsCategory $Category */
+        $Category = $Posts->Categories->find()->first();
+        if (!$Category) {
+            $Category = $Posts->Categories->newEntity(['title' => 'Example of category', 'slug' => 'example-of-category']);
+            $Posts->Categories->saveOrFail($Category);
+        }
+
+        $data = [
+            'category_id' => $Category->get('id'),
+            'user_id' => $User->get('id'),
             'title' => 'This is sample post',
             'subtitle' => 'Just a sample post',
             'slug' => 'a-sample-post',
             'text' => 'Hi! This is just <strong>a sample post</strong>, automatically created during installation.<br />Welcome!',
-        ]);
-        if (!$Posts->save($post)) {
+        ];
+        if (!$Posts->save($Posts->newEntity($data))) {
             return $io->error(I18N_OPERATION_NOT_OK);
         }
 

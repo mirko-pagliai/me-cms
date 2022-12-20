@@ -19,11 +19,11 @@ namespace MeCms\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use MeCms\Model\Table\UsersTable;
 use MeTools\Console\Command;
 
 /**
  * Adds an user
- * @property \MeCms\Model\Table\UsersTable $Users
  */
 class AddUserCommand extends Command
 {
@@ -47,7 +47,7 @@ class AddUserCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         /** @var \MeCms\Model\Table\UsersTable $Users */
-        $Users = $this->fetchTable('MeCms.Users');
+        $Users = $this->fetchTable('Users', ['className' => UsersTable::class]);
 
         $groups = $Users->Groups->find('list')->all();
         if ($groups->isEmpty()) {
