@@ -179,7 +179,6 @@ class AppTableTest extends TableTestCase
     {
         $this->assertSame('', $this->getTable('ArticlesTable', ['className' => ArticlesTable::class])->getCacheName());
         $this->assertSame('posts', $this->Posts->getCacheName());
-        $this->assertSame(['posts', 'users'], $this->Posts->getCacheName(true));
     }
 
     /**
