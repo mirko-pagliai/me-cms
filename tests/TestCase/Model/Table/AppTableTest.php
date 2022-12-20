@@ -69,40 +69,29 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for event methods
+     * Test for `afterSave()` event method
+     * @uses \MeCms\Model\Table\AppTable::afterSave()
      * @test
      */
     public function testEventMethods(): void
     {
-        $example = [
-            'user_id' => 1,
-            'category_id' => 1,
-            'title' => 'Example',
-            'slug' => 'example',
-            'text' => 'Example text',
-        ];
-
         /** @var \MeCms\Model\Table\AppTable&\PHPUnit\Framework\MockObject\MockObject $Table */
         $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
-        $Table->expects($this->atLeast(2))->method('clearCache');
+        $Table->expects($this->once())->method('clearCache');
+        $Table->save($Table->get(1)->set('title', 'New title'));
+    }
 
-        /** @var \Cake\Datasource\EntityInterface $entity */
-        $entity = $Table->save($Table->newEntity($example));
-        $this->assertNotEmpty($entity->get('created'));
-        $Table->delete($entity);
-
-        $now = new FrozenTime();
-        /** @var \Cake\Datasource\EntityInterface $entity */
-        $entity = $Table->save($Table->newEntity(['created' => $now] + $example));
-        $this->assertEquals($now, $entity->get('created'));
-        $Table->delete($entity);
-
-        foreach (['2017-03-14 20:19', '2017-03-14 20:19:00'] as $created) {
-            /** @var \Cake\Datasource\EntityInterface $entity */
-            $entity = $Table->save($Table->newEntity(compact('created') + $example));
-            $this->assertEquals('2017-03-14 20:19:00', $entity->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-            $Table->delete($entity);
-        }
+    /**
+     * Test for `afterDelete()` event method
+     * @uses \MeCms\Model\Table\AppTable::afterDelete()
+     * @test
+     */
+    public function testAfterDeleteEventMethod(): void
+    {
+        /** @var \MeCms\Model\Table\AppTable&\PHPUnit\Framework\MockObject\MockObject $Table */
+        $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
+        $Table->expects($this->once())->method('clearCache');
+        $Table->delete($Table->get(1));
     }
 
     /**
