@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Model\Table;
 
+use App\Model\Table\ArticlesTable;
 use BadMethodCallException;
 use Cake\Cache\Cache;
 use Cake\I18n\FrozenTime;
@@ -32,11 +33,6 @@ class AppTableTest extends TableTestCase
      * @var \MeCms\Model\Table\PostsTable
      */
     protected $Posts;
-
-    /**
-     * @var \MeCms\Model\Table\PostsCategoriesTable
-     */
-    protected $PostsCategories;
 
     /**
      * If `true`, a mock instance of the table will be created
@@ -64,59 +60,51 @@ class AppTableTest extends TableTestCase
         parent::setUp();
 
         $this->Posts ??= $this->getTable('MeCms.Posts');
-        $this->PostsCategories ??= $this->getTable('MeCms.PostsCategories');
     }
 
     /**
-     * Test for event methods
+     * Test for `afterSave()` event method
+     * @uses \MeCms\Model\Table\AppTable::afterSave()
      * @test
      */
     public function testEventMethods(): void
     {
-        $example = [
-            'user_id' => 1,
-            'category_id' => 1,
-            'title' => 'Example',
-            'slug' => 'example',
-            'text' => 'Example text',
-        ];
+        /** @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject $PostsTable */
+        $PostsTable = $this->getMockForModel('MeCms.Posts', ['clearCache']);
+        $PostsTable->expects($this->once())->method('clearCache');
+        $PostsTable->save($PostsTable->get(1)->set('title', 'New title'));
+    }
 
-        /** @var \MeCms\Model\Table\AppTable&\PHPUnit\Framework\MockObject\MockObject $Table */
-        $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
-        $Table->expects($this->atLeast(2))->method('clearCache');
-
-        /** @var \Cake\Datasource\EntityInterface $entity */
-        $entity = $Table->save($Table->newEntity($example));
-        $this->assertNotEmpty($entity->get('created'));
-        $Table->delete($entity);
-
-        $now = new FrozenTime();
-        /** @var \Cake\Datasource\EntityInterface $entity */
-        $entity = $Table->save($Table->newEntity(['created' => $now] + $example));
-        $this->assertEquals($now, $entity->get('created'));
-        $Table->delete($entity);
-
-        foreach (['2017-03-14 20:19', '2017-03-14 20:19:00'] as $created) {
-            /** @var \Cake\Datasource\EntityInterface $entity */
-            $entity = $Table->save($Table->newEntity(compact('created') + $example));
-            $this->assertEquals('2017-03-14 20:19:00', $entity->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'));
-            $Table->delete($entity);
-        }
+    /**
+     * Test for `afterDelete()` event method
+     * @uses \MeCms\Model\Table\AppTable::afterDelete()
+     * @test
+     */
+    public function testAfterDeleteEventMethod(): void
+    {
+        /** @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject $PostsTable */
+        $PostsTable = $this->getMockForModel('MeCms.Posts', ['clearCache']);
+        $PostsTable->expects($this->once())->method('clearCache');
+        $PostsTable->delete($PostsTable->get(1));
     }
 
     /**
      * Test for `clearCache()` method
+     * @uses \MeCms\Model\Table\AppTable::clearCache()
      * @test
      */
     public function testClearCache(): void
     {
         Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
+        Cache::write('associatedTestKey', 'associatedTestValue', $this->Posts->Users->getCacheName());
         $this->assertTrue($this->Posts->clearCache());
         $this->assertNull(Cache::read('testKey', $this->Posts->getCacheName()));
+        $this->assertNull(Cache::read('associatedTestKey', $this->Posts->Users->getCacheName()));
     }
 
     /**
      * Test for `deleteAll()` method
+     * @uses \MeCms\Model\Table\AppTable::deleteAll()
      * @test
      */
     public function testDeleteAll(): void
@@ -130,6 +118,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `findActive()` method
+     * @uses \MeCms\Model\Table\AppTable::findActive()
      * @test
      */
     public function testFindActiveMethod(): void
@@ -147,6 +136,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `findPending()` method
+     * @uses \MeCms\Model\Table\AppTable::findPending()
      * @test
      */
     public function testFindPendingMethod(): void
@@ -164,6 +154,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `findRandom()` method
+     * @uses \MeCms\Model\Table\AppTable::findRandom()
      * @test
      */
     public function testFindRandomMethod(): void
@@ -177,16 +168,30 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `getCacheName()` method
+     * @uses \MeCms\Model\Table\AppTable::getCacheName()
      * @test
      */
     public function testGetCacheName(): void
     {
-        $this->assertEquals('posts', $this->Posts->getCacheName());
-        $this->assertEquals(['posts', 'users'], $this->Posts->getCacheName(true));
+        $this->assertSame('', $this->getTable('ArticlesTable', ['className' => ArticlesTable::class])->getCacheName());
+        $this->assertSame('posts', $this->Posts->getCacheName());
+    }
+
+    /**
+     * Test for `getCacheNameWithAssociated()` method
+     * @uses \MeCms\Model\Table\AppTable::getCacheNameWithAssociated()
+     * @test
+     */
+    public function testGetCacheNameWithAssociated(): void
+    {
+        $this->assertSame([], $this->getTable('ArticlesTable', ['className' => ArticlesTable::class])->getCacheNameWithAssociated());
+        $this->assertSame(['posts', 'users'], $this->Posts->getCacheNameWithAssociated());
+        $this->assertSame(['users', 'posts'], $this->getTable('MeCms.Users')->getCacheNameWithAssociated());
     }
 
     /**
      * Test for `getList()` method
+     * @uses \MeCms\Model\Table\AppTable::getList()
      * @test
      */
     public function testGetList(): void
@@ -200,6 +205,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `getTreeList()` method
+     * @uses \MeCms\Model\Table\AppTable::getTreeList()
      * @test
      */
     public function testGetTreeList(): void
@@ -210,20 +216,13 @@ class AppTableTest extends TableTestCase
             4 => '——Sub sub post category',
             2 => 'Another post category',
         ];
-        $query = $this->PostsCategories->getTreeList();
-        $this->assertSqlEndsNotWith('ORDER BY `' . $this->PostsCategories->getDisplayField() . '` ASC', $query->sql());
+        $query = $this->Posts->Categories->getTreeList();
+        $this->assertSqlEndsNotWith('ORDER BY `' . $this->Posts->Categories->getDisplayField() . '` ASC', $query->sql());
         $this->assertEquals($expected, $query->toArray());
-        $fromCache = Cache::read('posts_categories_tree_list', $this->PostsCategories->getCacheName())->toArray();
+        $fromCache = Cache::read('posts_categories_tree_list', $this->Posts->Categories->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
-    }
 
-    /**
-     * Test for `getTreeList()` method
-     * @test
-     */
-    public function testGetTreeListOnFailure(): void
-    {
-        //With a model that does not have a tree
+        //On failure, With a model that does not have a tree
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Unknown finder method "treeList"');
         $this->Posts->getTreeList();
@@ -231,6 +230,7 @@ class AppTableTest extends TableTestCase
 
     /**
      * Test for `query()` method
+     * @uses \MeCms\Model\Table\AppTable::query()
      * @test
      */
     public function testQuery(): void

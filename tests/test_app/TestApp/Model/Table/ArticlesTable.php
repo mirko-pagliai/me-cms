@@ -15,8 +15,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Table;
+use MeCms\Model\Table\AppTable;
 
-class ArticlesTable extends Table
+class ArticlesTable extends AppTable
 {
 }

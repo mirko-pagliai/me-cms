@@ -19,7 +19,6 @@ use Cake\Cache\Cache;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\Association;
 use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\Table;
 use MeCms\ORM\Query;
@@ -62,12 +61,12 @@ abstract class AppTable extends Table
     }
 
     /**
-     * Delete all keys from the cache
+     * Delete all keys from the cache used by this table and its associated tables
      * @return bool `true` if the cache was successfully cleared, `false` otherwise
      */
     public function clearCache(): bool
     {
-        return Cache::clear($this->getCacheName());
+        return !in_array(false, array_map([Cache::class, 'clear'], $this->getCacheNameWithAssociated()));
     }
 
     /**
@@ -125,29 +124,29 @@ abstract class AppTable extends Table
 
     /**
      * Gets the cache configuration name used by this table
-     * @param bool $associations If `true`, it returns an array that contains
-     *  also the names of the associated tables
-     * @return string|array|null
+     * @return string
      * @since 2.26.0
-     * @uses $cache
      */
-    public function getCacheName(bool $associations = false)
+    public function getCacheName(): string
     {
-        if (!$associations) {
-            return $this->cache ?: null;
-        }
+        return $this->cache ?? '';
+    }
 
-        $values = collection($this->associations()->getIterator())
-            ->filter(fn(Association $association): bool => method_exists($association->getTarget(), 'getCacheName'))
-            ->map(function (Association $association) {
-                /** @var \MeCms\Model\Table\AppTable $target */
-                $target = $association->getTarget();
+    /**
+     * Gets the cache configuration name used by this table and its associated tables
+     * @return string[]
+     * @since 2.30.13
+     */
+    public function getCacheNameWithAssociated(): array
+    {
+        $values = array_map(function (string $name): string {
+            /** @var \MeCms\Model\Table\AppTable $table */
+            $table = $this->$name->getTarget();
 
-                return $target->getCacheName();
-            })
-            ->prependItem($this->cache ?: null);
+            return method_exists($table, 'getCacheName') ? $table->getCacheName() : '';
+        }, $this->associations()->keys());
 
-        return array_values(array_unique($values->toList()));
+        return array_clean([$this->getCacheName(), ...$values]);
     }
 
     /**
