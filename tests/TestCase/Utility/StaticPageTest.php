@@ -30,18 +30,14 @@ use Tools\Filesystem;
 class StaticPageTest extends TestCase
 {
     /**
-     * Cache keys to clear for each test
-     * @var array
-     */
-    protected array $cacheToClear = ['static_pages'];
-
-    /**
      * Called after every test method
      * @return void
      */
     protected function tearDown(): void
     {
         parent::tearDown();
+
+        Cache::clear('static_pages');
 
         $this->removePlugins(['TestPlugin']);
     }

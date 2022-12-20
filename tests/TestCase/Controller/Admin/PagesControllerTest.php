@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Controller\Admin;
 
+use Cake\Cache\Cache;
 use Cake\ORM\Entity;
 use MeCms\Model\Entity\Page;
 use MeCms\TestSuite\ControllerTestCase;
@@ -27,18 +28,23 @@ use MeCms\TestSuite\ControllerTestCase;
 class PagesControllerTest extends ControllerTestCase
 {
     /**
-     * Cache keys to clear for each test
-     * @var array<string>
-     */
-    protected array $cacheToClear = ['static_pages'];
-
-    /**
      * @var array<string>
      */
     public $fixtures = [
         'plugin.MeCms.Pages',
         'plugin.MeCms.PagesCategories',
     ];
+
+    /**
+     * Called after every test method
+     * @return void
+     */
+    public function tearDown(): void
+    {
+        Cache::clear('static_pages');
+
+        parent::tearDown();
+    }
 
     /**
      * Tests for `beforeFilter()` method

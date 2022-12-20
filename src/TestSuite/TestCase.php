@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace MeCms\TestSuite;
 
-use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use MeCms\Model\Table\AppTable;
 use MeTools\TestSuite\TestCase as BaseTestCase;
@@ -33,12 +32,6 @@ abstract class TestCase extends BaseTestCase
     protected AppTable $Table;
 
     /**
-     * Cache keys to clear for each test
-     * @var array
-     */
-    protected array $cacheToClear = [];
-
-    /**
      * Called after every test method
      * @return void
      */
@@ -46,14 +39,8 @@ abstract class TestCase extends BaseTestCase
     {
         parent::tearDown();
 
-        //Clears all cache keys
-        if (!empty($this->Table) && method_exists($this->Table, 'getCacheNameWithAssociated')) {
-            $this->cacheToClear = [...$this->cacheToClear, ...$this->Table->getCacheNameWithAssociated()];
-        }
-
-        foreach ($this->cacheToClear as $cacheKey) {
-            Cache::getConfig($cacheKey) ?: $this->fail('Cache key `' . $cacheKey . '` does not exist');
-            Cache::clear($cacheKey);
+        if (!empty($this->Table) && method_exists($this->Table, 'clearCache')) {
+            $this->Table->clearCache();
         }
     }
 
