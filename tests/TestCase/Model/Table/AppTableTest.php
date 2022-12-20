@@ -102,8 +102,10 @@ class AppTableTest extends TableTestCase
     public function testClearCache(): void
     {
         Cache::write('testKey', 'testValue', $this->Posts->getCacheName());
+        Cache::write('associatedTestKey', 'associatedTestValue', $this->Posts->Users->getCacheName());
         $this->assertTrue($this->Posts->clearCache());
         $this->assertNull(Cache::read('testKey', $this->Posts->getCacheName()));
+        $this->assertNull(Cache::read('associatedTestKey', $this->Posts->Users->getCacheName()));
     }
 
     /**
