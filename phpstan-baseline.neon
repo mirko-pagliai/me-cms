@@ -46,17 +46,7 @@ parameters:
 			path: tests/TestCase/Model/Table/AppTableTest.php
 
 		-
-			message: "#^Binary operation \"\\.\" between 'ORDER BY `' and array\\<string\\>\\|string\\|null results in an error\\.$#"
-			count: 1
-			path: tests/TestCase/Model/Table/AppTableTest.php
-
-		-
 			message: "#^Property MeCms\\\\Test\\\\TestCase\\\\Model\\\\Table\\\\AppTableTest\\:\\:\\$Posts \\(MeCms\\\\Model\\\\Table\\\\PostsTable\\) on left side of \\?\\?\\= is not nullable\\.$#"
-			count: 1
-			path: tests/TestCase/Model/Table/AppTableTest.php
-
-		-
-			message: "#^Property MeCms\\\\Test\\\\TestCase\\\\Model\\\\Table\\\\AppTableTest\\:\\:\\$PostsCategories \\(MeCms\\\\Model\\\\Table\\\\PostsCategoriesTable\\) on left side of \\?\\?\\= is not nullable\\.$#"
 			count: 1
 			path: tests/TestCase/Model/Table/AppTableTest.php
 
