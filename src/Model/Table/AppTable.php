@@ -61,12 +61,12 @@ abstract class AppTable extends Table
     }
 
     /**
-     * Delete all keys from the cache
+     * Delete all keys from the cache used by this table and its associated tables
      * @return bool `true` if the cache was successfully cleared, `false` otherwise
      */
     public function clearCache(): bool
     {
-        return Cache::clear($this->getCacheName());
+        return !in_array(false, array_map([Cache::class, 'clear'], $this->getCacheNameWithAssociated()));
     }
 
     /**

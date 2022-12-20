@@ -2,7 +2,8 @@
 ## 2.30 branch
 ### 2.30.13
 * added the `AppTable::getCacheNameWithAssociated()` method. The `getCacheName()` method will now only return the cache
-  name of the current table (string).
+  name of the current table (string);
+* `AppTable::clearCache()` deletes all keys from the cache used by this table and its associated tables.
 
 ### 2.30.12
 * fixed a bug that caused the "read more" button to disappear;
