@@ -58,12 +58,13 @@ class CreateSamplePostCommand extends Command
         }
 
         try {
+            /** @var \MeCms\Model\Entity\User $user */
             $user = $Users->find('all', ['fields' => ['id']])->firstOrFail();
         } catch (RecordNotFoundException $e) {
             return $io->error(__d('me_cms', 'You must first create a user. Run the `{0}` command', 'bin/cake me_cms.create_admin'));
         }
 
-        $post = new Post([
+        $post = $Posts->newEntity([
             'user_id' => $user->get('id'),
             'title' => 'This is sample post',
             'subtitle' => 'Just a sample post',
