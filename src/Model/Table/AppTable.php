@@ -19,7 +19,6 @@ use Cake\Cache\Cache;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\Association;
 use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\Table;
 use MeCms\ORM\Query;
@@ -125,17 +124,12 @@ abstract class AppTable extends Table
 
     /**
      * Gets the cache configuration name used by this table
-     * @param bool $associations If `true`, it returns an array that contains also the names of the associated tables
-     * @return string|string[]
+     * @return string
      * @since 2.26.0
      */
-    public function getCacheName(bool $associations = false)
+    public function getCacheName(): string
     {
-        if (!$associations) {
-            return $this->cache ?? '';
-        }
-
-        return array_clean([$this->cache, ...$this->getCacheNameWithAssociated()]);
+        return $this->cache ?? '';
     }
 
     /**
