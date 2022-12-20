@@ -47,7 +47,7 @@ abstract class TestCase extends BaseTestCase
         parent::tearDown();
 
         //Clears all cache keys
-        if (!empty($this->Table) && method_exists($this->Table, 'getCacheName')) {
+        if (!empty($this->Table) && method_exists($this->Table, 'getCacheNameWithAssociated')) {
             $this->cacheToClear = [...$this->cacheToClear, ...$this->Table->getCacheNameWithAssociated()];
         }
 
