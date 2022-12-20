@@ -35,11 +35,6 @@ class AppTableTest extends TableTestCase
     protected $Posts;
 
     /**
-     * @var \MeCms\Model\Table\PostsCategoriesTable
-     */
-    protected $PostsCategories;
-
-    /**
      * If `true`, a mock instance of the table will be created
      * @var bool
      */
@@ -65,7 +60,6 @@ class AppTableTest extends TableTestCase
         parent::setUp();
 
         $this->Posts ??= $this->getTable('MeCms.Posts');
-        $this->PostsCategories ??= $this->getTable('MeCms.PostsCategories');
     }
 
     /**
@@ -222,10 +216,10 @@ class AppTableTest extends TableTestCase
             4 => '——Sub sub post category',
             2 => 'Another post category',
         ];
-        $query = $this->PostsCategories->getTreeList();
-        $this->assertSqlEndsNotWith('ORDER BY `' . $this->PostsCategories->getDisplayField() . '` ASC', $query->sql());
+        $query = $this->Posts->Categories->getTreeList();
+        $this->assertSqlEndsNotWith('ORDER BY `' . $this->Posts->Categories->getDisplayField() . '` ASC', $query->sql());
         $this->assertEquals($expected, $query->toArray());
-        $fromCache = Cache::read('posts_categories_tree_list', $this->PostsCategories->getCacheName())->toArray();
+        $fromCache = Cache::read('posts_categories_tree_list', $this->Posts->Categories->getCacheName())->toArray();
         $this->assertEquals($query->toArray(), $fromCache);
 
         //On failure, With a model that does not have a tree
