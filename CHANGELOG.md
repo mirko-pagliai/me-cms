@@ -1,7 +1,7 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.13
-* improved `AppTable::getCacheName()` method.
+* added `AppTable::getCacheNameWithAssociated()` method.
 
 ### 2.30.12
 * fixed a bug that caused the "read more" button to disappear;

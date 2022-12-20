@@ -135,6 +135,16 @@ abstract class AppTable extends Table
             return $this->cache ?? '';
         }
 
+        return array_clean([$this->cache, ...$this->getCacheNameWithAssociated()]);
+    }
+
+    /**
+     * Gets the cache configuration name used by this table and its associated tables
+     * @return string[]
+     * @since 2.30.13
+     */
+    public function getCacheNameWithAssociated(): array
+    {
         $values = array_map(function (string $name): string {
             /** @var \MeCms\Model\Table\AppTable $table */
             $table = $this->$name->getTarget();
@@ -142,7 +152,7 @@ abstract class AppTable extends Table
             return method_exists($table, 'getCacheName') ? $table->getCacheName() : '';
         }, $this->associations()->keys());
 
-        return array_clean([$this->cache, ...$values]);
+        return array_clean([$this->getCacheName(), ...$values]);
     }
 
     /**

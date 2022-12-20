@@ -183,6 +183,18 @@ class AppTableTest extends TableTestCase
     }
 
     /**
+     * Test for `getCacheNameWithAssociated()` method
+     * @uses \MeCms\Model\Table\AppTable::getCacheNameWithAssociated()
+     * @test
+     */
+    public function testGetCacheNameWithAssociated(): void
+    {
+        $this->assertSame([], $this->getTable('ArticlesTable', ['className' => ArticlesTable::class])->getCacheNameWithAssociated());
+        $this->assertSame(['posts', 'users'], $this->Posts->getCacheNameWithAssociated());
+        $this->assertSame(['users', 'posts'], $this->getTable('MeCms.Users')->getCacheNameWithAssociated());
+    }
+
+    /**
      * Test for `getList()` method
      * @uses \MeCms\Model\Table\AppTable::getList()
      * @test

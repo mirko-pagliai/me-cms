@@ -48,7 +48,7 @@ abstract class TestCase extends BaseTestCase
 
         //Clears all cache keys
         if (!empty($this->Table) && method_exists($this->Table, 'getCacheName')) {
-            $this->cacheToClear = [...$this->cacheToClear, ...(array)$this->Table->getCacheName(true)];
+            $this->cacheToClear = [...$this->cacheToClear, ...$this->Table->getCacheNameWithAssociated()];
         }
 
         foreach ($this->cacheToClear as $cacheKey) {
