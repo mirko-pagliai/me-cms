@@ -31,6 +31,7 @@ use Tools\Exceptionist;
 
 /**
  * Posts model
+ * @property \Cake\ORM\Association\BelongsTo $Categories
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\BelongsToMany&\MeCms\Model\Table\TagsTable $Tags
  * @method \MeCms\Model\Entity\Post get($primaryKey, $options = [])
