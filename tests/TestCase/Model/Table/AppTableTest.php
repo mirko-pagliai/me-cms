@@ -69,10 +69,10 @@ class AppTableTest extends TableTestCase
      */
     public function testEventMethods(): void
     {
-        /** @var \MeCms\Model\Table\AppTable&\PHPUnit\Framework\MockObject\MockObject $Table */
-        $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
-        $Table->expects($this->once())->method('clearCache');
-        $Table->save($Table->get(1)->set('title', 'New title'));
+        /** @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject $PostsTable */
+        $PostsTable = $this->getMockForModel('MeCms.Posts', ['clearCache']);
+        $PostsTable->expects($this->once())->method('clearCache');
+        $PostsTable->save($PostsTable->get(1)->set('title', 'New title'));
     }
 
     /**
@@ -82,10 +82,10 @@ class AppTableTest extends TableTestCase
      */
     public function testAfterDeleteEventMethod(): void
     {
-        /** @var \MeCms\Model\Table\AppTable&\PHPUnit\Framework\MockObject\MockObject $Table */
-        $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
-        $Table->expects($this->once())->method('clearCache');
-        $Table->delete($Table->get(1));
+        /** @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject $PostsTable */
+        $PostsTable = $this->getMockForModel('MeCms.Posts', ['clearCache']);
+        $PostsTable->expects($this->once())->method('clearCache');
+        $PostsTable->delete($PostsTable->get(1));
     }
 
     /**
