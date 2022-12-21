@@ -27,10 +27,6 @@ parameters:
             message: '#^Variable \$\w+ might not be defined\.$#'
             path: templates/
 
-        -
-            message: '#^Undefined variable: \$this$#'
-            path: templates/
-
     excludePaths:
         - config/Migrations/
         - config/elfinder/
