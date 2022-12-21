@@ -63,7 +63,8 @@ class PostsTagsWidgetsCell extends Cell
      * @param string $prefix Prefix for each tag. This works only with the cloud
      * @param string $render Render type (`cloud`, `form` or `list`)
      * @param bool $shuffle Shuffles tags
-     * @param array|bool $style Style for tags. Array with `maxFont` and `minFont` keys or `false` to disable
+     * @param array{maxFont: int, minFont: int}|bool $style Style for tags. Array with `maxFont` and `minFont` keys or
+     *  `false` to disable
      * @return void
      * @throws \ErrorException
      */
@@ -74,7 +75,7 @@ class PostsTagsWidgetsCell extends Cell
         bool $shuffle = true,
         $style = ['maxFont' => 40, 'minFont' => 12]
     ): void {
-        $this->viewBuilder()->setTemplate(sprintf('popular_as_%s', $render));
+        $this->viewBuilder()->setTemplate('popular_as_' . $render);
 
         //Returns on tags index
         if ($this->request->is('url', ['_name' => 'postsTags'])) {
@@ -85,13 +86,13 @@ class PostsTagsWidgetsCell extends Cell
         $maxFont = $minFont = 0;
 
         //Sets the initial cache name
-        $cache = sprintf('widget_tags_popular_%s', $limit);
+        $cache = 'widget_tags_popular_' . $limit;
 
         if ($style && is_array($style)) {
             //Updates maximum and minimum font sizes we want to use
             [$maxFont, $minFont] = $this->getFontSizes($style);
 
-            $cache = sprintf('%s_max_%s_min_%s', $cache, $maxFont, $minFont);
+            $cache .= sprintf('_max_%s_min_%s', $maxFont, $minFont);
         }
 
         $tags = $this->Tags->find()

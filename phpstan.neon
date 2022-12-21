@@ -26,6 +26,9 @@ parameters:
         -
             message: '#^Variable \$\w+ might not be defined\.$#'
             path: templates/
+        -
+            message: '#^Variable \$\w+ in empty\(\) always exists and is not falsy\.$#'
+            path: templates/cell
 
     excludePaths:
         - config/Migrations/

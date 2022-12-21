@@ -48,7 +48,7 @@ class PagesWidgetsCell extends Cell
      */
     public function categories(string $render = 'form'): void
     {
-        $this->viewBuilder()->setTemplate(sprintf('categories_as_%s', $render));
+        $this->viewBuilder()->setTemplate('categories_as_' . $render);
 
         //Returns on categories index
         if ($this->request->is('url', ['_name' => 'pagesCategories'])) {
