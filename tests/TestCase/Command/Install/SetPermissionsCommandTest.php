@@ -34,7 +34,7 @@ class SetPermissionsCommandTest extends TestCase
     public function testExecute(): void
     {
         $this->exec('me_cms.set_permissions -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $expected = array_map(fn(string $path): string => 'Set permissions on `' . Filesystem::instance()->rtr($path) . '`', array_clean(Configure::read('WRITABLE_DIRS')));
         $this->assertSame($expected, $this->_out->messages());
     }

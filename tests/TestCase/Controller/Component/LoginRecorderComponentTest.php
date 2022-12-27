@@ -16,6 +16,8 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Collection\Collection;
+use Cake\Controller\ComponentRegistry;
+use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
 use Cake\I18n\FrozenTime;
 use MeCms\Controller\Component\LoginRecorderComponent;
@@ -51,7 +53,10 @@ class LoginRecorderComponentTest extends ComponentTestCase
     protected function getMockForLoginRecorder(array $methods = ['getUserAgent'], array $userAgent = [])
     {
         /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $Component */
-        $Component = $this->getMockForComponent(LoginRecorderComponent::class, $methods);
+        $Component = $this->getMockBuilder(LoginRecorderComponent::class)
+            ->setConstructorArgs([new ComponentRegistry(new Controller())])
+            ->onlyMethods($methods)
+            ->getMock();
 
         if (in_array('getUserAgent', $methods)) {
             $Component->method('getUserAgent')->willReturn($userAgent ?: self::DEFAULT_USER_AGENT);

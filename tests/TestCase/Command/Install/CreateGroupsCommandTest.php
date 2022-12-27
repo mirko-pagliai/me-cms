@@ -47,7 +47,7 @@ class CreateGroupsCommandTest extends TestCase
     {
         //A group already exists
         $this->exec('me_cms.create_groups -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertOutputEmpty();
         $this->assertErrorContains('Some user groups already exist');
 
@@ -56,7 +56,7 @@ class CreateGroupsCommandTest extends TestCase
         $UsersGroups->deleteAll(['id is NOT' => null]);
         $this->_in = $this->_err = null;
         $this->exec('me_cms.create_groups -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertOutputContains('The user groups have been created');
         $this->assertErrorEmpty();
         $this->assertCount(3, $UsersGroups->find()->all());

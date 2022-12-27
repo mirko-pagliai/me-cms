@@ -49,7 +49,7 @@ class CreateSamplePostCommandTest extends TestCase
     public function testExecute(): void
     {
         $this->exec('me_cms.create_sample_post -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertOutputContains('At least one post already exists');
 
         /** @var \MeCms\Model\Table\PostsTable $Posts */
@@ -58,7 +58,7 @@ class CreateSamplePostCommandTest extends TestCase
 
         $this->_out = $this->_err = null;
         $this->exec('me_cms.create_sample_post -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertOutputContains('The sample post has been created');
         $this->assertFalse($Posts->find()->all()->isEmpty());
 

@@ -49,7 +49,7 @@ class FixElFinderCommandTest extends TestCase
     {
         array_map('unlink', array_filter(self::EXPECTED_FILES, 'is_writable'));
         $this->exec($this->command);
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         foreach (self::EXPECTED_FILES as $expectedFile) {
             $this->assertOutputContains('Creating file ' . $expectedFile);
             $this->assertOutputContains('<success>Wrote</success> `' . $expectedFile . '`');
@@ -68,7 +68,7 @@ class FixElFinderCommandTest extends TestCase
     public function testExecuteFileAlreadyExists(): void
     {
         $this->exec($this->command);
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         foreach (self::EXPECTED_FILES as $expectedFile) {
             $this->assertOutputContains('File or directory `' . Filesystem::instance()->rtr($expectedFile) . '` already exists');
         }

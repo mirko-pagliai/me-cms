@@ -17,6 +17,8 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Collection\Collection;
+use Cake\Controller\ComponentRegistry;
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use MeCms\Controller\Component\LoginRecorderComponent;
@@ -357,7 +359,10 @@ class UsersControllerTest extends ControllerTestCase
     public function testLastLogin(): void
     {
         /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $LoginRecorder */
-        $LoginRecorder = $this->getMockForComponent(LoginRecorderComponent::class, ['getController', 'getUserAgent']);
+        $LoginRecorder = $this->getMockBuilder(LoginRecorderComponent::class)
+            ->setConstructorArgs([new ComponentRegistry()])
+            ->onlyMethods(['getController', 'getUserAgent'])
+            ->getMock();
         $LoginRecorder->method('getController')->will($this->returnValue($this->Controller));
         $LoginRecorder->method('getUserAgent')
             ->will($this->returnValue([

@@ -34,7 +34,7 @@ class CreateDirectoriesCommandTest extends TestCase
     public function testExecute(): void
     {
         $this->exec('me_cms.create_directories -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $expected = array_map(fn(string $path): string => 'File or directory `' . Filesystem::instance()->rtr($path) . '` already exists', array_clean(Configure::read('WRITABLE_DIRS')));
         $this->assertSame($expected, $this->_out->messages());
     }
