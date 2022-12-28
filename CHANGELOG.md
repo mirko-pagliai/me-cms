@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.30 branch
 ### 2.30.13
+* `AppController::__get()` magic method no longer exists;
 * added the `AppTable::getCacheNameWithAssociated()` method. The `getCacheName()` method will now only return the cache
   name of the current table (string);
 * `AppTable::clearCache()` deletes all keys from the cache used by this table and its associated tables.

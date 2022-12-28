@@ -23,7 +23,6 @@ use MeCms\Utility\StaticPage;
 
 /**
  * Pages controller
- * @property \MeCms\Model\Table\PagesCategoriesTable $Categories
  * @property \MeCms\Model\Table\PagesTable $Pages
  */
 class PagesController extends AppController
@@ -74,7 +73,7 @@ class PagesController extends AppController
 
         $slug = rtrim($slug, '/');
         $page = $this->Pages->findActiveBySlug($slug)
-            ->contain([$this->Categories->getAlias() => ['fields' => ['title', 'slug']]])
+            ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
             ->cache('view_' . md5($slug))
             ->firstOrFail();
 
@@ -90,7 +89,7 @@ class PagesController extends AppController
     public function preview(string $slug): Response
     {
         $page = $this->Pages->findPendingBySlug($slug)
-            ->contain([$this->Categories->getAlias() => ['fields' => ['title', 'slug']]])
+            ->contain([$this->Pages->Categories->getAlias() => ['fields' => ['title', 'slug']]])
             ->firstOrFail();
 
         $this->set(compact('page'));

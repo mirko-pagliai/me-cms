@@ -18,7 +18,6 @@ namespace MeCms\Controller\Admin;
 /**
  * PostsTags controller
  * @property \MeCms\Model\Table\PostsTagsTable $PostsTags
- * @property \MeCms\Model\Table\TagsTable $Tags
  */
 class PostsTagsController extends AppController
 {
@@ -40,14 +39,14 @@ class PostsTagsController extends AppController
      */
     public function index(): void
     {
-        $query = $this->Tags->find()->matching('Posts');
+        $query = $this->PostsTags->Tags->find()->matching('Posts');
 
         $this->paginate['order'] = ['tag' => 'ASC'];
 
         //Limit X6
         $this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 6;
 
-        $tags = $this->paginate($this->Tags->queryFromFilter($query, $this->getRequest()->getQueryParams()));
+        $tags = $this->paginate($this->PostsTags->Tags->queryFromFilter($query, $this->getRequest()->getQueryParams()));
 
         $this->set(compact('tags'));
     }
@@ -59,12 +58,12 @@ class PostsTagsController extends AppController
      */
     public function edit(string $id)
     {
-        $tag = $this->Tags->get($id);
+        $tag = $this->PostsTags->Tags->get($id);
 
         if ($this->getRequest()->is(['patch', 'post', 'put'])) {
-            $tag = $this->Tags->patchEntity($tag, $this->getRequest()->getData());
+            $tag = $this->PostsTags->Tags->patchEntity($tag, $this->getRequest()->getData());
 
-            if ($this->Tags->save($tag)) {
+            if ($this->PostsTags->Tags->save($tag)) {
                 $this->Flash->success(I18N_OPERATION_OK);
 
                 return $this->redirectMatchingReferer(['action' => 'index']);

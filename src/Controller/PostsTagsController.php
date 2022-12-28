@@ -21,9 +21,7 @@ use Cake\Utility\Text;
 
 /**
  * PostsTags controller
- * @property \MeCms\Model\Table\PostsTable $Posts
  * @property \MeCms\Model\Table\PostsTagsTable $PostsTags
- * @property \MeCms\Model\Table\TagsTable $Tags
  */
 class PostsTagsController extends AppController
 {
@@ -53,7 +51,7 @@ class PostsTagsController extends AppController
 
         //If the data are not available from the cache
         if (empty($tags) || empty($paging)) {
-            $query = $this->Tags->find('active');
+            $query = $this->PostsTags->Tags->find('active');
 
             [$tags, $paging] = [$this->paginate($query), $this->getPaging()];
 
@@ -83,7 +81,7 @@ class PostsTagsController extends AppController
 
         $slug = Text::slug($slug, ['replacement' => ' ']);
 
-        $tag = $this->Tags->findActiveByTag($slug)
+        $tag = $this->PostsTags->Tags->findActiveByTag($slug)
             ->cache('tag_' . md5($slug))
             ->firstOrFail();
 
@@ -103,9 +101,9 @@ class PostsTagsController extends AppController
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
-            $query = $this->Posts->find('active')
+            $query = $this->PostsTags->Posts->find('active')
                 ->find('forIndex')
-                ->innerJoinWith($this->Tags->getAlias(), fn(Query $query): Query => $query->where(['tag' => $slug]));
+                ->innerJoinWith($this->PostsTags->Tags->getAlias(), fn(Query $query): Query => $query->where(['tag' => $slug]));
 
             [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 

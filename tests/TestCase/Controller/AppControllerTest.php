@@ -18,10 +18,6 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Http\ServerRequest;
-use Cake\ORM\Association\BelongsTo;
-use MeCms\Controller\PostsController;
-use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\ControllerTestCase;
 use RuntimeException;
 
@@ -30,26 +26,6 @@ use RuntimeException;
  */
 class AppControllerTest extends ControllerTestCase
 {
-    /**
-     * Tests autoload modelClass
-     * @test
-     */
-    public function testTableAutoload(): void
-    {
-        $Request = new ServerRequest(['params' => ['plugin' => 'MeCms']]);
-        $PostsController = new PostsController($Request);
-        $this->assertInstanceOf(PostsTable::class, $PostsController->Posts);
-        /* @phpstan-ignore-next-line */
-        $this->assertInstanceOf(BelongsTo::class, $PostsController->Categories);
-        /* @phpstan-ignore-next-line */
-        $this->assertInstanceOf(BelongsTo::class, $PostsController->Users);
-
-        $this->expectNotice();
-        $this->expectExceptionMessageMatches('/^Undefined property\: PostsController\:\:\$Foo in/');
-        /** @noinspection PhpExpressionResultUnusedInspection */
-        $PostsController->Foo;
-    }
-
     /**
      * Tests for `beforeFilter()` method
      * @test

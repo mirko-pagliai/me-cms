@@ -22,7 +22,6 @@ use Cake\ORM\Query;
 /**
  * PostsCategories controller
  * @property \MeCms\Model\Table\PostsCategoriesTable $PostsCategories
- * @property \MeCms\Model\Table\PostsTable $Posts
  */
 class PostsCategoriesController extends AppController
 {
@@ -70,7 +69,7 @@ class PostsCategoriesController extends AppController
 
         //If the data are not available from the cache
         if (empty($posts) || empty($paging)) {
-            $query = $this->Posts->find('active')
+            $query = $this->PostsCategories->Posts->find('active')
                 ->find('forIndex')
                 ->innerJoinWith($this->PostsCategories->getAlias(), fn(Query $query): Query => $query->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]));
 
