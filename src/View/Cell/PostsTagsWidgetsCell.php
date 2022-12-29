@@ -38,7 +38,7 @@ class PostsTagsWidgetsCell extends Cell
      */
     public function initialize(): void
     {
-        $this->Tags = $this->fetchTable('MeCms.Tags');
+        $this->Tags = $this->getTableLocator()->get('MeCms.Tags');
     }
 
     /**

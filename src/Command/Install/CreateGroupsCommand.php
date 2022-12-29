@@ -48,23 +48,24 @@ class CreateGroupsCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $Table = $this->fetchTable('MeCms.UsersGroups');
+        $this->getTableLocator()->clear();
+        $UsersGroups = $this->getTableLocator()->get('MeCms.UsersGroups');
 
-        if (!$Table->find()->all()->isEmpty()) {
+        if (!$UsersGroups->find()->all()->isEmpty()) {
             return $io->error(__d('me_cms', 'Some user groups already exist'));
         }
 
         //Truncates the table (this resets IDs), then saves groups
         $command = 'TRUNCATE TABLE `%s`';
-        $connection = $Table->getConnection();
+        $connection = $UsersGroups->getConnection();
         if ($connection->getDriver() instanceof Sqlite) {
             $command = 'DELETE FROM "sqlite_sequence" WHERE "name"=\'%s\';';
         } elseif ($connection->getDriver() instanceof Postgres) {
             $command = 'truncate %s restart identity';
         }
-        $connection->execute(sprintf($command, $Table->getTable()));
+        $connection->execute(sprintf($command, $UsersGroups->getTable()));
 
-        $Table->saveMany($Table->newEntities([
+        $UsersGroups->saveMany($UsersGroups->newEntities([
             ['id' => 1, 'name' => 'admin', 'label' => 'Admin'],
             ['id' => 2, 'name' => 'manager', 'label' => 'Manager'],
             ['id' => 3, 'name' => 'user', 'label' => 'User'],

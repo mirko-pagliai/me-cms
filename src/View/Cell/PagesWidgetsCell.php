@@ -36,8 +36,7 @@ class PagesWidgetsCell extends Cell
      */
     public function initialize(): void
     {
-        /** @var \MeCms\Model\Table\PagesTable $Pages */
-        $Pages = $this->fetchTable('MeCms.Pages');
+        $Pages = $this->getTableLocator()->get('MeCms.Pages');
         $this->Pages = $Pages;
     }
 

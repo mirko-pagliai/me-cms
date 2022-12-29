@@ -44,6 +44,7 @@ class CreateSamplePostCommandTest extends TestCase
 
     /**
      * Test for `execute()` method
+     * @uses \MeCms\Command\Install\CreateSamplePostCommand::execute()
      * @test
      */
     public function testExecute(): void
@@ -72,13 +73,14 @@ class CreateSamplePostCommandTest extends TestCase
 
     /**
      * Test for `execute()` method, on failure
+     * @uses \MeCms\Command\Install\CreateSamplePostCommand::execute()
      * @test
      */
     public function testExecuteOnFailure(): void
     {
         /** @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject $Posts */
         $Posts = $this->getMockForModel('MeCms.Posts', ['save']);
-        $Posts->method('save')->will($this->returnValue(false));
+        $Posts->method('save')->willReturn(false);
         $Posts->deleteAll(['id is NOT' => null]);
 
         $this->_err = new StubConsoleOutput();

@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Model\Validation;
 
 use Cake\Auth\DefaultPasswordHasher;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use MeCms\Validation\AppValidator;
 
 /**
@@ -24,6 +24,8 @@ use MeCms\Validation\AppValidator;
  */
 class UserValidator extends AppValidator
 {
+    use LocatorAwareTrait;
+
     /**
      * Construct
      */
@@ -87,7 +89,7 @@ class UserValidator extends AppValidator
                 'rule' => function (string $value, array $context): bool {
                     //Gets the old password
                     /** @var \MeCms\Model\Table\UsersTable $Users */
-                    $Users = TableRegistry::getTableLocator()->get('MeCms.Users');
+                    $Users = $this->getTableLocator()->get('MeCms.Users');
 
                     $User = $Users->findById($context['data']['id'])->select(['password'])->firstOrFail();
 

@@ -39,7 +39,7 @@ class PostsWidgetsCell extends Cell
     public function initialize(): void
     {
         /** @var \MeCms\Model\Table\PostsTable $Posts */
-        $Posts = $this->fetchTable('MeCms.Posts');
+        $Posts = $this->getTableLocator()->get('MeCms.Posts');
         $this->Posts = $Posts;
     }
 
