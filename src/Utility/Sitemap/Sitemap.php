@@ -40,15 +40,15 @@ class Sitemap extends SitemapBase
             return [];
         }
 
-        /** @var \MeCms\Model\Table\PagesCategoriesTable $table */
-        $table = TableRegistry::getTableLocator()->get('MeCms.PagesCategories');
-        $url = Cache::read('sitemap', $table->getCacheName());
+        /** @var \MeCms\Model\Table\PagesCategoriesTable $PagesCategories */
+        $PagesCategories = TableRegistry::getTableLocator()->get('MeCms.PagesCategories');
+        $url = Cache::read('sitemap', $PagesCategories->getCacheName());
 
         if (!$url) {
-            $categories = $table->find('active')
+            $categories = $PagesCategories->find('active')
                 ->select(['id', 'lft', 'slug'])
-                ->contain($table->Pages->getAlias(), fn(Query $query): Query => $query->find('active')->select(['category_id', 'slug', 'modified'])->orderDesc('modified'))
-                ->orderAsc(sprintf('%s.lft', $table->getAlias()))
+                ->contain($PagesCategories->Pages->getAlias(), fn(Query $query): Query => $query->find('active')->select(['category_id', 'slug', 'modified'])->orderDesc('modified'))
+                ->orderAsc(sprintf('%s.lft', $PagesCategories->getAlias()))
                 ->all();
 
             if ($categories->isEmpty()) {
@@ -71,7 +71,7 @@ class Sitemap extends SitemapBase
                 }
             }
 
-            Cache::write('sitemap', $url, $table->getCacheName());
+            Cache::write('sitemap', $url, $PagesCategories->getCacheName());
         }
 
         return $url;
@@ -87,15 +87,15 @@ class Sitemap extends SitemapBase
             return [];
         }
 
-        /** @var \MeCms\Model\Table\PostsCategoriesTable $table */
-        $table = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
-        $url = Cache::read('sitemap', $table->getCacheName());
+        /** @var \MeCms\Model\Table\PostsCategoriesTable $PostsCategories */
+        $PostsCategories = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
+        $url = Cache::read('sitemap', $PostsCategories->getCacheName());
 
         if (!$url) {
-            $categories = $table->find('active')
+            $categories = $PostsCategories->find('active')
                 ->select(['id', 'lft', 'slug'])
-                ->contain($table->Posts->getAlias(), fn(Query $query): Query => $query->find('active')->select(['category_id', 'slug', 'modified'])->orderDesc('modified'))
-                ->orderAsc(sprintf('%s.lft', $table->getAlias()))
+                ->contain($PostsCategories->Posts->getAlias(), fn(Query $query): Query => $query->find('active')->select(['category_id', 'slug', 'modified'])->orderDesc('modified'))
+                ->orderAsc(sprintf('%s.lft', $PostsCategories->getAlias()))
                 ->all();
 
             if ($categories->isEmpty()) {
@@ -103,7 +103,7 @@ class Sitemap extends SitemapBase
             }
 
             /** @var \MeCms\Model\Entity\Post $latest */
-            $latest = $table->Posts->find('active')
+            $latest = $PostsCategories->Posts->find('active')
                 ->select(['modified'])
                 ->orderDesc('modified')
                 ->firstOrFail();
@@ -128,7 +128,7 @@ class Sitemap extends SitemapBase
                 }
             }
 
-            Cache::write('sitemap', $url, $table->getCacheName());
+            Cache::write('sitemap', $url, $PostsCategories->getCacheName());
         }
 
         return $url;
@@ -144,14 +144,14 @@ class Sitemap extends SitemapBase
             return [];
         }
 
-        /** @var \MeCms\Model\Table\TagsTable $table */
-        $table = TableRegistry::getTableLocator()->get('MeCms.Tags');
-        $url = Cache::read('sitemap', $table->getCacheName());
+        /** @var \MeCms\Model\Table\TagsTable $Tags */
+        $Tags = TableRegistry::getTableLocator()->get('MeCms.Tags');
+        $url = Cache::read('sitemap', $Tags->getCacheName());
 
         if (!$url) {
-            $tags = $table->find('active')
+            $tags = $Tags->find('active')
                 ->select(['tag', 'modified'])
-                ->orderAsc(sprintf('%s.tag', $table->getAlias()))
+                ->orderAsc(sprintf('%s.tag', $Tags->getAlias()))
                 ->all();
 
             if ($tags->isEmpty()) {
@@ -160,7 +160,7 @@ class Sitemap extends SitemapBase
 
             //Adds tags index
             /** @var \MeCms\Model\Entity\Tag $latest */
-            $latest = $table->find()
+            $latest = $Tags->find()
                 ->select(['modified'])
                 ->orderDesc('modified')
                 ->firstOrFail();
@@ -171,7 +171,7 @@ class Sitemap extends SitemapBase
                 $url[] = self::parse(['_name' => 'postsTag', $tag->get('slug')], ['lastmod' => $tag->get('modified')]);
             }
 
-            Cache::write('sitemap', $url, $table->getCacheName());
+            Cache::write('sitemap', $url, $Tags->getCacheName());
         }
 
         return $url;
