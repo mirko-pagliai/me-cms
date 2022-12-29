@@ -31,16 +31,6 @@ parameters:
 			path: templates/StaticPages/cookies-policy.php
 
 		-
-			message: "#^Access to an undefined property MeCms\\\\Controller\\\\PostsController\\:\\:\\$Foo\\.$#"
-			count: 1
-			path: tests/TestCase/Controller/AppControllerTest.php
-
-		-
-			message: "#^Expression \"\\$PostsController\\-\\>Foo\" on a separate line does not do anything\\.$#"
-			count: 1
-			path: tests/TestCase/Controller/AppControllerTest.php
-
-		-
 			message: "#^Binary operation \"\\.\" between 'ORDER BY ' and array\\<string\\>\\|string\\|null results in an error\\.$#"
 			count: 1
 			path: tests/TestCase/Model/Table/AppTableTest.php

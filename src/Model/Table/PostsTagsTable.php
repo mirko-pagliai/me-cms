@@ -20,7 +20,7 @@ use MeCms\Model\Validation\PostsTagValidator;
 
 /**
  * PostsTags model
- * @property \Cake\ORM\Association\BelongsTo $Tags
+ * @property \MeCms\Model\Table\TagsTable&\Cake\ORM\Association\BelongsTo $Tags
  * @property \Cake\ORM\Association\BelongsTo $Posts
  */
 class PostsTagsTable extends AppTable
