@@ -22,7 +22,7 @@ use MeTools\TestSuite\TestCase as BaseTestCase;
 
 /**
  * TestCase class
- * @method \MeCms\Model\Table\AppTable|null getTable(string $alias, array $options = [])
+ * @method \MeCms\Model\Table\AppTable getTable(string $alias, array $options = [])
  */
 abstract class TestCase extends BaseTestCase
 {

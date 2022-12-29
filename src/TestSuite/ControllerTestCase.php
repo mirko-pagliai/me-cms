@@ -43,7 +43,7 @@ abstract class ControllerTestCase extends TestCase
     protected bool $autoInitializeClass = true;
 
     /**
-     * @var array<string, string>
+     * @var array{controller: string, plugin: string, prefix: string|null}
      */
     protected array $url;
 
