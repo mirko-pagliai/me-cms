@@ -24,7 +24,7 @@ use Cake\ORM\Entity;
 abstract class EntityTestCase extends TestCase
 {
     /**
-     * @var \Cake\ORM\Entity&\PHPUnit\Framework\MockObject\MockObject
+     * @var \Cake\ORM\Entity
      */
     protected Entity $Entity;
 
@@ -57,12 +57,9 @@ abstract class EntityTestCase extends TestCase
         parent::setUp();
 
         if (empty($this->Entity) && $this->autoInitializeClass) {
+            /** @var class-string<\Cake\ORM\Entity> $className */
             $className = $this->getOriginClassNameOrFail($this);
-            /** @var \Cake\ORM\Entity&\PHPUnit\Framework\MockObject\MockObject $Entity */
-            $Entity = $this->getMockBuilder($className)
-                ->onlyMethods([])
-                ->getMock();
-            $this->Entity = $Entity;
+            $this->Entity = new $className();
         }
     }
 }
