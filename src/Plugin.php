@@ -15,18 +15,25 @@ declare(strict_types=1);
 namespace MeCms;
 
 use Assets\Plugin as Assets;
+use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceInterface;
+use Authentication\AuthenticationServiceProviderInterface;
+use Authentication\Identifier\IdentifierInterface;
+use Authentication\Middleware\AuthenticationMiddleware;
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\MiddlewareQueue;
+use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use MeCms\Command\Install\RunAllCommand;
 use MeTools\Command\Install\CreateDirectoriesCommand;
 use MeTools\Command\Install\CreateVendorsLinksCommand;
 use MeTools\Command\Install\SetPermissionsCommand;
 use MeTools\Plugin as MeTools;
+use Psr\Http\Message\ServerRequestInterface;
 use RecaptchaMailhide\Plugin as RecaptchaMailhide;
 use StopSpam\Plugin as StopSpam;
 use Symfony\Component\Finder\Finder;
@@ -36,7 +43,7 @@ use Tokens\Plugin as Tokens;
 /**
  * Plugin class
  */
-class Plugin extends BasePlugin
+class Plugin extends BasePlugin  implements AuthenticationServiceProviderInterface
 {
     /**
      * Returns `true` if is cli.
@@ -80,6 +87,8 @@ class Plugin extends BasePlugin
 
             $app->addPlugin($plugin);
         }
+
+        $app->addPlugin('Authentication');
 
         parent::bootstrap($app);
 
@@ -126,6 +135,35 @@ class Plugin extends BasePlugin
     {
         $key = Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
-        return $middlewareQueue->add(new EncryptedCookieMiddleware(['login'], $key));
+        return $middlewareQueue->add(new EncryptedCookieMiddleware(['login'], $key))
+            ->add(new AuthenticationMiddleware($this));
+    }
+
+    /**
+     * Returns a service provider instance
+     * @param \Psr\Http\Message\ServerRequestInterface $request Request
+     * @return \Authentication\AuthenticationServiceInterface
+     */
+    public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
+    {
+        $service = new AuthenticationService();
+
+        $loginUrl = Router::url(['_name' => 'login']);
+
+        //Defines where users should be redirected to when they are not authenticated
+        $service->setConfig(['unauthenticatedRedirect' => $loginUrl, 'queryParam' => 'redirect']);
+
+        $fields = [
+            IdentifierInterface::CREDENTIAL_USERNAME => 'email',
+            IdentifierInterface::CREDENTIAL_PASSWORD => 'password'
+        ];
+        //Loads the authenticators. Session should be first
+        $service->loadAuthenticator('Authentication.Session');
+        $service->loadAuthenticator('Authentication.Form', compact('fields', 'loginUrl'));
+
+        //Loads identifiers
+        $service->loadIdentifier('Authentication.Password', compact('fields'));
+
+        return $service;
     }
 }

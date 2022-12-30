@@ -23,6 +23,7 @@ use RuntimeException;
 /**
  * Application controller class
  * @property \MeCms\Controller\Component\AuthComponent $Auth
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @property \MeTools\Controller\Component\FlashComponent $Flash
  */
 abstract class AppController extends BaseAppController
@@ -80,6 +81,7 @@ abstract class AppController extends BaseAppController
         //Loads components
         //The configuration for `AuthComponent`  takes place in the same class
         $this->loadComponent('MeCms.Auth');
+        $this->loadComponent('Authentication.Authentication');
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler', ['enableBeforeRedirect' => false]);
 
@@ -105,9 +107,12 @@ abstract class AppController extends BaseAppController
      * @param array|\ArrayAccess|null $user The user to check the authorization
      *  of. If empty the user in the session will be used
      * @return bool `true` if the user is authorized, otherwise `false`
+     * @todo Fix
      */
     public function isAuthorized($user = null): bool
     {
+        return true;
+
         //Only admin and managers can access admin actions
         //Any registered user can access actions without prefix. Default deny
         return !$this->getRequest()->getParam('prefix') || $this->Auth->isGroup(['admin', 'manager']);

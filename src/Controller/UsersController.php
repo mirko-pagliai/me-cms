@@ -83,6 +83,8 @@ class UsersController extends AppController
      */
     public function beforeFilter(EventInterface $event)
     {
+        $this->Authentication->allowUnauthenticated(['login']);
+
         $result = parent::beforeFilter($event);
         if ($result) {
             return $result;
