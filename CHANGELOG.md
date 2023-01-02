@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.31 branch
+### 2.31.0
+* the `AuthComponent` is deprecated. Use instead the `AuthenticationComponent`.
+
 ## 2.30 branch
 ### 2.30.13
 * added the `AppTable::getCacheNameWithAssociated()` method. The `getCacheName()` method will now only return the cache
