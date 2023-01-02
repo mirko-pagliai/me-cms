@@ -24,6 +24,33 @@ use MeTools\TestSuite\HelperTestCase;
 class AuthHelperTest extends HelperTestCase
 {
     /**
+     * @var int
+     */
+    protected static int $initialErrorReporting;
+
+    /**
+     * This method is called before the first test of this test class is run
+     * @return void
+     */
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        self::$initialErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+    }
+
+    /**
+     * This method is called after the last test of this test class is run
+     * @return void
+     */
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+
+        error_reporting(self::$initialErrorReporting);
+    }
+
+    /**
      * Internal method to write auth data on session
      * @param array $data Data you want to write
      * @return void

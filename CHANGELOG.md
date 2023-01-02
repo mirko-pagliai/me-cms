@@ -1,7 +1,8 @@
 # 2.x branch
 ## 2.31 branch
 ### 2.31.0
-* the `AuthComponent` is deprecated. Use instead the `AuthenticationComponent`.
+* the `AuthComponent` is deprecated. Use instead the `AuthenticationComponent`;
+* the `AuthHelper` is deprecated.  Use instead the `IdentityHelper`.
 
 ## 2.30 branch
 ### 2.30.13

@@ -16,16 +16,30 @@ declare(strict_types=1);
 namespace MeCms\View\Helper;
 
 use Cake\View\Helper;
+use Cake\View\View;
 use MeCms\AuthTrait;
 
 /**
  * Auth Helper.
  *
  * Allows you to check the user data.
+ * @deprecated 2.31.0 Use instead the `IdentityHelper`
  */
 class AuthHelper extends Helper
 {
     use AuthTrait;
+
+    /**
+     * Default Constructor
+     * @param \Cake\View\View $view The View this helper is being attached to
+     * @param array<string, mixed> $config Configuration settings for the helper
+     */
+    public function __construct(View $view, array $config = [])
+    {
+        deprecationWarning('Deprecated. Use instead the `IdentityHelper`');
+
+        parent::__construct($view, $config);
+    }
 
     /**
      * Constructor hook method
@@ -41,8 +55,7 @@ class AuthHelper extends Helper
     /**
      * Get the current user from storage
      * @param string|null $key Field to retrieve or `null`
-     * @return mixed Either User record or `null` if no user is logged in,
-     *  or retrieved field if key is specified
+     * @return mixed Either User record or `null` if no user is logged in, or retrieved field if key is specified
      */
     public function user(?string $key = null)
     {
