@@ -11,6 +11,8 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AdminView $this
  */
 ?>
 
@@ -29,9 +31,9 @@ declare(strict_types=1);
                 <li class="nav-item dropwdown">
                     <?php
                     $params = ['controller' => 'Users', 'plugin' => 'MeCms'];
-                    $text = $this->Auth->user('full_name');
-                    if ($this->Auth->user('picture')) {
-                        $text = $this->Thumb->fit($this->Auth->user('picture'), ['height' => 23], ['class' => 'me-2 rounded-circle']) . $text;
+                    $text = $this->Identity->get('full_name');
+                    if ($this->Identity->get('picture')) {
+                        $text = $this->Thumb->fit($this->Identity->get('picture'), ['height' => 23], ['class' => 'me-2 rounded-circle']) . $text;
                     }
 
                     $this->Dropdown->start((string)$text, ['class' => 'nav-link']);

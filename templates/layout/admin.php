@@ -54,7 +54,7 @@ declare(strict_types=1);
                 <nav id="sidebar" class="col d-none d-lg-block border-end min-vh-100 py-4 p-3">
                     <?= $this->element('MeCms.admin/sidebar', [], getConfig('debug') ? [] : ['cache' => [
                         'config' => 'admin',
-                        'key' => sprintf('sidebar_user_%s', $this->Auth->user('id')),
+                        'key' => 'sidebar_user_' . $this->Identity->get('id'),
                     ]]) ?>
                 </nav>
                 <main class="col-lg-10 py-4 p-3">

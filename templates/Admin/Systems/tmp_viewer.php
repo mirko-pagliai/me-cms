@@ -11,7 +11,17 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var int $assetsSize
+ * @var int $cacheSize
+ * @var bool $cacheStatus
+ * @var int $logsSize
+ * @var int $sitemapSize
+ * @var \MeCms\View\View\AdminView $this
+ * @var int $thumbsSize
+ * @var int $totalSize
  */
+
 $this->extend('MeCms./Admin/common/index');
 $this->assign('title', __d('me_cms', 'Temporary files'));
 ?>
@@ -20,7 +30,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
     <h4><?= __d('me_cms', 'All temporary files') ?></h4>
     <p><?= __d('me_cms', 'All temporary files size: {0}', $this->Number->toReadableSize($totalSize)) ?></p>
 
-    <?php if ($this->Auth->isGroup('admin')) : ?>
+    <?php if ($this->Identity->isGroup('admin')) : ?>
         <p><?= __d('me_cms', 'This command clear all temporary files: cache, assets, logs and thumbnails') ?></p>
 
         <?= $this->Form->postButton(
@@ -70,7 +80,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
     <h4><?= __d('me_cms', 'Logs') ?></h4>
     <p><?= __d('me_cms', 'Logs size: {0}', $this->Number->toReadableSize($logsSize)) ?></p>
 
-    <?php if ($this->Auth->isGroup('admin') && $logsSize) : ?>
+    <?php if ($this->Identity->isGroup('admin') && $logsSize) : ?>
         <?= $this->Form->postButton(
             __d('me_cms', 'Clear all logs'),
             ['action' => 'tmpCleaner', 'logs'],
@@ -83,7 +93,7 @@ $this->assign('title', __d('me_cms', 'Temporary files'));
     <h4><?= __d('me_cms', 'Sitemap') ?></h4>
     <p><?= __d('me_cms', 'Sitemap size: {0}', $this->Number->toReadableSize($sitemapSize)) ?></p>
 
-    <?php if ($this->Auth->isGroup('admin') && $sitemapSize) : ?>
+    <?php if ($this->Identity->isGroup('admin') && $sitemapSize) : ?>
         <p><?= __d('me_cms', 'Note: you should not need to clear the sitemap, unless you have recently changed many records') ?></p>
 
         <?= $this->Form->postButton(

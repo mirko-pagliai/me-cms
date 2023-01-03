@@ -25,6 +25,7 @@ class MenuHelperTest extends MenuHelperTestCase
 {
     /**
      * Tests for `posts()` method
+     * @uses \MeCms\View\Helper\MenuHelper::posts()
      * @test
      */
     public function testPosts(): void
@@ -36,7 +37,7 @@ class MenuHelperTest extends MenuHelperTestCase
         $this->assertEquals(['Posts', 'PostsCategories', 'PostsTags'], $handledControllers);
 
         foreach (['manager', 'admin'] as $name) {
-            $this->writeAuthOnSession(['group' => compact('name')]);
+            $this->setIdentity(['group' => compact('name')]);
             [$links] = $this->Helper->posts();
             $this->assertTextContains('List categories', $links);
             $this->assertTextContains('Add category', $links);
@@ -45,6 +46,7 @@ class MenuHelperTest extends MenuHelperTestCase
 
     /**
      * Tests for `pages()` method
+     * @uses \MeCms\View\Helper\MenuHelper::pages()
      * @test
      */
     public function testPages(): void
@@ -56,7 +58,7 @@ class MenuHelperTest extends MenuHelperTestCase
         $this->assertEquals(['Pages', 'PagesCategories'], $handledControllers);
 
         foreach (['manager', 'admin'] as $name) {
-            $this->writeAuthOnSession(['group' => compact('name')]);
+            $this->setIdentity(['group' => compact('name')]);
             [$links] = $this->Helper->pages();
             $this->assertTextContains('List categories', $links);
             $this->assertTextContains('Add category', $links);
@@ -65,20 +67,21 @@ class MenuHelperTest extends MenuHelperTestCase
 
     /**
      * Tests for `users()` method
+     * @uses \MeCms\View\Helper\MenuHelper::users()
      * @test
      */
     public function testUsers(): void
     {
         $this->assertEmpty($this->Helper->users());
 
-        $this->writeAuthOnSession(['group' => ['name' => 'manager']]);
+        $this->setIdentity(['group' => ['name' => 'manager']]);
         [$links,,, $handledControllers] = $this->Helper->users();
         $this->assertNotEmpty($links);
         $this->assertTextNotContains('List groups', $links);
         $this->assertTextNotContains('Add group', $links);
         $this->assertEquals(['Users', 'UsersGroups'], $handledControllers);
 
-        $this->writeAuthOnSession(['group' => ['name' => 'admin']]);
+        $this->setIdentity(['group' => ['name' => 'admin']]);
         [$links] = $this->Helper->users();
         $this->assertTextContains('List groups', $links);
         $this->assertTextContains('Add group', $links);
@@ -86,6 +89,7 @@ class MenuHelperTest extends MenuHelperTestCase
 
     /**
      * Tests for `systems()` method
+     * @uses \MeCms\View\Helper\MenuHelper::systems()
      * @test
      */
     public function testSystems(): void
@@ -93,7 +97,7 @@ class MenuHelperTest extends MenuHelperTestCase
         $this->assertEmpty($this->Helper->systems());
 
         foreach (['manager', 'admin'] as $name) {
-            $this->writeAuthOnSession(['group' => compact('name')]);
+            $this->setIdentity(['group' => compact('name')]);
             [$links,,, $handledControllers] = $this->Helper->systems();
             $this->assertNotEmpty($links);
             $this->assertEquals(['Systems'], $handledControllers);
