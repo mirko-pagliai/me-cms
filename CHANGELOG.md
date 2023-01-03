@@ -1,7 +1,7 @@
 # 2.x branch
 ## 2.31 branch
 ### 2.31.0
-* the `AuthComponent` is deprecated. Use instead the `AuthenticationComponent`;
+* the `AuthComponent` is deprecated. Use instead `\Authentication\Controller\Component\AuthenticationComponent`;
 * the `AuthHelper` is deprecated.  Use instead `\MeCms\View\Helper\IdentityHelper`.
 
 ## 2.30 branch
