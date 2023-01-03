@@ -18,7 +18,6 @@ use Assets\Plugin as Assets;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
-use Authentication\Identifier\IdentifierInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
@@ -143,26 +142,26 @@ class Plugin extends BasePlugin  implements AuthenticationServiceProviderInterfa
      * Returns a service provider instance
      * @param \Psr\Http\Message\ServerRequestInterface $request Request
      * @return \Authentication\AuthenticationServiceInterface
+     * @see \MeCms\Controller\UsersController::login()
      */
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
-        $service = new AuthenticationService();
-
+        $fields = ['username' => 'username', 'password' => 'password'];
         $loginUrl = Router::url(['_name' => 'login']);
 
-        //Defines where users should be redirected to when they are not authenticated
+        $service = new AuthenticationService();
         $service->setConfig(['unauthenticatedRedirect' => $loginUrl, 'queryParam' => 'redirect']);
 
-        $fields = [
-            IdentifierInterface::CREDENTIAL_USERNAME => 'email',
-            IdentifierInterface::CREDENTIAL_PASSWORD => 'password'
-        ];
         //Loads the authenticators. Session should be first
         $service->loadAuthenticator('Authentication.Session');
         $service->loadAuthenticator('Authentication.Form', compact('fields', 'loginUrl'));
+        $service->loadAuthenticator('Authentication.Cookie', compact('fields', 'loginUrl') + ['cookie' => ['expires' => '+1 year']]);
 
         //Loads identifiers
-        $service->loadIdentifier('Authentication.Password', compact('fields'));
+        $service->loadIdentifier('Authentication.Password', [
+            'fields' => ['username' => ['username', 'email'], 'password' => 'password'],
+            'resolver' => ['className' => 'Authentication.Orm', 'userModel' => 'MeCms.Users', 'finder' => 'auth'],
+        ]);
 
         return $service;
     }
