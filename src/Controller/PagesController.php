@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Controller;
 
-use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\ORM\Entity;
 use Cake\Routing\Router;
@@ -28,20 +27,17 @@ use MeCms\Utility\StaticPage;
 class PagesController extends AppController
 {
     /**
-     * Called before the controller action.
-     * You can use this method to perform logic that needs to happen before
-     *  each controller action
-     * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null|void
+     * Initialization hook method
+     * @return void
+     * @throws \Exception
      */
-    public function beforeFilter(EventInterface $event)
+    public function initialize(): void
     {
-        $result = parent::beforeFilter($event);
-        if ($result) {
-            return $result;
-        }
+        parent::initialize();
 
-        $this->Auth->deny('preview');
+        if ($this->getRequest()->is('action', 'preview')) {
+            $this->Authentication->setConfig('requireIdentity', true);
+        }
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -16,8 +17,6 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Controller\Controller;
-use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\I18n\FrozenTime;
 use MeCms\Model\Entity\Post;
@@ -41,22 +40,23 @@ class PostsControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\EventInterface $event A dispatcher event
-     * @param \Cake\Controller\Controller|null $controller Controller instance
-     * @return void
+     * Tests for Authentication configuration
+     * @uses \MeCms\Controller\PostsController::initialize()
+     * @test
      */
-    public function controllerSpy(EventInterface $event, ?Controller $controller = null): void
+    public function testAuthentication(): void
     {
-        parent::controllerSpy($event, $controller);
+        parent::testAuthentication();
 
-        if ($this->getName() === 'testRss') {
-            $this->_controller->viewBuilder()->setLayout(null);
-        }
+        $Request = $this->Controller->getRequest();
+        $this->Controller->setRequest($Request->withParam('action', 'preview'));
+        $this->Controller->initialize();
+        $this->assertTrue($this->Controller->Authentication->getConfig('requireIdentity'));
     }
 
     /**
      * Tests for `index()` method
+     * @uses \MeCms\Controller\PostsController::index()
      * @test
      */
     public function testIndex(): void
@@ -83,6 +83,7 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `indexByDate()` method
+     * @uses \MeCms\Controller\PostsController::indexByDate()
      * @test
      */
     public function testIndexByDate(): void
@@ -132,6 +133,7 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `rss()` method
+     * @uses \MeCms\Controller\PostsController::rss()
      * @test
      */
     public function testRss(): void
@@ -151,6 +153,7 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `search()` method
+     * @uses \MeCms\Controller\PostsController::search()
      * @test
      */
     public function testSearch(): void
@@ -201,6 +204,7 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `view()` method
+     * @uses \MeCms\Controller\PostsController::view()
      * @test
      */
     public function testView(): void
@@ -216,11 +220,12 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `preview()` method
+     * @uses \MeCms\Controller\PostsController::preview()
      * @test
      */
     public function testPreview(): void
     {
-        $this->setUserGroup('user');
+        $this->setUserId(1);
         $this->get(['_name' => 'postsPreview', 'inactive-post']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Posts' . DS . 'view.php');

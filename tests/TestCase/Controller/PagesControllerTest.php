@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -35,7 +36,23 @@ class PagesControllerTest extends ControllerTestCase
     ];
 
     /**
+     * Tests for Authentication configuration
+     * @uses \MeCms\Controller\PagesController::initialize()
+     * @test
+     */
+    public function testAuthentication(): void
+    {
+        parent::testAuthentication();
+
+        $Request = $this->Controller->getRequest();
+        $this->Controller->setRequest($Request->withParam('action', 'preview'));
+        $this->Controller->initialize();
+        $this->assertTrue($this->Controller->Authentication->getConfig('requireIdentity'));
+    }
+
+    /**
      * Tests for `view()` method
+     * @uses \MeCms\Controller\PagesController::view()
      * @test
      */
     public function testView(): void
@@ -50,6 +67,7 @@ class PagesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `view()` method, with a static page
+     * @uses \MeCms\Controller\PagesController::view()
      * @test
      */
     public function testViewWithStaticPage(): void
@@ -57,9 +75,7 @@ class PagesControllerTest extends ControllerTestCase
         Cache::clear('static_pages');
         $slug = 'page-from-app';
         $url = ['_name' => 'page', $slug];
-//        $this->disableErrorHandlerMiddleware();
         $this->get($url);
-//        dd($this->_getBodyAsString());
         $this->assertResponseOk();
         $this->assertResponseContains('This is a static page');
         $this->assertTemplate('StaticPages' . DS . $slug . '.php');
@@ -72,6 +88,7 @@ class PagesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `view()` method, with a static page from a plugin
+     * @uses \MeCms\Controller\PagesController::view()
      * @test
      */
     public function testViewWithStaticPageFromPlugin(): void
@@ -86,11 +103,12 @@ class PagesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `preview()` method
+     * @uses \MeCms\Controller\PagesController::preview()
      * @test
      */
     public function testPreview(): void
     {
-        $this->setUserGroup('user');
+        $this->setUserId(1);
         $this->get(['_name' => 'pagesPreview', 'disabled-page']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Pages' . DS . 'view.php');

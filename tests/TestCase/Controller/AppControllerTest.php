@@ -18,6 +18,7 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use MeCms\Controller\AppController;
 use MeCms\TestSuite\ControllerTestCase;
 use RuntimeException;
 
@@ -28,6 +29,7 @@ class AppControllerTest extends ControllerTestCase
 {
     /**
      * Tests for `beforeFilter()` method
+     * @uses \MeCms\Controller\AppController::beforeFilter()
      * @test
      */
     public function testBeforeFilter(): void
@@ -37,7 +39,6 @@ class AppControllerTest extends ControllerTestCase
         Configure::write('MeCms.default.records', 5);
 
         $this->Controller->beforeFilter(new Event('myEvent'));
-        $this->assertNotEmpty($this->Controller->Auth->allowedActions);
         $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $this->Controller->paginate);
         $this->assertNull($this->Controller->viewBuilder()->getLayout());
         $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
@@ -72,6 +73,7 @@ class AppControllerTest extends ControllerTestCase
 
     /**
      * Tests for `initialize()` method, for `Recaptcha` component
+     * @uses \MeCms\Controller\AppController::initialize()
      * @test
      */
     public function testInitializeForRecaptchaComponent(): void
@@ -94,20 +96,18 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `isAuthorized()` method
+     * Tests for Authentication configuration
+     * @uses \MeCms\Controller\AppController::initialize()
      * @test
      */
-    public function testIsAuthorized(): void
+    public function testAuthentication(): void
     {
-        //With prefixes
-        foreach ([
-            null => true,
-            ADMIN_PREFIX => false,
-            'otherPrefix' => false,
-        ] as $prefix => $expected) {
-            $request = $this->Controller->getRequest()->withParam('prefix', $prefix);
-            $request->clearDetectorCache();
-            $this->assertSame($expected, $this->Controller->setRequest($request)->isAuthorized());
-        }
+        parent::testAuthentication();
+
+        //With a prefix
+        $Request = $this->Controller->getRequest()->withParam('prefix', 'admin');
+        $Controller = $this->getMockForAbstractClass(AppController::class, [$Request]);
+        $Controller->initialize();
+        $this->assertTrue($Controller->Authentication->getConfig('requireIdentity'));
     }
 }

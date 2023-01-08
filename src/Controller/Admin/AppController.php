@@ -44,8 +44,6 @@ abstract class AppController extends BaseAppController
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.records');
 
-        $this->Auth->deny();
-
         //Saves the referer in session, excluding post and put requests
         $request = $this->getRequest();
         $referer = $request->referer();
