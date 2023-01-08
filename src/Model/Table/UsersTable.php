@@ -104,7 +104,7 @@ class UsersTable extends AppTable
      */
     public function findAuth(Query $query): Query
     {
-        return $query->contain([$this->Groups->getAlias() => ['fields' => ['name']]]);
+        return $query->find('active')->contain([$this->Groups->getAlias() => ['fields' => ['name']]]);
     }
 
     /**

@@ -52,6 +52,7 @@ class UsersTableTest extends TableTestCase
 
     /**
      * Test for event methods
+     * @uses \MeCms\Model\Table\UsersTable::beforeMarshal()
      * @test
      */
     public function testEventMethods(): void
@@ -84,6 +85,7 @@ class UsersTableTest extends TableTestCase
 
     /**
      * Test for `buildRules()` method
+     * @uses \MeCms\Model\Table\UsersTable::buildRules()
      * @test
      */
     public function testBuildRules(): void
@@ -109,6 +111,7 @@ class UsersTableTest extends TableTestCase
 
     /**
      * Test for `initialize()` method
+     * @uses \MeCms\Model\Table\UsersTable::initialize()
      * @test
      */
     public function testInitialize(): void
@@ -147,6 +150,10 @@ class UsersTableTest extends TableTestCase
 
     /**
      * Test for `find()` methods
+     * @uses \MeCms\Model\Table\UsersTable::findActive()
+     * @uses \MeCms\Model\Table\UsersTable::findAuth()
+     * @uses \MeCms\Model\Table\UsersTable::findBanned()
+     * @uses \MeCms\Model\Table\UsersTable::findPending()
      * @test
      */
     public function testFindMethods(): void
@@ -165,13 +172,13 @@ class UsersTableTest extends TableTestCase
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
 
-        $this->skipIfCakeIsLessThan('4.3');
         $query = $this->Table->find('auth');
-        $this->assertSqlEndsWith('FROM users Users INNER JOIN users_groups Groups ON Groups.id = Users.group_id', $query->sql());
+        $this->assertSqlEndsWith('FROM `users` `Users` INNER JOIN `users_groups` `Groups` ON `Groups`.`id` = `Users`.`group_id` WHERE (`active` = :c0 AND `banned` = :c1)', $query->sql());
     }
 
     /**
      * Test for `getActiveList()` method
+     * @uses \MeCms\Model\Table\UsersTable::getActiveList()
      * @test
      */
     public function testGetActiveList(): void
@@ -185,6 +192,7 @@ class UsersTableTest extends TableTestCase
 
     /**
      * Test for `queryFromFilter()` method
+     * @uses \MeCms\Model\Table\UsersTable::queryFromFilter()
      * @test
      */
     public function testQueryFromFilter(): void
@@ -222,6 +230,7 @@ class UsersTableTest extends TableTestCase
 
     /**
      * Test for `validationDoNotRequirePresence()` method
+     * @uses \MeCms\Model\Table\UsersTable::validationDoNotRequirePresence()
      * @test
      */
     public function testValidationDoNotRequirePresence(): void
@@ -244,6 +253,7 @@ class UsersTableTest extends TableTestCase
 
     /**
      * Test for `validationEmptyPassword()` method
+     * @uses \MeCms\Model\Table\UsersTable::validationEmptyPassword()
      * @test
      */
     public function testValidationEmptyPassword(): void
