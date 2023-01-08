@@ -29,6 +29,7 @@ use Tools\Filesystem;
 /**
  * UsersControllerTest class
  * @property \MeCms\Model\Table\UsersTable $Table
+ * @group admin-controller
  */
 class UsersControllerTest extends ControllerTestCase
 {

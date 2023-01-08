@@ -21,6 +21,7 @@ use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PagesCategoriesControllerTest class
+ * @group admin-controller
  */
 class PagesCategoriesControllerTest extends ControllerTestCase
 {

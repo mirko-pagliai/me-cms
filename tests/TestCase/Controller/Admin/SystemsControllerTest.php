@@ -24,6 +24,7 @@ use Tools\Filesystem;
 
 /**
  * SystemsControllerTest class
+ * @group admin-controller
  */
 class SystemsControllerTest extends ControllerTestCase
 {

@@ -25,6 +25,7 @@ use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * AppControllerTest class
+ * @group admin-controller
  */
 class AppControllerTest extends ControllerTestCase
 {

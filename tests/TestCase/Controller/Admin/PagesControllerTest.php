@@ -24,6 +24,7 @@ use MeCms\TestSuite\ControllerTestCase;
 /**
  * PagesControllerTest class
  * @property \MeCms\Model\Table\PagesTable $Table
+ * @group admin-controller
  */
 class PagesControllerTest extends ControllerTestCase
 {

@@ -20,6 +20,7 @@ use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * UsersGroupsControllerTest class
+ * @group admin-controller
  */
 class UsersGroupsControllerTest extends ControllerTestCase
 {

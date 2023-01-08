@@ -23,6 +23,7 @@ use MeCms\TestSuite\ControllerTestCase;
 /**
  * PostsControllerTest class
  * @property \MeCms\Model\Table\PostsTable $Table
+ * @group admin-controller
  */
 class PostsControllerTest extends ControllerTestCase
 {

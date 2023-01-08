@@ -20,6 +20,7 @@ use MeCms\TestSuite\ControllerTestCase;
 
 /**
  * PostsTagsControllerTest class
+ * @group admin-controller
  */
 class PostsTagsControllerTest extends ControllerTestCase
 {
