@@ -18,6 +18,10 @@ use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
+use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceInterface;
+use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Middleware\AuthorizationMiddleware;
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
@@ -27,6 +31,7 @@ use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use MeCms\Command\Install\RunAllCommand;
+use MeCms\Policy\ControllerResolver;
 use MeTools\Command\Install\CreateDirectoriesCommand;
 use MeTools\Command\Install\CreateVendorsLinksCommand;
 use MeTools\Command\Install\SetPermissionsCommand;
@@ -36,7 +41,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * Plugin class
  */
-class Plugin extends BasePlugin  implements AuthenticationServiceProviderInterface
+class Plugin extends BasePlugin implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface
 {
     /**
      * Returns `true` if is cli
@@ -70,6 +75,7 @@ class Plugin extends BasePlugin  implements AuthenticationServiceProviderInterfa
         }
 
         $app->addPlugin('Authentication');
+        $app->addPlugin('Authorization');
 
         parent::bootstrap($app);
 
@@ -117,7 +123,8 @@ class Plugin extends BasePlugin  implements AuthenticationServiceProviderInterfa
         $key = Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
         return $middlewareQueue->add(new EncryptedCookieMiddleware(['login'], $key))
-            ->add(new AuthenticationMiddleware($this));
+            ->add(new AuthenticationMiddleware($this))
+            ->add(new AuthorizationMiddleware($this, ['requireAuthorizationCheck' => false]));
     }
 
     /**
@@ -146,5 +153,16 @@ class Plugin extends BasePlugin  implements AuthenticationServiceProviderInterfa
         ]);
 
         return $service;
+    }
+
+    /**
+     * Returns `AuthorizationServiceInterface` instance
+     * @param \Psr\Http\Message\ServerRequestInterface $request Server request
+     * @return \Authorization\AuthorizationServiceInterface
+     * @throws \RuntimeException When authorization method has not been defined
+     */
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+    {
+        return new AuthorizationService(new ControllerResolver());
     }
 }
