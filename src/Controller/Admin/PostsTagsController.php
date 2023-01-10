@@ -15,6 +15,8 @@ declare(strict_types=1);
 
 namespace MeCms\Controller\Admin;
 
+use MeCms\Model\Entity\User;
+
 /**
  * PostsTags controller
  * @property \MeCms\Model\Table\PostsTagsTable $PostsTags
@@ -22,15 +24,13 @@ namespace MeCms\Controller\Admin;
 class PostsTagsController extends AppController
 {
     /**
-     * Check if the provided user is authorized for the request
-     * @param array|\ArrayAccess|null $user The user to check the authorization
-     *  of. If empty the user in the session will be used
+     * Checks if the provided user is authorized for the request
+     * @param \MeCms\Model\Entity\User $User User entity
      * @return bool `true` if the user is authorized, otherwise `false`
      */
-    public function isAuthorized($user = null): bool
+    public function isAuthorized(User $User): bool
     {
-        //Only admins and managers can edit tags
-        return !$this->getRequest()->is('edit') || $this->Auth->isGroup(['admin', 'manager']);
+        return $this->getRequest()->is('index') || parent::isAuthorized($User);
     }
 
     /**

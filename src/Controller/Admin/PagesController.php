@@ -20,6 +20,7 @@ use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\ORM\ResultSet;
 use MeCms\Model\Entity\Page;
+use MeCms\Model\Entity\User;
 use MeCms\Utility\StaticPage;
 
 /**
@@ -29,14 +30,11 @@ use MeCms\Utility\StaticPage;
 class PagesController extends AppController
 {
     /**
-     * Called before the controller action.
-     * You can use this method to perform logic that needs to happen before each controller action
+     * Called before the controller action
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
      * @uses \MeCms\Model\Table\PagesCategoriesTable::getList()
      * @uses \MeCms\Model\Table\PagesCategoriesTable::getTreeList()
-     * @uses \MeCms\Model\Table\UsersTable::getActiveList()
-     * @uses \MeCms\Model\Table\UsersTable::getList()
      */
     public function beforeFilter(EventInterface $event)
     {
@@ -64,21 +62,18 @@ class PagesController extends AppController
     }
 
     /**
-     * Check if the provided user is authorized for the request
-     * @param array|\ArrayAccess|null $user The user to check the authorization
-     *  of. If empty the user in the session will be used
+     * Checks if the provided user is authorized for the request
+     * @param \MeCms\Model\Entity\User $User User entity
      * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
      */
-    public function isAuthorized($user = null): bool
+    public function isAuthorized(User $User): bool
     {
         //Everyone can list pages and static pages
         if ($this->getRequest()->is('action', ['index', 'indexStatics'])) {
             return true;
         }
 
-        //Only admins can delete pages. Admins and managers can access other actions
-        return $this->Auth->isGroup($this->getRequest()->is('delete') ? ['admin'] : ['admin', 'manager']);
+        return parent::isAuthorized($User);
     }
 
     /**

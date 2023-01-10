@@ -77,6 +77,7 @@ abstract class AppController extends BaseAppController
     public function initialize(): void
     {
         $this->loadComponent('Authentication.Authentication', [
+            'identityCheckEvent' => 'Controller.initialize',
             'unauthenticatedMessage' => __d('me_cms', 'You are not authorized for this action'),
             'logoutRedirect' => Router::url(['_name' => 'homepage']),
         ]);
@@ -98,9 +99,7 @@ abstract class AppController extends BaseAppController
         }
 
         //By default, "unprefixed" actions do not require authentication and identity
-        if (!$this->getRequest()->getParam('prefix')) {
-            $this->Authentication->setConfig('requireIdentity', false);
-        }
+        $this->Authentication->setConfig('requireIdentity', false);
 
         parent::initialize();
     }

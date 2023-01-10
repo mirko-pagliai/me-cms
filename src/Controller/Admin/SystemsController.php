@@ -20,6 +20,7 @@ use Cake\Http\Response;
 use Cake\Routing\Router;
 use League\CommonMark\CommonMarkConverter;
 use MeCms\Core\Plugin;
+use MeCms\Model\Entity\User;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Thumber\Cake\Utility\ThumbManager;
@@ -32,20 +33,18 @@ use Tools\Filesystem;
 class SystemsController extends AppController
 {
     /**
-     * Check if the provided user is authorized for the request
-     * @param array|\ArrayAccess|null $user The user to check the authorization
-     *  of. If empty the user in the session will be used
+     * Checks if the provided user is authorized for the request
+     * @param \MeCms\Model\Entity\User $User User entity
      * @return bool `true` if the user is authorized, otherwise `false`
      */
-    public function isAuthorized($user = null): bool
+    public function isAuthorized(User $User): bool
     {
-        //Only admins can clear all temporary files or logs
-        if ($this->getRequest()->is('action', 'tmpCleaner') && in_array($this->getRequest()->getParam('pass.0'), ['all', 'logs'])) {
-            return $this->Auth->isGroup('admin');
+        //Only admins can clear temporary files
+        if ($this->getRequest()->is('action', 'tmpCleaner')) {
+            return $User->get('group')->get('name') === 'admin';
         }
 
-        //Admins and managers can access other actions
-        return $this->Auth->isGroup(['admin', 'manager']);
+        return parent::isAuthorized($User);
     }
 
     /**
