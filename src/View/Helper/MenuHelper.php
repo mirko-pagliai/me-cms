@@ -131,11 +131,16 @@ class MenuHelper extends Helper
         }
 
         $params = ['controller' => 'Systems'] + $this->defaultParams;
+        $links = [];
 
-        return [[
-            [__d('me_cms', 'Temporary files'), ['action' => 'tmpViewer'] + $params],
-            [__d('me_cms', 'Media browser'), ['action' => 'browser'] + $params],
-            [__d('me_cms', 'Changelogs'), ['action' => 'changelogs'] + $params],
-        ], __d('me_cms', 'System'), ['icon' => 'wrench'], ['Systems']];
+        //Only admins can clear temporary files
+        if ($this->Identity->isGroup('admin')) {
+            $links[] = [__d('me_cms', 'Temporary files'), ['action' => 'tmpViewer'] + $params];
+        }
+
+        $links[] = [__d('me_cms', 'Media browser'), ['action' => 'browser'] + $params];
+        $links[] = [__d('me_cms', 'Changelogs'), ['action' => 'changelogs'] + $params];
+
+        return [$links, __d('me_cms', 'System'), ['icon' => 'wrench'], ['Systems']];
     }
 }
