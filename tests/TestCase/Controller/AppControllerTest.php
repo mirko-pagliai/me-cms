@@ -18,6 +18,7 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use MeCms\Controller\AppController;
 use MeCms\TestSuite\ControllerTestCase;
 use RuntimeException;
 
@@ -33,25 +34,32 @@ class AppControllerTest extends ControllerTestCase
      */
     public function testBeforeFilter(): void
     {
-        parent::testBeforeFilter();
-
         Configure::write('MeCms.default.records', 5);
+
+        //If the site is offline
+        Configure::write('MeCms.default.offline', true);
+        $this->Controller->getRequest()->clearDetectorCache();
+        $this->get('/');
+        $this->assertRedirect(['_name' => 'offline']);
+        Configure::write('MeCms.default.offline', false);
+
+        //Whether the user has been reported as a spammer
+        $Controller = $this->getMockForAbstractClass(AppController::class, [], '', true, true, true, ['isSpammer']);
+        $Controller->method('isSpammer')->willReturn(true);
+        /** @var \Cake\Http\Response $Response */
+        $Response = $Controller->beforeFilter(new Event('myEvent'));
+        $this->_response = $Response;
+        $this->assertRedirect(['_name' => 'ipNotAllowed']);
 
         $this->Controller->beforeFilter(new Event('myEvent'));
         $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $this->Controller->paginate);
         $this->assertNull($this->Controller->viewBuilder()->getLayout());
         $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
 
-        //Ajax request
+        //Layout for ajax and json requests
         $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
         $this->Controller->beforeFilter(new Event('myEvent'));
         $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
-
-        //If the site is offline this makes a redirect
-        Configure::write('MeCms.default.offline', true);
-        $this->Controller->getRequest()->clearDetectorCache();
-        $this->get('/');
-        $this->assertRedirect(['_name' => 'offline']);
     }
 
     /**
