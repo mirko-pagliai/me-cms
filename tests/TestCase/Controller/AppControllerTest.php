@@ -71,13 +71,14 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `initialize()` method, for `Recaptcha` component
+     * Tests for `initialize()` method
      * @uses \MeCms\Controller\AppController::initialize()
      * @test
      */
-    public function testInitializeForRecaptchaComponent(): void
+    public function testInitialize(): void
     {
         $this->Controller->initialize();
+
         $this->assertFalse($this->Controller->components()->has('Recaptcha'));
 
         Configure::write('MeCms.security.recaptcha', true);
