@@ -19,7 +19,6 @@ namespace MeCms\Test\TestCase\Controller;
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Routing\Router;
 use MeCms\Model\Entity\User;
 use MeCms\TestSuite\ControllerTestCase;
 use Tokens\Controller\Component\TokenComponent;
@@ -174,7 +173,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->Table->save($user->set('password', $password));
         $this->cleanup();
         $this->post($url, ['username' => $user->get('username')] + compact('password'));
-        $this->assertRedirect(Router::url(['_name' => 'dashboard']));
+        $this->assertRedirect(['_name' => 'dashboard']);
         $this->assertSession($user->get('id'), 'Auth.id');
 
         //POST request. The user is banned
@@ -201,8 +200,17 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testLogout(): void
     {
+        $this->setUserId(1);
+        $this->session(['otherSessionValue' => 'value']);
+
+        //The user is currently logged in
+        $this->get('/');
+        $this->assertSession(1, 'Auth.id');
+
         $this->get(['_name' => 'logout']);
-        $this->assertRedirect($this->_controller->Authentication->logout());
+        $this->assertResponseCode(302);
+        $this->assertSessionEmpty('Auth');
+        $this->assertSession('value', 'otherSessionValue');
     }
 
     /**

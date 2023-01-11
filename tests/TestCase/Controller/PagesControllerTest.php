@@ -36,21 +36,6 @@ class PagesControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Tests for Authentication configuration
-     * @uses \MeCms\Controller\PagesController::initialize()
-     * @test
-     */
-    public function testAuthentication(): void
-    {
-        parent::testAuthentication();
-
-        $Request = $this->Controller->getRequest();
-        $this->Controller->setRequest($Request->withParam('action', 'preview'));
-        $this->Controller->initialize();
-        $this->assertTrue($this->Controller->Authentication->getConfig('requireIdentity'));
-    }
-
-    /**
      * Tests for `view()` method
      * @uses \MeCms\Controller\PagesController::view()
      * @test
@@ -108,8 +93,14 @@ class PagesControllerTest extends ControllerTestCase
      */
     public function testPreview(): void
     {
+        $url = $this->url + ['action' => 'preview', 'disabled-page'];
+
+        $this->get($url);
+        $this->assertResponseCode(302);
+        $this->assertStringStartsWith('/login', $this->_response->getHeader('Location')[0]);
+
         $this->setUserId(1);
-        $this->get(['_name' => 'pagesPreview', 'disabled-page']);
+        $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Pages' . DS . 'view.php');
         $this->assertInstanceOf(Page::class, $this->viewVariable('page'));

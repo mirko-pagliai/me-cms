@@ -18,7 +18,6 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use MeCms\Controller\AppController;
 use MeCms\TestSuite\ControllerTestCase;
 use RuntimeException;
 
@@ -93,21 +92,13 @@ class AppControllerTest extends ControllerTestCase
         $this->expectExceptionMessage('Missing Recaptcha keys. You can rename the `config/recaptcha.example.php` file as `recaptcha.php` and change the keys');
         Configure::load('MeCms.recaptcha');
         $this->Controller->initialize();
-    }
 
-    /**
-     * Tests for Authentication configuration
-     * @uses \MeCms\Controller\AppController::initialize()
-     * @test
-     */
-    public function testAuthentication(): void
-    {
-        parent::testAuthentication();
+        $this->assertTrue($this->Controller->Authentication->getConfig('requireIdentity'));
 
-        //With a prefix
-        $Request = $this->Controller->getRequest()->withParam('prefix', 'admin');
-        $Controller = $this->getMockForAbstractClass(AppController::class, [$Request]);
-        $Controller->initialize();
-        $this->assertTrue($Controller->Authentication->getConfig('requireIdentity'));
+        //Tries some actions. They do not require authentication
+        foreach (['/posts', '/posts/categories'] as $url) {
+            $this->get($url);
+            $this->assertResponseOkAndNotEmpty();
+        }
     }
 }

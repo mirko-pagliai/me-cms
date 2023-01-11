@@ -40,21 +40,6 @@ class PostsControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Tests for Authentication configuration
-     * @uses \MeCms\Controller\PostsController::initialize()
-     * @test
-     */
-    public function testAuthentication(): void
-    {
-        parent::testAuthentication();
-
-        $Request = $this->Controller->getRequest();
-        $this->Controller->setRequest($Request->withParam('action', 'preview'));
-        $this->Controller->initialize();
-        $this->assertTrue($this->Controller->Authentication->getConfig('requireIdentity'));
-    }
-
-    /**
      * Tests for `index()` method
      * @uses \MeCms\Controller\PostsController::index()
      * @test
@@ -225,8 +210,14 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testPreview(): void
     {
+        $url = $this->url + ['action' => 'preview', 'inactive-post'];
+
+        $this->get($url);
+        $this->assertResponseCode(302);
+        $this->assertStringStartsWith('/login', $this->_response->getHeader('Location')[0]);
+
         $this->setUserId(1);
-        $this->get(['_name' => 'postsPreview', 'inactive-post']);
+        $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Posts' . DS . 'view.php');
         $this->assertInstanceOf(Post::class, $this->viewVariable('post'));
