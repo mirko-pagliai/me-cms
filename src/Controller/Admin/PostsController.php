@@ -76,14 +76,19 @@ class PostsController extends AppController
      */
     public function isAuthorized(User $User): bool
     {
+        //By default, administrators and managers are authorized
+        if (in_array($User->get('group')->get('name'), ['admin', 'manager'])) {
+            return true;
+        }
+
         //Simple users can edit only their own post
-        if ($this->getRequest()->is('edit') && !in_array($User->get('group')->get('name'), ['admin', 'manager'])) {
+        if ($this->getRequest()->is('action', 'edit')) {
             [$postId, $userId] = [$this->getRequest()->getParam('pass.0'), $User->get('id')];
 
             return $postId && $userId && $this->Posts->isOwnedBy((int)$postId, $userId);
         }
 
-        return !$this->getRequest()->is('delete') || parent::isAuthorized($User);
+        return !$this->getRequest()->is('action', 'delete');
     }
 
     /**
