@@ -119,12 +119,10 @@ abstract class ControllerTestCase extends TestCase
             $this->url = ['controller' => $alias, 'prefix' => $isAdmin ? ADMIN_PREFIX : null] + compact('plugin');
             $Request = new ServerRequest(['params' => $this->url]);
 
-            if (!(new \ReflectionClass($originClassName))->isAbstract()) {
-                $Controller = new $originClassName($Request, null, $alias);
-            } else {
+            if ((new \ReflectionClass($originClassName))->isAbstract()) {
                 $Controller = $this->getMockForAbstractClass($originClassName, [$Request, null, $alias]);
             }
-            $this->Controller = $Controller;
+            $this->Controller = $Controller ?? new $originClassName($Request, null, $alias);
 
             if (empty($this->Table)) {
                 $Table = false;
