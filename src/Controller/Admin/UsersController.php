@@ -163,7 +163,6 @@ class UsersController extends AppController
             return $this->redirectMatchingReferer(['action' => 'index']);
         }
 
-
         $user = $this->Users->patchEntity($user, $this->getRequest()->getData(), ['validate' => 'EmptyPassword']);
 
         if ($this->getRequest()->is(['patch', 'post', 'put'])) {

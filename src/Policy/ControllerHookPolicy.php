@@ -29,8 +29,8 @@ class ControllerHookPolicy
      * Magic method for the policy.
      *
      * It calls the `isAuthorized()` method on our controller
-     * @param string $name
-     * @param array{\Authorization\Identity, \MeCms\Controller\Admin\AppController} $arguments
+     * @param string $name Name
+     * @param array{\Authorization\Identity, \MeCms\Controller\Admin\AppController} $arguments Arguments
      * @return bool
      */
     public function __call(string $name, array $arguments): bool
