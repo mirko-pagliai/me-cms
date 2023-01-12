@@ -30,6 +30,7 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  * This class provides some methods and properties common to both classes.
  * @property \Cake\ORM\Association\BelongsTo $Categories
  * @method findActiveBySlug(string $slug)
+ * @method findByUserId(int $id)
  * @method findPendingBySlug(string $slug)
  */
 abstract class PostsAndPagesTables extends AppTable
