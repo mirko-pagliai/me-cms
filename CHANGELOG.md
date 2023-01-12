@@ -3,8 +3,8 @@
 ### 2.31.0
 * the `ControllerTestCase` has been completely revised and some methods have been moved to `AdminControllerTestCase`,
   (specific for controller admin), instead other methods have been removed;
-* the `AuthComponent` is deprecated. Use instead `\Authentication\Controller\Component\AuthenticationComponent`;
-* the `AuthHelper` is deprecated.  Use instead `\MeCms\View\Helper\IdentityHelper`.
+* the `AuthComponent` has been removed. Use instead `\Authentication\Controller\Component\AuthenticationComponent`;
+* the `AuthHelper` has been removed.  Use instead `\MeCms\View\Helper\IdentityHelper`.
 
 ## 2.30 branch
 ### 2.30.13
