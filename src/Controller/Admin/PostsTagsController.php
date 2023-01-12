@@ -30,7 +30,7 @@ class PostsTagsController extends AppController
      */
     public function isAuthorized(User $User): bool
     {
-        return $this->getRequest()->is('index') || parent::isAuthorized($User);
+        return $this->getRequest()->is('action', 'index') || parent::isAuthorized($User);
     }
 
     /**
