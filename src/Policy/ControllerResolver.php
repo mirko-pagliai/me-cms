@@ -18,7 +18,7 @@ namespace MeCms\Policy;
 
 use Authorization\Policy\Exception\MissingPolicyException;
 use Authorization\Policy\ResolverInterface;
-use Cake\Controller\Controller;
+use MeCms\Controller\AppController;
 
 /**
  * Policy resolver for controllers.
@@ -30,12 +30,12 @@ class ControllerResolver implements ResolverInterface
      * Gets a policy for a controller.
      *
      * It returns the `ControllerHookPolicy` for all controllers.
-     * @param \Cake\Controller\Controller $resource The resource
+     * @param \MeCms\Controller\AppController $resource The resource
      * @return \MeCms\Policy\ControllerHookPolicy
      */
     public function getPolicy($resource): ControllerHookPolicy
     {
-        if ($resource instanceof Controller) {
+        if ($resource instanceof AppController) {
             return new ControllerHookPolicy();
         }
 
