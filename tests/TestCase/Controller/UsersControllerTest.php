@@ -62,7 +62,7 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testBeforeFilter(): void
     {
-        $this->setUserId(1);
+        $this->setAuthData();
         $this->get(['_name' => 'login']);
         $this->assertRedirect(['_name' => 'dashboard']);
     }
@@ -198,7 +198,7 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testLogout(): void
     {
-        $this->setUserId(1);
+        $this->setAuthData();
         $this->session(['otherSessionValue' => 'value']);
 
         //The user is currently logged in

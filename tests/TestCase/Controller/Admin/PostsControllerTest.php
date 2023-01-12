@@ -18,14 +18,16 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Entity\Tag;
-use MeCms\TestSuite\ControllerTestCase;
+use MeCms\Model\Entity\User;
+use MeCms\Model\Entity\UsersGroup;
+use MeCms\TestSuite\AdminControllerTestCase;
 
 /**
  * PostsControllerTest class
  * @property \MeCms\Model\Table\PostsTable $Table
  * @group admin-controller
  */
-class PostsControllerTest extends ControllerTestCase
+class PostsControllerTest extends AdminControllerTestCase
 {
     /**
      * @var array<string, int|string>
@@ -51,12 +53,11 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `beforeFilter()` method
+     * @uses \MeCms\Controller\Admin\PostsController::beforeFilter()
      * @test
      */
     public function testBeforeFilter(): void
     {
-        parent::testBeforeFilter();
-
         $this->Table->Categories->deleteAll(['id IS NOT' => null]);
 
         foreach (['index', 'add', 'edit'] as $action) {
@@ -76,45 +77,35 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `isAuthorized()` method
+     * @uses \MeCms\Controller\Admin\PostsController::isAuthorized()
      * @test
      */
     public function testIsAuthorized(): void
     {
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => true,
-        ]);
+        foreach (['add', 'index'] as $action) {
+            $this->assertAllGroupsAreAuthorized($action);
+        }
 
-        //With `edit` and `delete` actions
         foreach (['edit', 'delete'] as $action) {
-            $this->assertGroupsAreAuthorized([
-                'admin' => true,
-                'manager' => true,
-                'user' => false,
-            ], $action);
+            $this->assertOnlyUserIsNotAuthorized($action);
         }
 
         //With `edit` action and a user who owns the record
-        $this->Controller->setRequest($this->Controller->getRequest()->withParam('pass.0', 1));
-        $this->assertUsersAreAuthorized([
-            1 => true,
-            2 => false,
-            3 => false,
-            4 => false,
-        ], 'edit');
-
-        $this->Controller->setRequest($this->Controller->getRequest()->withParam('pass.0', 2));
-        $this->assertUsersAreAuthorized([
-            1 => false,
-            2 => false,
-            3 => false,
-            4 => true,
-        ]);
+        //Gets the ID of a post that belongs to user with ID 2
+        $postId = $this->Table->findByUserId(2)->firstOrFail()->get('id');
+        $Request = $this->Controller->getRequest()->withParam('pass.0', $postId)->withParam('action', 'edit');
+        $this->Controller->setRequest($Request);
+        //User with ID 2 is authorized to edit
+        $User = new User(['id' => 2, 'group' => new UsersGroup(['name' => 'user'])]);
+        $this->assertTrue($this->Controller->isAuthorized($User));
+        //User with ID 1 is not authorized to edit
+        $User = new User(['id' => 1, 'group' => new UsersGroup(['name' => 'user'])]);
+        $this->assertFalse($this->Controller->isAuthorized($User));
     }
 
     /**
      * Tests for `index()` method
+     * @uses \MeCms\Controller\Admin\PostsController::index()
      * @test
      */
     public function testIndex(): void
@@ -127,6 +118,7 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `add()` method
+     * @uses \MeCms\Controller\Admin\PostsController::add()
      * @test
      */
     public function testAdd(): void
@@ -152,6 +144,7 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `edit()` method
+     * @uses \MeCms\Controller\Admin\PostsController::edit()
      * @test
      */
     public function testEdit(): void
@@ -178,6 +171,7 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `delete()` method
+     * @uses \MeCms\Controller\Admin\PostsController::delete()
      * @test
      */
     public function testDelete(): void
@@ -190,12 +184,13 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests that the admins and managers can add and edit as another user
+     * @uses \MeCms\Controller\Admin\PostsController::beforeFilter()
      * @test
      */
     public function testAdminsAndManagersCanAddAndEditAsAnotherUser(): void
     {
         foreach (['admin', 'manager'] as $userGroup) {
-            $this->setUserGroup($userGroup);
+            $this->setAuthData($userGroup);
 
             foreach ([1, 2] as $userId) {
                 //Adds record
@@ -221,12 +216,12 @@ class PostsControllerTest extends ControllerTestCase
 
     /**
      * Tests that the other users cannot add and edit as another user
+     * @uses \MeCms\Controller\Admin\PostsController::beforeFilter()
      * @test
      */
     public function testOtherUsersCannotAddOrEditAsAnotherUser(): void
     {
-        $this->setUserGroup('user');
-        $this->setUserId(3);
+        $this->setAuthData('user', 3);
 
         foreach ([1, 2] as $userId) {
             //Adds record

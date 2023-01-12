@@ -99,7 +99,7 @@ class PagesControllerTest extends ControllerTestCase
         $this->assertResponseCode(302);
         $this->assertStringStartsWith('/login', $this->_response->getHeader('Location')[0]);
 
-        $this->setUserId(1);
+        $this->setAuthData();
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Pages' . DS . 'view.php');

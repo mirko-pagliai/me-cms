@@ -17,13 +17,13 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use MeCms\Model\Entity\PostsCategory;
-use MeCms\TestSuite\ControllerTestCase;
+use MeCms\TestSuite\AdminControllerTestCase;
 
 /**
  * PostsCategoriesControllerTest class
  * @group admin-controller
  */
-class PostsCategoriesControllerTest extends ControllerTestCase
+class PostsCategoriesControllerTest extends AdminControllerTestCase
 {
     /**
      * @var array<string>
@@ -34,12 +34,11 @@ class PostsCategoriesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `beforeFilter()` method
+     * @uses \MeCms\Controller\Admin\PostsCategoriesController::beforeFilter()
      * @test
      */
     public function testBeforeFilter(): void
     {
-        parent::testBeforeFilter();
-
         foreach (['add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [1]);
             $this->assertNotEmpty($this->viewVariable('categories'));
@@ -47,23 +46,8 @@ class PostsCategoriesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `isAuthorized()` method
-     * @test
-     */
-    public function testIsAuthorized(): void
-    {
-        parent::testIsAuthorized();
-
-        //With `delete` action
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => false,
-            'user' => false,
-        ], 'delete');
-    }
-
-    /**
      * Tests for `index()` method
+     * @uses \MeCms\Controller\Admin\PostsCategoriesController::index()
      * @test
      */
     public function testIndex(): void
@@ -76,6 +60,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `add()` method
+     * @uses \MeCms\Controller\Admin\PostsCategoriesController::add()
      * @test
      */
     public function testAdd(): void
@@ -101,6 +86,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `edit()` method
+     * @uses \MeCms\Controller\Admin\PostsCategoriesController::edit()
      * @test
      */
     public function testEdit(): void
@@ -126,6 +112,7 @@ class PostsCategoriesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `delete()` method
+     * @uses \MeCms\Controller\Admin\PostsCategoriesController::delete()
      * @test
      */
     public function testDelete(): void

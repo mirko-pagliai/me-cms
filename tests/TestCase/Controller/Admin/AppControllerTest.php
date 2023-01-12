@@ -16,24 +16,20 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Controller\Admin;
 
+use Authorization\Controller\Component\AuthorizationComponent;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Response;
 use Cake\Routing\Router;
-use MeCms\Controller\AppController;
-use MeCms\TestSuite\ControllerTestCase;
+use MeCms\Controller\Admin\AppController;
+use MeCms\TestSuite\AdminControllerTestCase;
 
 /**
  * AppControllerTest class
  * @group admin-controller
  */
-class AppControllerTest extends ControllerTestCase
+class AppControllerTest extends AdminControllerTestCase
 {
-    /**
-     * @var \MeCms\Controller\Admin\AppController&\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected AppController $Controller;
-
     /**
      * @var array<string>
      */
@@ -48,23 +44,23 @@ class AppControllerTest extends ControllerTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
+        $this->Controller = $this->getMockForAbstractClass(AppController::class, [], '', true, true, true, ['initialize', 'isSpammer']);
+        $this->Controller->method('isSpammer')->willReturn(false);
+        $this->Controller->Authorization = $this->createStub(AuthorizationComponent::class);
 
-        $this->Controller->setRequest($this->Controller->getRequest()->withParam('prefix', ADMIN_PREFIX));
+        parent::setUp();
     }
 
     /**
      * Tests for `beforeFilter()` method
+     * @uses \MeCms\Controller\Admin\AppController::beforeFilter()
      * @test
      */
     public function testBeforeFilter(): void
     {
-        parent::testBeforeFilter();
-
         Configure::write('MeCms.admin.records', 7);
 
         $this->Controller->beforeFilter(new Event('myEvent'));
-        $this->assertEmpty($this->Controller->Auth->allowedActions);
         $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $this->Controller->paginate);
         $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
 
@@ -103,6 +99,7 @@ class AppControllerTest extends ControllerTestCase
 
     /**
      * Tests for `redirectMatchingReferer()` method
+     * @uses \MeCms\Controller\Admin\AppController::redirectMatchingReferer()
      * @test
      */
     public function testRedirectMatchingReferer(): void
@@ -122,18 +119,5 @@ class AppControllerTest extends ControllerTestCase
         //Different controller, so the referer does not match the requested redirect
         $this->_response = $this->Controller->setResponse(new Response())->redirectMatchingReferer(['controller' => 'Posts'] + $url);
         $this->assertRedirect(Router::url(['controller' => 'Posts'] + $url));
-    }
-
-    /**
-     * Tests for `isAuthorized()` method
-     * @test
-     */
-    public function testIsAuthorized(): void
-    {
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => false,
-        ]);
     }
 }

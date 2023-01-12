@@ -19,14 +19,14 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\ORM\Entity;
 use MeCms\Model\Entity\Page;
-use MeCms\TestSuite\ControllerTestCase;
+use MeCms\TestSuite\AdminControllerTestCase;
 
 /**
  * PagesControllerTest class
  * @property \MeCms\Model\Table\PagesTable $Table
  * @group admin-controller
  */
-class PagesControllerTest extends ControllerTestCase
+class PagesControllerTest extends AdminControllerTestCase
 {
     /**
      * @var array<string>
@@ -49,12 +49,11 @@ class PagesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `beforeFilter()` method
+     * @uses \MeCms\Controller\Admin\PagesController::beforeFilter()
      * @test
      */
     public function testBeforeFilter(): void
     {
-        parent::testBeforeFilter();
-
         foreach (['add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [1]);
             $this->assertNotEmpty($this->viewVariable('categories'));
@@ -83,6 +82,7 @@ class PagesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `isAuthorized()` method
+     * @uses \MeCms\Controller\Admin\PagesController::isAuthorized()
      * @test
      */
     public function testIsAuthorized(): void
@@ -91,23 +91,13 @@ class PagesControllerTest extends ControllerTestCase
 
         //With `index` and `indexStatics` actions
         foreach (['index', 'indexStatics'] as $action) {
-            $this->assertGroupsAreAuthorized([
-                'admin' => true,
-                'manager' => true,
-                'user' => true,
-            ], $action);
+            $this->assertAllGroupsAreAuthorized($action);
         }
-
-        //With `delete` action
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => false,
-            'user' => false,
-        ], 'delete');
     }
 
     /**
      * Tests for `index()` method
+     * @uses \MeCms\Controller\Admin\PagesController::index()
      * @test
      */
     public function testIndex(): void
@@ -120,6 +110,7 @@ class PagesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `indexStatics()` method
+     * @uses \MeCms\Controller\Admin\PagesController::indexStatics()
      * @test
      */
     public function testIndexStatics(): void
@@ -132,6 +123,7 @@ class PagesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `add()` method
+     * @uses \MeCms\Controller\Admin\PagesController::add()
      * @test
      */
     public function testAdd(): void
@@ -162,6 +154,7 @@ class PagesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `edit()` method
+     * @uses \MeCms\Controller\Admin\PagesController::edit()
      * @test
      */
     public function testEdit(): void
@@ -187,6 +180,7 @@ class PagesControllerTest extends ControllerTestCase
 
     /**
      * Tests for `delete()` method
+     * @uses \MeCms\Controller\Admin\PagesController::delete()
      * @test
      */
     public function testDelete(): void
