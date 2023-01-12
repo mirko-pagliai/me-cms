@@ -4,6 +4,7 @@
 * added the `AppTable::getCacheNameWithAssociated()` method. The `getCacheName()` method will now only return the cache
   name of the current table (string);
 * simplified the `Plugin` class;
+* fixed the `login` layout;
 * `AppController::__get()` magic method no longer exists;
 * large improvement of `ControllerTestCase`;
 * `AppTable::clearCache()` deletes all keys from the cache used by this table and its associated tables.
