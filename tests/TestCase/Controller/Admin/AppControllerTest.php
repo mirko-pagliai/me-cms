@@ -62,7 +62,7 @@ class AppControllerTest extends ControllerTestCase
 
         $this->Controller->beforeFilter(new Event('myEvent'));
         $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $this->Controller->paginate);
-        $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
+        $this->assertEquals('MeCms.View/Admin/App', $this->Controller->viewBuilder()->getClassName());
 
         //Ajax request
         $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));

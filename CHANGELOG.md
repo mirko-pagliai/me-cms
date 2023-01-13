@@ -2,6 +2,7 @@
 ## 2.31 branch
 ### 2.31.0
 * uses `Authentication` and `Authorization` plugins instead of the old `AuthComponent`;
+* `\MeCms\View\AdminView` has become `\MeCms\View\Admin\AppView`;
 * the `ControllerTestCase` has been completely revised and some methods have been moved to
   `\MeCms\TestSuite\Admin\ControllerTestCase`, (specific for controller admin), instead other methods have been removed;
 * the `AuthComponent` has been removed. Use instead `\Authentication\Controller\Component\AuthenticationComponent`;

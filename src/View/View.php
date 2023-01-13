@@ -21,7 +21,7 @@ use App\View\AppView;
  * Base view class.
  *
  * This class contains common methods, so you should not use it directly.
- * Instead, use `AppView` or `AdminView`.
+ * Instead, use `\MeCms\View\View\AppView` or (for admin views) `\MeCms\View\View\Admin\AppView`.
  * @property \Assets\View\Helper\AssetHelper $Asset
  * @property \MeTools\View\Helper\DropdownHelper $Dropdown
  * @property \MeTools\View\Helper\FormHelper $Form
