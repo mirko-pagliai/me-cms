@@ -20,14 +20,14 @@ use MeCms\Model\Entity\Post;
 use MeCms\Model\Entity\Tag;
 use MeCms\Model\Entity\User;
 use MeCms\Model\Entity\UsersGroup;
-use MeCms\TestSuite\AdminControllerTestCase;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 
 /**
  * PostsControllerTest class
  * @property \MeCms\Model\Table\PostsTable $Table
  * @group admin-controller
  */
-class PostsControllerTest extends AdminControllerTestCase
+class PostsControllerTest extends ControllerTestCase
 {
     /**
      * @var array<string, int|string>

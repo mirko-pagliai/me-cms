@@ -16,13 +16,13 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use MeCms\Model\Entity\Tag;
-use MeCms\TestSuite\AdminControllerTestCase;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 
 /**
  * PostsTagsControllerTest class
  * @group admin-controller
  */
-class PostsTagsControllerTest extends AdminControllerTestCase
+class PostsTagsControllerTest extends ControllerTestCase
 {
     /**
      * @var array<string>

@@ -22,13 +22,13 @@ use Cake\Event\Event;
 use Cake\Http\Response;
 use Cake\Routing\Router;
 use MeCms\Controller\Admin\AppController;
-use MeCms\TestSuite\AdminControllerTestCase;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 
 /**
  * AppControllerTest class
  * @group admin-controller
  */
-class AppControllerTest extends AdminControllerTestCase
+class AppControllerTest extends ControllerTestCase
 {
     /**
      * @var array<string>

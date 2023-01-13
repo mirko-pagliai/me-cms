@@ -14,17 +14,18 @@ declare(strict_types=1);
  * @since       2.31.0
  */
 
-namespace MeCms\TestSuite;
+namespace MeCms\TestSuite\Admin;
 
 use Cake\Http\ServerRequest;
 use MeCms\Model\Entity\User;
 use MeCms\Model\Entity\UsersGroup;
+use MeCms\TestSuite\ControllerTestCase as BaseControllerTestCase;
 
 /**
  * Abstract class for test admin controllers
  * @property \MeCms\Controller\Admin\AppController $Controller
  */
-abstract class AdminControllerTestCase extends ControllerTestCase
+abstract class ControllerTestCase extends BaseControllerTestCase
 {
     /**
      * Called before every test method

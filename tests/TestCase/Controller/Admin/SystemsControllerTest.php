@@ -19,14 +19,14 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\I18n\I18n;
 use MeCms\Controller\Admin\SystemsController;
-use MeCms\TestSuite\AdminControllerTestCase;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 use Tools\Filesystem;
 
 /**
  * SystemsControllerTest class
  * @group admin-controller
  */
-class SystemsControllerTest extends AdminControllerTestCase
+class SystemsControllerTest extends ControllerTestCase
 {
     /**
      * Asserts that the cache is empty.
