@@ -10,7 +10,8 @@
 * fixed the `login` layout;
 * `AppController::__get()` magic method no longer exists;
 * large improvement of `ControllerTestCase`;
-* `AppTable::clearCache()` deletes all keys from the cache used by this table and its associated tables.
+* `AppTable::clearCache()` deletes all keys from the cache used by this table and its associated tables;
+* updated for me-tools 2.22.3.
 
 ### 2.30.12
 * fixed a bug that caused the "read more" button to disappear;
