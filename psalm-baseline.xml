@@ -25,6 +25,11 @@
       <code>1</code>
     </RedundantCondition>
   </file>
+  <file src="src/Policy/ControllerResolver.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$resource</code>
+    </MoreSpecificImplementedParamType>
+  </file>
   <file src="src/TestSuite/CellTestCase.php">
     <TypeDoesNotContainType occurrences="2">
       <code>empty($this-&gt;Table)</code>
@@ -96,6 +101,11 @@
     <TypeDoesNotContainType occurrences="1">
       <code>empty($this-&gt;Form)</code>
     </TypeDoesNotContainType>
+  </file>
+  <file src="tests/TestCase/Policy/ControllerResolverTest.php">
+    <InvalidArgument occurrences="1">
+      <code>new \stdClass()</code>
+    </InvalidArgument>
   </file>
   <file src="tests/TestCase/View/View/AdminViewTest.php">
     <TypeDoesNotContainType occurrences="1">
