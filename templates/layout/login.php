@@ -38,6 +38,7 @@ declare(strict_types=1);
 
         echo $this->Asset->script([
             '/vendor/jquery/jquery.min',
+            '/vendor/bootstrap/js/bootstrap.bundle.min',
             'MeCms.display-password',
         ], ['block' => true]);
         echo $this->fetch('script');

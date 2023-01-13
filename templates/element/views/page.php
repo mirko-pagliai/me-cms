@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @var \MeCms\Model\Entity\Page $page
  * @var \MeCms\View\View\AppView $this
  */
-$isView = $this->getRequest()->is('action', 'view') && !$this->getRequest()->is('ajax');
+$isView = $this->getRequest()->is('action', 'view', 'Pages') && !$this->getRequest()->is('ajax');
 $category = $page->get('category');
 ?>
 

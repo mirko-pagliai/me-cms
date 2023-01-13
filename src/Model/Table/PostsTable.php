@@ -37,7 +37,7 @@ use Tools\Exceptionist;
  * @method \MeCms\Model\Entity\Post get($primaryKey, $options = [])
  * @method \MeCms\Model\Entity\Post newEntity($data = null, array $options = [])
  * @method \MeCms\Model\Entity\Post[] newEntities(array $data, array $options = [])
- * @method \MeCms\Model\Entity\Post|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \MeCms\Model\Entity\Post|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \MeCms\Model\Entity\Post patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \MeCms\Model\Entity\Post[] patchEntities($entities, array $data, array $options = [])
  * @method \MeCms\Model\Entity\Post findOrCreate($search, callable $callback = null, $options = [])

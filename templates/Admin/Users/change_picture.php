@@ -11,11 +11,11 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AdminView $this
  */
+
 $this->extend('MeCms./common/form');
 $this->assign('title', $title = __d('me_cms', 'Change your picture'));
-?>
 
-<div>
-<?= $this->element('admin/uploader', ['maxFiles' => 1]) ?>
-</div>
+echo $this->Html->div('', $this->element('admin/uploader', ['maxFiles' => 1]));

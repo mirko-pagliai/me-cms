@@ -1,2 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.x-dev@"/>
+<files psalm-version="4.x-dev@">
+  <file src="src/Controller/Component/LoginRecorderComponent.php">
+    <TypeDoesNotContainType occurrences="2">
+      <code>empty($this-&gt;User)</code>
+      <code>empty($this-&gt;Users)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="src/Controller/PostsCategoriesController.php">
+    <InvalidArgument occurrences="1"/>
+  </file>
+  <file src="src/Controller/PostsController.php">
+    <InvalidArgument occurrences="3"/>
+  </file>
+  <file src="src/Controller/PostsTagsController.php">
+    <InvalidArgument occurrences="2"/>
+  </file>
+  <file src="src/Controller/Traits/GetStartAndEndDateTrait.php">
+    <RedundantCast occurrences="2">
+      <code>(int)($day ?: 1)</code>
+      <code>(int)($month ?: 1)</code>
+    </RedundantCast>
+    <RedundantCondition occurrences="2">
+      <code>1</code>
+      <code>1</code>
+    </RedundantCondition>
+  </file>
+  <file src="src/TestSuite/CellTestCase.php">
+    <TypeDoesNotContainType occurrences="2">
+      <code>empty($this-&gt;Table)</code>
+      <code>empty($this-&gt;Widget)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="src/TestSuite/ControllerTestCase.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($this-&gt;Table)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="src/TestSuite/EntityTestCase.php">
+    <TypeDoesNotContainType occurrences="2">
+      <code>$this-&gt;fail('The property `$this-&gt;Entity` has not been set')</code>
+      <code>empty($this-&gt;Entity)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="src/TestSuite/TableTestCase.php">
+    <TypeDoesNotContainType occurrences="2">
+      <code>$this-&gt;fail('The property `$this-&gt;Table` has not been set')</code>
+      <code>empty($this-&gt;Table)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="src/TestSuite/ValidationTestCase.php">
+    <TypeDoesNotContainType occurrences="2">
+      <code>$this-&gt;fail('The property `$this-&gt;Table` has not been set')</code>
+      <code>empty($this-&gt;Table)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="templates/Admin/Pages/form.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>$this-&gt;extend('MeCms./common/form');</code>
+    </TooManyTemplateParams>
+  </file>
+  <file src="templates/Admin/Posts/form.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>$this-&gt;extend('MeCms./common/form');</code>
+    </TooManyTemplateParams>
+  </file>
+  <file src="templates/cell/PostsTagsWidgets/popular_as_cloud.php">
+    <TooManyTemplateParams occurrences="1"/>
+  </file>
+  <file src="templates/cell/PostsWidgets/months_as_form.php">
+    <TooManyTemplateParams occurrences="1"/>
+  </file>
+  <file src="templates/cell/PostsWidgets/months_as_list.php">
+    <TooManyTemplateParams occurrences="1"/>
+  </file>
+  <file src="tests/TestCase/Command/Install/RunAllCommandTest.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>assertSame</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="tests/TestCase/Command/UsersCommandTest.php">
+    <UndefinedPropertyAssignment occurrences="1">
+      <code>$this-&gt;Command-&gt;Users</code>
+    </UndefinedPropertyAssignment>
+  </file>
+  <file src="tests/TestCase/Controller/PostsCategoriesControllerTest.php">
+    <InvalidArgument occurrences="1"/>
+  </file>
+  <file src="tests/TestCase/Controller/PostsControllerTest.php">
+    <InvalidArgument occurrences="3"/>
+  </file>
+  <file src="tests/TestCase/Controller/PostsTagsControllerTest.php">
+    <InvalidArgument occurrences="2"/>
+  </file>
+  <file src="tests/TestCase/Form/ContactUsFormTest.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($this-&gt;Form)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="tests/TestCase/View/View/AdminViewTest.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($this-&gt;View)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="tests/TestCase/View/View/AppViewTest.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($this-&gt;View)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="tests/TestCase/View/ViewTest.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($this-&gt;View)</code>
+    </TypeDoesNotContainType>
+  </file>
+</files>

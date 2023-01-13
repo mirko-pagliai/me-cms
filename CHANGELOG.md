@@ -8,12 +8,17 @@
 
 ## 2.30 branch
 ### 2.30.13
+* fixed a bug for the "read more" button of posts and pages;
+* fixed a bug with uploading the user's profile picture;
+* fixed some small template bugs;
 * added the `AppTable::getCacheNameWithAssociated()` method. The `getCacheName()` method will now only return the cache
   name of the current table (string);
 * simplified the `Plugin` class;
+* fixed the `login` layout;
 * `AppController::__get()` magic method no longer exists;
 * large improvement of `ControllerTestCase`;
-* `AppTable::clearCache()` deletes all keys from the cache used by this table and its associated tables.
+* `AppTable::clearCache()` deletes all keys from the cache used by this table and its associated tables;
+* updated for me-tools 2.22.3.
 
 ### 2.30.12
 * fixed a bug that caused the "read more" button to disappear;

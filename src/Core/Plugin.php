@@ -26,7 +26,8 @@ class Plugin extends BasePlugin
     /**
      * Gets all loaded plugins.
      *
-     * Available options are:
+     * ### Options:
+     *
      *  - `core`, if `false` excludes the core plugins;
      *  - `exclude`, a plugin or array of plugins to be excluded;
      *  - `mecms_core`, if `false` excludes plugins automatically requested by MeCms;
