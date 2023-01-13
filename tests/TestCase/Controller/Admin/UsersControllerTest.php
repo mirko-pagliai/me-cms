@@ -18,7 +18,6 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Collection\Collection;
 use Cake\Controller\ComponentRegistry;
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use MeCms\Controller\Component\LoginRecorderComponent;
