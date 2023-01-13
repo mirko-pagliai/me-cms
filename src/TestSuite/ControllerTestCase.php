@@ -73,10 +73,8 @@ abstract class ControllerTestCase extends TestCase
                 if (empty($this->Table) && $Controller->fetchTable() instanceof AppTable) {
                     $this->Table = $Controller->fetchTable();
                 }
-            } else {
-                $Controller = $this->getMockForAbstractClass($originClassName, [$Request, null, $alias]);
             }
-            $this->Controller = $Controller;
+            $this->Controller = $Controller ?? $this->getMockForAbstractClass($originClassName, [$Request, null, $alias]);
         }
     }
 

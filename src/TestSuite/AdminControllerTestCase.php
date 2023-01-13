@@ -55,7 +55,7 @@ abstract class AdminControllerTestCase extends ControllerTestCase
      * @param string $group Group name
      * @return bool
      */
-    protected function _getIsAuthorizedResult(string $action, string $group): bool
+    protected function _isAuthorizedResult(string $action, string $group): bool
     {
         $Controller = &$this->Controller;
         $Controller->setRequest($Controller->getRequest()->withParam('action', $action));
@@ -87,7 +87,7 @@ abstract class AdminControllerTestCase extends ControllerTestCase
     {
         $message = $message ?: sprintf('False that the `%s` group is authorized to perform the `%s` action for controller `%s`', $group, $action, get_class($this->Controller));
 
-        parent::assertTrue($this->_getIsAuthorizedResult($action, $group), $message);
+        parent::assertTrue($this->_isAuthorizedResult($action, $group), $message);
     }
 
     /**
@@ -101,7 +101,7 @@ abstract class AdminControllerTestCase extends ControllerTestCase
     {
         $message = $message ?: sprintf('False that the `%s` group is not authorized to perform the `%s` action for controller `%s`', $group, $action, get_class($this->Controller));
 
-        parent::assertFalse($this->_getIsAuthorizedResult($action, $group), $message);
+        parent::assertFalse($this->_isAuthorizedResult($action, $group), $message);
     }
 
     /**
