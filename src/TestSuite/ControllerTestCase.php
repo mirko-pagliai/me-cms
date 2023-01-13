@@ -128,7 +128,7 @@ abstract class ControllerTestCase extends TestCase
                 $Table = false;
                 try {
                     $Table = $this->getTable($plugin . '.' . $alias);
-                } catch (\Error|\TypeError $e) {
+                } catch (\Error | \TypeError $e) {
                 }
                 if ($Table instanceof AppTable) {
                     $this->Table = $Table;
