@@ -18,6 +18,7 @@ namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use MeCms\Controller\AppController;
 use MeCms\TestSuite\ControllerTestCase;
 use RuntimeException;
 
@@ -28,30 +29,37 @@ class AppControllerTest extends ControllerTestCase
 {
     /**
      * Tests for `beforeFilter()` method
+     * @uses \MeCms\Controller\AppController::beforeFilter()
      * @test
      */
     public function testBeforeFilter(): void
     {
-        parent::testBeforeFilter();
-
         Configure::write('MeCms.default.records', 5);
 
-        $this->Controller->beforeFilter(new Event('myEvent'));
-        $this->assertNotEmpty($this->Controller->Auth->allowedActions);
-        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $this->Controller->paginate);
-        $this->assertNull($this->Controller->viewBuilder()->getLayout());
-        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
-
-        //Ajax request
-        $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
-        $this->Controller->beforeFilter(new Event('myEvent'));
-        $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
-
-        //If the site is offline this makes a redirect
+        //If the site is offline
         Configure::write('MeCms.default.offline', true);
         $this->Controller->getRequest()->clearDetectorCache();
         $this->get('/');
         $this->assertRedirect(['_name' => 'offline']);
+        Configure::write('MeCms.default.offline', false);
+
+        //Whether the user has been reported as a spammer
+        $Controller = $this->getMockForAbstractClass(AppController::class, [], '', true, true, true, ['isSpammer']);
+        $Controller->method('isSpammer')->willReturn(true);
+        /** @var \Cake\Http\Response $Response */
+        $Response = $Controller->beforeFilter(new Event('myEvent'));
+        $this->_response = $Response;
+        $this->assertRedirect(['_name' => 'ipNotAllowed']);
+
+        $this->Controller->beforeFilter(new Event('myEvent'));
+        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $this->Controller->paginate);
+        $this->assertNull($this->Controller->viewBuilder()->getLayout());
+        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
+
+        //Layout for ajax and json requests
+        $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
+        $this->Controller->beforeFilter(new Event('myEvent'));
+        $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
     }
 
     /**
@@ -71,12 +79,14 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `initialize()` method, for `Recaptcha` component
+     * Tests for `initialize()` method
+     * @uses \MeCms\Controller\AppController::initialize()
      * @test
      */
-    public function testInitializeForRecaptchaComponent(): void
+    public function testInitialize(): void
     {
         $this->Controller->initialize();
+
         $this->assertFalse($this->Controller->components()->has('Recaptcha'));
 
         Configure::write('MeCms.security.recaptcha', true);
@@ -91,23 +101,13 @@ class AppControllerTest extends ControllerTestCase
         $this->expectExceptionMessage('Missing Recaptcha keys. You can rename the `config/recaptcha.example.php` file as `recaptcha.php` and change the keys');
         Configure::load('MeCms.recaptcha');
         $this->Controller->initialize();
-    }
 
-    /**
-     * Tests for `isAuthorized()` method
-     * @test
-     */
-    public function testIsAuthorized(): void
-    {
-        //With prefixes
-        foreach ([
-            null => true,
-            ADMIN_PREFIX => false,
-            'otherPrefix' => false,
-        ] as $prefix => $expected) {
-            $request = $this->Controller->getRequest()->withParam('prefix', $prefix);
-            $request->clearDetectorCache();
-            $this->assertSame($expected, $this->Controller->setRequest($request)->isAuthorized());
+        $this->assertTrue($this->Controller->Authentication->getConfig('requireIdentity'));
+
+        //Tries some actions. They do not require authentication
+        foreach (['/posts', '/posts/categories'] as $url) {
+            $this->get($url);
+            $this->assertResponseOkAndNotEmpty();
         }
     }
 }

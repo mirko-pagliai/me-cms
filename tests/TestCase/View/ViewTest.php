@@ -123,7 +123,6 @@ class ViewTest extends TestCase
         Configure::write('Widgets.general', []);
         $this->View->set('title', 'title from controller');
         Filesystem::instance()->createFile(WWW_ROOT . 'favicon.ico');
-        $this->View->loadHelper('MeCms.Auth');
         $this->View->loadHelper('MeCms.Widget');
         $result = $this->View->render('StaticPages/page-from-app', 'MeCms.default');
 

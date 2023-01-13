@@ -23,10 +23,10 @@ use App\View\AppView;
  * This class contains common methods, so you should not use it directly.
  * Instead, use `AppView` or `AdminView`.
  * @property \Assets\View\Helper\AssetHelper $Asset
- * @property \MeCms\View\Helper\AuthHelper $Auth
  * @property \MeTools\View\Helper\DropdownHelper $Dropdown
  * @property \MeTools\View\Helper\FormHelper $Form
  * @property \MeTools\View\Helper\HtmlHelper $Html
+ * @property \MeCms\View\Helper\IdentityHelper $Identity
  * @property \MeTools\View\Helper\IconHelper $Icon
  * @property \MeTools\View\Helper\LibraryHelper $Library
  * @property \MeTools\View\Helper\PaginatorHelper $Paginator
@@ -86,7 +86,7 @@ abstract class View extends AppView
         }
 
         $this->loadHelper('Assets.Asset');
-        $this->loadHelper('MeCms.Auth');
+        $this->loadHelper('MeCms.Identity');
         $this->loadHelper('MeTools.Dropdown');
         $this->loadHelper('MeTools.Form');
         $this->loadHelper('MeTools.Html');

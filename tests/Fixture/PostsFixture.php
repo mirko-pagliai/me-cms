@@ -96,7 +96,7 @@ class PostsFixture extends TestFixture
         ],
         [
             'category_id' => 1,
-            'user_id' => 1,
+            'user_id' => 2,
             'title' => 'Seventh post',
             'slug' => 'seventh-post',
             'subtitle' => 'Subtitle for seventh post',

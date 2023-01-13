@@ -16,9 +16,10 @@ declare(strict_types=1);
 
 namespace MeCms\TestSuite;
 
-use Cake\Event\Event;
 use Cake\Http\ServerRequest;
 use MeCms\Controller\AppController;
+use MeCms\Model\Entity\User;
+use MeCms\Model\Entity\UsersGroup;
 use MeCms\Model\Table\AppTable;
 use MeTools\TestSuite\IntegrationTestTrait;
 
@@ -43,59 +44,9 @@ abstract class ControllerTestCase extends TestCase
     protected bool $autoInitializeClass = true;
 
     /**
-     * @var array{controller: string, plugin: string, prefix: string|null}
+     * @var array{controller: string, plugin: string, prefix: ?string}
      */
     protected array $url;
-
-    /**
-     * Asserts that groups are authorized
-     * @param array $values Group name as key and boolean as value
-     * @param string|null $action Optional action for this assert
-     * @return void
-     */
-    public function assertGroupsAreAuthorized(array $values, ?string $action = null): void
-    {
-        !empty($this->Controller) ?: $this->fail('The property `$this->Controller` has not been set');
-
-        $controller = &$this->Controller;
-        $this->Controller->getRequest()->clearDetectorCache();
-
-        if ($action) {
-            $this->Controller->setRequest($this->Controller->getRequest()->withParam('action', $action));
-        }
-
-        foreach ($values as $group => $isAllowed) {
-            $this->setUserGroup($group);
-            $this->assertEquals($isAllowed, $this->Controller->isAuthorized());
-        }
-
-        $this->Controller = $controller;
-    }
-
-    /**
-     * Asserts that users are authorized
-     * @param array $values UserID as key and boolean as value
-     * @param string|null $action Optional action for this assert
-     * @return void
-     */
-    public function assertUsersAreAuthorized(array $values, ?string $action = null): void
-    {
-        !empty($this->Controller) ?: $this->fail('The property `$this->Controller` has not been set');
-
-        $controller = &$this->Controller;
-        $controller->getRequest()->clearDetectorCache();
-
-        if ($action) {
-            $this->Controller->setRequest($this->Controller->getRequest()->withParam('action', $action));
-        }
-
-        foreach ($values as $id => $isAllowed) {
-            $this->setUserId($id);
-            $this->assertEquals($isAllowed, $this->Controller->isAuthorized());
-        }
-
-        $this->Controller = $controller;
-    }
 
     /**
      * Called before every test method
@@ -107,37 +58,23 @@ abstract class ControllerTestCase extends TestCase
     {
         parent::setUp();
 
-        $isAdmin = str_contains(get_class($this), 'Controller\\Admin\\');
-
         //Tries to retrieve controller and table from the class name
         if (empty($this->Controller) && $this->autoInitializeClass) {
             /** @var class-string<\MeCms\Controller\AppController> $originClassName */
             $originClassName = $this->getOriginClassNameOrFail($this);
             $alias = $this->getAlias($originClassName);
-            $plugin = $this->getPluginName($this);
 
-            $this->url = ['controller' => $alias, 'prefix' => $isAdmin ? ADMIN_PREFIX : null] + compact('plugin');
+            $this->url = ['controller' => $alias, 'prefix' => null, 'plugin' => $this->getPluginName($this)];
             $Request = new ServerRequest(['params' => $this->url]);
 
-            if ((new \ReflectionClass($originClassName))->isAbstract()) {
-                $Controller = $this->getMockForAbstractClass($originClassName, [$Request, null, $alias]);
-            }
-            $this->Controller = $Controller ?? new $originClassName($Request, null, $alias);
+            if (!(new \ReflectionClass($originClassName))->isAbstract()) {
+                $Controller = new $originClassName($Request, null, $alias);
 
-            if (empty($this->Table)) {
-                $Table = false;
-                try {
-                    $Table = $this->getTable($plugin . '.' . $alias);
-                } catch (\Error | \TypeError $e) {
-                }
-                if ($Table instanceof AppTable) {
-                    $this->Table = $Table;
+                if (empty($this->Table) && $Controller->fetchTable() instanceof AppTable) {
+                    $this->Table = $Controller->fetchTable();
                 }
             }
-        }
-
-        if ($isAdmin) {
-            $this->setUserGroup('admin');
+            $this->Controller = $Controller ?? $this->getMockForAbstractClass($originClassName, [$Request, null, $alias]);
         }
     }
 
@@ -145,7 +82,7 @@ abstract class ControllerTestCase extends TestCase
      * Internal method to create an image to upload.
      *
      * Returns an array, similar to the `$_FILE` array that is created after an upload
-     * @return array
+     * @return array{tmp_name: string, error: 0, name: string, type: string, size: int}
      */
     protected function createImageToUpload(): array
     {
@@ -156,73 +93,19 @@ abstract class ControllerTestCase extends TestCase
             'tmp_name' => $file,
             'error' => UPLOAD_ERR_OK,
             'name' => basename($file),
-            'type' => mime_content_type($file),
-            'size' => filesize($file),
+            'type' => mime_content_type($file) ?: '',
+            'size' => filesize($file) ?: 0,
         ];
     }
 
     /**
-     * Internal method to set the user ID
+     * Internal method to set the auth data (user group and user ID) for authentication and authorization
+     * @param string $name Group name
      * @param int $id User ID
      * @return void
      */
-    protected function setUserId(int $id): void
+    protected function setAuthData(string $name = 'user', int $id = 1): void
     {
-        if (!empty($this->Controller)) {
-            $this->Controller->Auth->setUser(compact('id'));
-        }
-
-        $this->session(['Auth.User.id' => $id]);
-    }
-
-    /**
-     * Internal method to set the user group
-     * @param string $name Group name
-     * @return void
-     */
-    protected function setUserGroup(string $name): void
-    {
-        if (!empty($this->Controller)) {
-            $this->Controller->Auth->setUser(['group' => compact('name')]);
-        }
-
-        $this->session(['Auth.User.group.name' => $name]);
-    }
-
-    /**
-     * Tests for `beforeFilter()` method.
-     *
-     * This is a default tests.
-     * @return void
-     * @test
-     * @throws \ReflectionException
-     */
-    public function testBeforeFilter(): void
-    {
-        $originClassName = $this->getOriginClassNameOrFail($this);
-
-        //If the user has been reported as a spammer this makes a redirect
-        /** @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject $Controller */
-        $Controller = $this->getMockBuilder($originClassName)
-            ->setConstructorArgs([null, null, $this->getAlias($originClassName)])
-            ->onlyMethods(['isSpammer'])
-            ->getMock();
-        $Controller->method('isSpammer')->willReturn(true);
-        /** @var \Cake\Http\Response $response */
-        $response = $Controller->beforeFilter(new Event('myEvent'));
-        $this->_response = $response;
-        $this->assertRedirect(['_name' => 'ipNotAllowed']);
-    }
-
-    /**
-     * Tests for `isAuthorized()` method.
-     *
-     * This is a default tests.
-     * @return void
-     * @test
-     */
-    public function testIsAuthorized(): void
-    {
-        $this->assertTrue($this->Controller->isAuthorized());
+        $this->session(['Auth' => new User(compact('id') + ['group' => new UsersGroup(compact('name'))])]);
     }
 }

@@ -19,6 +19,7 @@ use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\Mailer\MailerAwareTrait;
 use Laminas\Diactoros\UploadedFile;
+use MeCms\Model\Entity\User;
 use Symfony\Component\Finder\Finder;
 use Thumber\Cake\Utility\ThumbManager;
 
@@ -72,24 +73,23 @@ class UsersController extends AppController
     }
 
     /**
-     * Check if the provided user is authorized for the request
-     * @param array|\ArrayAccess|null $user The user to check the authorization
-     *  of. If empty the user in the session will be used
+     * Checks if the provided user is authorized for the request
+     * @param \MeCms\Model\Entity\User $User User entity
      * @return bool `true` if the user is authorized, otherwise `false`
      */
-    public function isAuthorized($user = null): bool
+    public function isAuthorized(User $User): bool
     {
-        //Every user can change his password
-        if ($this->getRequest()->is('action', 'changePassword')) {
+        //Every user can change his password or picture
+        if ($this->getRequest()->is('action', ['changePassword', 'changePicture'])) {
             return true;
         }
 
         //Only admins can activate account and delete users
         if ($this->getRequest()->is('action', ['activate', 'delete'])) {
-            return $this->Auth->isGroup('admin');
+            return $User->get('group')->get('name') === 'admin';
         }
 
-        return parent::isAuthorized($user);
+        return parent::isAuthorized($User);
     }
 
     /**
@@ -158,7 +158,7 @@ class UsersController extends AppController
         $user = $this->Users->get($id);
 
         //Only the admin founder can edit others admin users
-        if ($user->get('group_id') === 1 && !$this->Auth->isFounder()) {
+        if ($user->get('group_id') === 1 && $this->Authentication->getIdentityData('id') !== 1) {
             $this->Flash->alert(I18N_ONLY_ADMIN_FOUNDER);
 
             return $this->redirectMatchingReferer(['action' => 'index']);
@@ -194,7 +194,7 @@ class UsersController extends AppController
         if ($user->get('id') === 1) {
             $this->Flash->error(__d('me_cms', 'You cannot delete the admin founder'));
         //Only the admin founder can delete others admin users
-        } elseif ($user->get('group_id') === 1 && !$this->Auth->isFounder()) {
+        } elseif ($user->get('group_id') === 1 && $this->Authentication->getIdentityData('id') !== 1) {
             $this->Flash->alert(I18N_ONLY_ADMIN_FOUNDER);
         } elseif ($user->get('post_count')) {
             $this->Flash->alert(I18N_BEFORE_DELETE);
@@ -226,7 +226,7 @@ class UsersController extends AppController
      */
     public function changePassword()
     {
-        $user = $this->Users->get($this->Auth->user('id'));
+        $user = $this->Users->get($this->Authentication->getIdentityData('id'));
 
         if ($this->getRequest()->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
@@ -256,7 +256,7 @@ class UsersController extends AppController
         $UploadedFile = $this->getRequest()->getData('file');
 
         if ($UploadedFile) {
-            $id = $this->Auth->user('id');
+            $id = $this->Authentication->getIdentityData('id');
 
             //Deletes any picture that already exists
             foreach ((new Finder())->files()->name('/^' . $id . '\..+/')->in(USER_PICTURES) as $file) {
@@ -276,8 +276,7 @@ class UsersController extends AppController
                 return;
             }
 
-            //Updates the authentication data and clears similar thumbnails
-            $this->Auth->setUser(['picture' => $uploaded] + $this->Auth->user());
+            //Clears similar thumbnails
             (new ThumbManager())->clear($uploaded);
         }
     }
@@ -295,6 +294,6 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'dashboard']);
         }
 
-        $this->set('loginLog', $this->LoginRecorder->setConfig('user', $this->Auth->user('id'))->read());
+        $this->set('loginLog', $this->LoginRecorder->setConfig('user', $this->Authentication->getIdentityData('id'))->read());
     }
 }

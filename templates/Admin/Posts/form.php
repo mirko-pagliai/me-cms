@@ -32,9 +32,9 @@ $emptyCategory = !$defaultCategory && $this->getTemplate() !== 'edit';
         <div class="float-form">
         <?php
         //Only admins and managers can add posts on behalf of other users
-        if ($this->Auth->isGroup(['admin', 'manager'])) {
+        if ($this->Identity->isGroup('admin', 'manager')) {
             echo $this->Form->control('user_id', [
-                'default' => $this->Auth->user('id'),
+                'default' => $this->Identity->get('id'),
                 'label' => I18N_AUTHOR,
             ]);
         }

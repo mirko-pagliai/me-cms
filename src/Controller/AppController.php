@@ -18,11 +18,12 @@ namespace MeCms\Controller;
 use App\Controller\AppController as BaseAppController;
 use Cake\Event\EventInterface;
 use Cake\I18n\I18n;
+use Cake\Routing\Router;
 use RuntimeException;
 
 /**
  * Application controller class
- * @property \MeCms\Controller\Component\AuthComponent $Auth
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @property \MeTools\Controller\Component\FlashComponent $Flash
  */
 abstract class AppController extends BaseAppController
@@ -50,8 +51,6 @@ abstract class AppController extends BaseAppController
         //See http://book.cakephp.org/4.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('default.records');
 
-        $this->Auth->allow();
-
         //Layout for ajax and json requests
         if ($this->getRequest()->is(['ajax', 'json'])) {
             $this->viewBuilder()->setLayout('MeCms.ajax');
@@ -77,9 +76,11 @@ abstract class AppController extends BaseAppController
      */
     public function initialize(): void
     {
-        //Loads components
-        //The configuration for `AuthComponent`  takes place in the same class
-        $this->loadComponent('MeCms.Auth');
+        $this->loadComponent('Authentication.Authentication', [
+            'identityCheckEvent' => 'Controller.initialize',
+            'unauthenticatedMessage' => __d('me_cms', 'You are not authorized for this action'),
+            'logoutRedirect' => Router::url(['_name' => 'homepage']),
+        ]);
         $this->loadComponent('MeTools.Flash');
         $this->loadComponent('RequestHandler', ['enableBeforeRedirect' => false]);
 
@@ -97,20 +98,10 @@ abstract class AppController extends BaseAppController
             $this->loadComponent('Recaptcha.Recaptcha', compact('sitekey', 'secret') + ['lang' => substr(I18n::getLocale(), 0, 2)]);
         }
 
-        parent::initialize();
-    }
+        //By default, "unprefixed" actions do not require authentication and identity
+        $this->Authentication->setConfig('requireIdentity', false);
 
-    /**
-     * Checks if the user is authorized for the request
-     * @param array|\ArrayAccess|null $user The user to check the authorization
-     *  of. If empty the user in the session will be used
-     * @return bool `true` if the user is authorized, otherwise `false`
-     */
-    public function isAuthorized($user = null): bool
-    {
-        //Only admin and managers can access admin actions
-        //Any registered user can access actions without prefix. Default deny
-        return !$this->getRequest()->getParam('prefix') || $this->Auth->isGroup(['admin', 'manager']);
+        parent::initialize();
     }
 
     /**

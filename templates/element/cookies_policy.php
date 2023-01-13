@@ -14,8 +14,9 @@ declare(strict_types=1);
  *
  * @var \MeCms\View\View\AppView $this
  */
+
 //Returns for logged user
-if ($this->Auth->isLogged()) {
+if ($this->Identity->isLoggedIn()) {
     return;
 }
 

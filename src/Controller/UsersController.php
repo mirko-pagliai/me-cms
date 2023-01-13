@@ -18,12 +18,10 @@ namespace MeCms\Controller;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
-use Cake\Http\Cookie\Cookie;
 use Cake\Http\Response;
 use Cake\Log\Log;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Routing\Router;
-use DateTime;
 
 /**
  * Users controller
@@ -35,18 +33,6 @@ use DateTime;
 class UsersController extends AppController
 {
     use MailerAwareTrait;
-
-    /**
-     * Internal method to logout.
-     * Deletes some cookies.
-     * @return \Cake\Http\Response|null
-     */
-    protected function buildLogout(): ?Response
-    {
-        $this->setResponse($this->getResponse()->withExpiredCookie(new Cookie('login')));
-
-        return $this->redirect($this->Auth->logout());
-    }
 
     /**
      * Internal method to send the activation mail
@@ -83,15 +69,12 @@ class UsersController extends AppController
      */
     public function beforeFilter(EventInterface $event)
     {
-        $result = parent::beforeFilter($event);
-        if ($result) {
-            return $result;
-        }
-
         //Checks if the user is already logged in
-        if (!$this->getRequest()->is('action', 'logout') && $this->Auth->isLogged()) {
+        if (!$this->getRequest()->is('action', 'logout') && $this->getRequest()->getAttribute('identity')) {
             return $this->redirect(['_name' => 'dashboard']);
         }
+
+        return parent::beforeFilter($event);
     }
 
     /**
@@ -169,51 +152,30 @@ class UsersController extends AppController
     /**
      * Login
      * @return \Cake\Http\Response|null|void
+     * @see \MeCms\Plugin::getAuthenticationService()
+     * @todo Should return some error message for accounts not yet activated or banned
      */
     public function login()
     {
-        //Tries to get login data from cookies, if the login with cookies is enabled
-        $data = $this->getRequest()->getCookie('login');
-        if (getConfig('users.cookies_login') && $data) {
-            $this->setRequest($this->getRequest()->withParsedBody((array)$data));
+        $result = $this->Authentication->getResult();
+
+        if ($result->isValid()) {
+            /** @var \Authentication\Identity $Identity */
+            $Identity = $this->Authentication->getIdentity();
+            $this->LoginRecorder->setConfig('user', $Identity->get('id'))->write();
+
+            return $this->redirect($this->Authentication->getLoginRedirect() ?? Router::url(['_name' => 'dashboard'], true));
         }
 
-        $username = $this->getRequest()->getData('username');
-        $password = $this->getRequest()->getData('password');
-        if ($username && $password) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                //Checks if the user is banned or if is disabled (the account should still be enabled)
-                if ($user['banned'] || !$user['active']) {
-                    if ($user['banned']) {
-                        $this->Flash->error(__d('me_cms', 'Your account has been banned by an admin'));
-                    } elseif (!$user['active']) {
-                        $this->Flash->error(__d('me_cms', 'Your account has not been activated yet'));
-                    }
+        if ($this->getRequest()->is('post')) {
+            $this->Flash->error(__d('me_cms', 'Invalid username or password'));
 
-                    return $this->buildLogout();
-                }
-
-                $this->Auth->setUser($user);
-                $this->LoginRecorder->setConfig('user', $user['id'])->write();
-
-                //Saves the login data as cookies, if requested
-                if ($this->getRequest()->getData('remember_me')) {
-                    $Cookie = new Cookie('login', compact('username', 'password'), new DateTime('+1 year'));
-                    $this->setResponse($this->getResponse()->withCookie($Cookie));
-                }
-
-                return $this->redirect($this->Auth->redirectUrl());
-            }
-
-            Log::error(sprintf(
+            $this->log(sprintf(
                 '%s - Failed login: username `%s`, password `%s`',
                 $this->getRequest()->clientIp(),
-                $username,
-                $password
-            ), 'users');
-
-            $this->Flash->error(__d('me_cms', 'Invalid username or password'));
+                $this->getRequest()->getData('username'),
+                $this->getRequest()->getData('password')
+            ), 'error', 'users');
         }
 
         $this->viewBuilder()->setLayout('login');
@@ -227,7 +189,7 @@ class UsersController extends AppController
     {
         $this->Flash->success(__d('me_cms', 'You are successfully logged out'));
 
-        return $this->buildLogout();
+        return $this->redirect($this->Authentication->logout());
     }
 
     /**

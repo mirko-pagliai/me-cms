@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Controller\Admin;
 
 use Cake\Http\Response;
+use MeCms\Model\Entity\User;
 
 /**
  * UsersGroups controller
@@ -24,15 +25,14 @@ use Cake\Http\Response;
 class UsersGroupsController extends AppController
 {
     /**
-     * Check if the provided user is authorized for the request
-     * @param array|\ArrayAccess|null $user The user to check the authorization
-     *  of. If empty the user in the session will be used
+     * Checks if the provided user is authorized for the request
+     * @param \MeCms\Model\Entity\User $User User entity
      * @return bool `true` if the user is authorized, otherwise `false`
      */
-    public function isAuthorized($user = null): bool
+    public function isAuthorized(User $User): bool
     {
         //Only admins can access this controller
-        return $this->Auth->isGroup('admin');
+        return $User->get('group')->get('name') === 'admin';
     }
 
     /**

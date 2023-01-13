@@ -102,7 +102,7 @@ echo $this->Form->end();
                     ];
 
                     //Only admins can activate accounts and delete users
-                    if ($this->Auth->isGroup('admin')) {
+                    if ($this->Identity->isGroup('admin')) {
                         //If the user is not active (pending)
                         if (!$user->get('active')) {
                             $actions[] = $this->Form->postLink(__d('me_cms', 'Activate'), ['action' => 'activate', $user->get('id')], [

@@ -20,6 +20,7 @@ use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\ORM\ResultSet;
 use MeCms\Model\Entity\Post;
+use MeCms\Model\Entity\User;
 
 /**
  * Posts controller
@@ -28,8 +29,7 @@ use MeCms\Model\Entity\Post;
 class PostsController extends AppController
 {
     /**
-     * Called before the controller action.
-     *  each controller action
+     * Called before the controller action
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
      */
@@ -45,8 +45,8 @@ class PostsController extends AppController
             [$categoriesMethod, $usersMethod] = ['getTreeList', 'getActiveList'];
 
             //Only admins and managers can add and edit posts on behalf of other users
-            if ($this->getRequest()->getData() && !$this->Auth->isGroup(['admin', 'manager'])) {
-                $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
+            if ($this->getRequest()->getData() && !in_array($this->Authentication->getIdentityData('group.name'), ['admin', 'manager'])) {
+                $this->setRequest($this->getRequest()->withData('user_id', $this->Authentication->getIdentityData('id')));
             }
         }
         $users = $this->Posts->Users->$usersMethod()->all();
@@ -69,27 +69,26 @@ class PostsController extends AppController
     }
 
     /**
-     * Check if the provided user is authorized for the request
-     * @param array|\ArrayAccess|null $user The user to check the authorization
-     *  of. If empty the user in the session will be used
+     * Checks if the provided user is authorized for the request
+     * @param \MeCms\Model\Entity\User $User User entity
      * @return bool `true` if the user is authorized, otherwise `false`
      * @uses \MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
      */
-    public function isAuthorized($user = null): bool
+    public function isAuthorized(User $User): bool
     {
-        if ($this->Auth->isGroup(['admin', 'manager'])) {
+        //By default, administrators and managers are authorized
+        if (in_array($User->get('group')->get('name'), ['admin', 'manager'])) {
             return true;
         }
 
-        //Users can edit only their own post
-        if ($this->getRequest()->is('edit')) {
-            [$postId, $userId] = [$this->getRequest()->getParam('pass.0'), $this->Auth->user('id')];
+        //Simple users can edit only their own post
+        if ($this->getRequest()->is('action', 'edit')) {
+            [$postId, $userId] = [$this->getRequest()->getParam('pass.0'), $User->get('id')];
 
             return $postId && $userId && $this->Posts->isOwnedBy((int)$postId, $userId);
         }
 
-        //Only admins and managers can delete posts
-        return !$this->getRequest()->is('delete');
+        return !$this->getRequest()->is('action', 'delete');
     }
 
     /**

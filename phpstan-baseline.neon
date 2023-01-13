@@ -55,3 +55,8 @@ parameters:
 			count: 1
 			path: tests/TestCase/Model/Table/Traits/NextToBePublishedTraitTest.php
 
+		-
+			message: "#^Parameter \\#1 \\$resource of method MeCms\\\\Policy\\\\ControllerResolver\\:\\:getPolicy\\(\\) expects MeCms\\\\Controller\\\\AppController, stdClass given\\.$#"
+			count: 1
+			path: tests/TestCase/Policy/ControllerResolverTest.php
+

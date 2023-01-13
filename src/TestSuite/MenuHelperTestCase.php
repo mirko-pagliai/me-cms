@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace MeCms\TestSuite;
 
+use Authentication\Identity;
 use MeTools\TestSuite\HelperTestCase;
 use MeTools\View\Helper\HtmlHelper;
 
@@ -26,14 +27,15 @@ use MeTools\View\Helper\HtmlHelper;
 abstract class MenuHelperTestCase extends HelperTestCase
 {
     /**
-     * Internal method to write auth data on session
-     * @param array $data Data you want to write
+     * Internal method to set the identity for the current helper
+     * @param array $data Identity data
      * @return void
      */
-    protected function writeAuthOnSession(array $data = []): void
+    protected function setIdentity(array $data = []): void
     {
-        $this->Helper->getView()->getRequest()->getSession()->write('Auth.User', $data);
-        $this->Helper->Auth->initialize([]);
+        $request = $this->Helper->getView()->getRequest()->withAttribute('identity', new Identity($data));
+        $this->Helper->getView()->setRequest($request);
+        $this->Helper->Identity->initialize([]);
     }
 
     /**

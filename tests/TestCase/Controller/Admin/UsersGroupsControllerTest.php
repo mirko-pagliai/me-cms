@@ -16,12 +16,13 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use MeCms\Model\Entity\UsersGroup;
-use MeCms\TestSuite\ControllerTestCase;
+use MeCms\TestSuite\AdminControllerTestCase;
 
 /**
  * UsersGroupsControllerTest class
+ * @group admin-controller
  */
-class UsersGroupsControllerTest extends ControllerTestCase
+class UsersGroupsControllerTest extends AdminControllerTestCase
 {
     /**
      * @var array<string>
@@ -32,19 +33,17 @@ class UsersGroupsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `isAuthorized()` method
+     * @uses \MeCms\Controller\Admin\UsersGroupsController::isAuthorized()
      * @test
      */
     public function testIsAuthorized(): void
     {
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => false,
-            'user' => false,
-        ]);
+        $this->assertOnlyAdminIsAuthorized('index');
     }
 
     /**
      * Tests for `index()` method
+     * @uses \MeCms\Controller\Admin\UsersGroupsController::index()
      * @test
      */
     public function testIndex(): void
@@ -57,6 +56,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `add()` method
+     * @uses \MeCms\Controller\Admin\UsersGroupsController::add()
      * @test
      */
     public function testAdd(): void
@@ -81,6 +81,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `edit()` method
+     * @uses \MeCms\Controller\Admin\UsersGroupsController::edit()
      * @test
      */
     public function testEdit(): void
@@ -107,6 +108,7 @@ class UsersGroupsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `delete()` method
+     * @uses \MeCms\Controller\Admin\UsersGroupsController::delete()
      * @test
      */
     public function testDelete(): void

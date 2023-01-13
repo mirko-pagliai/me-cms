@@ -17,6 +17,8 @@
         "ext-libxml": "*",
         "ext-zlib": "*",
         "cakephp/cakephp": "^4.4",
+        "cakephp/authentication": "^2.0",
+        "cakephp/authorization": "^2.1",
         "dereuromark/cakephp-feed": "^2.0",
         "donatj/phpuseragentparser": "^v1",
         "enyo/dropzone": "^5.1",

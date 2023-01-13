@@ -42,6 +42,8 @@ abstract class TestCase extends BaseTestCase
         if (!empty($this->Table) && method_exists($this->Table, 'clearCache')) {
             $this->Table->clearCache();
         }
+
+        $this->getTableLocator()->clear();
     }
 
     /**
