@@ -14,7 +14,7 @@ declare(strict_types=1);
  *
  * @var \Cake\Collection\Collection<string> $categories
  * @var \MeCms\Model\Entity\Post $post
- * @var \MeCms\View\View\AdminView $this
+ * @var \MeCms\View\View\Admin\AppView $this
  * @var string $title
  */
 $this->extend('MeCms./common/form');

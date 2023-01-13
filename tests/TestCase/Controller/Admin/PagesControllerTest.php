@@ -19,14 +19,14 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\ORM\Entity;
 use MeCms\Model\Entity\Page;
-use MeCms\TestSuite\AdminControllerTestCase;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 
 /**
  * PagesControllerTest class
  * @property \MeCms\Model\Table\PagesTable $Table
  * @group admin-controller
  */
-class PagesControllerTest extends AdminControllerTestCase
+class PagesControllerTest extends ControllerTestCase
 {
     /**
      * @var array<string>

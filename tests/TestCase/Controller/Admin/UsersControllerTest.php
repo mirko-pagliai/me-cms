@@ -21,7 +21,7 @@ use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Model\Entity\User;
-use MeCms\TestSuite\AdminControllerTestCase;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 use Tools\Filesystem;
 
 /**
@@ -29,7 +29,7 @@ use Tools\Filesystem;
  * @property \MeCms\Model\Table\UsersTable $Table
  * @group admin-controller
  */
-class UsersControllerTest extends AdminControllerTestCase
+class UsersControllerTest extends ControllerTestCase
 {
     /**
      * @var array<string, int|string>

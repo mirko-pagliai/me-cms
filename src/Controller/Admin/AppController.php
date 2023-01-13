@@ -43,7 +43,7 @@ abstract class AppController extends BaseAppController
         //Checks if the user is authorized. The `ControllerHookPolicy` will call the `isAuthorized()` method
         $this->Authorization->authorize($this);
 
-        $this->viewBuilder()->setClassName('MeCms.View/Admin');
+        $this->viewBuilder()->setClassName('MeCms.View/Admin/App');
 
         //Sets paginate limit and maximum paginate limit
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched

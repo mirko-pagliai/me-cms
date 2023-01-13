@@ -22,13 +22,13 @@ use Cake\Event\Event;
 use Cake\Http\Response;
 use Cake\Routing\Router;
 use MeCms\Controller\Admin\AppController;
-use MeCms\TestSuite\AdminControllerTestCase;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 
 /**
  * AppControllerTest class
  * @group admin-controller
  */
-class AppControllerTest extends AdminControllerTestCase
+class AppControllerTest extends ControllerTestCase
 {
     /**
      * @var array<string>
@@ -62,7 +62,7 @@ class AppControllerTest extends AdminControllerTestCase
 
         $this->Controller->beforeFilter(new Event('myEvent'));
         $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $this->Controller->paginate);
-        $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
+        $this->assertEquals('MeCms.View/Admin/App', $this->Controller->viewBuilder()->getClassName());
 
         //Ajax request
         $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));

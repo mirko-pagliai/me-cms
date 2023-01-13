@@ -16,13 +16,13 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use MeCms\Model\Entity\UsersGroup;
-use MeCms\TestSuite\AdminControllerTestCase;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 
 /**
  * UsersGroupsControllerTest class
  * @group admin-controller
  */
-class UsersGroupsControllerTest extends AdminControllerTestCase
+class UsersGroupsControllerTest extends ControllerTestCase
 {
     /**
      * @var array<string>

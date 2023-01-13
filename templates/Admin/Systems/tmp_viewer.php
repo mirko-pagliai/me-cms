@@ -17,7 +17,7 @@ declare(strict_types=1);
  * @var bool $cacheStatus
  * @var int $logsSize
  * @var int $sitemapSize
- * @var \MeCms\View\View\AdminView $this
+ * @var \MeCms\View\View\Admin\AppView $this
  * @var int $thumbsSize
  * @var int $totalSize
  */

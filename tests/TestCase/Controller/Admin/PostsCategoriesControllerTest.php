@@ -17,13 +17,13 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use MeCms\Model\Entity\PostsCategory;
-use MeCms\TestSuite\AdminControllerTestCase;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 
 /**
  * PostsCategoriesControllerTest class
  * @group admin-controller
  */
-class PostsCategoriesControllerTest extends AdminControllerTestCase
+class PostsCategoriesControllerTest extends ControllerTestCase
 {
     /**
      * @var array<string>
