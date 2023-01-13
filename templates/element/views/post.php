@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @var \MeCms\Model\Entity\Post $post
  * @var \MeCms\View\View\AppView $this
  */
-$isView = $this->getRequest()->is('action', 'view') && !$this->getRequest()->is('ajax');
+$isView = $this->getRequest()->is('action', 'view', 'Posts') && !$this->getRequest()->is('ajax');
 $category = $post->get('category');
 $user = $post->get('user');
 ?>
