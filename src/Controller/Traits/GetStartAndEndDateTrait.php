@@ -19,18 +19,15 @@ namespace MeCms\Controller\Traits;
 use Cake\I18n\FrozenTime;
 
 /**
- * This trait provides a method to get start and end date as `FrozenTime` instances
- *  starting from a string. These can be used for a `where` condition to search
- *  for records based on a date.
+ * This trait provides a method to get start and end date as `FrozenTime` instances starting from a string. These can be
+ *  used for a `where` condition to search for records based on a date.
  */
 trait GetStartAndEndDateTrait
 {
     /**
      * Gets start and end date as `FrozenTime` instances starting from a string.
-     * These can be used for a `where` condition to search for records based on
-     *  a date.
-     * @param string $date Date as `today`, `yesterday`, `YYYY/MM/dd`,
-     *  `YYYY/MM` or `YYYY`
+     * These can be used for a `where` condition to search for records based on a date.
+     * @param string $date Date as `today`, `yesterday`, `YYYY/MM/dd`, `YYYY/MM` or `YYYY`
      * @return array Array with start and end date as `FrozenTime` instances
      */
     protected function getStartAndEndDate(string $date): array
