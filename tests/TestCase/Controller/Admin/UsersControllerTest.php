@@ -54,7 +54,6 @@ class UsersControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Tests for `beforeFilter()` method
      * @uses \MeCms\Controller\Admin\UsersController::beforeFilter()
      * @test
      */
@@ -69,15 +68,7 @@ class UsersControllerTest extends ControllerTestCase
         //Other actions (for example `changePassword`) still work
         $this->get($this->url + ['action' => 'changePassword']);
         $this->assertEmpty($this->viewVariable('groups'));
-    }
 
-    /**
-     * Tests for `beforeFilter()` method, with no groups
-     * @uses \MeCms\Controller\Admin\UsersController::beforeFilter()
-     * @test
-     */
-    public function testBeforeFilterNoGroups(): void
-    {
         //Deletes all categories
         $this->Table->Groups->deleteAll(['id IS NOT' => null]);
 
@@ -94,7 +85,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `isAuthorized()` method
      * @uses \MeCms\Controller\Admin\UsersController::isAuthorized()
      * @test
      */
@@ -112,7 +102,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `index()` method
      * @uses \MeCms\Controller\Admin\UsersController::index()
      * @test
      */
@@ -125,7 +114,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `view()` method
      * @uses \MeCms\Controller\Admin\UsersController::view()
      * @test
      */
@@ -146,7 +134,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `add()` method
      * @uses \MeCms\Controller\Admin\UsersController::add()
      * @test
      */
@@ -172,7 +159,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `edit()` method
      * @uses \MeCms\Controller\Admin\UsersController::edit()
      * @test
      */
@@ -211,7 +197,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `delete()` method
      * @uses \MeCms\Controller\Admin\UsersController::delete()
      * @test
      */
@@ -245,7 +230,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `activate()` method
      * @uses \MeCms\Controller\Admin\UsersController::activate()
      * @test
      */
@@ -258,7 +242,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `changePassword()` method
      * @uses \MeCms\Controller\Admin\UsersController::changePassword()
      * @test
      */
@@ -307,7 +290,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `changePicture()` method
      * @uses \MeCms\Controller\Admin\UsersController::changePicture()
      * @test
      */
@@ -351,7 +333,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `lastLogin()` method
      * @uses \MeCms\Controller\Admin\UsersController::lastLogin()
      * @test
      */

@@ -125,11 +125,9 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertRedirect(['_name' => 'homepage']);
 
         //With a spammer IP
-        Cache::write(md5(serialize(['ip' => ['31.133.120.18']])), [
-          'success' => 1,
-          'ip' => [['value' => '31.133.120.18', 'appears' => 1]],
-        ], 'StopSpam');
-        $this->configRequest(['environment' => ['REMOTE_ADDR' => '31.133.120.18']]);
+        $ip = '31.133.120.18';
+        Cache::write(md5(serialize(['ip' => [$ip]])), ['success' => 1, 'ip' => [['value' => $ip, 'appears' => 1]]], 'StopSpam');
+        $this->configRequest(['environment' => ['REMOTE_ADDR' => $ip]]);
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Systems' . DS . 'ip_not_allowed.php');

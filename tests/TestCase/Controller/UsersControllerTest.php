@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Controller;
 
-use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use MeCms\Model\Entity\User;
@@ -25,13 +24,12 @@ use Tokens\Controller\Component\TokenComponent;
 
 /**
  * UsersControllerTest class
- * @property \MeCms\Controller\UsersController $_controller
  * @property \MeCms\Model\Table\UsersTable $Table
  */
 class UsersControllerTest extends ControllerTestCase
 {
     /**
-     * @var \Tokens\Controller\Component\TokenComponent
+     * @var \Tokens\Controller\Component\TokenComponent&\PHPUnit\Framework\MockObject\MockObject
      */
     protected TokenComponent $Token;
 
@@ -52,11 +50,10 @@ class UsersControllerTest extends ControllerTestCase
     {
         parent::setUp();
 
-        $this->Token ??= new TokenComponent(new ComponentRegistry());
+        $this->Token ??= $this->createPartialMock(TokenComponent::class, []);
     }
 
     /**
-     * Test for `beforeFilter()` method
      * @uses \MeCms\Controller\UsersController::beforeFilter()
      * @test
      */
@@ -68,7 +65,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Test for `activation()` method
      * @uses \MeCms\Controller\UsersController::activation()
      * @test
      */
@@ -104,7 +100,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Test for `activationResend()` method
      * @uses \MeCms\Controller\UsersController::activationResend()
      * @test
      */
@@ -144,7 +139,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Test for `login()` method
      * @uses \MeCms\Controller\UsersController::login()
      * @test
      */
@@ -192,7 +186,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Test for `logout()` method
      * @uses \MeCms\Controller\UsersController::logout()
      * @test
      */
@@ -212,7 +205,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Test for `passwordForgot()` method
      * @uses \MeCms\Controller\UsersController::passwordForgot()
      * @test
      */
@@ -254,7 +246,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Test for `passwordReset()` method
      * @uses \MeCms\Controller\UsersController::passwordReset()
      * @test
      */
@@ -297,7 +288,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Test for `signup()` method
      * @uses \MeCms\Controller\UsersController::signup()
      * @test
      */

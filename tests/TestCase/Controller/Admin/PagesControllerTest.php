@@ -48,7 +48,6 @@ class PagesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `beforeFilter()` method
      * @uses \MeCms\Controller\Admin\PagesController::beforeFilter()
      * @test
      */
@@ -81,7 +80,6 @@ class PagesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `isAuthorized()` method
      * @uses \MeCms\Controller\Admin\PagesController::isAuthorized()
      * @test
      */
@@ -96,7 +94,6 @@ class PagesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `index()` method
      * @uses \MeCms\Controller\Admin\PagesController::index()
      * @test
      */
@@ -109,7 +106,6 @@ class PagesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `indexStatics()` method
      * @uses \MeCms\Controller\Admin\PagesController::indexStatics()
      * @test
      */
@@ -122,7 +118,6 @@ class PagesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `add()` method
      * @uses \MeCms\Controller\Admin\PagesController::add()
      * @test
      */
@@ -153,7 +148,6 @@ class PagesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `edit()` method
      * @uses \MeCms\Controller\Admin\PagesController::edit()
      * @test
      */
@@ -179,7 +173,6 @@ class PagesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `delete()` method
      * @uses \MeCms\Controller\Admin\PagesController::delete()
      * @test
      */

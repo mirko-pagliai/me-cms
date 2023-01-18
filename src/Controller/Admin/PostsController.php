@@ -32,23 +32,19 @@ class PostsController extends AppController
      * Called before the controller action
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
+     * @uses \MeCms\Model\Table\UsersTable::getActiveList()
+     * @uses \MeCms\Model\Table\UsersTable::getList()
      */
     public function beforeFilter(EventInterface $event)
     {
-        $result = parent::beforeFilter($event);
-        if ($result) {
-            return $result;
+        $parent = parent::beforeFilter($event);
+        if ($parent instanceof Response) {
+            return $parent;
         }
 
-        [$categoriesMethod, $usersMethod] = ['getList', 'getList'];
-        if ($this->getRequest()->is('action', ['add', 'edit'])) {
-            [$categoriesMethod, $usersMethod] = ['getTreeList', 'getActiveList'];
-
-            //Only admins and managers can add and edit posts on behalf of other users
-            if ($this->getRequest()->getData() && !in_array($this->Authentication->getIdentityData('group.name'), ['admin', 'manager'])) {
-                $this->setRequest($this->getRequest()->withData('user_id', $this->Authentication->getIdentityData('id')));
-            }
-        }
+        $usersMethod = $this->getRequest()->is('action', ['add', 'edit']) ? 'getActiveList' : 'getList';
         $users = $this->Posts->Users->$usersMethod()->all();
         if ($users->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create an user'));
@@ -56,6 +52,7 @@ class PostsController extends AppController
             return $this->redirect(['controller' => 'Users', 'action' => 'index']);
         }
 
+        $categoriesMethod = $this->getRequest()->is('action', ['add', 'edit']) ? 'getTreeList' : 'getList';
         $categories = $this->Posts->Categories->$categoriesMethod()->all();
         if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
@@ -65,7 +62,16 @@ class PostsController extends AppController
 
         $this->set(compact('categories', 'users'));
 
-        return null;
+        /**
+         * Only admins and managers can add and edit posts on behalf of other users
+         * @todo This code should be moved somewhere else
+         */
+        if ($this->getRequest()->is('action', ['add', 'edit']) &&
+            $this->getRequest()->getData() &&
+            !in_array($this->Authentication->getIdentityData('group.name'), ['admin', 'manager'])
+        ) {
+            $this->setRequest($this->getRequest()->withData('user_id', $this->Authentication->getIdentityData('id')));
+        }
     }
 
     /**

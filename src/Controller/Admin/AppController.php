@@ -30,33 +30,44 @@ abstract class AppController extends BaseAppController
 {
     /**
      * Called before the controller action
-     * @param \Cake\Event\EventInterface $event An EventInterface instance
-     * @return \Cake\Http\Response|null|void
+     * @param \Cake\Event\EventInterface $event An Event instance
+     * @return \Cake\Http\Response|void
      */
     public function beforeFilter(EventInterface $event)
     {
-        $result = parent::beforeFilter($event);
-        if ($result) {
-            return $result;
+        $parent = parent::beforeFilter($event);
+        if ($parent instanceof Response) {
+            return $parent;
         }
 
         //Checks if the user is authorized. The `ControllerHookPolicy` will call the `isAuthorized()` method
         $this->Authorization->authorize($this);
 
-        $this->viewBuilder()->setClassName('MeCms.View/Admin/App');
-
         //Sets paginate limit and maximum paginate limit
         //See http://book.cakephp.org/3.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('admin.records');
 
+        $this->viewBuilder()->setClassName('MeCms.View/Admin/App');
+    }
+
+    /**
+     * Called after the controller action is run, but before the view is rendered
+     * @param \Cake\Event\EventInterface $event An Event instance
+     * @return void
+     * @todo could it be `afterFilter()`?
+     */
+    public function beforeRender(EventInterface $event): void
+    {
+        parent::beforeRender($event);
+
         //Saves the referer in session, excluding post and put requests
         $request = $this->getRequest();
-        $referer = $request->referer();
-        if (!$request->is('post') && !$request->is('put') && $referer && $request->getRequestTarget() !== $referer) {
-            $request->getSession()->write('referer', $referer);
+        if (!$request->is('post') && !$request->is('put')) {
+            $referer = $request->referer();
+            if ($referer && $request->getRequestTarget() !== $referer) {
+                $request->getSession()->write('referer', $referer);
+            }
         }
-
-        return null;
     }
 
     /**

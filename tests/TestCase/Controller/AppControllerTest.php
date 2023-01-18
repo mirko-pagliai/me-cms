@@ -28,7 +28,6 @@ use RuntimeException;
 class AppControllerTest extends ControllerTestCase
 {
     /**
-     * Tests for `beforeFilter()` method
      * @uses \MeCms\Controller\AppController::beforeFilter()
      * @test
      */
@@ -38,33 +37,39 @@ class AppControllerTest extends ControllerTestCase
 
         //If the site is offline
         Configure::write('MeCms.default.offline', true);
-        $this->Controller->getRequest()->clearDetectorCache();
         $this->get('/');
         $this->assertRedirect(['_name' => 'offline']);
         Configure::write('MeCms.default.offline', false);
 
+        $Controller = $this->getMockForAbstractClass(AppController::class, [], '', true, true, true, ['initialize', 'isSpammer']);
+        $Controller->method('isSpammer')->willReturnOnConsecutiveCalls(false, true);
+
+        $Controller->dispatchEvent('Controller.initialize');
+        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $Controller->paginate);
+        $this->assertEquals('MeCms.View/App', $Controller->viewBuilder()->getClassName());
+
         //Whether the user has been reported as a spammer
-        $Controller = $this->getMockForAbstractClass(AppController::class, [], '', true, true, true, ['isSpammer']);
-        $Controller->method('isSpammer')->willReturn(true);
         /** @var \Cake\Http\Response $Response */
-        $Response = $Controller->beforeFilter(new Event('myEvent'));
+        $Response = $Controller->dispatchEvent('Controller.initialize')->getResult();
         $this->_response = $Response;
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
+    }
 
-        $this->Controller->beforeFilter(new Event('myEvent'));
-        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $this->Controller->paginate);
-        $this->assertNull($this->Controller->viewBuilder()->getLayout());
-        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
-
+    /**
+     * @uses \MeCms\Controller\AppController::beforeRender()
+     * @test
+     */
+    public function testBeforeRender(): void
+    {
         //Layout for ajax and json requests
         $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
-        $this->Controller->beforeFilter(new Event('myEvent'));
+        $this->Controller->dispatchEvent('Controller.beforeRender');
         $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
     }
 
     /**
-     * Tests for `getPaging()` and `setPaging()` methods
      * @uses \MeCms\Controller\AppController::getPaging()
+     * @uses \MeCms\Controller\AppController::setPaging()
      * @test
      */
     public function testGetAndSetPaging(): void
@@ -79,7 +84,6 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `initialize()` method
      * @uses \MeCms\Controller\AppController::initialize()
      * @test
      */

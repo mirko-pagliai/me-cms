@@ -34,16 +34,15 @@ class UsersController extends AppController
     use MailerAwareTrait;
 
     /**
-     * Called before the controller action.
-     * You can use this method to perform logic that needs to happen before each controller action
+     * Called before the controller action
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
      */
     public function beforeFilter(EventInterface $event)
     {
-        $result = parent::beforeFilter($event);
-        if ($result) {
-            return $result;
+        $parent = parent::beforeFilter($event);
+        if ($parent instanceof Response) {
+            return $parent;
         }
 
         if ($this->getRequest()->is('action', ['index', 'add', 'edit'])) {
@@ -56,8 +55,6 @@ class UsersController extends AppController
 
             $this->set(compact('groups'));
         }
-
-        return null;
     }
 
     /**
@@ -188,18 +185,18 @@ class UsersController extends AppController
     {
         $this->getRequest()->allowMethod(['post', 'delete']);
 
-        $user = $this->Users->get($id);
+        $User = $this->Users->get($id);
 
         //Cannot delete the admin founder
-        if ($user->get('id') === 1) {
+        if ($User->get('id') === 1) {
             $this->Flash->error(__d('me_cms', 'You cannot delete the admin founder'));
         //Only the admin founder can delete others admin users
-        } elseif ($user->get('group_id') === 1 && $this->Authentication->getIdentityData('id') !== 1) {
+        } elseif ($User->get('group_id') === 1 && $this->Authentication->getIdentityData('id') !== 1) {
             $this->Flash->alert(I18N_ONLY_ADMIN_FOUNDER);
-        } elseif ($user->get('post_count')) {
+        } elseif ($User->get('post_count')) {
             $this->Flash->alert(I18N_BEFORE_DELETE);
         } else {
-            $this->Users->deleteOrFail($user);
+            $this->Users->deleteOrFail($User);
             $this->Flash->success(I18N_OPERATION_OK);
         }
 
@@ -250,12 +247,12 @@ class UsersController extends AppController
      * @throws \Tools\Exception\ObjectWrongInstanceException|\ErrorException
      * @todo `$UploadedFile` should always be a `\Laminas\Diactoros\UploadedFile` instance (see test)
      */
-    public function changePicture(): void
+    public function changePicture()
     {
         /** @var ?\Laminas\Diactoros\UploadedFile $UploadedFile */
         $UploadedFile = $this->getRequest()->getData('file');
 
-        if ($UploadedFile) {
+        if ($this->getRequest()->is(['patch', 'post', 'put']) && $UploadedFile) {
             $id = $this->Authentication->getIdentityData('id');
 
             //Deletes any picture that already exists

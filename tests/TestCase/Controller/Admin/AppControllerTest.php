@@ -18,7 +18,6 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Authorization\Controller\Component\AuthorizationComponent;
 use Cake\Core\Configure;
-use Cake\Event\Event;
 use Cake\Http\Response;
 use Cake\Routing\Router;
 use MeCms\Controller\Admin\AppController;
@@ -52,33 +51,58 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `beforeFilter()` method
      * @uses \MeCms\Controller\Admin\AppController::beforeFilter()
      * @test
      */
     public function testBeforeFilter(): void
     {
         Configure::write('MeCms.admin.records', 7);
-
-        $this->Controller->beforeFilter(new Event('myEvent'));
+        $this->Controller->dispatchEvent('Controller.initialize');
         $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $this->Controller->paginate);
         $this->assertEquals('MeCms.View/Admin/App', $this->Controller->viewBuilder()->getClassName());
-
-        //Ajax request
-        $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
-        $this->Controller->beforeFilter(new Event('myEvent'));
-        $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
 
         //If the site is offline this makes a redirect
         //This works anyway, because the admin interface never goes offline
         Configure::write('MeCms.default.offline', true);
         $this->Controller->getRequest()->clearDetectorCache();
-        $this->assertNull($this->Controller->beforeFilter(new Event('myEvent')));
+        $this->assertNull($this->Controller->dispatchEvent('Controller.initialize')->getResult());
 
+        /**
+         * This tests that the parent `beforeFilter()` method is being executed correctly
+         */
+        //If the site is offline
+        Configure::write('MeCms.default.offline', true);
+        $this->get('/');
+        $this->assertRedirect(['_name' => 'offline']);
+        Configure::write('MeCms.default.offline', false);
+
+        $Controller = $this->getMockForAbstractClass(AppController::class, [], '', true, true, true, ['initialize', 'isSpammer']);
+        $Controller->method('isSpammer')->willReturn(true);
+        $Controller->Authorization = $this->createStub(AuthorizationComponent::class);
+
+        //Whether the user has been reported as a spammer
+        /** @var \Cake\Http\Response $Response */
+        $Response = $Controller->dispatchEvent('Controller.initialize')->getResult();
+        $this->_response = $Response;
+        $this->assertRedirect(['_name' => 'ipNotAllowed']);
+    }
+
+    /**
+     * @uses \MeCms\Controller\Admin\AppController::beforeRender()
+     * @test
+     */
+    public function testBeforeRender(): void
+    {
         $url = ['controller' => 'Pages', 'action' => 'index'] + $this->url;
-
         $this->get(['action' => 'add'] + $url);
         $this->assertSessionNotHasKey('referer');
+
+        //No referer on session for `post` and `put` requests
+        foreach (['post', 'put'] as $method) {
+            $this->configRequest(['environment' => ['HTTP_REFERER' => Router::url($url, true)]]);
+            $this->$method(['action' => 'add'] + $url);
+            $this->assertSessionNotHasKey('referer');
+        }
 
         $this->configRequest(['environment' => ['HTTP_REFERER' => Router::url($url, true)]]);
         $this->get(['action' => 'add'] + $url);
@@ -89,16 +113,9 @@ class AppControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertSessionNotHasKey('referer');
 
-        //No referer on session for `post` and `put` requests
-        foreach (['post', 'put'] as $method) {
-            $this->configRequest(['environment' => ['HTTP_REFERER' => Router::url($url, true)]]);
-            $this->$method(['action' => 'add'] + $url);
-            $this->assertSessionNotHasKey('referer');
-        }
     }
 
     /**
-     * Tests for `redirectMatchingReferer()` method
      * @uses \MeCms\Controller\Admin\AppController::redirectMatchingReferer()
      * @test
      */

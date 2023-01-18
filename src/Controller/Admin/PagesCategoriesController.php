@@ -28,23 +28,17 @@ use MeCms\Model\Entity\PagesCategory;
 class PagesCategoriesController extends AppController
 {
     /**
-     * Called before the controller action
+     * Called after the controller action is run, but before the view is rendered
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null|void
-     * @uses \MeCms\Model\Table\PagesCategoriesTable::getTreeList()
+     * @return void
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeRender(EventInterface $event): void
     {
-        $result = parent::beforeFilter($event);
-        if ($result) {
-            return $result;
-        }
+        parent::beforeRender($event);
 
         if ($this->getRequest()->is('action', ['add', 'edit'])) {
             $this->set('categories', $this->PagesCategories->getTreeList());
         }
-
-        return null;
     }
 
     /**

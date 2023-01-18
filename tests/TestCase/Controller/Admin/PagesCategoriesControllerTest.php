@@ -33,11 +33,10 @@ class PagesCategoriesControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Tests for `beforeFilter()` method
-     * @uses \MeCms\Controller\Admin\PagesCategoriesController::beforeFilter()
+     * @uses \MeCms\Controller\Admin\PagesCategoriesController::beforeRender()
      * @test
      */
-    public function testBeforeFilter(): void
+    public function testBeforeRender(): void
     {
         foreach (['add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [1]);
@@ -46,7 +45,6 @@ class PagesCategoriesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `index()` method
      * @uses \MeCms\Controller\Admin\PagesCategoriesController::index()
      * @test
      */
@@ -59,7 +57,6 @@ class PagesCategoriesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `add()` method
      * @uses \MeCms\Controller\Admin\PagesCategoriesController::add()
      * @test
      */
@@ -85,7 +82,6 @@ class PagesCategoriesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `edit()` method
      * @uses \MeCms\Controller\Admin\PagesCategoriesController::edit()
      * @test
      */
@@ -111,7 +107,6 @@ class PagesCategoriesControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `delete()` method
      * @uses \MeCms\Controller\Admin\PagesCategoriesController::delete()
      * @test
      */

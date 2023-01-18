@@ -52,7 +52,6 @@ class PostsControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Tests for `beforeFilter()` method
      * @uses \MeCms\Controller\Admin\PostsController::beforeFilter()
      * @test
      */
@@ -76,7 +75,63 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `isAuthorized()` method
+     * Tests that the admins and managers can add and edit as another user
+     * @uses \MeCms\Controller\Admin\PostsController::beforeFilter()
+     * @test
+     */
+    public function testBeforeFilterEditAsAnotherUser(): void
+    {
+        foreach (['admin', 'manager'] as $userGroup) {
+            $this->setAuthData($userGroup);
+
+            foreach ([1, 2] as $userId) {
+                //Adds record
+                $this->post($this->url + ['action' => 'add'], ['user_id' => $userId] + self::$example);
+                $this->assertRedirect(['action' => 'index']);
+                $this->assertFlashMessage(I18N_OPERATION_OK);
+
+                $Post = $this->Table->find()->all()->last();
+                $this->assertEquals($userId, $Post->get('user_id'));
+
+                //Edits record, adding +1 to the `user_id`
+                $this->post($this->url + ['action' => 'edit', $Post->get('id')], ['user_id' => ++$userId] + self::$example);
+                $this->assertRedirect(['action' => 'index']);
+                $this->assertFlashMessage(I18N_OPERATION_OK);
+
+                $Post = $this->Table->findById($Post->get('id'))->first();
+                $this->assertEquals($userId, $Post->get('user_id'));
+
+                $this->Table->delete($Post);
+            }
+        }
+
+        /**
+         * Tests that the other users cannot add and edit as another user
+         */
+        $this->setAuthData('user', 3);
+
+        foreach ([1, 2] as $userId) {
+            //Adds record
+            $this->post($this->url + ['action' => 'add'], ['user_id' => $userId] + self::$example);
+            $this->assertRedirect(['action' => 'index']);
+            $this->assertFlashMessage(I18N_OPERATION_OK);
+
+            $Post = $this->Table->find()->all()->last();
+            $this->assertEquals(3, $Post->get('user_id'));
+
+            //Edits record, adding +1 to the `user_id`
+            $this->post($this->url + ['action' => 'edit', $Post->get('id')], ['user_id' => ++$userId] + self::$example);
+            $this->assertRedirect(['action' => 'index']);
+            $this->assertFlashMessage(I18N_OPERATION_OK);
+
+            $Post = $this->Table->findById($Post->get('id'))->first();
+            $this->assertEquals(3, $Post->get('user_id'));
+
+            $this->Table->delete($Post);
+        }
+    }
+
+    /**
      * @uses \MeCms\Controller\Admin\PostsController::isAuthorized()
      * @test
      */
@@ -104,7 +159,6 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `index()` method
      * @uses \MeCms\Controller\Admin\PostsController::index()
      * @test
      */
@@ -117,7 +171,6 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `add()` method
      * @uses \MeCms\Controller\Admin\PostsController::add()
      * @test
      */
@@ -143,7 +196,6 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `edit()` method
      * @uses \MeCms\Controller\Admin\PostsController::edit()
      * @test
      */
@@ -170,7 +222,6 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `delete()` method
      * @uses \MeCms\Controller\Admin\PostsController::delete()
      * @test
      */
@@ -180,67 +231,5 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertTrue($this->Table->findById(1)->all()->isEmpty());
-    }
-
-    /**
-     * Tests that the admins and managers can add and edit as another user
-     * @uses \MeCms\Controller\Admin\PostsController::beforeFilter()
-     * @test
-     */
-    public function testAdminsAndManagersCanAddAndEditAsAnotherUser(): void
-    {
-        foreach (['admin', 'manager'] as $userGroup) {
-            $this->setAuthData($userGroup);
-
-            foreach ([1, 2] as $userId) {
-                //Adds record
-                $this->post($this->url + ['action' => 'add'], ['user_id' => $userId] + self::$example);
-                $this->assertRedirect(['action' => 'index']);
-                $this->assertFlashMessage(I18N_OPERATION_OK);
-
-                $post = $this->Table->find()->all()->last();
-                $this->assertEquals($userId, $post->get('user_id'));
-
-                //Edits record, adding +1 to the `user_id`
-                $this->post($this->url + ['action' => 'edit', $post->get('id')], ['user_id' => ++$userId] + self::$example);
-                $this->assertRedirect(['action' => 'index']);
-                $this->assertFlashMessage(I18N_OPERATION_OK);
-
-                $post = $this->Table->findById($post->get('id'))->first();
-                $this->assertEquals($userId, $post->get('user_id'));
-
-                $this->Table->delete($post);
-            }
-        }
-    }
-
-    /**
-     * Tests that the other users cannot add and edit as another user
-     * @uses \MeCms\Controller\Admin\PostsController::beforeFilter()
-     * @test
-     */
-    public function testOtherUsersCannotAddOrEditAsAnotherUser(): void
-    {
-        $this->setAuthData('user', 3);
-
-        foreach ([1, 2] as $userId) {
-            //Adds record
-            $this->post($this->url + ['action' => 'add'], ['user_id' => $userId] + self::$example);
-            $this->assertRedirect(['action' => 'index']);
-            $this->assertFlashMessage(I18N_OPERATION_OK);
-
-            $post = $this->Table->find()->all()->last();
-            $this->assertEquals(3, $post->get('user_id'));
-
-            //Edits record, adding +1 to the `user_id`
-            $this->post($this->url + ['action' => 'edit', $post->get('id')], ['user_id' => ++$userId] + self::$example);
-            $this->assertRedirect(['action' => 'index']);
-            $this->assertFlashMessage(I18N_OPERATION_OK);
-
-            $post = $this->Table->findById($post->get('id'))->first();
-            $this->assertEquals(3, $post->get('user_id'));
-
-            $this->Table->delete($post);
-        }
     }
 }

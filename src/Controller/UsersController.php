@@ -26,7 +26,6 @@ use Cake\Routing\Router;
 /**
  * Users controller
  * @property \MeCms\Controller\Component\LoginRecorderComponent $LoginRecorder
- * @property \Recaptcha\Controller\Component\RecaptchaComponent $Recaptcha
  * @property \Tokens\Controller\Component\TokenComponent $Token
  * @property \MeCms\Model\Table\UsersTable $Users
  */
@@ -65,7 +64,7 @@ class UsersController extends AppController
     /**
      * Called before the controller action
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null|void
+     * @return \Cake\Http\Response|void
      */
     public function beforeFilter(EventInterface $event)
     {

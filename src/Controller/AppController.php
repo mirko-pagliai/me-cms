@@ -25,16 +25,19 @@ use RuntimeException;
  * Application controller class
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @property \MeTools\Controller\Component\FlashComponent $Flash
+ * @property \Recaptcha\Controller\Component\RecaptchaComponent $Recaptcha
  */
 abstract class AppController extends BaseAppController
 {
     /**
      * Called before the controller action
-     * @param \Cake\Event\EventInterface $event EventInterface
-     * @return \Cake\Http\Response|null|void
+     * @param \Cake\Event\EventInterface $event An Event instance
+     * @return \Cake\Http\Response|void
      */
     public function beforeFilter(EventInterface $event)
     {
+        parent::beforeFilter($event);
+
         //Checks if the site is offline
         if ($this->getRequest()->is('offline')) {
             return $this->redirect(['_name' => 'offline']);
@@ -45,18 +48,26 @@ abstract class AppController extends BaseAppController
             return $this->redirect(['_name' => 'ipNotAllowed']);
         }
 
-        $this->viewBuilder()->setClassName('MeCms.View/App');
-
         //Sets paginate limit and maximum paginate limit
         //See http://book.cakephp.org/4.0/en/controllers/components/pagination.html#limit-the-maximum-number-of-rows-that-can-be-fetched
         $this->paginate['limit'] = $this->paginate['maxLimit'] = getConfigOrFail('default.records');
+
+        $this->viewBuilder()->setClassName('MeCms.View/App');
+    }
+
+    /**
+     * Called after the controller action is run, but before the view is rendered
+     * @param \Cake\Event\EventInterface $event An Event instance
+     * @return void
+     */
+    public function beforeRender(EventInterface $event)
+    {
+        parent::beforeRender($event);
 
         //Layout for ajax and json requests
         if ($this->getRequest()->is(['ajax', 'json'])) {
             $this->viewBuilder()->setLayout('MeCms.ajax');
         }
-
-        return parent::beforeFilter($event);
     }
 
     /**

@@ -32,20 +32,20 @@ class PagesController extends AppController
     /**
      * Called before the controller action
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null|void
+     * @return \Cake\Http\Response|void
      * @uses \MeCms\Model\Table\PagesCategoriesTable::getList()
      * @uses \MeCms\Model\Table\PagesCategoriesTable::getTreeList()
      */
     public function beforeFilter(EventInterface $event)
     {
-        $result = parent::beforeFilter($event);
-        if ($result) {
-            return $result;
+        $parent = parent::beforeFilter($event);
+        if ($parent) {
+            return $parent;
         }
 
         //Returns for `indexStatics` action
         if ($this->getRequest()->is('action', 'indexStatics')) {
-            return null;
+            return;
         }
 
         $methodToCall = $this->getRequest()->is('action', ['add', 'edit']) ? 'getTreeList' : 'getList';
@@ -57,8 +57,6 @@ class PagesController extends AppController
         }
 
         $this->set(compact('categories'));
-
-        return null;
     }
 
     /**
