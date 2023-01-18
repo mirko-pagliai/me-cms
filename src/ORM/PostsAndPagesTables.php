@@ -18,7 +18,7 @@ namespace MeCms\ORM;
 
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Query;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Table\Traits\GetPreviewsFromTextTrait;
@@ -39,10 +39,8 @@ abstract class PostsAndPagesTables extends AppTable
     use NextToBePublishedTrait;
 
     /**
-     * Alters the schema used by this table. This function is only called after
-     *  fetching the schema out of the database
-     * @param \Cake\Database\Schema\TableSchemaInterface $schema The table
-     *  definition fetched from database
+     * Alters the schema used by this table. This function is only called after fetching the schema out of the database
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema The table definition fetched from database
      * @return \Cake\Database\Schema\TableSchemaInterface The altered schema
      * @since 2.17.0
      */
@@ -53,12 +51,11 @@ abstract class PostsAndPagesTables extends AppTable
 
     /**
      * Called after an entity has been deleted
-     * @param \Cake\Event\Event $event Event object
+     * @param EventInterface $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
-     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterDelete(Event $event, EntityInterface $entity): void
+    public function afterDelete(EventInterface $event, EntityInterface $entity): void
     {
         parent::afterDelete($event, $entity);
 
@@ -68,12 +65,11 @@ abstract class PostsAndPagesTables extends AppTable
 
     /**
      * Called after an entity is saved
-     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\Event\EventInterface $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
-     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
-    public function afterSave(Event $event, EntityInterface $entity): void
+    public function afterSave(EventInterface $event, EntityInterface $entity): void
     {
         parent::afterSave($event, $entity);
 
@@ -83,14 +79,13 @@ abstract class PostsAndPagesTables extends AppTable
 
     /**
      * Called before each entity is saved
-     * @param \Cake\Event\Event $event Event object
+     * @param EventInterface $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      * @throws \Tools\Exception\NotWritableException
-     * @uses \MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreviews()
      * @since 2.17.0
      */
-    public function beforeSave(Event $event, EntityInterface $entity): void
+    public function beforeSave(EventInterface $event, EntityInterface $entity): void
     {
         $entity->set('preview', $this->getPreviews($entity->get('text')));
     }
@@ -100,8 +95,6 @@ abstract class PostsAndPagesTables extends AppTable
      * @param string $type The type of query to perform
      * @param array $options An array that will be passed to Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
-     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
-     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function find(string $type = 'all', array $options = []): Query
     {

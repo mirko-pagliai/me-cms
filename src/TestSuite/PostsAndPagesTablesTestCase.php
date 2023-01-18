@@ -19,7 +19,6 @@ namespace MeCms\TestSuite;
 
 use ArrayObject;
 use Cake\Cache\Cache;
-use Cake\Event\Event;
 use Cake\ORM\Entity;
 
 /**
@@ -39,7 +38,6 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     ];
 
     /**
-     * Test for `buildRules()` method
      * @return void
      * @test
      */
@@ -67,7 +65,6 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     }
 
     /**
-     * Test for `_initializeSchema()` method
      * @return void
      * @test
      */
@@ -77,31 +74,34 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     }
 
     /**
-     * Test for event methods
+     * @uses \MeCms\Model\Table\PagesTable::afterDelete()
+     * @uses \MeCms\Model\Table\PagesTable::beforeSave()
+     * @uses \MeCms\Model\Table\PostsTable::afterDelete()
+     * @uses \MeCms\Model\Table\PostsTable::beforeSave()
      * @return void
      * @test
      */
     public function testEventMethods(): void
     {
-        [$event, $entity] = [new Event('myEvent'), $this->Table->newEmptyEntity(), new ArrayObject()];
+        $entity = $this->Table->newEmptyEntity();
 
         /** @var \MeCms\ORM\PostsAndPagesTables&\PHPUnit\Framework\MockObject\MockObject $Table */
         $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'getPreviewSize', 'setNextToBePublished']);
         $Table->expects($this->exactly(2))->method('clearCache');
         $Table->expects($this->exactly(2))->method('setNextToBePublished');
-        $Table->afterDelete($event, $entity);
-        $Table->afterSave($event, $entity);
+        $Table->dispatchEvent('Model.afterDelete', [$entity, new ArrayObject()]);
+        $Table->dispatchEvent('Model.afterSave', [$entity, new ArrayObject()]);
 
         $Table->method('getPreviewSize')->will($this->returnValue([400, 300]));
 
         //Tries with a text without images or videos
         $entity = $Table->newEntity(self::$example);
-        $Table->beforeSave($event, $entity);
+        $Table->dispatchEvent('Model.beforeSave', [$entity, new ArrayObject()]);
         $this->assertTrue($entity->get('preview')->isEmpty());
 
         //Tries with a text with an image
         $entity = $Table->newEntity(['text' => '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg\' />'] + self::$example);
-        $Table->beforeSave($event, $entity);
+        $Table->dispatchEvent('Model.beforeSave', [$entity, new ArrayObject()]);
         $this->assertCount(1, $entity->get('preview'));
         $this->assertContainsOnlyInstancesOf(Entity::class, $entity->get('preview'));
         $this->assertMatchesRegularExpression('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $entity->get('preview')->first()->get('url'));
@@ -110,7 +110,6 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     }
 
     /**
-     * Test for `initialize()` method
      * @return void
      * @test
      */
@@ -125,7 +124,6 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     }
 
     /**
-     * Test for `find()` method
      * @return void
      * @test
      */

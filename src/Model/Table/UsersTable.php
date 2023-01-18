@@ -18,7 +18,7 @@ namespace MeCms\Model\Table;
 use ArrayObject;
 use Cake\Collection\CollectionInterface;
 use Cake\Database\Schema\TableSchemaInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\ResultSet;
 use Cake\ORM\RulesChecker;
@@ -59,13 +59,13 @@ class UsersTable extends AppTable
 
     /**
      * Called before request data is converted into entities
-     * @param \Cake\Event\Event $event Event object
+     * @param EventInterface $event Event object
      * @param \ArrayObject $data Request data
      * @param \ArrayObject $options Options
      * @return void
      * @since 2.16.1
      */
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         //Prevents that a blank password is saved
         if ($options['validate'] === 'EmptyPassword' && isset($data['password']) && !$data['password']) {
@@ -74,8 +74,7 @@ class UsersTable extends AppTable
     }
 
     /**
-     * Returns a rules checker object that will be used for validating
-     *  application integrity
+     * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
