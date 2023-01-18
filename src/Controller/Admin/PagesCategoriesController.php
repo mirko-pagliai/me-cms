@@ -51,7 +51,7 @@ class PagesCategoriesController extends AppController
         $treeList = $this->PagesCategories->getTreeList()->toArray();
         $categories = $this->PagesCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
-            ->orderAsc(sprintf('%s.lft', $this->PagesCategories->getAlias()))
+            ->orderAsc($this->PagesCategories->getAlias() . '.lft')
             ->formatResults(fn(ResultSet $results): CollectionInterface => $results->map(fn(PagesCategory $category): PagesCategory => $category->set('title', $treeList[$category->get('id')])));
 
         $this->set(compact('categories'));

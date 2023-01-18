@@ -22,7 +22,6 @@ parameters:
 
     ignoreErrors:
         - '#^Parameter \#[12] \$callback of function array_(map|walk) expects \(?callable\([^\)]+\): mixed\)?(\|null)?, (array{[^}]+}|Closure\([^\)]+\))(: string)? given\.$#'
-        - '#^Parameter \#1 \$array of function array_values expects array, iterable given\.$#'
         -
             message: '#^Variable \$\w+ might not be defined\.$#'
             path: templates/

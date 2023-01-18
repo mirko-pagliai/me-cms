@@ -17,14 +17,12 @@ declare(strict_types=1);
 namespace MeCms\Controller\Traits;
 
 /**
- * This trait provides a method to check if the latest search has been executed
- *  out of the minimum interval
+ * This trait provides a method to check if the latest search has been executed out of the minimum interval
  */
 trait CheckLastSearchTrait
 {
     /**
-     * Checks if the latest search has been executed out of the minimum
-     *  interval
+     * Checks if the latest search has been executed out of the minimum interval
      * @param string|null $id Query ID
      * @return bool
      */
@@ -35,7 +33,7 @@ trait CheckLastSearchTrait
             return true;
         }
 
-        $id = $id ? md5($id) : null;
+        $id = $id ? md5($id) : '';
         $lastSearch = $this->getRequest()->getSession()->read('last_search');
 
         if ($lastSearch) {

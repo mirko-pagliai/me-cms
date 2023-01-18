@@ -44,21 +44,16 @@ class PostsTagsController extends AppController
         );
 
         //Tries to get data from the cache
-        [$tags, $paging] = array_values(Cache::readMany(
-            [$cache, sprintf('%s_paging', $cache)],
-            $this->PostsTags->getCacheName()
-        ));
+        $tags = Cache::read($cache, $this->PostsTags->getCacheName());
+        $paging = Cache::read($cache . '_paging', $this->PostsTags->getCacheName());
 
         //If the data are not available from the cache
-        if (empty($tags) || empty($paging)) {
+        if (!$tags || !$paging) {
             $query = $this->PostsTags->Tags->find('active');
 
             [$tags, $paging] = [$this->paginate($query), $this->getPaging()];
 
-            Cache::writeMany([
-                $cache => $tags,
-                sprintf('%s_paging', $cache) => $paging,
-            ], $this->PostsTags->getCacheName());
+            Cache::writeMany([$cache => $tags, $cache . '_paging' => $paging], $this->PostsTags->getCacheName());
         //Else, sets the paging parameter
         } else {
             $this->setPaging($paging);
@@ -94,24 +89,18 @@ class PostsTagsController extends AppController
         );
 
         //Tries to get data from the cache
-        [$posts, $paging] = array_values(Cache::readMany(
-            [$cache, sprintf('%s_paging', $cache)],
-            $this->PostsTags->getCacheName()
-        ));
+        $posts = Cache::read($cache, $this->PostsTags->getCacheName());
+        $paging = Cache::read($cache . '_paging', $this->PostsTags->getCacheName());
 
         //If the data are not available from the cache
-        if (empty($posts) || empty($paging)) {
+        if (!$posts || !$paging) {
             $query = $this->PostsTags->Posts->find('active')
                 ->find('forIndex')
                 ->innerJoinWith($this->PostsTags->Tags->getAlias(), fn(Query $query): Query => $query->where(['tag' => $slug]));
 
             [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
-            //Writes on cache
-            Cache::writeMany([
-                $cache => $posts,
-                sprintf('%s_paging', $cache) => $paging,
-            ], $this->PostsTags->getCacheName());
+            Cache::writeMany([$cache => $posts, $cache . '_paging' => $paging], $this->PostsTags->getCacheName());
         //Else, sets the paging parameter
         } else {
             $this->setPaging($paging);

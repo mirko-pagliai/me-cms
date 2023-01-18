@@ -133,8 +133,6 @@ abstract class AppController extends BaseAppController
      */
     public function setPaging(array $paging)
     {
-        $request = $this->getRequest()->withAttribute('paging', $paging)->withParam('paging', $paging);
-
-        return $this->setRequest($request);
+        return $this->setRequest($this->request->withAttribute('paging', $paging)->withParam('paging', $paging));
     }
 }
