@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
 use MeCms\Controller\AppController;
 use MeCms\TestSuite\ControllerTestCase;
 use RuntimeException;
