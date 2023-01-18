@@ -54,6 +54,7 @@ echo $this->Form->create(null, [
     'class' => 'dropzone text-center',
     'type' => 'file',
     'url' => ['?' => $this->getRequest()->getQueryParams(), '_ext' => 'json'],
+    'validation' => false,
 ]);
 echo $this->Html->div('fallback', $this->Form->control('file', [
     'label' => false,
