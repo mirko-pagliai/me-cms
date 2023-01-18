@@ -43,8 +43,7 @@ abstract class ControllerTestCase extends BaseControllerTestCase
         $this->url = ['prefix' => ADMIN_PREFIX, 'plugin' => 'MeCms'] + ($this->url ?? []) + ['controller' => 'Posts'];
 
         if (!empty($this->Controller)) {
-            $Request = new ServerRequest(['params' => $this->url]);
-            $this->Controller->setRequest($Request);
+            $this->Controller->setRequest(new ServerRequest(['params' => $this->url]));
         }
 
         $this->setAuthData('admin');
