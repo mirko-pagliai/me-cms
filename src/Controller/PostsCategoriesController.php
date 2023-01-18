@@ -33,7 +33,7 @@ class PostsCategoriesController extends AppController
     {
         $categories = $this->PostsCategories->find('active')
             ->select(['title', 'slug'])
-            ->orderAsc(sprintf('%s.title', $this->PostsCategories->getAlias()))
+            ->orderAsc($this->PostsCategories->getAlias() . '.title')
             ->cache('categories_index')
             ->all();
 
@@ -62,13 +62,11 @@ class PostsCategoriesController extends AppController
         );
 
         //Tries to get data from the cache
-        [$posts, $paging] = array_values(Cache::readMany(
-            [$cache, sprintf('%s_paging', $cache)],
-            $this->PostsCategories->getCacheName()
-        ));
+        $posts = Cache::read($cache, $this->PostsCategories->getCacheName());
+        $paging = Cache::read($cache . '_paging', $this->PostsCategories->getCacheName());
 
         //If the data are not available from the cache
-        if (empty($posts) || empty($paging)) {
+        if (!$posts || !$paging) {
             $query = $this->PostsCategories->Posts->find('active')
                 ->find('forIndex')
                 ->innerJoinWith($this->PostsCategories->getAlias(), fn(Query $query): Query => $query->where([sprintf('%s.slug', $this->PostsCategories->getAlias()) => $slug]));
@@ -79,10 +77,7 @@ class PostsCategoriesController extends AppController
 
             [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
-            Cache::writeMany([
-                $cache => $posts,
-                sprintf('%s_paging', $cache) => $paging,
-            ], $this->PostsCategories->getCacheName());
+            Cache::writeMany([$cache => $posts, $cache . '_paging' => $paging], $this->PostsCategories->getCacheName());
         //Else, sets the paging parameter
         } else {
             $this->setPaging($paging);

@@ -67,22 +67,16 @@ class PostsController extends AppController
         );
 
         //Tries to get data from the cache
-        [$posts, $paging] = array_values(Cache::readMany(
-            [$cache, sprintf('%s_paging', $cache)],
-            $this->Posts->getCacheName()
-        ));
+        $posts = Cache::read($cache, $this->Posts->getCacheName());
+        $paging = Cache::read($cache . '_paging', $this->Posts->getCacheName());
 
         //If the data are not available from the cache
-        if (empty($posts) || empty($paging)) {
+        if (!$posts || !$paging) {
             $query = $this->Posts->find('active')->find('forIndex');
 
             [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
-            //Writes on cache
-            Cache::writeMany([
-                $cache => $posts,
-                sprintf('%s_paging', $cache) => $paging,
-            ], $this->Posts->getCacheName());
+            Cache::writeMany([$cache => $posts, $cache . '_paging' => $paging], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
             $this->setPaging($paging);
@@ -94,7 +88,7 @@ class PostsController extends AppController
     /**
      * Lists posts for a specific date.
      *
-     * Month and day are optional and you can also use special keywords `today` or `yesterday`.
+     * Month and day are optional, and you can also use special keywords `today` or `yesterday`.
      *
      * Examples:
      * <pre>/posts/2016/06/11</pre>
@@ -124,25 +118,19 @@ class PostsController extends AppController
         );
 
         //Tries to get data from the cache
-        [$posts, $paging] = array_values(Cache::readMany(
-            [$cache, sprintf('%s_paging', $cache)],
-            $this->Posts->getCacheName()
-        ));
+        $posts = Cache::read($cache, $this->Posts->getCacheName());
+        $paging = Cache::read($cache . '_paging', $this->Posts->getCacheName());
 
         //If the data are not available from the cache
-        if (empty($posts) || empty($paging)) {
+        if (!$posts || !$paging) {
             $query = $this->Posts->find('active')
                 ->find('forIndex')
-                ->where([sprintf('%s.created >=', $this->Posts->getAlias()) => $start])
-                ->andWhere([sprintf('%s.created <', $this->Posts->getAlias()) => $end]);
+                ->where([$this->Posts->getAlias() . '.created >=' => $start])
+                ->andWhere([$this->Posts->getAlias() . '.created <' => $end]);
 
             [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
-            //Writes on cache
-            Cache::writeMany([
-                $cache => $posts,
-                sprintf('%s_paging', $cache) => $paging,
-            ], $this->Posts->getCacheName());
+            Cache::writeMany([$cache => $posts, $cache . '_paging' => $paging], $this->Posts->getCacheName());
         //Else, sets the paging parameter
         } else {
             $this->setPaging($paging);
@@ -167,10 +155,9 @@ class PostsController extends AppController
         $posts = $this->Posts->find('active')
             ->limit(getConfigOrFail('default.records_for_rss'))
             ->orderDesc('created')
-            ->formatResults(fn(ResultSet $results) => $results->map(function (Post $post): array {
-                //Truncates the description if the "<!-- read-more -->" tag is
-                //  present or if requested by the configuration
-                $description = $text = $post->get('text');
+            ->formatResults(fn(ResultSet $results) => $results->map(function (Post $Post): array {
+                //Truncates the description if the "<!-- read-more -->" tag is present or if requested by the configuration
+                $description = $text = $Post->get('text');
                 $length = $options = false;
                 $strpos = strpos($description, '<!-- read-more -->');
                 if ($strpos) {
@@ -181,11 +168,11 @@ class PostsController extends AppController
                 $description = $length && $options ? Text::truncate($description, $length, $options) : $description;
 
                 return [
-                    'title' => $post->get('title'),
-                    'link' => $post->get('url'),
+                    'title' => $Post->get('title'),
+                    'link' => $Post->get('url'),
                     'description' => strip_tags($description),
                     'content:encoded' => $text,
-                    'pubDate' => $post->get('created'),
+                    'pubDate' => $Post->get('created'),
                 ];
             }))
             ->cache('rss');
@@ -240,28 +227,23 @@ class PostsController extends AppController
             );
 
             //Tries to get data from the cache
-            [$posts, $paging] = array_values(Cache::readMany(
-                [$cache, sprintf('%s_paging', $cache)],
-                $this->Posts->getCacheName()
-            ));
+            $posts = Cache::read($cache, $this->Posts->getCacheName());
+            $paging = Cache::read($cache . '_paging', $this->Posts->getCacheName());
 
             //If the data are not available from the cache
-            if (empty($posts) || empty($paging)) {
+            if (!$posts || !$paging) {
                 $query = $this->Posts->find('active')
                     ->select(['title', 'slug', 'text', 'created'])
                     ->where(['OR' => [
-                        'title LIKE' => sprintf('%%%s%%', $pattern),
-                        'subtitle LIKE' => sprintf('%%%s%%', $pattern),
-                        'text LIKE' => sprintf('%%%s%%', $pattern),
+                        'title LIKE' => '%%' . $pattern . '%%',
+                        'subtitle LIKE' => '%%' . $pattern . '%%',
+                        'text LIKE' => '%%' . $pattern . '%%',
                     ]])
                     ->orderDesc('created');
 
                 [$posts, $paging] = [$this->paginate($query), $this->getPaging()];
 
-                Cache::writeMany([
-                    $cache => $posts,
-                    sprintf('%s_paging', $cache) => $paging,
-                ], $this->Posts->getCacheName());
+                Cache::writeMany([$cache => $posts, $cache . '_paging' => $paging], $this->Posts->getCacheName());
             //Else, sets the paging parameter
             } else {
                 $this->setPaging($paging);

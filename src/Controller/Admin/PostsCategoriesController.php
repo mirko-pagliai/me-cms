@@ -71,7 +71,7 @@ class PostsCategoriesController extends AppController
         $treeList = $this->PostsCategories->getTreeList()->toArray();
         $categories = $this->PostsCategories->find()
             ->contain(['Parents' => ['fields' => ['title']]])
-            ->orderAsc(sprintf('%s.lft', $this->PostsCategories->getAlias()))
+            ->orderAsc($this->PostsCategories->getAlias() . '.lft')
             ->formatResults(fn(ResultSet $results): CollectionInterface => $results->map(fn(PostsCategory $category): PostsCategory => $category->set('title', $treeList[$category->get('id')])));
 
         $this->set(compact('categories'));
