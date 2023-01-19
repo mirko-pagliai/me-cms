@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -17,6 +18,7 @@ namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\Collection\CollectionInterface;
 use Cake\ORM\Entity;
+use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\TestCase;
 use MeTools\Utility\Youtube;
 
@@ -28,7 +30,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
     /**
      * @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $Posts;
+    protected PostsTable $Posts;
 
     /**
      * Called before every test method
@@ -38,11 +40,15 @@ class GetPreviewsFromTextTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->Posts = $this->Posts ?: $this->getTable('MeCms.Posts');
+        if (empty($this->Posts)) {
+            /** @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject $Posts */
+            $Posts = $this->getTable('MeCms.Posts');
+            $this->Posts = $Posts;
+        }
     }
 
     /**
-     * Test for `extractImages()` method
+     * @uses \MeCms\Model\Table\Traits\GetPreviewsFromTextTrait::extractImages()
      * @test
      */
     public function testExtractImages(): void
@@ -132,17 +138,7 @@ class GetPreviewsFromTextTraitTest extends TestCase
     }
 
     /**
-     * Test for `getPreviewSize()` method
-     * @test
-     */
-    public function testGetPreviewSize(): void
-    {
-        $result = $this->invokeMethod($this->Posts, 'getPreviewSize', [WWW_ROOT . 'img' . DS . 'image.jpg']);
-        $this->assertEquals([400, 400], $result);
-    }
-
-    /**
-     * Test for `getPreviews()` method
+     * @uses \MeCms\Model\Table\Traits\GetPreviewsFromTextTrait::getPreviews()
      * @test
      */
     public function testGetPreviews(): void
@@ -189,5 +185,15 @@ class GetPreviewsFromTextTraitTest extends TestCase
         $this->assertEquals(Youtube::getPreview($youtubeId), $result->first()->get('url'));
         $this->assertEquals(400, $result->first()->get('width'));
         $this->assertEquals(300, $result->first()->get('height'));
+    }
+
+    /**
+     * @uses \MeCms\Model\Table\Traits\GetPreviewsFromTextTrait::getPreviewSize()
+     * @test
+     */
+    public function testGetPreviewSize(): void
+    {
+        $result = $this->invokeMethod($this->Posts, 'getPreviewSize', [WWW_ROOT . 'img' . DS . 'image.jpg']);
+        $this->assertEquals([400, 400], $result);
     }
 }

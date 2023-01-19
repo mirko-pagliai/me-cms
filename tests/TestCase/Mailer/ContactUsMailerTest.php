@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -25,67 +26,43 @@ use Tools\Exception\KeyNotExistsException;
 class ContactUsMailerTest extends TestCase
 {
     /**
-     * @var \MeCms\Mailer\ContactUsMailer
-     */
-    public ContactUsMailer $Mailer;
-
-    /**
-     * @var array<string, string>
-     */
-    protected array $example = [
-        'first_name' => 'James',
-        'email' => 'mymail@example.com',
-        'last_name' => 'Blue',
-        'message' => 'Example of message',
-    ];
-
-    /**
-     * Called before every test method
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->Mailer ??= new ContactUsMailer();
-        $this->Mailer->viewBuilder()->setLayout(null);
-    }
-
-    /**
-     * Tests for `contactUsMail()` method
+     * @uses \MeCms\Mailer\ContactUsMailer::contactUsMail()
      * @test
      */
     public function testContactUsMail(): void
     {
-        $this->Mailer->contactUsMail($this->example);
-        $this->assertEquals(['mymail@example.com' => 'James Blue'], $this->Mailer->getSender());
-        $this->assertEquals(['mymail@example.com' => 'James Blue'], $this->Mailer->getReplyTo());
-        $this->assertEquals(['email@example.com' => 'email@example.com'], $this->Mailer->getTo());
-        $this->assertEquals('Email from MeCms', $this->Mailer->getSubject());
-        $this->assertEquals('MeCms.Systems/contact_us', $this->Mailer->viewBuilder()->getTemplate());
+        $example = [
+            'first_name' => 'James',
+            'email' => 'mymail@example.com',
+            'last_name' => 'Blue',
+            'message' => 'Example of message',
+        ];
+
+        $Mailer = new ContactUsMailer();
+        $Mailer->viewBuilder()->setLayout(null);
+
+        $Mailer->contactUsMail($example);
+        $this->assertEquals(['mymail@example.com' => 'James Blue'], $Mailer->getSender());
+        $this->assertEquals(['mymail@example.com' => 'James Blue'], $Mailer->getReplyTo());
+        $this->assertEquals(['email@example.com' => 'email@example.com'], $Mailer->getTo());
+        $this->assertEquals('Email from MeCms', $Mailer->getSubject());
+        $this->assertEquals('MeCms.Systems/contact_us', $Mailer->viewBuilder()->getTemplate());
         $this->assertEquals([
             'email' => 'mymail@example.com',
             'message' => 'Example of message',
             'firstName' => 'James',
             'lastName' => 'Blue',
-        ], $this->Mailer->viewBuilder()->getVars());
+        ], $Mailer->viewBuilder()->getVars());
 
         //With some missing data
         $this->expectException(KeyNotExistsException::class);
         $this->expectExceptionMessage('Key `email` does not exist');
-        $copy = $this->example;
+        $copy = $example;
         unset($copy['email']);
-        $this->Mailer->contactUsMail($copy);
-    }
+        $Mailer->contactUsMail($copy);
 
-    /**
-     * Tests for `contactUsMail()` method, calling `send()` method
-     * @test
-     */
-    public function testContactUsMailWithSend(): void
-    {
-        $result = $this->Mailer->setTransport('debug')
-            ->send('contactUsMail', [$this->example]);
+        //Calling `send()` method
+        $result = $Mailer->setTransport('debug')->send('contactUsMail', [$example]);
         $this->assertStringContainsString('From: MeCms <email@example.com>', $result['headers']);
         $this->assertStringContainsString('Reply-To: James Blue <mymail@example.com>', $result['headers']);
         $this->assertStringContainsString('Sender: James Blue <mymail@example.com>', $result['headers']);

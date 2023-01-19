@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -28,7 +29,7 @@ class SetPermissionsCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
-     * Tests for `execute()` method
+     * @uses \MeTools\Command\Install\SetPermissionsCommand::execute()
      * @test
      */
     public function testExecute(): void

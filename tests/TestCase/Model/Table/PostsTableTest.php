@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -55,7 +56,9 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
 
     /**
      * Test for event methods
+     * @uses \MeCms\Model\Table\PostsTable::beforeMarshal()
      * @test
+     * @todo should be `testBeforeMarshal()`?
      */
     public function testEventMethods(): void
     {
@@ -76,7 +79,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     }
 
     /**
-     * Test for `buildRules()` method
+     * @uses \MeCms\Model\Table\PostsTable::buildRules()
      * @test
      */
     public function testBuildRules(): void
@@ -93,7 +96,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     }
 
     /**
-     * Test for `initialize()` method
+     * @uses \MeCms\Model\Table\PostsTable::initialize()
      * @test
      */
     public function testInitialize(): void
@@ -129,20 +132,18 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     }
 
     /**
-     * Test for `find()` methods
+     * @uses \MeCms\Model\Table\PostsTable::findForIndex()
      * @test
      */
     public function testFindMethods(): void
     {
         $query = $this->Table->find('forIndex');
         $this->assertArrayKeysEqual(['Categories', 'Tags', 'Users'], $query->getContain());
-
-        $this->skipIfCakeIsLessThan('4.3');
         $this->assertSqlEndsWith('FROM posts Posts INNER JOIN posts_categories Categories ON Categories.id = Posts.category_id INNER JOIN users Users ON Users.id = Posts.user_id ORDER BY Posts.created DESC', $query->sql());
     }
 
     /**
-     * Test for `getRelated()` method
+     * @uses \MeCms\Model\Table\PostsTable::getRelated()
      * @test
      */
     public function testGetRelated(): void
@@ -189,7 +190,7 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     }
 
     /**
-     * Test for `queryFromFilter()` method
+     * @uses \MeCms\Model\Table\PostsTable::queryFromFilter()
      * @test
      */
     public function testQueryFromFilter(): void

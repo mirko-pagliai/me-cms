@@ -12,6 +12,7 @@
 * `AppController::__get()` magic method no longer exists;
 * large improvement of `ControllerTestCase`;
 * `AppTable::clearCache()` deletes all keys from the cache used by this table and its associated tables;
+* many code improvements suggested by `phpstorm`;
 * updated for me-tools 2.22.3.
 
 ### 2.30.12

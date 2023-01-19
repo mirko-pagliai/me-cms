@@ -30,6 +30,7 @@ class SitemapBuilder
      * @param string $plugin Plugin
      * @return \Cake\Collection\CollectionInterface Collection of classes and methods names
      * @throws \ErrorException
+     * @todo check the collection (array?)
      */
     public static function getMethods(string $plugin): CollectionInterface
     {

@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -47,7 +48,7 @@ class VersionUpdatesCommandTest extends TestCase
     ];
 
     /**
-     * Test for `addLastLoginsField()` method
+     * @uses \MeCms\Command\VersionUpdatesCommand::addLastLoginsField()
      * @test
      */
     public function testAddLastLoginsField(): void
@@ -68,7 +69,7 @@ class VersionUpdatesCommandTest extends TestCase
     }
 
     /**
-     * Test for `addEnableCommentsField()` method
+     * @uses \MeCms\Command\VersionUpdatesCommand::addEnableCommentsField()
      * @test
      */
     public function testAddEnableCommentsField(): void
@@ -94,7 +95,7 @@ class VersionUpdatesCommandTest extends TestCase
     }
 
     /**
-     * Test for `alterTagColumnSize()` method
+     * @uses \MeCms\Command\VersionUpdatesCommand::alterTagColumnSize()
      * @test
      */
     public function testAlterTagColumnSize(): void
@@ -115,7 +116,7 @@ class VersionUpdatesCommandTest extends TestCase
     }
 
     /**
-     * Test for `deleteOldDirectories()` method
+     * @uses \MeCms\Command\VersionUpdatesCommand::deleteOldDirectories()
      * @test
      */
     public function testDeleteOldDirectories(): void
@@ -127,7 +128,7 @@ class VersionUpdatesCommandTest extends TestCase
     }
 
     /**
-     * Test for `execute()` method
+     * @uses \MeCms\Command\VersionUpdatesCommand::execute()
      * @test
      */
     public function testExecute(): void
