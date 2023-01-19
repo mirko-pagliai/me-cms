@@ -54,7 +54,6 @@ abstract class AppController extends BaseAppController
      * Called after the controller action is run, but before the view is rendered
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return void
-     * @todo could it be `afterFilter()`?
      */
     public function beforeRender(EventInterface $event): void
     {
