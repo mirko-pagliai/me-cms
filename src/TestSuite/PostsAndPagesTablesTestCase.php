@@ -18,7 +18,6 @@ namespace MeCms\TestSuite;
 
 use ArrayObject;
 use Cake\Cache\Cache;
-use Cake\ORM\Entity;
 
 /**
  * Abstract class for `PagesTableTest` and `PostsTableTest` classes
@@ -90,7 +89,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     {
         $Entity = $this->Table->newEmptyEntity();
 
-        /** @var (\MeCms\Model\Table\PagesTable|\MeCms\Model\Table\PostsTable)&\PHPUnit\Framework\MockObject\MockObject $Table */
+        /** @var \MeCms\ORM\PostsAndPagesTables&\PHPUnit\Framework\MockObject\MockObject $Table */
         $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'getPreviewSize', 'setNextToBePublished']);
         $Table->expects($this->exactly(2))->method('clearCache');
         $Table->expects($this->exactly(2))->method('setNextToBePublished');
@@ -106,7 +105,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      */
     public function testBeforeSave(): void
     {
-        /** @var (\MeCms\Model\Table\PagesTable|\MeCms\Model\Table\PostsTable)&\PHPUnit\Framework\MockObject\MockObject $Table */
+        /** @var \MeCms\ORM\PostsAndPagesTables&\PHPUnit\Framework\MockObject\MockObject $Table */
         $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'getPreviewSize', 'setNextToBePublished']);
         $Table->method('getPreviewSize')->willReturn([400, 300]);
 

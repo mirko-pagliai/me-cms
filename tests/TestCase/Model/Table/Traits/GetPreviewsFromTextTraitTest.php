@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Model\Table\Traits;
 
 use Cake\Collection\CollectionInterface;
-use Cake\ORM\Entity;
 use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\TestCase;
 use MeTools\Utility\Youtube;
