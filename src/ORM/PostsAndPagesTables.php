@@ -31,6 +31,8 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  * @property \Cake\ORM\Association\BelongsTo $Categories
  * @method findActiveBySlug(string $slug)
  * @method findPendingBySlug(string $slug)
+ * @see \MeCms\Model\Table\PagesTable
+ * @see \MeCms\Model\Table\PostsTable
  */
 abstract class PostsAndPagesTables extends AppTable
 {
@@ -38,10 +40,8 @@ abstract class PostsAndPagesTables extends AppTable
     use NextToBePublishedTrait;
 
     /**
-     * Alters the schema used by this table. This function is only called after
-     *  fetching the schema out of the database
-     * @param \Cake\Database\Schema\TableSchemaInterface $schema The table
-     *  definition fetched from database
+     * Alters the schema used by this table. This function is only called after fetching the schema out of the database
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema The table definition fetched from database
      * @return \Cake\Database\Schema\TableSchemaInterface The altered schema
      * @since 2.17.0
      */
@@ -55,7 +55,6 @@ abstract class PostsAndPagesTables extends AppTable
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
-     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function afterDelete(Event $event, EntityInterface $entity): void
     {
@@ -70,7 +69,6 @@ abstract class PostsAndPagesTables extends AppTable
      * @param \Cake\Event\Event $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
-     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function afterSave(Event $event, EntityInterface $entity): void
     {
@@ -86,7 +84,6 @@ abstract class PostsAndPagesTables extends AppTable
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      * @throws \Tools\Exception\NotWritableException
-     * @uses \MeCms\Model\Table\Traits\GetPreviewFromTextTrait::getPreviews()
      * @since 2.17.0
      */
     public function beforeSave(Event $event, EntityInterface $entity): void
@@ -99,8 +96,6 @@ abstract class PostsAndPagesTables extends AppTable
      * @param string $type The type of query to perform
      * @param array $options An array that will be passed to Query::applyOptions()
      * @return \Cake\ORM\Query The query builder
-     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::getNextToBePublished()
-     * @uses \MeCms\Model\Table\Traits\NextToBePublishedTrait::setNextToBePublished()
      */
     public function find(string $type = 'all', array $options = []): Query
     {

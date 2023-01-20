@@ -33,8 +33,8 @@ class PagesTableTest extends PostsAndPagesTablesTestCase
     ];
 
     /**
-     * Test for `initialize()` method
      * @test
+     * @uses \MeCms\Model\Table\PagesTable::initialize()
      */
     public function testInitialize(): void
     {

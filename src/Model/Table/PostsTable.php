@@ -70,8 +70,7 @@ class PostsTable extends PostsAndPagesTables
             //Gets existing tags
             $existingTags = $this->Tags->getList()->toArray();
 
-            //For each tag, it searches if the tag already exists.
-            //If a tag exists in the database, it sets also the tag ID
+            //For each tag, it searches if the tag already exists. If a tag exists, it sets also the tag ID
             foreach ($tags as $k => $tag) {
                 $id = array_search($tag, $existingTags);
                 if ($id) {
@@ -84,8 +83,7 @@ class PostsTable extends PostsAndPagesTables
     }
 
     /**
-     * Returns a rules checker object that will be used for validating
-     *  application integrity
+     * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
