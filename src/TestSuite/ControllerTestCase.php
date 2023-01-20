@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace MeCms\TestSuite;
 
-use Cake\Event\Event;
 use Cake\Http\ServerRequest;
 use MeCms\Controller\AppController;
 use MeCms\Model\Table\AppTable;
@@ -209,7 +208,7 @@ abstract class ControllerTestCase extends TestCase
             ->getMock();
         $Controller->method('isSpammer')->willReturn(true);
         /** @var \Cake\Http\Response $response */
-        $response = $Controller->beforeFilter(new Event('myEvent'));
+        $response = $Controller->dispatchEvent('Controller.initialize')->getResult();
         $this->_response = $response;
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
     }
