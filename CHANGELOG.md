@@ -4,6 +4,7 @@
 * fixed a bug for the "read more" button of posts and pages;
 * fixed a bug with uploading the user's profile picture;
 * fixed some small template bugs;
+* `GetPreviewsFromTextTrait::getPreviews()` returns a collection of array (instead of entities);
 * improved the code of all controllers;
 * added the `AppTable::getCacheNameWithAssociated()` method. The `getCacheName()` method will now only return the cache
   name of the current table (string);

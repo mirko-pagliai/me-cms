@@ -163,28 +163,32 @@ class GetPreviewsFromTextTraitTest extends TestCase
         $result = $Posts->getPreviews('<img src=\'' . WWW_ROOT . 'img' . DS . 'noExisting.jpg\' />');
         $this->assertTrue($result->isEmpty());
 
-        $result = $Posts->getPreviews('<img src=\'http://example.com/image.jpg\' />');
+        $result = $Posts->getPreviews('<img src=\'https://example.com/image.jpg\' />');
         $this->assertInstanceOf(CollectionInterface::class, $result);
         $this->assertCount(1, $result);
-        $this->assertContainsOnlyInstancesOf(Entity::class, $result);
-        $this->assertEquals('http://example.com/image.jpg', $result->first()->get('url'));
-        $this->assertEquals(400, $result->first()->get('width'));
-        $this->assertEquals(300, $result->first()->get('height'));
+        $this->assertEquals([
+            'url' => 'https://example.com/image.jpg',
+            'width' => 400,
+            'height' => 300,
+        ], $result->first());
 
         foreach (['image.jpg', WWW_ROOT . 'img' . DS . 'image.jpg'] as $image) {
             $result = $Posts->getPreviews('<img src=\'' . $image . '\' />');
             $this->assertCount(1, $result);
-            $this->assertMatchesRegularExpression('/^http:\/\/localhost\/thumb\/[A-z0-9]+$/', $result->first()->get('url'));
-            $this->assertEquals(400, $result->first()->get('width'));
-            $this->assertEquals(300, $result->first()->get('height'));
+            $first = $result->first();
+            $this->assertMatchesRegularExpression('/^http:\/\/localhost\/thumb\/[A-z0-9]+$/', $first['url']);
+            $this->assertSame(400, $first['width']);
+            $this->assertSame(300, $first['height']);
         }
 
         $youtubeId = '6z4KK7RWjmk';
         $result = $Posts->getPreviews('[youtube]' . $youtubeId . '[/youtube]');
         $this->assertCount(1, $result);
-        $this->assertEquals(Youtube::getPreview($youtubeId), $result->first()->get('url'));
-        $this->assertEquals(400, $result->first()->get('width'));
-        $this->assertEquals(300, $result->first()->get('height'));
+        $this->assertEquals([
+            'url' => Youtube::getPreview($youtubeId),
+            'width' => 400,
+            'height' => 300,
+        ], $result->first());
     }
 
     /**

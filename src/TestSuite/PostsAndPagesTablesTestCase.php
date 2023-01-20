@@ -1,6 +1,4 @@
 <?php
-/** @noinspection PhpDocMissingThrowsInspection */
-/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -92,7 +90,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     {
         $Entity = $this->Table->newEmptyEntity();
 
-        /** @var \MeCms\ORM\PostsAndPagesTables&\PHPUnit\Framework\MockObject\MockObject $Table */
+        /** @var (\MeCms\Model\Table\PagesTable|\MeCms\Model\Table\PostsTable)&\PHPUnit\Framework\MockObject\MockObject $Table */
         $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'getPreviewSize', 'setNextToBePublished']);
         $Table->expects($this->exactly(2))->method('clearCache');
         $Table->expects($this->exactly(2))->method('setNextToBePublished');
@@ -108,7 +106,7 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
      */
     public function testBeforeSave(): void
     {
-        /** @var \MeCms\ORM\PostsAndPagesTables&\PHPUnit\Framework\MockObject\MockObject $Table */
+        /** @var (\MeCms\Model\Table\PagesTable|\MeCms\Model\Table\PostsTable)&\PHPUnit\Framework\MockObject\MockObject $Table */
         $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'getPreviewSize', 'setNextToBePublished']);
         $Table->method('getPreviewSize')->willReturn([400, 300]);
 
@@ -121,10 +119,10 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
         $Entity = $Table->newEntity(['text' => '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg\' />'] + self::$example);
         $Table->dispatchEvent('Model.beforeSave', [$Entity, new ArrayObject()]);
         $this->assertCount(1, $Entity->get('preview'));
-        $this->assertContainsOnlyInstancesOf(Entity::class, $Entity->get('preview'));
-        $this->assertMatchesRegularExpression('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $Entity->get('preview')->first()->get('url'));
-        $this->assertEquals(400, $Entity->get('preview')->first()->get('width'));
-        $this->assertEquals(300, $Entity->get('preview')->first()->get('height'));
+        $first = $Entity->get('preview')->first();
+        $this->assertMatchesRegularExpression('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $first['url']);
+        $this->assertSame(400, $first['width']);
+        $this->assertSame(300, $first['height']);
     }
 
     /**

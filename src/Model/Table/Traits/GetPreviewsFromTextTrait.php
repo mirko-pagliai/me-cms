@@ -82,20 +82,19 @@ trait GetPreviewsFromTextTrait
     }
 
     /**
-     * Gets all the available images from a html string, including the previews of YouTube videos, and returns entities
+     * Gets all the available images from a html string, including the previews of YouTube videos
      * @param string $html Html string
-     * @return \Cake\Collection\CollectionInterface Collection of entities with `url`, `width` and `height` properties
+     * @return \Cake\Collection\CollectionInterface<array{url: string, width: int, height: int}> Collection of images
      * @throws \Tools\Exception\NotWritableException
      * @since 2.23.0
-     * @todo array instead of entities?
      */
     public function getPreviews(string $html): CollectionInterface
     {
-        $images = array_map(function (string $url): ?Entity {
+        $images = array_map(function (string $url): array {
             if (!is_url($url)) {
                 $url = Filesystem::instance()->makePathAbsolute($url, WWW_ROOT . 'img');
                 if (!file_exists($url)) {
-                    return null;
+                    return [];
                 }
 
                 $thumber = new ThumbCreator($url);
@@ -105,7 +104,7 @@ trait GetPreviewsFromTextTrait
 
             [$width, $height] = $this->getPreviewSize($url);
 
-            return new Entity(compact('url', 'width', 'height'));
+            return compact('url', 'width', 'height');
         }, $this->extractImages($html));
 
         return collection(array_filter($images));
