@@ -57,8 +57,9 @@ abstract class EntityTestCase extends TestCase
         parent::setUp();
 
         if (empty($this->Entity) && $this->autoInitializeClass) {
+            $entityClassName = $this->getOriginClassNameOrFail($this);
             /** @var \Cake\ORM\Entity $Entity */
-            $Entity = new ($this->getOriginClassNameOrFail($this))();
+            $Entity = new $entityClassName();
             $this->Entity = $Entity;
         }
     }
