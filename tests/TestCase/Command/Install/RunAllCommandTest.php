@@ -34,7 +34,7 @@ class RunAllCommandTest extends TestCase
     {
         $questions = (new RunAllCommand())->questions;
         $this->exec('me_cms.install -v', array_fill(0, count($questions), 'n'));
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
 
         $expectedQuestions = array_column($questions, 'question');
         $matches = [];

@@ -50,17 +50,17 @@ class UsersController extends AppController
 
     /**
      * Internal method to send the activation mail
-     * @param \Cake\Datasource\EntityInterface $user User entity
+     * @param \Cake\Datasource\EntityInterface $User `User` entity
      * @return bool
      * @see \MeCms\Mailer\UserMailer::activation()
      */
-    protected function sendActivationMail(EntityInterface $user): bool
+    protected function sendActivationMail(EntityInterface $User): bool
     {
-        $token = $this->Token->create($user->get('email'), ['type' => 'signup', 'user_id' => $user->get('id')]);
+        $token = $this->Token->create($User->get('email'), ['type' => 'signup', 'user_id' => $User->get('id')]);
 
         return (bool)$this->getMailer('MeCms.User')
-            ->setViewVars('url', Router::url(['_name' => 'activation', (string)$user->get('id'), $token], true))
-            ->send('activation', [$user]);
+            ->setViewVars('url', Router::url(['_name' => 'activation', (string)$User->get('id'), $token], true))
+            ->send('activation', [$User]);
     }
 
     /**

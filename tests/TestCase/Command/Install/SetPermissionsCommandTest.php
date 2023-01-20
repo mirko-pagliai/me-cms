@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -28,13 +29,13 @@ class SetPermissionsCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
-     * Tests for `execute()` method
+     * @uses \MeTools\Command\Install\SetPermissionsCommand::execute()
      * @test
      */
     public function testExecute(): void
     {
         $this->exec('me_cms.set_permissions -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $expected = array_map(fn(string $path): string => 'Set permissions on `' . Filesystem::instance()->rtr($path) . '`', array_clean(Configure::read('WRITABLE_DIRS')));
         $this->assertSame($expected, $this->_out->messages());
     }

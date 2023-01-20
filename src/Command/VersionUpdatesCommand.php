@@ -48,12 +48,13 @@ class VersionUpdatesCommand extends Command
     {
         Cache::clear('_cake_model_');
 
-        $Table = $this->fetchTable('MeCms.Users');
-        if (!$Table->getSchema()->hasColumn('last_logins')) {
-            $connection = $Table->getConnection();
-            $command = 'ALTER TABLE `' . $Table->getTable() . '` ADD `last_logins` TEXT NULL DEFAULT NULL AFTER `last_name`;';
+        $this->getTableLocator()->clear();
+        $Users = $this->getTableLocator()->get('MeCms.Users');
+        if (!$Users->getSchema()->hasColumn('last_logins')) {
+            $connection = $Users->getConnection();
+            $command = 'ALTER TABLE `' . $Users->getTable() . '` ADD `last_logins` TEXT NULL DEFAULT NULL AFTER `last_name`;';
             if ($connection->getDriver() instanceof Postgres) {
-                $command = 'ALTER TABLE ' . $Table->getTable() . ' ADD COLUMN last_logins TEXT NULL DEFAULT NULL';
+                $command = 'ALTER TABLE ' . $Users->getTable() . ' ADD COLUMN last_logins TEXT NULL DEFAULT NULL';
             }
             $connection->execute($command);
         }
@@ -68,8 +69,10 @@ class VersionUpdatesCommand extends Command
     {
         Cache::clear('_cake_model_');
 
+        $this->getTableLocator()->clear();
+
         foreach (['Pages', 'Posts'] as $tableName) {
-            $Table = $this->fetchTable('MeCms.' . $tableName);
+            $Table = $this->getTableLocator()->get('MeCms.' . $tableName);
             if (!$Table->getSchema()->hasColumn('enable_comments')) {
                 $connection = $Table->getConnection();
                 $command = 'ALTER TABLE `' . $Table->getTable() . '` ADD `enable_comments` BOOLEAN NOT NULL DEFAULT TRUE';
@@ -87,12 +90,13 @@ class VersionUpdatesCommand extends Command
      */
     public function alterTagColumnSize(): void
     {
-        $Table = $this->fetchTable('MeCms.Tags');
-        if ($Table->getSchema()->getColumn('tag')['length'] < 255) {
-            $connection = $Table->getConnection();
-            $command = 'ALTER TABLE ' . $Table->getTable() . ' MODIFY tag varchar(255) NOT NULL';
+        $this->getTableLocator()->clear();
+        $Tags = $this->getTableLocator()->get('MeCms.Tags');
+        if ($Tags->getSchema()->getColumn('tag')['length'] < 255) {
+            $connection = $Tags->getConnection();
+            $command = 'ALTER TABLE ' . $Tags->getTable() . ' MODIFY tag varchar(255) NOT NULL';
             if ($connection->getDriver() instanceof Postgres) {
-                $command = 'ALTER TABLE ' . $Table->getTable() . ' ALTER COLUMN tag TYPE varchar(255);';
+                $command = 'ALTER TABLE ' . $Tags->getTable() . ' ALTER COLUMN tag TYPE varchar(255);';
             }
             $connection->execute($command);
         }

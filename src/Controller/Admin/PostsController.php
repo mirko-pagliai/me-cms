@@ -23,9 +23,7 @@ use MeCms\Model\Entity\Post;
 
 /**
  * Posts controller
- * @property \MeCms\Model\Table\PostsCategoriesTable $Categories
  * @property \MeCms\Model\Table\PostsTable $Posts
- * @property \MeCms\Model\Table\UsersTable $Users
  */
 class PostsController extends AppController
 {
@@ -51,14 +49,14 @@ class PostsController extends AppController
                 $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
             }
         }
-        $users = $this->Users->$usersMethod()->all();
+        $users = $this->Posts->Users->$usersMethod()->all();
         if ($users->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create an user'));
 
             return $this->redirect(['controller' => 'Users', 'action' => 'index']);
         }
 
-        $categories = $this->Categories->$categoriesMethod()->all();
+        $categories = $this->Posts->Categories->$categoriesMethod()->all();
         if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 

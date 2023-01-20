@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -54,7 +55,7 @@ class UserMailerTest extends TestCase
     }
 
     /**
-     * Tests for `activation()` method
+     * @uses \MeCms\Mailer\UserMailer::activation()
      * @test
      */
     public function testActivation(): void
@@ -70,14 +71,8 @@ class UserMailerTest extends TestCase
         $this->expectExceptionMessage('Key `email` does not exist');
         unset($this->example->email);
         $this->Mailer->activation($this->example);
-    }
 
-    /**
-     * Tests for `activation()` method, calling `send()` method
-     * @test
-     */
-    public function testActivationWithSend(): void
-    {
+        //Calling `send()` method
         $result = $this->Mailer->setTransport('debug')
             ->setViewVars(['url' => 'http://example/link'])
             ->send('activation', [$this->example]);
@@ -92,7 +87,7 @@ class UserMailerTest extends TestCase
     }
 
     /**
-     * Tests for `changePassword()` method
+     * @uses \MeCms\Mailer\UserMailer::changePassword()
      * @test
      */
     public function testChangePassword(): void
@@ -108,14 +103,8 @@ class UserMailerTest extends TestCase
         $this->expectExceptionMessage('Key `email` does not exist');
         unset($this->example->email);
         $this->Mailer->changePassword($this->example);
-    }
 
-    /**
-     * Tests for `changePassword()` method, calling `send()` method
-     * @test
-     */
-    public function testChangePasswordWithSend(): void
-    {
+        //Calling `send()` method
         $result = $this->Mailer->setTransport('debug')
             ->setViewVars(['url' => 'http://example/link'])
             ->send('changePassword', [$this->example]);
@@ -129,7 +118,7 @@ class UserMailerTest extends TestCase
     }
 
     /**
-     * Tests for `passwordForgot()` method
+     * @uses \MeCms\Mailer\UserMailer::passwordForgot()
      * @test
      */
     public function testPasswordForgot(): void
@@ -145,14 +134,8 @@ class UserMailerTest extends TestCase
         $this->expectExceptionMessage('Key `email` does not exist');
         unset($this->example->email);
         $this->Mailer->passwordForgot($this->example);
-    }
 
-    /**
-     * Tests for `passwordForgot()` method, calling `send()` method
-     * @test
-     */
-    public function testPasswordForgotWithSend(): void
-    {
+        //Calling `send()` method
         $result = $this->Mailer->setTransport('debug')
             ->setViewVars(['url' => 'http://example/link'])
             ->send('passwordForgot', [$this->example]);

@@ -11,7 +11,10 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AdminView $this
  */
+
 $this->extend('MeCms./Admin/common/index');
 $this->assign('title', I18N_USERS);
 $this->append('actions', $this->Html->button(
@@ -66,7 +69,7 @@ echo $this->Form->end();
             <th class="text-center"><?= $this->Paginator->sort('id', I18N_ID) ?></th>
             <th><?php echo $this->Paginator->sort('username', I18N_USERNAME) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('first_name', I18N_NAME) ?></th>
-            <th class="text-center d-none d-lg-block"><?= $this->Paginator->sort('email', I18N_EMAIL) ?></th>
+            <th class="text-center"><?= $this->Paginator->sort('email', I18N_EMAIL) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('Groups.label', I18N_GROUP) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('post_count', I18N_POSTS) ?></th>
             <th class="text-center"><?= $this->Paginator->sort('created', I18N_DATE) ?></th>
@@ -121,7 +124,7 @@ echo $this->Form->end();
                 <td class="text-center">
                     <?= $user->get('full_name') ?>
                 </td>
-                <td class="text-center d-none d-lg-block">
+                <td class="text-center">
                     <?= $this->Html->link($user->get('email'), sprintf('mailto:%s', $user->get('email'))) ?>
                 </td>
                 <td class="text-center">

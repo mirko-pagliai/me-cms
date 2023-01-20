@@ -25,7 +25,7 @@ use MeCms\ORM\PostsAndPagesTables;
  * @method \MeCms\Model\Entity\Page get($primaryKey, $options = [])
  * @method \MeCms\Model\Entity\Page newEntity($data = null, array $options = [])
  * @method \MeCms\Model\Entity\Page[] newEntities(array $data, array $options = [])
- * @method \MeCms\Model\Entity\Page|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \MeCms\Model\Entity\Page|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \MeCms\Model\Entity\Page patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \MeCms\Model\Entity\Page[] patchEntities($entities, array $data, array $options = [])
  * @method \MeCms\Model\Entity\Page findOrCreate($search, callable $callback = null, $options = [])

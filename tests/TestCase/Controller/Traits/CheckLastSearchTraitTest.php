@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -26,43 +27,43 @@ use MeCms\TestSuite\TestCase;
 class CheckLastSearchTraitTest extends TestCase
 {
     /**
-     * Tests for `checkLastSearch()` method
+     * @uses \MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
      * @test
      */
     public function testCheckLastSearch(): void
     {
-        $controller = new class extends AppController {
+        $Controller = new class extends AppController {
             use CheckLastSearchTrait;
         };
-        $checkLastSearchMethod = fn($queryId = false): bool => $this->invokeMethod($controller, 'checkLastSearch', [$queryId]);
+        $checkLastSearchMethod = fn($queryId = false): bool => $this->invokeMethod($Controller, 'checkLastSearch', [$queryId]);
 
         $this->assertTrue($checkLastSearchMethod('my-query'));
-        $firstSession = $controller->getRequest()->getSession()->read('last_search.id');
+        $firstSession = $Controller->getRequest()->getSession()->read('last_search.id');
         $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $firstSession);
 
         //Tries with the same query
         $this->assertTrue($checkLastSearchMethod('my-query'));
-        $secondSession = $controller->getRequest()->getSession()->read('last_search.id');
+        $secondSession = $Controller->getRequest()->getSession()->read('last_search.id');
         $this->assertEquals('6bd2aab45de1d380f1e47e147494dbbd', $secondSession);
 
         $this->assertEquals($firstSession, $secondSession);
 
         //Tries with another query
         $this->assertFalse($checkLastSearchMethod('another-query'));
-        $thirdSession = $controller->getRequest()->getSession()->read('last_search.id');
+        $thirdSession = $Controller->getRequest()->getSession()->read('last_search.id');
         $this->assertEquals($firstSession, $thirdSession);
 
         //Deletes the session and tries again with another query
-        $controller->getRequest()->getSession()->delete('last_search');
+        $Controller->getRequest()->getSession()->delete('last_search');
         $this->assertTrue($checkLastSearchMethod('another-query'));
-        $fourthSession = $controller->getRequest()->getSession()->read('last_search.id');
+        $fourthSession = $Controller->getRequest()->getSession()->read('last_search.id');
         $this->assertNotEquals($firstSession, $fourthSession);
 
         foreach ([0, false] as $value) {
-            $controller->getRequest()->getSession()->delete('last_search');
+            $Controller->getRequest()->getSession()->delete('last_search');
             Configure::write('MeCms.security.search_interval', $value);
             $this->assertTrue($checkLastSearchMethod());
-            $this->assertNull($controller->getRequest()->getSession()->read('last_search.id'));
+            $this->assertNull($Controller->getRequest()->getSession()->read('last_search.id'));
         }
     }
 }

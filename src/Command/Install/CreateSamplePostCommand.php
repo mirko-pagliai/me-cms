@@ -46,7 +46,7 @@ class CreateSamplePostCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         /** @var \MeCms\Model\Table\PostsTable $Posts */
-        $Posts = $this->fetchTable('MeCms.Posts');
+        $Posts = $this->getTableLocator()->get('MeCms.Posts');
 
         if (!$Posts->find()->all()->isEmpty()) {
             $io->verbose(__d('me_cms', 'At least one post already exists'));

@@ -50,10 +50,8 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->assertContainsOnlyInstancesOf(Tag::class, $this->viewVariable('tags'));
 
         $cache = sprintf('tags_limit_%s_page_%s', getConfigOrFail('default.records') * 4, 1);
-        [$tagsFromCache, $pagingFromCache] = array_values(Cache::readMany(
-            [$cache, sprintf('%s_paging', $cache)],
-            $this->Table->getCacheName()
-        ));
+        $tagsFromCache = Cache::read($cache, $this->Table->getCacheName());
+        $pagingFromCache = Cache::read($cache . '_paging', $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('tags')->toArray(), $tagsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Tags']);
 
@@ -81,10 +79,8 @@ class PostsTagsControllerTest extends ControllerTestCase
         $this->assertEquals($this->viewVariable('tag'), $tagFromCache->first());
 
         $cache = sprintf('tag_%s_limit_%s_page_%s', md5('cat'), getConfigOrFail('default.records'), 1);
-        [$postsFromCache, $pagingFromCache] = array_values(Cache::readMany(
-            [$cache, sprintf('%s_paging', $cache)],
-            $this->Table->getCacheName()
-        ));
+        $postsFromCache = Cache::read($cache, $this->Table->getCacheName());
+        $pagingFromCache = Cache::read($cache . '_paging', $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('posts')->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
 

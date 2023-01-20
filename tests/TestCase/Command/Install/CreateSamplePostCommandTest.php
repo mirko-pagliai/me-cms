@@ -44,12 +44,13 @@ class CreateSamplePostCommandTest extends TestCase
 
     /**
      * Test for `execute()` method
+     * @uses \MeCms\Command\Install\CreateSamplePostCommand::execute()
      * @test
      */
     public function testExecute(): void
     {
         $this->exec('me_cms.create_sample_post -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertOutputContains('At least one post already exists');
 
         /** @var \MeCms\Model\Table\PostsTable $Posts */
@@ -58,7 +59,7 @@ class CreateSamplePostCommandTest extends TestCase
 
         $this->_out = $this->_err = null;
         $this->exec('me_cms.create_sample_post -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertOutputContains('The sample post has been created');
         $this->assertFalse($Posts->find()->all()->isEmpty());
 
@@ -72,13 +73,14 @@ class CreateSamplePostCommandTest extends TestCase
 
     /**
      * Test for `execute()` method, on failure
+     * @uses \MeCms\Command\Install\CreateSamplePostCommand::execute()
      * @test
      */
     public function testExecuteOnFailure(): void
     {
         /** @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject $Posts */
         $Posts = $this->getMockForModel('MeCms.Posts', ['save']);
-        $Posts->method('save')->will($this->returnValue(false));
+        $Posts->method('save')->willReturn(false);
         $Posts->deleteAll(['id is NOT' => null]);
 
         $this->_err = new StubConsoleOutput();

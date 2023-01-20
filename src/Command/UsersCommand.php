@@ -45,9 +45,10 @@ class UsersCommand extends Command
      */
     public function getUsersRows(): array
     {
-        $Table = $this->fetchTable('MeCms.Users');
+        $this->getTableLocator()->clear();
+        $Users = $this->getTableLocator()->get('MeCms.Users');
 
-        return $Table->find()
+        return $Users->find()
             ->contain('Groups')
             ->formatResults(fn(CollectionInterface $results): CollectionInterface => $results->map(function (User $user): array {
                 $result = array_map(fn(string $key): string => (string)$user->get($key), ['id', 'username', 'full_name', 'email', 'post_count', 'created']);

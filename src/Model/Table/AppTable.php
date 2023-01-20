@@ -19,6 +19,7 @@ use Cake\Cache\Cache;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\I18n\FrozenTime;
+use Cake\ORM\Association;
 use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\Table;
 use MeCms\ORM\Query;
@@ -71,8 +72,7 @@ abstract class AppTable extends Table
 
     /**
      * Deletes all records matching the provided conditions
-     * @param mixed $conditions Conditions to be used, accepts anything
-     *  `Query::where()` can take
+     * @param mixed $conditions Conditions to be used, accepts anything `Query::where()` can take
      * @return int Returns the number of affected rows
      */
     public function deleteAll($conditions): int
@@ -139,14 +139,14 @@ abstract class AppTable extends Table
      */
     public function getCacheNameWithAssociated(): array
     {
-        $values = array_map(function (string $name): string {
+        $values = array_map(function (Association $association): string {
             /** @var \MeCms\Model\Table\AppTable $table */
-            $table = $this->$name->getTarget();
+            $table = $association->getTarget();
 
             return method_exists($table, 'getCacheName') ? $table->getCacheName() : '';
-        }, $this->associations()->keys());
+        }, iterator_to_array($this->associations()));
 
-        return array_clean([$this->getCacheName(), ...$values]);
+        return array_clean([$this->getCacheName(), ...array_values($values)]);
     }
 
     /**

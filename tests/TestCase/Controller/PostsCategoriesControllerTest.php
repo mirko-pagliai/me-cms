@@ -65,10 +65,8 @@ class PostsCategoriesControllerTest extends ControllerTestCase
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
 
         $cache = sprintf('category_%s_limit_%s_page_%s', md5('first-post-category'), getConfigOrFail('default.records'), 1);
-        [$postsFromCache, $pagingFromCache] = array_values(Cache::readMany(
-            [$cache, sprintf('%s_paging', $cache)],
-            $this->Table->getCacheName()
-        ));
+        $postsFromCache = Cache::read($cache, $this->Table->getCacheName());
+        $pagingFromCache = Cache::read($cache . '_paging', $this->Table->getCacheName());
         $this->assertEquals($this->viewVariable('posts')->toArray(), $postsFromCache->toArray());
         $this->assertNotEmpty($pagingFromCache['Posts']);
 

@@ -25,7 +25,7 @@ use MeCms\View\View\AppView as View;
 abstract class CellTestCase extends TestCase
 {
     /**
-     * @var \MeCms\View\Helper\WidgetHelper&\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\View\Helper\WidgetHelper
      */
     protected WidgetHelper $Widget;
 
@@ -45,10 +45,7 @@ abstract class CellTestCase extends TestCase
         parent::setUp();
 
         if (empty($this->Widget) && $this->autoInitializeClass) {
-            $this->Widget = $this->getMockBuilder(WidgetHelper::class)
-                ->onlyMethods([])
-                ->setConstructorArgs([new View()])
-                ->getMock();
+            $this->Widget = new WidgetHelper(new View());
         }
 
         $request = $this->Widget->getView()->getRequest()->withEnv('REQUEST_URI', '/');

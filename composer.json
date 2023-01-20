@@ -27,7 +27,7 @@
         "mirko-pagliai/cakephp-stop-spam": "^1.1.7",
         "mirko-pagliai/cakephp-thumber": "^1.10",
         "mirko-pagliai/cakephp-tokens": "^1.3.4",
-        "mirko-pagliai/me-tools": "~2.22.1",
+        "mirko-pagliai/me-tools": "~2.22.3",
         "mirko-pagliai/php-tools": "^1.5.9",
         "mirko-pagliai/php-thumber": "^1.4.1",
         "twbs/bootstrap": "^5.2.2",

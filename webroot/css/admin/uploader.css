@@ -11,7 +11,7 @@
  * @see			http://www.script-tutorials.com/html5-drag-and-drop-multiple-file-uploader
  */
 /* -------------------------------- */
-/*          Dropzone               */
+/*          Dropzone                */
 /* -------------------------------- */
 /* Form, message */
 form.dropzone .dz-message {
@@ -22,10 +22,15 @@ form.dropzone .dz-message {
     padding: 1.5rem;
 }
 
+/* Form, message, button */
+form.dropzone .dz-message button {
+    background: inherit;
+    border: 0;
+}
+
 /* Preview, error message */
 #dropzone-preview .dz-error-message {
     display: none;
-    font-size: 11px;
 }
 
 /* Preview, error message, error mark and success mark */

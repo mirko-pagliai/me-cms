@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -28,13 +29,13 @@ class CreateDirectoriesCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
-     * Tests for `execute()` method
+     * @uses \MeTools\Command\Install\CreateDirectoriesCommand::execute()
      * @test
      */
     public function testExecute(): void
     {
         $this->exec('me_cms.create_directories -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $expected = array_map(fn(string $path): string => 'File or directory `' . Filesystem::instance()->rtr($path) . '` already exists', array_clean(Configure::read('WRITABLE_DIRS')));
         $this->assertSame($expected, $this->_out->messages());
     }

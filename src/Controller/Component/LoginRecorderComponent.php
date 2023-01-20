@@ -44,7 +44,7 @@ class LoginRecorderComponent extends Component
     /**
      * @var \MeCms\Model\Table\UsersTable
      */
-    protected UsersTable $UsersTable;
+    protected UsersTable $Users;
 
     /**
      * Internal method to get a `UsersTable` instance
@@ -52,13 +52,14 @@ class LoginRecorderComponent extends Component
      */
     protected function getUsersTable(): UsersTable
     {
-        if (empty($this->UsersTable)) {
+        if (empty($this->Users)) {
+            $this->getController()->getTableLocator()->clear();
             /** @var \MeCms\Model\Table\UsersTable $UsersTable */
-            $UsersTable = $this->getController()->fetchTable('MeCms.Users');
-            $this->UsersTable = $UsersTable;
+            $UsersTable = $this->getController()->getTableLocator()->get('MeCms.Users');
+            $this->Users = $UsersTable;
         }
 
-        return $this->UsersTable;
+        return $this->Users;
     }
 
     /**

@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Collection\Collection;
+use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
 use Cake\I18n\FrozenTime;
 use MeCms\Controller\Component\LoginRecorderComponent;
@@ -50,14 +51,15 @@ class LoginRecorderComponentTest extends ComponentTestCase
      */
     protected function getMockForLoginRecorder(array $methods = ['getUserAgent'], array $userAgent = [])
     {
-        /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $Component */
-        $Component = $this->getMockForComponent(LoginRecorderComponent::class, $methods);
+        /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $LoginRecorder */
+        $LoginRecorder = $this->createPartialMock(LoginRecorderComponent::class, ['getController', ...$methods]);
+        $LoginRecorder->method('getController')->willReturn(new Controller());
 
         if (in_array('getUserAgent', $methods)) {
-            $Component->method('getUserAgent')->willReturn($userAgent ?: self::DEFAULT_USER_AGENT);
+            $LoginRecorder->method('getUserAgent')->willReturn($userAgent ?: self::DEFAULT_USER_AGENT);
         }
 
-        return $Component;
+        return $LoginRecorder;
     }
 
     /**
@@ -72,7 +74,6 @@ class LoginRecorderComponentTest extends ComponentTestCase
     }
 
     /**
-     * Test for `getUserAgent()` method
      * @uses \MeCms\Controller\Component\LoginRecorderComponent::getUserAgent()
      * @test
      */
@@ -83,7 +84,6 @@ class LoginRecorderComponentTest extends ComponentTestCase
     }
 
     /**
-     * Test for `getClientIp()` method
      * @uses \MeCms\Controller\Component\LoginRecorderComponent::getClientIp()
      * @test
      */
@@ -99,7 +99,6 @@ class LoginRecorderComponentTest extends ComponentTestCase
     }
 
     /**
-     * Test for `read()` method
      * @uses \MeCms\Controller\Component\LoginRecorderComponent::read()
      * @test
      */
@@ -117,21 +116,13 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $result = $this->Component->read();
         $this->assertInstanceOf(Collection::class, $result);
         $this->assertCount(1, $result);
-    }
 
-    /**
-     * Test for `read()` method, without the user id
-     * @uses \MeCms\Controller\Component\LoginRecorderComponent::read()
-     * @test
-     */
-    public function testReadWithoutUserId(): void
-    {
+        //Without user ID
         $this->expectExceptionMessage('Expected configuration `user` not found.');
         $this->getMockForLoginRecorder()->read();
     }
 
     /**
-     * Test for `write()` method
      * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
      * @test
      */
@@ -191,15 +182,8 @@ class LoginRecorderComponentTest extends ComponentTestCase
         //The last row the of third result is the second result row
         $secondResultRow['time'] = $secondResultRow['time']->toUnixString();
         $this->assertSame($thirdResultLastRow, $secondResultRow);
-    }
 
-    /**
-     * Test for `write()` method, without the user id
-     * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
-     * @test
-     */
-    public function testWriteWithoutUserId(): void
-    {
+        //Without user ID
         $this->expectExceptionMessage('Expected configuration `user` not found.');
         $this->getMockForLoginRecorder()->write();
     }

@@ -11,6 +11,9 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AppView $this
+ * @var \MeCms\Model\Entity\User $user
  */
 $this->extend('MeCms./common/form');
 $this->assign('title', $title = __d('me_cms', 'Sign up'));
@@ -34,7 +37,7 @@ $this->assign('title', $title = __d('me_cms', 'Sign up'));
         'label' => I18N_REPEAT_EMAIL,
     ]);
     echo $this->Form->control('password', [
-        'append-text' => $this->Html->button('', '#', [
+        'append-text' => $this->Html->link('', '#', [
             'class' => 'display-password',
             'icon' => 'eye',
             'title' => I18N_SHOW_HIDE_PASSWORD,
@@ -44,7 +47,7 @@ $this->assign('title', $title = __d('me_cms', 'Sign up'));
         'label' => I18N_PASSWORD,
     ]);
     echo $this->Form->control('password_repeat', [
-        'append-text' => $this->Html->button('', '#', [
+        'append-text' => $this->Html->link('', '#', [
             'class' => 'display-password',
             'icon' => 'eye',
             'title' => I18N_SHOW_HIDE_PASSWORD,

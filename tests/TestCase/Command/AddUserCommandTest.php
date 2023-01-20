@@ -45,7 +45,7 @@ class AddUserCommandTest extends TestCase
 
         $expectedUserId = $Users->find()->all()->extract('id')->last() + 1;
         $this->exec('me_cms.add_user', [...$example, '3']);
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertOutputContains('<question>Group ID</question>');
         $this->assertOutputContains('<success>The operation has been performed correctly</success>');
         $this->assertOutputContains('<success>The user was created with ID ' . $expectedUserId . '</success>');
@@ -58,7 +58,7 @@ class AddUserCommandTest extends TestCase
         //Tries using the `group` option
         $this->_in = null;
         $this->exec('me_cms.add_user --group 2', $example);
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertOutputContains('<success>The operation has been performed correctly</success>');
         $this->assertOutputContains('<success>The user was created with ID ' . ++$expectedUserId . '</success>');
         $this->assertErrorEmpty();
@@ -69,19 +69,19 @@ class AddUserCommandTest extends TestCase
         //Tries with a no existing group
         $this->_in = null;
         $this->exec('me_cms.add_user --group 123', $example);
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertErrorContains('Invalid group ID');
 
         //Tries with empty data
         $this->_in = null;
         $this->exec('me_cms.add_user -v', ['', '', '', '', '', '', '']);
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertErrorContains('Field `username` is empty. Try again');
 
         //Tries with wrong data
         $this->_in = null;
         $this->exec('me_cms.add_user -v', ['ab', 'password', 'password2', 'mail', 'aa', 'bb', '3']);
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertErrorContains('The operation has not been performed correctly');
         $this->assertErrorContains('The user could not be saved');
         $this->assertErrorContains('Field `email`: you have to enter a valid value');
@@ -98,7 +98,7 @@ class AddUserCommandTest extends TestCase
         $Users->Groups->deleteAll(['id IS NOT' => null]);
         $this->_in = null;
         $this->exec('me_cms.add_user -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertErrorContains('Before you can manage users, you have to create at least a user group');
     }
 }

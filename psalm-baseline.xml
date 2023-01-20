@@ -1,24 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.x-dev@">
-  <file src="src/Controller/AppController.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>\Cake\Datasource\RepositoryInterface|\Cake\ORM\Association|null</code>
-    </ImplementedReturnTypeMismatch>
-  </file>
   <file src="src/Controller/Component/LoginRecorderComponent.php">
     <TypeDoesNotContainType occurrences="2">
       <code>empty($this-&gt;User)</code>
-      <code>empty($this-&gt;UsersTable)</code>
+      <code>empty($this-&gt;Users)</code>
     </TypeDoesNotContainType>
-  </file>
-  <file src="src/Controller/PostsCategoriesController.php">
-    <InvalidArgument occurrences="1"/>
-  </file>
-  <file src="src/Controller/PostsController.php">
-    <InvalidArgument occurrences="3"/>
-  </file>
-  <file src="src/Controller/PostsTagsController.php">
-    <InvalidArgument occurrences="2"/>
   </file>
   <file src="src/Controller/Traits/GetStartAndEndDateTrait.php">
     <RedundantCast occurrences="2">
@@ -30,24 +16,31 @@
       <code>1</code>
     </RedundantCondition>
   </file>
-  <file src="src/Model/Table/PagesTable.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>\MeCms\Model\Entity\Page|bool</code>
-    </ImplementedReturnTypeMismatch>
-  </file>
   <file src="src/Model/Table/PostsTable.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>\MeCms\Model\Entity\Post|bool</code>
-    </ImplementedReturnTypeMismatch>
+    <TooManyTemplateParams occurrences="1">
+      <code>\Cake\Collection\CollectionInterface&lt;\MeCms\Model\Entity\Post&gt;</code>
+    </TooManyTemplateParams>
   </file>
-  <file src="src/Plugin.php">
-    <UndefinedClass occurrences="1">
-      <code>new $plugin()</code>
-    </UndefinedClass>
+  <file src="src/Model/Table/Traits/GetPreviewsFromTextTrait.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>\Cake\Collection\CollectionInterface&lt;array{url: string, width: int, height: int}&gt;</code>
+    </TooManyTemplateParams>
   </file>
   <file src="src/TestSuite/CellTestCase.php">
+    <TypeDoesNotContainType occurrences="2">
+      <code>empty($this-&gt;Table)</code>
+      <code>empty($this-&gt;Widget)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="src/TestSuite/ControllerTestCase.php">
     <TypeDoesNotContainType occurrences="1">
       <code>empty($this-&gt;Table)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="src/TestSuite/EntityTestCase.php">
+    <TypeDoesNotContainType occurrences="2">
+      <code>$this-&gt;fail('The property `$this-&gt;Entity` has not been set')</code>
+      <code>empty($this-&gt;Entity)</code>
     </TypeDoesNotContainType>
   </file>
   <file src="src/TestSuite/TableTestCase.php">
@@ -62,6 +55,16 @@
       <code>empty($this-&gt;Table)</code>
     </TypeDoesNotContainType>
   </file>
+  <file src="src/Utility/Sitemap/SitemapBuilder.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>\Cake\Collection\CollectionInterface&lt;array{class: class-string, name: string}&gt;</code>
+    </TooManyTemplateParams>
+  </file>
+  <file src="src/View/Cell/PostsTagsWidgetsCell.php">
+    <InvalidParamDefault occurrences="1">
+      <code>array{maxFont: int, minFont: int}|false</code>
+    </InvalidParamDefault>
+  </file>
   <file src="templates/Admin/Pages/form.php">
     <TooManyTemplateParams occurrences="1">
       <code>$this-&gt;extend('MeCms./common/form');</code>
@@ -72,10 +75,14 @@
       <code>$this-&gt;extend('MeCms./common/form');</code>
     </TooManyTemplateParams>
   </file>
-  <file src="tests/TestCase/Command/Install/CreateSamplePostCommandTest.php">
-    <UndefinedPropertyAssignment occurrences="1">
-      <code>$this-&gt;Command-&gt;Posts</code>
-    </UndefinedPropertyAssignment>
+  <file src="templates/cell/PostsTagsWidgets/popular_as_cloud.php">
+    <TooManyTemplateParams occurrences="1"/>
+  </file>
+  <file src="templates/cell/PostsWidgets/months_as_form.php">
+    <TooManyTemplateParams occurrences="1"/>
+  </file>
+  <file src="templates/cell/PostsWidgets/months_as_list.php">
+    <TooManyTemplateParams occurrences="1"/>
   </file>
   <file src="tests/TestCase/Command/Install/RunAllCommandTest.php">
     <TypeDoesNotContainType occurrences="1">
@@ -86,22 +93,6 @@
     <UndefinedPropertyAssignment occurrences="1">
       <code>$this-&gt;Command-&gt;Users</code>
     </UndefinedPropertyAssignment>
-  </file>
-  <file src="tests/TestCase/Controller/AppControllerTest.php">
-    <UndefinedMagicPropertyFetch occurrences="3">
-      <code>$PostsController-&gt;Categories</code>
-      <code>$PostsController-&gt;Foo</code>
-      <code>$PostsController-&gt;Users</code>
-    </UndefinedMagicPropertyFetch>
-  </file>
-  <file src="tests/TestCase/Controller/PostsCategoriesControllerTest.php">
-    <InvalidArgument occurrences="1"/>
-  </file>
-  <file src="tests/TestCase/Controller/PostsControllerTest.php">
-    <InvalidArgument occurrences="3"/>
-  </file>
-  <file src="tests/TestCase/Controller/PostsTagsControllerTest.php">
-    <InvalidArgument occurrences="2"/>
   </file>
   <file src="tests/TestCase/Form/ContactUsFormTest.php">
     <TypeDoesNotContainType occurrences="1">

@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -28,7 +29,7 @@ class CreateVendorsLinksCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
-     * Tests for `execute()` method
+     * @uses \MeTools\Command\Install\CreateVendorsLinksCommand::execute()
      * @test
      */
     public function testExecute(): void
@@ -43,7 +44,7 @@ class CreateVendorsLinksCommandTest extends TestCase
             return file_exists(ROOT . 'vendor' . DS . $origin) ? 'Link `' . $relTarget . '` has been created' : '';
         }, Configure::read('VENDOR_LINKS'), array_keys(Configure::read('VENDOR_LINKS'))));
         $this->exec('me_cms.create_vendors_links -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertSame($expected, $this->_out->messages());
     }
 }

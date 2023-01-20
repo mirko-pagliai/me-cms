@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @see         http://api.cakephp.org/3.7/class-Cake.Core.Plugin.html
+ * @see         http://api.cakephp.org/4.4/class-Cake.Core.Plugin.html
  */
 
 namespace MeCms\Core;
@@ -26,7 +26,8 @@ class Plugin extends BasePlugin
     /**
      * Gets all loaded plugins.
      *
-     * Available options are:
+     * ### Options:
+     *
      *  - `core`, if `false` excludes the core plugins;
      *  - `exclude`, a plugin or array of plugins to be excluded;
      *  - `mecms_core`, if `false` excludes plugins automatically requested by MeCms;

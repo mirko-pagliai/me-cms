@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -129,7 +128,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertStringEndsWith('elfinder/elfinder.html', $this->viewVariable('explorer'));
 
         /** @var \MeCms\Controller\Admin\SystemsController&\PHPUnit\Framework\MockObject\MockObject $Controller */
-        $Controller = $this->getMockForController(SystemsController::class, ['elFinderExists']);
+        $Controller = $this->getMockBuilder(SystemsController::class)->onlyMethods(['elFinderExists'])->getMock();
         $Controller->method('elFinderExists')->willReturn(false);
         $this->_response = $Controller->browser();
         $this->assertRedirect(['_name' => 'dashboard']);

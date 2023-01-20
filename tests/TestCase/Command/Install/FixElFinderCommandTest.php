@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -41,7 +42,6 @@ class FixElFinderCommandTest extends TestCase
     protected string $command = 'me_cms.fix_el_finder -v';
 
     /**
-     * Test for `execute()` method
      * @uses \MeCms\Command\Install\FixElFinderCommand::execute()
      * @test
      */
@@ -49,7 +49,7 @@ class FixElFinderCommandTest extends TestCase
     {
         array_map('unlink', array_filter(self::EXPECTED_FILES, 'is_writable'));
         $this->exec($this->command);
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         foreach (self::EXPECTED_FILES as $expectedFile) {
             $this->assertOutputContains('Creating file ' . $expectedFile);
             $this->assertOutputContains('<success>Wrote</success> `' . $expectedFile . '`');
@@ -58,35 +58,17 @@ class FixElFinderCommandTest extends TestCase
 
         $this->assertStringContainsString('\'path\' => \'' . UPLOADED . '\'', file_get_contents(self::EXPECTED_FILES[0]) ?: '');
         $this->assertStringContainsString('getFileCallback', file_get_contents(self::EXPECTED_FILES[1]) ?: '');
-    }
 
-    /**
-     * Test for `execute()` method, file already exists
-     * @uses \MeCms\Command\Install\FixElFinderCommand::execute()
-     * @test
-     */
-    public function testExecuteFileAlreadyExists(): void
-    {
+        //File already exists
         $this->exec($this->command);
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         foreach (self::EXPECTED_FILES as $expectedFile) {
             $this->assertOutputContains('File or directory `' . Filesystem::instance()->rtr($expectedFile) . '` already exists');
         }
-    }
 
-    /**
-     * Test for `execute()` method, with an exception
-     * @uses \MeCms\Command\Install\FixElFinderCommand::execute()
-     * @test
-     */
-    public function testExecuteWithException(): void
-    {
-        $Command = $this->getMockBuilder(FixElFinderCommand::class)
-            ->onlyMethods(['createElfinderCke'])
-            ->getMock();
-
+        //With an exception
+        $Command = $this->createPartialMock(FixElFinderCommand::class, ['createElfinderCke']);
         $Command->method('createElfinderCke')->willThrowException(new ErrorException('Exception message'));
-
         $this->_err = new StubConsoleOutput();
         $this->assertSame(0, $Command->run([], new ConsoleIo(new StubConsoleOutput(), $this->_err)));
         $this->assertErrorContains('Exception message');

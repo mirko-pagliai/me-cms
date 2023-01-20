@@ -45,7 +45,7 @@ class CreateAdminCommandTest extends TestCase
 
         $expectedUserId = $Users->find()->all()->extract('id')->last() + 1;
         $this->exec('me_cms.create_admin', $example);
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertOutputContains('<success>The operation has been performed correctly</success>');
         $this->assertOutputContains('<success>The user was created with ID ' . $expectedUserId . '</success>');
         $this->assertErrorEmpty();

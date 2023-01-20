@@ -24,7 +24,6 @@ use MeCms\Utility\StaticPage;
 
 /**
  * Pages controller
- * @property \MeCms\Model\Table\PagesCategoriesTable $Categories
  * @property \MeCms\Model\Table\PagesTable $Pages
  */
 class PagesController extends AppController
@@ -52,7 +51,7 @@ class PagesController extends AppController
         }
 
         $methodToCall = $this->getRequest()->is('action', ['add', 'edit']) ? 'getTreeList' : 'getList';
-        $categories = $this->Categories->$methodToCall()->all();
+        $categories = $this->Pages->Categories->$methodToCall()->all();
         if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
 

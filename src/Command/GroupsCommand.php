@@ -46,16 +46,17 @@ class GroupsCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $Table = $this->fetchTable('MeCms.UsersGroups');
+        $this->getTableLocator()->clear();
+        $UsersGroups = $this->getTableLocator()->get('MeCms.UsersGroups');
 
-        $rows = $Table->find()->select(['id', 'name', 'label', 'user_count'])->all();
-        if ($rows->isEmpty()) {
+        $groups = $UsersGroups->find()->select(['id', 'name', 'label', 'user_count'])->all();
+        if ($groups->isEmpty()) {
             return $io->error(__d('me_cms', 'There are no user groups'));
         }
 
-        $rows = $rows->map(fn(UsersGroup $group): array => array_map('strval', $group->toArray()));
+        $groups = $groups->map(fn(UsersGroup $group): array => array_map('strval', $group->toArray()));
 
-        $io->helper('table')->output([[I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS], ...$rows->toList()]);
+        $io->helper('table')->output([[I18N_ID, I18N_NAME, I18N_LABEL, I18N_USERS], ...$groups->toList()]);
 
         return null;
     }

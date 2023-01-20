@@ -63,13 +63,13 @@ class UsersCommandTest extends TestCase
         $expectedRows = [['<info>ID</info>', '<info>Username</info>', '<info>Group</info>', '<info>Name</info>', '<info>Email</info>', '<info>Posts</info>', '<info>Status</info>', '<info>Date</info>'], ...$this->Command->getUsersRows()];
 
         $this->exec('me_cms.users');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         array_walk($expectedRows, [$this, 'assertOutputContainsRow']);
 
         //Deletes all users
         $this->Command->Users->deleteAll(['id IS NOT' => null]);
         $this->exec('me_cms.users');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $this->assertErrorContains('There are no users');
     }
 }

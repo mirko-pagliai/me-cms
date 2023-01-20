@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -60,7 +61,6 @@ class ViewTest extends TestCase
     }
 
     /**
-     * Tests for `getTitleForLayout()` method
      * @uses \MeCms\View\View::getTitleForLayout()
      * @test
      */
@@ -98,7 +98,6 @@ class ViewTest extends TestCase
     }
 
     /**
-     * Tests for `elementExistsInApp()` method
      * @uses \MeCms\View\View::elementExistsInApp()
      * @test
      */
@@ -113,7 +112,6 @@ class ViewTest extends TestCase
     }
 
     /**
-     * Tests for `renderLayout()` method
      * @uses \MeCms\View\View::renderLayout()
      * @test
      */

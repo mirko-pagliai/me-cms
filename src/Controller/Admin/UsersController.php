@@ -18,12 +18,12 @@ namespace MeCms\Controller\Admin;
 use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\Mailer\MailerAwareTrait;
+use Laminas\Diactoros\UploadedFile;
 use Symfony\Component\Finder\Finder;
 use Thumber\Cake\Utility\ThumbManager;
 
 /**
  * Users controller
- * @property \MeCms\Model\Table\UsersGroupsTable $Groups
  * @property \MeCms\Controller\Component\LoginRecorderComponent $LoginRecorder
  * @property \MeTools\Controller\Component\UploaderComponent $Uploader
  * @property \MeCms\Model\Table\UsersTable $Users
@@ -46,7 +46,7 @@ class UsersController extends AppController
         }
 
         if ($this->getRequest()->is('action', ['index', 'add', 'edit'])) {
-            $groups = $this->Groups->getList()->all();
+            $groups = $this->Users->Groups->getList()->all();
             if ($groups->isEmpty()) {
                 $this->Flash->alert(__d('me_cms', 'You must first create an user group'));
 
@@ -248,10 +248,14 @@ class UsersController extends AppController
      * Changes the user's picture
      * @return void
      * @throws \Tools\Exception\ObjectWrongInstanceException|\ErrorException
+     * @todo `$UploadedFile` should always be a `\Laminas\Diactoros\UploadedFile` instance (see test)
      */
     public function changePicture(): void
     {
-        if ($this->getRequest()->getData('file')) {
+        /** @var ?\Laminas\Diactoros\UploadedFile $UploadedFile */
+        $UploadedFile = $this->getRequest()->getData('file');
+
+        if ($UploadedFile) {
             $id = $this->Auth->user('id');
 
             //Deletes any picture that already exists
@@ -259,9 +263,10 @@ class UsersController extends AppController
                 @unlink($file->getPathname());
             }
 
-            $filename = $id . '.' . pathinfo($this->getRequest()->getData('file')['tmp_name'], PATHINFO_EXTENSION);
+            $extension = pathinfo($UploadedFile instanceof UploadedFile ? $UploadedFile->getClientFilename() : $UploadedFile['tmp_name'], PATHINFO_EXTENSION);
+            $filename = $id . '.' . $extension;
 
-            $uploaded = $this->Uploader->setFile($this->getRequest()->getData('file'))
+            $uploaded = $this->Uploader->setFile($UploadedFile)
                 ->mimetype('image')
                 ->save(USER_PICTURES, $filename);
 

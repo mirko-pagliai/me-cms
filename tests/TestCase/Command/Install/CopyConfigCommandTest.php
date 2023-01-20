@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -28,13 +29,13 @@ class CopyConfigCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     /**
-     * Test for `execute()` method
+     * @uses \MeCms\Command\Install\CopyConfigCommand::execute()
      * @test
      */
     public function testExecute(): void
     {
         $this->exec('me_cms.copy_config -v');
-        $this->assertExitWithSuccess();
+        $this->assertExitSuccess();
         $expected = array_map(fn(string $path): string => 'File or directory `' . Filesystem::instance()->rtr(CONFIG . pluginSplit($path)[1] . '.php') . '` already exists', array_clean(Configure::read('CONFIG_FILES')));
         $this->assertSame($expected, $this->_out->messages());
     }

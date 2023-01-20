@@ -37,7 +37,7 @@ class PagesWidgetsCell extends Cell
     public function initialize(): void
     {
         /** @var \MeCms\Model\Table\PagesTable $Pages */
-        $Pages = $this->fetchTable('MeCms.Pages');
+        $Pages = $this->getTableLocator()->get('MeCms.Pages');
         $this->Pages = $Pages;
     }
 
@@ -48,7 +48,7 @@ class PagesWidgetsCell extends Cell
      */
     public function categories(string $render = 'form'): void
     {
-        $this->viewBuilder()->setTemplate(sprintf('categories_as_%s', $render));
+        $this->viewBuilder()->setTemplate('categories_as_' . $render);
 
         //Returns on categories index
         if ($this->request->is('url', ['_name' => 'pagesCategories'])) {

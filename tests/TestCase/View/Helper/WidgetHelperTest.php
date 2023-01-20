@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -36,17 +37,17 @@ class WidgetHelperTest extends HelperTestCase
 
         $this->loadPlugins(['TestPlugin' => []]);
 
-        $request = $this->Helper->getView()->getRequest()->withEnv('REQUEST_URI', '/');
-        $this->Helper->getView()->setRequest($request);
+        $Request = $this->Helper->getView()->getRequest()->withEnv('REQUEST_URI', '/');
+        $this->Helper->getView()->setRequest($Request);
     }
 
     /**
-     * Tests for `getAll()` method
+     * @uses \MeCms\View\Helper\WidgetHelper::getAll()
      * @test
      */
     public function testGetAll(): void
     {
-        $getAllMethod = fn() => $this->invokeMethod($this->Helper, 'getAll');
+        $getAllMethod = fn(): array => $this->invokeMethod($this->Helper, 'getAll');
 
         $widgets = array_map('array_value_first', array_map('array_keys', $getAllMethod()));
         $this->assertSame([
@@ -92,7 +93,7 @@ class WidgetHelperTest extends HelperTestCase
     }
 
     /**
-     * Tests for `all()` method
+     * @uses \MeCms\View\Helper\WidgetHelper::all()
      * @test
      */
     public function testAll(): void
@@ -109,7 +110,7 @@ class WidgetHelperTest extends HelperTestCase
     }
 
     /**
-     * Tests for `widget()` method
+     * @uses \MeCms\View\Helper\WidgetHelper::widget()
      * @test
      */
     public function testWidget(): void

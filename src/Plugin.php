@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace MeCms;
 
-use Assets\Plugin as Assets;
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
@@ -26,12 +25,7 @@ use MeCms\Command\Install\RunAllCommand;
 use MeTools\Command\Install\CreateDirectoriesCommand;
 use MeTools\Command\Install\CreateVendorsLinksCommand;
 use MeTools\Command\Install\SetPermissionsCommand;
-use MeTools\Plugin as MeTools;
-use RecaptchaMailhide\Plugin as RecaptchaMailhide;
-use StopSpam\Plugin as StopSpam;
 use Symfony\Component\Finder\Finder;
-use Thumber\Cake\Plugin as Thumber;
-use Tokens\Plugin as Tokens;
 
 /**
  * Plugin class
@@ -39,7 +33,7 @@ use Tokens\Plugin as Tokens;
 class Plugin extends BasePlugin
 {
     /**
-     * Returns `true` if is cli.
+     * Returns `true` if is cli
      * @return bool
      */
     protected function isCli(): bool
@@ -54,14 +48,7 @@ class Plugin extends BasePlugin
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
-        $pluginsToLoad = [
-            Assets::class,
-            MeTools::class,
-            RecaptchaMailhide::class,
-            StopSpam::class,
-            Thumber::class,
-            Tokens::class,
-        ];
+        $pluginsToLoad = ['Assets', 'MeTools', 'RecaptchaMailhide', 'StopSpam', 'Thumber/Cake', 'Tokens'];
         if (getConfig('default.theme')) {
             $pluginsToLoad[] = getConfig('default.theme');
         }
@@ -69,15 +56,10 @@ class Plugin extends BasePlugin
             $pluginsToLoad[] = 'WyriHaximus/MinifyHtml';
         }
 
-        /** @var \Cake\Http\BaseApplication $app */
-        $pluginsToLoad = array_filter($pluginsToLoad, fn(string $plugin): bool => !$app->getPlugins()->has($plugin));
         foreach ($pluginsToLoad as $plugin) {
-            if (method_exists($plugin, 'bootstrap')) {
-                /** @var \Cake\Core\BasePlugin $plugin */
-                $plugin = new $plugin();
-                $plugin->bootstrap($app);
-            }
-
+            /** @var \Cake\Http\BaseApplication $app */
+            $plugin = $app->getPlugins()->create($plugin);
+            $plugin->bootstrap($app);
             $app->addPlugin($plugin);
         }
 

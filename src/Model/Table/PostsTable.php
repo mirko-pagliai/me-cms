@@ -37,7 +37,7 @@ use Tools\Exceptionist;
  * @method \MeCms\Model\Entity\Post get($primaryKey, $options = [])
  * @method \MeCms\Model\Entity\Post newEntity($data = null, array $options = [])
  * @method \MeCms\Model\Entity\Post[] newEntities(array $data, array $options = [])
- * @method \MeCms\Model\Entity\Post|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \MeCms\Model\Entity\Post|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \MeCms\Model\Entity\Post patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \MeCms\Model\Entity\Post[] patchEntities($entities, array $data, array $options = [])
  * @method \MeCms\Model\Entity\Post findOrCreate($search, callable $callback = null, $options = [])
@@ -70,8 +70,7 @@ class PostsTable extends PostsAndPagesTables
             //Gets existing tags
             $existingTags = $this->Tags->getList()->toArray();
 
-            //For each tag, it searches if the tag already exists.
-            //If a tag exists in the database, it sets also the tag ID
+            //For each tag, it searches if the tag already exists. If a tag exists, it sets also the tag ID
             foreach ($tags as $k => $tag) {
                 $id = array_search($tag, $existingTags);
                 if ($id) {
@@ -84,8 +83,7 @@ class PostsTable extends PostsAndPagesTables
     }
 
     /**
-     * Returns a rules checker object that will be used for validating
-     *  application integrity
+     * Returns a rules checker object that will be used for validating application integrity
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified
      * @return \Cake\ORM\RulesChecker
      */
@@ -117,10 +115,8 @@ class PostsTable extends PostsAndPagesTables
      * @param \MeCms\Model\Entity\Post $post Post entity. It must contain `id` and `Tags`
      * @param int $limit Limit of related posts
      * @param bool $images If `true`, gets only posts with images
-     * @return \Cake\Collection\CollectionInterface Collection of entities
+     * @return \Cake\Collection\CollectionInterface<\MeCms\Model\Entity\Post>
      * @throws \Tools\Exception\PropertyNotExistsException
-     * @uses queryForRelated()
-     * @uses $cache
      */
     public function getRelated(Post $post, int $limit = 5, bool $images = true): CollectionInterface
     {
@@ -140,8 +136,7 @@ class PostsTable extends PostsAndPagesTables
                 $exclude[] = $post->get('id');
 
                 //For each tag, gets a related post.
-                //It reverses the tags order, because the tags less popular have
-                //  less chance to find a related post
+                //It reverses the tags order, because the tags less popular have less chance to find a related post
                 foreach (array_reverse($tags) as $tag) {
                     /** @var \MeCms\Model\Entity\Post $post */
                     $post = $this->queryForRelated($tag->get('id'), $images)
@@ -152,8 +147,7 @@ class PostsTable extends PostsAndPagesTables
                         continue;
                     }
 
-                    //Adds the current post to the related posts and its ID to the
-                    //  IDs to be excluded for the next query
+                    //Adds the current post to the related posts and its ID to the IDs to be excluded for the next query
                     $related[] = $post;
                     $exclude[] = $post->get('id');
                 }

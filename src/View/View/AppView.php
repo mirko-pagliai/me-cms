@@ -21,7 +21,8 @@ use MeCms\View\View;
 /**
  * Application view class for all views, except the admin views
  * @property \MeTools\View\Helper\BreadcrumbsHelper $Breadcrumbs
- * @property \RecaptchaMailhide\View\Helper\MailhideHelper $mailhide
+ * @property \RecaptchaMailhide\View\Helper\MailhideHelper $Mailhide
+ * @property \Recaptcha\View\Helper\RecaptchaHelper $Recaptcha
  * @property \MeCms\View\Helper\WidgetHelper $Widget
  */
 class AppView extends View

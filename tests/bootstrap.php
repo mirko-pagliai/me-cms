@@ -141,13 +141,6 @@ Log::setConfig('error', [
 TransportFactory::setConfig('debug', ['className' => 'Debug']);
 Mailer::setConfig('default', ['transport' => 'debug', 'log' => true]);
 
-/**
- * @todo To be removed in a later version
- */
-if (!class_exists('Cake\Console\TestSuite\StubConsoleOutput')) {
-    class_alias('Cake\TestSuite\Stub\ConsoleOutput', 'Cake\Console\TestSuite\StubConsoleOutput');
-}
-
 $scheme = ConnectionManager::getConfigOrFail('test')['scheme'];
 
 $migrator = new Migrator();

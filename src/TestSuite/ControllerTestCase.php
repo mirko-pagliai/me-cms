@@ -16,13 +16,13 @@ declare(strict_types=1);
 
 namespace MeCms\TestSuite;
 
-use Cake\Event\Event;
+use Cake\Http\ServerRequest;
 use MeCms\Controller\AppController;
+use MeCms\Model\Table\AppTable;
 use MeTools\TestSuite\IntegrationTestTrait;
 
 /**
  * Abstract class for test controllers
- * @method \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject getMockForController(string $className, ?array $methods = [], ?string $alias = null)
  * @property \MeCms\Controller\AppController $_controller
  * @property \Cake\Http\Response $_response
  */
@@ -31,7 +31,7 @@ abstract class ControllerTestCase extends TestCase
     use IntegrationTestTrait;
 
     /**
-     * @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\Controller\AppController|(\MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject)
      */
     protected AppController $Controller;
 
@@ -42,7 +42,7 @@ abstract class ControllerTestCase extends TestCase
     protected bool $autoInitializeClass = true;
 
     /**
-     * @var array
+     * @var array{controller: string, plugin: string, prefix: string|null}
      */
     protected array $url;
 
@@ -106,7 +106,7 @@ abstract class ControllerTestCase extends TestCase
     {
         parent::setUp();
 
-        $isAdmin = str_contains(get_class($this), 'Controller\\Admin');
+        $isAdmin = str_contains(get_class($this), 'Controller\\Admin\\');
 
         //Tries to retrieve controller and table from the class name
         if (empty($this->Controller) && $this->autoInitializeClass) {
@@ -115,15 +115,21 @@ abstract class ControllerTestCase extends TestCase
             $alias = $this->getAlias($originClassName);
             $plugin = $this->getPluginName($this);
 
-            /** @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject $Controller */
-            $Controller = $this->getMockForController($originClassName, [], $alias);
-            $this->Controller = $Controller;
             $this->url = ['controller' => $alias, 'prefix' => $isAdmin ? ADMIN_PREFIX : null] + compact('plugin');
+            $Request = new ServerRequest(['params' => $this->url]);
 
-            $className = $this->getTableClassNameFromAlias($alias, $plugin);
-            if (class_exists($className)) {
-                $Table = $this->getTable($alias, compact('className'));
-                if ($Table) {
+            if ((new \ReflectionClass($originClassName))->isAbstract()) {
+                $Controller = $this->getMockForAbstractClass($originClassName, [$Request, null, $alias]);
+            }
+            $this->Controller = $Controller ?? new $originClassName($Request, null, $alias);
+
+            if (empty($this->Table)) {
+                $Table = false;
+                try {
+                    $Table = $this->getTable($plugin . '.' . $alias);
+                } catch (\Error | \TypeError $e) {
+                }
+                if ($Table instanceof AppTable) {
                     $this->Table = $Table;
                 }
             }
@@ -192,11 +198,17 @@ abstract class ControllerTestCase extends TestCase
      */
     public function testBeforeFilter(): void
     {
+        $originClassName = $this->getOriginClassNameOrFail($this);
+
         //If the user has been reported as a spammer this makes a redirect
-        $controller = $this->getMockForController($this->getOriginClassName($this), ['isSpammer']);
-        $controller->method('isSpammer')->willReturn(true);
+        /** @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject $Controller */
+        $Controller = $this->getMockBuilder($originClassName)
+            ->setConstructorArgs([null, null, $this->getAlias($originClassName)])
+            ->onlyMethods(['isSpammer'])
+            ->getMock();
+        $Controller->method('isSpammer')->willReturn(true);
         /** @var \Cake\Http\Response $response */
-        $response = $controller->beforeFilter(new Event('myEvent'));
+        $response = $Controller->dispatchEvent('Controller.initialize')->getResult();
         $this->_response = $response;
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
     }
