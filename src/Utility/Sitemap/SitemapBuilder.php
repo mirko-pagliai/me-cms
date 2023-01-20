@@ -28,16 +28,15 @@ class SitemapBuilder
     /**
      * Gets all executable methods for the `Sitemap` class of a plugin
      * @param string $plugin Plugin
-     * @return \Cake\Collection\CollectionInterface Collection of classes and methods names
+     * @return \Cake\Collection\CollectionInterface<array{class: class-string, name: string}> Collection of classes and methods names
      * @throws \ErrorException
-     * @todo check the collection (array?)
      */
     public static function getMethods(string $plugin): CollectionInterface
     {
         $class = $plugin . '\Utility\Sitemap\Sitemap';
-        $methods = class_exists($class) ? get_child_methods($class) : [];
 
-        return collection($methods)->map(fn(string $name): array => ['class' => $class] + compact('name'));
+        return collection(class_exists($class) ? get_child_methods($class) : [])
+            ->map(fn(string $name): array => ['class' => $class] + compact('name'));
     }
 
     /**
