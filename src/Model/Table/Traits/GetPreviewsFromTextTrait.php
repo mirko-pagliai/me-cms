@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace MeCms\Model\Table\Traits;
 
 use Cake\Collection\CollectionInterface;
-use Cake\ORM\Entity;
 use DOMDocument;
 use MeTools\Utility\Youtube;
 use Thumber\Cake\Utility\ThumbCreator;
