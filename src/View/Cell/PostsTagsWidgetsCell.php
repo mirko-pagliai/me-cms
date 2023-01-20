@@ -43,15 +43,15 @@ class PostsTagsWidgetsCell extends Cell
 
     /**
      * Internal method to get the font sizes
-     * @param array{maxFont: int, minFont: int}|false $style Style for tags: `maxFont` and `minFont` keys or `false` to disable
-     * @return array
+     * @param array{maxFont: int, minFont: int} $style Style for tags: `maxFont` and `minFont` keys
+     * @return array{int, int}
      * @throws \ErrorException
      */
-    protected function getFontSizes($style = []): array
+    protected function getFontSizes(array $style = ['maxFont' => 0, 'minFont' => 0]): array
     {
         //Maximum and minimum font sizes we want to use
-        $maxFont = is_array($style) && array_key_exists('maxFont', $style) ? $style['maxFont'] : 40;
-        $minFont = is_array($style) && array_key_exists('minFont', $style) ? $style['minFont'] : 12;
+        $maxFont = $style['maxFont'] ?? 40;
+        $minFont = $style['minFont'] ?? 12;
         Exceptionist::isTrue($maxFont > $minFont, __d('me_cms', 'Invalid values'));
 
         return [$maxFont, $minFont];
@@ -63,7 +63,7 @@ class PostsTagsWidgetsCell extends Cell
      * @param string $prefix Prefix for each tag. This works only with the cloud
      * @param string $render Render type (`cloud`, `form` or `list`)
      * @param bool $shuffle Shuffles tags
-     * @param array{maxFont: int, minFont: int}|false $style Style for tags: `maxFont` and `minFont` keys or `false` to disable
+     * @param array{maxFont: int, minFont: int} $style Style for tags: `maxFont` and `minFont` keys or empty array to disable
      * @return void
      * @throws \ErrorException
      */
@@ -72,7 +72,7 @@ class PostsTagsWidgetsCell extends Cell
         string $prefix = '#',
         string $render = 'cloud',
         bool $shuffle = true,
-        $style = ['maxFont' => 40, 'minFont' => 12]
+        array $style = ['maxFont' => 40, 'minFont' => 12]
     ): void {
         $this->viewBuilder()->setTemplate('popular_as_' . $render);
 
@@ -81,16 +81,12 @@ class PostsTagsWidgetsCell extends Cell
             return;
         }
 
-        //Sets default maximum and minimum font sizes we want to use
+        //Sets default maximum and minimum font sizes we want to use and the initial cache name
         $maxFont = $minFont = 0;
-
-        //Sets the initial cache name
         $cache = 'widget_tags_popular_' . $limit;
 
-        if ($style && is_array($style)) {
-            //Updates maximum and minimum font sizes we want to use
+        if ($style) {
             [$maxFont, $minFont] = $this->getFontSizes($style);
-
             $cache .= sprintf('_max_%s_min_%s', $maxFont, $minFont);
         }
 
@@ -98,10 +94,10 @@ class PostsTagsWidgetsCell extends Cell
             ->select(['tag', 'post_count'])
             ->limit($limit)
             ->order(['post_count' => 'DESC', 'tag' => 'ASC'])
-            ->formatResults(function (ResultSet $results) use ($style, $maxFont, $minFont): CollectionInterface {
+            ->formatResults(function (ResultSet $results) use ($maxFont, $minFont): CollectionInterface {
                 $results = $results->indexBy('slug');
 
-                if (!$results->count() || !$style || !$maxFont || !$minFont) {
+                if (!$results->count() || !$maxFont || !$minFont) {
                     return $results;
                 }
 
@@ -110,7 +106,7 @@ class PostsTagsWidgetsCell extends Cell
                 $diffCount = $results->first()->get('post_count') - $minCount;
                 $diffFont = $maxFont - $minFont;
 
-                return $results->map(fn(Tag $tag): Tag => $tag->set('size', $diffCount ? round((($tag->get('post_count') - $minCount) / $diffCount * $diffFont) + $minFont) : $maxFont));
+                return $results->map(fn(Tag $Tag): Tag => $Tag->set('size', $diffCount ? round((($Tag->get('post_count') - $minCount) / $diffCount * $diffFont) + $minFont) : $maxFont));
             })
             ->cache($cache)
             ->all();

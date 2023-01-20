@@ -74,7 +74,6 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $this->assertEquals([20, 12], $getFontSizesMethod(['maxFont' => 20]));
         $this->assertEquals([40, 20], $getFontSizesMethod(['minFont' => 20]));
         $this->assertEquals([30, 20], $getFontSizesMethod(['maxFont' => 30, 'minFont' => 20]));
-        $this->assertEquals([40, 12], $getFontSizesMethod(false));
 
         //With invalid values
         $this->expectException(ErrorException::class);
@@ -133,7 +132,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, ['prefix' => '-', 'style' => false] + $this->example)->render();
+        $result = $this->Widget->widget($widget, ['prefix' => '-', 'style' => []] + $this->example)->render();
         $this->assertHtml($expected, $result);
 
         //Tries to render as form
@@ -160,7 +159,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, ['render' => 'form', 'style' => false] + $this->example)->render();
+        $result = $this->Widget->widget($widget, ['render' => 'form', 'style' => []] + $this->example)->render();
         $this->assertHtml($expected, $result);
 
         //Tries to render as list
@@ -193,7 +192,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
             '/div',
         ];
-        $result = $this->Widget->widget($widget, ['render' => 'list', 'style' => false] + $this->example)->render();
+        $result = $this->Widget->widget($widget, ['render' => 'list', 'style' => []] + $this->example)->render();
         $this->assertHtml($expected, $result);
 
         $expected = [
@@ -216,7 +215,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
             '/div',
         ];
         //Tries with shuffle
-        $result = $this->Widget->widget($widget, ['shuffle' => true, 'style' => false] + $this->example)->render();
+        $result = $this->Widget->widget($widget, ['shuffle' => true, 'style' => []] + $this->example)->render();
         $this->assertHtml($expected, $result);
 
         //Empty on tags index
