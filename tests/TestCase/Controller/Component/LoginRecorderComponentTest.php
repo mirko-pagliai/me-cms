@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Component;
 
 use Cake\Collection\Collection;
-use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
 use Cake\I18n\FrozenTime;

@@ -43,7 +43,7 @@ class PostsTagsWidgetsCell extends Cell
 
     /**
      * Internal method to get the font sizes
-     * @param array<string, int>|bool $style Style for tags. Array with `maxFont` and `minFont` keys or `false` to disable
+     * @param array{maxFont: int, minFont: int}|false $style Style for tags: `maxFont` and `minFont` keys or `false` to disable
      * @return array
      * @throws \ErrorException
      */
@@ -63,8 +63,7 @@ class PostsTagsWidgetsCell extends Cell
      * @param string $prefix Prefix for each tag. This works only with the cloud
      * @param string $render Render type (`cloud`, `form` or `list`)
      * @param bool $shuffle Shuffles tags
-     * @param array{maxFont: int, minFont: int}|bool $style Style for tags. Array with `maxFont` and `minFont` keys or
-     *  `false` to disable
+     * @param array{maxFont: int, minFont: int}|false $style Style for tags: `maxFont` and `minFont` keys or `false` to disable
      * @return void
      * @throws \ErrorException
      */
