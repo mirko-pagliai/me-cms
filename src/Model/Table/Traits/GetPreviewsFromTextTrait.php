@@ -74,7 +74,7 @@ trait GetPreviewsFromTextTrait
     /**
      * Internal method to get the preview size
      * @param string $image Image url or path
-     * @return array Array with width and height
+     * @return array<int, int> Array with width and height
      */
     protected function getPreviewSize(string $image): array
     {
@@ -82,13 +82,12 @@ trait GetPreviewsFromTextTrait
     }
 
     /**
-     * Gets all the available images from a html string, including the previews
-     *  of YouTube videos, and returns an array of `Entity`
+     * Gets all the available images from a html string, including the previews of YouTube videos, and returns entities
      * @param string $html Html string
-     * @return \Cake\Collection\CollectionInterface Collection of entities.
-     *  Each `Entity` has `url`, `width` and `height` properties
+     * @return \Cake\Collection\CollectionInterface Collection of entities with `url`, `width` and `height` properties
      * @throws \Tools\Exception\NotWritableException
      * @since 2.23.0
+     * @todo array instead of entities?
      */
     public function getPreviews(string $html): CollectionInterface
     {
