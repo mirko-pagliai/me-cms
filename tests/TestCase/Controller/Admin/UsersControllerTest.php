@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Collection\Collection;
-use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use MeCms\Controller\Component\LoginRecorderComponent;
@@ -352,23 +351,19 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `lastLogin()` method
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::lastLogin()
      */
     public function testLastLogin(): void
     {
         /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $LoginRecorder */
-        $LoginRecorder = $this->getMockBuilder(LoginRecorderComponent::class)
-            ->setConstructorArgs([new ComponentRegistry()])
-            ->onlyMethods(['getController', 'getUserAgent'])
-            ->getMock();
-        $LoginRecorder->method('getController')->will($this->returnValue($this->Controller));
-        $LoginRecorder->method('getUserAgent')
-            ->will($this->returnValue([
-                'platform' => 'Linux',
-                'browser' => 'Chrome',
-                'version' => '55.0.2883.87',
-            ]));
+        $LoginRecorder = $this->createPartialMock(LoginRecorderComponent::class, ['getController', 'getUserAgent']);
+        $LoginRecorder->method('getController')->willReturn($this->Controller);
+        $LoginRecorder->method('getUserAgent')->willReturn([
+            'platform' => 'Linux',
+            'browser' => 'Chrome',
+            'version' => '55.0.2883.87',
+        ]);
         $LoginRecorder->setConfig('user', 1);
 
         //Writes a login log
