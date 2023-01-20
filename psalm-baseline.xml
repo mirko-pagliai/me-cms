@@ -60,6 +60,11 @@
       <code>\Cake\Collection\CollectionInterface&lt;array{class: class-string, name: string}&gt;</code>
     </TooManyTemplateParams>
   </file>
+  <file src="src/View/Cell/PostsTagsWidgetsCell.php">
+    <InvalidParamDefault occurrences="1">
+      <code>array{maxFont: int, minFont: int}|false</code>
+    </InvalidParamDefault>
+  </file>
   <file src="templates/Admin/Pages/form.php">
     <TooManyTemplateParams occurrences="1">
       <code>$this-&gt;extend('MeCms./common/form');</code>
