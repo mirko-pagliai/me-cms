@@ -32,6 +32,13 @@ article header time::before {
 /* -------------------------------- */
 /*          Body content            */
 /* -------------------------------- */
+/* Body content, iframe */
+article .body iframe,
+.article iframe {
+    height: auto;
+    max-width: 100%;
+}
+
 /* Body content, images */
 article .body img,
 .article img {
