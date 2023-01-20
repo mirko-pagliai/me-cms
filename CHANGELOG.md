@@ -14,6 +14,7 @@
 * fixed a bug for the "read more" button of posts and pages;
 * fixed a bug with uploading the user's profile picture;
 * fixed some small template bugs;
+* `GetPreviewsFromTextTrait::getPreviews()` returns a collection of array (instead of entities);
 * improved the code of all controllers;
 * added the `AppTable::getCacheNameWithAssociated()` method. The `getCacheName()` method will now only return the cache
   name of the current table (string);
@@ -22,6 +23,7 @@
 * `AppController::__get()` magic method no longer exists;
 * large improvement of `ControllerTestCase`;
 * `AppTable::clearCache()` deletes all keys from the cache used by this table and its associated tables;
+* many code improvements suggested by `phpstorm`;
 * updated for me-tools 2.22.3.
 
 ### 2.30.12

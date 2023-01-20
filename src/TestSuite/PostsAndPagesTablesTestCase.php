@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -19,16 +18,17 @@ namespace MeCms\TestSuite;
 
 use ArrayObject;
 use Cake\Cache\Cache;
-use Cake\ORM\Entity;
 
 /**
  * Abstract class for `PagesTableTest` and `PostsTableTest` classes
- * @property \MeCms\ORM\PostsAndPagesTables $Table
+ * @property \MeCms\Model\Table\PagesTable|\MeCms\Model\Table\PostsTable $Table
+ * @see \MeCms\Test\TestCase\Model\Table\PagesTableTest
+ * @see \MeCms\Test\TestCase\Model\Table\PostsTableTest
  */
 abstract class PostsAndPagesTablesTestCase extends TableTestCase
 {
     /**
-     * @var array<string, mixed>
+     * @var array{category_id: int, title: string, slug: string, text: string}
      */
     protected static array $example = [
         'category_id' => 1,
@@ -40,33 +40,37 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     /**
      * @return void
      * @test
+     * @uses \MeCms\Model\Table\PagesTable::buildRules()
+     * @uses \MeCms\Model\Table\PostsTable::buildRules()
      */
     public function testBuildRules(): void
     {
-        $entity = $this->Table->newEntity(self::$example);
-        $this->assertNotEmpty($this->Table->save($entity));
+        $Entity = $this->Table->newEntity(self::$example);
+        $this->assertNotEmpty($this->Table->save($Entity));
 
         //Saves again the same entity
-        $entity = $this->Table->newEntity(self::$example);
-        $this->assertFalse($this->Table->save($entity));
+        $Entity = $this->Table->newEntity(self::$example);
+        $this->assertFalse($this->Table->save($Entity));
         $this->assertEquals([
             'slug' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
             'title' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
-        ], $entity->getErrors());
+        ], $Entity->getErrors());
 
-        $entity = $this->Table->newEntity([
+        $Entity = $this->Table->newEntity([
             'category_id' => 999,
             'title' => 'My title 2',
             'slug' => 'my-slug-2',
             'text' => 'My text',
         ] + self::$example);
-        $this->assertFalse($this->Table->save($entity));
-        $this->assertEquals(['category_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
+        $this->assertFalse($this->Table->save($Entity));
+        $this->assertEquals(['category_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $Entity->getErrors());
     }
 
     /**
      * @return void
      * @test
+     * @uses \MeCms\Model\Table\PagesTable::_initializeSchema()
+     * @uses \MeCms\Model\Table\PostsTable::_initializeSchema()
      */
     public function testInitializeSchema(): void
     {
@@ -74,44 +78,57 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     }
 
     /**
-     * @uses \MeCms\Model\Table\PagesTable::afterDelete()
-     * @uses \MeCms\Model\Table\PagesTable::beforeSave()
-     * @uses \MeCms\Model\Table\PostsTable::afterDelete()
-     * @uses \MeCms\Model\Table\PostsTable::beforeSave()
      * @return void
      * @test
+     * @uses \MeCms\Model\Table\PagesTable::afterDelete()
+     * @uses \MeCms\Model\Table\PagesTable::afterSave()
+     * @uses \MeCms\Model\Table\PostsTable::afterDelete()
+     * @uses \MeCms\Model\Table\PostsTable::afterSave()
      */
-    public function testEventMethods(): void
+    public function testAfterDeleteAndAfterSave(): void
     {
-        $entity = $this->Table->newEmptyEntity();
+        $Entity = $this->Table->newEmptyEntity();
 
         /** @var \MeCms\ORM\PostsAndPagesTables&\PHPUnit\Framework\MockObject\MockObject $Table */
         $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'getPreviewSize', 'setNextToBePublished']);
         $Table->expects($this->exactly(2))->method('clearCache');
         $Table->expects($this->exactly(2))->method('setNextToBePublished');
-        $Table->dispatchEvent('Model.afterDelete', [$entity, new ArrayObject()]);
-        $Table->dispatchEvent('Model.afterSave', [$entity, new ArrayObject()]);
-
-        $Table->method('getPreviewSize')->will($this->returnValue([400, 300]));
-
-        //Tries with a text without images or videos
-        $entity = $Table->newEntity(self::$example);
-        $Table->dispatchEvent('Model.beforeSave', [$entity, new ArrayObject()]);
-        $this->assertTrue($entity->get('preview')->isEmpty());
-
-        //Tries with a text with an image
-        $entity = $Table->newEntity(['text' => '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg\' />'] + self::$example);
-        $Table->dispatchEvent('Model.beforeSave', [$entity, new ArrayObject()]);
-        $this->assertCount(1, $entity->get('preview'));
-        $this->assertContainsOnlyInstancesOf(Entity::class, $entity->get('preview'));
-        $this->assertMatchesRegularExpression('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $entity->get('preview')->first()->get('url'));
-        $this->assertEquals(400, $entity->get('preview')->first()->get('width'));
-        $this->assertEquals(300, $entity->get('preview')->first()->get('height'));
+        $Table->dispatchEvent('Model.afterDelete', [$Entity, new ArrayObject()]);
+        $Table->dispatchEvent('Model.afterSave', [$Entity, new ArrayObject()]);
     }
 
     /**
      * @return void
      * @test
+     * @uses \MeCms\Model\Table\PagesTable::beforeSave()
+     * @uses \MeCms\Model\Table\PostsTable::beforeSave()
+     */
+    public function testBeforeSave(): void
+    {
+        /** @var \MeCms\ORM\PostsAndPagesTables&\PHPUnit\Framework\MockObject\MockObject $Table */
+        $Table = $this->getMockForModel('MeCms. ' . $this->Table->getAlias(), ['clearCache', 'getPreviewSize', 'setNextToBePublished']);
+        $Table->method('getPreviewSize')->willReturn([400, 300]);
+
+        //Tries with a text without images or videos
+        $Entity = $Table->newEntity(self::$example);
+        $Table->dispatchEvent('Model.beforeSave', [$Entity, new ArrayObject()]);
+        $this->assertTrue($Entity->get('preview')->isEmpty());
+
+        //Tries with a text with an image
+        $Entity = $Table->newEntity(['text' => '<img src=\'' . WWW_ROOT . 'img' . DS . 'image.jpg\' />'] + self::$example);
+        $Table->dispatchEvent('Model.beforeSave', [$Entity, new ArrayObject()]);
+        $this->assertCount(1, $Entity->get('preview'));
+        $first = $Entity->get('preview')->first();
+        $this->assertMatchesRegularExpression('/^http:\/\/localhost\/thumb\/[A-z\d]+/', $first['url']);
+        $this->assertSame(400, $first['width']);
+        $this->assertSame(300, $first['height']);
+    }
+
+    /**
+     * @return void
+     * @test
+     * @uses \MeCms\Model\Table\PagesTable::initialize()
+     * @uses \MeCms\Model\Table\PostsTable::initialize()
      */
     public function testInitialize(): void
     {
@@ -126,6 +143,8 @@ abstract class PostsAndPagesTablesTestCase extends TableTestCase
     /**
      * @return void
      * @test
+     * @uses \MeCms\Model\Table\PagesTable::find()
+     * @uses \MeCms\Model\Table\PostsTable::find()
      */
     public function testFind(): void
     {

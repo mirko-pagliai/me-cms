@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -25,15 +26,15 @@ use MeCms\TestSuite\TestCase;
 class GetStartAndEndDateTraitTest extends TestCase
 {
     /**
-     * Tests for `getStartAndEndDate()` method
+     * @uses \MeCms\Controller\Traits\GetStartAndEndDateTrait::getStartAndEndDate()
      * @test
      */
     public function testGetStartAndEndDate(): void
     {
-        $controller = new class extends AppController {
+        $Controller = new class extends AppController {
             use GetStartAndEndDateTrait;
         };
-        $getStartAndEndDateMethod = fn($date): array => $this->invokeMethod($controller, 'getStartAndEndDate', [$date]);
+        $getStartAndEndDateMethod = fn(string $date): array => $this->invokeMethod($Controller, 'getStartAndEndDate', [$date]);
 
         //"today" special word
         [$start, $end] = $getStartAndEndDateMethod('today');

@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -54,13 +55,11 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     }
 
     /**
-     * Test for event methods
      * @test
+     * @uses \MeCms\Model\Table\PostsTable::beforeMarshal()
      */
-    public function testEventMethods(): void
+    public function testBeforeMarshal(): void
     {
-        parent::testEventMethods();
-
         /** @var array<\MeCms\Model\Entity\Tag> $tags */
         $tags = $this->Table->newEntity(self::$example)->get('tags');
         $this->assertContainsOnlyInstancesOf(Tag::class, $tags);
@@ -76,25 +75,25 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     }
 
     /**
-     * Test for `buildRules()` method
      * @test
+     * @uses \MeCms\Model\Table\PostsTable::buildRules()
      */
     public function testBuildRules(): void
     {
         parent::testBuildRules();
 
-        $entity = $this->Table->newEntity([
+        $Entity = $this->Table->newEntity([
             'title' => 'My title 2',
             'slug' => 'my-slug-2',
             'user_id' => 999,
         ] + self::$example);
-        $this->assertFalse($this->Table->save($entity));
-        $this->assertEquals(['user_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
+        $this->assertFalse($this->Table->save($Entity));
+        $this->assertEquals(['user_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $Entity->getErrors());
     }
 
     /**
-     * Test for `initialize()` method
      * @test
+     * @uses \MeCms\Model\Table\PostsTable::initialize()
      */
     public function testInitialize(): void
     {
@@ -129,21 +128,19 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     }
 
     /**
-     * Test for `find()` methods
      * @test
+     * @uses \MeCms\Model\Table\PostsTable::findForIndex()
      */
     public function testFindMethods(): void
     {
         $query = $this->Table->find('forIndex');
         $this->assertArrayKeysEqual(['Categories', 'Tags', 'Users'], $query->getContain());
-
-        $this->skipIfCakeIsLessThan('4.3');
         $this->assertSqlEndsWith('FROM posts Posts INNER JOIN posts_categories Categories ON Categories.id = Posts.category_id INNER JOIN users Users ON Users.id = Posts.user_id ORDER BY Posts.created DESC', $query->sql());
     }
 
     /**
-     * Test for `getRelated()` method
      * @test
+     * @uses \MeCms\Model\Table\PostsTable::getRelated()
      */
     public function testGetRelated(): void
     {
@@ -189,8 +186,8 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     }
 
     /**
-     * Test for `queryFromFilter()` method
      * @test
+     * @uses \MeCms\Model\Table\PostsTable::queryFromFilter()
      */
     public function testQueryFromFilter(): void
     {
@@ -201,8 +198,8 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     }
 
     /**
-     * Test for `queryForRelated()` method
      * @test
+     * @uses \MeCms\Model\Table\PostsTable::queryForRelated()
      */
     public function testQueryForRelated(): void
     {
@@ -212,24 +209,14 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c2']['value']);
         $this->assertEquals([], $query->getValueBinder()->bindings()[':c3']['value']);
-
-        $this->skipIfCakeIsLessThan('4.3');
         $this->assertSqlEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = PostsTags.post_id INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = PostsTags.tag_id) WHERE (Posts.active = :c1 AND Posts.created <= :c2 AND (Posts.preview) IS NOT NULL AND Posts.preview != :c3)', $sql);
-    }
 
-    /**
-     * Test for `queryForRelated()` method, without images
-     * @test
-     */
-    public function testQueryForRelatedWithoutImages(): void
-    {
+        //Without images
         $query = $this->Table->queryForRelated(4, false);
         $sql = $query->sql();
         $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c2']['value']);
-
-        $this->skipIfCakeIsLessThan('4.3');
         $this->assertSqlEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = PostsTags.post_id INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = PostsTags.tag_id) WHERE (Posts.active = :c1 AND Posts.created <= :c2)', $sql);
     }
 }

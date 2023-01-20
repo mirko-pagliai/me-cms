@@ -130,6 +130,7 @@ abstract class AppController extends BaseAppController
      * @param array<string, array> $paging Paging value
      * @return $this
      * @since 2.29.1
+     * @noinspection PhpMissingReturnTypeInspection
      */
     public function setPaging(array $paging)
     {

@@ -59,7 +59,7 @@ class UsersTable extends AppTable
 
     /**
      * Called before request data is converted into entities
-     * @param EventInterface $event Event object
+     * @param \Cake\Event\EventInterface $event Event object
      * @param \ArrayObject $data Request data
      * @param \ArrayObject $options Options
      * @return void

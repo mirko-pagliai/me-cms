@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpDocMissingThrowsInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
@@ -112,7 +113,6 @@ class AppControllerTest extends ControllerTestCase
         $this->configRequest(['environment' => ['HTTP_REFERER' => Router::url($url, true)]]);
         $this->get($url);
         $this->assertSessionNotHasKey('referer');
-
     }
 
     /**

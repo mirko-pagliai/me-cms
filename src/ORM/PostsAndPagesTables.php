@@ -32,6 +32,8 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  * @method findActiveBySlug(string $slug)
  * @method findByUserId(int $id)
  * @method findPendingBySlug(string $slug)
+ * @see \MeCms\Model\Table\PagesTable
+ * @see \MeCms\Model\Table\PostsTable
  */
 abstract class PostsAndPagesTables extends AppTable
 {
@@ -51,7 +53,7 @@ abstract class PostsAndPagesTables extends AppTable
 
     /**
      * Called after an entity has been deleted
-     * @param EventInterface $event Event object
+     * @param \Cake\Event\EventInterface $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      */
@@ -79,7 +81,7 @@ abstract class PostsAndPagesTables extends AppTable
 
     /**
      * Called before each entity is saved
-     * @param EventInterface $event Event object
+     * @param \Cake\Event\EventInterface $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      * @throws \Tools\Exception\NotWritableException

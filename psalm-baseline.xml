@@ -6,15 +6,6 @@
       <code>empty($this-&gt;Users)</code>
     </TypeDoesNotContainType>
   </file>
-  <file src="src/Controller/PostsCategoriesController.php">
-    <InvalidArgument occurrences="1"/>
-  </file>
-  <file src="src/Controller/PostsController.php">
-    <InvalidArgument occurrences="3"/>
-  </file>
-  <file src="src/Controller/PostsTagsController.php">
-    <InvalidArgument occurrences="2"/>
-  </file>
   <file src="src/Controller/Traits/GetStartAndEndDateTrait.php">
     <RedundantCast occurrences="2">
       <code>(int)($day ?: 1)</code>
@@ -24,6 +15,16 @@
       <code>1</code>
       <code>1</code>
     </RedundantCondition>
+  </file>
+  <file src="src/Model/Table/PostsTable.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>\Cake\Collection\CollectionInterface&lt;\MeCms\Model\Entity\Post&gt;</code>
+    </TooManyTemplateParams>
+  </file>
+  <file src="src/Model/Table/Traits/GetPreviewsFromTextTrait.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>\Cake\Collection\CollectionInterface&lt;array{url: string, width: int, height: int}&gt;</code>
+    </TooManyTemplateParams>
   </file>
   <file src="src/Policy/ControllerResolver.php">
     <MoreSpecificImplementedParamType occurrences="1">
@@ -59,6 +60,11 @@
       <code>empty($this-&gt;Table)</code>
     </TypeDoesNotContainType>
   </file>
+  <file src="src/Utility/Sitemap/SitemapBuilder.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>\Cake\Collection\CollectionInterface&lt;array{class: class-string, name: string}&gt;</code>
+    </TooManyTemplateParams>
+  </file>
   <file src="templates/Admin/Pages/form.php">
     <TooManyTemplateParams occurrences="1">
       <code>$this-&gt;extend('MeCms./common/form');</code>
@@ -88,15 +94,6 @@
       <code>$this-&gt;Command-&gt;Users</code>
     </UndefinedPropertyAssignment>
   </file>
-  <file src="tests/TestCase/Controller/PostsCategoriesControllerTest.php">
-    <InvalidArgument occurrences="1"/>
-  </file>
-  <file src="tests/TestCase/Controller/PostsControllerTest.php">
-    <InvalidArgument occurrences="3"/>
-  </file>
-  <file src="tests/TestCase/Controller/PostsTagsControllerTest.php">
-    <InvalidArgument occurrences="2"/>
-  </file>
   <file src="tests/TestCase/Form/ContactUsFormTest.php">
     <TypeDoesNotContainType occurrences="1">
       <code>empty($this-&gt;Form)</code>
@@ -107,7 +104,7 @@
       <code>new \stdClass()</code>
     </InvalidArgument>
   </file>
-  <file src="tests/TestCase/View/View/AdminViewTest.php">
+  <file src="tests/TestCase/View/View/Admin/AppViewTest.php">
     <TypeDoesNotContainType occurrences="1">
       <code>empty($this-&gt;View)</code>
     </TypeDoesNotContainType>

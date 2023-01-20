@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace MeCms\Model\Table\Traits;
 
 use Cake\Collection\CollectionInterface;
-use Cake\ORM\Entity;
 use DOMDocument;
 use MeTools\Utility\Youtube;
 use Thumber\Cake\Utility\ThumbCreator;
@@ -74,7 +73,7 @@ trait GetPreviewsFromTextTrait
     /**
      * Internal method to get the preview size
      * @param string $image Image url or path
-     * @return array Array with width and height
+     * @return array<int, int> Array with width and height
      */
     protected function getPreviewSize(string $image): array
     {
@@ -82,21 +81,19 @@ trait GetPreviewsFromTextTrait
     }
 
     /**
-     * Gets all the available images from a html string, including the previews
-     *  of YouTube videos, and returns an array of `Entity`
+     * Gets all the available images from a html string, including the previews of YouTube videos
      * @param string $html Html string
-     * @return \Cake\Collection\CollectionInterface Collection of entities.
-     *  Each `Entity` has `url`, `width` and `height` properties
+     * @return \Cake\Collection\CollectionInterface<array{url: string, width: int, height: int}> Collection of images
      * @throws \Tools\Exception\NotWritableException
      * @since 2.23.0
      */
     public function getPreviews(string $html): CollectionInterface
     {
-        $images = array_map(function (string $url): ?Entity {
+        $images = array_map(function (string $url): array {
             if (!is_url($url)) {
                 $url = Filesystem::instance()->makePathAbsolute($url, WWW_ROOT . 'img');
                 if (!file_exists($url)) {
-                    return null;
+                    return [];
                 }
 
                 $thumber = new ThumbCreator($url);
@@ -106,7 +103,7 @@ trait GetPreviewsFromTextTrait
 
             [$width, $height] = $this->getPreviewSize($url);
 
-            return new Entity(compact('url', 'width', 'height'));
+            return compact('url', 'width', 'height');
         }, $this->extractImages($html));
 
         return collection(array_filter($images));

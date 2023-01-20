@@ -333,8 +333,12 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
+<<<<<<< HEAD
      * @uses \MeCms\Controller\Admin\UsersController::lastLogin()
+=======
+>>>>>>> develop
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::lastLogin()
      */
     public function testLastLogin(): void
     {
