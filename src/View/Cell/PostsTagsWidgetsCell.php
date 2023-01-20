@@ -43,11 +43,11 @@ class PostsTagsWidgetsCell extends Cell
 
     /**
      * Internal method to get the font sizes
-     * @param array{maxFont: int, minFont: int} $style Style for tags: `maxFont` and `minFont` keys
+     * @param array{maxFont?: int, minFont?: int} $style Style for tags: `maxFont` and `minFont` keys
      * @return array{int, int}
      * @throws \ErrorException
      */
-    protected function getFontSizes(array $style = ['maxFont' => 0, 'minFont' => 0]): array
+    protected function getFontSizes(array $style = []): array
     {
         //Maximum and minimum font sizes we want to use
         $maxFont = $style['maxFont'] ?? 40;
@@ -63,7 +63,7 @@ class PostsTagsWidgetsCell extends Cell
      * @param string $prefix Prefix for each tag. This works only with the cloud
      * @param string $render Render type (`cloud`, `form` or `list`)
      * @param bool $shuffle Shuffles tags
-     * @param array{maxFont: int, minFont: int} $style Style for tags: `maxFont` and `minFont` keys or empty array to disable
+     * @param array{maxFont?: int, minFont?: int} $style Style for tags: `maxFont` and `minFont` keys or empty array to disable
      * @return void
      * @throws \ErrorException
      */
