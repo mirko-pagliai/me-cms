@@ -31,22 +31,8 @@ class WidgetHelperTest extends HelperTestCase
     use ReflectionTrait;
 
     /**
-     * Called before every test method
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->loadPlugins(['TestPlugin' => []]);
-
-        $Request = $this->Helper->getView()->getRequest()->withEnv('REQUEST_URI', '/');
-        $this->Helper->getView()->setRequest($Request);
-    }
-
-    /**
-     * @uses \MeCms\View\Helper\WidgetHelper::getAll()
      * @test
+     * @uses \MeCms\View\Helper\WidgetHelper::getAll()
      */
     public function testGetAll(): void
     {
@@ -96,8 +82,8 @@ class WidgetHelperTest extends HelperTestCase
     }
 
     /**
-     * @uses \MeCms\View\Helper\WidgetHelper::all()
      * @test
+     * @uses \MeCms\View\Helper\WidgetHelper::all()
      */
     public function testAll(): void
     {
@@ -113,8 +99,8 @@ class WidgetHelperTest extends HelperTestCase
     }
 
     /**
-     * @uses \MeCms\View\Helper\WidgetHelper::widget()
      * @test
+     * @uses \MeCms\View\Helper\WidgetHelper::widget()
      */
     public function testWidget(): void
     {
