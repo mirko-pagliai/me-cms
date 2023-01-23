@@ -54,8 +54,8 @@ class UsersControllerTest extends ControllerTestCase
     ];
 
     /**
-     * @uses \MeCms\Controller\Admin\UsersController::beforeFilter()
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::beforeFilter()
      */
     public function testBeforeFilter(): void
     {
@@ -85,8 +85,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Admin\UsersController::isAuthorized()
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::isAuthorized()
      */
     public function testIsAuthorized(): void
     {
@@ -102,8 +102,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Admin\UsersController::index()
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::index()
      */
     public function testIndex(): void
     {
@@ -114,8 +114,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Admin\UsersController::view()
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::view()
      */
     public function testView(): void
     {
@@ -134,8 +134,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Admin\UsersController::add()
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::add()
      */
     public function testAdd(): void
     {
@@ -159,8 +159,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Admin\UsersController::edit()
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::edit()
      */
     public function testEdit(): void
     {
@@ -197,8 +197,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Admin\UsersController::delete()
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::delete()
      */
     public function testDelete(): void
     {
@@ -230,8 +230,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Admin\UsersController::activate()
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::activate()
      */
     public function testActivate(): void
     {
@@ -242,8 +242,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Admin\UsersController::changePassword()
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::changePassword()
      */
     public function testChangePassword(): void
     {
@@ -290,8 +290,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Admin\UsersController::changePicture()
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::changePicture()
      */
     public function testChangePicture(): void
     {
@@ -320,8 +320,8 @@ class UsersControllerTest extends ControllerTestCase
 
     /**
      * Tests for `changePicture()` method, error during the upload
-     * @uses \MeCms\Controller\Admin\UsersController::changePicture()
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::changePicture()
      */
     public function testChangePictureErrorDuringUpload(): void
     {
@@ -333,10 +333,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-<<<<<<< HEAD
-     * @uses \MeCms\Controller\Admin\UsersController::lastLogin()
-=======
->>>>>>> develop
      * @test
      * @uses \MeCms\Controller\Admin\UsersController::lastLogin()
      */
