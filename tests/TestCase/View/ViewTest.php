@@ -20,12 +20,15 @@ use Cake\Core\Configure;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\View;
 use Tools\Filesystem;
+use Tools\TestSuite\ReflectionTrait;
 
 /**
  * ViewTest class
  */
 class ViewTest extends TestCase
 {
+    use ReflectionTrait;
+
     /**
      * @var \MeCms\View\View
      */

@@ -20,12 +20,15 @@ use Cake\Collection\CollectionInterface;
 use MeCms\Model\Table\PostsTable;
 use MeCms\TestSuite\TestCase;
 use MeTools\Utility\Youtube;
+use Tools\TestSuite\ReflectionTrait;
 
 /**
  * GetPreviewsFromTextTraitTest class
  */
 class GetPreviewsFromTextTraitTest extends TestCase
 {
+    use ReflectionTrait;
+
     /**
      * @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject
      */

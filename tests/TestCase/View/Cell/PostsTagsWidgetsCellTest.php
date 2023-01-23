@@ -22,12 +22,15 @@ use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
 use ErrorException;
 use MeCms\TestSuite\CellTestCase;
+use Tools\TestSuite\ReflectionTrait;
 
 /**
  * PostsTagsWidgetsCellTest class
  */
 class PostsTagsWidgetsCellTest extends CellTestCase
 {
+    use ReflectionTrait;
+
     /**
      * @var array<string, mixed>
      */

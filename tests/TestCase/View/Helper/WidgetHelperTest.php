@@ -20,6 +20,7 @@ use App\View\Cell\ExampleWidgetsCell;
 use Cake\Core\Configure;
 use MeTools\TestSuite\HelperTestCase;
 use TestPlugin\View\Cell\PluginExampleWidgetsCell;
+use Tools\TestSuite\ReflectionTrait;
 
 /**
  * WidgetHelperTest class
@@ -27,6 +28,8 @@ use TestPlugin\View\Cell\PluginExampleWidgetsCell;
  */
 class WidgetHelperTest extends HelperTestCase
 {
+    use ReflectionTrait;
+
     /**
      * Called before every test method
      * @return void

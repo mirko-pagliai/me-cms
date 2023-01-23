@@ -20,13 +20,13 @@ use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
 use Cake\I18n\FrozenTime;
 use MeCms\Controller\Component\LoginRecorderComponent;
-use MeTools\TestSuite\ComponentTestCase;
+use MeCms\TestSuite\TestCase;
 
 /**
  * LoginRecorderTest class
  * @property \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $Component
  */
-class LoginRecorderComponentTest extends ComponentTestCase
+class LoginRecorderComponentTest extends TestCase
 {
     protected const DEFAULT_USER_AGENT = [
         'platform' => 'Linux',
@@ -68,9 +68,9 @@ class LoginRecorderComponentTest extends ComponentTestCase
      */
     protected function setUp(): void
     {
-        $this->Component ??= $this->getMockForLoginRecorder();
-
         parent::setUp();
+
+        $this->Component ??= $this->getMockForLoginRecorder();
     }
 
     /**
@@ -92,9 +92,9 @@ class LoginRecorderComponentTest extends ComponentTestCase
         $this->assertEmpty($this->Component->getClientIp());
 
         //On localhost
-        $request = $this->getMockBuilder(ServerRequest::class)->onlyMethods(['clientIp'])->getMock();
-        $request->method('clientIp')->willReturn('::1');
-        $this->Component->getController()->setRequest($request);
+        $Request = $this->getMockBuilder(ServerRequest::class)->onlyMethods(['clientIp'])->getMock();
+        $Request->method('clientIp')->willReturn('::1');
+        $this->Component->getController()->setRequest($Request);
         $this->assertEquals('127.0.0.1', $this->Component->getClientIp());
     }
 
