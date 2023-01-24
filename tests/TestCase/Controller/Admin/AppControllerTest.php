@@ -20,6 +20,7 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 use Authorization\Controller\Component\AuthorizationComponent;
 use Cake\Core\Configure;
 use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
 use MeCms\Controller\Admin\AppController;
 use MeCms\TestSuite\Admin\ControllerTestCase;
@@ -44,16 +45,26 @@ class AppControllerTest extends ControllerTestCase
      */
     protected function setUp(): void
     {
-        $this->Controller = $this->getMockForAbstractClass(AppController::class, [], '', true, true, true, ['initialize', 'isSpammer']);
-        $this->Controller->method('isSpammer')->willReturn(false);
-        $this->Controller->Authorization = $this->createStub(AuthorizationComponent::class);
-
         parent::setUp();
+
+        if (!isset($this->Controller)) {
+            $this->Controller = $this->getMockForAbstractClass(
+                AppController::class,
+                [new ServerRequest(['params' => $this->url])],
+                '',
+                true,
+                true,
+                true,
+                ['initialize', 'isSpammer']
+            );
+            $this->Controller->method('isSpammer')->willReturn(false);
+            $this->Controller->Authorization = $this->createStub(AuthorizationComponent::class);
+        }
     }
 
     /**
-     * @uses \MeCms\Controller\Admin\AppController::beforeFilter()
      * @test
+     * @uses \MeCms\Controller\Admin\AppController::beforeFilter()
      */
     public function testBeforeFilter(): void
     {
@@ -89,8 +100,8 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Admin\AppController::beforeRender()
      * @test
+     * @uses \MeCms\Controller\Admin\AppController::beforeRender()
      */
     public function testBeforeRender(): void
     {
@@ -116,8 +127,8 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Admin\AppController::redirectMatchingReferer()
      * @test
+     * @uses \MeCms\Controller\Admin\AppController::redirectMatchingReferer()
      */
     public function testRedirectMatchingReferer(): void
     {

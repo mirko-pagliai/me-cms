@@ -58,15 +58,16 @@ class PostsTagsWidgetsCellTest extends CellTestCase
      */
     protected function setUp(): void
     {
-        $this->Table ??= $this->getTable('MeCms.Tags');
-
         parent::setUp();
+
+        if (!isset($this->Table)) {
+            $this->Table = $this->getTable('MeCms.Tags');
+        }
     }
 
     /**
-     * Test for `getFontSizes()` method
-     * @uses \MeCms\View\Cell\PostsTagsWidgetsCell::getFontSizes()
      * @test
+     * @uses \MeCms\View\Cell\PostsTagsWidgetsCell::getFontSizes()
      */
     public function testGetFontSizes(): void
     {
@@ -84,9 +85,8 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     }
 
     /**
-     * Test for `popular()` method
-     * @uses \MeCms\View\Cell\PostsTagsWidgetsCell::popular()
      * @test
+     * @uses \MeCms\View\Cell\PostsTagsWidgetsCell::popular()
      */
     public function testPopular(): void
     {
@@ -244,17 +244,10 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'form'] + $this->example)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['render' => 'list'] + $this->example)->render());
         $this->assertEmpty($this->Widget->widget($widget, ['shuffle' => true] + $this->example)->render());
-    }
 
-    /**
-     * Test for `popular()` method, with tags that have the same `post_count` value
-     * @uses \MeCms\View\Cell\PostsTagsWidgetsCell::popular()
-     * @test
-     */
-    public function testPopularWithTagsSamePostCount(): void
-    {
-        $widget = 'MeCms.PostsTags::popular';
-
+        /**
+         * With tags that have the same `post_count` value
+         */
         //Adds some tag, with the same `post_count`
         foreach (['example1', 'example2'] as $tag) {
             $entity = $this->Table->newEntity(compact('tag') + ['post_count' => 999], ['accessibleFields' => ['post_count' => true]]);
