@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Command\Install;
 
 use MeTools\TestSuite\CommandTestCase;
-use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * CreateGroupsCommandTest class
@@ -38,8 +37,8 @@ class CreateGroupsCommandTest extends CommandTestCase
     ];
 
     /**
-     * Test for `execute()` method
      * @test
+     * @uses \MeCms\Command\Install\CreateGroupsCommand::execute()
      */
     public function testExecute(): void
     {

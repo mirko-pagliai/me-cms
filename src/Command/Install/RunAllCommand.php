@@ -36,33 +36,33 @@ class RunAllCommand extends BaseRunAllCommand
             ...$this->questions,
             [
                 'question' => __d('me_tools', 'Copy configuration files?'),
-                'default' => 'Y',
-                'command' => CopyConfigCommand::class,
+                'default' => true,
+                'command' => new CopyConfigCommand(),
             ],
             [
                 'question' => __d('me_tools', 'Fix {0}?', 'ElFinder'),
-                'default' => 'Y',
-                'command' => FixElFinderCommand::class,
+                'default' => true,
+                'command' => new FixElFinderCommand(),
             ],
             [
                 'question' => __d('me_cms', 'Updates to the database or files needed for versioning?'),
-                'default' => 'Y',
-                'command' => VersionUpdatesCommand::class,
+                'default' => true,
+                'command' => new VersionUpdatesCommand(),
             ],
             [
                 'question' => __d('me_cms', 'Create the user groups?'),
-                'default' => 'N',
-                'command' => CreateGroupsCommand::class,
+                'default' => false,
+                'command' => new CreateGroupsCommand(),
             ],
             [
                 'question' => __d('me_cms', 'Create an admin user?'),
-                'default' => 'N',
-                'command' => CreateAdminCommand::class,
+                'default' => false,
+                'command' => new CreateAdminCommand(),
             ],
             [
                 'question' => __d('me_cms', 'Create a sample post?'),
-                'default' => 'N',
-                'command' => CreateSamplePostCommand::class,
+                'default' => false,
+                'command' => new CreateSamplePostCommand(),
             ],
         ];
     }

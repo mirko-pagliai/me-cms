@@ -17,7 +17,6 @@ namespace MeCms\Test\TestCase\Command\Install;
 
 use MeCms\Command\Install\RunAllCommand;
 use MeTools\TestSuite\CommandTestCase;
-use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * RunAllCommandTest class
@@ -25,8 +24,8 @@ use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 class RunAllCommandTest extends CommandTestCase
 {
     /**
-     * Tests for `execute()` method
      * @test
+     * @uses \MeCms\Command\Install\RunAllCommand::execute()
      */
     public function testExecute(): void
     {

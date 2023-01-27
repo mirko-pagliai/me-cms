@@ -17,7 +17,6 @@ namespace MeCms\Test\TestCase\Command;
 
 use MeCms\Model\Entity\UsersGroup;
 use MeTools\TestSuite\CommandTestCase;
-use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * GroupsCommandTest class
