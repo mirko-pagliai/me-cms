@@ -27,12 +27,6 @@ use Cake\ORM\Association\HasMany;
 abstract class TableTestCase extends TestCase
 {
     /**
-     * If `true`, a mock instance of the table will be created
-     * @var bool
-     */
-    protected bool $autoInitializeClass = true;
-
-    /**
      * Asserts that the table has a "belongs to" association
      * @param \Cake\ORM\Association $association Association
      * @return void
@@ -46,6 +40,7 @@ abstract class TableTestCase extends TestCase
      * Asserts that the table has a "belongs to many" association
      * @param \Cake\ORM\Association $association Association
      * @return void
+     * @todo missing params
      */
     public function assertBelongsToMany(Association $association): void
     {
@@ -56,11 +51,10 @@ abstract class TableTestCase extends TestCase
      * Asserts that the table has a behavior
      * @param string|array $behavior Behavior name as string or array
      * @return void
+     * @todo missing params
      */
     public function assertHasBehavior($behavior): void
     {
-        !empty($this->Table) ?: $this->fail('The property `$this->Table` has not been set');
-
         foreach ((array)$behavior as $name) {
             $this->assertTrue($this->Table->hasBehavior($name));
         }
@@ -70,23 +64,10 @@ abstract class TableTestCase extends TestCase
      * Asserts that the table has a "many" association
      * @param \Cake\ORM\Association $association Association
      * @return void
+     * @todo missing params
      */
     public function assertHasMany(Association $association): void
     {
         $this->assertInstanceOf(HasMany::class, $association);
-    }
-
-    /**
-     * Called before every test method
-     * @return void
-     * @throws \ReflectionException
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        if (empty($this->Table) && $this->autoInitializeClass) {
-            $this->Table = $this->getTable($this->getAlias($this), ['className' => $this->getOriginClassNameOrFail($this)]);
-        }
     }
 }

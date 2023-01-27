@@ -7,6 +7,7 @@ use MeCms\TestSuite\TestCase;
 
 /**
  * SkipTestCase
+ * @todo move to `App\Test`
  */
 class SkipTestCase extends TestCase
 {

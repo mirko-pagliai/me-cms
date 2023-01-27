@@ -34,8 +34,8 @@ abstract class MenuHelperTestCase extends HelperTestCase
      */
     protected function setIdentity(array $data = []): void
     {
-        $request = $this->Helper->getView()->getRequest()->withAttribute('identity', new Identity($data));
-        $this->Helper->getView()->setRequest($request);
+        $Request = $this->Helper->getView()->getRequest()->withAttribute('identity', new Identity($data));
+        $this->Helper->getView()->setRequest($Request);
         $this->Helper->Identity->initialize([]);
     }
 
@@ -51,19 +51,18 @@ abstract class MenuHelperTestCase extends HelperTestCase
              * @var class-string<\Cake\View\Helper> $className
              * @noinspection PhpRedundantVariableDocTypeInspection
              */
-            $className = $this->getOriginClassNameOrFail($this);
+            $className = $this->getOriginClassName($this);
             $methods = get_child_methods($className);
 
-            //Mocks the helper. Each method returns its original value, but the
-            //  links are already built and returned as an HTML string
+            //Mock: each method returns its original value, but the links are already built and returned as HTML string
             /** @var \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper */
             $Helper = $this->getMockForHelper($className, $methods);
 
-            $originalHelper = new $className($Helper->getView());
+            $OriginalHelper = new $className($Helper->getView());
             $HtmlHelper = new HtmlHelper($Helper->getView());
             foreach ($methods as $method) {
-                $Helper->method($method)->willReturnCallback(function () use ($method, $originalHelper, $HtmlHelper): array {
-                    $returned = $originalHelper->$method();
+                $Helper->method($method)->willReturnCallback(function () use ($method, $OriginalHelper, $HtmlHelper): array {
+                    $returned = $OriginalHelper->$method();
 
                     if (!empty($returned[0])) {
                         $returned[0] = implode(PHP_EOL, array_map(fn(array $link): string => call_user_func_array([$HtmlHelper, 'link'], $link), $returned[0]));
