@@ -15,17 +15,15 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command\Install;
 
-use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\CommandTestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * CreateGroupsCommandTest class
  * @property \MeCms\Command\Install\CreateGroupsCommand $Command
  */
-class CreateGroupsCommandTest extends TestCase
+class CreateGroupsCommandTest extends CommandTestCase
 {
-    use ConsoleIntegrationTestTrait;
-
     /**
      * @var bool
      */

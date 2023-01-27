@@ -21,7 +21,7 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Database\Driver\Postgres;
-use MeTools\Console\Command;
+use MeTools\Command\Command;
 use Tools\Filesystem;
 
 /**

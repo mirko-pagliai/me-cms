@@ -17,18 +17,15 @@ namespace MeCms\Test\TestCase\Command\Install;
 
 use Cake\Console\ConsoleIo;
 use Cake\Console\TestSuite\StubConsoleOutput;
-use MeCms\TestSuite\TestCase;
-use MeTools\TestSuite\ConsoleIntegrationTestTrait;
+use MeTools\TestSuite\CommandTestCase;
 
 /**
  * CreateSamplePostCommandTest class
  * @property \MeCms\Command\Install\CreateSamplePostCommand $Command
  * @property \Cake\Console\TestSuite\StubConsoleOutput|null $_out
  */
-class CreateSamplePostCommandTest extends TestCase
+class CreateSamplePostCommandTest extends CommandTestCase
 {
-    use ConsoleIntegrationTestTrait;
-
     /**
      * @var bool
      */

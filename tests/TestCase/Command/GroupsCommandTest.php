@@ -16,16 +16,14 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Command;
 
 use MeCms\Model\Entity\UsersGroup;
-use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\CommandTestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * GroupsCommandTest class
  */
-class GroupsCommandTest extends TestCase
+class GroupsCommandTest extends CommandTestCase
 {
-    use ConsoleIntegrationTestTrait;
-
     /**
      * @var array<string>
      */

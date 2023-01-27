@@ -17,17 +17,15 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Command\Install;
 
 use Cake\Core\Configure;
-use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\CommandTestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 use Tools\Filesystem;
 
 /**
  * SetPermissionsCommandTest class
  */
-class SetPermissionsCommandTest extends TestCase
+class SetPermissionsCommandTest extends CommandTestCase
 {
-    use ConsoleIntegrationTestTrait;
-
     /**
      * @uses \MeTools\Command\Install\SetPermissionsCommand::execute()
      * @test

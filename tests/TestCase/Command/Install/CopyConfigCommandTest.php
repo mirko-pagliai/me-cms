@@ -17,17 +17,15 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Command\Install;
 
 use Cake\Core\Configure;
-use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\CommandTestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 use Tools\Filesystem;
 
 /**
  * CopyConfigCommandTest class
  */
-class CopyConfigCommandTest extends TestCase
+class CopyConfigCommandTest extends CommandTestCase
 {
-    use ConsoleIntegrationTestTrait;
-
     /**
      * @uses \MeCms\Command\Install\CopyConfigCommand::execute()
      * @test

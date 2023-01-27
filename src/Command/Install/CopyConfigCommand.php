@@ -21,7 +21,7 @@ use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
 use MeCms\Core\Plugin;
-use MeTools\Console\Command;
+use MeTools\Command\Command;
 use Tools\Filesystem;
 
 /**

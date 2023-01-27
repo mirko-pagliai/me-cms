@@ -16,16 +16,14 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Command\Install;
 
 use MeCms\Command\Install\RunAllCommand;
-use MeCms\TestSuite\TestCase;
+use MeTools\TestSuite\CommandTestCase;
 use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 
 /**
  * RunAllCommandTest class
  */
-class RunAllCommandTest extends TestCase
+class RunAllCommandTest extends CommandTestCase
 {
-    use ConsoleIntegrationTestTrait;
-
     /**
      * Tests for `execute()` method
      * @test

@@ -21,7 +21,7 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use MeCms\Model\Entity\User;
-use MeTools\Console\Command;
+use MeTools\Command\Command;
 
 /**
  * Lists users
