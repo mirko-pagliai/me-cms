@@ -18,7 +18,6 @@ namespace MeCms\Test\TestCase\Command\Install;
 
 use Cake\Core\Configure;
 use MeTools\TestSuite\CommandTestCase;
-use MeTools\TestSuite\ConsoleIntegrationTestTrait;
 use Tools\Filesystem;
 
 /**
