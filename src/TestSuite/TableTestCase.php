@@ -27,6 +27,27 @@ use Cake\ORM\Association\HasMany;
 abstract class TableTestCase extends TestCase
 {
     /**
+     * Get magic method.
+     *
+     * It provides access to the cached properties of the test.
+     * @param string $name Property name
+     * @return \MeCms\Model\Table\AppTable|mixed
+     * @throws \ReflectionException
+     */
+    public function __get(string $name)
+    {
+        if ($name === 'Table') {
+            if (empty($this->_cache['Table'])) {
+                $this->_cache['Table'] = new $this->originClassName();
+            }
+
+            return $this->_cache['Table'];
+        }
+
+        return parent::__get($name);
+    }
+
+    /**
      * Asserts that the table has a "belongs to" association
      * @param \Cake\ORM\Association $association Association
      * @return void

@@ -33,15 +33,10 @@ class TestCaseTest extends TestCase
      */
     public function testGetMagicMethod(): void
     {
-        $TableTest = new PostsTableTest();
-        $this->assertSame('Posts', $TableTest->alias);
-        $this->assertSame(PostsTable::class, $TableTest->originClassName);
-        $this->assertInstanceOf(PostsTable::class, $TableTest->Table);
-
         //With a no existing property
         $this->expectException(AssertionFailedError::class);
         $this->expectExceptionMessage('Property `noExistingProperty` does not exist');
-        $TableTest->noExistingProperty;
+        $this->noExistingProperty;
     }
 
     /**

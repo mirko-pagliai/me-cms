@@ -55,7 +55,6 @@ abstract class ControllerTestCase extends TestCase
                 }
 
                 return $this->_cache['Controller'];
-            //Rewrites the parent method
             case 'Table':
                 if (empty($this->_cache['Table'])) {
                     if ($this->Controller->fetchTable() instanceof AppTable) {
@@ -79,7 +78,7 @@ abstract class ControllerTestCase extends TestCase
      * Internal method to create an image to upload.
      *
      * Returns an array, similar to the `$_FILE` array that is created after an upload
-     * @return array{tmp_name: string, error: 0, name: string, type: string, size: int}
+     * @return array{tmp_name: string, error: int, name: string, type: string, size: int}
      */
     protected function createImageToUpload(): array
     {

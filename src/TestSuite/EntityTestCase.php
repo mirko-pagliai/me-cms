@@ -48,8 +48,6 @@ abstract class EntityTestCase extends TestCase
                 }
 
                 return $this->_cache['Entity'];
-            case 'Table':
-                $this->fail('Not implemented');
         }
 
         return parent::__get($name);

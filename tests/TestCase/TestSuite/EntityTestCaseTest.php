@@ -18,7 +18,6 @@ namespace MeCms\Test\TestCase\TestSuite;
 use MeCms\Model\Entity\Post;
 use MeCms\Test\TestCase\Model\Entity\PostTest;
 use MeCms\TestSuite\TestCase;
-use PHPUnit\Framework\AssertionFailedError;
 
 /**
  * EntityTestCaseTest class
@@ -35,9 +34,5 @@ class EntityTestCaseTest extends TestCase
         $this->assertSame('Posts', $EntityTestClass->alias);
         $this->assertSame(Post::class, $EntityTestClass->originClassName);
         $this->assertInstanceOf(Post::class, $EntityTestClass->Entity);
-
-        $this->expectException(AssertionFailedError::class);
-        $this->expectExceptionMessage('Not implemented');
-        $EntityTestClass->Table;
     }
 }

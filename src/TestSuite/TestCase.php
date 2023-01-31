@@ -49,28 +49,6 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Get magic method.
-     *
-     * It provides access to the cached properties of the test.
-     * @param string $name Property name
-     * @return mixed
-     * @throws \ReflectionException
-     */
-    public function __get(string $name)
-    {
-        if ($name === 'Table') {
-            if (empty($this->_cache['Table'])) {
-                $className = $this->getTableClassNameFromAlias($this->alias);
-                $this->_cache['Table'] = $this->getTable($this->alias, compact('className'));
-            }
-
-            return $this->_cache['Table'];
-        }
-
-        return parent::__get($name);
-    }
-
-    /**
      * Called after every test method
      * @return void
      */

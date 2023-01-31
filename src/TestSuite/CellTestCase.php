@@ -45,7 +45,6 @@ abstract class CellTestCase extends TestCase
                 }
 
                 return $this->_cache['alias'];
-            //Rewrites the parent's method
             case 'Table':
                 if (empty($this->_cache['Table'])) {
                     $className = $this->getTableClassNameFromAlias($this->alias);
