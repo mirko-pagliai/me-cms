@@ -56,12 +56,12 @@ parameters:
 			path: tests/TestCase/Policy/ControllerResolverTest.php
 
 		-
-			message: "#^Access to an undefined property App\\\\Test\\\\TestCase\\\\View\\\\AppViewTest\\:\\:\\$noExistingProperty\\.$#"
+			message: "#^Access to an undefined property MeCms\\\\Test\\\\TestCase\\\\TestSuite\\\\TestCaseTest\\:\\:\\$noExistingProperty\\.$#"
 			count: 1
 			path: tests/TestCase/TestSuite/TestCaseTest.php
 
 		-
-			message: "#^Expression \"\\$AppViewTest\\-\\>noExistingProperty\" on a separate line does not do anything\\.$#"
+			message: "#^Expression \"\\$this\\-\\>noExistingProperty\" on a separate line does not do anything\\.$#"
 			count: 1
 			path: tests/TestCase/TestSuite/TestCaseTest.php
 
