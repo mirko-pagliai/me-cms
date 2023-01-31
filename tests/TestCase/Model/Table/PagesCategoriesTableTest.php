@@ -36,36 +36,36 @@ class PagesCategoriesTableTest extends TableTestCase
     ];
 
     /**
-     * Test for `buildRules()` method
      * @test
+     * @uses \MeCms\Model\Table\PagesCategoriesTable::buildRules()
      */
     public function testBuildRules(): void
     {
         $example = ['title' => 'My title', 'slug' => 'my-slug'];
 
-        $entity = $this->Table->newEntity($example);
-        $this->assertNotEmpty($this->Table->save($entity));
+        $Entity = $this->Table->newEntity($example);
+        $this->assertNotEmpty($this->Table->save($Entity));
 
         //Saves again the same entity
-        $entity = $this->Table->newEntity($example);
-        $this->assertFalse($this->Table->save($entity));
+        $Entity = $this->Table->newEntity($example);
+        $this->assertFalse($this->Table->save($Entity));
         $this->assertEquals([
             'slug' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
             'title' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
-        ], $entity->getErrors());
+        ], $Entity->getErrors());
 
-        $entity = $this->Table->newEntity([
+        $Entity = $this->Table->newEntity([
             'parent_id' => 999,
             'title' => 'My title 2',
             'slug' => 'my-slug-2',
         ]);
-        $this->assertFalse($this->Table->save($entity));
-        $this->assertEquals(['parent_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $entity->getErrors());
+        $this->assertFalse($this->Table->save($Entity));
+        $this->assertEquals(['parent_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]], $Entity->getErrors());
     }
 
     /**
-     * Test for `initialize()` method
      * @test
+     * @uses \MeCms\Model\Table\PagesCategoriesTable::initialize()
      */
     public function testInitialize(): void
     {
@@ -106,17 +106,15 @@ class PagesCategoriesTableTest extends TableTestCase
     }
 
     /**
-     * Test for `find()` methods
      * @test
+     * @uses \MeCms\Model\Table\PagesCategoriesTable::findActive()
      */
-    public function testFindMethods(): void
+    public function testFindActive(): void
     {
         $query = $this->Table->find('active');
         $sql = $query->sql();
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
-
-        $this->skipIfCakeIsLessThan('4.3');
         $this->assertSqlEndsWith('FROM pages_categories Categories INNER JOIN pages Pages ON (Pages.active = :c0 AND Pages.created <= :c1 AND Categories.id = Pages.category_id)', $sql);
     }
 }
