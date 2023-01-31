@@ -20,35 +20,58 @@ use Cake\Utility\Inflector;
 
 /**
  * Abstract class for test validation classes
+ * @property \MeCms\Model\Table\AppTable $Table
  */
 abstract class ValidationTestCase extends TestCase
 {
-    /**
-     * If `true`, a mock instance of the table will be created
-     * @var bool
-     */
-    protected bool $autoInitializeClass = true;
-
     /**
      * @var array
      */
     protected array $example;
 
     /**
+     * Get magic method.
+     *
+     * It provides access to the cached properties of the test.
+     * @param string $name Property name
+     * @return mixed
+     * @throws \ReflectionException
+     */
+    public function __get(string $name)
+    {
+        switch ($name) {
+            //Rewrites the parent's method
+            case 'alias':
+                if (empty($this->_cache['alias'])) {
+                    $this->_cache['alias'] = Inflector::pluralize($this->getAlias($this));
+                }
+
+                return $this->_cache['alias'];
+            //Rewrites the parent's method
+            case 'Table':
+                if (empty($this->_cache['Table'])) {
+                    $className = $this->getTableClassNameFromAlias($this->alias);
+                    $this->_cache['Table'] = $this->getTable($this->alias, compact('className'));
+                }
+
+                return $this->_cache['Table'];
+        }
+
+        return parent::__get($name);
+    }
+
+    /**
      * Assert that all data are required.
      *
-     * It first verifies that the entity, compiled with passed data, has no
-     *  errors.
+     * It first verifies that the entity, compiled with passed data, has no errors.
      *
-     * Then it removes one field at a time, verifying that the "this field is
-     *  required" error is generated.
+     * Then it removes one field at a time, verifying that the "this field is required" error is generated.
      * @param array<string, mixed> $data Valid data
      * @param array<string> $exclude Key to be excluded
      * @return void
      */
     public function assertAllDataAreRequired(array $data, array $exclude = [])
     {
-        !empty($this->Table) ?: $this->fail('The property `$this->Table` has not been set');
         $this->example ?: $this->fail('The property `$this->example` has not been set');
 
         $this->assertEmpty($this->Table->newEntity($this->example)->getErrors());
@@ -64,24 +87,6 @@ abstract class ValidationTestCase extends TestCase
 
             $expectedErrors = [$key => ['_required' => 'This field is required']];
             $this->assertEquals($expectedErrors, $this->Table->newEntity($copy)->getErrors());
-        }
-    }
-
-    /**
-     * Called before every test method
-     * @return void
-     * @throw \PHPUnit\Framework\AssertionFailedError
-     * @throws \ReflectionException
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        if (empty($this->Table) && $this->autoInitializeClass) {
-            $alias = Inflector::pluralize($this->getAlias($this));
-            $className = $this->getTableClassNameFromAlias($alias);
-            $this->_classExistsOrFail($className);
-            $this->Table = $this->getTable($alias, compact('className'));
         }
     }
 

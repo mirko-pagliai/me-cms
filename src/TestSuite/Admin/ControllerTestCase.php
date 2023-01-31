@@ -28,9 +28,39 @@ use MeCms\TestSuite\ControllerTestCase as BaseControllerTestCase;
 abstract class ControllerTestCase extends BaseControllerTestCase
 {
     /**
+     * Get magic method.
+     *
+     * It provides access to the cached properties of the test.
+     * @param string $name Property name
+     * @return mixed
+     * @throws \ReflectionException
+     */
+    public function __get(string $name)
+    {
+        switch ($name) {
+            //Rewrites the parent method
+            case 'Controller':
+                if (empty($this->_cache['Controller'])) {
+                    $this->_cache['Controller'] = parent::__get($name);
+                    $this->_cache['Controller']->setRequest(new ServerRequest(['params' => $this->url]));
+                }
+
+                return $this->_cache['Controller'];
+            //Rewrites the parent method
+            case 'url':
+                if (empty($this->_cache['url'])) {
+                    $this->_cache['url'] = ['prefix' => ADMIN_PREFIX] + parent::__get($name);
+                }
+
+                return $this->_cache['url'];
+        }
+
+        return parent::__get($name);
+    }
+
+    /**
      * Called before every test method
      * @return void
-     * @throws \ReflectionException
      */
     protected function setUp(): void
     {
@@ -39,12 +69,6 @@ abstract class ControllerTestCase extends BaseControllerTestCase
         }
 
         parent::setUp();
-
-        $this->url = ['prefix' => ADMIN_PREFIX, 'plugin' => 'MeCms'] + ($this->url ?? []) + ['controller' => 'Posts'];
-
-        if (!empty($this->Controller)) {
-            $this->Controller->setRequest(new ServerRequest(['params' => $this->url]));
-        }
 
         $this->setAuthData('admin');
     }

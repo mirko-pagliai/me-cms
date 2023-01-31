@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use Cake\Http\ServerRequest;
-use MeCms\Controller\AppController;
 use MeCms\Model\Entity\User;
 use MeCms\Model\Entity\UsersGroup;
 use MeCms\Model\Table\AppTable;
@@ -27,55 +26,53 @@ use MeTools\TestSuite\IntegrationTestTrait;
  * Abstract class for test controllers
  * @property \MeCms\Controller\AppController $_controller
  * @property \Cake\Http\Response $_response
+ * @property \MeCms\Controller\AppController|(\MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject) $Controller
+ * @property \MeCms\Model\Table\AppTable $Table
+ * @property array{controller: string, plugin: string, prefix: ?string} $url
  */
 abstract class ControllerTestCase extends TestCase
 {
     use IntegrationTestTrait;
 
     /**
-     * @var \MeCms\Controller\AppController|(\MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject)
-     */
-    protected AppController $Controller;
-
-    /**
-     * If `true`, a mock instance of the shell will be created
-     * @var bool
-     */
-    protected bool $autoInitializeClass = true;
-
-    /**
-     * @var array{controller: string, plugin: string, prefix: ?string}
-     */
-    protected array $url;
-
-    /**
-     * Called before every test method
-     * @return void
+     * Get magic method.
+     *
+     * It provides access to the cached properties of the test.
+     * @param string $name Property name
+     * @return mixed
      * @throws \ReflectionException
-     * @noinspection PhpRedundantVariableDocTypeInspection
      */
-    protected function setUp(): void
+    public function __get(string $name)
     {
-        parent::setUp();
-
-        //Tries to retrieve controller and table from the class name
-        if (empty($this->Controller) && $this->autoInitializeClass) {
-            /** @var class-string<\MeCms\Controller\AppController> $originClassName */
-            $originClassName = $this->getOriginClassNameOrFail($this);
-            $alias = $this->getAlias($originClassName);
-
-            $this->url = ['controller' => $alias, 'prefix' => null, 'plugin' => $this->getPluginName($this)];
-            $Request = new ServerRequest(['params' => $this->url]);
-
-            if (!(new \ReflectionClass($originClassName))->isAbstract()) {
-                $Controller = new $originClassName($Request, null, $alias);
-
-                if (empty($this->Table) && $Controller->fetchTable() instanceof AppTable) {
-                    $this->Table = $Controller->fetchTable();
+        switch ($name) {
+            case 'Controller':
+                if (empty($this->_cache['Controller'])) {
+                    $Request = new ServerRequest(['params' => $this->url]);
+                    if (!(new \ReflectionClass($this->originClassName))->isAbstract()) {
+                        $this->_cache['Controller'] = new $this->originClassName($Request, null, $this->alias);
+                    }
+                    $this->_cache['Controller'] ??= $this->getMockForAbstractClass($this->originClassName, [$Request, null, $this->alias]);
                 }
-            }
-            $this->Controller = $Controller ?? $this->getMockForAbstractClass($originClassName, [$Request, null, $alias]);
+
+                return $this->_cache['Controller'];
+            //Rewrites the parent method
+            case 'Table':
+                if (empty($this->_cache['Table'])) {
+                    if ($this->Controller->fetchTable() instanceof AppTable) {
+                        $this->_cache['Table'] = $this->Controller->fetchTable();
+                    }
+                }
+
+                return $this->_cache['Table'];
+            case 'url':
+                if (empty($this->_cache['url'])) {
+                    $this->_cache['url'] = ['controller' => $this->alias, 'prefix' => null, 'plugin' => $this->getPluginName($this)];
+                }
+
+                return $this->_cache['url'];
         }
+
+        return parent::__get($name);
     }
 
     /**

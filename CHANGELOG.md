@@ -4,6 +4,8 @@
 * uses `Authentication` and `Authorization` plugins instead of the old `AuthComponent`;
 * some controller code has been moved from the `beforeFilter()` method to `beforeRender()`;
 * `\MeCms\View\AdminView` has become `\MeCms\View\Admin\AppView`;
+* all `TestCase` classes now provide access to useful properties for testing via the `__get()` magic methods and no
+  longer via the `setUp()` method;
 * the `ControllerTestCase` has been completely revised and some methods have been moved to
   `\MeCms\TestSuite\Admin\ControllerTestCase`, (specific for controller admin), instead other methods have been removed;
 * the `AuthComponent` has been removed. Use instead `\Authentication\Controller\Component\AuthenticationComponent`;

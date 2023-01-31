@@ -40,41 +40,43 @@ abstract class MenuHelperTestCase extends HelperTestCase
     }
 
     /**
-     * Called before every test method
-     * @return void
-     * @throws \ErrorException
+     * Get magic method.
+     *
+     * It provides access to the cached properties of the test.
+     * @param string $name Property name
+     * @return mixed
+     * @throws \ReflectionException
+     * @throws \Throwable
      */
-    protected function setUp(): void
+    public function __get(string $name)
     {
-        if (empty($this->Helper)) {
-            /**
-             * @var class-string<\Cake\View\Helper> $className
-             * @noinspection PhpRedundantVariableDocTypeInspection
-             */
-            $className = $this->getOriginClassName($this);
-            $methods = get_child_methods($className);
+        //Rewrites the parent method
+        if ($name === 'Helper') {
+            if (empty($this->_cache['Helper'])) {
+                $methods = get_child_methods($this->originClassName);
+                $Helper = $this->getMockForHelper($this->originClassName, $methods);
+                $OriginalHelper = new $this->originClassName($Helper->getView());
+                $HtmlHelper = new HtmlHelper($Helper->getView());
 
-            //Mock: each method returns its original value, but the links are already built and returned as HTML string
-            /** @var \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper */
-            $Helper = $this->getMockForHelper($className, $methods);
+                //Each method returns its original value, but links are already built and returned as HTML string
+                foreach ($methods as $method) {
+                    $Helper->method($method)->willReturnCallback(function () use ($OriginalHelper, $HtmlHelper, $method): array {
+                        $result = $OriginalHelper->$method();
 
-            $OriginalHelper = new $className($Helper->getView());
-            $HtmlHelper = new HtmlHelper($Helper->getView());
-            foreach ($methods as $method) {
-                $Helper->method($method)->willReturnCallback(function () use ($method, $OriginalHelper, $HtmlHelper): array {
-                    $returned = $OriginalHelper->$method();
+                        if (!empty($result[0])) {
+                            $result[0] = implode('', array_map(fn(array $link): string => $HtmlHelper->link(...$link), $result[0]));
+                        }
 
-                    if (!empty($returned[0])) {
-                        $returned[0] = implode(PHP_EOL, array_map(fn(array $link): string => call_user_func_array([$HtmlHelper, 'link'], $link), $returned[0]));
-                    }
+                        return $result;
+                    });
+                }
 
-                    return $returned;
-                });
+                $this->_cache['Helper'] = $Helper;
             }
 
-            $this->Helper = $Helper;
+            return $this->_cache['Helper'];
         }
 
-        parent::setUp();
+        return parent::__get($name);
     }
 }

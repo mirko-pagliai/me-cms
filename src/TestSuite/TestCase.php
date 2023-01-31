@@ -23,13 +23,52 @@ use MeTools\TestSuite\TestCase as BaseTestCase;
 /**
  * TestCase class
  * @method \MeCms\Model\Table\AppTable getTable(string $alias, array $options = [])
+ * @property \MeCms\Model\Table\AppTable $Table
  */
 abstract class TestCase extends BaseTestCase
 {
     /**
-     * @var \MeCms\Model\Table\AppTable
+     * @var array
      */
-    protected AppTable $Table;
+    protected array $_cache;
+
+    /**
+     * Constructor
+     * @param string|null $name Test name
+     * @param array $data Test data
+     * @param int|string $dataName Test data name
+     */
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+
+        if (!empty($data['cache'])) {
+            $this->_cache = $data['cache'];
+            unset($data['cache']);
+        }
+    }
+
+    /**
+     * Get magic method.
+     *
+     * It provides access to the cached properties of the test.
+     * @param string $name Property name
+     * @return mixed
+     * @throws \ReflectionException
+     */
+    public function __get(string $name)
+    {
+        if ($name === 'Table') {
+            if (empty($this->_cache['Table'])) {
+                $className = $this->getTableClassNameFromAlias($this->alias);
+                $this->_cache['Table'] = $this->getTable($this->alias, compact('className'));
+            }
+
+            return $this->_cache['Table'];
+        }
+
+        return parent::__get($name);
+    }
 
     /**
      * Called after every test method
@@ -39,8 +78,8 @@ abstract class TestCase extends BaseTestCase
     {
         parent::tearDown();
 
-        if (!empty($this->Table) && method_exists($this->Table, 'clearCache')) {
-            $this->Table->clearCache();
+        if (isset($this->_cache['Table']) && $this->_cache['Table'] instanceof AppTable) {
+            $this->_cache['Table']->clearCache();
         }
 
         $this->getTableLocator()->clear();
