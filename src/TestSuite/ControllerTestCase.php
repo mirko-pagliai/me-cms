@@ -26,9 +26,9 @@ use MeTools\TestSuite\IntegrationTestTrait;
  * Abstract class for test controllers
  * @property \MeCms\Controller\AppController $_controller
  * @property \Cake\Http\Response $_response
- * @property \MeCms\Controller\AppController|(\MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject) $Controller
+ * @property \MeCms\Controller\AppController $Controller
  * @property \MeCms\Model\Table\AppTable $Table
- * @property array{controller: string, plugin: string, prefix: ?string} $url
+ * @property array{controller: string, plugin: string} $url
  */
 abstract class ControllerTestCase extends TestCase
 {
@@ -48,10 +48,7 @@ abstract class ControllerTestCase extends TestCase
             case 'Controller':
                 if (empty($this->_cache['Controller'])) {
                     $Request = new ServerRequest(['params' => $this->url]);
-                    if (!(new \ReflectionClass($this->originClassName))->isAbstract()) {
-                        $this->_cache['Controller'] = new $this->originClassName($Request, null, $this->alias);
-                    }
-                    $this->_cache['Controller'] ??= $this->getMockForAbstractClass($this->originClassName, [$Request, null, $this->alias]);
+                    $this->_cache['Controller'] = new $this->originClassName($Request, null, $this->alias);
                 }
 
                 return $this->_cache['Controller'];
@@ -65,7 +62,7 @@ abstract class ControllerTestCase extends TestCase
                 return $this->_cache['Table'];
             case 'url':
                 if (empty($this->_cache['url'])) {
-                    $this->_cache['url'] = ['controller' => $this->alias, 'prefix' => null, 'plugin' => $this->getPluginName($this)];
+                    $this->_cache['url'] = ['controller' => $this->alias, 'plugin' => $this->getPluginName($this)];
                 }
 
                 return $this->_cache['url'];

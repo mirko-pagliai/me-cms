@@ -24,6 +24,7 @@ use MeCms\TestSuite\ControllerTestCase as BaseControllerTestCase;
 /**
  * Abstract class for test admin controllers
  * @property \MeCms\Controller\Admin\AppController $Controller
+ * @property array{controller: string, plugin: string, prefix: string} $url
  */
 abstract class ControllerTestCase extends BaseControllerTestCase
 {

@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
+use Cake\Http\ServerRequest;
 use MeCms\Controller\AppController;
 use MeCms\TestSuite\ControllerTestCase;
 use RuntimeException;
@@ -26,6 +27,18 @@ use RuntimeException;
  */
 class AppControllerTest extends ControllerTestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        if (!isset($this->Controller)) {
+            $Request = new ServerRequest(['params' => $this->url]);
+            /** @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject $Controller */
+            $Controller = $this->getMockForAbstractClass($this->originClassName, [$Request, null, $this->alias]);
+            $this->Controller = $Controller;
+        }
+    }
+
     /**
      * @uses \MeCms\Controller\AppController::beforeFilter()
      * @test
