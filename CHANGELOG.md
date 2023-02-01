@@ -9,7 +9,8 @@
 * the `ControllerTestCase` has been completely revised and some methods have been moved to
   `\MeCms\TestSuite\Admin\ControllerTestCase`, (specific for controller admin), instead other methods have been removed;
 * the `AuthComponent` has been removed. Use instead `\Authentication\Controller\Component\AuthenticationComponent`;
-* the `AuthHelper` has been removed.  Use instead `\MeCms\View\Helper\IdentityHelper`.
+* the `AuthHelper` has been removed.  Use instead `\MeCms\View\Helper\IdentityHelper`;
+* updated for me-tools 2.23.
 
 ## 2.30 branch
 ### 2.30.13
