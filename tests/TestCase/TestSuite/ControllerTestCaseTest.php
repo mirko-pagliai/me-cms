@@ -31,7 +31,7 @@ class ControllerTestCaseTest extends TestCase
      */
     public function testMagicGetMethod(): void
     {
-        $expectedUrl = ['controller' => 'Posts', 'prefix' => null, 'plugin' => 'MeCms'];
+        $expectedUrl = ['controller' => 'Posts', 'plugin' => 'MeCms'];
 
         $ControllerTestCase = new PostsControllerTest();
         $this->assertSame('Posts', $ControllerTestCase->alias);
