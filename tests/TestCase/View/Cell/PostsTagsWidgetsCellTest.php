@@ -67,7 +67,9 @@ class PostsTagsWidgetsCellTest extends CellTestCase
         parent::setUp();
 
         if (!isset($this->Table)) {
-            $this->Table = $this->getTable('MeCms.Tags');
+            /** @var \MeCms\Model\Table\TagsTable $Table */
+            $Table = $this->getTable('MeCms.Tags');
+            $this->Table = $Table;
         }
     }
 
