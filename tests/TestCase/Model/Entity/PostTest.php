@@ -24,8 +24,8 @@ use MeCms\TestSuite\PostAndPageEntityTestCase;
 class PostTest extends PostAndPageEntityTestCase
 {
     /**
-     * Test for `_getUrl()` method
      * @test
+     * @uses \MeCms\Model\Entity\Post::_getUrl()
      */
     public function testGetUrlVirtualField(): void
     {
@@ -33,8 +33,8 @@ class PostTest extends PostAndPageEntityTestCase
     }
 
     /**
-     * Test for `_getTagsAsString()` method
      * @test
+     * @uses \MeCms\Model\Entity\Post::_getTagsAsString()
      */
     public function testGetTagsAsStringVirtualField(): void
     {
