@@ -24,7 +24,6 @@ use MeCms\TestSuite\TestCase;
 
 /**
  * LoginRecorderTest class
- * @property \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $Component
  */
 class LoginRecorderComponentTest extends TestCase
 {
@@ -33,6 +32,11 @@ class LoginRecorderComponentTest extends TestCase
         'browser' => 'Chrome',
         'version' => '55.0.2883.87',
     ];
+
+    /**
+     * @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected LoginRecorderComponent $Component;
 
     /**
      * Fixtures

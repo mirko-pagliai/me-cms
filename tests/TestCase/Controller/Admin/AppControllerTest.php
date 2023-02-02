@@ -32,6 +32,11 @@ use MeCms\TestSuite\Admin\ControllerTestCase;
 class AppControllerTest extends ControllerTestCase
 {
     /**
+     * @var \MeCms\Controller\Admin\AppController&\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected AppController $Controller;
+
+    /**
      * @var array<string>
      */
     public $fixtures = [

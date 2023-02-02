@@ -31,34 +31,10 @@
       <code>$resource</code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="src/TestSuite/CellTestCase.php">
-    <TypeDoesNotContainType occurrences="2">
-      <code>empty($this-&gt;Table)</code>
-      <code>empty($this-&gt;Widget)</code>
-    </TypeDoesNotContainType>
-  </file>
-  <file src="src/TestSuite/ControllerTestCase.php">
-    <TypeDoesNotContainType occurrences="1">
-      <code>empty($this-&gt;Table)</code>
-    </TypeDoesNotContainType>
-  </file>
-  <file src="src/TestSuite/EntityTestCase.php">
-    <TypeDoesNotContainType occurrences="2">
-      <code>$this-&gt;fail('The property `$this-&gt;Entity` has not been set')</code>
-      <code>empty($this-&gt;Entity)</code>
-    </TypeDoesNotContainType>
-  </file>
-  <file src="src/TestSuite/TableTestCase.php">
-    <TypeDoesNotContainType occurrences="2">
-      <code>$this-&gt;fail('The property `$this-&gt;Table` has not been set')</code>
-      <code>empty($this-&gt;Table)</code>
-    </TypeDoesNotContainType>
-  </file>
-  <file src="src/TestSuite/ValidationTestCase.php">
-    <TypeDoesNotContainType occurrences="2">
-      <code>$this-&gt;fail('The property `$this-&gt;Table` has not been set')</code>
-      <code>empty($this-&gt;Table)</code>
-    </TypeDoesNotContainType>
+  <file src="src/TestSuite/TestCase.php">
+    <InternalMethod occurrences="1">
+      <code>parent::__construct($name, $data, $dataName)</code>
+    </InternalMethod>
   </file>
   <file src="src/Utility/Sitemap/SitemapBuilder.php">
     <TooManyTemplateParams occurrences="1">
@@ -83,11 +59,6 @@
   </file>
   <file src="templates/cell/PostsWidgets/months_as_list.php">
     <TooManyTemplateParams occurrences="1"/>
-  </file>
-  <file src="tests/TestCase/Command/Install/RunAllCommandTest.php">
-    <TypeDoesNotContainType occurrences="1">
-      <code>assertSame</code>
-    </TypeDoesNotContainType>
   </file>
   <file src="tests/TestCase/Command/UsersCommandTest.php">
     <UndefinedPropertyAssignment occurrences="1">

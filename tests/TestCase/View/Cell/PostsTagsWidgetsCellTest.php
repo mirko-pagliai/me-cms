@@ -21,6 +21,7 @@ use Cake\Cache\Cache;
 use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
 use ErrorException;
+use MeCms\Model\Table\TagsTable;
 use MeCms\TestSuite\CellTestCase;
 use Tools\TestSuite\ReflectionTrait;
 
@@ -51,6 +52,11 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     public $fixtures = [
         'plugin.MeCms.Tags',
     ];
+
+    /**
+     * @var \MeCms\Model\Table\TagsTable
+     */
+    protected TagsTable $Table;
 
     /**
      * Called before every test method

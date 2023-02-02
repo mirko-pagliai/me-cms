@@ -27,6 +27,15 @@ use RuntimeException;
  */
 class AppControllerTest extends ControllerTestCase
 {
+    /**
+     * @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected AppController $Controller;
+
+    /**
+     * Called before every test method
+     * @return void
+     */
     public function setUp(): void
     {
         parent::setUp();
