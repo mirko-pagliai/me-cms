@@ -55,7 +55,7 @@ abstract class TableTestCase extends TestCase
      */
     public function assertBelongsTo(Association $association, string $message = ''): void
     {
-        $message = $message ?: sprintf('Failed asserting that `%s` is an instance of `%s`', get_class($association), BelongsTo::class);
+        $message = $message ?: sprintf('Failed asserting that `%s` is an instance of `%s`', $association->getClassName(), BelongsTo::class);
         $this->assertInstanceOf(BelongsTo::class, $association, $message);
     }
 
@@ -67,7 +67,7 @@ abstract class TableTestCase extends TestCase
      */
     public function assertBelongsToMany(Association $association, string $message = ''): void
     {
-        $message = $message ?: sprintf('Failed asserting that `%s` is an instance of `%s`', get_class($association), BelongsToMany::class);
+        $message = $message ?: sprintf('Failed asserting that `%s` is an instance of `%s`', $association->getClassName(), BelongsToMany::class);
         $this->assertInstanceOf(BelongsToMany::class, $association, $message);
     }
 
@@ -92,7 +92,7 @@ abstract class TableTestCase extends TestCase
      */
     public function assertHasMany(Association $association, string $message = ''): void
     {
-        $message = $message ?: sprintf('Failed asserting that `%s` is an instance of `%s`', get_class($association), HasMany::class);
+        $message = $message ?: sprintf('Failed asserting that `%s` is an instance of `%s`', $association->getClassName(), HasMany::class);
         $this->assertInstanceOf(HasMany::class, $association, $message);
     }
 }

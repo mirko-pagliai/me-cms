@@ -48,7 +48,7 @@ class TableTestCaseTest extends TestCase
         $TableTestCase = new PostsTableTest();
         $TableTestCase->assertBelongsTo($TableTestCase->Table->Categories);
 
-        $this->expectAssertionFailed('Failed asserting that `Cake\ORM\Association\BelongsToMany` is an instance of `Cake\ORM\Association\BelongsTo`');
+        $this->expectAssertionFailed('Failed asserting that `MeCms\Model\Table\TagsTable` is an instance of `Cake\ORM\Association\BelongsTo`');
         $TableTestCase->assertBelongsTo($TableTestCase->Table->Tags);
     }
 
@@ -61,7 +61,7 @@ class TableTestCaseTest extends TestCase
         $TableTestCase = new PostsTableTest();
         $TableTestCase->assertBelongsToMany($TableTestCase->Table->Tags);
 
-        $this->expectAssertionFailed('Failed asserting that `Cake\ORM\Association\BelongsTo` is an instance of `Cake\ORM\Association\BelongsToMany`');
+        $this->expectAssertionFailed('Failed asserting that `MeCms\Model\Table\PostsCategoriesTable` is an instance of `Cake\ORM\Association\BelongsToMany`');
         $TableTestCase->assertBelongsToMany($TableTestCase->Table->Categories);
     }
 
@@ -88,7 +88,7 @@ class TableTestCaseTest extends TestCase
         $TableTestCase = new UsersTableTest();
         $TableTestCase->assertHasMany($TableTestCase->Table->Posts);
 
-        $this->expectAssertionFailed('Failed asserting that `Cake\ORM\Association\BelongsTo` is an instance of `Cake\ORM\Association\HasMany`');
+        $this->expectAssertionFailed('Failed asserting that `MeCms\Model\Table\UsersGroupsTable` is an instance of `Cake\ORM\Association\HasMany`');
         $TableTestCase->assertHasMany($TableTestCase->Table->Groups);
     }
 }
