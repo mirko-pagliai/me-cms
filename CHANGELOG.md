@@ -11,6 +11,8 @@
 * the `AuthComponent` has been removed. Use instead `\Authentication\Controller\Component\AuthenticationComponent`;
 * the `AuthHelper` has been removed.  Use instead `\MeCms\View\Helper\IdentityHelper`;
 * added `$message` argument to `EntityTestCase::assertHasNoAccessibleProperty()` method;
+* added `$message` argument to `assertBelongsTo()`, `assertBelongsToMany()`, `assertHasBehavior()` and `assertHasMany()`
+  methods provided by `TableTestCase`. Added tests for these methods;
 * updated for me-tools 2.23.
 
 ## 2.30 branch
