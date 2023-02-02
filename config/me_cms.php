@@ -7,8 +7,6 @@ return ['MeCms' => [
      ],
     //Default layout
     'default' => [
-        //Google Analytics ID or `false` to disable
-        'analytics' => false,
         //Displays the alert for the cookie policy
         'cookies_policy' => true,
         //"Contact us" form (enabled or disabled)
