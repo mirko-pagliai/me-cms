@@ -1,13 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App;
+namespace App\Test;
 
 use MeCms\TestSuite\TestCase;
 
 /**
  * SkipTestCase
- * @todo move to `App\Test`
  */
 class SkipTestCase extends TestCase
 {

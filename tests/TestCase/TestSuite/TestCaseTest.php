@@ -15,10 +15,8 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\TestSuite;
 
-use App\SkipTestCase;
+use App\Test\SkipTestCase;
 use Cake\ORM\Locator\TableLocator;
-use MeCms\Model\Table\PostsTable;
-use MeCms\Test\TestCase\Model\Table\PostsTableTest;
 use MeCms\TestSuite\TestCase;
 use PHPUnit\Framework\AssertionFailedError;
 
