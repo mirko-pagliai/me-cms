@@ -10,6 +10,7 @@
   `\MeCms\TestSuite\Admin\ControllerTestCase`, (specific for controller admin), instead other methods have been removed;
 * the `AuthComponent` has been removed. Use instead `\Authentication\Controller\Component\AuthenticationComponent`;
 * the `AuthHelper` has been removed.  Use instead `\MeCms\View\Helper\IdentityHelper`;
+* added `$message` argument to `EntityTestCase::assertHasNoAccessibleProperty()` method;
 * updated for me-tools 2.23.
 
 ## 2.30 branch
