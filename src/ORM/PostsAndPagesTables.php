@@ -18,7 +18,7 @@ namespace MeCms\ORM;
 
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Query;
 use MeCms\Model\Table\AppTable;
 use MeCms\Model\Table\Traits\GetPreviewsFromTextTrait;
@@ -30,6 +30,7 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  * This class provides some methods and properties common to both classes.
  * @property \Cake\ORM\Association\BelongsTo $Categories
  * @method findActiveBySlug(string $slug)
+ * @method findByUserId(int $id)
  * @method findPendingBySlug(string $slug)
  * @see \MeCms\Model\Table\PagesTable
  * @see \MeCms\Model\Table\PostsTable
@@ -52,11 +53,11 @@ abstract class PostsAndPagesTables extends AppTable
 
     /**
      * Called after an entity has been deleted
-     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\Event\EventInterface $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      */
-    public function afterDelete(Event $event, EntityInterface $entity): void
+    public function afterDelete(EventInterface $event, EntityInterface $entity): void
     {
         parent::afterDelete($event, $entity);
 
@@ -66,11 +67,11 @@ abstract class PostsAndPagesTables extends AppTable
 
     /**
      * Called after an entity is saved
-     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\Event\EventInterface $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      */
-    public function afterSave(Event $event, EntityInterface $entity): void
+    public function afterSave(EventInterface $event, EntityInterface $entity): void
     {
         parent::afterSave($event, $entity);
 
@@ -80,13 +81,13 @@ abstract class PostsAndPagesTables extends AppTable
 
     /**
      * Called before each entity is saved
-     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\Event\EventInterface $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      * @throws \Tools\Exception\NotWritableException
      * @since 2.17.0
      */
-    public function beforeSave(Event $event, EntityInterface $entity): void
+    public function beforeSave(EventInterface $event, EntityInterface $entity): void
     {
         $entity->set('preview', $this->getPreviews($entity->get('text')));
     }

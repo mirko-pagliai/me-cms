@@ -20,17 +20,14 @@ use Cake\Console\ConsoleIo;
 use Cake\Console\TestSuite\StubConsoleOutput;
 use ErrorException;
 use MeCms\Command\Install\FixElFinderCommand;
-use MeCms\TestSuite\TestCase;
-use MeTools\TestSuite\ConsoleIntegrationTestTrait;
+use MeTools\TestSuite\CommandTestCase;
 use Tools\Filesystem;
 
 /**
  * FixElFinderCommandTest class
  */
-class FixElFinderCommandTest extends TestCase
+class FixElFinderCommandTest extends CommandTestCase
 {
-    use ConsoleIntegrationTestTrait;
-
     protected const EXPECTED_FILES = [
         ELFINDER . 'php' . DS . 'connector.minimal.php',
         ELFINDER . 'elfinder-cke.html',

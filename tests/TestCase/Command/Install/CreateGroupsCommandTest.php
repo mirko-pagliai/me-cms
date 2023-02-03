@@ -15,17 +15,14 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command\Install;
 
-use MeCms\TestSuite\TestCase;
-use MeTools\TestSuite\ConsoleIntegrationTestTrait;
+use MeTools\TestSuite\CommandTestCase;
 
 /**
  * CreateGroupsCommandTest class
  * @property \MeCms\Command\Install\CreateGroupsCommand $Command
  */
-class CreateGroupsCommandTest extends TestCase
+class CreateGroupsCommandTest extends CommandTestCase
 {
-    use ConsoleIntegrationTestTrait;
-
     /**
      * @var bool
      */
@@ -40,8 +37,8 @@ class CreateGroupsCommandTest extends TestCase
     ];
 
     /**
-     * Test for `execute()` method
      * @test
+     * @uses \MeCms\Command\Install\CreateGroupsCommand::execute()
      */
     public function testExecute(): void
     {

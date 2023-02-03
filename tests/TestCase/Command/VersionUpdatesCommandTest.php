@@ -21,17 +21,14 @@ use Cake\Console\TestSuite\StubConsoleOutput;
 use Cake\Database\Driver\Postgres;
 use Cake\Database\Driver\Sqlite;
 use MeCms\Command\VersionUpdatesCommand;
-use MeCms\TestSuite\TestCase;
-use MeTools\TestSuite\ConsoleIntegrationTestTrait;
+use MeTools\TestSuite\CommandTestCase;
 
 /**
  * VersionUpdatesCommandTest class
  * @property \MeCms\Command\VersionUpdatesCommand $Command
  */
-class VersionUpdatesCommandTest extends TestCase
+class VersionUpdatesCommandTest extends CommandTestCase
 {
-    use ConsoleIntegrationTestTrait;
-
     /**
      * @var bool
      */
@@ -58,11 +55,13 @@ class VersionUpdatesCommandTest extends TestCase
 
         $this->skipIf($connection->getDriver() instanceof Sqlite);
 
-        $command = 'ALTER TABLE `' . $Table->getTable() . '` DROP `last_logins`';
-        if ($connection->getDriver() instanceof Postgres) {
-            $command = 'ALTER TABLE ' . $Table->getTable() . ' DROP COLUMN last_logins;';
+        if ($Table->getSchema()->hasColumn('last_logins')) {
+            $command = 'ALTER TABLE `' . $Table->getTable() . '` DROP `last_logins`';
+            if ($connection->getDriver() instanceof Postgres) {
+                $command = 'ALTER TABLE ' . $Table->getTable() . ' DROP COLUMN last_logins;';
+            }
+            $connection->execute($command);
         }
-        $connection->execute($command);
 
         $this->Command->addLastLoginsField();
         $this->assertTrue($this->getTable('MeCms.Users')->getSchema()->hasColumn('last_logins'));
@@ -80,12 +79,14 @@ class VersionUpdatesCommandTest extends TestCase
         $this->skipIf($Posts->getConnection()->getDriver() instanceof Sqlite);
 
         foreach ([$Posts, $Pages] as $Table) {
-            $connection = $Table->getConnection();
-            $command = 'ALTER TABLE `' . $Table->getTable() . '` DROP `enable_comments`';
-            if ($connection->getDriver() instanceof Postgres) {
-                $command = 'ALTER TABLE ' . $Table->getTable() . ' DROP COLUMN enable_comments;';
+            if ($Table->getSchema()->hasColumn('enable_comments')) {
+                $connection = $Table->getConnection();
+                $command = 'ALTER TABLE `' . $Table->getTable() . '` DROP `enable_comments`';
+                if ($connection->getDriver() instanceof Postgres) {
+                    $command = 'ALTER TABLE ' . $Table->getTable() . ' DROP COLUMN enable_comments;';
+                }
+                $connection->execute($command);
             }
-            $connection->execute($command);
         }
 
         $this->Command->addEnableCommentsField();

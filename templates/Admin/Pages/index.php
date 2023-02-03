@@ -11,7 +11,10 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\Admin\AppView $this
  */
+
 $this->extend('MeCms./Admin/common/index');
 $this->assign('title', I18N_PAGES);
 $this->append('actions', $this->Html->button(
@@ -96,12 +99,12 @@ echo $this->Form->end();
                     $actions = [];
 
                     //Only admins and managers can edit pages
-                    if ($this->Auth->isGroup(['admin', 'manager'])) {
+                    if ($this->Identity->isGroup('admin', 'manager')) {
                         $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $page->get('id')], ['icon' => 'pencil-alt']);
                     }
 
                     //Only admins can delete pages
-                    if ($this->Auth->isGroup('admin')) {
+                    if ($this->Identity->isGroup('admin')) {
                         $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $page->get('id')], [
                             'class' => 'text-danger',
                             'icon' => 'trash-alt',

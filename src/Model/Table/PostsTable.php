@@ -18,7 +18,7 @@ namespace MeCms\Model\Table;
 use ArrayObject;
 use Cake\Cache\Cache;
 use Cake\Collection\CollectionInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query as CakeQuery;
 use Cake\ORM\RulesChecker;
@@ -57,12 +57,12 @@ class PostsTable extends PostsAndPagesTables
 
     /**
      * Called before request data is converted into entities
-     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\Event\EventInterface $event Event object
      * @param \ArrayObject $data Request data
      * @return void
      * @since 2.15.2
      */
-    public function beforeMarshal(Event $event, ArrayObject $data): void
+    public function beforeMarshal(EventInterface $event, ArrayObject $data): void
     {
         if (!empty($data['tags_as_string'])) {
             $tags = array_unique(preg_split('/\s*,+\s*/', $data['tags_as_string']) ?: []);

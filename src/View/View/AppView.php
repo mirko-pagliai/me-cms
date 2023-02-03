@@ -44,11 +44,6 @@ class AppView extends View
             $this->Html->meta(__d('me_cms', 'Latest posts'), '/posts/rss', ['type' => 'rss']);
         }
 
-        //Sets scripts for Google Analytics
-        if (getConfig('default.analytics')) {
-            echo $this->Library->analytics(getConfig('default.analytics'));
-        }
-
         //Sets scripts for Shareaholic
         if (getConfig('shareaholic.site_id')) {
             echo $this->Library->shareaholic(getConfig('shareaholic.site_id'));

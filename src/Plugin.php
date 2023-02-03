@@ -14,23 +14,34 @@ declare(strict_types=1);
 
 namespace MeCms;
 
+use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceInterface;
+use Authentication\AuthenticationServiceProviderInterface;
+use Authentication\Middleware\AuthenticationMiddleware;
+use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceInterface;
+use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Middleware\AuthorizationMiddleware;
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\MiddlewareQueue;
+use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use MeCms\Command\Install\RunAllCommand;
+use MeCms\Policy\ControllerResolver;
 use MeTools\Command\Install\CreateDirectoriesCommand;
 use MeTools\Command\Install\CreateVendorsLinksCommand;
 use MeTools\Command\Install\SetPermissionsCommand;
+use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Finder\Finder;
 
 /**
  * Plugin class
  */
-class Plugin extends BasePlugin
+class Plugin extends BasePlugin implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface
 {
     /**
      * Returns `true` if is cli
@@ -62,6 +73,9 @@ class Plugin extends BasePlugin
             $plugin->bootstrap($app);
             $app->addPlugin($plugin);
         }
+
+        $app->addPlugin('Authentication');
+        $app->addPlugin('Authorization');
 
         parent::bootstrap($app);
 
@@ -108,6 +122,47 @@ class Plugin extends BasePlugin
     {
         $key = Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
 
-        return $middlewareQueue->add(new EncryptedCookieMiddleware(['login'], $key));
+        return $middlewareQueue->add(new EncryptedCookieMiddleware(['login'], $key))
+            ->add(new AuthenticationMiddleware($this))
+            ->add(new AuthorizationMiddleware($this, ['requireAuthorizationCheck' => false]));
+    }
+
+    /**
+     * Returns a service provider instance
+     * @param \Psr\Http\Message\ServerRequestInterface $request Request
+     * @return \Authentication\AuthenticationServiceInterface
+     * @see \MeCms\Controller\UsersController::login()
+     */
+    public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
+    {
+        $fields = ['username' => 'username', 'password' => 'password'];
+        $loginUrl = Router::url(['_name' => 'login']);
+
+        $service = new AuthenticationService();
+        $service->setConfig(['unauthenticatedRedirect' => $loginUrl, 'queryParam' => 'redirect']);
+
+        //Loads the authenticators. Session should be first
+        $service->loadAuthenticator('Authentication.Session');
+        $service->loadAuthenticator('Authentication.Form', compact('fields', 'loginUrl'));
+        $service->loadAuthenticator('Authentication.Cookie', compact('fields', 'loginUrl') + ['cookie' => ['expires' => '+1 year']]);
+
+        //Loads identifiers
+        $service->loadIdentifier('Authentication.Password', [
+            'fields' => ['username' => ['username', 'email'], 'password' => 'password'],
+            'resolver' => ['className' => 'Authentication.Orm', 'userModel' => 'MeCms.Users', 'finder' => 'auth'],
+        ]);
+
+        return $service;
+    }
+
+    /**
+     * Returns `AuthorizationServiceInterface` instance
+     * @param \Psr\Http\Message\ServerRequestInterface $request Server request
+     * @return \Authorization\AuthorizationServiceInterface
+     * @throws \RuntimeException When authorization method has not been defined
+     */
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+    {
+        return new AuthorizationService(new ControllerResolver());
     }
 }

@@ -20,7 +20,7 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use MeTools\Console\Command;
+use MeTools\Command\Command;
 
 /**
  * Creates a sample post

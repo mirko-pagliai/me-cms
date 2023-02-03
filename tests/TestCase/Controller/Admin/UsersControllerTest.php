@@ -21,12 +21,13 @@ use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Model\Entity\User;
-use MeCms\TestSuite\ControllerTestCase;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 use Tools\Filesystem;
 
 /**
  * UsersControllerTest class
  * @property \MeCms\Model\Table\UsersTable $Table
+ * @group admin-controller
  */
 class UsersControllerTest extends ControllerTestCase
 {
@@ -53,31 +54,21 @@ class UsersControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Tests for `beforeFilter()` method
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::beforeFilter()
      */
     public function testBeforeFilter(): void
     {
-        parent::testBeforeFilter();
-
         foreach (['index', 'add', 'edit'] as $action) {
             $this->get($this->url + compact('action') + [2]);
             $this->assertResponseOkAndNotEmpty();
             $this->assertNotEmpty($this->viewVariable('groups'));
         }
 
-        //Other actions, for example `changePassword`, still work
-        $this->setUserId(1);
+        //Other actions (for example `changePassword`) still work
         $this->get($this->url + ['action' => 'changePassword']);
         $this->assertEmpty($this->viewVariable('groups'));
-    }
 
-    /**
-     * Tests for `beforeFilter()` method, with no groups
-     * @test
-     */
-    public function testBeforeFilterNoGroups(): void
-    {
         //Deletes all categories
         $this->Table->Groups->deleteAll(['id IS NOT' => null]);
 
@@ -88,40 +79,31 @@ class UsersControllerTest extends ControllerTestCase
             $this->assertFlashMessage('You must first create an user group');
         }
 
-        //Other actions, for example `changePassword`, still work
-        $this->setUserId(1);
+        //Other actions (for example `changePassword`) still work
         $this->get($this->url + ['action' => 'changePassword']);
         $this->assertEmpty($this->viewVariable('groups'));
     }
 
     /**
-     * Tests for `isAuthorized()` method
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::isAuthorized()
      */
     public function testIsAuthorized(): void
     {
-        parent::testIsAuthorized();
-
-        //With `changePassword` action
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => true,
-        ], 'changePassword');
-
-        //With `activate` and `delete` actions
-        foreach (['activate', 'delete'] as $action) {
-            $this->assertGroupsAreAuthorized([
-                'admin' => true,
-                'manager' => false,
-                'user' => false,
-            ], $action);
+        foreach (['changePassword', 'changePicture'] as $action) {
+            $this->assertAllGroupsAreAuthorized($action);
         }
+
+        foreach (['activate', 'delete'] as $action) {
+            $this->assertOnlyAdminIsAuthorized($action);
+        }
+
+        parent::testIsAuthorized();
     }
 
     /**
-     * Tests for `index()` method
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::index()
      */
     public function testIndex(): void
     {
@@ -132,8 +114,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `view()` method
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::view()
      */
     public function testView(): void
     {
@@ -152,8 +134,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `add()` method
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::add()
      */
     public function testAdd(): void
     {
@@ -177,8 +159,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `edit()` method
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::edit()
      */
     public function testEdit(): void
     {
@@ -203,19 +185,20 @@ class UsersControllerTest extends ControllerTestCase
         $url = $this->url + ['action' => 'edit', 1];
 
         //An admin cannot edit other admin users
+        $this->setAuthData('admin', 2);
         $this->get($url);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('Only the admin founder can do this');
 
         //The admin founder can edit others admin users
-        $this->setUserId(1);
+        $this->setAuthData('admin', 1);
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
     }
 
     /**
-     * Tests for `delete()` method
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::delete()
      */
     public function testDelete(): void
     {
@@ -239,6 +222,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertFalse($this->Table->findById(4)->all()->isEmpty());
 
         //Only the admin founder can delete others admin users
+        $this->setAuthData('admin', 2);
         $this->post($url + [5]);
         $this->assertRedirect(['action' => 'index']);
         $this->assertFlashMessage('Only the admin founder can do this');
@@ -246,8 +230,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `activate()` method
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::activate()
      */
     public function testActivate(): void
     {
@@ -258,14 +242,13 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `changePassword()` method
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::changePassword()
      */
     public function testChangePassword(): void
     {
         $oldPassword = 'OldPassword1"';
         $url = $this->url + ['action' => 'changePassword'];
-        $this->setUserId(1);
 
         //Saves the password for the first user
         $user = $this->Table->get(1);
@@ -307,15 +290,14 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `changePicture()` method
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::changePicture()
      */
     public function testChangePicture(): void
     {
         $expectedPicture = USER_PICTURES . '1.jpg';
         $file = $this->createImageToUpload();
         $url = $this->url + ['action' => 'changePicture'];
-        $this->setUserId(1);
 
         //GET request
         $this->get($url);
@@ -323,14 +305,13 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertTemplate('Admin' . DS . 'Users' . DS . 'change_picture.php');
         $this->assertSessionEmpty('Auth.User.picture');
 
-        //Creates some files that simulate previous user pictures. These files
-        //  will be deleted before upload
+        //Creates some files that simulate previous user pictures. These files will be deleted before upload
         array_map([new Filesystem(), 'createFile'], [$expectedPicture, USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
 
         //POST request. This works
         $this->post($url + ['_ext' => 'json'], compact('file'));
         $this->assertResponseOk();
-        $this->assertSession($expectedPicture, 'Auth.User.picture');
+        $this->assertSession(basename(USER_PICTURES) . DS . '1.jpg', 'Auth.picture');
         $this->assertFileExists($expectedPicture);
         array_map([$this, 'assertFileDoesNotExist'], [USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
 
@@ -340,6 +321,7 @@ class UsersControllerTest extends ControllerTestCase
     /**
      * Tests for `changePicture()` method, error during the upload
      * @test
+     * @uses \MeCms\Controller\Admin\UsersController::changePicture()
      */
     public function testChangePictureErrorDuringUpload(): void
     {
@@ -359,17 +341,12 @@ class UsersControllerTest extends ControllerTestCase
         /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject $LoginRecorder */
         $LoginRecorder = $this->createPartialMock(LoginRecorderComponent::class, ['getController', 'getUserAgent']);
         $LoginRecorder->method('getController')->willReturn($this->Controller);
-        $LoginRecorder->method('getUserAgent')->willReturn([
-            'platform' => 'Linux',
-            'browser' => 'Chrome',
-            'version' => '55.0.2883.87',
-        ]);
+        $LoginRecorder->method('getUserAgent')->willReturn(['platform' => 'Linux', 'browser' => 'Chrome', 'version' => '55.0.2883.87']);
         $LoginRecorder->setConfig('user', 1);
 
         //Writes a login log
         $this->assertTrue($LoginRecorder->write());
 
-        $this->setUserId(1);
         $url = $this->url + ['action' => 'lastLogin'];
 
         $this->get($url);

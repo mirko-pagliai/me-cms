@@ -15,8 +15,10 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\TestSuite;
 
-use App\SkipTestCase;
+use App\Test\SkipTestCase;
+use Cake\ORM\Locator\TableLocator;
 use MeCms\TestSuite\TestCase;
+use PHPUnit\Framework\AssertionFailedError;
 
 /**
  * TestCaseTest class
@@ -24,8 +26,39 @@ use MeCms\TestSuite\TestCase;
 class TestCaseTest extends TestCase
 {
     /**
-     * Test for `skipIfCakeIsLessThan()` method
      * @test
+     * @uses \MeCms\TestSuite\TestCase::__get()
+     */
+    public function testGetMagicMethod(): void
+    {
+        //With a no existing property
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessage('Property `noExistingProperty` does not exist');
+        $this->noExistingProperty;
+    }
+
+    /**
+     * @test
+     * @uses \MeCms\TestSuite\TestCase::tearDown()
+     */
+    public function testTearDown(): void
+    {
+        $TableLocator = $this->createMock(TableLocator::class);
+        $TableLocator->expects($this->atLeastOnce())->method('clear');
+
+        /** @var \MeCms\Model\Table\PostsTable&\PHPUnit\Framework\MockObject\MockObject $Table */
+        $Table = $this->getMockForModel('MeCms.Posts', ['clearCache']);
+        $Table->expects($this->once())->method('clearCache');
+
+        $TestCase = $this->getMockForAbstractClass(TestCase::class, [null, ['cache' => compact('Table')]], '', true, true, true, ['getTableLocator']);
+        $TestCase->method('getTableLocator')->willReturn($TableLocator);
+
+        $TestCase->tearDown();
+    }
+
+    /**
+     * @test
+     * @uses \MeCms\TestSuite\TestCase::skipIfCakeIsLessThan()
      */
     public function testSkipIfCakeIsLessThan(): void
     {

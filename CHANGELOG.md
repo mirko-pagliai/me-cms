@@ -1,4 +1,20 @@
 # 2.x branch
+## 2.31 branch
+### 2.31.0
+* uses `Authentication` and `Authorization` plugins instead of the old `AuthComponent`;
+* some controller code has been moved from the `beforeFilter()` method to `beforeRender()`;
+* `\MeCms\View\AdminView` has become `\MeCms\View\Admin\AppView`;
+* all `TestCase` classes now provide access to useful properties for testing via the `__get()` magic methods and no
+  longer via the `setUp()` method;
+* the `ControllerTestCase` has been completely revised and some methods have been moved to
+  `\MeCms\TestSuite\Admin\ControllerTestCase`, (specific for controller admin), instead other methods have been removed;
+* the `AuthComponent` has been removed. Use instead `\Authentication\Controller\Component\AuthenticationComponent`;
+* the `AuthHelper` has been removed.  Use instead `\MeCms\View\Helper\IdentityHelper`;
+* added `$message` argument to `EntityTestCase::assertHasNoAccessibleProperty()` method;
+* added `$message` argument to `assertBelongsTo()`, `assertBelongsToMany()`, `assertHasBehavior()` and `assertHasMany()`
+  methods provided by `TableTestCase`. Added tests for these methods;
+* updated for me-tools 2.23.
+
 ## 2.30 branch
 ### 2.30.13
 * fixed a bug for the "read more" button of posts and pages;

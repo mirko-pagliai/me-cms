@@ -19,7 +19,7 @@ namespace MeCms\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use MeTools\Console\Command;
+use MeTools\Command\Command;
 
 /**
  * Adds an user

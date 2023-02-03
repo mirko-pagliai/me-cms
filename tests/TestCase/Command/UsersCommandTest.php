@@ -15,17 +15,14 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command;
 
-use MeCms\TestSuite\TestCase;
-use MeTools\TestSuite\ConsoleIntegrationTestTrait;
+use MeTools\TestSuite\CommandTestCase;
 
 /**
  * UsersCommandTest class
  * @property \MeCms\Command\UsersCommand $Command
  */
-class UsersCommandTest extends TestCase
+class UsersCommandTest extends CommandTestCase
 {
-    use ConsoleIntegrationTestTrait;
-
     /**
      * @var bool
      */

@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
- * @var \MeCms\View\View\AdminView $this
+ * @var \MeCms\View\View\Admin\AppView $this
  */
 
 $this->extend('MeCms./Admin/common/index');
@@ -102,7 +102,7 @@ echo $this->Form->end();
                     ];
 
                     //Only admins can activate accounts and delete users
-                    if ($this->Auth->isGroup('admin')) {
+                    if ($this->Identity->isGroup('admin')) {
                         //If the user is not active (pending)
                         if (!$user->get('active')) {
                             $actions[] = $this->Form->postLink(__d('me_cms', 'Activate'), ['action' => 'activate', $user->get('id')], [

@@ -17,7 +17,7 @@ namespace MeCms\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Association;
 use Cake\ORM\Query as CakeQuery;
@@ -41,22 +41,22 @@ abstract class AppTable extends Table
 
     /**
      * Called after an entity has been deleted
-     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\Event\EventInterface $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      */
-    public function afterDelete(Event $event, EntityInterface $entity): void
+    public function afterDelete(EventInterface $event, EntityInterface $entity): void
     {
         $this->clearCache();
     }
 
     /**
      * Called after an entity is saved
-     * @param \Cake\Event\Event $event Event object
+     * @param \Cake\Event\EventInterface $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      */
-    public function afterSave(Event $event, EntityInterface $entity): void
+    public function afterSave(EventInterface $event, EntityInterface $entity): void
     {
         $this->clearCache();
     }

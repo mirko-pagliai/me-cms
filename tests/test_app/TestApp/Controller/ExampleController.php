@@ -3,20 +3,22 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use MeCms\Model\Entity\User;
 
 class ExampleController extends Controller
 {
     /**
-     * Checks if the user is authorized for the request
+     * Checks if the provided user is authorized for the request
+     * @param \MeCms\Model\Entity\User $User User entity
      * @return bool `true` if the user is authorized, otherwise `false`
      */
-    public function isAuthorized(): bool
+    public function isAuthorized(User $User): bool
     {
-        if ($this->Auth->user('id') === 2) {
+        if ($User->get('id') === 2) {
             return false;
         }
 
-        if ($this->Auth->user('group.name') === 'moderator') {
+        if ($User->get('group')->get('name') === 'moderator') {
             return false;
         }
 

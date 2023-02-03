@@ -19,12 +19,15 @@ namespace MeCms\Test\TestCase\Controller\Traits;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
 use MeCms\TestSuite\TestCase;
+use Tools\TestSuite\ReflectionTrait;
 
 /**
  * GetStartAndEndDateTraitTest class
  */
 class GetStartAndEndDateTraitTest extends TestCase
 {
+    use ReflectionTrait;
+
     /**
      * @uses \MeCms\Controller\Traits\GetStartAndEndDateTrait::getStartAndEndDate()
      * @test

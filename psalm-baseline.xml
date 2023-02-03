@@ -26,44 +26,20 @@
       <code>\Cake\Collection\CollectionInterface&lt;array{url: string, width: int, height: int}&gt;</code>
     </TooManyTemplateParams>
   </file>
-  <file src="src/TestSuite/CellTestCase.php">
-    <TypeDoesNotContainType occurrences="2">
-      <code>empty($this-&gt;Table)</code>
-      <code>empty($this-&gt;Widget)</code>
-    </TypeDoesNotContainType>
+  <file src="src/Policy/ControllerResolver.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$resource</code>
+    </MoreSpecificImplementedParamType>
   </file>
-  <file src="src/TestSuite/ControllerTestCase.php">
-    <TypeDoesNotContainType occurrences="1">
-      <code>empty($this-&gt;Table)</code>
-    </TypeDoesNotContainType>
-  </file>
-  <file src="src/TestSuite/EntityTestCase.php">
-    <TypeDoesNotContainType occurrences="2">
-      <code>$this-&gt;fail('The property `$this-&gt;Entity` has not been set')</code>
-      <code>empty($this-&gt;Entity)</code>
-    </TypeDoesNotContainType>
-  </file>
-  <file src="src/TestSuite/TableTestCase.php">
-    <TypeDoesNotContainType occurrences="2">
-      <code>$this-&gt;fail('The property `$this-&gt;Table` has not been set')</code>
-      <code>empty($this-&gt;Table)</code>
-    </TypeDoesNotContainType>
-  </file>
-  <file src="src/TestSuite/ValidationTestCase.php">
-    <TypeDoesNotContainType occurrences="2">
-      <code>$this-&gt;fail('The property `$this-&gt;Table` has not been set')</code>
-      <code>empty($this-&gt;Table)</code>
-    </TypeDoesNotContainType>
+  <file src="src/TestSuite/TestCase.php">
+    <InternalMethod occurrences="1">
+      <code>parent::__construct($name, $data, $dataName)</code>
+    </InternalMethod>
   </file>
   <file src="src/Utility/Sitemap/SitemapBuilder.php">
     <TooManyTemplateParams occurrences="1">
       <code>\Cake\Collection\CollectionInterface&lt;array{class: class-string, name: string}&gt;</code>
     </TooManyTemplateParams>
-  </file>
-  <file src="src/View/Cell/PostsTagsWidgetsCell.php">
-    <InvalidParamDefault occurrences="1">
-      <code>array{maxFont: int, minFont: int}|false</code>
-    </InvalidParamDefault>
   </file>
   <file src="templates/Admin/Pages/form.php">
     <TooManyTemplateParams occurrences="1">
@@ -84,11 +60,6 @@
   <file src="templates/cell/PostsWidgets/months_as_list.php">
     <TooManyTemplateParams occurrences="1"/>
   </file>
-  <file src="tests/TestCase/Command/Install/RunAllCommandTest.php">
-    <TypeDoesNotContainType occurrences="1">
-      <code>assertSame</code>
-    </TypeDoesNotContainType>
-  </file>
   <file src="tests/TestCase/Command/UsersCommandTest.php">
     <UndefinedPropertyAssignment occurrences="1">
       <code>$this-&gt;Command-&gt;Users</code>
@@ -99,7 +70,12 @@
       <code>empty($this-&gt;Form)</code>
     </TypeDoesNotContainType>
   </file>
-  <file src="tests/TestCase/View/View/AdminViewTest.php">
+  <file src="tests/TestCase/Policy/ControllerResolverTest.php">
+    <InvalidArgument occurrences="1">
+      <code>new \stdClass()</code>
+    </InvalidArgument>
+  </file>
+  <file src="tests/TestCase/View/View/Admin/AppViewTest.php">
     <TypeDoesNotContainType occurrences="1">
       <code>empty($this-&gt;View)</code>
     </TypeDoesNotContainType>
