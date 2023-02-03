@@ -30,7 +30,7 @@ use Cake\View\Helper;
  *  - the options for the menu title;
  *  - the controllers handled by this menu, as an array.
  *
- * See the `\MeCms\View\Helper\MenuBuilderHelper::generate()` method for more information.
+ * @see \MeCms\View\Helper\MenuBuilderHelper::generate() for more information
  * @property \MeCms\View\Helper\IdentityHelper $Identity
  */
 class MenuHelper extends Helper
