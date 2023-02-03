@@ -13,20 +13,20 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace MeCms\Test\TestCase\View\View;
+namespace MeCms\Test\TestCase\View\View\Admin;
 
 use MeCms\TestSuite\TestCase;
-use MeCms\View\View\AdminView;
+use MeCms\View\View\Admin\AppView;
 
 /**
- * AdminViewTest class
+ * AppViewTest class
  */
-class AdminViewTest extends TestCase
+class AppViewTest extends TestCase
 {
     /**
-     * @var \MeCms\View\View\AdminView
+     * @var \MeCms\View\View\Admin\AppView
      */
-    protected AdminView $View;
+    protected AppView $View;
 
     /**
      * Called before every test method
@@ -37,7 +37,7 @@ class AdminViewTest extends TestCase
         parent::setUp();
 
         if (empty($this->View)) {
-            $this->View = new AdminView();
+            $this->View = new AppView();
             $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
         }
     }
@@ -53,7 +53,7 @@ class AdminViewTest extends TestCase
 
     /**
      * Tests for `render()` method
-     * @uses \MeCms\View\View\AdminView::render()
+     * @uses \MeCms\View\View\Admin\AppView::render()
      * @test
      */
     public function testRender(): void

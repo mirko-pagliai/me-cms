@@ -28,38 +28,17 @@ use MeCms\Model\Entity\PagesCategory;
 class PagesCategoriesController extends AppController
 {
     /**
-     * Called before the controller action.
-     * You can use this method to perform logic that needs to happen before
-     *  each controller action
+     * Called after the controller action is run, but before the view is rendered
      * @param \Cake\Event\EventInterface $event An Event instance
-     * @return \Cake\Http\Response|null|void
-     * @uses \MeCms\Model\Table\PagesCategoriesTable::getTreeList()
+     * @return void
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeRender(EventInterface $event): void
     {
-        $result = parent::beforeFilter($event);
-        if ($result) {
-            return $result;
-        }
+        parent::beforeRender($event);
 
         if ($this->getRequest()->is('action', ['add', 'edit'])) {
             $this->set('categories', $this->PagesCategories->getTreeList());
         }
-
-        return null;
-    }
-
-    /**
-     * Checks if the provided user is authorized for the request
-     * @param array|\ArrayAccess|null $user The user to check the authorization
-     *  of. If empty the user in the session will be used
-     * @return bool `true` if the user is authorized, otherwise `false`
-     * @uses \MeCms\Controller\Component\AuthComponent::isGroup()
-     */
-    public function isAuthorized($user = null): bool
-    {
-        //Only admins can delete pages categories. Admins and managers can access other actions
-        return $this->Auth->isGroup($this->getRequest()->is('delete') ? ['admin'] : ['admin', 'manager']);
     }
 
     /**

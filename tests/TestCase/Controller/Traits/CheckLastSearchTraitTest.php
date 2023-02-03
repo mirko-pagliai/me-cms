@@ -20,12 +20,15 @@ use Cake\Core\Configure;
 use MeCms\Controller\AppController;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\TestSuite\TestCase;
+use Tools\TestSuite\ReflectionTrait;
 
 /**
  * CheckLastSearchTraitTest class
  */
 class CheckLastSearchTraitTest extends TestCase
 {
+    use ReflectionTrait;
+
     /**
      * @uses \MeCms\Controller\Traits\CheckLastSearchTrait::checkLastSearch()
      * @test

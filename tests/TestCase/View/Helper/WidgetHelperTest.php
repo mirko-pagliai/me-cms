@@ -20,6 +20,7 @@ use App\View\Cell\ExampleWidgetsCell;
 use Cake\Core\Configure;
 use MeTools\TestSuite\HelperTestCase;
 use TestPlugin\View\Cell\PluginExampleWidgetsCell;
+use Tools\TestSuite\ReflectionTrait;
 
 /**
  * WidgetHelperTest class
@@ -27,23 +28,11 @@ use TestPlugin\View\Cell\PluginExampleWidgetsCell;
  */
 class WidgetHelperTest extends HelperTestCase
 {
-    /**
-     * Called before every test method
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->loadPlugins(['TestPlugin' => []]);
-
-        $Request = $this->Helper->getView()->getRequest()->withEnv('REQUEST_URI', '/');
-        $this->Helper->getView()->setRequest($Request);
-    }
+    use ReflectionTrait;
 
     /**
-     * @uses \MeCms\View\Helper\WidgetHelper::getAll()
      * @test
+     * @uses \MeCms\View\Helper\WidgetHelper::getAll()
      */
     public function testGetAll(): void
     {
@@ -93,8 +82,8 @@ class WidgetHelperTest extends HelperTestCase
     }
 
     /**
-     * @uses \MeCms\View\Helper\WidgetHelper::all()
      * @test
+     * @uses \MeCms\View\Helper\WidgetHelper::all()
      */
     public function testAll(): void
     {
@@ -110,8 +99,8 @@ class WidgetHelperTest extends HelperTestCase
     }
 
     /**
-     * @uses \MeCms\View\Helper\WidgetHelper::widget()
      * @test
+     * @uses \MeCms\View\Helper\WidgetHelper::widget()
      */
     public function testWidget(): void
     {

@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
- * @var \MeCms\View\View\AdminView $this
+ * @var \MeCms\View\View\Admin\AppView $this
  */
 ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@ declare(strict_types=1);
                 <nav id="sidebar" class="col d-none d-lg-block border-end min-vh-100 py-4 p-3">
                     <?= $this->element('MeCms.admin/sidebar', [], getConfig('debug') ? [] : ['cache' => [
                         'config' => 'admin',
-                        'key' => sprintf('sidebar_user_%s', $this->Auth->user('id')),
+                        'key' => 'sidebar_user_' . $this->Identity->get('id'),
                     ]]) ?>
                 </nav>
                 <main class="col-lg-10 py-4 p-3">

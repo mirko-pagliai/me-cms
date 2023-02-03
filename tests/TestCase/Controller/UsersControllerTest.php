@@ -17,26 +17,20 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Controller;
 
-use Cake\Controller\ComponentRegistry;
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\EventInterface;
-use Cake\I18n\FrozenTime;
-use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Model\Entity\User;
 use MeCms\TestSuite\ControllerTestCase;
 use Tokens\Controller\Component\TokenComponent;
 
 /**
  * UsersControllerTest class
- * @property \MeCms\Controller\UsersController $_controller
  * @property \MeCms\Model\Table\UsersTable $Table
  */
 class UsersControllerTest extends ControllerTestCase
 {
     /**
-     * @var \Tokens\Controller\Component\TokenComponent
+     * @var \Tokens\Controller\Component\TokenComponent&\PHPUnit\Framework\MockObject\MockObject
      */
     protected TokenComponent $Token;
 
@@ -57,72 +51,21 @@ class UsersControllerTest extends ControllerTestCase
     {
         parent::setUp();
 
-        $this->Token ??= new TokenComponent(new ComponentRegistry());
+        $this->Token ??= $this->createPartialMock(TokenComponent::class, []);
     }
 
     /**
-     * Asserts cookie values which are encrypted by the CookieComponent
-     * @param mixed $expected The expected contents
-     * @param string $name The cookie name
-     * @param string $encrypt Encryption mode to use
-     * @param string|null $key Encryption key used
-     * @param string $message The failure message that will be appended to the generated message
-     * @return void
-     */
-    public function assertCookieEncrypted($expected, string $name, string $encrypt = 'aes', ?string $key = null, string $message = ''): void
-    {
-        $key = $key ?: Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
-
-        parent::assertCookieEncrypted($expected, $name, $encrypt, $key, $message);
-    }
-
-    /**
-     * Sets a encrypted request cookie for future requests
-     * @param string $name The cookie name to use
-     * @param mixed $value The value of the cookie
-     * @param string|false $encrypt Encryption mode to use
-     * @param string|null $key Encryption key used
-     * @return void
-     */
-    public function cookieEncrypted(string $name, $value, $encrypt = 'aes', $key = null): void
-    {
-        $key = $key ?: Configure::read('Security.cookieKey', md5(Configure::read('Security.salt', '')));
-
-        parent::cookieEncrypted($name, $value, $encrypt, $key);
-    }
-
-    /**
-     * Adds additional event spies to the controller/view event manager
-     * @param \Cake\Event\EventInterface $event A dispatcher event
-     * @param \Cake\Controller\Controller|null $controller Controller instance
-     * @return void
-     */
-    public function controllerSpy(EventInterface $event, ?Controller $controller = null): void
-    {
-        parent::controllerSpy($event, $controller);
-
-        /** @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\Stub $LoginRecorder */
-        $LoginRecorder = $this->createStub(LoginRecorderComponent::class);
-        $LoginRecorder->method('setConfig')->willReturnSelf();
-        $this->_controller->LoginRecorder = $LoginRecorder;
-    }
-
-    /**
-     * Test for `beforeFilter()` method
      * @uses \MeCms\Controller\UsersController::beforeFilter()
      * @test
      */
     public function testBeforeFilter(): void
     {
-        parent::testBeforeFilter();
-
-        $this->setUserId(1);
+        $this->setAuthData();
         $this->get(['_name' => 'login']);
         $this->assertRedirect(['_name' => 'dashboard']);
     }
 
     /**
-     * Test for `activation()` method
      * @uses \MeCms\Controller\UsersController::activation()
      * @test
      */
@@ -158,7 +101,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Test for `activationResend()` method
      * @uses \MeCms\Controller\UsersController::activationResend()
      * @test
      */
@@ -198,7 +140,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Test for `login()` method
      * @uses \MeCms\Controller\UsersController::login()
      * @test
      */
@@ -212,99 +153,59 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertLayout('login.php');
 
         //POST request with invalid data
+        $this->enableRetainFlashMessages();
         $this->post($url, ['username' => 'wrong', 'password' => 'wrong']);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertCookieNotSet('login');
         $this->assertSessionEmpty('Auth');
+        $this->assertFlashMessage('Invalid username or password');
         $this->assertLogContains('Failed login: username `wrong`, password `wrong`', 'users');
 
         //POST request. Now data are valid
         $password = 'newPassword1!';
         $user = $this->Table->get(1);
         $this->Table->save($user->set('password', $password));
-        $this->post($url, ['username' => $user->get('username'), 'remember_me' => true] + compact('password'));
-        $this->assertRedirect($this->Controller->Auth->redirectUrl());
-        $this->assertSession($user->get('id'), 'Auth.User.id');
-        $this->assertCookieEncrypted(['username' => $user->get('username')] + compact('password'), 'login');
-        $expires = FrozenTime::createFromTimestamp($this->_response->getCookie('login')['expires']);
-        $this->assertTrue($expires->isWithinNext('1 year'));
+        $this->cleanup();
+        $this->post($url, ['username' => $user->get('username')] + compact('password'));
+        $this->assertRedirect(['_name' => 'dashboard']);
+        $this->assertSession($user->get('id'), 'Auth.id');
 
         //POST request. The user is banned
         $this->Table->save($user->set('banned', true));
-        $this->post($url, ['username' => $user->get('username'), 'remember_me' => true] + compact('password'));
-        $this->assertRedirect($this->Controller->Auth->logout());
-        $this->assertTrue($this->_response->getCookieCollection()->get('login')->isExpired());
+        $this->enableRetainFlashMessages();
+        $this->post($url, ['username' => $user->get('username')] + compact('password'));
+        $this->assertResponseOkAndNotEmpty();
         $this->assertSessionEmpty('Auth');
-        $this->assertFlashMessage('Your account has been banned by an admin');
+        $this->assertFlashMessage('Invalid username or password');
 
         //POST request. The user is pending
         $this->Table->save($user->set(['active' => false, 'banned' => false]));
-        $this->post($url, ['username' => $user->get('username'), 'remember_me' => true] + compact('password'));
-        $this->assertRedirect($this->Controller->Auth->logout());
-        $this->assertTrue($this->_response->getCookieCollection()->get('login')->isExpired());
+        $this->enableRetainFlashMessages();
+        $this->post($url, ['username' => $user->get('username')] + compact('password'));
+        $this->assertResponseOkAndNotEmpty();
         $this->assertSessionEmpty('Auth');
-        $this->assertFlashMessage('Your account has not been activated yet');
+        $this->assertFlashMessage('Invalid username or password');
     }
 
     /**
-     * Test for `login()` method, with cookies
-     * @uses \MeCms\Controller\UsersController::login()
-     * @test
-     */
-    public function testLoginWithCookies(): void
-    {
-        $url = ['_name' => 'login'];
-
-        //No user data on cookies
-        $this->get($url);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertSessionEmpty('Auth');
-
-        //Writes wrong data on cookies
-        $this->cookie('login', ['username' => 'a', 'password' => 'b']);
-        $this->get($url);
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertSessionEmpty('Auth');
-
-        //Gets a user and sets a password, then writes right data on cookies
-        $password = 'my-password-1!';
-        $user = $this->Table->findByActiveAndBanned(true, false)->first();
-        $this->Table->save($user->set(compact('password') + ['password_repeat' => $password]));
-        $this->cookieEncrypted('login', ['username' => $user->username] + compact('password'));
-        $this->get($url);
-        $this->assertRedirect(['_name' => 'dashboard']);
-        $this->assertSession($user->get('id'), 'Auth.User.id');
-
-        //"pending" and "banned" users
-        foreach ([
-            ['active' => false],
-            ['active' => true, 'banned' => true],
-        ] as $userData) {
-            $this->Table->save($user->set($userData));
-            $this->cookieEncrypted('login', ['username' => $user->username] + compact('password'));
-            $this->get($url);
-            $this->assertRedirect(['_name' => 'homepage']);
-            $this->assertSessionEmpty('Auth');
-            $this->assertTrue($this->_response->getCookieCollection()->get('login')->isExpired());
-        }
-    }
-
-    /**
-     * Test for `logout()` method
      * @uses \MeCms\Controller\UsersController::logout()
      * @test
      */
     public function testLogout(): void
     {
-        $this->cookie('login', 'value');
+        $this->setAuthData();
+        $this->session(['otherSessionValue' => 'value']);
+
+        //The user is currently logged in
+        $this->get('/');
+        $this->assertSession(1, 'Auth.id');
+
         $this->get(['_name' => 'logout']);
-        $this->assertRedirect($this->Controller->Auth->logout());
-        $this->assertTrue($this->_response->getCookieCollection()->get('login')->isExpired());
-        $this->assertFlashMessage('You are successfully logged out');
+        $this->assertResponseCode(302);
+        $this->assertSessionEmpty('Auth');
+        $this->assertSession('value', 'otherSessionValue');
     }
 
     /**
-     * Test for `passwordForgot()` method
      * @uses \MeCms\Controller\UsersController::passwordForgot()
      * @test
      */
@@ -346,7 +247,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Test for `passwordReset()` method
      * @uses \MeCms\Controller\UsersController::passwordReset()
      * @test
      */
@@ -389,7 +289,6 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * Test for `signup()` method
      * @uses \MeCms\Controller\UsersController::signup()
      * @test
      */

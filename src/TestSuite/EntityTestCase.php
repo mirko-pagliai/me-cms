@@ -16,51 +16,54 @@ declare(strict_types=1);
 
 namespace MeCms\TestSuite;
 
-use Cake\ORM\Entity;
+use Cake\Utility\Inflector;
 
 /**
  * Abstract class for test entities
+ * @property \Cake\ORM\Entity $Entity
  */
 abstract class EntityTestCase extends TestCase
 {
     /**
-     * @var \Cake\ORM\Entity
+     * Get magic method.
+     *
+     * It provides access to the cached properties of the test.
+     * @param string $name Property name
+     * @return mixed
+     * @throws \ReflectionException
      */
-    protected Entity $Entity;
+    public function __get(string $name)
+    {
+        switch ($name) {
+            //Rewrites the parent method
+            case 'alias':
+                if (empty($this->_cache['alias'])) {
+                    $this->_cache['alias'] = Inflector::pluralize(get_class_short_name($this->originClassName));
+                }
 
-    /**
-     * If `true`, a mock instance of the shell will be created
-     * @var bool
-     */
-    protected bool $autoInitializeClass = true;
+                return $this->_cache['alias'];
+            case 'Entity':
+                if (empty($this->_cache['Entity'])) {
+                    $this->_cache['Entity'] = new $this->originClassName();
+                }
+
+                return $this->_cache['Entity'];
+        }
+
+        return parent::__get($name);
+    }
 
     /**
      * Asserts that the entity has a "no accessible" property
      * @param string|array $property Property name
      * @return void
      */
-    public function assertHasNoAccessibleProperty($property): void
+    public function assertHasNoAccessibleProperty($property, string $message = ''): void
     {
-        !empty($this->Entity) ?: $this->fail('The property `$this->Entity` has not been set');
 
         foreach ((array)$property as $name) {
-            $this->assertFalse($this->Entity->isAccessible($name));
-        }
-    }
-
-    /**
-     * Called before every test method
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        if (empty($this->Entity) && $this->autoInitializeClass) {
-            $entityClassName = $this->getOriginClassNameOrFail($this);
-            /** @var \Cake\ORM\Entity $Entity */
-            $Entity = new $entityClassName();
-            $this->Entity = $Entity;
+            $message = $message ?: sprintf('Failed asserting that `\%s::$%s` property is not accessible', get_class($this->Entity), $name);
+            $this->assertFalse($this->Entity->isAccessible($name), $message);
         }
     }
 }

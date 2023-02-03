@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace MeCms\View\View;
+namespace MeCms\View\View\Admin;
 
 use MeCms\View\View;
 
@@ -21,7 +21,7 @@ use MeCms\View\View;
  * Application view class for admin views
  * @property \MeCms\View\Helper\MenuBuilderHelper $MenuBuilder
  */
-class AdminView extends View
+class AppView extends View
 {
     /**
      * The name of the layout file to render the template inside of

@@ -18,11 +18,12 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\I18n\I18n;
 use MeCms\Controller\Admin\SystemsController;
-use MeCms\TestSuite\ControllerTestCase;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 use Tools\Filesystem;
 
 /**
  * SystemsControllerTest class
+ * @group admin-controller
  */
 class SystemsControllerTest extends ControllerTestCase
 {
@@ -33,15 +34,15 @@ class SystemsControllerTest extends ControllerTestCase
      * @see createSomeTemporaryData()
      * @return void
      */
-    public function assertCacheIsEmpty(): void
+    protected function assertCacheIsEmpty(): void
     {
-        array_map([$this, 'assertNull'], [Cache::read('value'), Cache::read('varFromGroup', 'posts')]);
+        $this->assertNull(Cache::read('value'));
+        $this->assertNull(Cache::read('varFromGroup', 'posts'));
     }
 
     /**
-     * Internal method to create some temporary data (cache, assets, logs,
-     *  sitemap, thumbnails)
-     * @return array Files
+     * Internal method to create some temporary data (cache, assets, logs, sitemap, thumbnails)
+     * @return array<string, string> Files
      */
     protected function createSomeTemporaryData(): array
     {
@@ -93,31 +94,19 @@ class SystemsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `isAuthorized()` method
+     * @uses \MeCms\Controller\Admin\SystemsController::isAuthorized()
      * @test
      */
     public function testIsAuthorized(): void
     {
+        $this->assertOnlyAdminIsAuthorized('tmpCleaner');
+
         parent::testIsAuthorized();
-
-        //With `tmpCleaner` action
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => false,
-        ], 'tmpCleaner');
-
-        foreach (['all', 'logs'] as $param) {
-            $this->Controller->setRequest($this->Controller->getRequest()->withParam('pass.0', $param));
-            $this->assertGroupsAreAuthorized([
-                'admin' => true,
-                'manager' => false,
-                'user' => false,
-            ]);
-        }
     }
 
     /**
      * Tests for `browser()` method
+     * @uses \MeCms\Controller\Admin\SystemsController::browser()
      * @test
      */
     public function testBrowser(): void
@@ -137,6 +126,7 @@ class SystemsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `changelogs()` method
+     * @uses \MeCms\Controller\Admin\SystemsController::changelogs()
      * @test
      */
     public function testChangelogs(): void
@@ -164,6 +154,7 @@ class SystemsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `tmpCleaner()` method
+     * @uses \MeCms\Controller\Admin\SystemsController::tmpCleaner()
      * @test
      */
     public function testTmpCleaner(): void
@@ -205,6 +196,7 @@ class SystemsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `tmpViewer()` method
+     * @uses \MeCms\Controller\Admin\SystemsController::tmpViewer()
      * @test
      */
     public function testTmpViewer(): void

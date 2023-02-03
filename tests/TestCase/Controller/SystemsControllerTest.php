@@ -51,17 +51,14 @@ class SystemsControllerTest extends ControllerTestCase
     {
         parent::controllerSpy($event, $controller);
 
-        $this->_controller->ContactUsForm->SpamDetector = $this->getMockBuilder(SpamDetector::class)
-            ->onlyMethods(['verify'])
-            ->getMock();
-
+        $this->_controller->ContactUsForm->SpamDetector = $this->createPartialMock(SpamDetector::class, ['verify']);
         $this->_controller->ContactUsForm->SpamDetector->method('verify')->willReturn(true);
 
         $this->_controller->viewBuilder()->setLayout('with_flash');
     }
 
     /**
-     * Tests for `acceptCookies()` method
+     * @uses \MeCms\Controller\SystemsController::acceptCookies()
      * @test
      */
     public function testAcceptCookies(): void
@@ -74,7 +71,7 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `contactUs()` method
+     * @uses \MeCms\Controller\SystemsController::contactUs()
      * @test
      */
     public function testContactUs(): void
@@ -117,7 +114,7 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `ipNotAllowed()` method
+     * @uses \MeCms\Controller\SystemsController::ipNotAllowed()
      * @test
      */
     public function testIpNotAllowed(): void
@@ -126,14 +123,9 @@ class SystemsControllerTest extends ControllerTestCase
         $this->assertRedirect(['_name' => 'homepage']);
 
         //With a spammer IP
-        Cache::write(md5(serialize(['ip' => ['31.133.120.18']])), [
-          'success' => 1,
-          'ip' => [[
-              'value' => '31.133.120.18',
-              'appears' => 1,
-            ]],
-        ], 'StopSpam');
-        $this->configRequest(['environment' => ['REMOTE_ADDR' => '31.133.120.18']]);
+        $ip = '31.133.120.18';
+        Cache::write(md5(serialize(['ip' => [$ip]])), ['success' => 1, 'ip' => [['value' => $ip, 'appears' => 1]]], 'StopSpam');
+        $this->configRequest(['environment' => ['REMOTE_ADDR' => $ip]]);
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Systems' . DS . 'ip_not_allowed.php');
@@ -141,7 +133,7 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `offline()` method
+     * @uses \MeCms\Controller\SystemsController::offline()
      * @test
      */
     public function testOffline(): void
@@ -158,7 +150,7 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `sitemap()` method
+     * @uses \MeCms\Controller\SystemsController::sitemap()
      * @test
      */
     public function testSitemap(): void

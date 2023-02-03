@@ -11,7 +11,11 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\Admin\AppView $this
+ * @var \MeCms\Model\Entity\User $user
  */
+
 $this->extend('/Admin/common/view');
 $this->assign('title', $user->get('full_name'));
 $this->append('actions', $this->Html->button(
@@ -21,7 +25,7 @@ $this->append('actions', $this->Html->button(
 ));
 
 //Only admins can activate accounts and delete users
-if ($this->Auth->isGroup('admin')) {
+if ($this->Identity->isGroup('admin')) {
     //If the user is not active (pending)
     if (!$user->get('active')) {
         $this->append('actions', $this->Form->postButton(

@@ -22,7 +22,7 @@ use Cake\Console\ConsoleOptionParser;
 use Cake\Routing\Router;
 use ErrorException;
 use MeCms\Core\Plugin;
-use MeTools\Console\Command;
+use MeTools\Command\Command;
 use Tools\Filesystem;
 
 /**

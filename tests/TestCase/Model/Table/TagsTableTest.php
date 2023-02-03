@@ -38,22 +38,23 @@ class TagsTableTest extends TableTestCase
     /**
      * Test for `buildRules()` method
      * @test
+     * @uses \MeCms\Model\Table\TagsTable::buildRules()
      */
     public function testBuildRules(): void
     {
         $example = ['tag' => 'my tag'];
-        $entity = $this->Table->newEntity($example);
-        $this->assertNotEmpty($this->Table->save($entity));
+        $Entity = $this->Table->newEntity($example);
+        $this->assertNotEmpty($this->Table->save($Entity));
 
         //Saves again the same entity
-        $entity = $this->Table->newEntity($example);
-        $this->assertFalse($this->Table->save($entity));
-        $this->assertEquals(['tag' => ['_isUnique' => I18N_VALUE_ALREADY_USED]], $entity->getErrors());
+        $Entity = $this->Table->newEntity($example);
+        $this->assertFalse($this->Table->save($Entity));
+        $this->assertEquals(['tag' => ['_isUnique' => I18N_VALUE_ALREADY_USED]], $Entity->getErrors());
     }
 
     /**
-     * Test for `initialize()` method
      * @test
+     * @uses \MeCms\Model\Table\TagsTable::initialize()
      */
     public function testInitialize(): void
     {
@@ -72,23 +73,21 @@ class TagsTableTest extends TableTestCase
     }
 
     /**
-     * Test for `find()` methods
      * @test
+     * @uses \MeCms\Model\Table\TagsTable::findActive()
      */
-    public function testFindMethods(): void
+    public function testFindActive(): void
     {
         $query = $this->Table->find('active');
         $sql = $query->sql();
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
-
-        $this->skipIfCakeIsLessThan('4.3');
         $this->assertSqlEndsWith('FROM tags Tags INNER JOIN posts_tags PostsTags ON Tags.id = PostsTags.tag_id INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Posts.id = PostsTags.post_id)', $sql);
     }
 
     /**
-     * Test for `queryFromFilter()` method
      * @test
+     * @uses \MeCms\Model\Table\TagsTable::queryFromFilter()
      */
     public function testQueryFromFilter(): void
     {

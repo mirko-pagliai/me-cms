@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
- * @var \MeCms\View\View\AdminView $this
+ * @var \MeCms\View\View\Admin\AppView $this
  */
 
 $this->Asset->css('MeCms.admin/uploader', ['block' => 'css_bottom']);
@@ -54,6 +54,7 @@ echo $this->Form->create(null, [
     'class' => 'dropzone text-center',
     'type' => 'file',
     'url' => ['?' => $this->getRequest()->getQueryParams(), '_ext' => 'json'],
+    'validation' => false,
 ]);
 echo $this->Html->div('fallback', $this->Form->control('file', [
     'label' => false,

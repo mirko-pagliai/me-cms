@@ -15,16 +15,13 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command\Install;
 
-use MeCms\TestSuite\TestCase;
-use MeTools\TestSuite\ConsoleIntegrationTestTrait;
+use MeTools\TestSuite\CommandTestCase;
 
 /**
  * CreateAdminCommandTest class
  */
-class CreateAdminCommandTest extends TestCase
+class CreateAdminCommandTest extends CommandTestCase
 {
-    use ConsoleIntegrationTestTrait;
-
     /**
      * @var array<string>
      */

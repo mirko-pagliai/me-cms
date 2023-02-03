@@ -17,15 +17,17 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Controller\Admin;
 
+use Authorization\Controller\Component\AuthorizationComponent;
 use Cake\Core\Configure;
-use Cake\Event\Event;
 use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
-use MeCms\Controller\AppController;
-use MeCms\TestSuite\ControllerTestCase;
+use MeCms\Controller\Admin\AppController;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 
 /**
  * AppControllerTest class
+ * @group admin-controller
  */
 class AppControllerTest extends ControllerTestCase
 {
@@ -50,39 +52,74 @@ class AppControllerTest extends ControllerTestCase
     {
         parent::setUp();
 
-        $this->Controller->setRequest($this->Controller->getRequest()->withParam('prefix', ADMIN_PREFIX));
+        if (!isset($this->Controller)) {
+            $this->Controller = $this->getMockForAbstractClass(
+                AppController::class,
+                [new ServerRequest(['params' => $this->url])],
+                '',
+                true,
+                true,
+                true,
+                ['initialize', 'isSpammer']
+            );
+            $this->Controller->method('isSpammer')->willReturn(false);
+            $this->Controller->Authorization = $this->createStub(AuthorizationComponent::class);
+        }
     }
 
     /**
-     * Tests for `beforeFilter()` method
      * @test
+     * @uses \MeCms\Controller\Admin\AppController::beforeFilter()
      */
     public function testBeforeFilter(): void
     {
-        parent::testBeforeFilter();
-
         Configure::write('MeCms.admin.records', 7);
-
-        $this->Controller->beforeFilter(new Event('myEvent'));
-        $this->assertEmpty($this->Controller->Auth->allowedActions);
+        $this->Controller->dispatchEvent('Controller.initialize');
         $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $this->Controller->paginate);
-        $this->assertEquals('MeCms.View/Admin', $this->Controller->viewBuilder()->getClassName());
-
-        //Ajax request
-        $this->Controller->setRequest($this->Controller->getRequest()->withEnv('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest'));
-        $this->Controller->beforeFilter(new Event('myEvent'));
-        $this->assertEquals('MeCms.ajax', $this->Controller->viewBuilder()->getLayout());
+        $this->assertEquals('MeCms.View/Admin/App', $this->Controller->viewBuilder()->getClassName());
 
         //If the site is offline this makes a redirect
         //This works anyway, because the admin interface never goes offline
         Configure::write('MeCms.default.offline', true);
         $this->Controller->getRequest()->clearDetectorCache();
-        $this->assertNull($this->Controller->beforeFilter(new Event('myEvent')));
+        $this->assertNull($this->Controller->dispatchEvent('Controller.initialize')->getResult());
 
+        /**
+         * This tests that the parent `beforeFilter()` method is being executed correctly
+         */
+        //If the site is offline
+        Configure::write('MeCms.default.offline', true);
+        $this->get('/');
+        $this->assertRedirect(['_name' => 'offline']);
+        Configure::write('MeCms.default.offline', false);
+
+        $Controller = $this->getMockForAbstractClass(AppController::class, [], '', true, true, true, ['initialize', 'isSpammer']);
+        $Controller->method('isSpammer')->willReturn(true);
+        $Controller->Authorization = $this->createStub(AuthorizationComponent::class);
+
+        //Whether the user has been reported as a spammer
+        /** @var \Cake\Http\Response $Response */
+        $Response = $Controller->dispatchEvent('Controller.initialize')->getResult();
+        $this->_response = $Response;
+        $this->assertRedirect(['_name' => 'ipNotAllowed']);
+    }
+
+    /**
+     * @test
+     * @uses \MeCms\Controller\Admin\AppController::beforeRender()
+     */
+    public function testBeforeRender(): void
+    {
         $url = ['controller' => 'Pages', 'action' => 'index'] + $this->url;
-
         $this->get(['action' => 'add'] + $url);
         $this->assertSessionNotHasKey('referer');
+
+        //No referer on session for `post` and `put` requests
+        foreach (['post', 'put'] as $method) {
+            $this->configRequest(['environment' => ['HTTP_REFERER' => Router::url($url, true)]]);
+            $this->$method(['action' => 'add'] + $url);
+            $this->assertSessionNotHasKey('referer');
+        }
 
         $this->configRequest(['environment' => ['HTTP_REFERER' => Router::url($url, true)]]);
         $this->get(['action' => 'add'] + $url);
@@ -92,18 +129,11 @@ class AppControllerTest extends ControllerTestCase
         $this->configRequest(['environment' => ['HTTP_REFERER' => Router::url($url, true)]]);
         $this->get($url);
         $this->assertSessionNotHasKey('referer');
-
-        //No referer on session for `post` and `put` requests
-        foreach (['post', 'put'] as $method) {
-            $this->configRequest(['environment' => ['HTTP_REFERER' => Router::url($url, true)]]);
-            $this->$method(['action' => 'add'] + $url);
-            $this->assertSessionNotHasKey('referer');
-        }
     }
 
     /**
-     * Tests for `redirectMatchingReferer()` method
      * @test
+     * @uses \MeCms\Controller\Admin\AppController::redirectMatchingReferer()
      */
     public function testRedirectMatchingReferer(): void
     {
@@ -122,18 +152,5 @@ class AppControllerTest extends ControllerTestCase
         //Different controller, so the referer does not match the requested redirect
         $this->_response = $this->Controller->setResponse(new Response())->redirectMatchingReferer(['controller' => 'Posts'] + $url);
         $this->assertRedirect(Router::url(['controller' => 'Posts'] + $url));
-    }
-
-    /**
-     * Tests for `isAuthorized()` method
-     * @test
-     */
-    public function testIsAuthorized(): void
-    {
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => false,
-        ]);
     }
 }

@@ -17,63 +17,67 @@ declare(strict_types=1);
 
 namespace MeCms\TestSuite;
 
+use Authentication\Identity;
 use MeTools\TestSuite\HelperTestCase;
 use MeTools\View\Helper\HtmlHelper;
 
 /**
  * Abstract class for test `MenuHelper` classes
  * @property \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper
+ * @property class-string<\Cake\View\Helper> $originClassName
  */
 abstract class MenuHelperTestCase extends HelperTestCase
 {
     /**
-     * Internal method to write auth data on session
-     * @param array $data Data you want to write
+     * Internal method to set the identity for the current helper
+     * @param array $data Identity data
      * @return void
      */
-    protected function writeAuthOnSession(array $data = []): void
+    protected function setIdentity(array $data = []): void
     {
-        $this->Helper->getView()->getRequest()->getSession()->write('Auth.User', $data);
-        $this->Helper->Auth->initialize([]);
+        $Request = $this->Helper->getView()->getRequest()->withAttribute('identity', new Identity($data));
+        $this->Helper->getView()->setRequest($Request);
+        $this->Helper->Identity->initialize([]);
     }
 
     /**
-     * Called before every test method
-     * @return void
-     * @throws \ErrorException
+     * Get magic method.
+     *
+     * It provides access to the cached properties of the test.
+     * @param string $name Property name
+     * @return mixed
+     * @throws \ReflectionException
+     * @throws \Throwable
      */
-    protected function setUp(): void
+    public function __get(string $name)
     {
-        if (empty($this->Helper)) {
-            /**
-             * @var class-string<\Cake\View\Helper> $className
-             * @noinspection PhpRedundantVariableDocTypeInspection
-             */
-            $className = $this->getOriginClassNameOrFail($this);
-            $methods = get_child_methods($className);
+        //Rewrites the parent method
+        if ($name === 'Helper') {
+            if (empty($this->_cache['Helper'])) {
+                $methods = get_child_methods($this->originClassName);
+                $Helper = $this->getMockForHelper($this->originClassName, $methods);
+                $OriginalHelper = new $this->originClassName($Helper->getView());
+                $HtmlHelper = new HtmlHelper($Helper->getView());
 
-            //Mocks the helper. Each method returns its original value, but the
-            //  links are already built and returned as an HTML string
-            /** @var \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper */
-            $Helper = $this->getMockForHelper($className, $methods);
+                //Each method returns its original value, but links are already built and returned as HTML string
+                foreach ($methods as $method) {
+                    $Helper->method($method)->willReturnCallback(function () use ($OriginalHelper, $HtmlHelper, $method): array {
+                        $result = $OriginalHelper->$method();
 
-            $originalHelper = new $className($Helper->getView());
-            $HtmlHelper = new HtmlHelper($Helper->getView());
-            foreach ($methods as $method) {
-                $Helper->method($method)->willReturnCallback(function () use ($method, $originalHelper, $HtmlHelper): array {
-                    $returned = $originalHelper->$method();
+                        if (!empty($result[0])) {
+                            $result[0] = implode('', array_map(fn(array $link): string => $HtmlHelper->link(...$link), $result[0]));
+                        }
 
-                    if (!empty($returned[0])) {
-                        $returned[0] = implode(PHP_EOL, array_map(fn(array $link): string => call_user_func_array([$HtmlHelper, 'link'], $link), $returned[0]));
-                    }
+                        return $result;
+                    });
+                }
 
-                    return $returned;
-                });
+                $this->_cache['Helper'] = $Helper;
             }
 
-            $this->Helper = $Helper;
+            return $this->_cache['Helper'];
         }
 
-        parent::setUp();
+        return parent::__get($name);
     }
 }

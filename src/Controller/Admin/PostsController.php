@@ -20,6 +20,7 @@ use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use Cake\ORM\ResultSet;
 use MeCms\Model\Entity\Post;
+use MeCms\Model\Entity\User;
 
 /**
  * Posts controller
@@ -28,27 +29,22 @@ use MeCms\Model\Entity\Post;
 class PostsController extends AppController
 {
     /**
-     * Called before the controller action.
-     *  each controller action
+     * Called before the controller action
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
+     * @uses \MeCms\Model\Table\UsersTable::getActiveList()
+     * @uses \MeCms\Model\Table\UsersTable::getList()
      */
     public function beforeFilter(EventInterface $event)
     {
-        $result = parent::beforeFilter($event);
-        if ($result) {
-            return $result;
+        $parent = parent::beforeFilter($event);
+        if ($parent instanceof Response) {
+            return $parent;
         }
 
-        [$categoriesMethod, $usersMethod] = ['getList', 'getList'];
-        if ($this->getRequest()->is('action', ['add', 'edit'])) {
-            [$categoriesMethod, $usersMethod] = ['getTreeList', 'getActiveList'];
-
-            //Only admins and managers can add and edit posts on behalf of other users
-            if ($this->getRequest()->getData() && !$this->Auth->isGroup(['admin', 'manager'])) {
-                $this->setRequest($this->getRequest()->withData('user_id', $this->Auth->user('id')));
-            }
-        }
+        $usersMethod = $this->getRequest()->is('action', ['add', 'edit']) ? 'getActiveList' : 'getList';
         $users = $this->Posts->Users->$usersMethod()->all();
         if ($users->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create an user'));
@@ -56,6 +52,7 @@ class PostsController extends AppController
             return $this->redirect(['controller' => 'Users', 'action' => 'index']);
         }
 
+        $categoriesMethod = $this->getRequest()->is('action', ['add', 'edit']) ? 'getTreeList' : 'getList';
         $categories = $this->Posts->Categories->$categoriesMethod()->all();
         if ($categories->isEmpty()) {
             $this->Flash->alert(__d('me_cms', 'You must first create a category'));
@@ -65,31 +62,39 @@ class PostsController extends AppController
 
         $this->set(compact('categories', 'users'));
 
-        return null;
+        /**
+         * Only admins and managers can add and edit posts on behalf of other users
+         * @todo This code should be moved somewhere else
+         */
+        if ($this->getRequest()->is('action', ['add', 'edit']) &&
+            $this->getRequest()->getData() &&
+            !in_array($this->Authentication->getIdentityData('group.name'), ['admin', 'manager'])
+        ) {
+            $this->setRequest($this->getRequest()->withData('user_id', $this->Authentication->getIdentityData('id')));
+        }
     }
 
     /**
-     * Check if the provided user is authorized for the request
-     * @param array|\ArrayAccess|null $user The user to check the authorization
-     *  of. If empty the user in the session will be used
+     * Checks if the provided user is authorized for the request
+     * @param \MeCms\Model\Entity\User $User User entity
      * @return bool `true` if the user is authorized, otherwise `false`
      * @uses \MeCms\Model\Table\Traits\IsOwnedByTrait::isOwnedBy()
      */
-    public function isAuthorized($user = null): bool
+    public function isAuthorized(User $User): bool
     {
-        if ($this->Auth->isGroup(['admin', 'manager'])) {
+        //By default, administrators and managers are authorized
+        if (in_array($User->get('group')->get('name'), ['admin', 'manager'])) {
             return true;
         }
 
-        //Users can edit only their own post
-        if ($this->getRequest()->is('edit')) {
-            [$postId, $userId] = [$this->getRequest()->getParam('pass.0'), $this->Auth->user('id')];
+        //Simple users can edit only their own post
+        if ($this->getRequest()->is('action', 'edit')) {
+            [$postId, $userId] = [$this->getRequest()->getParam('pass.0'), $User->get('id')];
 
             return $postId && $userId && $this->Posts->isOwnedBy((int)$postId, $userId);
         }
 
-        //Only admins and managers can delete posts
-        return !$this->getRequest()->is('delete');
+        return !$this->getRequest()->is('action', 'delete');
     }
 
     /**

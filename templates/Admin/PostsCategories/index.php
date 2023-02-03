@@ -11,7 +11,10 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\Admin\AppView $this
  */
+
 $this->extend('MeCms./Admin/common/index');
 $this->assign('title', I18N_POSTS_CATEGORIES);
 $this->append('actions', $this->Html->button(
@@ -52,7 +55,7 @@ $this->append('actions', $this->Html->button(
                     ];
 
                     //Only admins can delete posts categories
-                    if ($this->Auth->isGroup('admin')) {
+                    if ($this->Identity->isGroup('admin')) {
                         $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $category->get('id')], [
                             'class' => 'text-danger',
                             'icon' => 'trash-alt',

@@ -27,6 +27,7 @@ class PluginTest extends TestCase
 {
     /**
      * Tests for `bootstrap()` method
+     * @uses \MeCms\Plugin::bootstrap()
      * @test
      */
     public function testBootstrap(): void
@@ -40,18 +41,14 @@ class PluginTest extends TestCase
         $app = $this->getMockForAbstractClass(BaseApplication::class, ['']);
 
         //In the first call is cli
-        $Plugin = $this->getMockBuilder(MeCms::class)
-            ->onlyMethods(['isCli'])
-            ->getMock();
+        $Plugin = $this->createPartialMock(MeCms::class, ['isCli']);
         $Plugin->method('isCli')->willReturn(true);
 
         $Plugin->bootstrap($app);
         $loadedPlugins = $getLoadedPlugins($app);
         $this->assertContains('MyTheme', $loadedPlugins);
 
-        $Plugin = $this->getMockBuilder(MeCms::class)
-            ->onlyMethods(['isCli'])
-            ->getMock();
+        $Plugin = $this->createPartialMock(MeCms::class, ['isCli']);
         $Plugin->method('isCli')->willReturn(false);
         $Plugin->bootstrap($app);
 

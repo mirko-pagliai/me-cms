@@ -16,10 +16,11 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller\Admin;
 
 use MeCms\Model\Entity\Tag;
-use MeCms\TestSuite\ControllerTestCase;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 
 /**
  * PostsTagsControllerTest class
+ * @group admin-controller
  */
 class PostsTagsControllerTest extends ControllerTestCase
 {
@@ -34,26 +35,19 @@ class PostsTagsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `isAuthorized()` method
+     * @uses \MeCms\Controller\Admin\PostsTagsController::isAuthorized()
      * @test
      */
     public function testIsAuthorized(): void
     {
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => true,
-        ]);
+        $this->assertAllGroupsAreAuthorized('index');
 
-        //With `edit` action
-        $this->assertGroupsAreAuthorized([
-            'admin' => true,
-            'manager' => true,
-            'user' => false,
-        ], 'edit');
+        parent::testIsAuthorized();
     }
 
     /**
      * Tests for `index()` method
+     * @uses \MeCms\Controller\Admin\PostsTagsController::index()
      * @test
      */
     public function testIndex(): void
@@ -66,6 +60,7 @@ class PostsTagsControllerTest extends ControllerTestCase
 
     /**
      * Tests for `edit()` method
+     * @uses \MeCms\Controller\Admin\PostsTagsController::edit()
      * @test
      */
     public function testEdit(): void

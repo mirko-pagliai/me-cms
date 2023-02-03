@@ -21,7 +21,7 @@ use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Database\Driver\Postgres;
 use Cake\Database\Driver\Sqlite;
-use MeTools\Console\Command;
+use MeTools\Command\Command;
 
 /**
  * Creates the user groups

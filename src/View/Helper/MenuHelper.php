@@ -21,10 +21,8 @@ use Cake\View\Helper;
 /**
  * Menu Helper.
  *
- * This helper contains methods that will be called automatically to generate
- *  menus for the admin layout.
- * You don't need to call these methods manually, use instead the
- *  `MenuBuilderHelper` helper.
+ * This helper contains methods that will be called automatically to generate menus for the admin layout.
+ * You don't need to call these methods manually, use instead the `MenuBuilderHelper` helper.
  *
  * Each method must return an array with four values:
  *  - the menu links, as an array of parameters;
@@ -32,9 +30,8 @@ use Cake\View\Helper;
  *  - the options for the menu title;
  *  - the controllers handled by this menu, as an array.
  *
- * See the `\MeCms\View\Helper\MenuBuilderHelper::generate()` method for more
- *  information.
- * @property \MeCms\View\Helper\AuthHelper $Auth
+ * @see \MeCms\View\Helper\MenuBuilderHelper::generate() for more information
+ * @property \MeCms\View\Helper\IdentityHelper $Identity
  */
 class MenuHelper extends Helper
 {
@@ -42,11 +39,11 @@ class MenuHelper extends Helper
      * Helpers
      * @var array
      */
-    public $helpers = ['MeCms.Auth'];
+    public $helpers = ['MeCms.Identity'];
 
     /**
      * Default parameters for routers
-     * @var array
+     * @var array<string, string>
      */
     protected array $defaultParams = ['plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
 
@@ -60,7 +57,7 @@ class MenuHelper extends Helper
         $links[] = [__d('me_cms', 'List posts'), ['action' => 'index'] + $params];
         $links[] = [__d('me_cms', 'Add post'), ['action' => 'add'] + $params];
 
-        if ($this->Auth->isGroup(['admin', 'manager'])) {
+        if ($this->Identity->isGroup('admin', 'manager')) {
             $params['controller'] = 'PostsCategories';
             $links[] = [__d('me_cms', 'List categories'), ['action' => 'index'] + $params];
             $links[] = [__d('me_cms', 'Add category'), ['action' => 'add'] + $params];
@@ -83,13 +80,13 @@ class MenuHelper extends Helper
         $params = ['controller' => 'Pages'] + $this->defaultParams;
         $links[] = [__d('me_cms', 'List pages'), ['action' => 'index'] + $params];
 
-        if ($this->Auth->isGroup(['admin', 'manager'])) {
+        if ($this->Identity->isGroup('admin', 'manager')) {
             $links[] = [__d('me_cms', 'Add page'), ['action' => 'add'] + $params];
         }
 
         $links[] = [__d('me_cms', 'List static pages'), ['action' => 'indexStatics'] + $params];
 
-        if ($this->Auth->isGroup(['admin', 'manager'])) {
+        if ($this->Identity->isGroup('admin', 'manager')) {
             $params['controller'] = 'PagesCategories';
             $links[] = [__d('me_cms', 'List categories'), ['action' => 'index'] + $params];
             $links[] = [__d('me_cms', 'Add category'), ['action' => 'add'] + $params];
@@ -105,7 +102,7 @@ class MenuHelper extends Helper
     public function users(): array
     {
         //Only admins and managers can access this controller
-        if (!$this->Auth->isGroup(['admin', 'manager'])) {
+        if (!$this->Identity->isGroup('admin', 'manager')) {
             return [];
         }
 
@@ -113,7 +110,7 @@ class MenuHelper extends Helper
         $links[] = [__d('me_cms', 'List users'), ['action' => 'index'] + $params];
         $links[] = [__d('me_cms', 'Add user'), ['action' => 'add'] + $params];
 
-        if ($this->Auth->isGroup('admin')) {
+        if ($this->Identity->isGroup('admin')) {
             $params['controller'] = 'UsersGroups';
             $links[] = [__d('me_cms', 'List groups'), ['action' => 'index'] + $params];
             $links[] = [__d('me_cms', 'Add group'), ['action' => 'add'] + $params];
@@ -129,16 +126,21 @@ class MenuHelper extends Helper
     public function systems(): array
     {
         //Only admins and managers can access this controller
-        if (!$this->Auth->isGroup(['admin', 'manager'])) {
+        if (!$this->Identity->isGroup('admin', 'manager')) {
             return [];
         }
 
         $params = ['controller' => 'Systems'] + $this->defaultParams;
+        $links = [];
 
-        return [[
-            [__d('me_cms', 'Temporary files'), ['action' => 'tmpViewer'] + $params],
-            [__d('me_cms', 'Media browser'), ['action' => 'browser'] + $params],
-            [__d('me_cms', 'Changelogs'), ['action' => 'changelogs'] + $params],
-        ], __d('me_cms', 'System'), ['icon' => 'wrench'], ['Systems']];
+        //Only admins can clear temporary files
+        if ($this->Identity->isGroup('admin')) {
+            $links[] = [__d('me_cms', 'Temporary files'), ['action' => 'tmpViewer'] + $params];
+        }
+
+        $links[] = [__d('me_cms', 'Media browser'), ['action' => 'browser'] + $params];
+        $links[] = [__d('me_cms', 'Changelogs'), ['action' => 'changelogs'] + $params];
+
+        return [$links, __d('me_cms', 'System'), ['icon' => 'wrench'], ['Systems']];
     }
 }

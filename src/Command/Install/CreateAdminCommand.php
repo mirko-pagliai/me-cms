@@ -20,7 +20,7 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use MeCms\Command\AddUserCommand;
-use MeTools\Console\Command;
+use MeTools\Command\Command;
 
 /**
  * Creates an admin user
