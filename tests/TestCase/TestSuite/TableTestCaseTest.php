@@ -15,9 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\TestSuite;
 
-use MeCms\Model\Table\PostsCategoriesTable;
 use MeCms\Model\Table\PostsTable;
-use MeCms\Test\TestCase\Model\Entity\UserTest;
 use MeCms\Test\TestCase\Model\Table\PostsTableTest;
 use MeCms\Test\TestCase\Model\Table\UsersTableTest;
 use MeCms\TestSuite\TestCase;
