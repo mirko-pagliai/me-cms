@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.31 branch
+### 2.31.1
+* updated for php-tools 1.7.1.
+
 ### 2.31.0
 * uses `Authentication` and `Authorization` plugins instead of the old `AuthComponent`;
 * some controller code has been moved from the `beforeFilter()` method to `beforeRender()`;
