@@ -83,7 +83,9 @@ abstract class ControllerTestCase extends BaseControllerTestCase
     protected function _isAuthorizedResult(string $action, string $group): bool
     {
         $Controller = &$this->Controller;
-        $Controller->setRequest($Controller->getRequest()->withParam('action', $action));
+        $Request = $Controller->getRequest();
+        $Request->clearDetectorCache();
+        $Controller->setRequest($Request->withParam('action', $action));
 
         return $Controller->isAuthorized(new User(['group' => new UsersGroup(['name' => $group])]));
     }

@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.31 branch
 ### 2.31.1
+* fixed little bug for `ControllerTestCase::assert*Authorized()` methods;
 * updated for php-tools 1.7.1.
 
 ### 2.31.0
