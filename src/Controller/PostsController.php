@@ -57,11 +57,9 @@ class PostsController extends AppController
     public function index(): void
     {
         //Sets the cache name
-        $cache = sprintf(
-            'index_limit_%s_page_%s',
-            $this->paginate['limit'],
-            trim((string)$this->getRequest()->getQuery('page', 1), '/')
-        );
+        /** @var string $queryPage */
+        $queryPage = $this->getRequest()->getQuery('page', '1');
+        $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], trim($queryPage, '/') );
 
         //Tries to get data from the cache
         $posts = Cache::read($cache, $this->Posts->getCacheName());
@@ -107,12 +105,9 @@ class PostsController extends AppController
         [$start, $end] = $this->getStartAndEndDate($date);
 
         //Sets the cache name
-        $cache = sprintf(
-            'index_date_%s_limit_%s_page_%s',
-            md5(serialize([$start, $end])),
-            $this->paginate['limit'],
-            trim((string)$this->getRequest()->getQuery('page', 1), '/')
-        );
+        /** @var string $queryPage */
+        $queryPage = $this->getRequest()->getQuery('page', '1');
+        $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$start, $end])), $this->paginate['limit'], trim($queryPage, '/'));
 
         //Tries to get data from the cache
         $posts = Cache::read($cache, $this->Posts->getCacheName());
@@ -216,12 +211,9 @@ class PostsController extends AppController
             $this->paginate['limit'] = getConfigOrFail('default.records_for_searches');
 
             //Sets the cache name
-            $cache = sprintf(
-                'search_%s_limit_%s_page_%s',
-                md5($pattern),
-                $this->paginate['limit'],
-                trim((string)$this->getRequest()->getQuery('page', 1), '/')
-            );
+            /** @var string $queryPage */
+            $queryPage = $this->getRequest()->getQuery('page', '1');
+            $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), $this->paginate['limit'], trim($queryPage, '/'));
 
             //Tries to get data from the cache
             $posts = Cache::read($cache, $this->Posts->getCacheName());
