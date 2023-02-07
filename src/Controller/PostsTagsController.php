@@ -36,12 +36,8 @@ class PostsTagsController extends AppController
         //Limit X4
         $this->paginate['limit'] = $this->paginate['maxLimit'] = $this->paginate['limit'] * 4;
 
-        //Sets the cache name
-        /** @var string $queryPage */
-        $queryPage = $this->getRequest()->getQuery('page', '1');
-        $cache = sprintf('tags_limit_%s_page_%s', $this->paginate['limit'], trim($queryPage, '/'));
-
         //Tries to get data from the cache
+        $cache = sprintf('tags_limit_%s_page_%s', $this->paginate['limit'], $this->getQueryPage());
         $tags = Cache::read($cache, $this->PostsTags->getCacheName());
         $paging = Cache::read($cache . '_paging', $this->PostsTags->getCacheName());
 
@@ -78,12 +74,8 @@ class PostsTagsController extends AppController
             ->cache('tag_' . md5($slug))
             ->firstOrFail();
 
-        //Sets the cache name
-        /** @var string $queryPage */
-        $queryPage = $this->getRequest()->getQuery('page', '1');
-        $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], trim($queryPage, '/'));
-
         //Tries to get data from the cache
+        $cache = sprintf('tag_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $this->getQueryPage());
         $posts = Cache::read($cache, $this->PostsTags->getCacheName());
         $paging = Cache::read($cache . '_paging', $this->PostsTags->getCacheName());
 

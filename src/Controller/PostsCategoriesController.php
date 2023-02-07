@@ -53,12 +53,8 @@ class PostsCategoriesController extends AppController
             return $this->redirect([$this->getRequest()->getQuery('q')]);
         }
 
-        //Sets the cache name
-        /** @var string $queryPage */
-        $queryPage = $this->getRequest()->getQuery('page', '1');
-        $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], trim($queryPage, '/'));
-
         //Tries to get data from the cache
+        $cache = sprintf('category_%s_limit_%s_page_%s', md5($slug), $this->paginate['limit'], $this->getQueryPage());
         $posts = Cache::read($cache, $this->PostsCategories->getCacheName());
         $paging = Cache::read($cache . '_paging', $this->PostsCategories->getCacheName());
 

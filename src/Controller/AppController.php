@@ -71,6 +71,18 @@ abstract class AppController extends BaseAppController
     }
 
     /**
+     * Returns the `page` value from the query
+     * @return string
+     * @since 2.31.1
+     */
+    public function getQueryPage(): string
+    {
+        $queryPage = $this->getRequest()->getQuery('page');
+
+        return trim(is_string($queryPage) && is_positive($queryPage) ? $queryPage : '1', '/');
+    }
+
+    /**
      * Gets the `paging` request attribute and parameter
      * @return array<string, mixed>
      * @since 2.27.1
