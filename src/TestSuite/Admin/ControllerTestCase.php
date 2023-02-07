@@ -158,6 +158,26 @@ abstract class ControllerTestCase extends BaseControllerTestCase
     }
 
     /**
+     * Internal method to create an image to upload.
+     *
+     * Returns an array, similar to the `$_FILE` array that is created after an upload
+     * @return array{tmp_name: string, error: int, name: string, type: string, size: int}
+     */
+    protected function createImageToUpload(): array
+    {
+        $file = TMP . 'file_to_upload.jpg';
+        copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
+
+        return [
+            'tmp_name' => $file,
+            'error' => UPLOAD_ERR_OK,
+            'name' => basename($file),
+            'type' => mime_content_type($file) ?: '',
+            'size' => filesize($file) ?: 0,
+        ];
+    }
+
+    /**
      * Tests for `isAuthorized()` method.
      *
      * This is a test for the default `isAuthorized()` method. It can then be extended for controllers that use the same
