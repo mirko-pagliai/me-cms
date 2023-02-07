@@ -83,7 +83,9 @@ abstract class ControllerTestCase extends BaseControllerTestCase
     protected function _isAuthorizedResult(string $action, string $group): bool
     {
         $Controller = &$this->Controller;
-        $Controller->setRequest($Controller->getRequest()->withParam('action', $action));
+        $Request = $Controller->getRequest();
+        $Request->clearDetectorCache();
+        $Controller->setRequest($Request->withParam('action', $action));
 
         return $Controller->isAuthorized(new User(['group' => new UsersGroup(['name' => $group])]));
     }
@@ -153,6 +155,26 @@ abstract class ControllerTestCase extends BaseControllerTestCase
         self::assertGroupIsAuthorized($action, 'admin', $message);
         self::assertGroupIsAuthorized($action, 'manager', $message);
         self::assertGroupIsNotAuthorized($action, 'user', $message);
+    }
+
+    /**
+     * Internal method to create an image to upload.
+     *
+     * Returns an array, similar to the `$_FILE` array that is created after an upload
+     * @return array{tmp_name: string, error: int, name: string, type: string, size: int}
+     */
+    protected function createImageToUpload(): array
+    {
+        $file = TMP . 'file_to_upload.jpg';
+        copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
+
+        return [
+            'tmp_name' => $file,
+            'error' => UPLOAD_ERR_OK,
+            'name' => basename($file),
+            'type' => mime_content_type($file) ?: '',
+            'size' => filesize($file) ?: 0,
+        ];
     }
 
     /**

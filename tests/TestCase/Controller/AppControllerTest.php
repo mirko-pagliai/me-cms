@@ -49,8 +49,8 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\AppController::beforeFilter()
      * @test
+     * @uses \MeCms\Controller\AppController::beforeFilter()
      */
     public function testBeforeFilter(): void
     {
@@ -77,8 +77,8 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\AppController::beforeRender()
      * @test
+     * @uses \MeCms\Controller\AppController::beforeRender()
      */
     public function testBeforeRender(): void
     {
@@ -89,9 +89,9 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
+     * @test
      * @uses \MeCms\Controller\AppController::getPaging()
      * @uses \MeCms\Controller\AppController::setPaging()
-     * @test
      */
     public function testGetAndSetPaging(): void
     {
@@ -105,8 +105,26 @@ class AppControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\AppController::initialize()
      * @test
+     * @uses \MeCms\Controller\AppController::getQueryPage()
+     */
+    public function testGetQueryPage(): void
+    {
+        $this->assertSame('1', $this->Controller->getQueryPage());
+
+        $this->Controller->setRequest($this->Controller->getRequest()->withQueryParams(['page' => '2']));
+        $this->assertSame('2', $this->Controller->getQueryPage());
+
+        //With invalid values, it's `1`
+        foreach ([0, '0', ['key' => 'value'], null, 'string'] as $page) {
+            $this->Controller->setRequest($this->Controller->getRequest()->withQueryParams(compact('page')));
+            $this->assertSame('1', $this->Controller->getQueryPage());
+        }
+    }
+
+    /**
+     * @test
+     * @uses \MeCms\Controller\AppController::initialize()
      */
     public function testInitialize(): void
     {

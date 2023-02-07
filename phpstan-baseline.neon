@@ -1,21 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Cannot cast array\\|string\\|null to string\\.$#"
-			count: 1
-			path: src/Controller/PostsCategoriesController.php
-
-		-
-			message: "#^Cannot cast array\\|string\\|null to string\\.$#"
-			count: 3
-			path: src/Controller/PostsController.php
-
-		-
-			message: "#^Cannot cast array\\|string\\|null to string\\.$#"
-			count: 2
-			path: src/Controller/PostsTagsController.php
-
-		-
 			message: "#^Call to an undefined method DOMDocument\\|SimpleXMLElement\\:\\:asXML\\(\\)\\.$#"
 			count: 1
 			path: src/Utility/Sitemap/SitemapBuilder.php

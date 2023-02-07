@@ -56,14 +56,8 @@ class PostsController extends AppController
      */
     public function index(): void
     {
-        //Sets the cache name
-        $cache = sprintf(
-            'index_limit_%s_page_%s',
-            $this->paginate['limit'],
-            trim((string)$this->getRequest()->getQuery('page', 1), '/')
-        );
-
         //Tries to get data from the cache
+        $cache = sprintf('index_limit_%s_page_%s', $this->paginate['limit'], $this->getQueryPage());
         $posts = Cache::read($cache, $this->Posts->getCacheName());
         $paging = Cache::read($cache . '_paging', $this->Posts->getCacheName());
 
@@ -106,15 +100,8 @@ class PostsController extends AppController
 
         [$start, $end] = $this->getStartAndEndDate($date);
 
-        //Sets the cache name
-        $cache = sprintf(
-            'index_date_%s_limit_%s_page_%s',
-            md5(serialize([$start, $end])),
-            $this->paginate['limit'],
-            trim((string)$this->getRequest()->getQuery('page', 1), '/')
-        );
-
         //Tries to get data from the cache
+        $cache = sprintf('index_date_%s_limit_%s_page_%s', md5(serialize([$start, $end])), $this->paginate['limit'], $this->getQueryPage());
         $posts = Cache::read($cache, $this->Posts->getCacheName());
         $paging = Cache::read($cache . '_paging', $this->Posts->getCacheName());
 
@@ -215,15 +202,8 @@ class PostsController extends AppController
         if ($pattern) {
             $this->paginate['limit'] = getConfigOrFail('default.records_for_searches');
 
-            //Sets the cache name
-            $cache = sprintf(
-                'search_%s_limit_%s_page_%s',
-                md5($pattern),
-                $this->paginate['limit'],
-                trim((string)$this->getRequest()->getQuery('page', 1), '/')
-            );
-
             //Tries to get data from the cache
+            $cache = sprintf('search_%s_limit_%s_page_%s', md5($pattern), $this->paginate['limit'], $this->getQueryPage());
             $posts = Cache::read($cache, $this->Posts->getCacheName());
             $paging = Cache::read($cache . '_paging', $this->Posts->getCacheName());
 
