@@ -20,7 +20,6 @@ use Cake\Core\Configure;
 use Cake\Http\ServerRequest;
 use MeCms\Controller\AppController;
 use MeCms\TestSuite\ControllerTestCase;
-use RuntimeException;
 
 /**
  * AppControllerTest class
@@ -41,9 +40,8 @@ class AppControllerTest extends ControllerTestCase
         parent::setUp();
 
         if (!isset($this->Controller)) {
-            $Request = new ServerRequest(['params' => $this->url]);
             /** @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject $Controller */
-            $Controller = $this->getMockForAbstractClass($this->originClassName, [$Request, null, $this->alias]);
+            $Controller = $this->createPartialMockForAbstractClass($this->originClassName, ['initialize']);
             $this->Controller = $Controller;
         }
     }
@@ -55,21 +53,25 @@ class AppControllerTest extends ControllerTestCase
     public function testBeforeFilter(): void
     {
         Configure::write('MeCms.default.records', 5);
+        $this->Controller->dispatchEvent('Controller.initialize');
+        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $this->Controller->paginate);
+        $this->assertEquals('MeCms.View/App', $this->Controller->viewBuilder()->getClassName());
 
         //If the site is offline
-        Configure::write('MeCms.default.offline', true);
-        $this->get('/');
+        $Request = $this->createPartialMock(ServerRequest::class, ['is']);
+        $Request->method('is')->with($this->equalTo('offline'))->willReturn(true);
+        /** @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject $Controller */
+        $Controller = $this->createPartialMockForAbstractClass($this->originClassName, ['initialize'], [$Request]);
+        /** @var \Cake\Http\Response $Response */
+        $Response = $Controller->dispatchEvent('Controller.initialize')->getResult();
+        $this->_response = $Response;
         $this->assertRedirect(['_name' => 'offline']);
-        Configure::write('MeCms.default.offline', false);
-
-        $Controller = $this->getMockForAbstractClass(AppController::class, [], '', true, true, true, ['initialize', 'isSpammer']);
-        $Controller->method('isSpammer')->willReturnOnConsecutiveCalls(false, true);
-
-        $Controller->dispatchEvent('Controller.initialize');
-        $this->assertEquals(['limit' => 5, 'maxLimit' => 5], $Controller->paginate);
-        $this->assertEquals('MeCms.View/App', $Controller->viewBuilder()->getClassName());
 
         //Whether the user has been reported as a spammer
+        $Request = $this->createPartialMock(ServerRequest::class, ['is']);
+        $Request->method('is')->willReturnCallback(fn(string $type): bool => $type == 'spammer');
+        /** @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject $Controller */
+        $Controller = $this->createPartialMockForAbstractClass($this->originClassName, ['initialize'], [$Request]);
         /** @var \Cake\Http\Response $Response */
         $Response = $Controller->dispatchEvent('Controller.initialize')->getResult();
         $this->_response = $Response;
@@ -128,29 +130,24 @@ class AppControllerTest extends ControllerTestCase
      */
     public function testInitialize(): void
     {
-        $this->Controller->initialize();
+        /** @var \MeCms\Controller\AppController&\PHPUnit\Framework\MockObject\MockObject $Controller */
+        $Controller = $this->createPartialMockForAbstractClass($this->originClassName);
+        $Controller->initialize();
 
-        $this->assertFalse($this->Controller->components()->has('Recaptcha'));
+        $this->assertFalse($Controller->components()->has('Recaptcha'));
 
         Configure::write('MeCms.security.recaptcha', true);
         Configure::write('Recaptcha', [
             'public' => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
             'private' => 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
         ]);
-        $this->Controller->initialize();
-        $this->assertTrue($this->Controller->components()->has('Recaptcha'));
+        $Controller->initialize();
+        $this->assertTrue($Controller->components()->has('Recaptcha'));
 
-        $this->expectException(RuntimeException::class);
+        $this->assertFalse($Controller->Authentication->getConfig('requireIdentity'));
+
         $this->expectExceptionMessage('Missing Recaptcha keys. You can rename the `config/recaptcha.example.php` file as `recaptcha.php` and change the keys');
         Configure::load('MeCms.recaptcha');
-        $this->Controller->initialize();
-
-        $this->assertTrue($this->Controller->Authentication->getConfig('requireIdentity'));
-
-        //Tries some actions. They do not require authentication
-        foreach (['/posts', '/posts/categories'] as $url) {
-            $this->get($url);
-            $this->assertResponseOkAndNotEmpty();
-        }
+        $Controller->initialize();
     }
 }
