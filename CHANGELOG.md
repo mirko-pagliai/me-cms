@@ -3,6 +3,7 @@
 ### 2.31.1
 * fixed little bug for `ControllerTestCase::assert*Authorized()` methods;
 * added `AppController::getQueryPage()` method. Little fixes for controllers;
+* improved `Sitemap`, `SitemapBuilder` and `SitemapBase` classes;
 * updated for php-tools 1.7.1.
 
 ### 2.31.0

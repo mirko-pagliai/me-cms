@@ -26,15 +26,21 @@ abstract class SitemapBase
     /**
      * Internal method to parse each url
      * @param string|array|null $url Url
-     * @param array $options Options, for example `lastmod` or `priority`
-     * @return array
+     * @param array<array-key, mixed> $options Options. Valid options are `lastmod` and `priority`
+     * @return array{loc: string, lastmod?: string, priority: string}
      */
     protected static function parse($url, array $options = []): array
     {
-        if (isset($options['lastmod']) && !is_string($options['lastmod'])) {
-            $options['lastmod'] = $options['lastmod']->format('c');
-        }
+        $result['loc'] = Router::url($url, true);
 
-        return ['loc' => Router::url($url, true)] + $options + ['priority' => '0.5'];
+        if (isset($options['lastmod'])) {
+            /** @var string $lastmod */
+            $lastmod = is_string($options['lastmod']) ? $options['lastmod'] : $options['lastmod']->format('c');
+            $result += compact('lastmod');
+        }
+        /** @var string $priority */
+        $priority = $options['priority'] ?? '0.5';
+
+        return $result + compact( 'priority');
     }
 }
