@@ -57,9 +57,9 @@ class StaticPageTest extends TestCase
 
         //Checks filenames
         $this->assertEqualsCanonicalizing([
+            'example-page',
+            'example-page-it',
             'page-from-app',
-            'cookies-policy',
-            'cookies-policy-it',
             'test-from-plugin',
             'page-on-first-from-plugin',
             'page_on_second_from_plugin',
@@ -67,19 +67,20 @@ class StaticPageTest extends TestCase
 
         //Checks paths
         $this->assertEqualsCanonicalizing([
+            'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'templates' . DS . 'StaticPages' . DS . 'example-page-it.' . StaticPage::EXTENSION,
             'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'templates' . DS . 'StaticPages' . DS . 'page-from-app.' . StaticPage::EXTENSION,
-            'templates' . DS . 'StaticPages' . DS . 'cookies-policy.' . StaticPage::EXTENSION,
-            'templates' . DS . 'StaticPages' . DS . 'cookies-policy-it.' . StaticPage::EXTENSION,
+            'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'templates' . DS . 'StaticPages' . DS . 'example-page.' . StaticPage::EXTENSION,
             $TestPluginPath . 'test-from-plugin.' . StaticPage::EXTENSION,
             $TestPluginPath . 'first-folder' . DS . 'page-on-first-from-plugin.' . StaticPage::EXTENSION,
             $TestPluginPath . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin.' . StaticPage::EXTENSION,
+
         ], $pages->extract('path')->toArray());
 
         //Checks slugs
         $this->assertEqualsCanonicalizing([
+            'example-page',
+            'example-page-it',
             'page-from-app',
-            'cookies-policy',
-            'cookies-policy-it',
             'test-from-plugin',
             'first-folder/page-on-first-from-plugin',
             'first-folder/second_folder/page_on_second_from_plugin',
@@ -87,9 +88,9 @@ class StaticPageTest extends TestCase
 
         //Checks titles
         $this->assertEqualsCanonicalizing([
+            'Example Page',
+            'Example Page It',
             'Page From App',
-            'Cookies Policy',
-            'Cookies Policy It',
             'Test From Plugin',
             'Page On First From Plugin',
             'Page On Second From Plugin',
@@ -107,9 +108,9 @@ class StaticPageTest extends TestCase
         //Gets all pages from slugs
         $pages = array_map([StaticPage::class, 'get'], StaticPage::all()->extract('slug')->toArray());
         $this->assertEqualsCanonicalizing([
+            DS . 'StaticPages' . DS . 'example-page',
+            DS . 'StaticPages' . DS . 'example-page-it',
             DS . 'StaticPages' . DS . 'page-from-app',
-            'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy',
-            'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy-it',
             'TestPlugin.' . DS . 'StaticPages' . DS . 'test-from-plugin',
             'TestPlugin.' . DS . 'StaticPages' . DS . 'first-folder' . DS . 'page-on-first-from-plugin',
             'TestPlugin.' . DS . 'StaticPages' . DS . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin',
@@ -125,15 +126,16 @@ class StaticPageTest extends TestCase
      */
     public function testGetDifferentLocale(): void
     {
-        $expected = 'MeCms.' . DS . 'StaticPages' . DS . 'cookies-policy';
-        $this->assertEquals($expected, StaticPage::get('cookies-policy'));
+        $expected = '/StaticPages/example-page';
+        $this->assertSame($expected, StaticPage::get('example-page'));
 
         $originalValue = ini_set('intl.default_locale', 'it_IT');
-        $this->assertEquals(sprintf('%s-it', $expected), StaticPage::get('cookies-policy'));
+        $expected = '/StaticPages/example-page-it';
+        $this->assertSame($expected, StaticPage::get('example-page'));
         ini_set('intl.default_locale', (string)$originalValue);
 
         $originalValue = ini_set('intl.default_locale', 'it');
-        $this->assertEquals(sprintf('%s-it', $expected), StaticPage::get('cookies-policy'));
+        $this->assertSame($expected, StaticPage::get('example-page'));
         ini_set('intl.default_locale', (string)$originalValue);
     }
 

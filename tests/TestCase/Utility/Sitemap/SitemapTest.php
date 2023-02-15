@@ -241,8 +241,6 @@ class SitemapTest extends TestCase
             'http://localhost/page/example-page-it',
             'http://localhost/page/page-from-app',
             'http://localhost/page/example-page',
-            'http://localhost/page/cookies-policy',
-            'http://localhost/page/cookies-policy-it',
             'http://localhost/page/test-from-plugin',
             'http://localhost/page/first-folder/page-on-first-from-plugin',
             'http://localhost/page/first-folder/second_folder/page_on_second_from_plugin',

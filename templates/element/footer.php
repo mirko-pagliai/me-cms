@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 $links = [
     $this->Html->link(__d('me_cms', 'Search'), ['_name' => 'postsSearch']),
-    $this->Html->link(__d('me_cms', 'Cookies policy'), ['_name' => 'page', 'cookies-policy']),
     $this->Html->link(__d('me_cms', 'Feed RSS'), '/posts/rss'),
 ];
 
