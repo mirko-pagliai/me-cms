@@ -3,6 +3,7 @@
 ### 2.31.1
 * fixed little bug for `ControllerTestCase::assert*Authorized()` methods;
 * added `AppController::getQueryPage()` method. Little fixes for controllers;
+* fonts (Roboto and Abel) are now internal to me-cms;
 * removed the `cookie-policy` static page. You should integrate your own personal cookie policy;
 * improved `Sitemap`, `SitemapBuilder` and `SitemapBase` classes;
 * updated for php-tools 1.7.1.

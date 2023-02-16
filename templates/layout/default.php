@@ -29,14 +29,11 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
         echo $this->Html->title($this->fetch('title'));
         echo $this->fetch('meta');
 
-        echo $this->Html->css([
-            'https://fonts.googleapis.com/css?family=Roboto|Abel',
-            '/vendor/font-awesome/css/all.min',
-        ], ['block' => true]);
-
         //Default css and css files from the application (`layout.css` and `contents.css`)
         $css = array_filter(['layout', 'contents'], fn(string $name): bool => is_readable(Configure::read('App.wwwRoot') . Configure::read('App.cssBaseUrl') . $name . '.css'));
         echo $this->Asset->css([
+            '/vendor/font-awesome/css/all.min',
+            'MeCms.fonts',
             '/vendor/bootstrap/css/bootstrap.min',
             'MeTools.default',
             'MeTools.forms',
