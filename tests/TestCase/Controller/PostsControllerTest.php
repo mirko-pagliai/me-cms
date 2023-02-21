@@ -19,6 +19,7 @@ namespace MeCms\Test\TestCase\Controller;
 use Cake\Cache\Cache;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\I18n\FrozenTime;
+use Cake\Routing\Router;
 use MeCms\Model\Entity\Post;
 use MeCms\TestSuite\ControllerTestCase;
 
@@ -120,8 +121,16 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseRegExp('/^\<\?xml version\="1\.0" encoding\="UTF\-8"\?\>\n\<rss xmlns\:content\="http\:\/\/purl\.org\/rss\/1\.0\/modules\/content\/" version\="2\.0"\>\n\s*\<channel\>/');
         $this->assertHeaderContains('Content-Type', 'application/rss+xml');
-        $data = $this->viewVariable('data');
-        $this->assertArrayKeysEqual(['channel', 'items'], $data);
+        $dataFromView = $this->viewVariable('data');
+
+        //Tests the channel
+        $expected = [
+            "title" => "MeCms",
+            "link" => Router::url('/', true),
+            "description" => "Latest posts",
+            "language" => "en_US",
+        ];
+        $this->assertEquals($expected, $dataFromView['channel']);
 
         //Tests the first item (the last post)
         $expected = [
@@ -133,11 +142,11 @@ class PostsControllerTest extends ControllerTestCase
             'pubDate' => '2016-12-29 18:59:19',
             'description' => 'Text of the seventh post',
         ];
-        $this->assertEquals($expected, $data['items'][0]);
+        $this->assertEquals($expected, $dataFromView['items'][0]);
 
         //Tests the cache value
         $rssFromCache = Cache::read('rss', $this->Table->getCacheName());
-        $this->assertSame($data['items'], $rssFromCache->toArray());
+        $this->assertSame($dataFromView['items'], $rssFromCache->toArray());
 
         //With an invalid extension
         $this->expectException(ForbiddenException::class);

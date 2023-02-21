@@ -3,7 +3,8 @@
 ### 2.31.1
 * fixed little bug for `ControllerTestCase::assert*Authorized()` methods;
 * added `AppController::getQueryPage()` method. Little fixes for controllers;
-* improved rss for posts: description and content have been improved; the post category and the `guid` are also employed;
+* improved rss for posts: description and content have been improved; the post category and the `guid` are also employed.
+  Fixed the main title for rss resource;
 * fonts (Roboto and Abel) are now internal to me-cms;
 * removed the `cookie-policy` static page. You should integrate your own personal cookie policy;
 * improved `Sitemap`, `SitemapBuilder` and `SitemapBase` classes;

@@ -164,7 +164,7 @@ class PostsController extends AppController
 
         $data = [
             'channel' => [
-                'title' => __d('me_cms', 'Latest posts'),
+                'title' => getConfigOrFail('main.title'),
                 'link' => Router::url('/', true),
                 'description' => __d('me_cms', 'Latest posts'),
                 'language' => I18n::getLocale(),
