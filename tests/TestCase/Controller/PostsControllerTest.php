@@ -40,7 +40,6 @@ class PostsControllerTest extends ControllerTestCase
     ];
 
     /**
-     * Tests for `index()` method
      * @uses \MeCms\Controller\PostsController::index()
      * @test
      */
@@ -65,7 +64,6 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `indexByDate()` method
      * @uses \MeCms\Controller\PostsController::indexByDate()
      * @test
      */
@@ -113,7 +111,6 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `rss()` method
      * @uses \MeCms\Controller\PostsController::rss()
      * @test
      */
@@ -125,7 +122,22 @@ class PostsControllerTest extends ControllerTestCase
         $this->assertHeaderContains('Content-Type', 'application/rss+xml');
         $data = $this->viewVariable('data');
         $this->assertArrayKeysEqual(['channel', 'items'], $data);
-        $this->assertNotEmpty($data['items'][0]);
+
+        //Tests the first item (the last post)
+        $expected = [
+            'title' => 'Seventh post',
+            'link' => 'http://localhost/post/seventh-post',
+            'guid' => 'http://localhost/post/seventh-post',
+            'content:encoded' => 'Text of the <strong>seventh post</strong><!-- read-more -->Text after read more',
+            'category' => 'First post category',
+            'pubDate' => '2016-12-29 18:59:19',
+            'description' => 'Text of the seventh post',
+        ];
+        $this->assertEquals($expected, $data['items'][0]);
+
+        //Tests the cache value
+        $rssFromCache = Cache::read('rss', $this->Table->getCacheName());
+        $this->assertSame($data['items'], $rssFromCache->toArray());
 
         //With an invalid extension
         $this->expectException(ForbiddenException::class);
@@ -133,13 +145,12 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `search()` method
      * @uses \MeCms\Controller\PostsController::search()
      * @test
      */
     public function testSearch(): void
     {
-        $pattern = 'Text of the seventh';
+        $pattern = 'seventh';
         $url = ['_name' => 'postsSearch'];
 
         $this->get($url);
@@ -150,7 +161,7 @@ class PostsControllerTest extends ControllerTestCase
 
         $this->get($url + ['?' => ['p' => $pattern]]);
         $this->assertResponseOkAndNotEmpty();
-        $this->assertResponseContains('<mark>' . $pattern . '</mark>');
+        $this->assertResponseContains('Text of the <mark>seventh</mark> post');
         $this->assertEquals($this->viewVariable('pattern'), $pattern);
         $this->assertContainsOnlyInstancesOf(Post::class, $this->viewVariable('posts'));
         $this->assertStringContainsString($pattern, $this->viewVariable('posts')->first()->text);
@@ -182,7 +193,6 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `view()` method
      * @uses \MeCms\Controller\PostsController::view()
      * @test
      */
@@ -198,7 +208,6 @@ class PostsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `preview()` method
      * @uses \MeCms\Controller\PostsController::preview()
      * @test
      */

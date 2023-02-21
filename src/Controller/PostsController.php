@@ -25,6 +25,7 @@ use Cake\Utility\Text;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
 use MeCms\Model\Entity\Post;
+use MeCms\Model\Entity\Tag;
 use Tools\Exceptionist;
 
 /**
@@ -137,27 +138,27 @@ class PostsController extends AppController
         $this->viewBuilder()->setClassName('Feed.Rss');
 
         $posts = $this->Posts->find('active')
+            ->contain(['Categories' => ['fields' => ['title']]])
             ->limit(getConfigOrFail('default.records_for_rss'))
-            ->orderDesc('created')
+            ->orderDesc($this->Posts->getAlias() . '.created')
             ->formatResults(fn(ResultSet $results) => $results->map(function (Post $Post): array {
+                $description = $text = preg_replace('/\R+/', '', $Post->get('text'));
                 //Truncates the description if the "<!-- read-more -->" tag is present or if requested by the configuration
-                $description = $text = $Post->get('text');
-                $length = $options = false;
                 $strpos = strpos($description, '<!-- read-more -->');
-                if ($strpos) {
-                    [$length, $options] = [$strpos, ['exact' => true, 'html' => false]];
-                } elseif (getConfig('default.truncate_to')) {
-                    [$length, $options] = [getConfig('default.truncate_to'), ['exact' => false, 'html' => true]];
+                if (!$strpos && getConfig('default.truncate_to')) {
+                    $strpos = getConfig('default.truncate_to');
+                    $options = ['exact' => false, 'html' => true];
                 }
-                $description = $length && $options ? Text::truncate($description, $length, $options) : $description;
+                $description = strip_tags($strpos !== false ? Text::truncate($description, $strpos, $options ?? ['exact' => true, 'html' => false]) : $description);
 
                 return [
                     'title' => $Post->get('title'),
                     'link' => $Post->get('url'),
-                    'description' => strip_tags($description),
+                    'guid' => $Post->get('url'),
                     'content:encoded' => $text,
-                    'pubDate' => $Post->get('created'),
-                ];
+                    'category' => $Post->get('category')->get('title'),
+                    'pubDate' => $Post->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'),
+                ] + compact('description');
             }))
             ->cache('rss');
 
