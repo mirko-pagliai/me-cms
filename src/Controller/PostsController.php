@@ -25,7 +25,6 @@ use Cake\Utility\Text;
 use MeCms\Controller\Traits\CheckLastSearchTrait;
 use MeCms\Controller\Traits\GetStartAndEndDateTrait;
 use MeCms\Model\Entity\Post;
-use MeCms\Model\Entity\Tag;
 use Tools\Exceptionist;
 
 /**

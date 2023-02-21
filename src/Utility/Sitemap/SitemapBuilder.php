@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Utility\Sitemap;
 
-use Cake\Collection\CollectionInterface;
 use Cake\Routing\Router;
 use Cake\Utility\Xml;
 use MeCms\Core\Plugin;

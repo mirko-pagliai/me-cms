@@ -41,6 +41,6 @@ abstract class SitemapBase
         /** @var string $priority */
         $priority = $options['priority'] ?? '0.5';
 
-        return $result + compact( 'priority');
+        return $result + compact('priority');
     }
 }
