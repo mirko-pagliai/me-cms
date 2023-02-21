@@ -125,10 +125,10 @@ class PostsControllerTest extends ControllerTestCase
 
         //Tests the channel
         $expected = [
-            "title" => "MeCms",
-            "link" => Router::url('/', true),
-            "description" => "Latest posts",
-            "language" => "en_US",
+            'title' => 'MeCms',
+            'link' => Router::url('/', true),
+            'description' => 'Latest posts',
+            'language' => 'en_US',
         ];
         $this->assertEquals($expected, $dataFromView['channel']);
 
