@@ -138,7 +138,6 @@ class PostsController extends AppController
 
         $posts = $this->Posts->find('active')
             ->contain(['Categories' => ['fields' => ['title']]])
-            ->limit(getConfigOrFail('default.records_for_rss'))
             ->orderDesc($this->Posts->getAlias() . '.created')
             ->formatResults(fn(ResultSet $results) => $results->map(function (Post $Post): array {
                 $description = $text = preg_replace('/\R+/', '', $Post->get('text'));
@@ -158,19 +157,20 @@ class PostsController extends AppController
                     'category' => $Post->get('category')->get('title'),
                     'pubDate' => $Post->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'),
                 ] + compact('description');
-            }))
-            ->cache('rss');
+            }));
 
-        $data = [
-            'channel' => [
-                'title' => getConfigOrFail('main.title'),
-                'link' => Router::url('/', true),
-                'description' => __d('me_cms', 'Latest posts'),
-                'language' => I18n::getLocale(),
-            ],
-            'items' => $posts->toArray(),
-        ];
+        if (!array_key_exists('all', $this->getRequest()->getQueryParams())) {
+            $cache = 'rss_limit_' . getConfigOrFail('default.records_for_rss');
+            $posts->limit(getConfigOrFail('default.records_for_rss'));
+        }
+        $items = $posts->cache($cache ?? 'rss_all')->toArray();
 
+        $data = (['channel' => [
+            'title' => getConfigOrFail('main.title'),
+            'link' => Router::url('/', true),
+            'description' => __d('me_cms', 'Latest posts'),
+            'language' => I18n::getLocale(),
+        ]] + compact('items'));
         $this->set('_serialize', 'data');
         $this->set(compact('data'));
     }

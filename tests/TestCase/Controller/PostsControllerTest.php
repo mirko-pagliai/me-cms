@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\I18n\FrozenTime;
 use Cake\Routing\Router;
@@ -117,13 +118,14 @@ class PostsControllerTest extends ControllerTestCase
      */
     public function testRss(): void
     {
+        $limit = 2;
+        Configure::write('MeCms.default.records_for_rss', $limit);
+
         $this->get('/posts/rss');
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseRegExp('/^\<\?xml version\="1\.0" encoding\="UTF\-8"\?\>\n\<rss xmlns\:content\="http\:\/\/purl\.org\/rss\/1\.0\/modules\/content\/" version\="2\.0"\>\n\s*\<channel\>/');
         $this->assertHeaderContains('Content-Type', 'application/rss+xml');
         $dataFromView = $this->viewVariable('data');
-
-        //Tests the channel
         $expected = [
             'title' => 'MeCms',
             'link' => Router::url('/', true),
@@ -131,8 +133,7 @@ class PostsControllerTest extends ControllerTestCase
             'language' => 'en_US',
         ];
         $this->assertEquals($expected, $dataFromView['channel']);
-
-        //Tests the first item (the last post)
+        $this->assertCount($limit, $dataFromView['items']);
         $expected = [
             'title' => 'Seventh post',
             'link' => 'http://localhost/post/seventh-post',
@@ -143,9 +144,15 @@ class PostsControllerTest extends ControllerTestCase
             'description' => 'Text of the seventh post',
         ];
         $this->assertEquals($expected, $dataFromView['items'][0]);
+        $rssFromCache = Cache::read('rss_limit_' . $limit, $this->Table->getCacheName());
+        $this->assertSame($dataFromView['items'], $rssFromCache->toArray());
 
-        //Tests the cache value
-        $rssFromCache = Cache::read('rss', $this->Table->getCacheName());
+        //With `all` query parameter
+        $this->get('/posts/rss?all');
+        $this->assertResponseOkAndNotEmpty();
+        $dataFromView = $this->viewVariable('data');
+        $this->assertCount($this->Table->find('active')->count(), $dataFromView['items']);
+        $rssFromCache = Cache::read('rss_all', $this->Table->getCacheName());
         $this->assertSame($dataFromView['items'], $rssFromCache->toArray());
 
         //With an invalid extension
