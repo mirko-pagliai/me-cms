@@ -6,16 +6,6 @@ parameters:
 			path: src/Utility/Sitemap/SitemapBuilder.php
 
 		-
-			message: "#^Call to method getRequest\\(\\) on an unknown class MeCms\\\\Controller\\\\PostsController\\.$#"
-			count: 1
-			path: tests/TestCase/Controller/PostsControllerTest.php
-
-		-
-			message: "#^Call to method setRequest\\(\\) on an unknown class MeCms\\\\Controller\\\\PostsController\\.$#"
-			count: 1
-			path: tests/TestCase/Controller/PostsControllerTest.php
-
-		-
 			message: "#^Binary operation \"\\.\" between 'ORDER BY ' and array\\<string\\>\\|string\\|null results in an error\\.$#"
 			count: 1
 			path: tests/TestCase/Model/Table/AppTableTest.php
@@ -39,16 +29,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$resource of method MeCms\\\\Policy\\\\ControllerResolver\\:\\:getPolicy\\(\\) expects MeCms\\\\Controller\\\\AppController, stdClass given\\.$#"
 			count: 1
 			path: tests/TestCase/Policy/ControllerResolverTest.php
-
-		-
-			message: "#^Call to method getRequest\\(\\) on an unknown class MeCms\\\\Controller\\\\PostsController\\.$#"
-			count: 1
-			path: tests/TestCase/TestSuite/ControllerTestCaseTest.php
-
-		-
-			message: "#^Class MeCms\\\\Controller\\\\PostsController not found\\.$#"
-			count: 2
-			path: tests/TestCase/TestSuite/ControllerTestCaseTest.php
 
 		-
 			message: "#^Access to an undefined property MeCms\\\\Test\\\\TestCase\\\\TestSuite\\\\TestCaseTest\\:\\:\\$noExistingProperty\\.$#"
