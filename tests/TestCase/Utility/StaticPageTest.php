@@ -43,8 +43,8 @@ class StaticPageTest extends TestCase
     }
 
     /**
-     * Test for `all()` method
      * @test
+     * @uses \MeCms\Utility\StaticPage::all()
      */
     public function testAll(): void
     {
@@ -56,50 +56,49 @@ class StaticPageTest extends TestCase
         $this->assertContainsOnlyInstancesOf(FrozenTime::class, $pages->extract('modified'));
 
         //Checks filenames
-        $this->assertEqualsCanonicalizing([
-            'example-page',
+        $this->assertSame([
             'example-page-it',
+            'example-page',
             'page-from-app',
-            'test-from-plugin',
             'page-on-first-from-plugin',
             'page_on_second_from_plugin',
+            'test-from-plugin',
         ], $pages->extract('filename')->toArray());
 
         //Checks paths
-        $this->assertEqualsCanonicalizing([
+        $this->assertSame([
             'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'templates' . DS . 'StaticPages' . DS . 'example-page-it.' . StaticPage::EXTENSION,
-            'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'templates' . DS . 'StaticPages' . DS . 'page-from-app.' . StaticPage::EXTENSION,
             'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'templates' . DS . 'StaticPages' . DS . 'example-page.' . StaticPage::EXTENSION,
-            $TestPluginPath . 'test-from-plugin.' . StaticPage::EXTENSION,
+            'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'templates' . DS . 'StaticPages' . DS . 'page-from-app.' . StaticPage::EXTENSION,
             $TestPluginPath . 'first-folder' . DS . 'page-on-first-from-plugin.' . StaticPage::EXTENSION,
             $TestPluginPath . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin.' . StaticPage::EXTENSION,
-
+            $TestPluginPath . 'test-from-plugin.' . StaticPage::EXTENSION,
         ], $pages->extract('path')->toArray());
 
         //Checks slugs
-        $this->assertEqualsCanonicalizing([
-            'example-page',
+        $this->assertSame([
             'example-page-it',
+            'example-page',
             'page-from-app',
-            'test-from-plugin',
             'first-folder/page-on-first-from-plugin',
             'first-folder/second_folder/page_on_second_from_plugin',
+            'test-from-plugin',
         ], $pages->extract('slug')->toArray());
 
         //Checks titles
-        $this->assertEqualsCanonicalizing([
-            'Example Page',
+        $this->assertSame([
             'Example Page It',
+            'Example Page',
             'Page From App',
-            'Test From Plugin',
             'Page On First From Plugin',
             'Page On Second From Plugin',
+            'Test From Plugin',
         ], $pages->extract('title')->toArray());
     }
 
     /**
-     * Test for `get()` method
      * @test
+     * @uses \MeCms\Utility\StaticPage::get()
      */
     public function testGet(): void
     {
@@ -107,25 +106,19 @@ class StaticPageTest extends TestCase
 
         //Gets all pages from slugs
         $pages = array_map([StaticPage::class, 'get'], StaticPage::all()->extract('slug')->toArray());
-        $this->assertEqualsCanonicalizing([
-            DS . 'StaticPages' . DS . 'example-page',
+        $this->assertSame([
             DS . 'StaticPages' . DS . 'example-page-it',
+            DS . 'StaticPages' . DS . 'example-page',
             DS . 'StaticPages' . DS . 'page-from-app',
-            'TestPlugin.' . DS . 'StaticPages' . DS . 'test-from-plugin',
             'TestPlugin.' . DS . 'StaticPages' . DS . 'first-folder' . DS . 'page-on-first-from-plugin',
             'TestPlugin.' . DS . 'StaticPages' . DS . 'first-folder' . DS . 'second_folder' . DS . 'page_on_second_from_plugin',
+            'TestPlugin.' . DS . 'StaticPages' . DS . 'test-from-plugin',
         ], $pages);
 
         //Tries to get a no existing page
         $this->assertNull(StaticPage::get('no-Existing'));
-    }
 
-    /**
-     * Test for `get()` method, using a different locale
-     * @test
-     */
-    public function testGetDifferentLocale(): void
-    {
+        //Using a different locale
         $expected = '/StaticPages/example-page';
         $this->assertSame($expected, StaticPage::get('example-page'));
 
@@ -140,8 +133,8 @@ class StaticPageTest extends TestCase
     }
 
     /**
-     * Test for `getPaths()` method
      * @test
+     * @uses \MeCms\Utility\StaticPage::getPaths()
      */
     public function testGetPaths(): void
     {

@@ -164,7 +164,7 @@ class Sitemap extends SitemapBase
 
     /**
      * Returns static pages urls
-     * @return array
+     * @return array<array{loc: string, lastmod: string, priority: string}>
      * @throws \ErrorException
      */
     public static function staticPages(): array

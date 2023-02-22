@@ -5,6 +5,7 @@
 * added `AppController::getQueryPage()` method. Little fixes for controllers;
 * improved rss for posts: description and content have been improved; the post category and the `guid` are also employed.
   Fixed the main title for rss resource;
+* static pages are now correctly sorted by filename;
 * fonts (Roboto and Abel) are now internal to me-cms;
 * removed the `cookie-policy` static page. You should integrate your own personal cookie policy;
 * improved `Sitemap`, `SitemapBuilder` and `SitemapBase` classes;

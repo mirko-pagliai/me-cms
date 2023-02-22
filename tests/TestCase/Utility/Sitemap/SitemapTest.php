@@ -239,13 +239,13 @@ class SitemapTest extends TestCase
 
         $expected = [
             'http://localhost/page/example-page-it',
-            'http://localhost/page/page-from-app',
             'http://localhost/page/example-page',
-            'http://localhost/page/test-from-plugin',
+            'http://localhost/page/page-from-app',
             'http://localhost/page/first-folder/page-on-first-from-plugin',
             'http://localhost/page/first-folder/second_folder/page_on_second_from_plugin',
+            'http://localhost/page/test-from-plugin',
         ];
-        $this->assertEquals($expected, array_map(fn(array $row) => $row['loc'], $result));
+        $this->assertSame($expected, array_map(fn(array $row) => $row['loc'], $result));
 
         Configure::write('MeCms.sitemap.static_pages', false);
         $this->assertEmpty(Sitemap::staticPages());
