@@ -119,11 +119,11 @@ class StaticPageTest extends TestCase
         $this->assertNull(StaticPage::get('no-Existing'));
 
         //Using a different locale
-        $expected = '/StaticPages/example-page';
+        $expected = DS . 'StaticPages' . DS . 'example-page';
         $this->assertSame($expected, StaticPage::get('example-page'));
 
         $originalValue = ini_set('intl.default_locale', 'it_IT');
-        $expected = '/StaticPages/example-page-it';
+        $expected = DS . 'StaticPages' . DS . 'example-page-it';
         $this->assertSame($expected, StaticPage::get('example-page'));
         ini_set('intl.default_locale', (string)$originalValue);
 
