@@ -24,11 +24,9 @@ declare(strict_types=1);
         echo $this->Html->title($this->fetch('title'));
         echo $this->fetch('meta');
 
-        echo $this->Html->css([
-            'https://fonts.googleapis.com/css?family=Roboto|Abel',
-            '/vendor/font-awesome/css/all.min',
-        ], ['block' => true]);
         echo $this->Asset->css([
+            '/vendor/font-awesome/css/all.min',
+            'MeCms.fonts',
             '/vendor/bootstrap/css/bootstrap.min',
             'MeTools.default',
             'MeTools.forms',

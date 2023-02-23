@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Utility\Sitemap;
 
-use Cake\Collection\CollectionInterface;
 use Cake\Routing\Router;
 use Cake\Utility\Xml;
 use MeCms\Core\Plugin;
@@ -28,15 +27,14 @@ class SitemapBuilder
     /**
      * Gets all executable methods for the `Sitemap` class of a plugin
      * @param string $plugin Plugin
-     * @return \Cake\Collection\CollectionInterface<array{class: class-string, name: string}> Collection of classes and methods names
+     * @return array<array{class: class-string, name: string}> Array with classes and methods names
      * @throws \ErrorException
      */
-    public static function getMethods(string $plugin): CollectionInterface
+    public static function getMethods(string $plugin): array
     {
         $class = $plugin . '\Utility\Sitemap\Sitemap';
 
-        return collection(class_exists($class) ? get_child_methods($class) : [])
-            ->map(fn(string $name): array => ['class' => $class] + compact('name'));
+        return class_exists($class) ? array_map(fn(string $name) => ['class' => $class] + compact('name'), get_child_methods($class)) : [];
     }
 
     /**

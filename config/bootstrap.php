@@ -29,7 +29,7 @@ Configure::write('CONFIG_FILES', [
     'MeCms.widgets',
 ]);
 
-//Sets directories to be created and must be writable
+//Sets the directories to be created and which must be writable
 Configure::write('WRITABLE_DIRS', [
     ...Configure::read('WRITABLE_DIRS', []),
     getConfigOrFail('Assets.target'),

@@ -58,18 +58,19 @@ class StaticPage
      */
     public static function all(): CollectionInterface
     {
-        $getSlug = fn(string $relativePathname): string => str_replace('\\', '/', substr($relativePathname, 0, strrpos($relativePathname, '.' . self::EXTENSION) ?: null));
+        $getSlugFn = fn(string $relPathname): string => str_replace('\\', '/', substr($relPathname, 0, strrpos($relPathname, '.' . self::EXTENSION) ?: null));
 
-        /** @var array<\Symfony\Component\Finder\SplFileInfo> $files */
-        $files = iterator_to_array((new Finder())->in(self::getPaths())->name('*.' . self::EXTENSION));
+        /** @var \IteratorAggregate<string, \Symfony\Component\Finder\SplFileInfo> $files */
+        $files = (new Finder())->in(self::getPaths())->name('*.' . self::EXTENSION)
+            ->sort(fn(SplFileInfo $a, SplFileInfo $b): int => strcmp($a->getFilename(), $b->getFilename()));
 
-        return collection(array_values(array_map(fn(SplFileInfo $file): Entity => new Entity([
+        return collection(array_values(iterator_to_array($files)))->map(fn(SplFileInfo $file): Entity => new Entity([
             'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
             'path' => Filesystem::instance()->rtr($file->getPathname()),
-            'slug' => $getSlug($file->getRelativePathname()),
+            'slug' => $getSlugFn($file->getRelativePathname()),
             'title' => self::getTitle($file->getPathname()),
             'modified' => new FrozenTime($file->getMTime()),
-        ]), $files)));
+        ]));
     }
 
     /**

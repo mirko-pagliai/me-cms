@@ -25,8 +25,8 @@ use MeCms\Utility\StaticPage;
  * This class contains methods called by the `SitemapBuilder`.
  * Each method must be return an array or urls to add to the sitemap.
  *
- * This class contains methods that will be called automatically.
- * You do not need to call these methods manually.
+ * This class contains methods that will be called automatically. You do not need to call these methods manually.
+ * @see \MeCms\Utility\Sitemap\SitemapBuilder
  */
 class Sitemap extends SitemapBase
 {
@@ -40,41 +40,38 @@ class Sitemap extends SitemapBase
             return [];
         }
 
-        /** @var \MeCms\Model\Table\PagesCategoriesTable $PagesCategories */
-        $PagesCategories = TableRegistry::getTableLocator()->get('MeCms.PagesCategories');
-        $url = Cache::read('sitemap', $PagesCategories->getCacheName());
+        /** @var \MeCms\Model\Table\PagesCategoriesTable $Table */
+        $Table = TableRegistry::getTableLocator()->get('MeCms.PagesCategories');
 
-        if (!$url) {
-            $categories = $PagesCategories->find('active')
+        $result = Cache::read('sitemap', $Table->getCacheName());
+        if (!$result) {
+            $categories = $Table->find('active')
                 ->select(['id', 'lft', 'slug'])
-                ->contain($PagesCategories->Pages->getAlias(), fn(Query $query): Query => $query->find('active')->select(['category_id', 'slug', 'modified'])->orderDesc('modified'))
-                ->orderAsc(sprintf('%s.lft', $PagesCategories->getAlias()))
+                ->contain($Table->Pages->getAlias(), fn(Query $query): Query => $query->find('active')->select(['category_id', 'slug', 'modified'])->orderDesc('modified'))
+                ->orderAsc($Table->getAlias() . '.lft')
                 ->all();
 
             if ($categories->isEmpty()) {
                 return [];
             }
 
-            //Adds categories index
-            $url = [self::parse(['_name' => 'pagesCategories'])];
-
-            foreach ($categories as $category) {
-                //Adds category
-                $url[] = self::parse(
-                    ['_name' => 'pagesCategory', $category->get('slug')],
-                    ['lastmod' => array_value_first($category->get('pages'))->get('modified')]
+            //Adds categories index, then adds each category and each page for each category
+            $result = [self::parse(['_name' => 'pagesCategories'])];
+            foreach ($categories as $Category) {
+                $result[] = self::parse(
+                    ['_name' => 'pagesCategory', $Category->get('slug')],
+                    ['lastmod' => array_value_first($Category->get('pages'))->get('modified')]
                 );
 
-                //Adds each page
-                foreach ($category->get('pages') as $page) {
-                    $url[] = self::parse(['_name' => 'page', $page->get('slug')], ['lastmod' => $page->get('modified')]);
+                foreach ($Category->get('pages') as $Page) {
+                    $result[] = self::parse(['_name' => 'page', $Page->get('slug')], ['lastmod' => $Page->get('modified')]);
                 }
             }
 
-            Cache::write('sitemap', $url, $PagesCategories->getCacheName());
+            Cache::write('sitemap', $result, $Table->getCacheName());
         }
 
-        return $url;
+        return $result;
     }
 
     /**
@@ -87,51 +84,44 @@ class Sitemap extends SitemapBase
             return [];
         }
 
-        /** @var \MeCms\Model\Table\PostsCategoriesTable $PostsCategories */
-        $PostsCategories = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
-        $url = Cache::read('sitemap', $PostsCategories->getCacheName());
+        /** @var \MeCms\Model\Table\PostsCategoriesTable $Table */
+        $Table = TableRegistry::getTableLocator()->get('MeCms.PostsCategories');
 
-        if (!$url) {
-            $categories = $PostsCategories->find('active')
+        $result = Cache::read('sitemap', $Table->getCacheName());
+        if (!$result) {
+            $categories = $Table->find('active')
                 ->select(['id', 'lft', 'slug'])
-                ->contain($PostsCategories->Posts->getAlias(), fn(Query $query): Query => $query->find('active')->select(['category_id', 'slug', 'modified'])->orderDesc('modified'))
-                ->orderAsc(sprintf('%s.lft', $PostsCategories->getAlias()))
+                ->contain($Table->Posts->getAlias(), fn(Query $query): Query => $query->find('active')->select(['category_id', 'slug', 'modified'])->orderDesc('modified'))
+                ->orderAsc($Table->getAlias() . '.lft')
                 ->all();
 
             if ($categories->isEmpty()) {
                 return [];
             }
 
-            /** @var \MeCms\Model\Entity\Post $latest */
-            $latest = $PostsCategories->Posts->find('active')
-                ->select(['modified'])
-                ->orderDesc('modified')
-                ->firstOrFail();
-
-            //Adds posts index, categories index and posts search
-            $url = [
-                self::parse(['_name' => 'posts'], ['lastmod' => $latest->get('modified')]),
+            //Adds posts index, categories index and posts search, then adds each category and each post for each category
+            /** @var \MeCms\Model\Entity\Post $Latest */
+            $Latest = $Table->Posts->find('active')->select(['modified'])->orderDesc('modified')->firstOrFail();
+            $result = [
+                self::parse(['_name' => 'posts'], ['lastmod' => $Latest->get('modified')]),
                 self::parse(['_name' => 'postsCategories']),
                 self::parse(['_name' => 'postsSearch'], ['priority' => '0.2']),
             ];
-
-            foreach ($categories as $category) {
-                //Adds category
-                $url[] = self::parse(
-                    ['_name' => 'postsCategory', $category->get('slug')],
-                    ['lastmod' => array_value_first($category->get('posts'))->get('modified')]
+            foreach ($categories as $Category) {
+                $result[] = self::parse(
+                    ['_name' => 'postsCategory', $Category->get('slug')],
+                    ['lastmod' => array_value_first($Category->get('posts'))->get('modified')]
                 );
 
-                //Adds each post
-                foreach ($category->get('posts') as $post) {
-                    $url[] = self::parse(['_name' => 'post', $post->get('slug')], ['lastmod' => $post->get('modified')]);
+                foreach ($Category->get('posts') as $Post) {
+                    $result[] = self::parse(['_name' => 'post', $Post->get('slug')], ['lastmod' => $Post->get('modified')]);
                 }
             }
 
-            Cache::write('sitemap', $url, $PostsCategories->getCacheName());
+            Cache::write('sitemap', $result, $Table->getCacheName());
         }
 
-        return $url;
+        return $result;
     }
 
     /**
@@ -144,42 +134,37 @@ class Sitemap extends SitemapBase
             return [];
         }
 
-        /** @var \MeCms\Model\Table\TagsTable $Tags */
-        $Tags = TableRegistry::getTableLocator()->get('MeCms.Tags');
-        $url = Cache::read('sitemap', $Tags->getCacheName());
+        /** @var \MeCms\Model\Table\TagsTable $Table */
+        $Table = TableRegistry::getTableLocator()->get('MeCms.Tags');
 
-        if (!$url) {
-            $tags = $Tags->find('active')
+        $result = Cache::read('sitemap', $Table->getCacheName());
+        if (!$result) {
+            $tags = $Table->find('active')
                 ->select(['tag', 'modified'])
-                ->orderAsc(sprintf('%s.tag', $Tags->getAlias()))
+                ->orderAsc($Table->getAlias() . '.tag')
                 ->all();
 
             if ($tags->isEmpty()) {
                 return [];
             }
 
-            //Adds tags index
-            /** @var \MeCms\Model\Entity\Tag $latest */
-            $latest = $Tags->find()
-                ->select(['modified'])
-                ->orderDesc('modified')
-                ->firstOrFail();
-            $url = [self::parse(['_name' => 'postsTags'], ['lastmod' => $latest->get('modified')])];
-
-            //Adds each tag
-            foreach ($tags as $tag) {
-                $url[] = self::parse(['_name' => 'postsTag', $tag->get('slug')], ['lastmod' => $tag->get('modified')]);
+            //Adds tags index, then adds each tag
+            /** @var \MeCms\Model\Entity\Tag $Latest */
+            $Latest = $Table->find()->select(['modified']) ->orderDesc('modified')->firstOrFail();
+            $result = [self::parse(['_name' => 'postsTags'], ['lastmod' => $Latest->get('modified')])];
+            foreach ($tags as $Tag) {
+                $result[] = self::parse(['_name' => 'postsTag', $Tag->get('slug')], ['lastmod' => $Tag->get('modified')]);
             }
 
-            Cache::write('sitemap', $url, $Tags->getCacheName());
+            Cache::write('sitemap', $result, $Table->getCacheName());
         }
 
-        return $url;
+        return $result;
     }
 
     /**
      * Returns static pages urls
-     * @return array
+     * @return array<array{loc: string, lastmod: string, priority: string}>
      * @throws \ErrorException
      */
     public static function staticPages(): array
@@ -188,7 +173,7 @@ class Sitemap extends SitemapBase
             return [];
         }
 
-        return StaticPage::all()->map(fn(Entity $page): array => self::parse(['_name' => 'page', $page->get('slug')], ['lastmod' => $page->get('modified')]))->toArray();
+        return StaticPage::all()->map(fn(Entity $Page): array => self::parse(['_name' => 'page', $Page->get('slug')], ['lastmod' => $Page->get('modified')]))->toArray();
     }
 
     /**

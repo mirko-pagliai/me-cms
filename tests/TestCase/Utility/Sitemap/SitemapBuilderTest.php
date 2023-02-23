@@ -62,23 +62,46 @@ class SitemapBuilderTest extends TestCase
      */
     public function testGetMethods(): void
     {
-        $methods = $this->SitemapBuilder->getMethods('MeCms');
-        $this->assertEquals([
-            'pages',
-            'posts',
-            'postsTags',
-            'staticPages',
-            'systems',
-        ], $methods->extract('name')->toArray());
+        $expected = [
+            [
+                'class' => 'MeCms\Utility\Sitemap\Sitemap',
+                'name' => 'pages',
+            ],
+            [
+                'class' => 'MeCms\Utility\Sitemap\Sitemap',
+                'name' => 'posts',
+            ],
+            [
+                'class' => 'MeCms\Utility\Sitemap\Sitemap',
+                'name' => 'postsTags',
+            ],
+            [
+                'class' => 'MeCms\Utility\Sitemap\Sitemap',
+                'name' => 'staticPages',
+            ],
+            [
+                'class' => 'MeCms\Utility\Sitemap\Sitemap',
+                'name' => 'systems',
+            ],
+        ];
+        $this->assertSame($expected, $this->SitemapBuilder->getMethods('MeCms'));
 
+        $expected = [
+            [
+                'class' => 'TestPlugin\Utility\Sitemap\Sitemap',
+                'name' => 'urlMethod1',
+            ],
+            [
+                'class' => 'TestPlugin\Utility\Sitemap\Sitemap',
+                'name' => 'urlMethod2',
+            ],
+        ];
         $this->loadPlugins(['TestPlugin' => []]);
-        $methods = $this->SitemapBuilder->getMethods('TestPlugin');
-        $this->assertEquals(['urlMethod1', 'urlMethod2'], $methods->extract('name')->toArray());
+        $this->assertSame($expected, $this->SitemapBuilder->getMethods('TestPlugin'));
 
         //This plugin does not have the `Sitemap` class
         $this->loadPlugins(['TestPluginTwo' => []]);
-        $methods = $this->SitemapBuilder->getMethods('TestPluginTwo');
-        $this->assertCount(0, $methods);
+        $this->assertEmpty($this->SitemapBuilder->getMethods('TestPluginTwo'));
     }
 
     /**

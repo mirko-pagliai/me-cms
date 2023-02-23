@@ -51,11 +51,10 @@ class UsersTableTest extends TableTestCase
     ];
 
     /**
-     * Test for event methods
-     * @uses \MeCms\Model\Table\UsersTable::beforeMarshal()
      * @test
+     * @uses \MeCms\Model\Table\UsersTable::beforeMarshal()
      */
-    public function testEventMethods(): void
+    public function testBeforeMarshal(): void
     {
         $entity = $this->Table->patchEntity($this->Table->get(1), self::$example, ['validate' => 'EmptyPassword']);
         $this->assertNotEmpty($entity->get('password'));
@@ -64,19 +63,19 @@ class UsersTableTest extends TableTestCase
         $example = ['password' => '', 'password_repeat' => ''] + self::$example;
         $entity = $this->Table->patchEntity($this->Table->get(1), $example, ['validate' => 'EmptyPassword']);
         $this->assertEmpty($entity->getErrors());
-        $this->assertObjectNotHasAttribute('password', $entity);
-        $this->assertObjectNotHasAttribute('password_repeat', $entity);
+        $this->assertFalse(property_exists($entity, 'password'));
+        $this->assertFalse(property_exists($entity, 'password_repeat'));
 
         unset($example['password'], $example['password_repeat']);
         $entity = $this->Table->patchEntity($this->Table->get(1), $example, ['validate' => 'EmptyPassword']);
         $this->assertEmpty($entity->getErrors());
-        $this->assertObjectNotHasAttribute('password', $entity);
-        $this->assertObjectNotHasAttribute('password_repeat', $entity);
+        $this->assertFalse(property_exists($entity, 'password'));
+        $this->assertFalse(property_exists($entity, 'password_repeat'));
     }
 
     /**
-     * Test for `_initializeSchema()` method
      * @test
+     * @uses \MeCms\Model\Table\UsersTable::_initializeSchema()
      */
     public function testInitializeSchema(): void
     {
@@ -84,9 +83,8 @@ class UsersTableTest extends TableTestCase
     }
 
     /**
-     * Test for `buildRules()` method
-     * @uses \MeCms\Model\Table\UsersTable::buildRules()
      * @test
+     * @uses \MeCms\Model\Table\UsersTable::buildRules()
      */
     public function testBuildRules(): void
     {
@@ -110,9 +108,8 @@ class UsersTableTest extends TableTestCase
     }
 
     /**
-     * Test for `initialize()` method
-     * @uses \MeCms\Model\Table\UsersTable::initialize()
      * @test
+     * @uses \MeCms\Model\Table\UsersTable::initialize()
      */
     public function testInitialize(): void
     {
@@ -149,12 +146,11 @@ class UsersTableTest extends TableTestCase
     }
 
     /**
-     * Test for `find()` methods
+     * @test
      * @uses \MeCms\Model\Table\UsersTable::findActive()
      * @uses \MeCms\Model\Table\UsersTable::findAuth()
      * @uses \MeCms\Model\Table\UsersTable::findBanned()
      * @uses \MeCms\Model\Table\UsersTable::findPending()
-     * @test
      */
     public function testFindMethods(): void
     {
@@ -177,9 +173,8 @@ class UsersTableTest extends TableTestCase
     }
 
     /**
-     * Test for `getActiveList()` method
-     * @uses \MeCms\Model\Table\UsersTable::getActiveList()
      * @test
+     * @uses \MeCms\Model\Table\UsersTable::getActiveList()
      */
     public function testGetActiveList(): void
     {
@@ -191,9 +186,8 @@ class UsersTableTest extends TableTestCase
     }
 
     /**
-     * Test for `queryFromFilter()` method
-     * @uses \MeCms\Model\Table\UsersTable::queryFromFilter()
      * @test
+     * @uses \MeCms\Model\Table\UsersTable::queryFromFilter()
      */
     public function testQueryFromFilter(): void
     {
@@ -229,9 +223,8 @@ class UsersTableTest extends TableTestCase
     }
 
     /**
-     * Test for `validationDoNotRequirePresence()` method
-     * @uses \MeCms\Model\Table\UsersTable::validationDoNotRequirePresence()
      * @test
+     * @uses \MeCms\Model\Table\UsersTable::validationDoNotRequirePresence()
      */
     public function testValidationDoNotRequirePresence(): void
     {
@@ -252,9 +245,8 @@ class UsersTableTest extends TableTestCase
     }
 
     /**
-     * Test for `validationEmptyPassword()` method
-     * @uses \MeCms\Model\Table\UsersTable::validationEmptyPassword()
      * @test
+     * @uses \MeCms\Model\Table\UsersTable::validationEmptyPassword()
      */
     public function testValidationEmptyPassword(): void
     {
