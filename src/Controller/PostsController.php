@@ -165,12 +165,12 @@ class PostsController extends AppController
         }
         $items = $posts->cache($cache ?? 'rss_all')->toArray();
 
-        $data = (['channel' => [
+        $data = ['channel' => [
             'title' => getConfigOrFail('main.title'),
             'link' => Router::url('/', true),
             'description' => __d('me_cms', 'Latest posts'),
             'language' => I18n::getLocale(),
-        ]] + compact('items'));
+        ]] + compact('items');
         $this->set('_serialize', 'data');
         $this->set(compact('data'));
     }
