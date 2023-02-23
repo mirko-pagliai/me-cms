@@ -6,16 +6,6 @@ parameters:
 			path: src/Utility/Sitemap/SitemapBuilder.php
 
 		-
-			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$page\\.$#"
-			count: 1
-			path: templates/StaticPages/cookies-policy-it.php
-
-		-
-			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$page\\.$#"
-			count: 1
-			path: templates/StaticPages/cookies-policy.php
-
-		-
 			message: "#^Binary operation \"\\.\" between 'ORDER BY ' and array\\<string\\>\\|string\\|null results in an error\\.$#"
 			count: 1
 			path: tests/TestCase/Model/Table/AppTableTest.php

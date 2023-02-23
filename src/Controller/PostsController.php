@@ -131,46 +131,46 @@ class PostsController extends AppController
     public function rss(): void
     {
         //This method works only for RSS
-        if (!$this->RequestHandler->prefers('rss')) {
+        if ($this->getRequest()->getParam('_ext') != 'rss') {
             throw new ForbiddenException();
         }
         $this->viewBuilder()->setClassName('Feed.Rss');
 
         $posts = $this->Posts->find('active')
-            ->limit(getConfigOrFail('default.records_for_rss'))
-            ->orderDesc('created')
+            ->contain(['Categories' => ['fields' => ['title']]])
+            ->orderDesc($this->Posts->getAlias() . '.created')
             ->formatResults(fn(ResultSet $results) => $results->map(function (Post $Post): array {
+                $description = $text = preg_replace('/\R+/', '', $Post->get('text'));
                 //Truncates the description if the "<!-- read-more -->" tag is present or if requested by the configuration
-                $description = $text = $Post->get('text');
-                $length = $options = false;
                 $strpos = strpos($description, '<!-- read-more -->');
-                if ($strpos) {
-                    [$length, $options] = [$strpos, ['exact' => true, 'html' => false]];
-                } elseif (getConfig('default.truncate_to')) {
-                    [$length, $options] = [getConfig('default.truncate_to'), ['exact' => false, 'html' => true]];
+                if (!$strpos && getConfig('default.truncate_to')) {
+                    $strpos = getConfig('default.truncate_to');
+                    $options = ['exact' => false, 'html' => true];
                 }
-                $description = $length && $options ? Text::truncate($description, $length, $options) : $description;
+                $description = strip_tags($strpos !== false ? Text::truncate($description, $strpos, $options ?? ['exact' => true, 'html' => false]) : $description);
 
                 return [
                     'title' => $Post->get('title'),
                     'link' => $Post->get('url'),
-                    'description' => strip_tags($description),
+                    'guid' => $Post->get('url'),
                     'content:encoded' => $text,
-                    'pubDate' => $Post->get('created'),
-                ];
-            }))
-            ->cache('rss');
+                    'category' => $Post->get('category')->get('title'),
+                    'pubDate' => $Post->get('created')->i18nFormat('yyyy-MM-dd HH:mm:ss'),
+                ] + compact('description');
+            }));
 
-        $data = [
-            'channel' => [
-                'title' => __d('me_cms', 'Latest posts'),
-                'link' => Router::url('/', true),
-                'description' => __d('me_cms', 'Latest posts'),
-                'language' => I18n::getLocale(),
-            ],
-            'items' => $posts->toArray(),
-        ];
+        if (!array_key_exists('all', $this->getRequest()->getQueryParams())) {
+            $cache = 'rss_limit_' . getConfigOrFail('default.records_for_rss');
+            $posts->limit(getConfigOrFail('default.records_for_rss'));
+        }
+        $items = $posts->cache($cache ?? 'rss_all')->toArray();
 
+        $data = ['channel' => [
+            'title' => getConfigOrFail('main.title'),
+            'link' => Router::url('/', true),
+            'description' => __d('me_cms', 'Latest posts'),
+            'language' => I18n::getLocale(),
+        ]] + compact('items');
         $this->set('_serialize', 'data');
         $this->set(compact('data'));
     }

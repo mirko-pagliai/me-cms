@@ -53,17 +53,9 @@ class AppControllerTest extends ControllerTestCase
         parent::setUp();
 
         if (!isset($this->Controller)) {
-            $this->Controller = $this->getMockForAbstractClass(
-                AppController::class,
-                [new ServerRequest(['params' => $this->url])],
-                '',
-                true,
-                true,
-                true,
-                ['initialize', 'isSpammer']
-            );
-            $this->Controller->method('isSpammer')->willReturn(false);
-            $this->Controller->Authorization = $this->createStub(AuthorizationComponent::class);
+            /** @var \MeCms\Controller\Admin\AppController&\PHPUnit\Framework\MockObject\MockObject $Controller */
+            $Controller = $this->createPartialMockForAbstractClass(AppController::class, ['initialize']);
+            $this->Controller = $Controller;
         }
     }
 
@@ -74,32 +66,20 @@ class AppControllerTest extends ControllerTestCase
     public function testBeforeFilter(): void
     {
         Configure::write('MeCms.admin.records', 7);
+        $this->Controller->Authorization = $this->createPartialMock(AuthorizationComponent::class, ['authorize']);
         $this->Controller->dispatchEvent('Controller.initialize');
         $this->assertEquals(['limit' => 7, 'maxLimit' => 7], $this->Controller->paginate);
         $this->assertEquals('MeCms.View/Admin/App', $this->Controller->viewBuilder()->getClassName());
 
-        //If the site is offline this makes a redirect
-        //This works anyway, because the admin interface never goes offline
-        Configure::write('MeCms.default.offline', true);
-        $this->Controller->getRequest()->clearDetectorCache();
-        $this->assertNull($this->Controller->dispatchEvent('Controller.initialize')->getResult());
-
         /**
          * This tests that the parent `beforeFilter()` method is being executed correctly
          */
-        //If the site is offline
-        Configure::write('MeCms.default.offline', true);
-        $this->get('/');
-        $this->assertRedirect(['_name' => 'offline']);
-        Configure::write('MeCms.default.offline', false);
-
-        $Controller = $this->getMockForAbstractClass(AppController::class, [], '', true, true, true, ['initialize', 'isSpammer']);
-        $Controller->method('isSpammer')->willReturn(true);
-        $Controller->Authorization = $this->createStub(AuthorizationComponent::class);
-
         //Whether the user has been reported as a spammer
+        $Request = $this->createPartialMock(ServerRequest::class, ['is']);
+        $Request->method('is')->willReturnCallback(fn($type) => $type == 'spammer');
+        $this->Controller->setRequest($Request);
         /** @var \Cake\Http\Response $Response */
-        $Response = $Controller->dispatchEvent('Controller.initialize')->getResult();
+        $Response = $this->Controller->dispatchEvent('Controller.initialize')->getResult();
         $this->_response = $Response;
         $this->assertRedirect(['_name' => 'ipNotAllowed']);
     }

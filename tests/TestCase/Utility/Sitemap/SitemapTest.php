@@ -53,13 +53,13 @@ class SitemapTest extends TestCase
     }
 
     /**
-     * Test for `pages()` method
      * @test
+     * @uses \MeCms\Utility\Sitemap\Sitemap::pages()
      */
     public function testPages(): void
     {
-        /** @var \MeCms\Model\Table\PagesCategoriesTable $table */
-        $table = $this->getTable('MeCms.PagesCategories');
+        /** @var \MeCms\Model\Table\PagesCategoriesTable $Table */
+        $Table = $this->getTable('MeCms.PagesCategories');
 
         $expected = [
             [
@@ -87,26 +87,26 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $this->assertEquals($expected, Sitemap::pages());
-        $this->assertEquals($expected, Cache::read('sitemap', $table->getCacheName()));
+        $this->assertSame($expected, Sitemap::pages());
+        $this->assertSame($expected, Cache::read('sitemap', $Table->getCacheName()));
 
         Configure::write('MeCms.sitemap.pages', false);
         $this->assertEmpty(Sitemap::pages());
 
         //Deletes all records
         Configure::write('MeCms.sitemap.pages', true);
-        $table->deleteAll(['id IS NOT' => null]);
+        $Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty(Sitemap::pages());
     }
 
     /**
-     * Test for `posts()` method
      * @test
+     * @uses \MeCms\Utility\Sitemap\Sitemap::posts()
      */
     public function testPosts(): void
     {
-        /** @var \MeCms\Model\Table\PostsCategoriesTable $table */
-        $table = $this->getTable('MeCms.PostsCategories');
+        /** @var \MeCms\Model\Table\PostsCategoriesTable $Table */
+        $Table = $this->getTable('MeCms.PostsCategories');
 
         $expected = [
             [
@@ -163,26 +163,26 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $this->assertEquals($expected, Sitemap::posts());
-        $this->assertEquals($expected, Cache::read('sitemap', $table->getCacheName()));
+        $this->assertSame($expected, Sitemap::posts());
+        $this->assertSame($expected, Cache::read('sitemap', $Table->getCacheName()));
 
         Configure::write('MeCms.sitemap.posts', false);
         $this->assertEmpty(Sitemap::posts());
 
         //Deletes all records
         Configure::write('MeCms.sitemap.posts', true);
-        $table->deleteAll(['id IS NOT' => null]);
+        $Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty(Sitemap::posts());
     }
 
     /**
-     * Test for `postsTags()` method
      * @test
+     * @uses \MeCms\Utility\Sitemap\Sitemap::postsTags()
      */
     public function testPostsTags(): void
     {
-        /** @var \MeCms\Model\Table\TagsTable $table */
-        $table = $this->getTable('MeCms.Tags');
+        /** @var \MeCms\Model\Table\TagsTable $Table */
+        $Table = $this->getTable('MeCms.Tags');
 
         $expected = [
             [
@@ -211,38 +211,41 @@ class SitemapTest extends TestCase
                 'priority' => '0.5',
             ],
         ];
-        $this->assertEquals($expected, Sitemap::postsTags());
-        $this->assertEquals($expected, Cache::read('sitemap', $table->getCacheName()));
+        $this->assertSame($expected, Sitemap::postsTags());
+        $this->assertSame($expected, Cache::read('sitemap', $Table->getCacheName()));
 
         Configure::write('MeCms.sitemap.posts_tags', false);
         $this->assertEmpty(Sitemap::postsTags());
 
         //Deletes all records
         Configure::write('MeCms.sitemap.posts_tags', true);
-        $table->deleteAll(['id IS NOT' => null]);
+        $Table->deleteAll(['id IS NOT' => null]);
         $this->assertEmpty(Sitemap::postsTags());
     }
 
     /**
-     * Test for `staticPages()` method
      * @test
+     * @uses \MeCms\Utility\Sitemap\Sitemap::staticPages()
      */
     public function testStaticPages(): void
     {
-        $map = Sitemap::staticPages();
+        $result = Sitemap::staticPages();
 
-        //It checks here the `lastmod` value and removes it from the array
-        foreach ($map as $k => $url) {
-            $this->assertEquals($url['lastmod'], (new FrozenTime($url['lastmod']))->format('c'));
-            unset($map[$k]['lastmod']);
+        //Checks here `lastmod` and `priority` values
+        foreach ($result as $row) {
+            $this->assertSame($row['lastmod'], (new FrozenTime($row['lastmod']))->format('c'));
+            $this->assertSame('0.5', $row['priority']);
         }
 
-        $this->assertContains(['loc' => 'http://localhost/page/page-from-app', 'priority' => '0.5'], $map);
-        $this->assertContains(['loc' => 'http://localhost/page/cookies-policy', 'priority' => '0.5'], $map);
-        $this->assertContains(['loc' => 'http://localhost/page/cookies-policy-it', 'priority' => '0.5'], $map);
-        $this->assertContains(['loc' => 'http://localhost/page/first-folder/page-on-first-from-plugin', 'priority' => '0.5'], $map);
-        $this->assertContains(['loc' => 'http://localhost/page/first-folder/second_folder/page_on_second_from_plugin', 'priority' => '0.5'], $map);
-        $this->assertContains(['loc' => 'http://localhost/page/test-from-plugin', 'priority' => '0.5'], $map);
+        $expected = [
+            'http://localhost/page/example-page-it',
+            'http://localhost/page/example-page',
+            'http://localhost/page/page-from-app',
+            'http://localhost/page/first-folder/page-on-first-from-plugin',
+            'http://localhost/page/first-folder/second_folder/page_on_second_from_plugin',
+            'http://localhost/page/test-from-plugin',
+        ];
+        $this->assertSame($expected, array_map(fn(array $row) => $row['loc'], $result));
 
         Configure::write('MeCms.sitemap.static_pages', false);
         $this->assertEmpty(Sitemap::staticPages());
@@ -250,12 +253,12 @@ class SitemapTest extends TestCase
     }
 
     /**
-     * Test for `systems()` method
      * @test
+     * @uses \MeCms\Utility\Sitemap\Sitemap::systems()
      */
     public function testSystems(): void
     {
-        $this->assertEquals([[
+        $this->assertSame([[
             'loc' => 'http://localhost/contact/us',
             'priority' => '0.5',
         ]], Sitemap::systems());

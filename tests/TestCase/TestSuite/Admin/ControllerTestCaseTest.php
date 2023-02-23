@@ -18,6 +18,7 @@ namespace MeCms\Test\TestCase\TestSuite\Admin;
 use MeCms\Controller\Admin\PostsController;
 use MeCms\Model\Table\PostsTable;
 use MeCms\Test\TestCase\Controller\Admin\PostsControllerTest;
+use MeCms\TestSuite\Admin\ControllerTestCase;
 use MeCms\TestSuite\TestCase;
 
 /**
@@ -44,5 +45,17 @@ class ControllerTestCaseTest extends TestCase
         foreach ($expectedUrl as $name => $value) {
             $this->assertEquals($value, $ControllerTestCase->Controller->getRequest()->getParam($name));
         }
+    }
+
+    /**
+     * @return void
+     * @uses \MeCms\TestSuite\Admin\ControllerTestCase::setUp()
+     */
+    public function testSetUp(): void
+    {
+        $this->expectAssertionFailed('You cannot use the `' . ControllerTestCase::class . '` class with a non-admin controller');
+        $BadControllerTestCase = new class extends ControllerTestCase {
+        };
+        $BadControllerTestCase->setUp();
     }
 }

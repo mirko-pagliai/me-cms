@@ -25,8 +25,8 @@ use RuntimeException;
 class GlobalFunctionsTest extends TestCase
 {
     /**
-     * Test for `getConfig()` global function
      * @test
+     * @uses \getConfig()
      */
     public function testGetConfig(): void
     {
@@ -52,8 +52,8 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `getConfigOrFail()` global function
      * @test
+     * @uses \getConfigOrFail()
      */
     public function testGetConfigOrFail(): void
     {
