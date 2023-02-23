@@ -66,7 +66,7 @@ abstract class ControllerTestCase extends BaseControllerTestCase
     protected function setUp(): void
     {
         if (!str_contains(get_class($this), 'Controller\\Admin\\')) {
-            $this->fail('You cannot use the `AdminControllerTestCase` class with a non-admin controller');
+            $this->fail('You cannot use the `MeCms\TestSuite\Admin\ControllerTestCase` class with a non-admin controller');
         }
 
         parent::setUp();
