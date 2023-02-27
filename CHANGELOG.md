@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.31 branch
+### 2.31.3
+* fixed a small bug for css files that contain relative paths (and therefore shouldn't be used with `AssetHelper`);
+* fixed Roboto fonts.
+
 ### 2.31.2
 * improved rss for posts: description and content have been improved; the post category and the `guid` are also employed.
   Fixed the main title for rss resource;
