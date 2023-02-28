@@ -16,11 +16,9 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Chronos\Chronos;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\I18n\FrozenTime;
 use MeCms\Form\ContactUsForm;
 use MeCms\TestSuite\ControllerTestCase;
 use StopSpam\SpamDetector;
@@ -55,19 +53,6 @@ class SystemsControllerTest extends ControllerTestCase
         $this->_controller->ContactUsForm->SpamDetector->method('verify')->willReturn(true);
 
         $this->_controller->viewBuilder()->setLayout('with_flash');
-    }
-
-    /**
-     * @uses \MeCms\Controller\SystemsController::acceptCookies()
-     * @test
-     */
-    public function testAcceptCookies(): void
-    {
-        $this->get(['_name' => 'acceptCookies']);
-        $this->assertRedirect(['_name' => 'homepage']);
-        $expires = FrozenTime::createFromTimestamp($this->_response->getCookie('cookies-policy')['expires']);
-        $this->assertCookie('1', 'cookies-policy');
-        $this->assertTrue($expires->isWithinNext((string)Chronos::createFromDate(2038, 1, 1)));
     }
 
     /**

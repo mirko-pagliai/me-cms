@@ -55,7 +55,6 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
             '/vendor/bootstrap/js/bootstrap.bundle.min',
             'MeCms.js.cookie.min',
             'MeTools.default',
-            'MeCms.layout',
             ...(array)getConfig('default.other_js'),
         ], ['block' => true]);
         echo $this->fetch('script');
@@ -63,7 +62,6 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
     </head>
     <body class="d-flex flex-column min-vh-100">
         <?= $this->element('MeCms.userbar') ?>
-        <?= $this->element('MeCms.cookies_policy') ?>
         <header>
             <?php
             $logo = $this->Html->h1(getConfigOrFail('main.title'));

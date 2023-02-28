@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.31 branch
 ### 2.31.4
+* removed the `cookies_policy` template element, the `SystemsController::acceptCookies()` method and all code related to
+  privacy for cookies (you need to integrate your privacy cookie);
 * added `MeCms.default.other_css` and `MeCms.default.other_js` configuration values. These are used directly by the
   `default` layout, to allow you to easily load css and js files from the application.
 

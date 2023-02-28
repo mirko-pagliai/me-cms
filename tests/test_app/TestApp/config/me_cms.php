@@ -9,8 +9,6 @@ return ['MeCms' => [
      ],
     //Default layout
     'default' => [
-        //Displays the alert for the cookie policy
-        'cookies_policy' => true,
         //"Contact us" form (enabled or disabled)
         'contact_us' => true,
         //Facebook app ID or `false`
