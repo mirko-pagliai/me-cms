@@ -22,7 +22,7 @@ if ($this->getRequest()->is('url', ['_name' => 'postsSearch'])) {
 $this->extend('MeCms./common/widget');
 $this->assign('title', __d('me_cms', 'Search posts'));
 
-echo $this->Form->createInline(null, [
+echo $this->Form->create(null, [
     'type' => 'get',
     'url' => ['_name' => 'postsSearch'],
 ]);
