@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace MeCms\Controller;
 
-use Cake\Http\Cookie\Cookie;
 use Cake\Http\Response;
 use Cake\I18n\FrozenTime;
 use MeCms\Form\ContactUsForm;
@@ -43,20 +42,6 @@ class SystemsController extends AppController
         parent::initialize();
 
         $this->ContactUsForm ??= new ContactUsForm();
-    }
-
-    /**
-     * Accept cookies policy.
-     * It sets the cookie to remember the user accepted the cookie policy and
-     *  redirects
-     * @return \Cake\Http\Response|null
-     */
-    public function acceptCookies(): ?Response
-    {
-        $cookie = (new Cookie('cookies-policy', '1'))->withNeverExpire();
-        $this->setResponse($this->getResponse()->withCookie($cookie));
-
-        return $this->redirect($this->referer(['_name' => 'homepage']));
     }
 
     /**
