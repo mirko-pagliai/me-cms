@@ -21,6 +21,10 @@ return ['MeCms' => [
         'offline' => false,
         //Text to display when the site is offline or `false`
         'offline_text' => false,
+        //Other application css files to load automatically (default `contents` and `layout`)
+        'other_css' => ['contents', 'layout'],
+        //Other application script files to load automatically (default empty)
+        'other_js' => [],
         //Number of records to show per page
         'records' => 10,
         //Number of records to show on RSS

@@ -11,13 +11,13 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- *
- * @var \MeCms\View\View\AppView $this
  */
 
-use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
+/**
+ * @var \MeCms\View\View\AppView $this
+ */
 $sidebar = $this->fetch('sidebar') . $this->Widget->all();
 ?>
 <!DOCTYPE html>
@@ -34,8 +34,7 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
             '/vendor/font-awesome/css/all.min',
             'MeCms.fonts',
         ], ['block' => true]);
-        //Default css and css files from the application (`layout.css` and `contents.css`)
-        $css = array_filter(['layout', 'contents'], fn(string $name): bool => is_readable(Configure::read('App.wwwRoot') . Configure::read('App.cssBaseUrl') . $name . '.css'));
+        //Default css and application css files to load automatically (default `contents` and `layout`)
         echo $this->Asset->css([
             '/vendor/bootstrap/css/bootstrap.min',
             'MeTools.default',
@@ -43,19 +42,21 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
             'MeCms.cookies',
             'MeCms.layout',
             'MeCms.contents',
-            ...$css,
+            ...(array)getConfig('default.other_css'),
         ], ['block' => true]);
 
         //Other css files
         echo $this->Asset->css('MeCms.print', ['block' => true, 'media' => 'print']);
         echo $this->fetch('css');
 
+        //Default script and application script files to load automatically (default empty)
         echo $this->Asset->script([
             '/vendor/jquery/jquery.min',
             '/vendor/bootstrap/js/bootstrap.bundle.min',
             'MeCms.js.cookie.min',
             'MeTools.default',
             'MeCms.layout',
+            ...(array)getConfig('default.other_js'),
         ], ['block' => true]);
         echo $this->fetch('script');
         ?>

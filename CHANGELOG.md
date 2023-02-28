@@ -1,5 +1,9 @@
 # 2.x branch
 ## 2.31 branch
+### 2.31.4
+* added `MeCms.default.other_css` and `MeCms.default.other_js` configuration values. These are used directly by the
+  `default` layout, to allow you to easily load css and js files from the application.
+
 ### 2.31.3
 * fixed a small bug for css files that contain relative paths (and therefore shouldn't be used with `AssetHelper`);
 * fixed Roboto fonts.
