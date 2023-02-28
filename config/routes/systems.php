@@ -14,15 +14,6 @@
 
 /** @var \Cake\Routing\RouteBuilder $routes */
 
-//Accept cookies
-if (!$routes->nameExists('acceptCookies')) {
-    $routes->connect(
-        '/accept/cookies',
-        ['controller' => 'Systems', 'action' => 'acceptCookies'],
-        ['_name' => 'acceptCookies']
-    );
-}
-
 //"Contact us" form
 if (!$routes->nameExists('contactUs')) {
     $routes->connect(
