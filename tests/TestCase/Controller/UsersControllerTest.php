@@ -111,7 +111,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Users' . DS . 'activation_resend.php');
-        $this->assertLayout('login.php');
+        $this->assertLayout('single-column.php');
         $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. For now, data are invalid
@@ -150,7 +150,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('login.php');
-        $this->assertLayout('login.php');
+        $this->assertLayout('single-column.php');
 
         //POST request with invalid data
         $this->enableRetainFlashMessages();
@@ -216,7 +216,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Users' . DS . 'password_forgot.php');
-        $this->assertLayout('login.php');
+        $this->assertLayout('single-column.php');
         $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. No existing mail address and user pending email
@@ -260,7 +260,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Users' . DS . 'password_reset.php');
-        $this->assertLayout('login.php');
+        $this->assertLayout('single-column.php');
         $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. Data are invalid
@@ -308,7 +308,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Users' . DS . 'signup.php');
-        $this->assertLayout('login.php');
+        $this->assertLayout('single-column.php');
         $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. For now, data are invalid
