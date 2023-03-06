@@ -16,19 +16,8 @@
 
 //"Contact us" form
 if (!$routes->nameExists('contactUs')) {
-    $routes->connect(
-        '/contact/us',
-        ['controller' => 'Systems', 'action' => 'contactUs'],
-        ['_name' => 'contactUs']
-    );
+    $routes->connect('/contact/us', ['controller' => 'Systems', 'action' => 'contactUs'], ['_name' => 'contactUs']);
 }
-
-//Redirect from the old address of the "contact us" form
-$routes->redirect(
-    '/contact/form',
-    ['controller' => 'Systems', 'action' => 'contactUs'],
-    ['status' => 301]
-);
 
 //"IP not allowed" page
 if (!$routes->nameExists('ipNotAllowed')) {
@@ -42,6 +31,6 @@ if (!$routes->nameExists('offline')) {
 
 //Sitemap
 if (!$routes->nameExists('sitemap')) {
-    $routes->connect('/sitemap{ext}', ['controller' => 'Systems', 'action' => 'sitemap'], ['_name' => 'sitemap', ])
+    $routes->connect('/sitemap{ext}', ['controller' => 'Systems', 'action' => 'sitemap'], ['_name' => 'sitemap'])
         ->setPatterns(['ext' => '\.xml(\.gz)?']);
 }
