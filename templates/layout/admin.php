@@ -14,9 +14,11 @@ declare(strict_types=1);
  *
  * @var \MeCms\View\View\Admin\AppView $this
  */
+
+use Cake\I18n\I18n;
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= substr(I18n::getLocale(), 0, 2) ?>">
     <head>
         <?php
         echo $this->Html->charset();
