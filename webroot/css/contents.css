@@ -35,7 +35,6 @@ article header time::before {
 /* Body content, iframe */
 article .body iframe,
 .article iframe {
-    height: auto;
     max-width: 100%;
 }
 
