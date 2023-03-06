@@ -88,7 +88,7 @@ class SystemsController extends AppController
             return $this->redirect($this->referer(['_name' => 'homepage']));
         }
 
-        $this->viewBuilder()->setLayout('login');
+        $this->viewBuilder()->setLayout('single-column');
     }
 
     /**
@@ -102,7 +102,7 @@ class SystemsController extends AppController
             return $this->redirect($this->referer(['_name' => 'homepage']));
         }
 
-        $this->viewBuilder()->setLayout('login');
+        $this->viewBuilder()->setLayout('single-column');
     }
 
     /**

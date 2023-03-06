@@ -114,7 +114,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->get(['_name' => 'ipNotAllowed']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Systems' . DS . 'ip_not_allowed.php');
-        $this->assertLayout('login.php');
+        $this->assertLayout('single-column.php');
     }
 
     /**
@@ -131,7 +131,7 @@ class SystemsControllerTest extends ControllerTestCase
         $this->get(['_name' => 'offline']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Systems' . DS . 'offline.php');
-        $this->assertLayout('login.php');
+        $this->assertLayout('single-column.php');
     }
 
     /**

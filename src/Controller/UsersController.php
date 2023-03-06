@@ -145,7 +145,7 @@ class UsersController extends AppController
         }
 
         $this->set('user', $entity);
-        $this->viewBuilder()->setLayout('login');
+        $this->viewBuilder()->setLayout('single-column');
     }
 
     /**
@@ -177,7 +177,7 @@ class UsersController extends AppController
             ), 'error', 'users');
         }
 
-        $this->viewBuilder()->setLayout('login');
+        $this->viewBuilder()->setLayout('single-column');
     }
 
     /**
@@ -237,7 +237,7 @@ class UsersController extends AppController
         }
 
         $this->set('user', $entity);
-        $this->viewBuilder()->setLayout('login');
+        $this->viewBuilder()->setLayout('single-column');
     }
 
     /**
@@ -269,7 +269,7 @@ class UsersController extends AppController
         }
 
         $this->set(compact('user'));
-        $this->viewBuilder()->setLayout('login');
+        $this->viewBuilder()->setLayout('single-column');
     }
 
     /**
@@ -324,6 +324,6 @@ class UsersController extends AppController
         }
 
         $this->set(compact('user'));
-        $this->viewBuilder()->setLayout('login');
+        $this->viewBuilder()->setLayout('single-column');
     }
 }
