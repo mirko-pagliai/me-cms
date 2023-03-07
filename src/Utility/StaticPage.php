@@ -94,8 +94,7 @@ class StaticPage
             $patterns[] = $filename;
             foreach (self::getPaths() as $plugin => $path) {
                 foreach ($patterns as $pattern) {
-                    $file = Filesystem::instance()->concatenate($path, $pattern . '.' . self::EXTENSION);
-                    if (is_readable($file)) {
+                    if (is_readable(Filesystem::instance()->concatenate($path, $pattern . '.' . self::EXTENSION))) {
                         return ($plugin != 'App' ? $plugin . '.' : '') . DS . 'StaticPages' . DS . $pattern;
                     }
                 }
