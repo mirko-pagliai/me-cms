@@ -61,7 +61,6 @@ $sidebar = $this->fetch('sidebar') . $this->Widget->all();
         ?>
     </head>
     <body class="d-flex flex-column min-vh-100">
-        <?= $this->element('MeCms.userbar') ?>
         <header>
             <?php
             $logo = $this->Html->h1(getConfigOrFail('main.title'));

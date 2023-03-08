@@ -28,12 +28,6 @@ use MeCms\View\View;
 class AppView extends View
 {
     /**
-     * Internal property to set the userbar elements
-     * @var array
-     */
-    protected array $userbar = [];
-
-    /**
      * Internal method to set some blocks
      * @return void
      */
@@ -86,20 +80,6 @@ class AppView extends View
 
         $this->setBlocks();
 
-        //Assign the userbar
-        $this->assign('userbar', implode(PHP_EOL, array_map(fn($element): string => $this->Html->li($element), $this->userbar)));
-
         return parent::renderLayout($content, $layout);
-    }
-
-    /**
-     * Adds content to the userbar
-     * @param string ...$content Contents as string or an array of contents
-     * @return void
-     * @since 2.29.5
-     */
-    public function addToUserbar(string ...$content): void
-    {
-        $this->userbar = [...$this->userbar, $content];
     }
 }

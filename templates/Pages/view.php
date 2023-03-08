@@ -11,32 +11,14 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- *
+ */
+
+/**
  * @var \MeCms\Model\Entity\Page $page
+ * @var \MeCms\View\View\AppView $this
  */
 $this->extend('/common/view');
 $this->assign('title', $page->get('title'));
-
-/**
- * Userbar
- */
-$class = 'badge badge-warning';
-if (!$page->get('active')) {
-    $this->addToUserbar($this->Html->span(I18N_DRAFT, compact('class')));
-}
-if ($page->get('created')->isFuture()) {
-    $this->addToUserbar($this->Html->span(I18N_SCHEDULED, compact('class')));
-}
-$this->addToUserbar($this->Html->link(
-    __d('me_cms', 'Edit page'),
-    ['action' => 'edit', $page->get('id'), 'prefix' => ADMIN_PREFIX],
-    ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']
-));
-$this->addToUserbar($this->Form->postLink(
-    __d('me_cms', 'Delete page'),
-    ['action' => 'delete', $page->get('id'), 'prefix' => ADMIN_PREFIX],
-    ['class' => 'nav-link text-danger', 'icon' => 'trash-alt', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
-));
 
 /**
  * Breadcrumb
