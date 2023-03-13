@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\View\View;
 
 use Cake\Core\Configure;
+use Cake\Http\ServerRequest;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\View\AppView;
 
@@ -42,16 +43,14 @@ class AppViewTest extends TestCase
         Configure::write('MeCms.default.theme', false);
 
         if (empty($this->View)) {
-            $this->View = new AppView();
-            $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
-            $this->View->setPlugin('MeCms');
+            $Request = new ServerRequest();
+            $this->View = new AppView($Request->withEnv('REQUEST_URI', '/some-page'));
         }
     }
 
     /**
-     * Tests for `setBlocks()` method
-     * @uses \MeCms\View\View\AppView::setBlocks()
      * @test
+     * @uses \MeCms\View\View\AppView::setBlocks()
      */
     public function testSetBlocks(): void
     {
@@ -68,9 +67,8 @@ class AppViewTest extends TestCase
     }
 
     /**
-     * Tests for `renderLayout()` method
-     * @uses \MeCms\View\View\AppView::renderLayout()
      * @test
+     * @uses \MeCms\View\View\AppView::renderLayout()
      */
     public function testRenderLayout(): void
     {
@@ -80,9 +78,8 @@ class AppViewTest extends TestCase
     }
 
     /**
-     * Tests for `renderLayout()` method, with a layout from a theme
-     * @uses \MeCms\View\View\AppView::renderLayout()
      * @test
+     * @uses \MeCms\View\View\AppView::renderLayout()
      */
     public function testRenderLayoutFromTheme(): void
     {
@@ -91,23 +88,10 @@ class AppViewTest extends TestCase
         Configure::write('MeCms.default.theme', 'TestPlugin');
 
         //Reloads the View
-        $this->View = new AppView();
-        $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
+        $Request = new ServerRequest();
+        $this->View = new AppView($Request->withEnv('REQUEST_URI', '/some-page'));
         $this->assertEquals('This is a layout from TestPlugin', $this->View->render('StaticPages/page-from-app'));
         $this->assertEquals('default', $this->View->getLayout());
         $this->assertEquals('TestPlugin', $this->View->getTheme());
-    }
-
-    /**
-     * Tests for `addToUserbar()` method
-     * @uses \MeCms\View\View\AppView::addToUserbar()
-     * @test
-     */
-    public function testAddToUserbar(): void
-    {
-        $this->View->addToUserbar('string');
-        $this->View->addToUserbar('first', 'second');
-        $this->View->render('StaticPages/page-from-app');
-        $this->assertEquals('<li>string</li>' . PHP_EOL . '<li>first</li>' . PHP_EOL . '<li>second</li>', $this->View->fetch('userbar'));
     }
 }

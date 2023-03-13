@@ -12,17 +12,14 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Posts/index');
-$this->assign('title', $title = __d('me_cms', 'Tag {0}', $tag->get('tag')));
 
 /**
- * Userbar
+ * @var \MeCms\Model\Entity\Tag $tag
+ * @var \MeCms\View\View\AppView $this
  */
-$this->addToUserbar($this->Html->link(
-    __d('me_cms', 'Edit tag'),
-    ['controller' => 'PostsTags', 'action' => 'edit', 'prefix' => ADMIN_PREFIX, $tag->get('id')],
-    ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']
-));
+
+$this->extend('/Posts/index');
+$this->assign('title', $title = __d('me_cms', 'Tag {0}', $tag->get('tag')));
 
 /**
  * Breadcrumb

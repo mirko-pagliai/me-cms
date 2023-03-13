@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.31 branch
+### 2.31.6
+* removed the default `userbar` and all code related.
+
 ### 2.31.5
 * `login` layout changed to `single-column`. This name clarifies that it can be used for various purposes (login, sign
   up, but also error views);
