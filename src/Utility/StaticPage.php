@@ -54,7 +54,6 @@ class StaticPage
     /**
      * Gets all static pages
      * @return \Cake\Collection\CollectionInterface Collection of static pages
-     * @throws \ErrorException
      */
     public static function all(): CollectionInterface
     {

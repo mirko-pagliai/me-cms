@@ -61,6 +61,7 @@ class PostsTable extends PostsAndPagesTables
      * @param \ArrayObject $data Request data
      * @return void
      * @since 2.15.2
+     * @noinspection PhpUnusedParameterInspection
      */
     public function beforeMarshal(EventInterface $event, ArrayObject $data): void
     {

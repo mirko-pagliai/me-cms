@@ -130,8 +130,8 @@ class SystemsController extends AppController
      * Temporary cleaner (assets, cache, logs, sitemap and thumbnails)
      * @param string $type Type
      * @return \Cake\Http\Response|null
-     * @throws \Symfony\Component\Filesystem\Exception\IOException
-     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
+     * @throws \Tools\Exception\MethodNotExistsException
+     * @throws \Tools\Exception\NotReadableException
      */
     public function tmpCleaner(string $type): ?Response
     {

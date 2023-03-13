@@ -64,6 +64,7 @@ class UsersTable extends AppTable
      * @param \ArrayObject $options Options
      * @return void
      * @since 2.16.1
+     * @noinspection PhpUnusedParameterInspection
      */
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {

@@ -86,6 +86,7 @@ abstract class PostsAndPagesTables extends AppTable
      * @return void
      * @throws \Tools\Exception\NotWritableException
      * @since 2.17.0
+     * @noinspection PhpUnusedParameterInspection
      */
     public function beforeSave(EventInterface $event, EntityInterface $entity): void
     {
