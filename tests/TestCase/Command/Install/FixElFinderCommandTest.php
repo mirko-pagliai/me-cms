@@ -18,6 +18,7 @@ namespace MeCms\Test\TestCase\Command\Install;
 
 use Cake\Console\ConsoleIo;
 use Cake\Console\TestSuite\StubConsoleOutput;
+use Cake\Routing\Router;
 use ErrorException;
 use MeCms\Command\Install\FixElFinderCommand;
 use MeTools\TestSuite\CommandTestCase;
@@ -28,40 +29,39 @@ use Tools\Filesystem;
  */
 class FixElFinderCommandTest extends CommandTestCase
 {
-    protected const EXPECTED_FILES = [
-        ELFINDER . 'php' . DS . 'connector.minimal.php',
-        ELFINDER . 'elfinder-cke.html',
-    ];
-
-    /**
-     * @var string
-     */
-    protected string $command = 'me_cms.fix_el_finder -v';
-
     /**
      * @uses \MeCms\Command\Install\FixElFinderCommand::execute()
      * @test
      */
     public function testExecute(): void
     {
-        array_map('unlink', array_filter(self::EXPECTED_FILES, 'is_writable'));
-        $this->exec($this->command);
+        $command = 'me_cms.fix_el_finder -v';
+
+        $Filesystem = new Filesystem();
+        $connector = $Filesystem->concatenate(ELFINDER, 'php' , 'connector.minimal.php');
+        $elfinderCke = $Filesystem->concatenate(ELFINDER, 'elfinder-cke.html');
+        array_map('unlink', array_filter([$connector, $elfinderCke], 'file_exists'));
+
+        $this->exec($command);
         $this->assertExitSuccess();
-        foreach (self::EXPECTED_FILES as $expectedFile) {
-            $this->assertOutputContains('Creating file ' . $expectedFile);
-            $this->assertOutputContains('<success>Wrote</success> `' . $expectedFile . '`');
-        }
         $this->assertErrorEmpty();
 
-        $this->assertStringContainsString('\'path\' => \'' . UPLOADED . '\'', file_get_contents(self::EXPECTED_FILES[0]) ?: '');
-        $this->assertStringContainsString('getFileCallback', file_get_contents(self::EXPECTED_FILES[1]) ?: '');
+        $this->assertOutputContains('Creating file ' . $connector);
+        $this->assertOutputContains('<success>Wrote</success> `' . $connector . '`');
+        $connectorContent = file_get_contents($connector) ?: '';
+        $this->assertStringContainsString('require_once \'' . Filesystem::instance()->concatenate(APP, 'vendor', 'autoload.php') . '\';', $connectorContent);
+        $this->assertStringContainsString('\'path\' => \'' . UPLOADED . '\'', $connectorContent);
+        $this->assertStringContainsString('\'URL\' => \'' . Router::url('/files', true) . '\'', $connectorContent);
+
+        $this->assertOutputContains('Creating file ' . $elfinderCke);
+        $this->assertOutputContains('<success>Wrote</success> `' . $elfinderCke . '`');
+        $this->assertStringContainsString('getFileCallback', file_get_contents($elfinderCke) ?: '');
 
         //File already exists
-        $this->exec($this->command);
+        $this->exec($command);
         $this->assertExitSuccess();
-        foreach (self::EXPECTED_FILES as $expectedFile) {
-            $this->assertOutputContains('File or directory `' . Filesystem::instance()->rtr($expectedFile) . '` already exists');
-        }
+        $this->assertOutputContains('File or directory `' . $Filesystem->rtr($connector) . '` already exists');
+        $this->assertOutputContains('File or directory `' . $Filesystem->rtr($elfinderCke) . '` already exists');
 
         //With an exception
         $Command = $this->createPartialMock(FixElFinderCommand::class, ['createElfinderCke']);

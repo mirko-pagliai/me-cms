@@ -1,16 +1,18 @@
 <?php
-error_reporting(0); //Set E_ALL for debuging
+error_reporting(0); //Set E_ALL for debugging
+
+require_once '{{AUTOLOAD_PATH}}';
+require_once './autoload.php';
+
+use MeCms\Model\Entity\User;
 
 session_start();
 
-if (!isset($_SESSION['Auth']['User']['id'])) {
+if (!isset($_SESSION['Auth']) || !$_SESSION['Auth'] instanceof User || $_SESSION['Auth']->isEmpty('id')) {
     header('HTTP/1.0 401 Unauthorized');
     echo '{"error": "Login failed."}';
     exit;
 }
-
-is_readable('./vendor/autoload.php') && require './vendor/autoload.php';
-require './autoload.php';
 
 /**
  * Control file access using "accessControl" callback.
@@ -28,7 +30,7 @@ function access($attr, $path, $data, $volume, $isDir, $relpath)
     $basename = basename($path);
 
     return $basename[0] === '.' // if file/folder begins with '.' (dot)
-             && strlen($relpath) !== 1 // but with out volume root
+             && strlen($relpath) !== 1 // but without volume root
         ? !($attr == 'read' || $attr == 'write') // set read+write to false, other (locked+hidden) set to true
         : null; //else elFinder decide it itself
 }
@@ -53,7 +55,7 @@ $opts = [
             'path' => '{{UPLOADS_PATH}}.trash',
             'tmbURL' => '{{UPLOADS_URL}}/.trash/.tmb/',
             'winHashFix' => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
-            'uploadDeny' => ['all'], // Recomend the same settings as the original volume that uses the trash
+            'uploadDeny' => ['all'], // Recommend the same settings as the original volume that uses the trash
             'uploadAllow' => ['image', 'text/plain'], // Same as above
             'uploadOrder' => ['deny', 'allow'], // Same as above
             'accessControl' => 'access', // Same as above
