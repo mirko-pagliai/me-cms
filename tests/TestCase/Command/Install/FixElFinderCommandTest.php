@@ -38,7 +38,7 @@ class FixElFinderCommandTest extends CommandTestCase
         $command = 'me_cms.fix_el_finder -v';
 
         $Filesystem = new Filesystem();
-        $connector = $Filesystem->concatenate(ELFINDER, 'php' , 'connector.minimal.php');
+        $connector = $Filesystem->concatenate(ELFINDER, 'php', 'connector.minimal.php');
         $elfinderCke = $Filesystem->concatenate(ELFINDER, 'elfinder-cke.html');
         array_map('unlink', array_filter([$connector, $elfinderCke], 'file_exists'));
 
