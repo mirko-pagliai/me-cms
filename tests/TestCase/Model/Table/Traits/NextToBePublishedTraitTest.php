@@ -55,7 +55,7 @@ class NextToBePublishedTraitTest extends TestCase
      */
     public function testGetNextToBePublishedAndSetNextToBePublished(): void
     {
-        //Creates a record with a future publication time (1 hours)
+        //Creates a record with a future publication time (1 hour)
         $future = new FrozenTime('+1 hours');
         $entity = $this->Posts->newEntity([
             'user_id' => 1,

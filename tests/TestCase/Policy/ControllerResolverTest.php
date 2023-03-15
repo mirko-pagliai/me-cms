@@ -40,6 +40,7 @@ class ControllerResolverTest extends TestCase
 
         $this->expectException(MissingPolicyException::class);
         $this->expectExceptionMessage('Policy for `stdClass` has not been defined');
+        /** @noinspection PhpParamsInspection */
         $Resolver->getPolicy(new \stdClass());
     }
 }

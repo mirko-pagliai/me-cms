@@ -26,9 +26,12 @@ use Cake\I18n\I18n;
         echo $this->Html->title($this->fetch('title'));
         echo $this->fetch('meta');
 
-        echo $this->Asset->css([
+        //CSS files which contain relative paths (and therefore should not be used with `AssetHelper`)
+        echo $this->Html->css([
             '/vendor/font-awesome/css/all.min',
             'MeCms.fonts',
+        ], ['block' => true]);
+        echo $this->Asset->css([
             '/vendor/bootstrap/css/bootstrap.min',
             'MeTools.default',
             'MeTools.forms',

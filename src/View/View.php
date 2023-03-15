@@ -59,14 +59,12 @@ abstract class View extends AppView
             return $title;
         }
 
-        //If exists, it adds the title set by the controller, as if it has
-        //  been set via `$this->View->set()`
+        //If exists, it adds the title set by the controller, as if it has been set via `$this->View->set()`
         if ($this->get('title')) {
-            $title = sprintf('%s - %s', $this->get('title'), $title);
-            //Else, if exists, it adds the title set by the current view, as if
-            //  it has been set via `$this->View->Blocks->set()`
+            $title = $this->get('title') . ' - ' . $title;
+        //Else, if exists, it adds the title set by the current view, as if it has been set via `$this->View->Blocks->set()`
         } elseif ($this->fetch('title')) {
-            $title = sprintf('%s - %s', $this->fetch('title'), $title);
+            $title = $this->fetch('title') . ' - ' . $title;
         }
 
         return $this->titleForLayout = $title;

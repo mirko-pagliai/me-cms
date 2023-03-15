@@ -11,37 +11,17 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- *
+ */
+use MeCms\Model\Entity\Post;
+
+/**
  * @var \MeCms\Model\Entity\Post $post
  * @var \Cake\Collection\Collection<\MeCms\Model\Entity\Post> $related
  * @var \MeCms\View\View\AppView $this
  */
 
-use MeCms\Model\Entity\Post;
-
 $this->extend('/common/view');
 $this->assign('title', $post->get('title'));
-
-/**
- * Userbar
- */
-$class = 'badge badge-warning';
-if (!$post->get('active')) {
-    $this->addToUserbar($this->Html->span(I18N_DRAFT, compact('class')));
-}
-if ($post->get('created')->isFuture()) {
-    $this->addToUserbar($this->Html->span(I18N_SCHEDULED, compact('class')));
-}
-$this->addToUserbar($this->Html->link(
-    __d('me_cms', 'Edit post'),
-    ['action' => 'edit', $post->get('id'), 'prefix' => ADMIN_PREFIX],
-    ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']
-));
-$this->addToUserbar($this->Form->postLink(
-    __d('me_cms', 'Delete post'),
-    ['action' => 'delete', $post->get('id'), 'prefix' => ADMIN_PREFIX],
-    ['class' => 'nav-link text-danger', 'icon' => 'trash-alt', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
-));
 
 /**
  * Breadcrumb
@@ -89,14 +69,13 @@ echo $this->element('views/post', compact('post'));
 
 <?php if (!$related->isEmpty()) : ?>
     <?php
-        $relatedAsArray = collection($related)
-            ->map(fn(Post $post): string => $this->Html->link($post->get('title'), ['_name' => 'post', $post->get('slug')]))
+        $relatedAsLinks = $related->map(fn(Post $post): string => $this->Html->link($post->get('title'), ['_name' => 'post', $post->get('slug')]))
             ->toArray();
     ?>
     <div class="related-contents mb-4">
         <?= $this->Html->h5(__d('me_cms', 'Related posts')) ?>
         <?php if (!getConfig('post.related.images')) : ?>
-            <?= $this->Html->ul($relatedAsArray, ['icon' => 'caret-right']) ?>
+            <?= $this->Html->ul($relatedAsLinks, ['icon' => 'caret-right']) ?>
         <?php else : ?>
             <div class="d-none d-lg-block">
                 <div class="row">
@@ -109,7 +88,7 @@ echo $this->element('views/post', compact('post'));
             </div>
 
             <div class="d-lg-none">
-                <?= $this->Html->ul($relatedAsArray, ['icon' => 'caret-right']) ?>
+                <?= $this->Html->ul($relatedAsLinks, ['icon' => 'caret-right']) ?>
             </div>
         <?php endif; ?>
     </div>

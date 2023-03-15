@@ -54,8 +54,18 @@ class FixElFinderCommand extends Command
             return;
         }
 
+        $Filesystem = new Filesystem();
+        $autoload = $Filesystem->concatenate(APP, 'vendor', 'autoload.php');
         $origin = Plugin::path('MeCms', 'config' . DS . 'elfinder' . DS . 'connector.minimal.php');
-        $content = str_replace(['{{UPLOADS_PATH}}', '{{UPLOADS_URL}}'], [Filesystem::instance()->addSlashTerm(UPLOADED), Router::url('/files', true)], file_get_contents($origin) ?: '');
+        $content = str_replace([
+            '{{AUTOLOAD_PATH}}',
+            '{{UPLOADS_PATH}}',
+            '{{UPLOADS_URL}}',
+        ], [
+            is_readable($autoload) ? $autoload : $Filesystem->concatenate(ROOT, 'vendor', 'autoload.php'),
+            $Filesystem->addSlashTerm(UPLOADED),
+            Router::url('/files', true),
+        ], file_get_contents($origin) ?: '');
         $io->createFile($target, $content);
     }
 

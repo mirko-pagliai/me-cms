@@ -36,11 +36,6 @@
       <code>parent::__construct($name, $data, $dataName)</code>
     </InternalMethod>
   </file>
-  <file src="src/Utility/Sitemap/SitemapBuilder.php">
-    <TooManyTemplateParams occurrences="1">
-      <code>\Cake\Collection\CollectionInterface&lt;array{class: class-string, name: string}&gt;</code>
-    </TooManyTemplateParams>
-  </file>
   <file src="templates/Admin/Pages/form.php">
     <TooManyTemplateParams occurrences="1">
       <code>$this-&gt;extend('MeCms./common/form');</code>
@@ -49,6 +44,11 @@
   <file src="templates/Admin/Posts/form.php">
     <TooManyTemplateParams occurrences="1">
       <code>$this-&gt;extend('MeCms./common/form');</code>
+    </TooManyTemplateParams>
+  </file>
+  <file src="templates/Posts/view.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>$this-&gt;extend('/common/view');</code>
     </TooManyTemplateParams>
   </file>
   <file src="templates/cell/PostsTagsWidgets/popular_as_cloud.php">

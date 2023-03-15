@@ -12,22 +12,13 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-$this->extend('/Posts/index');
-$this->assign('title', $category->get('title'));
 
 /**
- * Userbar
+ * @var \MeCms\Model\Entity\PostsCategory $category
+ * @var \MeCms\View\View\AppView $this
  */
-$this->addToUserbar($this->Html->link(
-    __d('me_cms', 'Edit category'),
-    ['action' => 'edit', $category->get('id'), 'prefix' => ADMIN_PREFIX],
-    ['class' => 'nav-link', 'icon' => 'pencil-alt', 'target' => '_blank']
-));
-$this->addToUserbar($this->Form->postLink(
-    __d('me_cms', 'Delete category'),
-    ['action' => 'delete', $category->get('id'), 'prefix' => ADMIN_PREFIX],
-    ['class' => 'nav-link text-danger', 'icon' => 'trash-alt', 'confirm' => I18N_SURE_TO_DELETE, 'target' => '_blank']
-));
+$this->extend('/Posts/index');
+$this->assign('title', $category->get('title'));
 
 /**
  * Breadcrumb
