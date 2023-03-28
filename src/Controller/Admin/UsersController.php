@@ -76,8 +76,13 @@ class UsersController extends AppController
      */
     public function isAuthorized(User $User): bool
     {
-        //Every user can change his password or picture
-        if ($this->getRequest()->is('action', ['changePassword', 'changePicture'])) {
+        /**
+         * Every user:
+         *  - can change his own password;
+         *  - can change his own profile picture;
+         *  - can view his last logins.
+         */
+        if ($this->getRequest()->is('action', ['changePassword', 'changePicture', 'lastLogin'])) {
             return true;
         }
 

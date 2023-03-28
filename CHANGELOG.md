@@ -2,6 +2,7 @@
 ## 2.31 branch
 ### 2.31.7
 * improved admin view for users;
+* every user can view his last logins;
 * vertical alignment is used for admin interface tables.
 
 ### 2.31.6
