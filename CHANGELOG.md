@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.31 branch
+### 2.31.7
+* vertical alignment is used for admin interface tables.
+
 ### 2.31.6
 * fixed the `connector.minimal.php` file for ElFinder and the `FixElFinderCommand`: the Composer autoload is now
   correctly loaded via absolute path;

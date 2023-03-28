@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
+ * @var \MeCms\Model\Entity\PostsCategory[] $categories
  * @var \MeCms\View\View\Admin\AppView $this
  */
 
@@ -41,20 +42,18 @@ $this->append('actions', $this->Html->button(
     <tbody>
         <?php foreach ($categories as $category) : ?>
             <tr>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <code><?= $category->get('id') ?></code>
                 </td>
                 <td>
-                    <strong>
-                        <?= $this->Html->link($category->get('title'), ['action' => 'edit', $category->get('id')]) ?>
-                    </strong>
-
                     <?php
+                    echo $this->Html->link($category->get('title'), ['action' => 'edit', $category->get('id')], ['class' => 'fw-bold']);
+
                     $actions = [
                         $this->Html->link(I18N_EDIT, ['action' => 'edit', $category->get('id')], ['icon' => 'pencil-alt']),
                     ];
 
-                    //Only admins can delete posts categories
+                    //Only admins can delete
                     if ($this->Identity->isGroup('admin')) {
                         $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $category->get('id')], [
                             'class' => 'text-danger',
@@ -74,14 +73,14 @@ $this->append('actions', $this->Html->button(
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <?php
                     if ($category->hasValue('parent') && $category->get('parent')->hasValue('title')) {
                         echo $category->get('parent')->get('title');
                     }
                     ?>
                 </td>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <?php
                     if ($category->hasValue('post_count')) {
                         echo $this->Html->link(

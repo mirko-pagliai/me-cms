@@ -12,9 +12,9 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
+ * @var \MeCms\Model\Entity\Page[] $pages
  * @var \MeCms\View\View\Admin\AppView $this
  */
-
 $this->extend('MeCms./Admin/common/index');
 $this->assign('title', I18N_PAGES);
 $this->append('actions', $this->Html->button(
@@ -76,34 +76,33 @@ echo $this->Form->end();
     <tbody>
         <?php foreach ($pages as $page) : ?>
             <tr>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <code><?= $page->get('id') ?></code>
                 </td>
                 <td>
-                    <strong>
-                        <?= $this->Html->link($page->get('title'), ['action' => 'edit', $page->get('id')]) ?>
-                    </strong>
                     <?php
+                    echo $this->Html->link($page->get('title'), ['action' => 'edit', $page->get('id')]. ['class' => 'fw-bold']);
+
                     $class = 'record-badge badge badge-warning';
 
-                    //If the page is not active (it's a draft)
+                    //If it's not active (it's a draft)
                     if (!$page->get('active')) {
                         echo $this->Html->span(I18N_DRAFT, compact('class'));
                     }
 
-                    //If the page is scheduled
+                    //If it's scheduled
                     if ($page->get('created')->isFuture()) {
                         echo $this->Html->span(I18N_SCHEDULED, compact('class'));
                     }
 
                     $actions = [];
 
-                    //Only admins and managers can edit pages
+                    //Only admins and managers can edit
                     if ($this->Identity->isGroup('admin', 'manager')) {
                         $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $page->get('id')], ['icon' => 'pencil-alt']);
                     }
 
-                    //Only admins can delete pages
+                    //Only admins can delete
                     if ($this->Identity->isGroup('admin')) {
                         $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $page->get('id')], [
                             'class' => 'text-danger',
@@ -112,7 +111,7 @@ echo $this->Form->end();
                         ]);
                     }
 
-                    //If the page is active and is not scheduled
+                    //If it's active and is not scheduled
                     if ($page->get('active') && !$page->get('created')->isFuture()) {
                         $actions[] = $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->get('slug')], [
                             'icon' => 'external-link-alt',
@@ -128,7 +127,7 @@ echo $this->Form->end();
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <?= $this->Html->link(
                         $page->get('category')->get('title'),
                         ['?' => ['category' => $page->get('category')->get('id')]],
@@ -136,10 +135,10 @@ echo $this->Form->end();
                     ) ?>
                 </td>
 
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <?= $this->element('admin/priority-badge', ['priority' => $page->get('priority')]) ?>
                 </td>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <div class="d-none d-lg-block">
                         <?= $page->get('created')->i18nFormat() ?>
                     </div>

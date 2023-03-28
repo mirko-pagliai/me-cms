@@ -11,7 +11,11 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\Model\Entity\UsersGroup[] $groups
+ * @var \MeCms\View\View\Admin\AppView $this
  */
+
 $this->extend('MeCms./Admin/common/index');
 $this->assign('title', __d('me_cms', 'Users groups'));
 $this->append('actions', $this->Html->button(
@@ -38,14 +42,13 @@ $this->append('actions', $this->Html->button(
     <tbody>
         <?php foreach ($groups as $group) : ?>
             <tr>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <code><?= $group->get('id') ?></code>
                 </td>
                 <td>
-                    <strong>
-                        <?= $this->Html->link($group->get('name'), ['action' => 'edit', $group->get('id')]) ?>
-                    </strong>
                     <?php
+                    echo $this->Html->link($group->get('name'), ['action' => 'edit', $group->get('id')], ['class' => 'fw-bold']);
+
                     $actions = [
                         $this->Html->link(I18N_EDIT, ['action' => 'edit', $group->get('id')], ['icon' => 'pencil-alt']),
                         $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $group->get('id')], [
@@ -58,10 +61,10 @@ $this->append('actions', $this->Html->button(
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
-                <td>
+                <td class="align-middle">
                     <?= $group->get('description') ?>
                 </td>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <?php
                     if ($group->hasValue('user_count')) {
                         echo $this->Html->link(

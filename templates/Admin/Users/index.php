@@ -13,6 +13,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
  * @var \MeCms\View\View\Admin\AppView $this
+ * @var \MeCms\Model\Entity\User[] $users
  */
 
 $this->extend('MeCms./Admin/common/index');
@@ -78,20 +79,19 @@ echo $this->Form->end();
     <tbody>
         <?php foreach ($users as $user) : ?>
             <tr>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <code><?= $user->get('id') ?></code>
                 </td>
                 <td>
-                    <strong>
-                        <?= $this->Html->link($user->get('username'), ['action' => 'view', $user->get('id')]) ?>
-                    </strong>
                     <?php
+                    echo $this->Html->link($user->get('username'), ['action' => 'view', $user->get('id')], ['class' => 'fw-bold']);
+
                     $class = 'record-badge badge badge-danger';
 
-                    //If the user is banned
+                    //If it's banned
                     if ($user->get('banned')) {
                         echo $this->Html->span(__d('me_cms', 'Banned'), compact('class'));
-                    //Else, if the user is not active (pending)
+                    //Else, if it's not active (pending)
                     } elseif (!$user->get('active')) {
                         echo $this->Html->span(__d('me_cms', 'Pending'), compact('class'));
                     }
@@ -103,7 +103,7 @@ echo $this->Form->end();
 
                     //Only admins can activate accounts and delete users
                     if ($this->Identity->isGroup('admin')) {
-                        //If the user is not active (pending)
+                        //If it's not active (pending)
                         if (!$user->get('active')) {
                             $actions[] = $this->Form->postLink(__d('me_cms', 'Activate'), ['action' => 'activate', $user->get('id')], [
                                 'icon' => 'user-plus',
@@ -121,20 +121,20 @@ echo $this->Form->end();
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
-                <td class="text-center">
+                <td class="text-center align-middle">
                     <?= $user->get('full_name') ?>
                 </td>
-                <td class="text-center">
+                <td class="text-center align-middle">
                     <?= $this->Html->link($user->get('email'), sprintf('mailto:%s', $user->get('email'))) ?>
                 </td>
-                <td class="text-center">
+                <td class="text-center align-middle">
                     <?= $this->Html->link(
                         $user->get('group')->get('label'),
                         ['?' => ['group' => $user->get('group')->get('id')]],
                         ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <?php
                     if ($user->hasValue('post_count')) {
                         echo $this->Html->link(
@@ -147,7 +147,7 @@ echo $this->Form->end();
                     }
                     ?>
                 </td>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <div class="d-none d-lg-block">
                         <?= $user->get('created')->i18nFormat() ?>
                     </div>

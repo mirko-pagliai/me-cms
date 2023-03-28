@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
+ * @var \MeCms\Model\Entity\PostsTag[] $tags
  * @var \MeCms\View\View\Admin\AppView $this
  */
 
@@ -44,13 +45,10 @@ echo $this->Form->end();
         <div class="col-md-3 mb-4">
             <div class="card bg-light px-3 py-2 border-0">
                 <div>
-                    <samp><?= I18N_ID ?> <?= $tag->get('id') ?></samp>
+                    <code><?= I18N_ID ?> <?= $tag->get('id') ?></code>
                 </div>
                 <div class="mb-1">
-                    <?= $this->Html->link(
-                        $this->Html->strong($tag->get('tag')),
-                        ['controller' => 'PostsTags', 'action' => 'edit', $tag->get('id')]
-                    ) ?>
+                    <?= $this->Html->link($tag->get('tag'), ['controller' => 'PostsTags', 'action' => 'edit', $tag->get('id')], ['class' => 'fw-bold']) ?>
                 </div>
                 <div class="mb-1">
                     <?= sprintf('(%s)', $this->Html->link(
@@ -62,7 +60,7 @@ echo $this->Form->end();
                 <?php
                 $actions = [];
 
-                //Only admins and managers can edit tags
+                //Only admins and managers can edit
                 if ($this->Identity->isGroup('admin', 'manager')) {
                     $actions[] = $this->Html->link(
                         I18N_EDIT,
