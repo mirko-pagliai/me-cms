@@ -81,7 +81,7 @@ echo $this->Form->end();
                 </td>
                 <td>
                     <?php
-                    echo $this->Html->link($page->get('title'), ['action' => 'edit', $page->get('id')]. ['class' => 'fw-bold']);
+                    echo $this->Html->link($page->get('title'), ['action' => 'edit', $page->get('id')], ['class' => 'fw-bold']);
 
                     $class = 'record-badge badge badge-warning';
 
