@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.31 branch
 ### 2.31.7
+* improved admin view for users;
 * vertical alignment is used for admin interface tables.
 
 ### 2.31.6

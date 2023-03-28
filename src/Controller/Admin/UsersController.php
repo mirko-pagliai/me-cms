@@ -112,7 +112,7 @@ class UsersController extends AppController
     public function view(string $id): void
     {
         $user = $this->Users->findById($id)
-            ->contain(['Groups' => ['fields' => ['label']]])
+            ->contain(['Groups' => ['fields' => ['id', 'label']]])
             ->firstOrFail();
 
         $this->set(compact('user'));
