@@ -23,8 +23,9 @@ use RuntimeException;
 
 /**
  * Application controller class
- * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property \MeCms\Controller\Component\AuthenticationComponent $Authentication
  * @property \MeTools\Controller\Component\FlashComponent $Flash
+ * @property \MeCms\Controller\Component\LoginRecorderComponent $LoginRecorder
  * @property \Recaptcha\Controller\Component\RecaptchaComponent $Recaptcha
  */
 abstract class AppController extends BaseAppController
@@ -99,13 +100,14 @@ abstract class AppController extends BaseAppController
      */
     public function initialize(): void
     {
-        $this->loadComponent('Authentication.Authentication', [
+        $this->loadComponent('RequestHandler', ['enableBeforeRedirect' => false]);
+        $this->loadComponent('MeTools.Flash');
+        $this->loadComponent('MeCms.LoginRecorder');
+        $this->loadComponent('MeCms.Authentication', [
             'identityCheckEvent' => 'Controller.initialize',
             'unauthenticatedMessage' => __d('me_cms', 'You are not authorized for this action'),
             'logoutRedirect' => Router::url(['_name' => 'homepage']),
         ]);
-        $this->loadComponent('MeTools.Flash');
-        $this->loadComponent('RequestHandler', ['enableBeforeRedirect' => false]);
 
         //Loads Recaptcha. Throws an exception if the keys are not set or are the default ones
         if (getConfig('MeCms.security.recaptcha')) {

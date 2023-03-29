@@ -144,6 +144,7 @@ class AppControllerTest extends ControllerTestCase
         $Controller->initialize();
         $this->assertTrue($Controller->components()->has('Recaptcha'));
 
+        $this->assertCount(1, $Controller->Authentication->getEventManager()->listeners('Authentication.afterIdentify'));
         $this->assertFalse($Controller->Authentication->getConfig('requireIdentity'));
 
         $this->expectExceptionMessage('Missing Recaptcha keys. You can rename the `config/recaptcha.example.php` file as `recaptcha.php` and change the keys');

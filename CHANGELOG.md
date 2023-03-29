@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.31 branch
 ### 2.31.7
+* added the `AuthenticationComponent`, with the `afterIdentify()` event method. This event is dispatched after the
+  identity and takes care of its management. Some code has been moved from the `UsersController::login()` method;
 * improved admin view for users;
 * every user can view his last logins;
 * vertical alignment is used for admin interface tables.

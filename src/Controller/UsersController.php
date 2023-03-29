@@ -25,7 +25,6 @@ use Cake\Routing\Router;
 
 /**
  * Users controller
- * @property \MeCms\Controller\Component\LoginRecorderComponent $LoginRecorder
  * @property \Tokens\Controller\Component\TokenComponent $Token
  * @property \MeCms\Model\Table\UsersTable $Users
  */
@@ -58,7 +57,6 @@ class UsersController extends AppController
         parent::initialize();
 
         $this->loadComponent('Tokens.Token');
-        $this->loadComponent('MeCms.LoginRecorder');
     }
 
     /**
@@ -152,6 +150,7 @@ class UsersController extends AppController
      * Login
      * @return \Cake\Http\Response|null|void
      * @see \MeCms\Plugin::getAuthenticationService()
+     * @see \MeCms\Controller\Component\AuthenticationComponent::afterIdentify() for `afterIdentify` event
      * @todo Should return some error message for accounts not yet activated or banned
      */
     public function login()
@@ -159,10 +158,6 @@ class UsersController extends AppController
         $result = $this->Authentication->getResult();
 
         if ($result->isValid()) {
-            /** @var \Authentication\Identity $Identity */
-            $Identity = $this->Authentication->getIdentity();
-            $this->LoginRecorder->setConfig('user', $Identity->get('id'))->write();
-
             return $this->redirect($this->Authentication->getLoginRedirect() ?? Router::url(['_name' => 'dashboard'], true));
         }
 

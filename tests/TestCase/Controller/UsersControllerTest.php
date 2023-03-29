@@ -17,8 +17,11 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Controller;
 
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\EventInterface;
+use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Model\Entity\User;
 use MeCms\TestSuite\ControllerTestCase;
 use Tokens\Controller\Component\TokenComponent;
@@ -52,6 +55,22 @@ class UsersControllerTest extends ControllerTestCase
         parent::setUp();
 
         $this->Token ??= $this->createPartialMock(TokenComponent::class, []);
+    }
+
+    /**
+     * Adds additional event spies to the controller/view event manager
+     * @param \Cake\Event\EventInterface $event A dispatcher event
+     * @param \Cake\Controller\Controller|null $controller Controller instance
+     * @return void
+     */
+    public function controllerSpy(EventInterface $event, ?Controller $controller = null): void
+    {
+        parent::controllerSpy($event, $controller);
+
+        if ($this->_controller->components()->has('LoginRecorder')) {
+            $this->_controller->LoginRecorder = $this->createPartialMock(LoginRecorderComponent::class, ['getController', 'getUserAgent']);
+            $this->_controller->LoginRecorder->method('getController')->willReturn($this->_controller);
+        }
     }
 
     /**

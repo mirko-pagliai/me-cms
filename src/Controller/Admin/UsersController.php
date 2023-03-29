@@ -25,7 +25,6 @@ use Thumber\Cake\Utility\ThumbManager;
 
 /**
  * Users controller
- * @property \MeCms\Controller\Component\LoginRecorderComponent $LoginRecorder
  * @property \MeTools\Controller\Component\UploaderComponent $Uploader
  * @property \MeCms\Model\Table\UsersTable $Users
  */
@@ -55,18 +54,6 @@ class UsersController extends AppController
 
             $this->set(compact('groups'));
         }
-    }
-
-    /**
-     * Initialization hook method
-     * @return void
-     * @throws \Exception
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->loadComponent('MeCms.LoginRecorder');
     }
 
     /**
