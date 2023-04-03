@@ -23,7 +23,7 @@ use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\TestSuite\TestCase;
 
 /**
- * LoginRecorderTest class
+ * LoginRecorderComponentTest class
  */
 class LoginRecorderComponentTest extends TestCase
 {
