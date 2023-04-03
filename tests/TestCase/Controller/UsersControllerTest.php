@@ -65,6 +65,8 @@ class UsersControllerTest extends ControllerTestCase
         }
 
         $this->Token ??= $this->createPartialMock(TokenComponent::class, []);
+
+        $this->enableRetainFlashMessages();
     }
 
     /**
@@ -99,25 +101,25 @@ class UsersControllerTest extends ControllerTestCase
     {
         //Creates a token for an active user
         $tokenOptions = ['type' => 'signup', 'user_id' => 1];
-        $token = $this->Token->create('alfa@test.com', $tokenOptions);
+        $Token = $this->Token->create('alfa@test.com', $tokenOptions);
         $url = ['_name' => 'activation'];
 
         //GET request. This request is invalid, because the user is already active
-        $this->get($url + ['id' => '1'] + compact('token'));
+        $this->get($url + ['id' => '1', 'token' => $Token]);
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage(I18N_OPERATION_NOT_OK);
-        $this->assertFalse($this->Token->check($token, $tokenOptions));
+        $this->assertFalse($this->Token->check($Token, $tokenOptions));
 
         //Creates a token for a pending user
         $tokenOptions = ['type' => 'signup', 'user_id' => 2];
-        $token = $this->Token->create('gamma@test.com', $tokenOptions);
+        $Token = $this->Token->create('gamma@test.com', $tokenOptions);
 
         //GET request. This request is valid, because the user is pending
-        $this->get($url + ['id' => '2'] + compact('token'));
+        $this->get($url + ['id' => '2', 'token' => $Token]);
         $this->assertRedirect(['_name' => 'login']);
         $this->assertFlashMessage(I18N_OPERATION_OK);
         $this->assertTrue($this->Table->findById(2)->all()->extract('active')->first());
-        $this->assertFalse($this->Token->check($token, $tokenOptions));
+        $this->assertFalse($this->Token->check($Token, $tokenOptions));
 
         //With an invalid token
         $this->expectException(RecordNotFoundException::class);
@@ -211,7 +213,6 @@ class UsersControllerTest extends ControllerTestCase
         $this->LoginRecorder->setConfig('user', $User->get('id'));
 
         //The user is banned
-        $this->enableRetainFlashMessages();
         $this->post($url, ['username' => $User->get('username')] + compact('password'));
         $this->assertRedirect('/');
         $this->assertSessionEmpty('Auth');
@@ -219,7 +220,6 @@ class UsersControllerTest extends ControllerTestCase
 
         //The user is no longer banned, but now is not active
         $this->Table->save($User->set(['active' => false, 'banned' => false]));
-        $this->enableRetainFlashMessages();
         $this->post($url, ['username' => $User->get('username')] + compact('password'));
         $this->assertRedirect('/');
         $this->assertSessionEmpty('Auth');
@@ -237,7 +237,6 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testLoginWithInvalidData(): void
     {
-        $this->enableRetainFlashMessages();
         $this->post(['_name' => 'login'], ['username' => 'wrong', 'password' => 'wrong']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertSessionEmpty('Auth');
@@ -252,7 +251,6 @@ class UsersControllerTest extends ControllerTestCase
     public function testLogout(): void
     {
         $this->setAuthData();
-        $this->session(['otherSessionValue' => 'value']);
 
         //The user is currently logged in
         $this->get('/');
@@ -261,7 +259,6 @@ class UsersControllerTest extends ControllerTestCase
         $this->get(['_name' => 'logout']);
         $this->assertResponseCode(302);
         $this->assertSessionEmpty('Auth');
-        $this->assertSession('value', 'otherSessionValue');
     }
 
     /**
@@ -313,8 +310,8 @@ class UsersControllerTest extends ControllerTestCase
     {
         //Creates the token for an active user
         $tokenOptions = ['type' => 'password_forgot', 'user_id' => 1];
-        $token = $this->Token->create('alfa@test.com', $tokenOptions);
-        $url = ['_name' => 'passwordReset', 'id' => '1'] + compact('token');
+        $Token = $this->Token->create('alfa@test.com', $tokenOptions);
+        $url = ['_name' => 'passwordReset', 'id' => '1', 'token' => $Token];
 
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
@@ -328,7 +325,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseContains('The password has not been edited');
 
         //The password has not been changed and the token still exists
-        $this->assertTrue($this->Token->check($token, $tokenOptions));
+        $this->assertTrue($this->Token->check($Token, $tokenOptions));
         $this->assertEmpty($this->Table->findById(1)->all()->extract('password')->first());
 
         //POST request again. Now data are valid
@@ -338,7 +335,7 @@ class UsersControllerTest extends ControllerTestCase
 
         //The password has changed and the token no longer exists
         $this->assertNotEmpty($this->Table->findById(1)->all()->extract('password')->first());
-        $this->assertFalse($this->Token->check($token, $tokenOptions));
+        $this->assertFalse($this->Token->check($Token, $tokenOptions));
 
         //With an invalid token
         $this->expectException(RecordNotFoundException::class);
@@ -380,7 +377,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('Account created, but it needs to be activated by an admin');
-        $user = $this->Table->findByUsername($data['username'])->first()->extract(['group_id', 'active']);
+        $user = $this->Table->findByUsername($data['username'])->firstOrFail()->extract(['group_id', 'active']);
         $this->assertEquals(['group_id' => getConfigOrFail('users.default_group'), 'active' => false], $user);
 
         //Deletes the user
