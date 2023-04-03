@@ -38,16 +38,31 @@ class AuthenticationComponent extends BaseAuthenticationComponent
     }
 
     /**
-     * `afterIdentify` event
+     * `afterIdentify` event.
+     *
+     * Checks if the user is banned or if is disabled.
+     * Then, it uses the `LoginRecorder` component to write the login as a log.
      * @param \Cake\Event\EventInterface $Event Event
      * @param \Authentication\Authenticator\AuthenticatorInterface $Provider Provider
      * @param \Authorization\Identity $Identity Identity
-     * @return void
+     * @return \Cake\Http\Response|void
      */
-    public function afterIdentify(EventInterface $Event, AuthenticatorInterface $Provider, Identity $Identity): void
+    public function afterIdentify(EventInterface $Event, AuthenticatorInterface $Provider, Identity $Identity)
     {
         /** @var \MeCms\Controller\AppController $Controller */
         $Controller = $this->getController();
-        $Controller->LoginRecorder->setConfig('user', $Identity->getIdentifier())->write();
+
+        /** @var \MeCms\Model\Entity\User $User */
+        $User = $Identity->getOriginalData();
+
+        //Checks if the user is banned or if is disabled (the account should still be enabled)
+        if ($User->get('banned') || !$User->get('active')) {
+            $Controller->Flash->error($User->get('banned') ? __d('me_cms', 'Your account has been banned by an admin') : __d('me_cms', 'Your account has not been activated yet'));
+
+            return $Controller->redirect($this->logout());
+        }
+
+        $Controller->LoginRecorder->setConfig('user', $User->get('id'));
+        $Controller->LoginRecorder->write();
     }
 }

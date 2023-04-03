@@ -148,28 +148,46 @@ class UsersTableTest extends TableTestCase
     /**
      * @test
      * @uses \MeCms\Model\Table\UsersTable::findActive()
-     * @uses \MeCms\Model\Table\UsersTable::findAuth()
-     * @uses \MeCms\Model\Table\UsersTable::findBanned()
-     * @uses \MeCms\Model\Table\UsersTable::findPending()
      */
-    public function testFindMethods(): void
+    public function testFindActive(): void
     {
         $query = $this->Table->find('active');
         $this->assertSqlEndsWith('FROM users Users WHERE (active = :c0 AND banned = :c1)', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
+    }
 
+    /**
+     * @test
+     * @uses \MeCms\Model\Table\UsersTable::findAuth()
+     */
+    public function testFindAuth(): void
+    {
+        $query = $this->Table->find('auth');
+        $this->assertSqlEndsWith('FROM `users` `Users` INNER JOIN `users_groups` `Groups` ON `Groups`.`id` = `Users`.`group_id`', $query->sql());
+    }
+
+    /**
+     * @test
+     * @uses \MeCms\Model\Table\UsersTable::findBanned()
+     */
+    public function testFindBanned(): void
+    {
         $query = $this->Table->find('banned');
         $this->assertSqlEndsWith('FROM users Users WHERE banned = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
+    }
 
+    /**
+     * @test
+     * @uses \MeCms\Model\Table\UsersTable::findPending()
+     */
+    public function testFindPending(): void
+    {
         $query = $this->Table->find('pending');
         $this->assertSqlEndsWith('FROM users Users WHERE (active = :c0 AND banned = :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
-
-        $query = $this->Table->find('auth');
-        $this->assertSqlEndsWith('FROM `users` `Users` INNER JOIN `users_groups` `Groups` ON `Groups`.`id` = `Users`.`group_id` WHERE (`active` = :c0 AND `banned` = :c1)', $query->sql());
     }
 
     /**

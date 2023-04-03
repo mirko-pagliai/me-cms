@@ -3,6 +3,8 @@
 ### 2.31.7
 * added the `AuthenticationComponent`, with the `afterIdentify()` event method. This event is dispatched after the
   identity and takes care of its management. Some code has been moved from the `UsersController::login()` method;
+* custom messages have been restored when, at login, the user account has been banned or is not yet active. Improved all
+  tests related to the login code;
 * improved admin view for users;
 * every user can view his last logins;
 * vertical alignment is used for admin interface tables.

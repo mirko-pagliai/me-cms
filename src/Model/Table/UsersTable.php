@@ -100,11 +100,12 @@ class UsersTable extends AppTable
      * "auth" find method
      * @param \MeCms\ORM\Query $query Query object
      * @return \MeCms\ORM\Query $query Query object
+     * @throws \Cake\Core\Exception\CakeException
      * @since 2.25.1
      */
     public function findAuth(Query $query): Query
     {
-        return $query->find('active')->contain([$this->Groups->getAlias() => ['fields' => ['name']]]);
+        return $query->contain([$this->Groups->getAlias() => ['fields' => ['name']]]);
     }
 
     /**
@@ -130,6 +131,7 @@ class UsersTable extends AppTable
     /**
      * Gets active users as list
      * @return \Cake\ORM\Query $query Query object
+     * @throws \Cake\Core\Exception\CakeException
      */
     public function getActiveList(): CakeQuery
     {

@@ -33,6 +33,11 @@ use Tokens\Controller\Component\TokenComponent;
 class UsersControllerTest extends ControllerTestCase
 {
     /**
+     * @var \MeCms\Controller\Component\LoginRecorderComponent&\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected LoginRecorderComponent $LoginRecorder;
+
+    /**
      * @var \Tokens\Controller\Component\TokenComponent&\PHPUnit\Framework\MockObject\MockObject
      */
     protected TokenComponent $Token;
@@ -54,6 +59,11 @@ class UsersControllerTest extends ControllerTestCase
     {
         parent::setUp();
 
+        if (empty($this->LoginRecorder)) {
+            $this->LoginRecorder = $this->createPartialMock(LoginRecorderComponent::class, ['getController', 'getUserAgent']);
+            $this->LoginRecorder->method('getController')->willReturn($this->Controller);
+        }
+
         $this->Token ??= $this->createPartialMock(TokenComponent::class, []);
     }
 
@@ -67,10 +77,7 @@ class UsersControllerTest extends ControllerTestCase
     {
         parent::controllerSpy($event, $controller);
 
-        if ($this->_controller->components()->has('LoginRecorder')) {
-            $this->_controller->LoginRecorder = $this->createPartialMock(LoginRecorderComponent::class, ['getController', 'getUserAgent']);
-            $this->_controller->LoginRecorder->method('getController')->willReturn($this->_controller);
-        }
+        $this->_controller->LoginRecorder = $this->LoginRecorder;
     }
 
     /**
@@ -159,6 +166,7 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
+     * @uses \MeCms\Controller\Component\AuthenticationComponent::afterIdentify()
      * @uses \MeCms\Controller\UsersController::login()
      * @test
      */
@@ -166,43 +174,75 @@ class UsersControllerTest extends ControllerTestCase
     {
         $url = ['_name' => 'login'];
 
+        //Gets a user and sets a new password. For now, the `LoginRecorder` component is empty
+        /** @var \MeCms\Model\Entity\User $User */
+        $User = $this->Table->find('active')->firstOrFail();
+        $password = 'newPassword1!';
+        $this->Table->save($User->set('password', $password));
+        $this->LoginRecorder->setConfig('user', $User->get('id'));
+        $this->assertTrue($this->LoginRecorder->read()->isEmpty());
+
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('login.php');
         $this->assertLayout('single-column.php');
 
-        //POST request with invalid data
+        $this->post($url, ['username' => $User->get('username')] + compact('password'));
+        $this->assertRedirect(['_name' => 'dashboard']);
+        $this->assertSession($User->get('id'), 'Auth.id');
+        $this->assertCount(1, $this->LoginRecorder->read());
+    }
+
+    /**
+     * Test for `login()` method with a banned and a not active user
+     * @uses \MeCms\Controller\Component\AuthenticationComponent::afterIdentify()
+     * @uses \MeCms\Controller\UsersController::login()
+     * @test
+     */
+    public function testLoginWithBannedOrNotActiveUser(): void
+    {
+        $url = ['_name' => 'login'];
+
+        //Gets a banned user and sets a new password. For now, the `LoginRecorder` component is empty
+        /** @var \MeCms\Model\Entity\User $User */
+        $User = $this->Table->find('banned')->firstOrFail();
+        $password = 'newPassword1!';
+        $this->Table->save($User->set(compact('password')));
+        $this->LoginRecorder->setConfig('user', $User->get('id'));
+
+        //The user is banned
         $this->enableRetainFlashMessages();
-        $this->post($url, ['username' => 'wrong', 'password' => 'wrong']);
+        $this->post($url, ['username' => $User->get('username')] + compact('password'));
+        $this->assertRedirect('/');
+        $this->assertSessionEmpty('Auth');
+        $this->assertFlashMessage('Your account has been banned by an admin');
+
+        //The user is no longer banned, but now is not active
+        $this->Table->save($User->set(['active' => false, 'banned' => false]));
+        $this->enableRetainFlashMessages();
+        $this->post($url, ['username' => $User->get('username')] + compact('password'));
+        $this->assertRedirect('/');
+        $this->assertSessionEmpty('Auth');
+        $this->assertFlashMessage('Your account has not been activated yet');
+
+        //The `LoginRecorder` component is always empty
+        $this->assertTrue($this->LoginRecorder->read()->isEmpty());
+    }
+
+    /**
+     * Test for `login()` method with a banned and a pending user
+     * @uses \MeCms\Controller\Component\AuthenticationComponent::afterIdentify()
+     * @uses \MeCms\Controller\UsersController::login()
+     * @test
+     */
+    public function testLoginWithInvalidData(): void
+    {
+        $this->enableRetainFlashMessages();
+        $this->post(['_name' => 'login'], ['username' => 'wrong', 'password' => 'wrong']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertSessionEmpty('Auth');
         $this->assertFlashMessage('Invalid username or password');
         $this->assertLogContains('Failed login: username `wrong`, password `wrong`', 'users');
-
-        //POST request. Now data are valid
-        $password = 'newPassword1!';
-        $user = $this->Table->get(1);
-        $this->Table->save($user->set('password', $password));
-        $this->cleanup();
-        $this->post($url, ['username' => $user->get('username')] + compact('password'));
-        $this->assertRedirect(['_name' => 'dashboard']);
-        $this->assertSession($user->get('id'), 'Auth.id');
-
-        //POST request. The user is banned
-        $this->Table->save($user->set('banned', true));
-        $this->enableRetainFlashMessages();
-        $this->post($url, ['username' => $user->get('username')] + compact('password'));
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertSessionEmpty('Auth');
-        $this->assertFlashMessage('Invalid username or password');
-
-        //POST request. The user is pending
-        $this->Table->save($user->set(['active' => false, 'banned' => false]));
-        $this->enableRetainFlashMessages();
-        $this->post($url, ['username' => $user->get('username')] + compact('password'));
-        $this->assertResponseOkAndNotEmpty();
-        $this->assertSessionEmpty('Auth');
-        $this->assertFlashMessage('Invalid username or password');
     }
 
     /**
