@@ -78,7 +78,7 @@
         }
     },
     "scripts": {
-        "i18n-extract": "bin/cake i18n extract --paths config,src,templates --relative-paths --overwrite -q",
+        "i18n-extract": "bin/cake i18n extract --paths config,src,templates --overwrite -q",
         "check": [
             "@cs-check",
             "@update-lowest",

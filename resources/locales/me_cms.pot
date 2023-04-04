@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2022-10-15 12:23+0000\n"
+"POT-Creation-Date: 2023-04-04 14:44+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -282,11 +282,11 @@ msgstr ""
 msgid "This value is already used"
 msgstr ""
 
-#: .src/Command/AddUserCommand.php:37
+#: .src/Command/AddUserCommand.php:36
 msgid "Adds an user"
 msgstr ""
 
-#: .src/Command/AddUserCommand.php:38
+#: .src/Command/AddUserCommand.php:37
 #: .src/Command/AddUserCommand.php:81
 msgid "Group ID"
 msgstr ""
@@ -319,7 +319,7 @@ msgstr ""
 msgid "Lists user groups"
 msgstr ""
 
-#: .src/Command/GroupsCommand.php:53
+#: .src/Command/GroupsCommand.php:54
 msgid "There are no user groups"
 msgstr ""
 
@@ -335,23 +335,23 @@ msgstr ""
 msgid "Creates the user groups"
 msgstr ""
 
-#: .src/Command/Install/CreateGroupsCommand.php:54
+#: .src/Command/Install/CreateGroupsCommand.php:55
 msgid "Some user groups already exist"
 msgstr ""
 
-#: .src/Command/Install/CreateGroupsCommand.php:72
+#: .src/Command/Install/CreateGroupsCommand.php:73
 msgid "The user groups have been created"
 msgstr ""
 
-#: .src/Command/Install/CreateSamplePostCommand.php:40
+#: .src/Command/Install/CreateSamplePostCommand.php:37
 msgid "Creates a sample post"
 msgstr ""
 
-#: .src/Command/Install/CreateSamplePostCommand.php:55
+#: .src/Command/Install/CreateSamplePostCommand.php:52
 msgid "At least one post already exists"
 msgstr ""
 
-#: .src/Command/Install/CreateSamplePostCommand.php:63
+#: .src/Command/Install/CreateSamplePostCommand.php:61
 msgid "You must first create a user. Run the `{0}` command"
 msgstr ""
 
@@ -379,25 +379,25 @@ msgstr ""
 msgid "Lists users"
 msgstr ""
 
-#: .src/Command/UsersCommand.php:55
-#: .templates/Admin/Users/index.php:90
-#: .templates/Admin/Users/view.php:69
+#: .src/Command/UsersCommand.php:56
+#: .templates/Admin/Users/index.php:93
+#: .templates/Admin/Users/view.php:79
 msgid "Banned"
 msgstr ""
 
-#: .src/Command/UsersCommand.php:55
-#: .templates/Admin/Users/add.php:31
-#: .templates/Admin/Users/view.php:66
+#: .src/Command/UsersCommand.php:56
+#: .templates/Admin/Users/add.php:34
+#: .templates/Admin/Users/view.php:87
 msgid "Active"
 msgstr ""
 
-#: .src/Command/UsersCommand.php:55
-#: .templates/Admin/Users/index.php:93
-#: .templates/Admin/Users/view.php:72
+#: .src/Command/UsersCommand.php:56
+#: .templates/Admin/Users/index.php:96
+#: .templates/Admin/Users/view.php:83
 msgid "Pending"
 msgstr ""
 
-#: .src/Command/UsersCommand.php:74
+#: .src/Command/UsersCommand.php:75
 msgid "There are no users"
 msgstr ""
 
@@ -405,62 +405,60 @@ msgstr ""
 msgid "Performs some updates to the database or files needed for versioning"
 msgstr ""
 
-#: .src/Controller/Admin/PagesCategoriesController.php:102
+#: .src/Controller/Admin/PagesCategoriesController.php:81
 msgid "Add pages category"
 msgstr ""
 
-#: .src/Controller/Admin/PagesCategoriesController.php:128
+#: .src/Controller/Admin/PagesCategoriesController.php:107
 msgid "Edit pages category"
 msgstr ""
 
-#: .src/Controller/Admin/PagesController.php:57
-#: .src/Controller/Admin/PostsController.php:63
+#: .src/Controller/Admin/PagesController.php:54
+#: .src/Controller/Admin/PostsController.php:58
 msgid "You must first create a category"
 msgstr ""
 
-#: .src/Controller/Admin/PagesController.php:133
-#: .src/View/Helper/MenuHelper.php:87
-#: .templates/Admin/PagesCategories/index.php:24
+#: .src/Controller/Admin/PagesController.php:125
+#: .src/View/Helper/MenuHelper.php:84
+#: .templates/Admin/PagesCategories/index.php:28
 msgid "Add page"
 msgstr ""
 
-#: .src/Controller/Admin/PagesController.php:161
-#: .templates/Pages/view.php:29
+#: .src/Controller/Admin/PagesController.php:153
 msgid "Edit page"
 msgstr ""
 
-#: .src/Controller/Admin/PostsCategoriesController.php:101
+#: .src/Controller/Admin/PostsCategoriesController.php:81
 msgid "Add posts category"
 msgstr ""
 
-#: .src/Controller/Admin/PostsCategoriesController.php:127
+#: .src/Controller/Admin/PostsCategoriesController.php:107
 msgid "Edit posts category"
 msgstr ""
 
-#: .src/Controller/Admin/PostsController.php:56
+#: .src/Controller/Admin/PostsController.php:50
 msgid "You must first create an user"
 msgstr ""
 
-#: .src/Controller/Admin/PostsController.php:140
-#: .src/View/Helper/MenuHelper.php:61
-#: .templates/Admin/PostsCategories/index.php:23
+#: .src/Controller/Admin/PostsController.php:143
+#: .src/View/Helper/MenuHelper.php:58
+#: .templates/Admin/PostsCategories/index.php:27
 msgid "Add post"
 msgstr ""
 
-#: .src/Controller/Admin/PostsController.php:169
-#: .templates/Posts/view.php:32
+#: .src/Controller/Admin/PostsController.php:172
 msgid "Edit post"
 msgstr ""
 
-#: .src/Controller/Admin/SystemsController.php:67
+#: .src/Controller/Admin/SystemsController.php:66
 msgid "{0} not available"
 msgstr ""
 
-#: .src/Controller/Admin/UsersController.php:51
+#: .src/Controller/Admin/UsersController.php:50
 msgid "You must first create an user group"
 msgstr ""
 
-#: .src/Controller/Admin/UsersController.php:195
+#: .src/Controller/Admin/UsersController.php:184
 msgid "You cannot delete the admin founder"
 msgstr ""
 
@@ -468,86 +466,85 @@ msgstr ""
 msgid "You cannot delete this users group"
 msgstr ""
 
-#: .src/Controller/Component/AuthComponent.php:59
+#: .src/Controller/AppController.php:108
 msgid "You are not authorized for this action"
 msgstr ""
 
-#: .src/Controller/PostsController.php:195
-#: .src/Controller/PostsController.php:197
-#: .src/View/View/AppView.php:45
-msgid "Latest posts"
-msgstr ""
-
-#: .src/Controller/PostsController.php:219
-msgid "You have to search at least a word of {0} characters"
-msgstr ""
-
-#: .src/Controller/PostsController.php:226
-msgid "You have to wait {0} seconds to perform a new search"
-msgstr ""
-
-#: .src/Controller/SystemsController.php:79
-#: .src/Controller/UsersController.php:140
-#: .src/Controller/UsersController.php:251
-#: .src/Controller/UsersController.php:336
-msgid "You must fill in the {0} control correctly"
-msgstr ""
-
-#: .src/Controller/UsersController.php:107
-#: .src/Controller/UsersController.php:292
-msgid "Invalid token"
-msgstr ""
-
-#: .src/Controller/UsersController.php:145
-msgid "No valid account was found"
-msgstr ""
-
-#: .src/Controller/UsersController.php:148
-#: .src/Controller/UsersController.php:350
-msgid "We send you an email to activate your account"
-msgstr ""
-
-#: .src/Controller/UsersController.php:189
+#: .src/Controller/Component/AuthenticationComponent.php:60
 msgid "Your account has been banned by an admin"
 msgstr ""
 
-#: .src/Controller/UsersController.php:191
+#: .src/Controller/Component/AuthenticationComponent.php:60
 msgid "Your account has not been activated yet"
 msgstr ""
 
-#: .src/Controller/UsersController.php:216
+#: .src/Controller/PostsController.php:171
+#: .src/View/View/AppView.php:38
+msgid "Latest posts"
+msgstr ""
+
+#: .src/Controller/PostsController.php:190
+msgid "You have to search at least a word of {0} characters"
+msgstr ""
+
+#: .src/Controller/PostsController.php:197
+msgid "You have to wait {0} seconds to perform a new search"
+msgstr ""
+
+#: .src/Controller/SystemsController.php:64
+#: .src/Controller/UsersController.php:120
+#: .src/Controller/UsersController.php:207
+#: .src/Controller/UsersController.php:292
+msgid "You must fill in the {0} control correctly"
+msgstr ""
+
+#: .src/Controller/UsersController.php:87
+#: .src/Controller/UsersController.php:248
+msgid "Invalid token"
+msgstr ""
+
+#: .src/Controller/UsersController.php:125
+msgid "No valid account was found"
+msgstr ""
+
+#: .src/Controller/UsersController.php:128
+#: .src/Controller/UsersController.php:306
+msgid "We send you an email to activate your account"
+msgstr ""
+
+#: .src/Controller/UsersController.php:165
 msgid "Invalid username or password"
 msgstr ""
 
-#: .src/Controller/UsersController.php:228
+#: .src/Controller/UsersController.php:184
 msgid "You are successfully logged out"
 msgstr ""
 
-#: .src/Controller/UsersController.php:253
+#: .src/Controller/UsersController.php:209
 msgid "No account found"
 msgstr ""
 
-#: .src/Controller/UsersController.php:262
+#: .src/Controller/UsersController.php:218
 msgid "We have sent you an email to reset your password"
 msgstr ""
 
-#: .src/Controller/UsersController.php:302
+#: .src/Controller/UsersController.php:258
 msgid "The password has been edited"
 msgstr ""
 
-#: .src/Controller/UsersController.php:307
+#: .src/Controller/UsersController.php:263
 msgid "The password has not been edited"
 msgstr ""
 
-#: .src/Controller/UsersController.php:338
+#: .src/Controller/UsersController.php:294
 msgid "The account has not been created"
 msgstr ""
 
-#: .src/Controller/UsersController.php:344
+#: .src/Controller/UsersController.php:300
 msgid "Account created, but it needs to be activated by an admin"
 msgstr ""
 
-#: .src/Controller/UsersController.php:354
+#: .src/Controller/UsersController.php:310
 msgid "Account created. Now you can login"
 msgstr ""
 
@@ -557,7 +554,7 @@ msgstr ""
 
 #: .src/Form/ContactUsForm.php:76
 #: .src/Model/Validation/TagValidator.php:34
-#: .src/Model/Validation/UserValidator.php:43
+#: .src/Model/Validation/UserValidator.php:45
 #: .src/Model/Validation/UsersGroupValidator.php:34
 #: .src/Model/Validation/UsersGroupValidator.php:45
 #: .src/Validation/AppValidator.php:58
@@ -589,27 +586,39 @@ msgstr ""
 msgid "Tag \"{0}\": {1}"
 msgstr ""
 
-#: .src/Model/Validation/UserValidator.php:51
+#: .src/Model/Validation/UserValidator.php:53
 msgid "This value contains a reserved word"
 msgstr ""
 
-#: .src/Model/Validation/UserValidator.php:60
+#: .src/Model/Validation/UserValidator.php:62
 msgid "Email addresses don't match"
 msgstr ""
 
-#: .src/Model/Validation/UserValidator.php:68
+#: .src/Model/Validation/UserValidator.php:70
 msgid "Must be at least {0} chars"
 msgstr ""
 
-#: .src/Model/Validation/UserValidator.php:72
-msgid "The password should contain letters, numbers and symbols"
+#: .src/Model/Validation/UserValidator.php:74
+msgid "The password should contain at least one digit"
 msgstr ""
 
-#: .src/Model/Validation/UserValidator.php:79
-msgid "Passwords don't match"
+#: .src/Model/Validation/UserValidator.php:78
+msgid "The password should contain at least one lowercase letter"
+msgstr ""
+
+#: .src/Model/Validation/UserValidator.php:82
+msgid "The password should contain at least one capital letter"
 msgstr ""
 
 #: .src/Model/Validation/UserValidator.php:86
+msgid "The password should contain at least one symbol"
+msgstr ""
+
+#: .src/Model/Validation/UserValidator.php:93
+msgid "Passwords don't match"
+msgstr ""
+
+#: .src/Model/Validation/UserValidator.php:100
 msgid "The old password is wrong"
 msgstr ""
 
@@ -644,74 +653,74 @@ msgstr ""
 msgid "Method `{0}::{1}()` returned only {2} values"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:60
+#: .src/View/Helper/MenuHelper.php:57
 msgid "List posts"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:65
-#: .src/View/Helper/MenuHelper.php:94
+#: .src/View/Helper/MenuHelper.php:62
+#: .src/View/Helper/MenuHelper.php:91
 msgid "List categories"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:66
-#: .src/View/Helper/MenuHelper.php:95
-#: .templates/Admin/Pages/index.php:23
-#: .templates/Admin/Posts/index.php:23
+#: .src/View/Helper/MenuHelper.php:63
+#: .src/View/Helper/MenuHelper.php:92
+#: .templates/Admin/Pages/index.php:26
+#: .templates/Admin/Posts/index.php:27
 msgid "Add category"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:69
+#: .src/View/Helper/MenuHelper.php:66
 msgid "List tags"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:84
+#: .src/View/Helper/MenuHelper.php:81
 msgid "List pages"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:90
+#: .src/View/Helper/MenuHelper.php:87
 msgid "List static pages"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:113
+#: .src/View/Helper/MenuHelper.php:110
 msgid "List users"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:114
-#: .templates/Admin/Users/add.php:16
-#: .templates/Admin/UsersGroups/index.php:23
+#: .src/View/Helper/MenuHelper.php:111
+#: .templates/Admin/Users/add.php:19
+#: .templates/Admin/UsersGroups/index.php:27
 msgid "Add user"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:118
+#: .src/View/Helper/MenuHelper.php:115
 msgid "List groups"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:119
-#: .templates/Admin/Users/index.php:23
+#: .src/View/Helper/MenuHelper.php:116
+#: .templates/Admin/Users/index.php:27
 msgid "Add group"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:139
-#: .templates/Admin/Systems/tmp_viewer.php:16
+#: .src/View/Helper/MenuHelper.php:138
+#: .templates/Admin/Systems/tmp_viewer.php:26
 msgid "Temporary files"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:140
-#: .templates/Admin/Systems/browser.php:16
+#: .src/View/Helper/MenuHelper.php:141
+#: .templates/Admin/Systems/browser.php:18
 msgid "Media browser"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:141
+#: .src/View/Helper/MenuHelper.php:142
 #: .templates/Admin/Systems/changelogs.php:16
 msgid "Changelogs"
 msgstr ""
 
-#: .src/View/Helper/MenuHelper.php:142
+#: .src/View/Helper/MenuHelper.php:144
 msgid "System"
 msgstr ""
 
 #: .src/View/Helper/TopbarHelper.php:33
-#: .templates/layout/default.php:75
+#: .templates/layout/default.php:89
 msgid "Home"
 msgstr ""
 
@@ -719,68 +728,67 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-#: .src/View/View/AdminView.php:52
+#: .src/View/View/Admin/AppView.php:53
 #: .templates/element/admin/priority-badge.php:18
 msgid "Very low"
 msgstr ""
 
-#: .src/View/View/AdminView.php:53
+#: .src/View/View/Admin/AppView.php:54
 #: .templates/element/admin/priority-badge.php:21
 msgid "Low"
 msgstr ""
 
-#: .src/View/View/AdminView.php:54
+#: .src/View/View/Admin/AppView.php:55
 #: .templates/element/admin/priority-badge.php:30
 msgid "Normal"
 msgstr ""
 
-#: .src/View/View/AdminView.php:55
+#: .src/View/View/Admin/AppView.php:56
 #: .templates/element/admin/priority-badge.php:24
 msgid "High"
 msgstr ""
 
-#: .src/View/View/AdminView.php:56
+#: .src/View/View/Admin/AppView.php:57
 #: .templates/element/admin/priority-badge.php:27
 msgid "Very high"
 msgstr ""
 
-#: .templates/Admin/Pages/index.php:55
-#: .templates/Admin/Posts/index.php:59
-#: .templates/Admin/Users/index.php:55
+#: .templates/Admin/Pages/index.php:58
+#: .templates/Admin/Posts/index.php:63
+#: .templates/Admin/Users/index.php:59
 msgid "month"
 msgstr ""
 
-#: .templates/Admin/Pages/index_statics.php:16
+#: .templates/Admin/Pages/index_statics.php:20
 msgid "Static pages"
 msgstr ""
 
-#: .templates/Admin/Pages/index_statics.php:24
+#: .templates/Admin/Pages/index_statics.php:28
 msgid "Path"
 msgstr ""
 
-#: .templates/Admin/PagesCategories/index.php:16
-#: .templates/PagesCategories/index.php:19
-#: .templates/cell/PagesWidgets/categories_as_form.php:23
-#: .templates/cell/PagesWidgets/categories_as_list.php:23
+#: .templates/Admin/PagesCategories/index.php:20
+#: .templates/PagesCategories/index.php:21
+#: .templates/cell/PagesWidgets/categories_as_form.php:26
+#: .templates/cell/PagesWidgets/categories_as_list.php:26
 msgid "Pages categories"
 msgstr ""
 
-#: .templates/Admin/PagesCategories/index.php:35
-#: .templates/Admin/PostsCategories/index.php:34
+#: .templates/Admin/PagesCategories/index.php:39
+#: .templates/Admin/PostsCategories/index.php:38
 msgid "Parent"
 msgstr ""
 
-#: .templates/Admin/Posts/form.php:78
-#: .templates/Admin/Posts/form.php:96
+#: .templates/Admin/Posts/form.php:83
+#: .templates/Admin/Posts/form.php:101
 msgid "Tags must be at least 3 chars and separated by a comma or a comma and a space. Only lowercase letters, numbers, hyphen, space"
 msgstr ""
 
-#: .templates/Admin/Posts/index.php:65
+#: .templates/Admin/Posts/index.php:69
 msgid "tag"
 msgstr ""
 
 #: .templates/Admin/PostsTags/edit.php:16
-#: .templates/PostsTags/view.php:22
 msgid "Edit tag"
 msgstr ""
 
@@ -788,7 +796,7 @@ msgstr ""
 msgid "Tag"
 msgstr ""
 
-#: .templates/Admin/PostsTags/index.php:54
+#: .templates/Admin/PostsTags/index.php:55
 msgid "{0} post"
 msgid_plural "{0} posts"
 msgstr[0] ""
@@ -799,104 +807,104 @@ msgstr[1] ""
 msgid "Changelog"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:20
+#: .templates/Admin/Systems/tmp_viewer.php:30
 msgid "All temporary files"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:21
+#: .templates/Admin/Systems/tmp_viewer.php:31
 msgid "All temporary files size: {0}"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:24
+#: .templates/Admin/Systems/tmp_viewer.php:34
 msgid "This command clear all temporary files: cache, assets, logs and thumbnails"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:27
+#: .templates/Admin/Systems/tmp_viewer.php:37
 msgid "Clear all temporary files"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:37
+#: .templates/Admin/Systems/tmp_viewer.php:47
 msgid "Cache"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:40
+#: .templates/Admin/Systems/tmp_viewer.php:50
 msgid "Cache is disabled or debugging is active"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:43
+#: .templates/Admin/Systems/tmp_viewer.php:53
 msgid "Cache size: {0}"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:45
+#: .templates/Admin/Systems/tmp_viewer.php:55
 msgid "Note: you should not need to clear the cache, unless you have not edited the configuration or after an upgrade"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:50
+#: .templates/Admin/Systems/tmp_viewer.php:60
 msgid "Clear cache"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:57
+#: .templates/Admin/Systems/tmp_viewer.php:67
 msgid "Assets"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:58
+#: .templates/Admin/Systems/tmp_viewer.php:68
 msgid "Assets size: {0}"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:62
+#: .templates/Admin/Systems/tmp_viewer.php:72
 msgid "Clear all assets"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:70
+#: .templates/Admin/Systems/tmp_viewer.php:80
 msgid "Logs"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:71
+#: .templates/Admin/Systems/tmp_viewer.php:81
 msgid "Logs size: {0}"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:75
+#: .templates/Admin/Systems/tmp_viewer.php:85
 msgid "Clear all logs"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:83
+#: .templates/Admin/Systems/tmp_viewer.php:93
 msgid "Sitemap"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:84
+#: .templates/Admin/Systems/tmp_viewer.php:94
 msgid "Sitemap size: {0}"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:87
+#: .templates/Admin/Systems/tmp_viewer.php:97
 msgid "Note: you should not need to clear the sitemap, unless you have recently changed many records"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:90
+#: .templates/Admin/Systems/tmp_viewer.php:100
 msgid "Clear sitemap"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:98
+#: .templates/Admin/Systems/tmp_viewer.php:108
 msgid "Thumbnails"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:99
+#: .templates/Admin/Systems/tmp_viewer.php:109
 msgid "Thumbnails size: {0}"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:103
+#: .templates/Admin/Systems/tmp_viewer.php:113
 msgid "Note: you should not need to clear the thumbnails and that this will slow down the images loading the first time that are displayed. You should clear thumbnails only when they have reached a large size or when many images are no longer used"
 msgstr ""
 
-#: .templates/Admin/Systems/tmp_viewer.php:109
+#: .templates/Admin/Systems/tmp_viewer.php:119
 msgid "Clear all thumbnails"
 msgstr ""
 
-#: .templates/Admin/Users/add.php:26
-#: .templates/Admin/Users/edit.php:23
+#: .templates/Admin/Users/add.php:29
+#: .templates/Admin/Users/edit.php:26
 msgid "User group"
 msgstr ""
 
-#: .templates/Admin/Users/add.php:30
+#: .templates/Admin/Users/add.php:33
 msgid "If is not active, the user won't be able to login"
 msgstr ""
 
@@ -922,50 +930,50 @@ msgstr ""
 msgid "Repeat your new password"
 msgstr ""
 
-#: .templates/Admin/Users/change_picture.php:16
+#: .templates/Admin/Users/change_picture.php:19
 msgid "Change your picture"
 msgstr ""
 
-#: .templates/Admin/Users/edit.php:16
+#: .templates/Admin/Users/edit.php:19
 msgid "Edit user"
 msgstr ""
 
-#: .templates/Admin/Users/edit.php:43
-#: .templates/Admin/Users/edit.php:56
+#: .templates/Admin/Users/edit.php:46
+#: .templates/Admin/Users/edit.php:59
 msgid "If you want to change the password just type a new one. Otherwise, leave the field empty"
 msgstr ""
 
-#: .templates/Admin/Users/index.php:37
+#: .templates/Admin/Users/index.php:41
 msgid "username"
 msgstr ""
 
-#: .templates/Admin/Users/index.php:44
+#: .templates/Admin/Users/index.php:48
 msgid "Only active"
 msgstr ""
 
-#: .templates/Admin/Users/index.php:45
+#: .templates/Admin/Users/index.php:49
 msgid "Only pending"
 msgstr ""
 
-#: .templates/Admin/Users/index.php:46
+#: .templates/Admin/Users/index.php:50
 msgid "Only banned"
 msgstr ""
 
-#: .templates/Admin/Users/index.php:97
+#: .templates/Admin/Users/index.php:100
 msgid "View"
 msgstr ""
 
-#: .templates/Admin/Users/index.php:105
-#: .templates/Admin/Users/view.php:28
+#: .templates/Admin/Users/index.php:108
+#: .templates/Admin/Users/view.php:32
 msgid "Activate"
 msgstr ""
 
-#: .templates/Admin/Users/index.php:107
-#: .templates/Admin/Users/view.php:33
+#: .templates/Admin/Users/index.php:110
+#: .templates/Admin/Users/view.php:37
 msgid "Are you sure you want to activate this account?"
 msgstr ""
 
-#: .templates/Admin/Users/view.php:90
+#: .templates/Admin/Users/view.php:102
 msgid "Created"
 msgstr ""
 
@@ -977,22 +985,8 @@ msgstr ""
 msgid "Edit users group"
 msgstr ""
 
-#: .templates/Admin/UsersGroups/index.php:16
+#: .templates/Admin/UsersGroups/index.php:20
 msgid "Users groups"
-msgstr ""
-
-#: .templates/Pages/view.php:34
-msgid "Delete page"
-msgstr ""
-
-#: .templates/PagesCategories/view.php:25
-#: .templates/PostsCategories/view.php:22
-msgid "Edit category"
-msgstr ""
-
-#: .templates/PagesCategories/view.php:30
-#: .templates/PostsCategories/view.php:27
-msgid "Delete category"
 msgstr ""
 
 #: .templates/Posts/index_by_date.php:18
@@ -1018,40 +1012,36 @@ msgctxt "posts of month"
 msgid "Posts of {0}"
 msgstr ""
 
-#: .templates/Posts/search.php:16
-#: .templates/cell/PostsWidgets/search.php:21
+#: .templates/Posts/search.php:21
+#: .templates/cell/PostsWidgets/search.php:23
 msgid "Search posts"
 msgstr ""
 
-#: .templates/Posts/search.php:25
-#: .templates/Posts/search.php:28
-#: .templates/cell/PostsWidgets/search.php:31
+#: .templates/Posts/search.php:30
+#: .templates/Posts/search.php:33
+#: .templates/cell/PostsWidgets/search.php:33
 #: .templates/element/footer.php:19
 msgid "Search"
 msgstr ""
 
-#: .templates/Posts/search.php:35
+#: .templates/Posts/search.php:40
 msgid "You have searched for: {0}"
 msgstr ""
 
-#: .templates/Posts/view.php:37
-msgid "Delete post"
-msgstr ""
-
-#: .templates/Posts/view.php:93
+#: .templates/Posts/view.php:76
 msgid "Related posts"
 msgstr ""
 
-#: .templates/PostsTags/index.php:19
+#: .templates/PostsTags/index.php:21
 msgid "Posts tags"
 msgstr ""
 
-#: .templates/PostsTags/view.php:16
+#: .templates/PostsTags/view.php:22
 msgid "Tag {0}"
 msgstr ""
 
 #: .templates/Systems/contact_us.php:16
-#: .templates/element/footer.php:25
+#: .templates/element/footer.php:24
 msgid "Contact us"
 msgstr ""
 
@@ -1076,26 +1066,26 @@ msgid "The website is temporarily offline"
 msgstr ""
 
 #: .templates/Users/activation_resend.php:16
-#: .templates/element/login/menu.php:33
+#: .templates/element/login/menu.php:35
 msgid "Resend activation email"
 msgstr ""
 
 #: .templates/Users/activation_resend.php:29
 #: .templates/Users/password_forgot.php:29
-#: .templates/Users/signup.php:33
+#: .templates/Users/signup.php:36
 msgid "Repeat your email"
 msgstr ""
 
-#: .templates/Users/login.php:15
-#: .templates/element/login/menu.php:19
+#: .templates/Users/login.php:18
+#: .templates/element/login/menu.php:21
 msgid "Login"
 msgstr ""
 
-#: .templates/Users/login.php:37
+#: .templates/Users/login.php:40
 msgid "Don't use on public computers"
 msgstr ""
 
-#: .templates/Users/login.php:38
+#: .templates/Users/login.php:41
 msgid "Remember me"
 msgstr ""
 
@@ -1107,81 +1097,85 @@ msgstr ""
 msgid "Reset password"
 msgstr ""
 
-#: .templates/Users/signup.php:16
-#: .templates/element/login/menu.php:26
+#: .templates/Users/signup.php:19
+#: .templates/element/login/menu.php:28
 msgid "Sign up"
 msgstr ""
 
-#: .templates/Users/signup.php:43
+#: .templates/Users/signup.php:46
 msgid "Enter your password"
 msgstr ""
 
-#: .templates/Users/signup.php:53
+#: .templates/Users/signup.php:56
 msgid "Repeat your password"
 msgstr ""
 
-#: .templates/cell/PostsTagsWidgets/popular_as_cloud.php:20
-#: .templates/cell/PostsTagsWidgets/popular_as_form.php:23
-#: .templates/cell/PostsTagsWidgets/popular_as_list.php:23
+#: .templates/cell/PostsTagsWidgets/popular_as_cloud.php:24
+#: .templates/cell/PostsTagsWidgets/popular_as_form.php:26
+#: .templates/cell/PostsTagsWidgets/popular_as_list.php:26
 msgid "Popular tags"
 msgstr ""
 
-#: .templates/cell/PostsWidgets/latest.php:23
+#: .templates/cell/PostsWidgets/latest.php:26
 msgid "Latest post"
 msgid_plural "Latest {0} posts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: .templates/cell/PostsWidgets/months_as_form.php:21
-#: .templates/cell/PostsWidgets/months_as_list.php:21
+#: .templates/cell/PostsWidgets/months_as_form.php:24
+#: .templates/cell/PostsWidgets/months_as_list.php:24
 msgid "Posts by month"
 msgstr ""
 
-#: .templates/element/admin/bbcode.php:19
+#: .templates/element/admin/bbcode.php:18
 msgid "BBCode"
 msgstr ""
 
-#: .templates/element/admin/bbcode.php:34
+#: .templates/element/admin/bbcode.php:32
+msgid "Creates a horizontal line"
+msgstr ""
+
+#: .templates/element/admin/bbcode.php:40
 msgid "Manually indicates where to cut the text and show the \"Read more\" button"
 msgstr ""
 
-#: .templates/element/admin/bbcode.php:35
+#: .templates/element/admin/bbcode.php:41
 msgid "If this is not present, the system can still cut the text, for example after a certain number of characters"
 msgstr ""
 
-#: .templates/element/admin/bbcode.php:44
+#: .templates/element/admin/bbcode.php:51
 msgid "Adds an image"
 msgstr ""
 
-#: .templates/element/admin/bbcode.php:52
+#: .templates/element/admin/bbcode.php:59
 msgid "Adds a link"
 msgstr ""
 
-#: .templates/element/admin/bbcode.php:61
+#: .templates/element/admin/bbcode.php:69
 msgid "Adds a {0} video. You may indicate the ID or the url of the video"
 msgstr ""
 
-#: .templates/element/admin/last-logins.php:21
+#: .templates/element/admin/last-logins.php:24
 msgid "Time"
 msgstr ""
 
-#: .templates/element/admin/last-logins.php:22
+#: .templates/element/admin/last-logins.php:25
 msgid "IP"
 msgstr ""
 
-#: .templates/element/admin/last-logins.php:23
+#: .templates/element/admin/last-logins.php:26
 msgid "Browser"
 msgstr ""
 
-#: .templates/element/admin/last-logins.php:24
+#: .templates/element/admin/last-logins.php:27
 msgid "Client"
 msgstr ""
 
-#: .templates/element/admin/last-logins.php:42
+#: .templates/element/admin/last-logins.php:45
 msgid "Who is"
 msgstr ""
 
-#: .templates/element/admin/last-logins.php:48
+#: .templates/element/admin/last-logins.php:51
 msgid "{0} {1} on {2}"
 msgstr ""
 
@@ -1193,68 +1187,49 @@ msgstr ""
 msgid "Show as grid"
 msgstr ""
 
-#: .templates/element/admin/uploader.php:23
+#: .templates/element/admin/uploader.php:26
 msgid "Drag files here or click"
 msgstr ""
 
-#: .templates/element/admin/userbar.php:27
-#: .templates/layout/default.php:63
+#: .templates/element/admin/userbar.php:25
+#: .templates/layout/default.php:70
 msgid "Homepage"
 msgstr ""
 
-#: .templates/element/common/userbar.php:24
-#: .templates/element/topbar.php:33
+#: .templates/element/common/userbar.php:23
 msgid "Toggle navigation"
 msgstr ""
 
-#: .templates/element/common/userbar.php:46
+#: .templates/element/common/userbar.php:45
 msgid "Change picture"
 msgstr ""
 
-#: .templates/element/common/userbar.php:47
+#: .templates/element/common/userbar.php:46
 msgid "Change password"
 msgstr ""
 
-#: .templates/element/common/userbar.php:48
+#: .templates/element/common/userbar.php:47
 msgid "Logout"
 msgstr ""
 
-#: .templates/element/cookies_policy.php:29
-msgid "If you continue, you agree to the use of cookies, ok?"
-msgstr ""
-
-#: .templates/element/cookies_policy.php:31
-msgid "Ok"
-msgstr ""
-
-#: .templates/element/cookies_policy.php:36
-#: .templates/element/views/page.php:79
-#: .templates/element/views/post.php:103
-msgid "Read more"
-msgstr ""
-
 #: .templates/element/footer.php:20
-msgid "Cookies policy"
-msgstr ""
-
-#: .templates/element/footer.php:21
 msgid "Feed RSS"
 msgstr ""
 
-#: .templates/element/footer.php:31
+#: .templates/element/footer.php:29
 msgid "Powered by {0}. Copyright {1}"
 msgstr ""
 
-#: .templates/element/footer.php:33
+#: .templates/element/footer.php:30
 msgid "Developed by {0}"
 msgstr ""
 
-#: .templates/element/login/menu.php:40
+#: .templates/element/login/menu.php:42
 msgid "Forgot your password?"
 msgstr ""
 
-#: .templates/element/userbar.php:22
-msgid "Dashboard"
+#: .templates/element/topbar.php:63
+msgid "Close"
 msgstr ""
 
 #: .templates/element/views/page.php:42
@@ -1262,13 +1237,18 @@ msgstr ""
 msgid "Posted on {0}"
 msgstr ""
 
-#: .templates/element/views/page.php:50
-#: .templates/element/views/post.php:65
+#: .templates/element/views/page.php:46
+#: .templates/element/views/post.php:61
 msgid "Updated on {0}"
 msgstr ""
 
-#: .templates/element/views/post.php:26
-#: .templates/element/views/post.php:51
+#: .templates/element/views/page.php:69
+#: .templates/element/views/post.php:95
+msgid "Read more"
+msgstr ""
+
+#: .templates/element/views/post.php:29
+#: .templates/element/views/post.php:53
 msgid "Posted by {0}"
 msgstr ""
 
