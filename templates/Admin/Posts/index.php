@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
- * @var \MeCms\Model\Entity\Post[] $posts
+ * @var \Cake\ORM\ResultSet<\MeCms\Model\Entity\Post> $posts
  * @var \MeCms\View\View\Admin\AppView $this
  */
 

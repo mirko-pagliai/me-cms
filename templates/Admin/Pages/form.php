@@ -12,11 +12,12 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
- * @var \Cake\Collection\Collection<string> $categories
+ * @var \Cake\ORM\ResultSet<\MeCms\Model\Entity\PagesCategory> $categories
  * @var \MeCms\Model\Entity\Page $page
  * @var \MeCms\View\View\Admin\AppView $this
  * @var string $title
  */
+
 $this->extend('MeCms./common/form');
 $this->Library->ckeditor();
 $this->Library->slugify();

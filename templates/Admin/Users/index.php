@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
  * @var \MeCms\View\View\Admin\AppView $this
- * @var \MeCms\Model\Entity\User[] $users
+ * @var \Cake\ORM\ResultSet<\MeCms\Model\Entity\User> $users
  */
 
 $this->extend('MeCms./Admin/common/index');

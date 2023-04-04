@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
  * @var string $pattern
- * @var \MeCms\Model\Entity\Post[] $posts
+ * @var \Cake\ORM\ResultSet<\MeCms\Model\Entity\Post> $posts
  * @var \MeCms\View\View\AppView $this
  */
 

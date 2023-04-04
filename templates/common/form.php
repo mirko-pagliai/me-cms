@@ -11,12 +11,12 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\View\View\AppView $this
  */
 ?>
 
 <div class="form">
-    <?php
-    echo $this->Html->h2($this->fetch('title') ? $this->fetch('title') : $this->get('title'));
-    echo $this->fetch('content');
-    ?>
+    <?= $this->Html->h2($this->fetch('title') ? $this->fetch('title') : $this->get('title')) ?>
+    <?= $this->fetch('content') ?>
 </div>

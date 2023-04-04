@@ -15,6 +15,7 @@ declare(strict_types=1);
  * @var \MeCms\View\View\AppView $this
  * @var \MeCms\Model\Entity\User $user
  */
+
 $this->extend('MeCms./common/form');
 $this->assign('title', $title = __d('me_cms', 'Request new password'));
 ?>

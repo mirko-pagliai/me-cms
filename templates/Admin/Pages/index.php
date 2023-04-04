@@ -12,9 +12,10 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
- * @var \MeCms\Model\Entity\Page[] $pages
+ * @var \Cake\ORM\ResultSet<\MeCms\Model\Entity\Page> $pages
  * @var \MeCms\View\View\Admin\AppView $this
  */
+
 $this->extend('MeCms./Admin/common/index');
 $this->assign('title', I18N_PAGES);
 $this->append('actions', $this->Html->button(
