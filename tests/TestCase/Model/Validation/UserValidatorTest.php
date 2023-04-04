@@ -31,8 +31,8 @@ class UserValidatorTest extends ValidationTestCase
         'first_name' => 'Alfa',
         'last_name' => 'Beta',
         'username' => 'my-username',
-        'password' => 'my-password1!',
-        'password_repeat' => 'my-password1!',
+        'password' => 'my-Password1!',
+        'password_repeat' => 'my-Password1!',
     ];
 
     /**
@@ -119,11 +119,21 @@ class UserValidatorTest extends ValidationTestCase
         $errors = $this->Table->newEntity(compact('password', 'password_repeat') + $this->example)->getErrors();
         $this->assertEquals(['password' => ['minLength' => 'Must be at least 8 chars']], $errors);
 
-        foreach (['abcdefgh', '12345678', '!!!!!!!!', 'abcd1234', 'abcd!!!!', '1234!!!!'] as $password) {
-            $password_repeat = $password;
-            $errors = $this->Table->newEntity(compact('password', 'password_repeat') + $this->example)->getErrors();
-            $this->assertEquals(['password' => ['passwordIsStrong' => 'The password should contain letters, numbers and symbols']], $errors);
-        }
+        $password_repeat = $password = 'Abcdefgh!';
+        $errors = $this->Table->newEntity(compact('password', 'password_repeat') + $this->example)->getErrors();
+        $this->assertEquals(['password' => ['passwordContainsDigit' => 'The password should contain at least one digit']], $errors);
+
+        $password_repeat = $password = '1ABCDEFGH!';
+        $errors = $this->Table->newEntity(compact('password', 'password_repeat') + $this->example)->getErrors();
+        $this->assertEquals(['password' => ['passwordContainsLowercaseLetter' => 'The password should contain at least one lowercase letter']], $errors);
+
+        $password_repeat = $password = '1bcdefgh!';
+        $errors = $this->Table->newEntity(compact('password', 'password_repeat') + $this->example)->getErrors();
+        $this->assertEquals(['password' => ['passwordContainsCapitalLetter' => 'The password should contain at least one capital letter']], $errors);
+
+        $password_repeat = $password = '1Abcdefgh';
+        $errors = $this->Table->newEntity(compact('password', 'password_repeat') + $this->example)->getErrors();
+        $this->assertEquals(['password' => ['passwordContainsSymbol' => 'The password should contain at least one symbol']], $errors);
 
         $copy = $this->example;
         unset($copy['password'], $copy['password_repeat']);

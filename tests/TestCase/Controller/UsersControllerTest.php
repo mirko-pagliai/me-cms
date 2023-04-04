@@ -262,8 +262,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\UsersController::passwordForgot()
      * @test
+     * @uses \MeCms\Controller\UsersController::passwordForgot()
      */
     public function testPasswordForgot(): void
     {
@@ -303,8 +303,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\UsersController::passwordReset()
      * @test
+     * @uses \MeCms\Controller\UsersController::passwordReset()
      */
     public function testPasswordReset(): void
     {
@@ -345,8 +345,8 @@ class UsersControllerTest extends ControllerTestCase
     }
 
     /**
-     * @uses \MeCms\Controller\UsersController::signup()
      * @test
+     * @uses \MeCms\Controller\UsersController::signup()
      */
     public function testSignup(): void
     {
@@ -354,8 +354,8 @@ class UsersControllerTest extends ControllerTestCase
             'username' => 'example',
             'email' => 'example@example.it',
             'email_repeat' => 'example@example.it',
-            'password' => 'password1!',
-            'password_repeat' => 'password1!',
+            'password' => 'Password1!',
+            'password_repeat' => 'Password1!',
             'first_name' => 'Alfa',
             'last_name' => 'Beta',
         ];

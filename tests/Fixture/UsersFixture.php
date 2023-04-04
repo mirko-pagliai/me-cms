@@ -99,7 +99,7 @@ class UsersFixture extends TestFixture
             'group_id' => 1,
             'username' => 'zeta',
             'email' => 'zeta@example.com',
-            'password' => 'zeta',
+            'password' => 'Zeta1!',
             'first_name' => 'Zeta',
             'last_name' => 'Zeta',
             'active' => 1,

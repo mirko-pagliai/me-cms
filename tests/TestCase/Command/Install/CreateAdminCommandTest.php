@@ -31,12 +31,12 @@ class CreateAdminCommandTest extends CommandTestCase
     ];
 
     /**
-     * Test for `execute()` method
      * @test
+     * @uses \MeCms\Command\Install\CreateAdminCommand::execute()
      */
     public function testExecute(): void
     {
-        $example = ['my-username', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
+        $example = ['my-username', 'Password1/', 'Password1/', 'mail@example.com', 'Alfa', 'Beta'];
         /** @var \MeCms\Model\Table\UsersTable $Users */
         $Users = $this->getTable('MeCms.Users');
 

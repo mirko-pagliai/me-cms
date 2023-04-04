@@ -55,8 +55,8 @@ class AppValidatorTest extends TestCase
             'first_name' => 'Alfa',
             'last_name' => 'Beta',
             'username' => 'my-username',
-            'password' => 'my-password1!',
-            'password_repeat' => 'my-password1!',
+            'password' => 'Password1!',
+            'password_repeat' => 'Password1!',
         ],
     ];
 
