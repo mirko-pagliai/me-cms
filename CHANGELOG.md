@@ -8,6 +8,7 @@
   tests related to the login code;
 * improved admin view for users;
 * every user can view his last logins;
+* little fixes for admin template elements;
 * vertical alignment is used for admin interface tables.
 
 ### 2.31.6
