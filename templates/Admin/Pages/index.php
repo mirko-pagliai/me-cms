@@ -136,7 +136,7 @@ echo $this->Form->end();
                 </td>
 
                 <td class="text-nowrap text-center align-middle">
-                    <?= $this->element('admin/priority-badge', ['priority' => $page->get('priority')]) ?>
+                    <?= $this->PriorityBadge->badge($page->get('priority')) ?>
                 </td>
                 <td class="text-nowrap text-center align-middle">
                     <div class="d-none d-lg-block">

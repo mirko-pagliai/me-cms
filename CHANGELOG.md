@@ -7,6 +7,7 @@
 * custom messages have been restored when, at login, the user account has been banned or is not yet active. Improved all
   tests related to the login code;
 * improved admin view for users;
+* added the `PriorityBadgeHelper`. This replaces the `priority-badge` template element;
 * every user can view his last logins;
 * little fixes for admin template elements;
 * vertical alignment is used for admin interface tables.
