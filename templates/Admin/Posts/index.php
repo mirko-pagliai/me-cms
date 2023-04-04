@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  *
+ * @var \MeCms\Model\Entity\Post[] $posts
  * @var \MeCms\View\View\Admin\AppView $this
  */
 
@@ -86,22 +87,21 @@ echo $this->Form->end();
     <tbody>
         <?php foreach ($posts as $post) : ?>
             <tr>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <code><?= $post->get('id') ?></code>
                 </td>
                 <td>
-                    <strong>
-                        <?= $this->Html->link($post->get('title'), ['action' => 'edit', $post->get('id')]) ?>
-                    </strong>
                     <?php
+                    echo $this->Html->link($post->get('title'), ['action' => 'edit', $post->get('id')], ['class' => 'fw-bold']);
+
                     $class = 'record-badge badge badge-warning';
 
-                    //If the post is not active (it's a draft)
+                    //If it's not active (it's a draft)
                     if (!$post->get('active')) {
                         echo $this->Html->span(I18N_DRAFT, compact('class'));
                     }
 
-                    //If the post is scheduled
+                    //If it's scheduled
                     if ($post->get('created')->isFuture()) {
                         echo $this->Html->span(I18N_SCHEDULED, compact('class'));
                     }
@@ -129,7 +129,7 @@ echo $this->Form->end();
                         $actions[] = $this->Html->link(I18N_EDIT, ['action' => 'edit', $post->get('id')], ['icon' => 'pencil-alt']);
                     }
 
-                    //Only admins and managers can delete posts
+                    //Only admins and managers can delete
                     if ($this->Identity->isGroup('admin', 'manager')) {
                         $actions[] = $this->Form->postLink(I18N_DELETE, ['action' => 'delete', $post->get('id')], [
                             'class' => 'text-danger',
@@ -138,7 +138,7 @@ echo $this->Form->end();
                         ]);
                     }
 
-                    //If the post is active and is not scheduled
+                    //If it's active and is not scheduled
                     if ($post->get('active') && !$post->get('created')->isFuture()) {
                         $actions[] = $this->Html->link(
                             I18N_OPEN,
@@ -156,24 +156,24 @@ echo $this->Form->end();
                     echo $this->Html->ul($actions, ['class' => 'actions']);
                     ?>
                 </td>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <?= $this->Html->link(
                         $post->get('category')->get('title'),
                         ['?' => ['category' => $post->get('category')->get('id')]],
                         ['title' => I18N_BELONG_ELEMENT]
                     ) ?>
                 </td>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <?= $this->Html->link(
                         $post->get('user')->get('full_name'),
                         ['?' => ['user' => $post->get('user')->get('id')]],
                         ['title' => I18N_BELONG_USER]
                     ) ?>
                 </td>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <?= $this->element('admin/priority-badge', ['priority' => $post->get('priority')]) ?>
                 </td>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center align-middle">
                     <div class="d-none d-lg-block">
                         <?= $post->get('created')->i18nFormat() ?>
                     </div>

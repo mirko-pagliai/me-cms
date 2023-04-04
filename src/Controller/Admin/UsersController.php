@@ -25,7 +25,6 @@ use Thumber\Cake\Utility\ThumbManager;
 
 /**
  * Users controller
- * @property \MeCms\Controller\Component\LoginRecorderComponent $LoginRecorder
  * @property \MeTools\Controller\Component\UploaderComponent $Uploader
  * @property \MeCms\Model\Table\UsersTable $Users
  */
@@ -58,26 +57,19 @@ class UsersController extends AppController
     }
 
     /**
-     * Initialization hook method
-     * @return void
-     * @throws \Exception
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->loadComponent('MeCms.LoginRecorder');
-    }
-
-    /**
      * Checks if the provided user is authorized for the request
      * @param \MeCms\Model\Entity\User $User User entity
      * @return bool `true` if the user is authorized, otherwise `false`
      */
     public function isAuthorized(User $User): bool
     {
-        //Every user can change his password or picture
-        if ($this->getRequest()->is('action', ['changePassword', 'changePicture'])) {
+        /**
+         * Every user:
+         *  - can change his own password;
+         *  - can change his own profile picture;
+         *  - can view his last logins.
+         */
+        if ($this->getRequest()->is('action', ['changePassword', 'changePicture', 'lastLogin'])) {
             return true;
         }
 
@@ -112,7 +104,7 @@ class UsersController extends AppController
     public function view(string $id): void
     {
         $user = $this->Users->findById($id)
-            ->contain(['Groups' => ['fields' => ['label']]])
+            ->contain(['Groups' => ['fields' => ['id', 'label']]])
             ->firstOrFail();
 
         $this->set(compact('user'));

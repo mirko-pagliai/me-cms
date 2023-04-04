@@ -35,8 +35,8 @@ class UsersTableTest extends TableTestCase
         'first_name' => 'Alfa',
         'last_name' => 'Beta',
         'username' => 'my-username',
-        'password' => 'my-password1!',
-        'password_repeat' => 'my-password1!',
+        'password' => 'Password1!',
+        'password_repeat' => 'Password1!',
     ];
 
     /**
@@ -56,21 +56,21 @@ class UsersTableTest extends TableTestCase
      */
     public function testBeforeMarshal(): void
     {
-        $entity = $this->Table->patchEntity($this->Table->get(1), self::$example, ['validate' => 'EmptyPassword']);
-        $this->assertNotEmpty($entity->get('password'));
-        $this->assertNotEmpty($entity->get('password_repeat'));
+        $User = $this->Table->patchEntity($this->Table->get(1), self::$example, ['validate' => 'EmptyPassword']);
+        $this->assertNotEmpty($User->get('password'));
+        $this->assertNotEmpty($User->get('password_repeat'));
 
         $example = ['password' => '', 'password_repeat' => ''] + self::$example;
-        $entity = $this->Table->patchEntity($this->Table->get(1), $example, ['validate' => 'EmptyPassword']);
-        $this->assertEmpty($entity->getErrors());
-        $this->assertFalse(property_exists($entity, 'password'));
-        $this->assertFalse(property_exists($entity, 'password_repeat'));
+        $User = $this->Table->patchEntity($this->Table->get(1), $example, ['validate' => 'EmptyPassword']);
+        $this->assertEmpty($User->getErrors());
+        $this->assertFalse(property_exists($User, 'password'));
+        $this->assertFalse(property_exists($User, 'password_repeat'));
 
         unset($example['password'], $example['password_repeat']);
-        $entity = $this->Table->patchEntity($this->Table->get(1), $example, ['validate' => 'EmptyPassword']);
-        $this->assertEmpty($entity->getErrors());
-        $this->assertFalse(property_exists($entity, 'password'));
-        $this->assertFalse(property_exists($entity, 'password_repeat'));
+        $User = $this->Table->patchEntity($this->Table->get(1), $example, ['validate' => 'EmptyPassword']);
+        $this->assertEmpty($User->getErrors());
+        $this->assertFalse(property_exists($User, 'password'));
+        $this->assertFalse(property_exists($User, 'password_repeat'));
     }
 
     /**
@@ -93,18 +93,18 @@ class UsersTableTest extends TableTestCase
             'username' => ['_isUnique' => I18N_VALUE_ALREADY_USED],
         ];
 
-        $entity = $this->Table->newEntity(self::$example);
-        $this->assertNotEmpty($this->Table->save($entity));
+        $User = $this->Table->newEntity(self::$example);
+        $this->assertNotEmpty($this->Table->save($User));
 
         //Saves again the same entity
-        $entity = $this->Table->newEntity(self::$example);
-        $this->assertFalse($this->Table->save($entity));
-        $this->assertEquals($expected, $entity->getErrors());
+        $User = $this->Table->newEntity(self::$example);
+        $this->assertFalse($this->Table->save($User));
+        $this->assertEquals($expected, $User->getErrors());
 
-        $entity = $this->Table->newEntity(['group_id' => 999] + self::$example);
+        $User = $this->Table->newEntity(['group_id' => 999] + self::$example);
         $expected = $expected + ['group_id' => ['_existsIn' => I18N_SELECT_VALID_OPTION]];
-        $this->assertFalse($this->Table->save($entity));
-        $this->assertEquals($expected, $entity->getErrors());
+        $this->assertFalse($this->Table->save($User));
+        $this->assertEquals($expected, $User->getErrors());
     }
 
     /**
@@ -148,28 +148,46 @@ class UsersTableTest extends TableTestCase
     /**
      * @test
      * @uses \MeCms\Model\Table\UsersTable::findActive()
-     * @uses \MeCms\Model\Table\UsersTable::findAuth()
-     * @uses \MeCms\Model\Table\UsersTable::findBanned()
-     * @uses \MeCms\Model\Table\UsersTable::findPending()
      */
-    public function testFindMethods(): void
+    public function testFindActive(): void
     {
         $query = $this->Table->find('active');
         $this->assertSqlEndsWith('FROM users Users WHERE (active = :c0 AND banned = :c1)', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
+    }
 
+    /**
+     * @test
+     * @uses \MeCms\Model\Table\UsersTable::findAuth()
+     */
+    public function testFindAuth(): void
+    {
+        $query = $this->Table->find('auth');
+        $this->assertSqlEndsWith('FROM `users` `Users` INNER JOIN `users_groups` `Groups` ON `Groups`.`id` = `Users`.`group_id`', $query->sql());
+    }
+
+    /**
+     * @test
+     * @uses \MeCms\Model\Table\UsersTable::findBanned()
+     */
+    public function testFindBanned(): void
+    {
         $query = $this->Table->find('banned');
         $this->assertSqlEndsWith('FROM users Users WHERE banned = :c0', $query->sql());
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
+    }
 
+    /**
+     * @test
+     * @uses \MeCms\Model\Table\UsersTable::findPending()
+     */
+    public function testFindPending(): void
+    {
         $query = $this->Table->find('pending');
         $this->assertSqlEndsWith('FROM users Users WHERE (active = :c0 AND banned = :c1)', $query->sql());
         $this->assertFalse($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertFalse($query->getValueBinder()->bindings()[':c1']['value']);
-
-        $query = $this->Table->find('auth');
-        $this->assertSqlEndsWith('FROM `users` `Users` INNER JOIN `users_groups` `Groups` ON `Groups`.`id` = `Users`.`group_id` WHERE (`active` = :c0 AND `banned` = :c1)', $query->sql());
     }
 
     /**
@@ -229,19 +247,19 @@ class UsersTableTest extends TableTestCase
     public function testValidationDoNotRequirePresence(): void
     {
         $example = ['email' => 'example@test.com'];
-        $entity = $this->Table->newEntity($example);
-        $this->assertNotEmpty($entity->getErrors());
+        $User = $this->Table->newEntity($example);
+        $this->assertNotEmpty($User->getErrors());
 
-        $entity = $this->Table->newEntity($example, ['validate' => 'DoNotRequirePresence']);
-        $this->assertEmpty($entity->getErrors());
+        $User = $this->Table->newEntity($example, ['validate' => 'DoNotRequirePresence']);
+        $this->assertEmpty($User->getErrors());
 
         $example['email_repeat'] = $example['email'];
-        $entity = $this->Table->newEntity($example, ['validate' => 'DoNotRequirePresence']);
-        $this->assertEmpty($entity->getErrors());
+        $User = $this->Table->newEntity($example, ['validate' => 'DoNotRequirePresence']);
+        $this->assertEmpty($User->getErrors());
 
         $example['email_repeat'] = $example['email'] . 'aaa';
-        $entity = $this->Table->newEntity($example, ['validate' => 'DoNotRequirePresence']);
-        $this->assertEquals(['email_repeat' => ['compareWith' => 'Email addresses don\'t match']], $entity->getErrors());
+        $User = $this->Table->newEntity($example, ['validate' => 'DoNotRequirePresence']);
+        $this->assertEquals(['email_repeat' => ['compareWith' => 'Email addresses don\'t match']], $User->getErrors());
     }
 
     /**
@@ -256,13 +274,13 @@ class UsersTableTest extends TableTestCase
             'password_repeat' => ['_empty' => 'This field cannot be left empty'],
         ];
 
-        $entity = $this->Table->newEntity($example);
-        $this->assertEquals($expected, $entity->getErrors());
+        $User = $this->Table->newEntity($example);
+        $this->assertEquals($expected, $User->getErrors());
 
-        $entity = $this->Table->patchEntity($this->Table->get(1), $example);
-        $this->assertEquals($expected, $entity->getErrors());
+        $User = $this->Table->patchEntity($this->Table->get(1), $example);
+        $this->assertEquals($expected, $User->getErrors());
 
-        $entity = $this->Table->patchEntity($this->Table->get(1), $example, ['validate' => 'EmptyPassword']);
-        $this->assertEmpty($entity->getErrors());
+        $User = $this->Table->patchEntity($this->Table->get(1), $example, ['validate' => 'EmptyPassword']);
+        $this->assertEmpty($User->getErrors());
     }
 }

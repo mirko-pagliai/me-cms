@@ -26,9 +26,6 @@ parameters:
             message: '#^Variable \$\w+ might not be defined\.$#'
             path: templates/
         -
-            message: '#^Variable \$\w+ in empty\(\) always exists and is not falsy\.$#'
-            path: templates/cell
-        -
             message: '#^Property MeTools\\TestSuite\\CommandTestCase::\$_(err|in) \(Cake\\Console\\TestSuite\\StubConsole(Input|Output)\) does not accept null\.$#'
             path: tests/TestCase/Command
 

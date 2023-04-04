@@ -31,14 +31,14 @@ class AddUserCommandTest extends CommandTestCase
     ];
 
     /**
-     * Test for `execute()` method
      * @test
+     * @uses \MeCms\Command\AddUserCommand::execute()
      */
     public function testExecute(): void
     {
         /** @var \MeCms\Model\Table\UsersTable $Users */
         $Users = $this->getTable('MeCms.Users');
-        $example = ['my-username', 'password1/', 'password1/', 'mail@example.com', 'Alfa', 'Beta'];
+        $example = ['my-username', 'Password1/', 'Password1/', 'mail@example.com', 'Alfa', 'Beta'];
 
         $expectedUserId = $Users->find()->all()->extract('id')->last() + 1;
         $this->exec('me_cms.add_user', [...$example, '3']);
@@ -88,7 +88,9 @@ class AddUserCommandTest extends CommandTestCase
         $this->assertErrorContains('Field `last_name`: allowed chars: letters, apostrophe, space. Has to begin with a capital letter');
         $this->assertErrorContains('Field `username`: must be between 4 and 40 chars');
         $this->assertErrorContains('Field `username`: allowed chars: ' . I18N_LOWERCASE_NUMBERS_DASH);
-        $this->assertErrorContains('Field `password`: the password should contain letters, numbers and symbols');
+        $this->assertErrorContains('Field `password`: the password should contain at least one digit');
+        $this->assertErrorContains('Field `password`: the password should contain at least one capital letter');
+        $this->assertErrorContains('Field `password`: the password should contain at least one symbol');
         $this->assertErrorContains('Field `password_repeat`: passwords don\'t match');
 
         //Tries with no groups

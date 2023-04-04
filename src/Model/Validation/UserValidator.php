@@ -70,9 +70,21 @@ class UserValidator extends AppValidator
                 'message' => __d('me_cms', 'Must be at least {0} chars', 8),
                 'rule' => ['minLength', 8],
             ],
-            'passwordIsStrong' => [
-                'message' => __d('me_cms', 'The password should contain letters, numbers and symbols'),
-                'rule' => fn(string $value): bool => preg_match('/[A-z]/', $value) && preg_match('/\d/', $value) && preg_match('/[^A-z\d]/', $value),
+            'passwordContainsDigit' => [
+                'message' => __d('me_cms', 'The password should contain at least one digit'),
+                'rule' => fn(string $password): bool => preg_match('/\d/', $password) === 1,
+            ],
+            'passwordContainsLowercaseLetter' => [
+                'message' => __d('me_cms', 'The password should contain at least one lowercase letter'),
+                'rule' => fn(string $password): bool => preg_match('/[a-z]/', $password) === 1,
+            ],
+            'passwordContainsCapitalLetter' => [
+                'message' => __d('me_cms', 'The password should contain at least one capital letter'),
+                'rule' => fn(string $password): bool => preg_match('/[A-Z]/', $password) === 1,
+            ],
+            'passwordContainsSymbol' => [
+                'message' => __d('me_cms', 'The password should contain at least one symbol'),
+                'rule' => fn(string $password): bool => preg_match('/[^A-z\d]/', $password) === 1,
             ],
         ])->requirePresence('password', 'create')->notEmptyString('password');
 

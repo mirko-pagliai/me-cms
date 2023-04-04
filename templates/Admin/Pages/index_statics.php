@@ -11,7 +11,11 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \MeCms\Model\Entity\Page[] $pages
+ * @var \MeCms\View\View\Admin\AppView $this
  */
+
 $this->extend('MeCms./Admin/common/index');
 $this->assign('title', __d('me_cms', 'Static pages'));
 ?>
@@ -28,25 +32,19 @@ $this->assign('title', __d('me_cms', 'Static pages'));
         <?php foreach ($pages as $page) : ?>
             <tr>
                 <td>
-                    <strong>
-                        <?= $this->Html->link($page->get('filename'), ['_name' => 'page', $page->get('slug')], ['target' => '_blank']) ?>
-                    </strong>
                     <?php
-                    $actions = [
-                        $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->get('slug')], [
-                            'icon' => 'external-link-alt',
-                            'target' => '_blank',
-                        ]),
-                    ];
+                    echo $this->Html->link($page->get('filename'), ['_name' => 'page', $page->get('slug')], ['class' => 'fw-bold', 'target' => '_blank']);
 
-                    echo $this->Html->ul($actions, ['class' => 'actions']);
+                    echo $this->Html->ul([
+                        $this->Html->link(I18N_OPEN, ['_name' => 'page', $page->get('slug')], ['icon' => 'external-link-alt', 'target' => '_blank']),
+                    ], ['class' => 'actions']);
                     ?>
                 </td>
-                <td class="text-center">
+                <td class="text-center align-middle">
                     <?= $page->get('title') ?>
                 </td>
-                <td class="text-nowrap">
-                    <samp><?= $page->get('path') ?></samp>
+                <td class="text-nowrap align-middle">
+                    <code><?= $page->get('path') ?></code>
                 </td>
             </tr>
         <?php endforeach; ?>

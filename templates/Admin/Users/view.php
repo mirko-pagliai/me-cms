@@ -56,27 +56,35 @@ if ($this->Identity->isGroup('admin')) {
     <dd class="col-11"><?= $user->get('username') ?></dd>
 
     <dt class="col-1"><?= I18N_EMAIL ?></dt>
-    <dd class="col-11"><?= $user->get('email') ?></dd>
+    <dd class="col-11"><?= $this->Html->link($user->get('email'), sprintf('mailto:%s', $user->get('email'))) ?></dd>
 
     <dt class="col-1"><?= I18N_NAME ?></dt>
     <dd class="col-11"><?= $user->get('full_name') ?></dd>
 
     <dt class="col-1"><?= I18N_GROUP ?></dt>
-    <dd class="col-11"><?= $user->get('group')->get('label') ?></dd>
+    <dd class="col-11">
+        <?= $this->Html->link(
+            $user->get('group')->get('label'),
+            ['action' => 'index', '?' => ['group' => $user->get('group')->get('id')]],
+            ['title' => I18N_BELONG_ELEMENT]
+        ) ?>
+    </dd>
 
     <dt class="col-1"><?= I18N_STATUS ?></dt>
     <dd class="col-11">
         <?php
-        $status = ['text' => __d('me_cms', 'Active'), 'class' => 'text-success'];
-        //If the user is banned
+        $class = 'text-success';
+        //If it's banned
         if ($user->get('banned')) {
-            $status = ['text' => __d('me_cms', 'Banned'), 'class' => 'text-danger'];
-        //Else, if the user is pending (not active)
+            $text = __d('me_cms', 'Banned');
+            $class = 'text-danger';
+        //Else, if it's pending (not active)
         } elseif (!$user->get('active')) {
-            $status = ['text' => __d('me_cms', 'Pending'), 'class' => 'text-warning'];
+            $text = __d('me_cms', 'Pending');
+            $class = 'text-warning';
         }
 
-        echo $this->Html->span($status['text'], ['class' => $status['class']]);
+        echo $this->Html->span($text ?? __d('me_cms', 'Active'), compact('class'));
         ?>
     </dd>
 
