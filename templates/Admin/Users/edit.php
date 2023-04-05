@@ -38,7 +38,7 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
         'label' => I18N_EMAIL,
     ]);
     echo $this->Form->control('password', [
-        'append-text' => $this->Html->button('', '#', [
+        'append-text' => $this->Html->link('', '#', [
             'class' => 'display-password',
             'icon' => 'eye',
             'title' => I18N_SHOW_HIDE_PASSWORD,
@@ -51,7 +51,7 @@ $this->assign('title', $title = __d('me_cms', 'Edit user'));
         'value' => '',
     ]);
     echo $this->Form->control('password_repeat', [
-        'append-text' => $this->Html->button('', '#', [
+        'append-text' => $this->Html->link('', '#', [
             'class' => 'display-password',
             'icon' => 'eye',
             'title' => I18N_SHOW_HIDE_PASSWORD,
