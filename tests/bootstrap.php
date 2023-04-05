@@ -84,12 +84,9 @@ Configure::write('App', [
     ],
 ]);
 /**
- * @todo these are to be removed as soon as possible
+ * @todo remove as soon as possible
  */
-Configure::write('Error.ignoredDeprecationPaths', [
-    '*/cakephp/cakephp/src/I18n/Time.php',
-    '*/crabstudio/recaptcha/src/Controller/Component/RecaptchaComponent.php',
-]);
+Configure::write('Error.ignoredDeprecationPaths', '*/cakephp/cakephp/src/I18n/Time.php');
 Configure::write('Session', ['defaults' => 'php']);
 Configure::write('Assets.target', TMP . 'assets');
 Configure::write('Tokens.usersClassOptions', ['foreignKey' => 'user_id', 'className' => 'Users']);
