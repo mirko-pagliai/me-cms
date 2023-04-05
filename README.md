@@ -1,7 +1,7 @@
 # me-cms
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
-[![Build Status](https://travis-ci.org/mirko-pagliai/me-cms.svg?branch=master)](https://travis-ci.org/mirko-pagliai/me-cms)
+[![CI](https://github.com/mirko-pagliai/me-cms/actions/workflows/ci.yml/badge.svg)](https://github.com/mirko-pagliai/me-cms/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/mirko-pagliai/me-cms/branch/master/graph/badge.svg)](https://codecov.io/gh/mirko-pagliai/me-cms)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f42666d11ea44cb1a901a5f57b207f60)](https://www.codacy.com/gh/mirko-pagliai/me-cms/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mirko-pagliai/me-cms&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/mirko-pagliai/me-cms/badge)](https://www.codefactor.io/repository/github/mirko-pagliai/me-cms)
