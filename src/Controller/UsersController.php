@@ -151,7 +151,6 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null|void
      * @see \MeCms\Plugin::getAuthenticationService()
      * @see \MeCms\Controller\Component\AuthenticationComponent::afterIdentify() for `afterIdentify` event
-     * @todo Should return some error message for accounts not yet activated or banned
      */
     public function login()
     {
