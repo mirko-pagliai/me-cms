@@ -6,6 +6,12 @@
       <code>empty($this-&gt;Users)</code>
     </TypeDoesNotContainType>
   </file>
+  <file src="src/Controller/SystemsController.php">
+    <RedundantPropertyInitializationCheck occurrences="2">
+      <code>$this-&gt;ContactUsForm</code>
+      <code>new ContactUsForm()</code>
+    </RedundantPropertyInitializationCheck>
+  </file>
   <file src="src/Controller/Traits/GetStartAndEndDateTrait.php">
     <RedundantCast occurrences="2">
       <code>(int)($day ?: 1)</code>
@@ -15,16 +21,31 @@
       <code>1</code>
       <code>1</code>
     </RedundantCondition>
+    <TypeDoesNotContainType occurrences="11">
+      <code>$day</code>
+      <code>$day</code>
+      <code>$day</code>
+      <code>$month</code>
+      <code>$month</code>
+      <code>$month</code>
+      <code>$month</code>
+      <code>$year</code>
+      <code>$year</code>
+      <code>$year</code>
+      <code>$year</code>
+    </TypeDoesNotContainType>
   </file>
-  <file src="src/Model/Table/PostsTable.php">
-    <TooManyTemplateParams occurrences="1">
-      <code>\Cake\Collection\CollectionInterface&lt;\MeCms\Model\Entity\Post&gt;</code>
-    </TooManyTemplateParams>
+  <file src="src/Form/ContactUsForm.php">
+    <RedundantPropertyInitializationCheck occurrences="2">
+      <code>$this-&gt;SpamDetector</code>
+      <code>new SpamDetector()</code>
+    </RedundantPropertyInitializationCheck>
   </file>
-  <file src="src/Model/Table/Traits/GetPreviewsFromTextTrait.php">
-    <TooManyTemplateParams occurrences="1">
-      <code>\Cake\Collection\CollectionInterface&lt;array{url: string, width: int, height: int}&gt;</code>
-    </TooManyTemplateParams>
+  <file src="src/Model/Table/AppTable.php">
+    <RedundantPropertyInitializationCheck occurrences="2">
+      <code>$this-&gt;cache</code>
+      <code>''</code>
+    </RedundantPropertyInitializationCheck>
   </file>
   <file src="src/Policy/ControllerResolver.php">
     <MoreSpecificImplementedParamType occurrences="1">
@@ -36,29 +57,58 @@
       <code>parent::__construct($name, $data, $dataName)</code>
     </InternalMethod>
   </file>
-  <file src="templates/Admin/Pages/form.php">
-    <TooManyTemplateParams occurrences="1">
-      <code>$this-&gt;extend('MeCms./common/form');</code>
-    </TooManyTemplateParams>
+  <file src="templates/PagesCategories/index.php">
+    <UndefinedGlobalVariable occurrences="1">
+      <code>$categories</code>
+    </UndefinedGlobalVariable>
   </file>
-  <file src="templates/Admin/Posts/form.php">
-    <TooManyTemplateParams occurrences="1">
-      <code>$this-&gt;extend('MeCms./common/form');</code>
-    </TooManyTemplateParams>
+  <file src="templates/PagesCategories/view.php">
+    <UndefinedGlobalVariable occurrences="4">
+      <code>$category</code>
+      <code>$category</code>
+      <code>$category</code>
+      <code>$category</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="templates/Posts/index_by_date.php">
+    <TypeDoesNotContainType occurrences="7">
+      <code>$day</code>
+      <code>$month</code>
+      <code>$month</code>
+      <code>$year</code>
+      <code>$year</code>
+      <code>$year</code>
+      <code>$year</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="templates/Posts/view.php">
-    <TooManyTemplateParams occurrences="1">
-      <code>$this-&gt;extend('/common/view');</code>
-    </TooManyTemplateParams>
+    <UndefinedGlobalVariable occurrences="15">
+      <code>$post</code>
+      <code>$post</code>
+      <code>$post</code>
+      <code>$post</code>
+      <code>$post</code>
+      <code>$post</code>
+      <code>$post</code>
+      <code>$post</code>
+      <code>$post</code>
+      <code>$post</code>
+      <code>$post</code>
+      <code>$related</code>
+      <code>$related</code>
+      <code>$related</code>
+      <code>'post'</code>
+    </UndefinedGlobalVariable>
   </file>
-  <file src="templates/cell/PostsTagsWidgets/popular_as_cloud.php">
-    <TooManyTemplateParams occurrences="1"/>
+  <file src="templates/PostsCategories/index.php">
+    <UndefinedGlobalVariable occurrences="1">
+      <code>$categories</code>
+    </UndefinedGlobalVariable>
   </file>
-  <file src="templates/cell/PostsWidgets/months_as_form.php">
-    <TooManyTemplateParams occurrences="1"/>
-  </file>
-  <file src="templates/cell/PostsWidgets/months_as_list.php">
-    <TooManyTemplateParams occurrences="1"/>
+  <file src="templates/PostsTags/index.php">
+    <UndefinedGlobalVariable occurrences="1">
+      <code>$tags</code>
+    </UndefinedGlobalVariable>
   </file>
   <file src="tests/TestCase/Command/UsersCommandTest.php">
     <UndefinedPropertyAssignment occurrences="1">
@@ -74,6 +124,11 @@
     <InvalidArgument occurrences="1">
       <code>new \stdClass()</code>
     </InvalidArgument>
+  </file>
+  <file src="tests/TestCase/TestSuite/TestCaseTest.php">
+    <UndefinedThisPropertyFetch occurrences="1">
+      <code>$this-&gt;noExistingProperty</code>
+    </UndefinedThisPropertyFetch>
   </file>
   <file src="tests/TestCase/View/View/Admin/AppViewTest.php">
     <TypeDoesNotContainType occurrences="1">

@@ -11,7 +11,8 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
-
+ *
+ * @var \Cake\ORM\ResultSet<\MeCms\Model\Entity\PostsCategory> $categories
  * @var \MeCms\View\View\AppView $this
  */
 
@@ -26,5 +27,4 @@ $this->assign('title', $title = I18N_POSTS_CATEGORIES);
 $this->Breadcrumbs->add($title, ['_name' => 'postsCategories']);
 
 $categories = $categories->map(fn(PostsCategory $category): string => $this->Html->link($category->get('title'), $category->get('url')))->toList();
-
 echo $this->Html->ul($categories, ['icon' => 'caret-right']);

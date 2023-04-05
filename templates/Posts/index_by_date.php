@@ -11,7 +11,13 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var string $date
+ * @var \Cake\I18n\FrozenDate $end
+ * @var \Cake\I18n\FrozenDate $start
+ * @var \MeCms\View\View\AppView $this
  */
+
 $this->extend('/Posts/index');
 
 if ($date === 'today') {
@@ -28,7 +34,6 @@ if ($date === 'today') {
         $title = __dx('me_cms', 'posts of month', 'Posts of {0}', $start->i18nFormat('MMMM y'));
     }
 }
-
 $this->assign('title', $title);
 
 /**

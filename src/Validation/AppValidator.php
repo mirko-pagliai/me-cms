@@ -20,8 +20,7 @@ use Cake\Validation\Validator;
 /**
  * Application validator class.
  *
- * This class adds some common rules and provides some common methods for all
- *  validators.
+ * This class adds some common rules and provides some common methods for all validators.
  */
 class AppValidator extends Validator
 {

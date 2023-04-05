@@ -55,6 +55,10 @@ class ControllerTestCaseTest extends TestCase
     {
         $this->expectAssertionFailed('You cannot use the `' . ControllerTestCase::class . '` class with a non-admin controller');
         $BadControllerTestCase = new class extends ControllerTestCase {
+            public function setUp(): void
+            {
+                parent::setUp();
+            }
         };
         $BadControllerTestCase->setUp();
     }

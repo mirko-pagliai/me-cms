@@ -52,7 +52,7 @@ use Cake\I18n\I18n;
         ?>
     </head>
     <body>
-        <?= $this->element('MeCms.admin/userbar') ?>
+        <?= $this->element('MeCms.admin/topbar') ?>
         <div class="container-fluid">
             <div class="row">
                 <nav id="sidebar" class="col d-none d-lg-block border-end min-vh-100 py-4 p-3">

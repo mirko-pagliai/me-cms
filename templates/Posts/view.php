@@ -11,14 +11,13 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- */
-use MeCms\Model\Entity\Post;
-
-/**
+ *
  * @var \MeCms\Model\Entity\Post $post
- * @var \Cake\Collection\Collection<\MeCms\Model\Entity\Post> $related
+ * @var \Cake\ORM\ResultSet<\MeCms\Model\Entity\Post> $related
  * @var \MeCms\View\View\AppView $this
  */
+
+use MeCms\Model\Entity\Post;
 
 $this->extend('/common/view');
 $this->assign('title', $post->get('title'));
@@ -27,10 +26,7 @@ $this->assign('title', $post->get('title'));
  * Breadcrumb
  */
 if (getConfig('post.category')) {
-    $this->Breadcrumbs->add(
-        $post->get('category')->get('title'),
-        ['_name' => 'postsCategory', $post->get('category')->get('slug')]
-    );
+    $this->Breadcrumbs->add($post->get('category')->get('title'), ['_name' => 'postsCategory', $post->get('category')->get('slug')]);
 }
 $this->Breadcrumbs->add($post->get('title'), ['_name' => 'post', $post->get('slug')]);
 

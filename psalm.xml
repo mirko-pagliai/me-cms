@@ -22,8 +22,6 @@
     </projectFiles>
 
     <issueHandlers>
-        <DuplicateArrayKey errorLevel="suppress" />
-
         <InternalMethod>
             <errorLevel type="suppress">
                 <directory name="tests/TestCase" />
@@ -36,19 +34,20 @@
             </errorLevel>
         </InvalidScope>
 
-        <RedundantPropertyInitializationCheck errorLevel="suppress" />
-
-        <TypeDoesNotContainType>
+        <RedundantPropertyInitializationCheck>
             <errorLevel type="suppress">
-                <file name="src/Controller/Traits/GetStartAndEndDateTrait.php" />
-                <file name="templates/Posts/index_by_date.php" />
+                <directory name="tests/TestCase" />
             </errorLevel>
-        </TypeDoesNotContainType>
+        </RedundantPropertyInitializationCheck>
 
+        <UndefinedGlobalVariable>
+            <errorLevel type="suppress">
+                <directory name="templates/email" />
+            </errorLevel>
+        </UndefinedGlobalVariable>
+
+        <DuplicateArrayKey errorLevel="suppress" />
         <UndefinedConstant errorLevel="suppress" />
-        <UndefinedGlobalVariable errorLevel="suppress" />
-        <UndefinedMagicMethod errorLevel="suppress" />
-        <UndefinedMethod errorLevel="suppress" />
-        <UndefinedThisPropertyFetch errorLevel="suppress" />
+        <TooManyTemplateParams errorLevel="suppress" />
     </issueHandlers>
 </psalm>
