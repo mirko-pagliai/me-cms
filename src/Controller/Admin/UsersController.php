@@ -241,7 +241,7 @@ class UsersController extends AppController
      */
     public function changePicture()
     {
-        /** @var ?\Laminas\Diactoros\UploadedFile $UploadedFile */
+        /** @var ?\Laminas\Diactoros\UploadedFile|array $UploadedFile */
         $UploadedFile = $this->getRequest()->getData('file');
 
         if ($this->getRequest()->is(['patch', 'post', 'put']) && $UploadedFile) {
