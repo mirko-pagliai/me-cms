@@ -19,6 +19,7 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 use Cake\Collection\Collection;
 use Cake\Core\Configure;
 use Cake\ORM\Entity;
+use Laminas\Diactoros\UploadedFile;
 use MeCms\Controller\Component\LoginRecorderComponent;
 use MeCms\Model\Entity\User;
 use MeCms\TestSuite\Admin\ControllerTestCase;
@@ -296,7 +297,6 @@ class UsersControllerTest extends ControllerTestCase
     public function testChangePicture(): void
     {
         $expectedPicture = USER_PICTURES . '1.jpg';
-        $file = $this->createImageToUpload();
         $url = $this->url + ['action' => 'changePicture'];
 
         //GET request
@@ -309,6 +309,7 @@ class UsersControllerTest extends ControllerTestCase
         array_map([new Filesystem(), 'createFile'], [$expectedPicture, USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
 
         //POST request. This works
+        $file = $this->createImageToUpload();
         $this->post($url + ['_ext' => 'json'], compact('file'));
         $this->assertResponseOk();
         $this->assertSession(basename(USER_PICTURES) . DS . '1.jpg', 'Auth.picture');
@@ -325,7 +326,7 @@ class UsersControllerTest extends ControllerTestCase
      */
     public function testChangePictureErrorDuringUpload(): void
     {
-        $file = ['error' => UPLOAD_ERR_NO_FILE] + $this->createImageToUpload();
+        $file = new UploadedFile('', 0, UPLOAD_ERR_NO_FILE);
         $this->post($this->url + ['action' => 'changePicture', '_ext' => 'json'], compact('file'));
         $this->assertResponseFailure();
         $this->assertResponseEquals('{"error":"No file was uploaded"}');

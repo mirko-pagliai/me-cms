@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace MeCms\TestSuite\Admin;
 
 use Cake\Http\ServerRequest;
+use Laminas\Diactoros\UploadedFile;
 use MeCms\Model\Entity\User;
 use MeCms\Model\Entity\UsersGroup;
 use MeCms\TestSuite\ControllerTestCase as BaseControllerTestCase;
@@ -158,23 +159,15 @@ abstract class ControllerTestCase extends BaseControllerTestCase
     }
 
     /**
-     * Internal method to create an image to upload.
-     *
-     * Returns an array, similar to the `$_FILE` array that is created after an upload
-     * @return array{tmp_name: string, error: int, name: string, type: string, size: int}
+     * Internal method to create an image to upload
+     * @return \Laminas\Diactoros\UploadedFile
      */
-    protected function createImageToUpload(): array
+    public function createImageToUpload(): UploadedFile
     {
         $file = TMP . 'file_to_upload.jpg';
         copy(WWW_ROOT . 'img' . DS . 'image.jpg', $file);
 
-        return [
-            'tmp_name' => $file,
-            'error' => UPLOAD_ERR_OK,
-            'name' => basename($file),
-            'type' => mime_content_type($file) ?: '',
-            'size' => filesize($file) ?: 0,
-        ];
+        return new UploadedFile($file, filesize($file) ?: 0, UPLOAD_ERR_OK, basename($file), mime_content_type($file) ?: '');
     }
 
     /**
