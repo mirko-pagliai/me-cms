@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\TestSuite\Admin;
 
+use Laminas\Diactoros\UploadedFile;
 use MeCms\Controller\Admin\PostsController;
 use MeCms\Model\Table\PostsTable;
 use MeCms\Test\TestCase\Controller\Admin\PostsControllerTest;
@@ -26,6 +27,22 @@ use MeCms\TestSuite\TestCase;
  */
 class ControllerTestCaseTest extends TestCase
 {
+    /**
+     * @return void
+     * @uses \MeCms\TestSuite\Admin\ControllerTestCase::setUp()
+     */
+    public function testSetUp(): void
+    {
+        $this->expectAssertionFailed('You cannot use the `' . ControllerTestCase::class . '` class with a non-admin controller');
+        $BadControllerTestCase = new class extends ControllerTestCase {
+            public function setUp(): void
+            {
+                parent::setUp();
+            }
+        };
+        $BadControllerTestCase->setUp();
+    }
+
     /**
      * @test
      * @uses \MeCms\TestSuite\Admin\ControllerTestCase::__get()
@@ -48,18 +65,15 @@ class ControllerTestCaseTest extends TestCase
     }
 
     /**
-     * @return void
-     * @uses \MeCms\TestSuite\Admin\ControllerTestCase::setUp()
+     * @test
+     * @uses \MeCms\TestSuite\Admin\ControllerTestCase::createImageToUpload()
      */
-    public function testSetUp(): void
+    public function testCreateImageToUpload(): void
     {
-        $this->expectAssertionFailed('You cannot use the `' . ControllerTestCase::class . '` class with a non-admin controller');
-        $BadControllerTestCase = new class extends ControllerTestCase {
-            public function setUp(): void
-            {
-                parent::setUp();
-            }
-        };
-        $BadControllerTestCase->setUp();
+        $ControllerTestCase = new PostsControllerTest();
+        $UploadedFile = $ControllerTestCase->createImageToUpload();
+        $this->assertInstanceOf(UploadedFile::class, $UploadedFile);
+        $this->assertGreaterThan(0, $UploadedFile->getSize());
+        $this->assertNotEmpty($UploadedFile->getClientFilename());
     }
 }
