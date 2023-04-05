@@ -35,9 +35,8 @@ class PostsWidgetsCellTest extends CellTestCase
     ];
 
     /**
-     * Test for `categories()` method
-     * @uses \MeCms\View\Cell\PostsWidgetsCell::categories()
      * @test
+     * @uses \MeCms\View\Cell\PostsWidgetsCell::categories()
      */
     public function testCategories(): void
     {
@@ -116,9 +115,8 @@ class PostsWidgetsCellTest extends CellTestCase
     }
 
     /**
-     * Test for `latest()` method
-     * @uses \MeCms\View\Cell\PostsWidgetsCell::latest()
      * @test
+     * @uses \MeCms\View\Cell\PostsWidgetsCell::latest()
      */
     public function testLatest(): void
     {
@@ -201,9 +199,8 @@ class PostsWidgetsCellTest extends CellTestCase
     }
 
     /**
-     * Test for `months()` method
-     * @uses \MeCms\View\Cell\PostsWidgetsCell::months()
      * @test
+     * @uses \MeCms\View\Cell\PostsWidgetsCell::months()
      */
     public function testMonths(): void
     {
@@ -290,9 +287,8 @@ class PostsWidgetsCellTest extends CellTestCase
     }
 
     /**
-     * Test for `search()` method
-     * @uses \MeCms\View\Cell\PostsWidgetsCell::search()
      * @test
+     * @uses \MeCms\View\Cell\PostsWidgetsCell::search()
      */
     public function testSearch(): void
     {
@@ -318,13 +314,11 @@ class PostsWidgetsCellTest extends CellTestCase
                 'placeholder' => 'Search...',
                 'aria-label' => 'Search...',
             ],
-            ['div' => ['class' => 'submit']],
-            'button' => ['class' => 'btn btn-primary', 'value' => 'Submit'],
+            'button' => ['class' => 'btn btn-primary', 'type' => 'submit'],
             'i' => ['class' => 'fas fa-search'],
             ' ',
             '/i',
             '/button',
-            '/div',
             '/div',
             '/div',
             '/form',
