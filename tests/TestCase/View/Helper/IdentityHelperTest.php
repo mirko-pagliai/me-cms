@@ -15,6 +15,10 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\View\Helper;
 
+use Authentication\Identity;
+use Cake\Http\ServerRequest;
+use Cake\View\View;
+use MeCms\Model\Entity\User;
 use MeCms\View\Helper\IdentityHelper;
 use MeTools\TestSuite\HelperTestCase;
 
@@ -30,18 +34,46 @@ class IdentityHelperTest extends HelperTestCase
     protected bool $autoInitializeClass = false;
 
     /**
-     * Tests for `isGroup()` method
-     * @uses \MeCms\View\Helper\IdentityHelper::isGroup()
+     * @var \MeCms\Model\Entity\User
+     */
+    protected User $User;
+
+    /**
+     * Fixtures
+     * @var array<string>
+     */
+    public $fixtures = [
+        'plugin.MeCms.Users',
+        'plugin.MeCms.UsersGroups',
+    ];
+
+    /**
      * @test
+     * @uses \MeCms\View\Helper\IdentityHelper::isGroup()
      */
     public function testIsGroup(): void
     {
-        $Helper = $this->createPartialMock(IdentityHelper::class, ['get']);
-        $Helper->method('get')->willReturnCallback(fn(?string $key = null): ?string => $key === 'group.name' ? 'admin' : null);
+        /** @var \MeCms\Model\Table\UsersTable $UsersTable */
+        $UsersTable = $this->getTable('MeCms.Users');
+        /** @var \MeCms\Model\Entity\User $User */
+        $User = $UsersTable->findByGroupId(2)->contain(['Groups' => ['fields' => ['name']]])->firstOrFail();
+        $this->User = $User;
 
-        $this->assertTrue($Helper->isGroup('admin'));
-        $this->assertTrue($Helper->isGroup('admin', 'manager'));
-        $this->assertFalse($Helper->isGroup('manager'));
-        $this->assertFalse($Helper->isGroup('manager', 'otherGroup'));
+        $Request = $this->createPartialMock(ServerRequest::class, ['getAttribute']);
+        $Request->method('getAttribute')->with('identity')->willReturnCallback(fn(): Identity => new Identity($this->User->toArray()));
+
+        $IdentityHelper = new IdentityHelper(new View($Request));
+        $IdentityHelper->initialize([]);
+
+        $this->assertTrue($IdentityHelper->isGroup('manager'));
+        $this->assertTrue($IdentityHelper->isGroup('manager', 'admin'));
+        $this->assertFalse($IdentityHelper->isGroup('admin'));
+        $this->assertFalse($IdentityHelper->isGroup('user'));
+        $this->assertFalse($IdentityHelper->isGroup('admin', 'user'));
+
+        $this->expectExceptionMessage('`group.name` path is missing');
+        $this->User = $this->User->unset('group');
+        $IdentityHelper->initialize([]);
+        $IdentityHelper->isGroup('manager');
     }
 }
