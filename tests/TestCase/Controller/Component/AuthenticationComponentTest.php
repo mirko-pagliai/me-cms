@@ -24,6 +24,7 @@ use MeTools\TestSuite\ComponentTestCase;
 
 /**
  * AuthenticationComponentTest class
+ * @property \MeCms\Controller\Component\AuthenticationComponent&\PHPUnit\Framework\MockObject\MockObject $Component
  */
 class AuthenticationComponentTest extends ComponentTestCase
 {
