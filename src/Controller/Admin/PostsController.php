@@ -62,12 +62,8 @@ class PostsController extends AppController
 
         $this->set(compact('categories', 'users'));
 
-        /**
-         * Only admins and managers can add and edit posts on behalf of other users
-         * @todo This code should be moved somewhere else
-         */
-        if ($this->getRequest()->is('action', ['add', 'edit']) &&
-            $this->getRequest()->getData() &&
+        //On `post` requests, only admins and managers can set a different user
+        if ($this->getRequest()->is('post') && $this->getRequest()->getData('user_id') &&
             !in_array($this->Authentication->getIdentityData('group.name'), ['admin', 'manager'])
         ) {
             $this->setRequest($this->getRequest()->withData('user_id', $this->Authentication->getIdentityData('id')));
