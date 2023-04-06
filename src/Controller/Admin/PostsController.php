@@ -32,10 +32,11 @@ class PostsController extends AppController
      * Called before the controller action
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
-     * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
+     * @throws \ErrorException
      * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      * @uses \MeCms\Model\Table\UsersTable::getActiveList()
      * @uses \MeCms\Model\Table\UsersTable::getList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
      */
     public function beforeFilter(EventInterface $event)
     {
@@ -64,9 +65,8 @@ class PostsController extends AppController
 
         //On `post` requests, only admins and managers can set a different user
         if ($this->getRequest()->is('post') && $this->getRequest()->getData('user_id') &&
-            !in_array($this->Authentication->getIdentityData('group.name'), ['admin', 'manager'])
-        ) {
-            $this->setRequest($this->getRequest()->withData('user_id', $this->Authentication->getIdentityData('id')));
+            !$this->Authentication->isGroup('admin', 'manager')) {
+            $this->setRequest($this->getRequest()->withData('user_id', $this->Authentication->getId()));
         }
     }
 

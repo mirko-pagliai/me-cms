@@ -20,6 +20,7 @@ use Authentication\Authenticator\AuthenticatorInterface;
 use Authentication\Controller\Component\AuthenticationComponent as BaseAuthenticationComponent;
 use Authorization\Identity;
 use Cake\Event\EventInterface;
+use Tools\Exceptionist;
 
 /**
  * Controller Component for interacting with Authentication.
@@ -64,5 +65,29 @@ class AuthenticationComponent extends BaseAuthenticationComponent
 
         $Controller->LoginRecorder->setConfig('user', $User->get('id'));
         $Controller->LoginRecorder->write();
+    }
+
+    /**
+     * Gets the user id
+     * @return int
+     * @since 2.31.8
+     */
+    public function getId(): int
+    {
+        return $this->getIdentityData('id');
+    }
+
+    /**
+     * Checks whether the logged user belongs to a group.
+     *
+     * If you compare with several groups, it will check that at least one matches.
+     * @param string ...$group User group
+     * @return bool
+     * @since 2.31.8
+     * @throws \ErrorException
+     */
+    public function isGroup(string ...$group): bool
+    {
+        return in_array(Exceptionist::isTrue($this->getIdentityData('group.name'), '`group.name` path is missing'), $group);
     }
 }
