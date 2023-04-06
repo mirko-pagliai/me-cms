@@ -36,12 +36,6 @@ class AppTableTest extends TableTestCase
     protected $Posts;
 
     /**
-     * If `true`, a mock instance of the table will be created
-     * @var bool
-     */
-    protected bool $autoInitializeClass = false;
-
-    /**
      * Fixtures
      * @var array<string>
      */
@@ -64,9 +58,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `afterSave()` event method
-     * @uses \MeCms\Model\Table\AppTable::afterSave()
      * @test
+     * @uses \MeCms\Model\Table\AppTable::afterSave()
      */
     public function testEventMethods(): void
     {
@@ -77,9 +70,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `afterDelete()` event method
-     * @uses \MeCms\Model\Table\AppTable::afterDelete()
      * @test
+     * @uses \MeCms\Model\Table\AppTable::afterDelete()
      */
     public function testAfterDeleteEventMethod(): void
     {
@@ -90,9 +82,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `clearCache()` method
-     * @uses \MeCms\Model\Table\AppTable::clearCache()
      * @test
+     * @uses \MeCms\Model\Table\AppTable::clearCache()
      */
     public function testClearCache(): void
     {
@@ -104,9 +95,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `deleteAll()` method
-     * @uses \MeCms\Model\Table\AppTable::deleteAll()
      * @test
+     * @uses \MeCms\Model\Table\AppTable::deleteAll()
      */
     public function testDeleteAll(): void
     {
@@ -118,9 +108,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `findActive()` method
-     * @uses \MeCms\Model\Table\AppTable::findActive()
      * @test
+     * @uses \MeCms\Model\Table\AppTable::findActive()
      */
     public function testFindActiveMethod(): void
     {
@@ -136,9 +125,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `findPending()` method
-     * @uses \MeCms\Model\Table\AppTable::findPending()
      * @test
+     * @uses \MeCms\Model\Table\AppTable::findPending()
      */
     public function testFindPendingMethod(): void
     {
@@ -154,9 +142,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `findRandom()` method
-     * @uses \MeCms\Model\Table\AppTable::findRandom()
      * @test
+     * @uses \MeCms\Model\Table\AppTable::findRandom()
      */
     public function testFindRandomMethod(): void
     {
@@ -168,9 +155,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `getCacheName()` method
-     * @uses \MeCms\Model\Table\AppTable::getCacheName()
      * @test
+     * @uses \MeCms\Model\Table\AppTable::getCacheName()
      */
     public function testGetCacheName(): void
     {
@@ -179,9 +165,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `getCacheNameWithAssociated()` method
-     * @uses \MeCms\Model\Table\AppTable::getCacheNameWithAssociated()
      * @test
+     * @uses \MeCms\Model\Table\AppTable::getCacheNameWithAssociated()
      */
     public function testGetCacheNameWithAssociated(): void
     {
@@ -191,9 +176,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `getList()` method
-     * @uses \MeCms\Model\Table\AppTable::getList()
      * @test
+     * @uses \MeCms\Model\Table\AppTable::getList()
      */
     public function testGetList(): void
     {
@@ -205,9 +189,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `getTreeList()` method
-     * @uses \MeCms\Model\Table\AppTable::getTreeList()
      * @test
+     * @uses \MeCms\Model\Table\AppTable::getTreeList()
      */
     public function testGetTreeList(): void
     {
@@ -230,9 +213,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `query()` method
-     * @uses \MeCms\Model\Table\AppTable::query()
      * @test
+     * @uses \MeCms\Model\Table\AppTable::query()
      */
     public function testQuery(): void
     {
@@ -240,8 +222,8 @@ class AppTableTest extends TableTestCase
     }
 
     /**
-     * Test for `queryFromFilter()` method
      * @test
+     * @uses \MeCms\Model\Table\AppTable::queryFromFilter()
      */
     public function testQueryFromFilter(): void
     {
@@ -273,7 +255,7 @@ class AppTableTest extends TableTestCase
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['active' => I18N_NO] + $data);
         $this->assertSqlEndsWith($expectedSql, $query->sql());
-        $this->assertEquals(false, $query->getValueBinder()->bindings()[':c4']['value']);
+        $this->assertFalse($query->getValueBinder()->bindings()[':c4']['value']);
 
         //With some invalid data
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['title' => 'ab', 'priority' => 6, 'created' => '2016-12-30']);

@@ -23,11 +23,6 @@ use MeCms\TestSuite\TableTestCase;
 class AssociationsSameAliasesTest extends TableTestCase
 {
     /**
-     * @var bool
-     */
-    protected bool $autoInitializeClass = false;
-
-    /**
      * Fixtures
      * @var array<string>
      */
@@ -48,10 +43,9 @@ class AssociationsSameAliasesTest extends TableTestCase
             /** @var \MeCms\Model\Table\PagesTable|\MeCms\Model\Table\PostsTable $Table */
             $Table = $this->getTable('MeCms.' . $name);
             $this->assertBelongsTo($Table->Categories);
-            $this->assertEquals('Categories', $Table->Categories->getName());
-            $this->assertEquals('MeCms\\Model\\Table\\' . $name . 'CategoriesTable', $Table->Categories->getClassName());
-            $className = '\\MeCms\\Model\\Entity\\' . $name . 'Category';
-            $this->assertInstanceOf($className, $Table->Categories->find()->first());
+            $this->assertSame('Categories', $Table->Categories->getName());
+            $this->assertSame('MeCms\\Model\\Table\\' . $name . 'CategoriesTable', $Table->Categories->getClassName());
+            $this->assertInstanceOf('\\MeCms\\Model\\Entity\\' . $name . 'Category', $Table->Categories->find()->first());
         }
     }
 }

@@ -27,11 +27,6 @@ use MeTools\TestSuite\CommandTestCase;
 class CreateSamplePostCommandTest extends CommandTestCase
 {
     /**
-     * @var bool
-     */
-    public bool $autoInitializeClass = true;
-
-    /**
      * @var array<string>
      */
     public $fixtures = [
@@ -40,9 +35,8 @@ class CreateSamplePostCommandTest extends CommandTestCase
     ];
 
     /**
-     * Test for `execute()` method
-     * @uses \MeCms\Command\Install\CreateSamplePostCommand::execute()
      * @test
+     * @uses \MeCms\Command\Install\CreateSamplePostCommand::execute()
      */
     public function testExecute(): void
     {
@@ -70,8 +64,8 @@ class CreateSamplePostCommandTest extends CommandTestCase
 
     /**
      * Test for `execute()` method, on failure
-     * @uses \MeCms\Command\Install\CreateSamplePostCommand::execute()
      * @test
+     * @uses \MeCms\Command\Install\CreateSamplePostCommand::execute()
      */
     public function testExecuteOnFailure(): void
     {

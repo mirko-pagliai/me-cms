@@ -24,11 +24,6 @@ use MeTools\TestSuite\CommandTestCase;
 class UsersCommandTest extends CommandTestCase
 {
     /**
-     * @var bool
-     */
-    public bool $autoInitializeClass = true;
-
-    /**
      * @var array<string>
      */
     public $fixtures = [
@@ -37,8 +32,8 @@ class UsersCommandTest extends CommandTestCase
     ];
 
     /**
-     * Test for `getUsersRows()` method
      * @test
+     * @uses \MeCms\Command\UsersCommand::getUsersRows()
      */
     public function testGetUsersRows(): void
     {
@@ -49,8 +44,8 @@ class UsersCommandTest extends CommandTestCase
     }
 
     /**
-     * Test for `execute()` method
      * @test
+     * @uses \MeCms\Command\UsersCommand::execute()
      */
     public function testExecute(): void
     {
