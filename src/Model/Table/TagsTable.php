@@ -23,7 +23,7 @@ use MeCms\ORM\Query;
 /**
  * Tags model
  * @property \Cake\ORM\Association\BelongsToMany $Posts
- * @method findActiveByTag(string $tag)
+ * @method \MeCms\ORM\Query findActiveByTag(string $tag)
  */
 class TagsTable extends AppTable
 {
