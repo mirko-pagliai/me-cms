@@ -121,6 +121,7 @@ class UsersController extends AppController
             if (!getConfig('security.recaptcha') || (isset($this->Recaptcha) && $this->Recaptcha->verify())) {
                 if (!$entity->getErrors()) {
                     $email = $this->getRequest()->getData('email');
+                    /** @var \MeCms\Model\Entity\User $user */
                     $user = $this->Users->findPendingByEmail($email)->first();
                     $message = __d('me_cms', 'No valid account was found');
 
@@ -207,6 +208,7 @@ class UsersController extends AppController
             if (!getConfig('security.recaptcha') || (isset($this->Recaptcha) && $this->Recaptcha->verify())) {
                 $message = __d('me_cms', 'No account found');
                 $email = $this->getRequest()->getData('email');
+                /** @var \MeCms\Model\Entity\User $user */
                 $user = $this->Users->findActiveByEmail($email)->first();
 
                 if ($user) {
@@ -247,6 +249,7 @@ class UsersController extends AppController
             throw new RecordNotFoundException(__d('me_cms', 'Invalid token'));
         }
 
+        /** @var \MeCms\Model\Entity\User $user */
         $user = $this->Users->findActiveById($id)->firstOrFail();
 
         if ($this->getRequest()->is(['patch', 'post', 'put'])) {

@@ -133,6 +133,7 @@ class PagesController extends AppController
      */
     public function edit(string $id)
     {
+        /** @var \MeCms\Model\Entity\Page $page */
         $page = $this->Pages->findById($id)
             ->formatResults(fn(ResultSet $results): CollectionInterface => $results->map(fn(Page $page): Page => $page->set('created', $page->get('created')->i18nFormat(FORMAT_FOR_MYSQL))))
             ->firstOrFail();

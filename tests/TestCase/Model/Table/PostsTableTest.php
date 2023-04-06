@@ -23,6 +23,7 @@ use Cake\Utility\Hash;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Entity\PostsTag;
 use MeCms\Model\Entity\Tag;
+use MeCms\Model\Table\PostsTable;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\TestSuite\PostsAndPagesTablesTestCase;
 use Tools\Exception\PropertyNotExistsException;
@@ -144,8 +145,11 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
      */
     public function testGetRelated(): void
     {
-        //Gets a post from which to search the related posts.
-        //Note that the tags of this post are sorted in ascending order
+        /**
+         * Gets a post from which to search the related posts.
+         * Note that the tags of this post are sorted in ascending order.
+         * @var \MeCms\Model\Entity\Post $Post
+         */
         $Post = $this->Table->findById(1)->contain(['Tags' => ['sort' => ['post_count' => 'ASC']]])->first();
         $this->assertNotEmpty($Post->get('tags'));
 
@@ -169,12 +173,14 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         $this->assertEquals(400, array_value_first($firstRelated->get('preview'))->get('height'));
 
         //This post has no tags
+        /** @var \MeCms\Model\Entity\Post $Post */
         $Post = $this->Table->findById(4)->contain('Tags')->first();
         $this->assertEmpty($Post->get('tags'));
         $this->assertTrue($this->Table->getRelated($Post)->isEmpty());
         $this->assertTrue(Cache::read('related_5_posts_for_4_with_images', $this->Table->getCacheName())->isEmpty());
 
         //This post has one tag, but this is not related to any other post
+        /** @var \MeCms\Model\Entity\Post $Post */
         $Post = $this->Table->findById(5)->contain('Tags')->first();
         $this->assertCount(1, $Post->get('tags'));
         $this->assertTrue($this->Table->getRelated($Post)->isEmpty());
@@ -204,8 +210,8 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
     {
         $query = $this->Table->queryForRelated(4);
         $sql = $query->sql();
-        $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertSame(4, $query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c2']['value']);
         $this->assertEquals([], $query->getValueBinder()->bindings()[':c3']['value']);
         $this->assertSqlEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = PostsTags.post_id INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = PostsTags.tag_id) WHERE (Posts.active = :c1 AND Posts.created <= :c2 AND (Posts.preview) IS NOT NULL AND Posts.preview != :c3)', $sql);
@@ -213,8 +219,8 @@ class PostsTableTest extends PostsAndPagesTablesTestCase
         //Without images
         $query = $this->Table->queryForRelated(4, false);
         $sql = $query->sql();
-        $this->assertEquals(4, $query->getValueBinder()->bindings()[':c0']['value']);
-        $this->assertEquals(true, $query->getValueBinder()->bindings()[':c1']['value']);
+        $this->assertSame(4, $query->getValueBinder()->bindings()[':c0']['value']);
+        $this->assertTrue($query->getValueBinder()->bindings()[':c1']['value']);
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c2']['value']);
         $this->assertSqlEndsWith('FROM posts Posts INNER JOIN posts_tags PostsTags ON Posts.id = PostsTags.post_id INNER JOIN tags Tags ON (Tags.id = :c0 AND Tags.id = PostsTags.tag_id) WHERE (Posts.active = :c1 AND Posts.created <= :c2)', $sql);
     }

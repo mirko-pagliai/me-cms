@@ -377,8 +377,9 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('Account created, but it needs to be activated by an admin');
-        $user = $this->Table->findByUsername($data['username'])->firstOrFail()->extract(['group_id', 'active']);
-        $this->assertEquals(['group_id' => getConfigOrFail('users.default_group'), 'active' => false], $user);
+        /** @var \MeCms\Model\Entity\User $User */
+        $User = $this->Table->findByUsername($data['username'])->firstOrFail();
+        $this->assertEquals(['group_id' => getConfigOrFail('users.default_group'), 'active' => false], $User->extract(['group_id', 'active']));
 
         //Deletes the user
         $this->Table->deleteAll(['username' => $data['username']]);
@@ -388,8 +389,9 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('We send you an email to activate your account');
-        $user = $this->Table->findByUsername($data['username'])->first()->extract(['group_id', 'active']);
-        $this->assertEquals(['group_id' => getConfigOrFail('users.default_group'), 'active' => false], $user);
+        /** @var \MeCms\Model\Entity\User $User */
+        $User = $this->Table->findByUsername($data['username'])->firstOrFail();
+        $this->assertEquals(['group_id' => getConfigOrFail('users.default_group'), 'active' => false], $User->extract(['group_id', 'active']));
 
         //Deletes the user
         $this->Table->deleteAll(['username' => $data['username']]);
@@ -399,8 +401,9 @@ class UsersControllerTest extends ControllerTestCase
         $this->post($url, $data);
         $this->assertRedirect(['_name' => 'homepage']);
         $this->assertFlashMessage('Account created. Now you can login');
-        $user = $this->Table->findByUsername($data['username'])->first()->extract(['group_id', 'active']);
-        $this->assertEquals(['group_id' => getConfigOrFail('users.default_group'), 'active' => true], $user);
+        /** @var \MeCms\Model\Entity\User $User */
+        $User = $this->Table->findByUsername($data['username'])->firstOrFail();
+        $this->assertEquals(['group_id' => getConfigOrFail('users.default_group'), 'active' => true], $User->extract(['group_id', 'active']));
 
         //With reCAPTCHA
         Configure::write('MeCms.security.recaptcha', true);

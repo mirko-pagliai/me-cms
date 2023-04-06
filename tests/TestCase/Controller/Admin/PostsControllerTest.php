@@ -91,15 +91,16 @@ class PostsControllerTest extends ControllerTestCase
                 $this->assertFlashMessage(I18N_OPERATION_OK);
 
                 $Post = $this->Table->find()->all()->last();
-                $this->assertEquals($userId, $Post->get('user_id'));
+                $this->assertSame($userId, $Post->get('user_id'));
 
                 //Edits record, adding +1 to the `user_id`
                 $this->post($this->url + ['action' => 'edit', $Post->get('id')], ['user_id' => ++$userId] + self::$example);
                 $this->assertRedirect(['action' => 'index']);
                 $this->assertFlashMessage(I18N_OPERATION_OK);
 
-                $Post = $this->Table->findById($Post->get('id'))->first();
-                $this->assertEquals($userId, $Post->get('user_id'));
+                /** @var \MeCms\Model\Entity\Post $Post */
+                $Post = $this->Table->findById($Post->get('id'))->firstOrFail();
+                $this->assertSame($userId, $Post->get('user_id'));
 
                 $this->Table->delete($Post);
             }
@@ -117,15 +118,16 @@ class PostsControllerTest extends ControllerTestCase
             $this->assertFlashMessage(I18N_OPERATION_OK);
 
             $Post = $this->Table->find()->all()->last();
-            $this->assertEquals(3, $Post->get('user_id'));
+            $this->assertSame(3, $Post->get('user_id'));
 
             //Edits record, adding +1 to the `user_id`
             $this->post($this->url + ['action' => 'edit', $Post->get('id')], ['user_id' => ++$userId] + self::$example);
             $this->assertRedirect(['action' => 'index']);
             $this->assertFlashMessage(I18N_OPERATION_OK);
 
-            $Post = $this->Table->findById($Post->get('id'))->first();
-            $this->assertEquals(3, $Post->get('user_id'));
+            /** @var \MeCms\Model\Entity\Post $Post */
+            $Post = $this->Table->findById($Post->get('id'))->firstOrFail();
+            $this->assertSame(3, $Post->get('user_id'));
 
             $this->Table->delete($Post);
         }
@@ -145,10 +147,14 @@ class PostsControllerTest extends ControllerTestCase
             $this->assertOnlyUserIsNotAuthorized($action);
         }
 
-        //With `edit` action and a user who owns the record
-        //Gets the ID of a post that belongs to user with ID 2
-        $postId = $this->Table->findByUserId(2)->firstOrFail()->get('id');
-        $Request = $this->Controller->getRequest()->withParam('pass.0', $postId)->withParam('action', 'edit');
+        /**
+         * With `edit` action and a user who owns the record.
+         * Gets the ID of a post that belongs to user with ID 2
+         * @var \MeCms\Model\Entity\Post $Post
+         */
+        $Post = $this->Table->findByUserId(2)->firstOrFail();
+        $Request = $this->Controller->getRequest()->withParam('pass.0', $Post->get('id'))
+            ->withParam('action', 'edit');
         $this->Controller->setRequest($Request);
         //User with ID 2 is authorized to edit
         $User = new User(['id' => 2, 'group' => new UsersGroup(['name' => 'user'])]);

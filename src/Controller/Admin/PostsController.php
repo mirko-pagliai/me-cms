@@ -147,6 +147,7 @@ class PostsController extends AppController
      */
     public function edit(string $id)
     {
+        /** @var \MeCms\Model\Entity\Post $post */
         $post = $this->Posts->findById($id)
             ->contain(['Tags' => ['sort' => ['tag' => 'ASC']]])
             ->formatResults(fn(ResultSet $results): CollectionInterface => $results->map(fn(Post $post): Post => $post->set('created', $post->get('created')->i18nFormat(FORMAT_FOR_MYSQL))))
