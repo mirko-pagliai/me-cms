@@ -29,11 +29,6 @@ use MeTools\TestSuite\HelperTestCase;
 class IdentityHelperTest extends HelperTestCase
 {
     /**
-     * @var bool
-     */
-    protected bool $autoInitializeClass = false;
-
-    /**
      * @var \MeCms\Model\Entity\User
      */
     protected User $User;
