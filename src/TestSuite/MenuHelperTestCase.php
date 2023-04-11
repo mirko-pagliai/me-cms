@@ -50,11 +50,7 @@ abstract class MenuHelperTestCase extends HelperTestCase
                 $Helper->method($method)->willReturnCallback(function () use ($OriginalHelper, $HtmlHelper, $method) {
                     $result = $OriginalHelper->$method();
 
-                    if (!empty($result[0])) {
-                        $result[0] = implode('', array_map(fn(array $link): string => $HtmlHelper->link(...$link), $result[0]));
-                    }
-
-                    return $result;
+                    return empty($result) ? [] : [implode('', array_map(fn(array $link): string => $HtmlHelper->link(...$link), $result[0]))] + $result;
                 });
             }
 
@@ -73,6 +69,8 @@ abstract class MenuHelperTestCase extends HelperTestCase
     {
         $Request = $this->Helper->getView()->getRequest()->withAttribute('identity', new Identity($data));
         $this->Helper->getView()->setRequest($Request);
-        $this->Helper->Identity->initialize([]);
+        if (in_array('MeCms.Identity', $this->Helper->helpers)) {
+            $this->Helper->Identity->initialize([]);
+        }
     }
 }
