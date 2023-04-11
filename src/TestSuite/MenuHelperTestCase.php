@@ -18,16 +18,21 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use Authentication\Identity;
+use MeCms\View\Helper\MenuHelper;
 use MeTools\TestSuite\HelperTestCase;
 use MeTools\View\Helper\HtmlHelper;
 
 /**
  * Abstract class for test `MenuHelper` classes
- * @property \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper
  * @property class-string<\MeCms\View\Helper\MenuHelper> $originClassName
  */
 abstract class MenuHelperTestCase extends HelperTestCase
 {
+    /**
+     * @var \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected MenuHelper $Helper;
+
     /**
      * Called before every test method
      * @return void
@@ -69,7 +74,7 @@ abstract class MenuHelperTestCase extends HelperTestCase
     {
         $Request = $this->Helper->getView()->getRequest()->withAttribute('identity', new Identity($data));
         $this->Helper->getView()->setRequest($Request);
-        if (in_array('MeCms.Identity', $this->Helper->helpers)) {
+        if ($this->Helper->Identity) {
             $this->Helper->Identity->initialize([]);
         }
     }

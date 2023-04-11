@@ -24,7 +24,6 @@ use MeTools\TestSuite\ComponentTestCase;
 
 /**
  * AuthenticationComponentTest class
- * @property \MeCms\Controller\Component\AuthenticationComponent&\PHPUnit\Framework\MockObject\MockObject $Component
  */
 class AuthenticationComponentTest extends ComponentTestCase
 {
@@ -55,17 +54,19 @@ class AuthenticationComponentTest extends ComponentTestCase
     {
         parent::setUp();
 
-        /** @var \MeCms\Model\Table\UsersTable $UsersTable */
-        $UsersTable = $this->getTable('MeCms.Users');
-        /** @var \MeCms\Model\Entity\User $User */
-        $User = $UsersTable->findByGroupId(2)->contain(['Groups' => ['fields' => ['name']]])->firstOrFail();
-        $this->User = $User;
+        if (empty($this->User)) {
+            /** @var \MeCms\Model\Table\UsersTable $UsersTable */
+            $UsersTable = $this->getTable('MeCms.Users');
+            /** @var \MeCms\Model\Entity\User $User */
+            $User = $UsersTable->findByGroupId(2)->contain(['Groups' => ['fields' => ['name']]])->firstOrFail();
+            $this->User = $User;
+        }
 
         if (empty($this->Component)) {
             $this->Component = $this->createPartialMock(AuthenticationComponent::class, ['getController', 'getIdentity']);
             $this->Component->method('getController')->willReturn(new UsersController());
+            $this->Component->method('getIdentity')->willReturnCallback(fn(): Identity => new Identity($this->User->toArray()));
         }
-        $this->Component->method('getIdentity')->willReturnCallback(fn(): Identity => new Identity($this->User->toArray()));
     }
 
     /**

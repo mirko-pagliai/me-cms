@@ -115,6 +115,21 @@
       <code>$this-&gt;Command-&gt;Users</code>
     </UndefinedPropertyAssignment>
   </file>
+  <file src="tests/TestCase/Controller/Component/AuthenticationComponentTest.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($this-&gt;User)</code>
+    </TypeDoesNotContainType>
+    <UndefinedMethod occurrences="8">
+      <code>getId</code>
+      <code>getId</code>
+      <code>isGroup</code>
+      <code>isGroup</code>
+      <code>isGroup</code>
+      <code>isGroup</code>
+      <code>isGroup</code>
+      <code>isGroup</code>
+    </UndefinedMethod>
+  </file>
   <file src="tests/TestCase/Form/ContactUsFormTest.php">
     <TypeDoesNotContainType occurrences="1">
       <code>empty($this-&gt;Form)</code>
