@@ -65,10 +65,5 @@ class IdentityHelperTest extends HelperTestCase
         $this->assertFalse($IdentityHelper->isGroup('admin'));
         $this->assertFalse($IdentityHelper->isGroup('user'));
         $this->assertFalse($IdentityHelper->isGroup('admin', 'user'));
-
-        $this->expectExceptionMessage('`group.name` path is missing');
-        $this->User = $this->User->unset('group');
-        $IdentityHelper->initialize([]);
-        $IdentityHelper->isGroup('manager');
     }
 }

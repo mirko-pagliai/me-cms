@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace MeCms\View\Helper;
 
 use Authentication\View\Helper\IdentityHelper as CakeIdentityHelper;
-use Tools\Exceptionist;
 
 /**
  * Identity Helper.
@@ -32,10 +31,9 @@ class IdentityHelper extends CakeIdentityHelper
      * If you compare with several groups, it will check that at least one matches.
      * @param string ...$group User group
      * @return bool
-     * @throws \ErrorException
      */
     public function isGroup(string ...$group): bool
     {
-        return in_array(Exceptionist::isTrue($this->get('group.name'), '`group.name` path is missing'), $group);
+        return in_array($this->get('group.name'), $group);
     }
 }
