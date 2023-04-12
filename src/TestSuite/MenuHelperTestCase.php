@@ -18,20 +18,20 @@ declare(strict_types=1);
 namespace MeCms\TestSuite;
 
 use Authentication\Identity;
-use MeCms\View\Helper\MenuHelper;
+use Cake\View\Helper;
 use MeTools\TestSuite\HelperTestCase;
 use MeTools\View\Helper\HtmlHelper;
 
 /**
  * Abstract class for test `MenuHelper` classes
- * @property class-string<\MeCms\View\Helper\MenuHelper> $originClassName
+ * @property class-string<\MeCms\View\Helper\MenuHelper|\Cake\View\Helper> $originClassName
  */
 abstract class MenuHelperTestCase extends HelperTestCase
 {
     /**
-     * @var \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject
+     * @var (\MeCms\View\Helper\MenuHelper|\Cake\View\Helper)&\PHPUnit\Framework\MockObject\MockObject
      */
-    protected MenuHelper $Helper;
+    protected Helper $Helper;
 
     /**
      * Called before every test method
