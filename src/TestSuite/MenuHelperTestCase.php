@@ -24,12 +24,12 @@ use MeTools\View\Helper\HtmlHelper;
 
 /**
  * Abstract class for test `MenuHelper` classes
- * @property class-string<\MeCms\View\Helper\MenuHelper|\Cake\View\Helper> $originClassName
+ * @property class-string<\Cake\View\Helper> $originClassName
  */
 abstract class MenuHelperTestCase extends HelperTestCase
 {
     /**
-     * @var (\MeCms\View\Helper\MenuHelper|\Cake\View\Helper)&\PHPUnit\Framework\MockObject\MockObject
+     * @var \Cake\View\Helper&\PHPUnit\Framework\MockObject\MockObject
      */
     protected Helper $Helper;
 
@@ -74,6 +74,7 @@ abstract class MenuHelperTestCase extends HelperTestCase
     {
         $Request = $this->Helper->getView()->getRequest()->withAttribute('identity', new Identity($data));
         $this->Helper->getView()->setRequest($Request);
+        /** @phpstan-ignore-next-line */
         if ($this->Helper->Identity) {
             $this->Helper->Identity->initialize([]);
         }
