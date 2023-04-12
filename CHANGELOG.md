@@ -1,7 +1,10 @@
 # 2.x branch
 ## 2.31 branch
 ### 2.31.8
-* added `getid()` and `isGroup()` methods to the `AuthenticationComponent`, with tests.
+* added `getid()` and `isGroup()` methods to the `AuthenticationComponent`, with tests;
+* improved `MenuHelperTestCase`;
+* some little fixes of code and tags;
+* updated for cakephp-recaptcha-mailhide `1.4.12`.
 
 ### 2.31.7
 * new passwords also require the presence of a capital letter (in addition to the previous rules);
