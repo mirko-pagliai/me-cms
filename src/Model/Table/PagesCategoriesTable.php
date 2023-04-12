@@ -24,7 +24,7 @@ use MeCms\ORM\Query;
  * @property \Cake\ORM\Association\BelongsTo $Parents
  * @property \Cake\ORM\Association\HasMany $Childs
  * @property \Cake\ORM\Association\HasMany $Pages
- * @method findActiveBySlug(string $slug)
+ * @method \MeCms\ORM\Query findActiveBySlug(string $slug)
  */
 class PagesCategoriesTable extends AppTable
 {

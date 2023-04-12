@@ -239,6 +239,7 @@ class PostsController extends AppController
      */
     public function view(string $slug): void
     {
+        /** @var \MeCms\Model\Entity\Post $post */
         $post = $this->Posts->findActiveBySlug($slug)
             ->find('forIndex')
             ->cache('view_' . md5($slug))
@@ -262,6 +263,7 @@ class PostsController extends AppController
      */
     public function preview(string $slug): Response
     {
+        /** @var \MeCms\Model\Entity\Post $post */
         $post = $this->Posts->findPendingBySlug($slug)
             ->find('forIndex')
             ->firstOrFail();

@@ -31,10 +31,11 @@ use MeCms\ORM\Query;
  * @property \MeCms\Model\Table\UsersGroupsTable&\Cake\ORM\Association\BelongsTo $Groups
  * @property \MeCms\Model\Table\PostsTable&\Cake\ORM\Association\HasMany $Posts
  * @property \MeCms\Model\Table\TokensTable&\Cake\ORM\Association\HasMany $Tokens
- * @method findByActiveAndBanned(bool $isActive, bool $isBanned)
- * @method findActiveByEmail(string $email)
- * @method findByUsername(string $username)
- * @method findPendingByEmail(string $email)
+ * @method \MeCms\ORM\Query findByActiveAndBanned(bool $isActive, bool $isBanned)
+ * @method \MeCms\ORM\Query findActiveByEmail(string $email)
+ * @method \MeCms\ORM\Query findByGroupId(int $group)
+ * @method \MeCms\ORM\Query findByUsername(string $username)
+ * @method \MeCms\ORM\Query findPendingByEmail(string $email)
  */
 class UsersTable extends AppTable
 {

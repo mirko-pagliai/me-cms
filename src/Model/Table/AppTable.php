@@ -27,9 +27,9 @@ use Tools\Exceptionist;
 
 /**
  * Application table class
- * @method findActiveById($id)
- * @method findById($id)
- * @method findPendingById($id)
+ * @method \MeCms\ORM\Query findActiveById($id)
+ * @method \MeCms\ORM\Query findById($id)
+ * @method \MeCms\ORM\Query findPendingById($id)
  */
 abstract class AppTable extends Table
 {

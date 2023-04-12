@@ -93,14 +93,16 @@ class PostsCategoriesTableTest extends TableTestCase
      */
     public function testAssociations(): void
     {
-        $category = $this->Table->findById(4)->contain('Parents')->first();
-        $this->assertNotEmpty($category->get('parent'));
-        $this->assertInstanceOf(PostsCategory::class, $category->get('parent'));
-        $this->assertEquals(3, $category->get('parent')->get('id'));
+        /** @var \MeCms\Model\Entity\PostsCategory $Category */
+        $Category = $this->Table->findById(4)->contain('Parents')->first();
+        $this->assertNotEmpty($Category->get('parent'));
+        $this->assertInstanceOf(PostsCategory::class, $Category->get('parent'));
+        $this->assertEquals(3, $Category->get('parent')->get('id'));
 
-        $category = $this->Table->findById($category->get('parent')->get('id'))->contain('Parents')->first();
-        $this->assertInstanceOf(PostsCategory::class, $category->get('parent'));
-        $this->assertEquals(1, $category->get('parent')->get('id'));
+        /** @var \MeCms\Model\Entity\PostsCategory $Category */
+        $Category = $this->Table->findById($Category->get('parent')->get('id'))->contain('Parents')->first();
+        $this->assertInstanceOf(PostsCategory::class, $Category->get('parent'));
+        $this->assertEquals(1, $Category->get('parent')->get('id'));
 
         $childs = $this->Table->find()->contain('Childs')->all()->extract('childs')->first();
         $this->assertContainsOnlyInstancesOf(PostsCategory::class, $childs);

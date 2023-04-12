@@ -24,11 +24,6 @@ use MeTools\TestSuite\CommandTestCase;
 class CreateGroupsCommandTest extends CommandTestCase
 {
     /**
-     * @var bool
-     */
-    public bool $autoInitializeClass = true;
-
-    /**
      * @var array<string>
      */
     public $fixtures = [

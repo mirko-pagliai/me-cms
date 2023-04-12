@@ -30,11 +30,6 @@ use MeTools\TestSuite\CommandTestCase;
 class VersionUpdatesCommandTest extends CommandTestCase
 {
     /**
-     * @var bool
-     */
-    protected bool $autoInitializeClass = true;
-
-    /**
      * @var array<string>
      */
     public $fixtures = [
@@ -45,8 +40,8 @@ class VersionUpdatesCommandTest extends CommandTestCase
     ];
 
     /**
-     * @uses \MeCms\Command\VersionUpdatesCommand::addLastLoginsField()
      * @test
+     * @uses \MeCms\Command\VersionUpdatesCommand::addLastLoginsField()
      */
     public function testAddLastLoginsField(): void
     {
@@ -68,8 +63,8 @@ class VersionUpdatesCommandTest extends CommandTestCase
     }
 
     /**
-     * @uses \MeCms\Command\VersionUpdatesCommand::addEnableCommentsField()
      * @test
+     * @uses \MeCms\Command\VersionUpdatesCommand::addEnableCommentsField()
      */
     public function testAddEnableCommentsField(): void
     {
@@ -96,8 +91,8 @@ class VersionUpdatesCommandTest extends CommandTestCase
     }
 
     /**
-     * @uses \MeCms\Command\VersionUpdatesCommand::alterTagColumnSize()
      * @test
+     * @uses \MeCms\Command\VersionUpdatesCommand::alterTagColumnSize()
      */
     public function testAlterTagColumnSize(): void
     {
@@ -117,8 +112,8 @@ class VersionUpdatesCommandTest extends CommandTestCase
     }
 
     /**
-     * @uses \MeCms\Command\VersionUpdatesCommand::deleteOldDirectories()
      * @test
+     * @uses \MeCms\Command\VersionUpdatesCommand::deleteOldDirectories()
      */
     public function testDeleteOldDirectories(): void
     {
@@ -129,8 +124,8 @@ class VersionUpdatesCommandTest extends CommandTestCase
     }
 
     /**
-     * @uses \MeCms\Command\VersionUpdatesCommand::execute()
      * @test
+     * @uses \MeCms\Command\VersionUpdatesCommand::execute()
      */
     public function testExecute(): void
     {
@@ -138,10 +133,7 @@ class VersionUpdatesCommandTest extends CommandTestCase
         $this->assertNotEmpty($this->_out->messages());
 
         $expectedMethods = get_child_methods(VersionUpdatesCommand::class);
-        $Command = $this->getMockBuilder(VersionUpdatesCommand::class)
-            ->onlyMethods($expectedMethods)
-            ->getMock();
-
+        $Command = $this->createPartialMock(VersionUpdatesCommand::class, $expectedMethods);
         foreach ($expectedMethods as $method) {
             $Command->expects($this->once())->method($method);
         }

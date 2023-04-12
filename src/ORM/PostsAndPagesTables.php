@@ -29,9 +29,9 @@ use MeCms\Model\Table\Traits\NextToBePublishedTrait;
  *
  * This class provides some methods and properties common to both classes.
  * @property \Cake\ORM\Association\BelongsTo $Categories
- * @method findActiveBySlug(string $slug)
- * @method findByUserId(int $id)
- * @method findPendingBySlug(string $slug)
+ * @method \MeCms\ORM\Query findActiveBySlug(string $slug)
+ * @method \MeCms\ORM\Query findByUserId(int $id)
+ * @method \MeCms\ORM\Query findPendingBySlug(string $slug)
  * @see \MeCms\Model\Table\PagesTable
  * @see \MeCms\Model\Table\PostsTable
  */

@@ -146,7 +146,7 @@ class UsersController extends AppController
         $user = $this->Users->get($id);
 
         //Only the admin founder can edit others admin users
-        if ($user->get('group_id') === 1 && $this->Authentication->getIdentityData('id') !== 1) {
+        if ($user->get('group_id') === 1 && $this->Authentication->getId() !== 1) {
             $this->Flash->alert(I18N_ONLY_ADMIN_FOUNDER);
 
             return $this->redirectMatchingReferer(['action' => 'index']);
@@ -182,7 +182,7 @@ class UsersController extends AppController
         if ($User->get('id') === 1) {
             $this->Flash->error(__d('me_cms', 'You cannot delete the admin founder'));
         //Only the admin founder can delete others admin users
-        } elseif ($User->get('group_id') === 1 && $this->Authentication->getIdentityData('id') !== 1) {
+        } elseif ($User->get('group_id') === 1 && $this->Authentication->getId() !== 1) {
             $this->Flash->alert(I18N_ONLY_ADMIN_FOUNDER);
         } elseif ($User->get('post_count')) {
             $this->Flash->alert(I18N_BEFORE_DELETE);
@@ -214,7 +214,7 @@ class UsersController extends AppController
      */
     public function changePassword()
     {
-        $user = $this->Users->get($this->Authentication->getIdentityData('id'));
+        $user = $this->Users->get($this->Authentication->getId());
 
         if ($this->getRequest()->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->getRequest()->getData());
@@ -243,7 +243,7 @@ class UsersController extends AppController
         $UploadedFile = $this->getRequest()->getData('file');
 
         if ($this->getRequest()->is(['patch', 'post', 'put']) && $UploadedFile) {
-            $id = $this->Authentication->getIdentityData('id');
+            $id = $this->Authentication->getId();
 
             //Deletes any picture that already exists
             foreach ((new Finder())->files()->name('/^' . $id . '\..+/')->in(USER_PICTURES) as $file) {
@@ -277,6 +277,6 @@ class UsersController extends AppController
             return $this->redirect(['_name' => 'dashboard']);
         }
 
-        $this->set('loginLog', $this->LoginRecorder->setConfig('user', $this->Authentication->getIdentityData('id'))->read());
+        $this->set('loginLog', $this->LoginRecorder->setConfig('user', $this->Authentication->getId())->read());
     }
 }

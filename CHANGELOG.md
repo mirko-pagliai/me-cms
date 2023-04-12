@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.31 branch
+### 2.31.8
+* added `getid()` and `isGroup()` methods to the `AuthenticationComponent`, with tests.
+
 ### 2.31.7
 * new passwords also require the presence of a capital letter (in addition to the previous rules);
 * added the `AuthenticationComponent`, with the `afterIdentify()` event method. This event is dispatched after the

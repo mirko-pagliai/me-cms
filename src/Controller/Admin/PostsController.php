@@ -32,10 +32,11 @@ class PostsController extends AppController
      * Called before the controller action
      * @param \Cake\Event\EventInterface $event An Event instance
      * @return \Cake\Http\Response|null|void
-     * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
+     * @throws \ErrorException
      * @uses \MeCms\Model\Table\PostsCategoriesTable::getTreeList()
      * @uses \MeCms\Model\Table\UsersTable::getActiveList()
      * @uses \MeCms\Model\Table\UsersTable::getList()
+     * @uses \MeCms\Model\Table\PostsCategoriesTable::getList()
      */
     public function beforeFilter(EventInterface $event)
     {
@@ -62,15 +63,10 @@ class PostsController extends AppController
 
         $this->set(compact('categories', 'users'));
 
-        /**
-         * Only admins and managers can add and edit posts on behalf of other users
-         * @todo This code should be moved somewhere else
-         */
-        if ($this->getRequest()->is('action', ['add', 'edit']) &&
-            $this->getRequest()->getData() &&
-            !in_array($this->Authentication->getIdentityData('group.name'), ['admin', 'manager'])
-        ) {
-            $this->setRequest($this->getRequest()->withData('user_id', $this->Authentication->getIdentityData('id')));
+        //On `post` requests, only admins and managers can set a different user
+        if ($this->getRequest()->is('post') && $this->getRequest()->getData('user_id') &&
+            !$this->Authentication->isGroup('admin', 'manager')) {
+            $this->setRequest($this->getRequest()->withData('user_id', $this->Authentication->getId()));
         }
     }
 
@@ -151,6 +147,7 @@ class PostsController extends AppController
      */
     public function edit(string $id)
     {
+        /** @var \MeCms\Model\Entity\Post $post */
         $post = $this->Posts->findById($id)
             ->contain(['Tags' => ['sort' => ['tag' => 'ASC']]])
             ->formatResults(fn(ResultSet $results): CollectionInterface => $results->map(fn(Post $post): Post => $post->set('created', $post->get('created')->i18nFormat(FORMAT_FOR_MYSQL))))
