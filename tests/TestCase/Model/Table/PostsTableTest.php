@@ -23,7 +23,6 @@ use Cake\Utility\Hash;
 use MeCms\Model\Entity\Post;
 use MeCms\Model\Entity\PostsTag;
 use MeCms\Model\Entity\Tag;
-use MeCms\Model\Table\PostsTable;
 use MeCms\Model\Validation\PostValidator;
 use MeCms\TestSuite\PostsAndPagesTablesTestCase;
 use Tools\Exception\PropertyNotExistsException;
