@@ -16,10 +16,10 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\View\Helper;
 
+use Authentication\Identity;
 use BadMethodCallException;
-use Cake\View\Helper;
+use Cake\Http\ServerRequest;
 use Cake\View\View;
-use MeCms\View\Helper\IdentityHelper;
 use MeCms\View\Helper\MenuBuilderHelper;
 use MeTools\TestSuite\HelperTestCase;
 use Tools\Exception\ObjectWrongInstanceException;
@@ -38,24 +38,11 @@ class MenuBuilderHelperTest extends HelperTestCase
     {
         parent::setUp();
 
-        /**
-         * Mock for `loadHelper()` method.
-         * It makes the `Menu` helpers use an `IdentityHelper` stub.
-         * @see \Cake\View\View::loadHelper()
-         */
-        $View = $this->createPartialMock(View::class, ['loadHelper']);
-        $View->method('loadHelper')->willReturnCallback(function (string $name, array $config = []) use ($View): Helper {
-            [, $class] = pluginSplit($name);
-            $Helper = $View->helpers()->load($name, $config);
-            if (str_ends_with($name, 'Menu')) {
-                /** @var \MeCms\View\Helper\AbstractMenuHelper $Helper */
-                $Helper->Identity = $this->createStub(IdentityHelper::class);
-            }
-
-            return $View->{$class} = $Helper;
-        });
-
-        $this->Helper = new MenuBuilderHelper($View);
+        if (empty($this->Helper)) {
+            $Request = new ServerRequest();
+            $Request = $Request->withAttribute('identity', new Identity(['group' => ['name' => 'admin']]));
+            $this->Helper = new MenuBuilderHelper(new View($Request));
+        }
     }
 
     /**
