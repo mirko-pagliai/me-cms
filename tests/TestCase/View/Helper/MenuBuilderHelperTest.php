@@ -16,6 +16,9 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\View\Helper;
 
+use Cake\View\View;
+use MeCms\View\Helper\IdentityHelper;
+use MeCms\View\Helper\MenuBuilderHelper;
 use MeTools\TestSuite\HelperTestCase;
 
 /**
@@ -33,12 +36,26 @@ class MenuBuilderHelperTest extends HelperTestCase
         parent::setUp();
 
         $this->loadPlugins(['TestPlugin' => []]);
+
+        if (!$this->Helper) {
+            $View = $this->createPartialMock(View::class, ['loadHelper']);
+            $View->method('loadHelper')->willReturnCallback(function (string $name, array $config = []) use ($View) {
+                [, $class] = pluginSplit($name);
+                $Helper = $View->helpers()->load($name, $config);
+                if (str_ends_with($name, 'Menu')) {
+                    $Helper->Identity = $this->createStub(IdentityHelper::class);
+                }
+
+                return $View->{$class} = $Helper;
+            });
+
+            $this->Helper = new MenuBuilderHelper($View);
+        }
     }
 
     /**
-     * Tests for `getMethods()` method
-     * @uses \MeCms\View\Helper\MenuBuilderHelper::getMethods()
      * @test
+     * @uses \MeCms\View\Helper\MenuBuilderHelper::getMethods()
      */
     public function testGetMethods(): void
     {
@@ -53,9 +70,8 @@ class MenuBuilderHelperTest extends HelperTestCase
     }
 
     /**
-     * Tests for `generate()` method
-     * @uses \MeCms\View\Helper\MenuBuilderHelper::generate()
      * @test
+     * @uses \MeCms\View\Helper\MenuBuilderHelper::generate()
      */
     public function testGenerate(): void
     {
