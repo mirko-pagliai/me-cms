@@ -12,7 +12,6 @@
     ],
     "require": {
         "php": ">=7.4",
-        "ext-apache": "*",
         "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-json": "*",
