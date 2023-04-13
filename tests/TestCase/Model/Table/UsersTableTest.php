@@ -27,7 +27,7 @@ use MeCms\TestSuite\TableTestCase;
 class UsersTableTest extends TableTestCase
 {
     /**
-     * @var array<string, string|int>
+     * @var array
      */
     protected static array $example = [
         'group_id' => 1,

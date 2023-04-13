@@ -24,8 +24,8 @@ use MeCms\TestSuite\TestCase;
 class PluginTest extends TestCase
 {
     /**
-     * Tests for `all()` method
      * @test
+     * @uses \MeCms\Core\Plugin::all()
      */
     public function testAll(): void
     {
@@ -52,9 +52,9 @@ class PluginTest extends TestCase
         $this->assertContains('TestPlugin', $result);
 
         $result = Plugin::all(['mecms_core' => false]);
-        $this->assertSame($result, ['MeCms', 'TestPlugin']);
+        $this->assertSame(['MeCms', 'TestPlugin'], $result);
 
         $result = Plugin::all(['exclude' => 'TestPlugin', 'mecms_core' => false]);
-        $this->assertSame($result, ['MeCms']);
+        $this->assertSame(['MeCms'], $result);
     }
 }

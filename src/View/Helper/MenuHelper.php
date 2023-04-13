@@ -41,6 +41,7 @@ class MenuHelper extends AbstractMenuHelper
     /**
      * Internal function to generate the menu for "posts" actions
      * @return array Array with links, title, title options and handled controllers
+     * @throws \ErrorException
      */
     public function posts(): array
     {
@@ -65,6 +66,7 @@ class MenuHelper extends AbstractMenuHelper
     /**
      * Internal function to generate the menu for "pages" actions
      * @return array Array with links, title, title options and handled controllers
+     * @throws \ErrorException
      */
     public function pages(): array
     {
@@ -89,6 +91,7 @@ class MenuHelper extends AbstractMenuHelper
     /**
      * Internal function to generate the menu for "users" actions
      * @return array Array with links, title, title options and handled controllers
+     * @throws \ErrorException
      */
     public function users(): array
     {
@@ -113,6 +116,7 @@ class MenuHelper extends AbstractMenuHelper
     /**
      * Internal function to generate the menu for "systems" actions
      * @return array Array with links, title, title options and handled controllers
+     * @throws \ErrorException
      */
     public function systems(): array
     {

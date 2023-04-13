@@ -12,8 +12,10 @@
     ],
     "require": {
         "php": ">=7.4",
+        "ext-apache": "*",
         "ext-dom": "*",
         "ext-fileinfo": "*",
+        "ext-json": "*",
         "ext-libxml": "*",
         "ext-zlib": "*",
         "cakephp/cakephp": "^4.4",
@@ -37,7 +39,6 @@
         "components/jquery": "^3.6"
     },
     "require-dev": {
-        "ext-json": "*",
         "cakephp/cakephp-codesniffer": "^4.0",
         "cakephp/migrations": "^3.2",
         "phpunit/phpunit": "^9.1|^9.5",

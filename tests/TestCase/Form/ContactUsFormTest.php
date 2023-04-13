@@ -33,7 +33,7 @@ class ContactUsFormTest extends TestCase
     public ContactUsForm $Form;
 
     /**
-     * @var array<string, string>
+     * @var string[]
      */
     protected array $example = [
         'email' => 'mymail@example.com',

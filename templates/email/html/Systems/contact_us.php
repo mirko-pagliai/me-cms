@@ -11,10 +11,12 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ * @var string $email
+ * @var string $firstName
+ * @var string $lastName
+ * @var string $message
  */
+
 echo __d('me_cms', 'Email from {0}', sprintf('%s %s (%s)', $firstName, $lastName, $email));
-?>
 
-
-<?php
-    echo $message;
+echo $message;

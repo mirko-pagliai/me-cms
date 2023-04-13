@@ -30,7 +30,7 @@ use MeCms\TestSuite\Admin\ControllerTestCase;
 class PostsControllerTest extends ControllerTestCase
 {
     /**
-     * @var array<string, int|string>
+     * @var array
      */
     protected static array $example = [
         'user_id' => 1,
