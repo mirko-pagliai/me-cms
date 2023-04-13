@@ -73,7 +73,6 @@ abstract class MenuHelperTestCase extends HelperTestCase
     {
         $Request = $this->Helper->getView()->getRequest()->withAttribute('identity', new Identity($data));
         $this->Helper->getView()->setRequest($Request);
-        /** @phpstan-ignore-next-line */
         if ($this->Helper->Identity) {
             $this->Helper->Identity->initialize([]);
         }
