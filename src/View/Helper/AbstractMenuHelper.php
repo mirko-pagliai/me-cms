@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       2.30.0
+ * @since       2.31.9
  */
 
 namespace MeCms\View\Helper;
