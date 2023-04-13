@@ -61,6 +61,8 @@ class AppViewTest extends TestCase
      */
     public function testRender(): void
     {
+        $this->removePlugins(['TestPluginTwo']);
+
         $this->View->render('StaticPages/page-from-app');
         $this->assertEquals([
             1 => '1 - Very low',
