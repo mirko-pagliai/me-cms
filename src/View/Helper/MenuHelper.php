@@ -16,8 +16,6 @@ declare(strict_types=1);
 
 namespace MeCms\View\Helper;
 
-use Cake\View\Helper;
-
 /**
  * Menu Helper.
  *
@@ -31,19 +29,12 @@ use Cake\View\Helper;
  *  - the controllers handled by this menu, as an array.
  *
  * @see \MeCms\View\Helper\MenuBuilderHelper::generate() for more information
- * @property \MeCms\View\Helper\IdentityHelper $Identity
  */
-class MenuHelper extends Helper
+class MenuHelper extends AbstractMenuHelper
 {
     /**
-     * Helpers
-     * @var array
-     */
-    public $helpers = ['MeCms.Identity'];
-
-    /**
      * Default parameters for routers
-     * @var array<string, string>
+     * @var array
      */
     protected array $defaultParams = ['plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
 

@@ -74,7 +74,8 @@
             "App\\": "tests/test_app/TestApp/",
             "MyTheme\\": "tests/test_app/TestApp/Plugin/MyTheme/src",
             "TestPlugin\\": "tests/test_app/TestApp/Plugin/TestPlugin/src",
-            "TestPluginTwo\\": "tests/test_app/TestApp/Plugin/TestPluginTwo/src"
+            "TestPluginTwo\\": "tests/test_app/TestApp/Plugin/TestPluginTwo/src",
+            "TestPluginThree\\": "tests/test_app/TestApp/Plugin/TestPluginThree/src"
         }
     },
     "scripts": {

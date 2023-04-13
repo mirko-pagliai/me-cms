@@ -18,6 +18,7 @@ namespace MeCms\View\Helper;
 use BadMethodCallException;
 use Cake\Core\App;
 use Cake\View\Helper;
+use Tools\Exceptionist;
 
 /**
  * MenuBuilder Helper.
@@ -63,7 +64,9 @@ class MenuBuilderHelper extends Helper
         if (!$className) {
             return [];
         }
+        /** @var \MeCms\View\Helper\AbstractMenuHelper $Helper */
         $Helper = $this->getView()->loadHelper($plugin . '.Menu', compact('className'));
+        Exceptionist::isInstanceOf($Helper, AbstractMenuHelper::class);
 
         //Calls dynamically each method
         foreach ($this->getMethods($plugin) as $method) {

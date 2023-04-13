@@ -16,10 +16,13 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\View\Helper;
 
+use BadMethodCallException;
+use Cake\View\Helper;
 use Cake\View\View;
 use MeCms\View\Helper\IdentityHelper;
 use MeCms\View\Helper\MenuBuilderHelper;
 use MeTools\TestSuite\HelperTestCase;
+use Tools\Exception\ObjectWrongInstanceException;
 
 /**
  * MenuBuilderHelperTest class
@@ -35,22 +38,24 @@ class MenuBuilderHelperTest extends HelperTestCase
     {
         parent::setUp();
 
-        $this->loadPlugins(['TestPlugin' => []]);
+        /**
+         * Mock for `loadHelper()` method.
+         * It makes the `Menu` helpers use an `IdentityHelper` stub.
+         * @see \Cake\View\View::loadHelper()
+         */
+        $View = $this->createPartialMock(View::class, ['loadHelper']);
+        $View->method('loadHelper')->willReturnCallback(function (string $name, array $config = []) use ($View): Helper {
+            [, $class] = pluginSplit($name);
+            $Helper = $View->helpers()->load($name, $config);
+            if (str_ends_with($name, 'Menu')) {
+                /** @var \MeCms\View\Helper\AbstractMenuHelper $Helper */
+                $Helper->Identity = $this->createStub(IdentityHelper::class);
+            }
 
-        if (!$this->Helper) {
-            $View = $this->createPartialMock(View::class, ['loadHelper']);
-            $View->method('loadHelper')->willReturnCallback(function (string $name, array $config = []) use ($View) {
-                [, $class] = pluginSplit($name);
-                $Helper = $View->helpers()->load($name, $config);
-                if (str_ends_with($name, 'Menu')) {
-                    $Helper->Identity = $this->createStub(IdentityHelper::class);
-                }
+            return $View->{$class} = $Helper;
+        });
 
-                return $View->{$class} = $Helper;
-            });
-
-            $this->Helper = new MenuBuilderHelper($View);
-        }
+        $this->Helper = new MenuBuilderHelper($View);
     }
 
     /**
@@ -75,8 +80,6 @@ class MenuBuilderHelperTest extends HelperTestCase
      */
     public function testGenerate(): void
     {
-        $this->loadPlugins(['TestPlugin' => [], 'TestPluginTwo' => []]);
-
         foreach (['MeCms', 'TestPlugin'] as $plugin) {
             $result = $this->Helper->generate($plugin);
             $this->assertNotEmpty($result);
@@ -86,7 +89,10 @@ class MenuBuilderHelperTest extends HelperTestCase
             }
         }
 
-        $this->expectExceptionMessage('Method `TestPluginTwo\View\Helper\MenuHelper::badArticles()` returned only 1 values');
-        $this->Helper->generate('TestPluginTwo');
+        // Class `TestPluginThree\View\Helper\MenuHelper` does not extend `AbstractMenuHelper`
+        $this->assertException(fn() => $this->Helper->generate('TestPluginThree'), ObjectWrongInstanceException::class);
+
+        // Method `TestPluginTwo\View\Helper\MenuHelper::badArticles()` returns a bad value
+        $this->assertException(fn() => $this->Helper->generate('TestPluginTwo'), BadMethodCallException::class, 'Method `TestPluginTwo\View\Helper\MenuHelper::badArticles()` returned only 1 values');
     }
 }

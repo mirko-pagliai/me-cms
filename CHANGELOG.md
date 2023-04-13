@@ -1,5 +1,8 @@
 # 2.x branch
 ## 2.31 branch
+### 2.31.9
+* added `AbstractMenuHelper`. Every `MenuHelper` class must extend this abstract class.
+
 ### 2.31.8
 * added `getid()` and `isGroup()` methods to the `AuthenticationComponent`, with tests;
 * improved `MenuHelperTestCase`;
