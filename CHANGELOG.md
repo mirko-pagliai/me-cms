@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.31 branch
 ### 2.31.9
+* fixed little bug for `IdentityHelper::isGroup()`;
 * added `AbstractMenuHelper`. Every `MenuHelper` class must extend this abstract class.
 
 ### 2.31.8
