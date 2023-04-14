@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace TestPluginTwo\View\Helper;
 
-use Cake\View\Helper;
+use MeCms\View\Helper\AbstractMenuHelper;
 
-class MenuHelper extends Helper
+class MenuHelper extends AbstractMenuHelper
 {
     public $helpers = ['MeTools.Html'];
 

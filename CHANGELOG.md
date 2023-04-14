@@ -1,5 +1,10 @@
 # 2.x branch
 ## 2.31 branch
+### 2.31.9
+* fixed little bug for `IdentityHelper::isGroup()`;
+* added `AbstractMenuHelper`. Every `MenuHelper` class must extend this abstract class;
+* many code and tags improvements suggested by `phpstorm`.
+
 ### 2.31.8
 * added `getid()` and `isGroup()` methods to the `AuthenticationComponent`, with tests;
 * improved `MenuHelperTestCase`;

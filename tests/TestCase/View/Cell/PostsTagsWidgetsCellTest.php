@@ -33,7 +33,7 @@ class PostsTagsWidgetsCellTest extends CellTestCase
     use ReflectionTrait;
 
     /**
-     * @var array<string, mixed>
+     * @var array
      */
     protected array $example = [
         'limit' => 2,

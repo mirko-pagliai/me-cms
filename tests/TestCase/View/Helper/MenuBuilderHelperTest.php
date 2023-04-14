@@ -16,14 +16,24 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\View\Helper;
 
+use Authentication\Identity;
+use BadMethodCallException;
+use Cake\Http\ServerRequest;
+use Cake\View\View;
+use MeCms\View\Helper\MenuBuilderHelper;
 use MeTools\TestSuite\HelperTestCase;
+use Tools\Exception\ObjectWrongInstanceException;
 
 /**
  * MenuBuilderHelperTest class
- * @property \MeCms\View\Helper\MenuBuilderHelper $Helper
  */
 class MenuBuilderHelperTest extends HelperTestCase
 {
+    /**
+     * @var \MeCms\View\Helper\MenuBuilderHelper
+     */
+    protected MenuBuilderHelper $Helper;
+
     /**
      * Called before every test method
      * @return void
@@ -32,13 +42,16 @@ class MenuBuilderHelperTest extends HelperTestCase
     {
         parent::setUp();
 
-        $this->loadPlugins(['TestPlugin' => []]);
+        if (empty($this->Helper)) {
+            $Request = new ServerRequest();
+            $Request = $Request->withAttribute('identity', new Identity(['group' => ['name' => 'admin']]));
+            $this->Helper = new MenuBuilderHelper(new View($Request));
+        }
     }
 
     /**
-     * Tests for `getMethods()` method
-     * @uses \MeCms\View\Helper\MenuBuilderHelper::getMethods()
      * @test
+     * @uses \MeCms\View\Helper\MenuBuilderHelper::getMethods()
      */
     public function testGetMethods(): void
     {
@@ -48,19 +61,16 @@ class MenuBuilderHelperTest extends HelperTestCase
             'users',
             'systems',
         ], $this->Helper->getMethods('MeCms'));
-        $this->assertEquals(['articles', 'other_items'], $this->Helper->getMethods('TestPlugin'));
+        $this->assertEquals(['articles', 'empty_return', 'other_items'], $this->Helper->getMethods('TestPlugin'));
         $this->assertEquals(['badArticles'], $this->Helper->getMethods('TestPluginTwo'));
     }
 
     /**
-     * Tests for `generate()` method
-     * @uses \MeCms\View\Helper\MenuBuilderHelper::generate()
      * @test
+     * @uses \MeCms\View\Helper\MenuBuilderHelper::generate()
      */
     public function testGenerate(): void
     {
-        $this->loadPlugins(['TestPlugin' => [], 'TestPluginTwo' => []]);
-
         foreach (['MeCms', 'TestPlugin'] as $plugin) {
             $result = $this->Helper->generate($plugin);
             $this->assertNotEmpty($result);
@@ -70,7 +80,10 @@ class MenuBuilderHelperTest extends HelperTestCase
             }
         }
 
-        $this->expectExceptionMessage('Method `TestPluginTwo\View\Helper\MenuHelper::badArticles()` returned only 1 values');
-        $this->Helper->generate('TestPluginTwo');
+        // Class `TestPluginThree\View\Helper\MenuHelper` does not extend `AbstractMenuHelper`
+        $this->assertException(fn() => $this->Helper->generate('TestPluginThree'), ObjectWrongInstanceException::class);
+
+        // Method `TestPluginTwo\View\Helper\MenuHelper::badArticles()` returns a bad value
+        $this->assertException(fn() => $this->Helper->generate('TestPluginTwo'), BadMethodCallException::class, 'Method `TestPluginTwo\View\Helper\MenuHelper::badArticles()` returned only 1 values');
     }
 }

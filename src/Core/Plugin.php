@@ -32,8 +32,8 @@ class Plugin extends BasePlugin
      *  - `exclude`, a plugin or array of plugins to be excluded;
      *  - `mecms_core`, if `false` excludes plugins automatically requested by MeCms;
      *  - `order`, if `true` the plugins will be sorted.
-     * @param array<string, mixed> $options Options
-     * @return array<string> Plugins
+     * @param array $options Options
+     * @return string[] Plugins
      */
     public static function all(array $options = []): array
     {

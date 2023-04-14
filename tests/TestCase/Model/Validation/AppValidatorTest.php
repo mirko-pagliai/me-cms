@@ -39,7 +39,7 @@ class AppValidatorTest extends TestCase
     protected AppTable $Users;
 
     /**
-     * @var array<string, array>
+     * @var array[]
      */
     protected array $example = [
         'Posts' => [

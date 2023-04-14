@@ -16,8 +16,6 @@ declare(strict_types=1);
 
 namespace MeCms\View\Helper;
 
-use Cake\View\Helper;
-
 /**
  * Menu Helper.
  *
@@ -31,25 +29,19 @@ use Cake\View\Helper;
  *  - the controllers handled by this menu, as an array.
  *
  * @see \MeCms\View\Helper\MenuBuilderHelper::generate() for more information
- * @property \MeCms\View\Helper\IdentityHelper $Identity
  */
-class MenuHelper extends Helper
+class MenuHelper extends AbstractMenuHelper
 {
     /**
-     * Helpers
-     * @var array
-     */
-    public $helpers = ['MeCms.Identity'];
-
-    /**
      * Default parameters for routers
-     * @var array<string, string>
+     * @var array
      */
     protected array $defaultParams = ['plugin' => 'MeCms', 'prefix' => ADMIN_PREFIX];
 
     /**
      * Internal function to generate the menu for "posts" actions
      * @return array Array with links, title, title options and handled controllers
+     * @throws \ErrorException
      */
     public function posts(): array
     {
@@ -74,6 +66,7 @@ class MenuHelper extends Helper
     /**
      * Internal function to generate the menu for "pages" actions
      * @return array Array with links, title, title options and handled controllers
+     * @throws \ErrorException
      */
     public function pages(): array
     {
@@ -98,6 +91,7 @@ class MenuHelper extends Helper
     /**
      * Internal function to generate the menu for "users" actions
      * @return array Array with links, title, title options and handled controllers
+     * @throws \ErrorException
      */
     public function users(): array
     {
@@ -122,6 +116,7 @@ class MenuHelper extends Helper
     /**
      * Internal function to generate the menu for "systems" actions
      * @return array Array with links, title, title options and handled controllers
+     * @throws \ErrorException
      */
     public function systems(): array
     {

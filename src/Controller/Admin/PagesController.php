@@ -94,7 +94,6 @@ class PagesController extends AppController
      *
      * Static pages must be located in `APP/View/StaticPages/`.
      * @return void
-     * @throws \ErrorException
      */
     public function indexStatics(): void
     {

@@ -341,7 +341,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->expectException(RecordNotFoundException::class);
         $this->expectExceptionMessage('Invalid token');
         $this->disableErrorHandlerMiddleware();
-        $this->get($url + ['token' => 'invalidToken']);
+        $this->get(['token' => 'invalidToken'] + $url);
     }
 
     /**

@@ -29,7 +29,6 @@ parameters:
                 - templates/layout/ajax
                 - templates/layout/email
                 - templates/layout/json
-                - templates/layout/rss
         -
             message: '#^Property MeTools\\TestSuite\\CommandTestCase::\$_(err|in) \(Cake\\Console\\TestSuite\\StubConsole(Input|Output)\) does not accept null\.$#'
             path: tests/TestCase/Command

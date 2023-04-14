@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -18,7 +19,6 @@ namespace MeCms\Test\TestCase\View\Helper;
 use Authentication\Identity;
 use Cake\Http\ServerRequest;
 use Cake\View\View;
-use MeCms\Model\Entity\User;
 use MeCms\View\Helper\IdentityHelper;
 use MeTools\TestSuite\HelperTestCase;
 
@@ -29,41 +29,23 @@ use MeTools\TestSuite\HelperTestCase;
 class IdentityHelperTest extends HelperTestCase
 {
     /**
-     * @var \MeCms\Model\Entity\User
-     */
-    protected User $User;
-
-    /**
-     * Fixtures
-     * @var array<string>
-     */
-    public $fixtures = [
-        'plugin.MeCms.Users',
-        'plugin.MeCms.UsersGroups',
-    ];
-
-    /**
      * @test
      * @uses \MeCms\View\Helper\IdentityHelper::isGroup()
      */
     public function testIsGroup(): void
     {
-        /** @var \MeCms\Model\Table\UsersTable $UsersTable */
-        $UsersTable = $this->getTable('MeCms.Users');
-        /** @var \MeCms\Model\Entity\User $User */
-        $User = $UsersTable->findByGroupId(2)->contain(['Groups' => ['fields' => ['name']]])->firstOrFail();
-        $this->User = $User;
-
-        $Request = $this->createPartialMock(ServerRequest::class, ['getAttribute']);
-        $Request->method('getAttribute')->with('identity')->willReturnCallback(fn(): Identity => new Identity($this->User->toArray()));
-
+        $Request = new ServerRequest();
+        $Request = $Request->withAttribute('identity', new Identity(['group' => ['name' => 'manager']]));
         $IdentityHelper = new IdentityHelper(new View($Request));
-        $IdentityHelper->initialize([]);
-
         $this->assertTrue($IdentityHelper->isGroup('manager'));
         $this->assertTrue($IdentityHelper->isGroup('manager', 'admin'));
         $this->assertFalse($IdentityHelper->isGroup('admin'));
         $this->assertFalse($IdentityHelper->isGroup('user'));
         $this->assertFalse($IdentityHelper->isGroup('admin', 'user'));
+
+        $this->expectExceptionMessage('`group.name` path is missing');
+        $Request = $Request->withAttribute('identity', new Identity([]));
+        $IdentityHelper = new IdentityHelper(new View($Request));
+        $this->assertFalse($IdentityHelper->isGroup('user'));
     }
 }

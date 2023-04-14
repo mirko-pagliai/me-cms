@@ -52,14 +52,22 @@ class QueryTest extends TestCase
             ->onlyMethods(['_cache'])
             ->getMock();
 
-        $Query->expects($this->exactly(4))
+        $matcher = $this->exactly(4);
+        $Query->expects($matcher)
             ->method('_cache')
-            ->withConsecutive(
-                [$this->equalTo($cacheKey), $this->equalTo($expectedConfig)],
-                [$this->equalTo($cacheKey), $this->equalTo('default')],
-                [$this->equalTo($cacheKey), $this->equalTo($expectedConfig)],
-                [$this->equalTo($cacheKey), $this->equalTo($defaultEngine)]
-            );
+            ->with($this->equalTo($cacheKey), $this->callback(function ($config) use ($matcher, $expectedConfig, $defaultEngine): bool {
+                switch ($matcher->getInvocationCount()) {
+                    case 1:
+                    case 3:
+                        return $config === $expectedConfig;
+                    case 2:
+                        return $config === 'default';
+                    case 4:
+                        return $config === $defaultEngine;
+                    default:
+                        return false;
+                }
+            }));
 
         $Query->cache($cacheKey);
         $Query->cache($cacheKey, 'default');
@@ -75,14 +83,22 @@ class QueryTest extends TestCase
             ->onlyMethods(['_cache'])
             ->getMock();
 
-        $Query->expects($this->exactly(4))
+        $matcher = $this->exactly(4);
+        $Query->expects($matcher)
             ->method('_cache')
-            ->withConsecutive(
-                [$this->equalTo($cacheKey), $this->equalTo('default')],
-                [$this->equalTo($cacheKey), $this->equalTo('default')],
-                [$this->equalTo($cacheKey), $this->equalTo('articles')],
-                [$this->equalTo($cacheKey), $this->equalTo($defaultEngine)]
-            );
+            ->with($this->equalTo($cacheKey), $this->callback(function ($config) use ($matcher, $defaultEngine): bool {
+                switch ($matcher->getInvocationCount()) {
+                    case 1:
+                    case 2:
+                        return $config === 'default';
+                    case 3:
+                        return $config === 'articles';
+                    case 4:
+                        return $config === $defaultEngine;
+                    default:
+                        return false;
+                }
+            }));
 
         $Query->cache($cacheKey);
         $Query->cache($cacheKey, 'default');

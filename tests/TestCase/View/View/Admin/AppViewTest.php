@@ -15,6 +15,8 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\View\View\Admin;
 
+use Authentication\Identity;
+use Cake\Http\ServerRequest;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\View\Admin\AppView;
 
@@ -37,14 +39,16 @@ class AppViewTest extends TestCase
         parent::setUp();
 
         if (empty($this->View)) {
-            $this->View = new AppView();
-            $this->View->setRequest($this->View->getRequest()->withEnv('REQUEST_URI', '/some-page'));
+            $Request = new ServerRequest();
+            $Request = $Request->withEnv('REQUEST_URI', '/some-page')
+                ->withAttribute('identity', new Identity(['group' => ['name' => 'admin']]));
+            $this->View = new AppView($Request);
         }
     }
 
     /**
-     * Tests for `__construct()` method
      * @test
+     * @uses \MeCms\View\View\Admin\AppView::__construct()
      */
     public function testConstruct(): void
     {
@@ -52,9 +56,8 @@ class AppViewTest extends TestCase
     }
 
     /**
-     * Tests for `render()` method
-     * @uses \MeCms\View\View\Admin\AppView::render()
      * @test
+     * @uses \MeCms\View\View\Admin\AppView::render()
      */
     public function testRender(): void
     {

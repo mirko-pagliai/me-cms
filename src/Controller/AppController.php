@@ -141,7 +141,7 @@ abstract class AppController extends BaseAppController
 
     /**
      * Sets the `paging` request attribute and parameter
-     * @param array<string, array> $paging Paging value
+     * @param array[] $paging Paging value
      * @return $this
      * @since 2.29.1
      * @noinspection PhpMissingReturnTypeInspection

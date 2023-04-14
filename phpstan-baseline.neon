@@ -6,6 +6,11 @@ parameters:
 			path: src/Utility/Sitemap/SitemapBuilder.php
 
 		-
+			message: "#^Access to an undefined property Feed\\\\View\\\\RssView\\:\\:\\$Rss\\.$#"
+			count: 2
+			path: templates/layout/rss/default.php
+
+		-
 			message: "#^Binary operation \"\\.\" between 'ORDER BY ' and array\\<string\\>\\|string\\|null results in an error\\.$#"
 			count: 1
 			path: tests/TestCase/Model/Table/AppTableTest.php

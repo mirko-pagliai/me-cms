@@ -110,6 +110,11 @@
       <code>$tags</code>
     </UndefinedGlobalVariable>
   </file>
+  <file src="templates/layout/rss/default.php">
+    <UndefinedThisPropertyFetch occurrences="1">
+      <code>$this-&gt;Rss</code>
+    </UndefinedThisPropertyFetch>
+  </file>
   <file src="tests/TestCase/Command/UsersCommandTest.php">
     <UndefinedPropertyAssignment occurrences="1">
       <code>$this-&gt;Command-&gt;Users</code>

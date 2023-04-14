@@ -33,7 +33,7 @@ use Tools\Filesystem;
 class UsersControllerTest extends ControllerTestCase
 {
     /**
-     * @var array<string, int|string>
+     * @var array
      */
     protected static array $example = [
         'group_id' => 1,
@@ -192,7 +192,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertFlashMessage('Only the admin founder can do this');
 
         //The admin founder can edit others admin users
-        $this->setAuthData('admin', 1);
+        $this->setAuthData('admin');
         $this->get($url);
         $this->assertResponseOkAndNotEmpty();
     }

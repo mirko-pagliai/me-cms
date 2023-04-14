@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace TestPlugin\View\Helper;
 
-use Cake\View\Helper;
+use MeCms\View\Helper\AbstractMenuHelper;
 
-class MenuHelper extends Helper
+class MenuHelper extends AbstractMenuHelper
 {
     public $helpers = ['MeTools.Html'];
 
@@ -25,6 +25,10 @@ class MenuHelper extends Helper
         ];
 
         return [$links, 'First menu', ['icon' => 'home'], ['Articles']];
+    }
+
+    public function empty_return()
+    {
     }
 
     public function other_items(): array

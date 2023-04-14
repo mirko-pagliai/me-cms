@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -24,12 +23,12 @@ use MeTools\View\Helper\HtmlHelper;
 
 /**
  * Abstract class for test `MenuHelper` classes
- * @property class-string<\Cake\View\Helper> $originClassName
+ * @property class-string<\MeCms\View\Helper\AbstractMenuHelper> $originClassName
  */
 abstract class MenuHelperTestCase extends HelperTestCase
 {
     /**
-     * @var \Cake\View\Helper&\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeCms\View\Helper\AbstractMenuHelper&\PHPUnit\Framework\MockObject\MockObject
      */
     protected Helper $Helper;
 
@@ -44,7 +43,7 @@ abstract class MenuHelperTestCase extends HelperTestCase
 
         if (empty($this->Helper)) {
             $methodsToMock = get_child_methods($this->originClassName);
-            /** @var \MeCms\View\Helper\MenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper */
+            /** @var \MeCms\View\Helper\AbstractMenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper */
             $Helper = $this->getMockForHelper($this->originClassName, $methodsToMock);
 
             $OriginalHelper = new $this->originClassName($Helper->getView());
@@ -74,7 +73,6 @@ abstract class MenuHelperTestCase extends HelperTestCase
     {
         $Request = $this->Helper->getView()->getRequest()->withAttribute('identity', new Identity($data));
         $this->Helper->getView()->setRequest($Request);
-        /** @phpstan-ignore-next-line */
         if ($this->Helper->Identity) {
             $this->Helper->Identity->initialize([]);
         }
