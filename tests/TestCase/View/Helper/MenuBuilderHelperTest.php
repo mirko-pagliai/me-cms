@@ -61,7 +61,7 @@ class MenuBuilderHelperTest extends HelperTestCase
             'users',
             'systems',
         ], $this->Helper->getMethods('MeCms'));
-        $this->assertEquals(['articles', 'other_items'], $this->Helper->getMethods('TestPlugin'));
+        $this->assertEquals(['articles', 'empty_return', 'other_items'], $this->Helper->getMethods('TestPlugin'));
         $this->assertEquals(['badArticles'], $this->Helper->getMethods('TestPluginTwo'));
     }
 

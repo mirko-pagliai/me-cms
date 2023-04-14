@@ -27,6 +27,10 @@ class MenuHelper extends AbstractMenuHelper
         return [$links, 'First menu', ['icon' => 'home'], ['Articles']];
     }
 
+    public function empty_return()
+    {
+    }
+
     public function other_items(): array
     {
         $links = [
