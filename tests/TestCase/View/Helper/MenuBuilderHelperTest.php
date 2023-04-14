@@ -26,10 +26,14 @@ use Tools\Exception\ObjectWrongInstanceException;
 
 /**
  * MenuBuilderHelperTest class
- * @property \MeCms\View\Helper\MenuBuilderHelper $Helper
  */
 class MenuBuilderHelperTest extends HelperTestCase
 {
+    /**
+     * @var \MeCms\View\Helper\MenuBuilderHelper
+     */
+    protected MenuBuilderHelper $Helper;
+
     /**
      * Called before every test method
      * @return void
