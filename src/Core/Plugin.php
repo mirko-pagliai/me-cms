@@ -56,4 +56,14 @@ class Plugin extends BasePlugin
 
         return $plugins;
     }
+
+    /**
+     * Gets all loaded extensions of MeCms
+     * @return string[]
+     * @since 2.32.0
+     */
+    public static function extensions(): array
+    {
+        return array_values(array_filter(parent::loaded(), fn(string $name): bool => str_starts_with($name, 'MeCms') && $name !== 'MeCms'));
+    }
 }

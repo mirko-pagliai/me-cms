@@ -1,4 +1,8 @@
 # 2.x branch
+## 2.32 branch
+### 2.32.0
+* added `Plugin::extensions()` method.
+
 ## 2.31 branch
 ### 2.31.9
 * fixed little bug for `IdentityHelper::isGroup()`;
