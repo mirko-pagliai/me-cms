@@ -32,14 +32,14 @@ class PluginTest extends TestCase
         $this->removePlugins(['TestPlugin']);
 
         $result = Plugin::all();
-        $this->assertEquals('MeCms', $result[0]);
-        $this->assertEquals('MeTools', $result[1]);
+        $this->assertSame('MeCms', $result[0]);
+        $this->assertSame('MeTools', $result[1]);
         $this->assertNotContains('TestPlugin', $result);
 
         $this->loadPlugins(['TestPlugin' => []]);
         $result = Plugin::all();
-        $this->assertEquals('MeCms', $result[0]);
-        $this->assertEquals('MeTools', $result[1]);
+        $this->assertSame('MeCms', $result[0]);
+        $this->assertSame('MeTools', $result[1]);
         $this->assertContains('TestPlugin', $result);
 
         $this->assertSame($result, Plugin::all(['mecms_core' => true]));
