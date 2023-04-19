@@ -18,6 +18,10 @@ use Cake\Core\Configure;
 use Cake\Database\TypeFactory;
 use Cake\Log\Log;
 use MeCms\Database\Type\JsonEntityType;
+use MeCms\View\Helper\MenuHelper\PagesMenuHelper;
+use MeCms\View\Helper\MenuHelper\PostsMenuHelper;
+use MeCms\View\Helper\MenuHelper\SystemsMenuHelper;
+use MeCms\View\Helper\MenuHelper\UsersMenuHelper;
 
 require_once __DIR__ . DS . 'constants.php';
 
@@ -27,6 +31,14 @@ Configure::write('CONFIG_FILES', [
     'MeCms.recaptcha',
     'MeCms.me_cms',
     'MeCms.widgets',
+]);
+
+//Sets the menu helpers that will be used
+Configure::write('MeCms.MenuHelpers', [
+    PostsMenuHelper::class,
+    PagesMenuHelper::class,
+    UsersMenuHelper::class,
+    SystemsMenuHelper::class,
 ]);
 
 //Sets the directories to be created and which must be writable

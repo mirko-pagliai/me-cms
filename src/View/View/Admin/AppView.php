@@ -19,7 +19,6 @@ use MeCms\View\View;
 
 /**
  * Application view class for admin views
- * @property \MeCms\View\Helper\MenuBuilderHelper $MenuBuilder
  * @property \MeCms\View\Helper\PriorityBadgeHelper $PriorityBadge
  */
 class AppView extends View
@@ -39,7 +38,6 @@ class AppView extends View
         parent::initialize();
 
         $this->loadHelper('MeCms.PriorityBadge');
-        $this->loadHelper('MeCms.MenuBuilder');
     }
 
     /**

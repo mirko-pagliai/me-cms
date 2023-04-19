@@ -1,6 +1,11 @@
 # 2.x branch
 ## 2.32 branch
 ### 2.32.0
+* the `MenuHelper` has been removed and replaced with more classes under the `MeCms\View\Helper\MenuHelper` namespace
+  (one class for each menu, instead of one method for each menu in the helper itself). The helper list is set in the
+  bootstrap, with the `MeCms.MenuHelpers` config key (and the other plugins will have to do the same);
+* `AbstractMenuHelper` has been completely rewritten, with new methods to be implemented by menu helpers that extend it;
+* `MenuBuilderHelper` no longer exists (and is not being replaced);
 * added `Plugin::extensions()` method.
 
 ## 2.31 branch
