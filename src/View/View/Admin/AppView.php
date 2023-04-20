@@ -62,6 +62,7 @@ class AppView extends View
         );
 
         return array_map(function (string $className): AbstractMenuHelper {
+            /** @var class-string<\MeCms\View\Helper\AbstractMenuHelper> $className */
             Exceptionist::isInstanceOf($className, AbstractMenuHelper::class);
 
             /** @var \MeCms\View\Helper\AbstractMenuHelper $Helper */
