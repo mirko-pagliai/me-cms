@@ -18,10 +18,10 @@ namespace MeCms\Test\TestCase\View\View\Admin;
 use Authentication\Identity;
 use Cake\Core\Configure;
 use Cake\Http\ServerRequest;
+use MeCms\Example\View\Helper\ExampleMenuHelper;
 use MeCms\TestSuite\TestCase;
 use MeCms\View\Helper\AbstractMenuHelper;
 use MeCms\View\View\Admin\AppView;
-use MeCms\Example\View\Helper\ExampleMenuHelper;
 
 /**
  * AppViewTest class
