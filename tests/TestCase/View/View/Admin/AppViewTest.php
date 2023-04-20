@@ -16,9 +16,12 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\View\View\Admin;
 
 use Authentication\Identity;
+use Cake\Core\Configure;
 use Cake\Http\ServerRequest;
 use MeCms\TestSuite\TestCase;
+use MeCms\View\Helper\AbstractMenuHelper;
 use MeCms\View\View\Admin\AppView;
+use MeCms\Example\View\Helper\ExampleMenuHelper;
 
 /**
  * AppViewTest class
@@ -47,6 +50,17 @@ class AppViewTest extends TestCase
     }
 
     /**
+     * Called after every test method
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->removePlugins(['MeCmsExample']);
+    }
+
+    /**
      * @test
      * @uses \MeCms\View\View\Admin\AppView::__construct()
      */
@@ -57,12 +71,42 @@ class AppViewTest extends TestCase
 
     /**
      * @test
+     * @uses \MeCms\View\View\Admin\AppView::getAllMenuHelpers()
+     */
+    public function testGetAllMenuHelpers(): void
+    {
+        $expectedClasses = Configure::readOrFail('MeCms.MenuHelpers');
+        $result = $this->View->getAllMenuHelpers();
+        $this->assertSame($expectedClasses, array_map('get_class', $result));
+        $this->assertContainsOnlyInstancesOf(AbstractMenuHelper::class, $result);
+        $this->assertCount(count($expectedClasses), $result);
+
+        //All helpers are loaded
+        $loadedHelpers = $this->View->helpers()->loaded();
+        foreach ($expectedClasses as $class) {
+            $this->assertContains(get_class_short_name($class), $loadedHelpers);
+        }
+
+        $this->loadPlugins(['MeCmsExample' => []]);
+        $expectedClasses[] = ExampleMenuHelper::class;
+        $result = $this->View->getAllMenuHelpers();
+        $this->assertSame($expectedClasses, array_map('get_class', $result));
+        $this->assertContainsOnlyInstancesOf(AbstractMenuHelper::class, $result);
+        $this->assertCount(count($expectedClasses), $result);
+        $this->assertContains(ExampleMenuHelper::class, array_map('get_class', $result));
+
+        //Using a bad class
+        $this->expectExceptionMessage('Object `stdClass` is not an instance of `MeCms\View\Helper\AbstractMenuHelper`');
+        Configure::write('MeCms.MenuHelpers', [...$expectedClasses, \stdClass::class]);
+        $this->View->getAllMenuHelpers();
+    }
+
+    /**
+     * @test
      * @uses \MeCms\View\View\Admin\AppView::render()
      */
     public function testRender(): void
     {
-        $this->removePlugins(['TestPluginTwo']);
-
         $this->View->render('StaticPages/page-from-app');
         $this->assertEquals([
             1 => '1 - Very low',

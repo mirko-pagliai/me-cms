@@ -1,6 +1,7 @@
 # 2.x branch
 ## 2.32 branch
 ### 2.32.0
+* added `MeCms\View\View\Admin\AppView::getAllMenuHelpers()` method. The admin sidebar template has been rewritten;
 * the `MenuHelper` has been removed and replaced with more classes under the `MeCms\View\Helper\MenuHelper` namespace
   (one class for each menu, instead of one method for each menu in the helper itself). The helper list is set in the
   bootstrap, with the `MeCms.MenuHelpers` config key (and the other plugins will have to do the same);

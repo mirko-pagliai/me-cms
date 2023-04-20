@@ -15,7 +15,11 @@ declare(strict_types=1);
 
 namespace MeCms\View\View\Admin;
 
+use Cake\Core\Configure;
+use MeCms\Core\Plugin;
+use MeCms\View\Helper\AbstractMenuHelper;
 use MeCms\View\View;
+use Tools\Exceptionist;
 
 /**
  * Application view class for admin views
@@ -38,6 +42,33 @@ class AppView extends View
         parent::initialize();
 
         $this->loadHelper('MeCms.PriorityBadge');
+    }
+
+    /**
+     * Gets all "menu helpers", as loaded helpers
+     * @return \MeCms\View\Helper\AbstractMenuHelper[]
+     * @since 2.32.0
+     * @throws \ReflectionException|\Exception
+     * @throws \Tools\Exception\ObjectWrongInstanceException
+     */
+    public function getAllMenuHelpers(): array
+    {
+        $plugins = array_filter(Plugin::extensions(), fn(string $plugin): bool => Configure::check($plugin . '.MenuHelpers'));
+
+        //Merges the "menu helpers" from MeCms with the "menu helpers" from any extension plugin
+        $classes = array_merge(
+            (array)Configure::readOrFail('MeCms.MenuHelpers'),
+            ...array_map(fn(string $plugin): array => (array)Configure::read($plugin . '.MenuHelpers'), $plugins)
+        );
+
+        return array_map(function (string $className): AbstractMenuHelper {
+            Exceptionist::isInstanceOf($className, AbstractMenuHelper::class);
+
+            /** @var \MeCms\View\Helper\AbstractMenuHelper $Helper */
+            $Helper = $this->helpers()->load(get_class_short_name($className), compact('className'));
+
+            return $Helper;
+        }, $classes);
     }
 
     /**
