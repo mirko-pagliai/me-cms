@@ -315,11 +315,10 @@ class PostsWidgetsCellTest extends CellTestCase
             'input' => [
                 'type' => 'text',
                 'name' => 'p',
+                'aria-label' => 'Search...',
                 'class' => 'form-control',
                 'placeholder' => 'Search...',
-                'aria-label' => 'Search...',
             ],
-            'span' => ['class' => 'input-group-text'],
             ['div' => ['class' => 'col-12 submit']],
             'button' => ['class' => 'btn btn-primary', 'value' => 'Submit'],
             'i' => ['class' => 'fas fa-search'],
@@ -327,7 +326,6 @@ class PostsWidgetsCellTest extends CellTestCase
             '/i',
             '/button',
             '/div',
-            '/span',
             '/div',
             '/div',
             '/form',
@@ -335,7 +333,6 @@ class PostsWidgetsCellTest extends CellTestCase
             '/div',
         ];
         $result = $this->Widget->widget($widget)->render();
-//        dd($result);
         $this->assertHtml($expected, $result);
 
         //Empty on search
