@@ -1,6 +1,11 @@
 # 2.x branch
+## 2.32 branch
+### 2.32.0
+* as for `me-tools` 2.24.0, it uses `Configure::readFromPlugins()` with `ConfigFiles`, `WritableDirs` and `VendorLinks`
+  keys instead of the old `CONFIG_FILES`, `WRITABLE_DIRS` and `VENDOR_LINKS` keys.
+
 ## 2.31 branch
-### 2.31.0
+### 2.31.10
 * uses `Authentication` and `Authorization` plugins instead of the old `AuthComponent`;
 * some controller code has been moved from the `beforeFilter()` method to `beforeRender()`;
 * `\MeCms\View\AdminView` has become `\MeCms\View\Admin\AppView`;

@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command\Install;
 
-use Cake\Core\Configure;
+use MeTools\Core\Configure;
 use MeTools\TestSuite\CommandTestCase;
 use Tools\Filesystem;
 
@@ -33,7 +33,8 @@ class CreateDirectoriesCommandTest extends CommandTestCase
     {
         $this->exec('me_cms.create_directories -v');
         $this->assertExitSuccess();
-        $expected = array_map(fn(string $path): string => 'File or directory `' . Filesystem::instance()->rtr($path) . '` already exists', array_clean(Configure::read('WRITABLE_DIRS')));
-        $this->assertSame($expected, $this->_out->messages());
+        foreach (Configure::read('MeCms.WritableDirs') as $expectedDir) {
+            $this->assertOutputContains('File or directory `' . Filesystem::instance()->rtr($expectedDir) . '` already exists');
+        }
     }
 }

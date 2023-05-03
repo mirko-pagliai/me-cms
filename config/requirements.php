@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-use Cake\Core\Configure;
+use MeTools\Core\Configure;
 
 if (!extension_loaded('imagick') && !extension_loaded('gd')) {
     trigger_error('You must enable the imagick or the gd extension', E_USER_ERROR);
@@ -23,7 +23,7 @@ if (!extension_loaded('zip')) {
     trigger_error('You must enable the zip extension', E_USER_ERROR);
 }
 
-foreach (Configure::readOrFail('WRITABLE_DIRS') as $dir) {
+foreach (Configure::readFromPlugins('WritableDirs') as $dir) {
     if (!file_exists($dir)) {
         @mkdir($dir, 0777, true);
     }
