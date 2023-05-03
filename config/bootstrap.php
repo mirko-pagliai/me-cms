@@ -26,8 +26,7 @@ use MeCms\View\Helper\MenuHelper\UsersMenuHelper;
 require_once __DIR__ . DS . 'constants.php';
 
 //Sets files to be copied
-Configure::write('CONFIG_FILES', [
-    ...Configure::read('CONFIG_FILES', []),
+Configure::write('MeCms.ConfigFiles', [
     'MeCms.recaptcha',
     'MeCms.me_cms',
     'MeCms.widgets',
@@ -42,8 +41,7 @@ Configure::write('MeCms.MenuHelpers', [
 ]);
 
 //Sets the directories to be created and which must be writable
-Configure::write('WRITABLE_DIRS', [
-    ...Configure::read('WRITABLE_DIRS', []),
+Configure::write('MeCms.WritableDirs', [
     getConfigOrFail('Assets.target'),
     THUMBER_TARGET,
     UPLOADED,
@@ -52,10 +50,10 @@ Configure::write('WRITABLE_DIRS', [
 ]);
 
 //Sets symbolic links for vendor assets to be created
-Configure::write('VENDOR_LINKS', [
-    'studio-42' . DS . 'elfinder' => 'elfinder',
-    'enyo' . DS . 'dropzone' . DS . 'dist' => 'dropzone',
-] + Configure::read('VENDOR_LINKS', []));
+Configure::write('MeCms.VendorLinks', [
+    'studio-42/elfinder' => 'elfinder',
+    'enyo/dropzone/dist' => 'dropzone',
+]);
 
 //Sets configuration for the Tokens plugin
 Configure::write('Tokens.usersClassOptions', [
@@ -78,8 +76,7 @@ foreach ((array)Configure::consume('Cache') as $key => $config) {
     }
 }
 
-//Loads the widgets configuration and merges with the configuration from
-//  application, if exists
+//Loads the widgets configuration and merges with the configuration from application, if exists
 Configure::load('MeCms.widgets');
 if (is_readable(CONFIG . 'widgets.php')) {
     Configure::load('widgets', 'default', false);

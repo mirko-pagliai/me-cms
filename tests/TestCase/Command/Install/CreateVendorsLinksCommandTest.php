@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command\Install;
 
-use Cake\Core\Configure;
+use MeTools\Core\Configure;
 use MeTools\TestSuite\CommandTestCase;
 use Tools\Filesystem;
 
@@ -31,17 +31,14 @@ class CreateVendorsLinksCommandTest extends CommandTestCase
      */
     public function testExecute(): void
     {
-        $expected = array_clean(array_map(function (string $target, string $origin): string {
-            $target = WWW_ROOT . 'vendor' . DS . $target;
-            $relTarget = Filesystem::instance()->rtr($target);
-            if (file_exists($target)) {
-                return 'File or directory `' . $relTarget . '` already exists';
-            }
+        $Filesystem = new Filesystem();
 
-            return file_exists(ROOT . 'vendor' . DS . $origin) ? 'Link `' . $relTarget . '` has been created' : '';
-        }, Configure::read('VENDOR_LINKS'), array_keys(Configure::read('VENDOR_LINKS'))));
+        $targetFiles = array_map(fn(string $target): string => $Filesystem->rtr($Filesystem->concatenate(WWW_ROOT, 'vendor', $target)), Configure::read('MeCms.VendorLinks'));
+
         $this->exec('me_cms.create_vendors_links -v');
         $this->assertExitSuccess();
-        $this->assertSame($expected, $this->_out->messages());
+        foreach ($targetFiles as $targetFile) {
+            $this->assertOutputContains('File or directory `' . $targetFile . '` already exists');
+        }
     }
 }

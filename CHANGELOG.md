@@ -1,6 +1,8 @@
 # 2.x branch
 ## 2.32 branch
-### 2.32.10
+### 2.32.0
+* as for `me-tools` 2.24.0, it uses `Configure::readFromPlugins()` with `ConfigFiles`, `WritableDirs` and `VendorLinks`
+  keys instead of the old `CONFIG_FILES`, `WRITABLE_DIRS` and `VENDOR_LINKS` keys;
 * added `MeCms\View\View\Admin\AppView::getAllMenuHelpers()` method. The admin sidebar template has been rewritten;
 * the `MenuHelper` has been removed and replaced with more classes under the `MeCms\View\Helper\MenuHelper` namespace
   (one class for each menu, instead of one method for each menu in the helper itself). The helper list is set in the
@@ -69,6 +71,14 @@
 * updated for php-tools 1.7.1.
 
 ### 2.31.0
+=======
+### 2.32.0
+* as for `me-tools` 2.24.0, it uses `Configure::readFromPlugins()` with `ConfigFiles`, `WritableDirs` and `VendorLinks`
+  keys instead of the old `CONFIG_FILES`, `WRITABLE_DIRS` and `VENDOR_LINKS` keys.
+
+## 2.31 branch
+### 2.31.10
+>>>>>>> develop-next-release
 * uses `Authentication` and `Authorization` plugins instead of the old `AuthComponent`;
 * some controller code has been moved from the `beforeFilter()` method to `beforeRender()`;
 * `\MeCms\View\AdminView` has become `\MeCms\View\Admin\AppView`;

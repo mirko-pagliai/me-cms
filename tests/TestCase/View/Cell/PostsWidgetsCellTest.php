@@ -310,9 +310,9 @@ class PostsWidgetsCellTest extends CellTestCase
             'input' => [
                 'type' => 'text',
                 'name' => 'p',
+                'aria-label' => 'Search...',
                 'class' => 'form-control',
                 'placeholder' => 'Search...',
-                'aria-label' => 'Search...',
             ],
             'button' => ['class' => 'btn btn-primary', 'type' => 'submit'],
             'i' => ['class' => 'fas fa-search'],
