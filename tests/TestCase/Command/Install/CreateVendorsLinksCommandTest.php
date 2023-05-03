@@ -34,6 +34,7 @@ class CreateVendorsLinksCommandTest extends CommandTestCase
         $Filesystem = new Filesystem();
 
         $targetFiles = array_map(fn(string $target): string => $Filesystem->rtr($Filesystem->concatenate(WWW_ROOT, 'vendor', $target)), Configure::read('MeCms.VendorLinks'));
+        $targetFiles = array_map(fn(string $target): string => file_exists($target) ? $target : $Filesystem->createFile($target), $targetFiles);
 
         $this->exec('me_cms.create_vendors_links -v');
         $this->assertExitSuccess();
