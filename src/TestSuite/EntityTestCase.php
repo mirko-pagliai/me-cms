@@ -56,11 +56,11 @@ abstract class EntityTestCase extends TestCase
     /**
      * Asserts that the entity has a "no accessible" property
      * @param string|array $property Property name
+     * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
     public function assertHasNoAccessibleProperty($property, string $message = ''): void
     {
-
         foreach ((array)$property as $name) {
             $message = $message ?: sprintf('Failed asserting that `\%s::$%s` property is not accessible', get_class($this->Entity), $name);
             $this->assertFalse($this->Entity->isAccessible($name), $message);
