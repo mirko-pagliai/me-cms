@@ -26,16 +26,17 @@ use Tools\Filesystem;
 class CopyConfigCommandTest extends CommandTestCase
 {
     /**
-     * @uses \MeCms\Command\Install\CopyConfigCommand::execute()
      * @test
+     * @uses \MeCms\Command\Install\CopyConfigCommand::execute()
      */
     public function testExecute(): void
     {
         $Filesystem = new Filesystem();
 
-        $expectedFiles = array_map(fn(string $file): string => $Filesystem->concatenate(CONFIG, pluginSplit($file)[1] . '.php'), Configure::readFromPlugins('ConfigFiles'));
         $this->exec('me_cms.copy_config -v');
         $this->assertExitSuccess();
+        $this->assertErrorEmpty();
+        $expectedFiles = array_map(fn(string $file): string => $Filesystem->concatenate(CONFIG, pluginSplit($file)[1] . '.php'), Configure::read('MeCms.ConfigFiles'));
         foreach ($expectedFiles as $expectedFile) {
             $this->assertOutputContains('File or directory `' . $Filesystem->rtr($expectedFile) . '` already exists');
         }

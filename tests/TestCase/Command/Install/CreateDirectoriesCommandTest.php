@@ -26,13 +26,14 @@ use Tools\Filesystem;
 class CreateDirectoriesCommandTest extends CommandTestCase
 {
     /**
-     * @uses \MeTools\Command\Install\CreateDirectoriesCommand::execute()
      * @test
+     * @uses \MeTools\Command\Install\CreateDirectoriesCommand::execute()
      */
     public function testExecute(): void
     {
         $this->exec('me_cms.create_directories -v');
         $this->assertExitSuccess();
+        $this->assertErrorEmpty();
         foreach (Configure::read('MeCms.WritableDirs') as $expectedDir) {
             $this->assertOutputContains('File or directory `' . Filesystem::instance()->rtr($expectedDir) . '` already exists');
         }
