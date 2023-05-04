@@ -25,7 +25,6 @@ parameters:
         -
             message: '#^Variable \$\w+ might not be defined\.$#'
             paths:
-                - templates/email
                 - templates/layout/ajax
                 - templates/layout/email
                 - templates/layout/json
