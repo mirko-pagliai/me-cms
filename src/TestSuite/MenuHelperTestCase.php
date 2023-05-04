@@ -11,57 +11,36 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/me-cms
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       2.28.0
  */
 
 namespace MeCms\TestSuite;
 
 use Authentication\Identity;
-use Cake\View\Helper;
 use MeTools\TestSuite\HelperTestCase;
 use MeTools\View\Helper\HtmlHelper;
 
 /**
  * Abstract class for test `MenuHelper` classes
- * @property class-string<\MeCms\View\Helper\AbstractMenuHelper> $originClassName
+ * @property \MeCms\View\Helper\AbstractMenuHelper $Helper
  */
 abstract class MenuHelperTestCase extends HelperTestCase
 {
     /**
-     * @var \MeCms\View\Helper\AbstractMenuHelper&\PHPUnit\Framework\MockObject\MockObject
+     * @var \MeTools\View\Helper\HtmlHelper
      */
-    protected Helper $Helper;
+    protected HtmlHelper $Html;
 
     /**
      * Called before every test method
      * @return void
-     * @throws \ErrorException
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        if (empty($this->Helper)) {
-            $methodsToMock = get_child_methods($this->originClassName);
-            /** @var \MeCms\View\Helper\AbstractMenuHelper&\PHPUnit\Framework\MockObject\MockObject $Helper */
-            $Helper = $this->getMockForHelper($this->originClassName, $methodsToMock);
-
-            $OriginalHelper = new $this->originClassName($Helper->getView());
-            $HtmlHelper = new HtmlHelper($Helper->getView());
-
-            //Each method returns its original value, but links (the first result value) are already built and returned as HTML string
-            foreach ($methodsToMock as $method) {
-                $Helper->method($method)->willReturnCallback(function () use ($OriginalHelper, $HtmlHelper, $method) {
-                    $result = $OriginalHelper->$method();
-
-                    return empty($result) ? [] : [implode('', array_map(fn(array $link): string => $HtmlHelper->link(...$link), $result[0]))] + $result;
-                });
-            }
-
-            $this->Helper = $Helper;
-        }
-
         $this->setIdentity(['group' => ['name' => 'user']]);
+
+        $this->Html ??= new HtmlHelper($this->Helper->getView());
     }
 
     /**
@@ -73,8 +52,51 @@ abstract class MenuHelperTestCase extends HelperTestCase
     {
         $Request = $this->Helper->getView()->getRequest()->withAttribute('identity', new Identity($data));
         $this->Helper->getView()->setRequest($Request);
-        if ($this->Helper->Identity) {
+
+        if (property_exists($this->Helper, 'Identity')) {
             $this->Helper->Identity->initialize([]);
         }
+    }
+
+    /**
+     * Internal method to get links as html.
+     *
+     * Returns an array where each link has been transformed into a html string.
+     * @return string[]
+     */
+    protected function getLinksAsHtml(): array
+    {
+        return array_map(fn(array $link): string => call_user_func_array([$this->Html, 'link'], $link), $this->Helper->getLinks());
+    }
+
+    /**
+     * Test for `getLinks()` method.
+     *
+     * You have implement this method.
+     * @return void
+     * @test
+     */
+    abstract public function testGetLinks(): void;
+
+    /**
+     * Test for `getOptions()` method
+     * @return void
+     * @test
+     */
+    public function testGetOptions(): void
+    {
+        $result = $this->Helper->getOptions();
+        $this->assertIsArrayNotEmpty($result);
+        $this->assertArrayHasKey('icon', $result);
+    }
+
+    /**
+     * Test for `getTitle()` method
+     * @return void
+     * @test
+     */
+    public function testGetTitle(): void
+    {
+        $this->assertIsString($this->Helper->getTitle());
     }
 }
