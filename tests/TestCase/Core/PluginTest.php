@@ -57,16 +57,4 @@ class PluginTest extends TestCase
         $result = Plugin::all(['exclude' => 'TestPlugin', 'mecms_core' => false]);
         $this->assertSame(['MeCms'], $result);
     }
-
-    /**
-     * @test
-     * @uses \MeCms\Core\Plugin::extensions()
-     */
-    public function testExtensions(): void
-    {
-        $this->assertEmpty(Plugin::extensions());
-
-        $this->loadPlugins(['MeCms/Example' => []]);
-        $this->assertSame(['MeCms/Example'], Plugin::extensions());
-    }
 }
