@@ -15,10 +15,9 @@ declare(strict_types=1);
 
 namespace MeCms\View\View\Admin;
 
-use Cake\Core\Configure;
-use MeCms\Core\Plugin;
 use MeCms\View\Helper\AbstractMenuHelper;
 use MeCms\View\View;
+use MeTools\Core\Configure;
 use Tools\Exceptionist;
 
 /**
@@ -47,20 +46,12 @@ class AppView extends View
     /**
      * Gets all "menu helpers", as loaded helpers
      * @return \MeCms\View\Helper\AbstractMenuHelper[]
-     * @since 2.32.0
-     * @throws \ReflectionException|\Exception
+     * @throws \Exception|\ReflectionException
      * @throws \Tools\Exception\ObjectWrongInstanceException
+     * @since 2.32.0
      */
     public function getAllMenuHelpers(): array
     {
-        $plugins = array_filter(Plugin::extensions(), fn(string $plugin): bool => Configure::check($plugin . '.MenuHelpers'));
-
-        //Merges the "menu helpers" from MeCms with the "menu helpers" from any extension plugin
-        $classes = array_merge(
-            (array)Configure::readOrFail('MeCms.MenuHelpers'),
-            ...array_map(fn(string $plugin): array => (array)Configure::read($plugin . '.MenuHelpers'), $plugins)
-        );
-
         return array_map(function (string $className): AbstractMenuHelper {
             /** @var class-string<\MeCms\View\Helper\AbstractMenuHelper> $className */
             Exceptionist::isInstanceOf($className, AbstractMenuHelper::class);
@@ -69,7 +60,7 @@ class AppView extends View
             $Helper = $this->helpers()->load(get_class_short_name($className), compact('className'));
 
             return $Helper;
-        }, $classes);
+        }, Configure::readFromPlugins('MenuHelpers'));
     }
 
     /**
