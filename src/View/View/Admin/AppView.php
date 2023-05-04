@@ -52,15 +52,15 @@ class AppView extends View
      */
     public function getAllMenuHelpers(): array
     {
-        return array_map(function (string $className): AbstractMenuHelper {
-            /** @var class-string<\MeCms\View\Helper\AbstractMenuHelper> $className */
-            Exceptionist::isInstanceOf($className, AbstractMenuHelper::class);
+        /** @var class-string<\MeCms\View\Helper\AbstractMenuHelper>[] $classes */
+        $classes = Configure::readFromPlugins('MenuHelpers');
+        /** @var class-string<\MeCms\View\Helper\AbstractMenuHelper>[] $classes */
+        $classes = array_map(fn(string $className) => Exceptionist::isInstanceOf($className, AbstractMenuHelper::class), $classes);
 
-            /** @var \MeCms\View\Helper\AbstractMenuHelper $Helper */
-            $Helper = $this->helpers()->load(get_class_short_name($className), compact('className'));
+        /** @var \MeCms\View\Helper\AbstractMenuHelper[] $helpers */
+        $helpers = array_map(fn(string $className) => $this->helpers()->load(get_class_short_name($className), compact('className')), $classes);
 
-            return $Helper;
-        }, Configure::readFromPlugins('MenuHelpers'));
+        return $helpers;
     }
 
     /**
