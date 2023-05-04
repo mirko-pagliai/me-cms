@@ -52,6 +52,12 @@
       <code>$resource</code>
     </MoreSpecificImplementedParamType>
   </file>
+  <file src="src/TestSuite/MenuHelperTestCase.php">
+    <RedundantPropertyInitializationCheck occurrences="2">
+      <code>$this-&gt;Html</code>
+      <code>new HtmlHelper($this-&gt;Helper-&gt;getView())</code>
+    </RedundantPropertyInitializationCheck>
+  </file>
   <file src="src/TestSuite/TestCase.php">
     <InternalMethod occurrences="1">
       <code>parent::__construct($name, $data, $dataName)</code>
