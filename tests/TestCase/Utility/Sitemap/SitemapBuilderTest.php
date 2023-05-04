@@ -100,8 +100,8 @@ class SitemapBuilderTest extends TestCase
         $this->assertSame($expected, $this->SitemapBuilder->getMethods('TestPlugin'));
 
         //This plugin does not have the `Sitemap` class
-        $this->loadPlugins(['TestPluginTwo' => []]);
-        $this->assertEmpty($this->SitemapBuilder->getMethods('TestPluginTwo'));
+        $this->loadPlugins(['MeCmsExample' => []]);
+        $this->assertEmpty($this->SitemapBuilder->getMethods('MeCmsExample'));
     }
 
     /**

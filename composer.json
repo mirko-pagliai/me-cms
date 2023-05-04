@@ -73,8 +73,7 @@
             "App\\": "tests/test_app/TestApp/",
             "MeCms\\Example\\": "tests/test_app/TestApp/Plugin/MeCmsExample/src",
             "MyTheme\\": "tests/test_app/TestApp/Plugin/MyTheme/src",
-            "TestPlugin\\": "tests/test_app/TestApp/Plugin/TestPlugin/src",
-            "TestPluginTwo\\": "tests/test_app/TestApp/Plugin/TestPluginTwo/src"
+            "TestPlugin\\": "tests/test_app/TestApp/Plugin/TestPlugin/src"
         }
     },
     "scripts": {
