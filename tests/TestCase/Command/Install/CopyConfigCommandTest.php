@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Command\Install;
 
-use Cake\Core\Configure;
+use MeTools\Core\Configure;
 use MeTools\TestSuite\CommandTestCase;
 use Tools\Filesystem;
 
@@ -26,14 +26,19 @@ use Tools\Filesystem;
 class CopyConfigCommandTest extends CommandTestCase
 {
     /**
-     * @uses \MeCms\Command\Install\CopyConfigCommand::execute()
      * @test
+     * @uses \MeCms\Command\Install\CopyConfigCommand::execute()
      */
     public function testExecute(): void
     {
+        $Filesystem = new Filesystem();
+
         $this->exec('me_cms.copy_config -v');
         $this->assertExitSuccess();
-        $expected = array_map(fn(string $path): string => 'File or directory `' . Filesystem::instance()->rtr(CONFIG . pluginSplit($path)[1] . '.php') . '` already exists', array_clean(Configure::read('CONFIG_FILES')));
-        $this->assertSame($expected, $this->_out->messages());
+        $this->assertErrorEmpty();
+        $expectedFiles = array_map(fn(string $file): string => $Filesystem->concatenate(CONFIG, pluginSplit($file)[1] . '.php'), Configure::read('MeCms.ConfigFiles'));
+        foreach ($expectedFiles as $expectedFile) {
+            $this->assertOutputContains('File or directory `' . $Filesystem->rtr($expectedFile) . '` already exists');
+        }
     }
 }

@@ -47,6 +47,7 @@ class AuthenticationComponent extends BaseAuthenticationComponent
      * @param \Authentication\Authenticator\AuthenticatorInterface $Provider Provider
      * @param \Authorization\Identity $Identity Identity
      * @return \Cake\Http\Response|void
+     * @noinspection PhpUnusedParameterInspection
      */
     public function afterIdentify(EventInterface $Event, AuthenticatorInterface $Provider, Identity $Identity)
     {

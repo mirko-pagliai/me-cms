@@ -84,7 +84,8 @@ abstract class PostsAndPagesTables extends AppTable
      * @param \Cake\Event\EventInterface $event Event object
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
-     * @throws \Tools\Exception\NotWritableException
+     * @throws \Tools\Exception\NotReadableException
+     * @throws \ErrorException
      * @since 2.17.0
      * @noinspection PhpUnusedParameterInspection
      */

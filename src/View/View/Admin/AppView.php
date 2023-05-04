@@ -15,11 +15,13 @@ declare(strict_types=1);
 
 namespace MeCms\View\View\Admin;
 
+use MeCms\View\Helper\AbstractMenuHelper;
 use MeCms\View\View;
+use MeTools\Core\Configure;
+use Tools\Exceptionist;
 
 /**
  * Application view class for admin views
- * @property \MeCms\View\Helper\MenuBuilderHelper $MenuBuilder
  * @property \MeCms\View\Helper\PriorityBadgeHelper $PriorityBadge
  */
 class AppView extends View
@@ -39,7 +41,26 @@ class AppView extends View
         parent::initialize();
 
         $this->loadHelper('MeCms.PriorityBadge');
-        $this->loadHelper('MeCms.MenuBuilder');
+    }
+
+    /**
+     * Gets all "menu helpers", as loaded helpers
+     * @return \MeCms\View\Helper\AbstractMenuHelper[]
+     * @throws \Exception|\ReflectionException
+     * @throws \Tools\Exception\ObjectWrongInstanceException
+     * @since 2.32.0
+     */
+    public function getAllMenuHelpers(): array
+    {
+        /** @var class-string<\MeCms\View\Helper\AbstractMenuHelper>[] $classes */
+        $classes = Configure::readFromPlugins('MenuHelpers');
+        /** @var class-string<\MeCms\View\Helper\AbstractMenuHelper>[] $classes */
+        $classes = array_map(fn(string $className) => Exceptionist::isInstanceOf($className, AbstractMenuHelper::class), $classes);
+
+        /** @var \MeCms\View\Helper\AbstractMenuHelper[] $helpers */
+        $helpers = array_map(fn(string $className) => $this->helpers()->load(get_class_short_name($className), compact('className')), $classes);
+
+        return $helpers;
     }
 
     /**

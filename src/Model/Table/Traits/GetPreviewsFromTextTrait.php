@@ -84,6 +84,8 @@ trait GetPreviewsFromTextTrait
      * Gets all the available images from a html string, including the previews of YouTube videos
      * @param string $html Html string
      * @return \Cake\Collection\CollectionInterface<array{url: string, width: int, height: int}> Collection of images
+     * @throws \Tools\Exception\NotReadableException
+     * @throws \ErrorException
      * @since 2.23.0
      */
     public function getPreviews(string $html): CollectionInterface
