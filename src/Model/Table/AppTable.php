@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Model\Table;
 
 use Cake\Cache\Cache;
+use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
@@ -189,36 +190,40 @@ abstract class AppTable extends Table
     {
         //"ID" field
         if (!empty($data['id']) && is_positive($data['id'])) {
-            $query->where([sprintf('%s.id', $this->getAlias()) => $data['id']]);
+            $query->where([$this->getAlias() . '.id' => $data['id']]);
         }
 
-        //"Title" field
+        //"Title" (and optional "slug") field
         if (!empty($data['title']) && strlen($data['title']) > 2) {
-            $query->where([sprintf('%s.%s LIKE', $this->getAlias(), 'title') => '%' . $data['title'] . '%']);
+            $where = [$this->getAlias() . '.title LIKE' => '%' . $data['title'] . '%'];
+            if ($this->getSchema()->hasColumn('slug')) {
+                $where = ['OR' => $where + [$this->getAlias() . '.slug LIKE' => '%' . $data['title'] . '%']];
+            }
+            $query->where($where);
         }
 
         //"User" (author) and "category" fields
         foreach (['user', 'category'] as $field) {
             if (!empty($data[$field]) && is_positive($data[$field])) {
-                $query->where([sprintf('%s.%s_id', $this->getAlias(), $field) => $data[$field]]);
+                $query->where([$this->getAlias() . '.' . $field . '_id' => $data[$field]]);
             }
         }
 
         //"Active" field
         if (!empty($data['active'])) {
-            $query->where([sprintf('%s.active', $this->getAlias()) => $data['active'] === I18N_YES]);
+            $query->where([$this->getAlias() . '.active' => $data['active'] === I18N_YES]);
         }
 
         //"Priority" field
         if (!empty($data['priority']) && $data['priority'] > 0 && $data['priority'] <= 5) {
-            $query->where([sprintf('%s.priority', $this->getAlias()) => $data['priority']]);
+            $query->where([$this->getAlias() . '.priority' => $data['priority']]);
         }
 
         //"Created" field
         if (!empty($data['created']) && preg_match('/^[1-9]\d{3}-[01]\d$/', $data['created'])) {
             $start = new FrozenTime(sprintf('%s-01', $data['created']));
-            $query->where([sprintf('%s.created >=', $this->getAlias()) => $start])
-                ->andWhere([sprintf('%s.created <', $this->getAlias()) => $start->addMonth()]);
+            $query->where([$this->getAlias() . '.created >=' => $start])
+                ->andWhere([$this->getAlias() . '.created <' => $start->addMonth()]);
         }
 
         return $query;

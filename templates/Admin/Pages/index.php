@@ -39,7 +39,7 @@ echo $this->Form->control('id', [
 ]);
 echo $this->Form->control('title', [
     'default' => $this->getRequest()->getQuery('title'),
-    'placeholder' => I18N_TITLE,
+    'placeholder' => __d('me_cms', 'title or slug'),
     'size' => 13,
 ]);
 echo $this->Form->control('active', [
