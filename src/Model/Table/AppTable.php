@@ -189,12 +189,12 @@ abstract class AppTable extends Table
     public function queryFromFilter(CakeQuery $query, array $data = []): CakeQuery
     {
         //"ID" field
-        if (!empty($data['id']) && is_positive($data['id'])) {
+        if (is_positive($data['id'] ?? 0)) {
             $query->where([$this->getAlias() . '.id' => $data['id']]);
         }
 
         //"Title" (and optional "slug") field
-        if (!empty($data['title']) && strlen($data['title']) > 2) {
+        if (strlen($data['title'] ?? '') > 2) {
             $where = [$this->getAlias() . '.title LIKE' => '%' . $data['title'] . '%'];
             if ($this->getSchema()->hasColumn('slug')) {
                 $where = ['OR' => $where + [$this->getAlias() . '.slug LIKE' => '%' . $data['title'] . '%']];
@@ -204,7 +204,7 @@ abstract class AppTable extends Table
 
         //"User" (author) and "category" fields
         foreach (['user', 'category'] as $field) {
-            if (!empty($data[$field]) && is_positive($data[$field])) {
+            if (is_positive($data[$field] ?? 0)) {
                 $query->where([$this->getAlias() . '.' . $field . '_id' => $data[$field]]);
             }
         }
