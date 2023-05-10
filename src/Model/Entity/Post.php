@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace MeCms\Model\Entity;
 
 use Cake\Routing\Router;
-use Cake\Utility\Hash;
 use MeCms\ORM\PostAndPageEntity;
 
 /**
@@ -61,6 +60,6 @@ class Post extends PostAndPageEntity
      */
     protected function _getTagsAsString(): ?string
     {
-        return $this->hasValue('tags') ? implode(', ', (array)Hash::extract($this->get('tags'), '{*}.tag')) : '';
+        return $this->hasValue('tags') ? implode(', ', array_map(fn(Tag $tag): string => $tag->get('tag'), $this->get('tags'))) : '';
     }
 }

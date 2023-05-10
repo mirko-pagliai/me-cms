@@ -96,18 +96,14 @@ class User extends Entity
 
     /**
      * Gets the last logins (accessor)
-     * @param array|null $lastLogins Last logins
+     * @param array[]|null $lastLogins Last logins
      * @return \Cake\Collection\Collection Last logins as `Collection`
      * @since 2.30.7-RC4
      */
     protected function _getLastLogins(?array $lastLogins): Collection
     {
         //Turns `time` values into `FrozenTime` instances
-        return new Collection(array_map(function (array $row): array {
-            $row['time'] = $row['time'] instanceof FrozenTime ? $row['time'] : new FrozenTime($row['time']);
-
-            return $row;
-        }, $lastLogins ?: []));
+        return new Collection(array_map(fn(array $row): array => array_merge($row, ['time' => $row['time'] instanceof FrozenTime ? $row['time'] : new FrozenTime($row['time'])]), $lastLogins ?: []));
     }
 
     /**

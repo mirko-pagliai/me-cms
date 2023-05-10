@@ -74,14 +74,12 @@ class LoginRecorderComponentTest extends TestCase
     {
         parent::setUp();
 
-        if (!isset($this->Component)) {
-            $this->Component = $this->getMockForLoginRecorder();
-        }
+        $this->Component ??= $this->getMockForLoginRecorder();
     }
 
     /**
-     * @uses \MeCms\Controller\Component\LoginRecorderComponent::getUserAgent()
      * @test
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::getUserAgent()
      */
     public function testGetUserAgent(): void
     {
@@ -90,23 +88,23 @@ class LoginRecorderComponentTest extends TestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Component\LoginRecorderComponent::getClientIp()
      * @test
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::getClientIp()
      */
     public function testGetClientIp(): void
     {
         $this->assertEmpty($this->Component->getClientIp());
 
         //On localhost
-        $Request = $this->getMockBuilder(ServerRequest::class)->onlyMethods(['clientIp'])->getMock();
+        $Request = $this->createPartialMock(ServerRequest::class, ['clientIp']);
         $Request->method('clientIp')->willReturn('::1');
         $this->Component->getController()->setRequest($Request);
         $this->assertEquals('127.0.0.1', $this->Component->getClientIp());
     }
 
     /**
-     * @uses \MeCms\Controller\Component\LoginRecorderComponent::read()
      * @test
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::read()
      */
     public function testRead(): void
     {
@@ -129,8 +127,8 @@ class LoginRecorderComponentTest extends TestCase
     }
 
     /**
-     * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
      * @test
+     * @uses \MeCms\Controller\Component\LoginRecorderComponent::write()
      */
     public function testWrite(): void
     {
@@ -155,7 +153,6 @@ class LoginRecorderComponentTest extends TestCase
          */
         sleep(1);
         $this->assertTrue($this->Component->write());
-
         $this->assertCount(1, $this->Component->read());
         $secondResultRow = $this->Component->read()->first();
         $this->assertInstanceOf(FrozenTime::class, $secondResultRow['time']);
