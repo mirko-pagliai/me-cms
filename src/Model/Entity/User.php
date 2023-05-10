@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace MeCms\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
-use Cake\Collection\Collection;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use Symfony\Component\Finder\Finder;
@@ -97,13 +96,13 @@ class User extends Entity
     /**
      * Gets the last logins (accessor)
      * @param array[]|null $lastLogins Last logins
-     * @return \Cake\Collection\Collection Last logins as `Collection`
+     * @return array[] Last logins
      * @since 2.30.7-RC4
      */
-    protected function _getLastLogins(?array $lastLogins): Collection
+    protected function _getLastLogins(?array $lastLogins): array
     {
         //Turns `time` values into `FrozenTime` instances
-        return new Collection(array_map(fn(array $row): array => array_merge($row, ['time' => $row['time'] instanceof FrozenTime ? $row['time'] : new FrozenTime($row['time'])]), $lastLogins ?: []));
+        return array_map(fn(array $row): array => array_merge($row, ['time' => $row['time'] instanceof FrozenTime ? $row['time'] : new FrozenTime($row['time'])]), $lastLogins ?: []);
     }
 
     /**

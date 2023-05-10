@@ -111,7 +111,7 @@ class LoginRecorderComponent extends Component
      */
     public function read(): Collection
     {
-        return $this->getUser()->get('last_logins');
+        return new Collection($this->getUser()->get('last_logins'));
     }
 
     /**
