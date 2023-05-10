@@ -181,17 +181,17 @@ class UsersTable extends AppTable
         $query = parent::queryFromFilter($query, $data);
 
         //"Username" field
-        if (!empty($data['username']) && strlen($data['username']) > 2) {
+        if (strlen($data['username'] ?? '') > 2) {
             $query->where(['username LIKE' => '%' . $data['username'] . '%']);
         }
 
         //"Group" field
-        if (!empty($data['group']) && is_positive($data['group'])) {
+        if (is_positive($data['group'] ?? 0)) {
             $query->where(['group_id' => $data['group']]);
         }
 
         //"Status" field
-        if (!empty($data['status']) && in_array($data['status'], ['active', 'pending', 'banned'])) {
+        if (in_array($data['status'] ?? '', ['active', 'pending', 'banned'])) {
             $query->find($data['status']);
         }
 

@@ -227,9 +227,10 @@ class AppTableTest extends TableTestCase
      */
     public function testQueryFromFilter(): void
     {
-        $expectedSql = 'FROM posts Posts WHERE (Posts.id = :c0 AND Posts.title like :c1 AND Posts.user_id = :c2 AND Posts.category_id = :c3 AND Posts.active = :c4 AND Posts.priority = :c5 AND Posts.created >= :c6 AND Posts.created < :c7)';
+        $expectedSql = 'FROM posts Posts WHERE (Posts.id = :c0 AND (Posts.title like :c1 OR Posts.slug like :c2) AND Posts.user_id = :c3 AND Posts.category_id = :c4 AND Posts.active = :c5 AND Posts.priority = :c6 AND Posts.created >= :c7 AND Posts.created < :c8)';
         $expectedParams = [
             2,
+            '%Title%',
             '%Title%',
             3,
             4,
@@ -255,7 +256,7 @@ class AppTableTest extends TableTestCase
 
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['active' => I18N_NO] + $data);
         $this->assertSqlEndsWith($expectedSql, $query->sql());
-        $this->assertFalse($query->getValueBinder()->bindings()[':c4']['value']);
+        $this->assertFalse($query->getValueBinder()->bindings()[':c5']['value']);
 
         //With some invalid data
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['title' => 'ab', 'priority' => 6, 'created' => '2016-12-30']);

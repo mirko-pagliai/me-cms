@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace MeCms\Test\TestCase\Model\Entity;
 
 use MeCms\TestSuite\EntityTestCase;
+use Tools\Exception\PropertyNotExistsException;
 
 /**
  * TagTest class
@@ -32,8 +33,8 @@ class TagTest extends EntityTestCase
     }
 
     /**
-     * Test for `_getSlug()` method
      * @test
+     * @uses \MeCms\Model\Entity\Tag::_getSlug()
      */
     public function testGetSlugVirtualField(): void
     {
@@ -46,12 +47,15 @@ class TagTest extends EntityTestCase
     }
 
     /**
-     * Test for `_getUrl()` method
      * @test
+     * @uses \MeCms\Model\Entity\Tag::_getUrl()
      */
     public function testGetUrlVirtualField(): void
     {
         $this->Entity->set('tag', 'a-tag');
         $this->assertStringEndsWith('/posts/tag/a-tag', $this->Entity->get('url'));
+
+        $this->expectException(PropertyNotExistsException::class);
+        $this->Entity->unset('tag')->get('url');
     }
 }

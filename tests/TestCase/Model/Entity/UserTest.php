@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 namespace MeCms\Test\TestCase\Model\Entity;
 
-use Cake\Collection\Collection;
 use Cake\I18n\FrozenTime;
 use MeCms\TestSuite\EntityTestCase;
 use Tools\Filesystem;
@@ -51,8 +50,8 @@ class UserTest extends EntityTestCase
     }
 
     /**
-     * Test for `_getFullName()` method
      * @test
+     * @uses \MeCms\Model\Entity\User::_getFullName()
      */
     public function testGetFullNameVirtualField(): void
     {
@@ -61,15 +60,13 @@ class UserTest extends EntityTestCase
     }
 
     /**
-     * Test for `_getLastLogins()` method
-     * @uses \MeCms\Model\Entity\User::_getLastLogins()
      * @test
+     * @uses \MeCms\Model\Entity\User::_getLastLogins()
      */
     public function testLastLoginsGetAccessor(): void
     {
         $result = $this->Entity->get('last_logins');
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertTrue($result->isEmpty());
+        $this->assertEmpty($result);
 
         $data = [
             'platform' => 'Linux',
@@ -79,26 +76,23 @@ class UserTest extends EntityTestCase
             'ip' => '',
             'time' => time(),
         ];
-
         $result = $this->Entity->set('last_logins', [$data])->get('last_logins');
-        $this->assertInstanceOf(Collection::class, $result);
         $this->assertCount(1, $result);
-        $row = $result->first();
+        $row = array_value_first($result);
         $this->assertInstanceOf(FrozenTime::class, $row['time']);
         $row['time'] = (int)$row['time']->toUnixString();
-        $this->assertSame($data, $row);
+        $this->assertEquals($data, $row);
     }
 
     /**
-     * Test for `_getPicture()` method
      * @test
+     * @uses \MeCms\Model\Entity\User::_getPicture()
      */
     public function testGetPictureVirtualField(): void
     {
         $this->assertEquals('MeCms.no-avatar.jpg', $this->Entity->set('id', 1)->get('picture'));
 
         $Filesystem = new Filesystem();
-
         $Filesystem->createFile(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
         $this->assertEquals('no-avatar.jpg', $this->Entity->get('picture'));
 

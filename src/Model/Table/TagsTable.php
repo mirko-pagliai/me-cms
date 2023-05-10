@@ -88,7 +88,7 @@ class TagsTable extends AppTable
         $query = parent::queryFromFilter($query, $data);
 
         //"Name" field
-        if (!empty($data['name']) && strlen($data['name']) > 2) {
+        if (strlen($data['name'] ?? '') > 2) {
             $query->where(['tag LIKE' => '%' . $data['name'] . '%']);
         }
 

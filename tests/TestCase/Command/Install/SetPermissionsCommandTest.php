@@ -33,6 +33,7 @@ class SetPermissionsCommandTest extends CommandTestCase
     {
         $this->exec('me_cms.set_permissions -v');
         $this->assertExitSuccess();
+        $this->assertErrorEmpty();
         foreach (Configure::read('MeCms.WritableDirs') as $expectedDir) {
             $this->assertOutputContains('Set permissions on `' . Filesystem::instance()->rtr($expectedDir) . '`');
         }
