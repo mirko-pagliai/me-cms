@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace MeCms\Model\Table;
 
 use Cake\Cache\Cache;
-use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
