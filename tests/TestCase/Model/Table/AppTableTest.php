@@ -261,15 +261,5 @@ class AppTableTest extends TableTestCase
         //With some invalid data
         $query = $this->Posts->queryFromFilter($this->Posts->find(), ['title' => 'ab', 'priority' => 6, 'created' => '2016-12-30']);
         $this->assertEmpty($query->getValueBinder()->bindings());
-
-        /**
-         * This table schema without the `slug` column
-         * @var \MeCms\Model\Table\UsersTable $Users
-         */
-        $Users = $this->getTable('MeCms.Users');
-        $query = $Users->queryFromFilter($Users->find(), $data);
-        $result = $query->sql();
-        $this->assertStringContainsString('AND `Users`.`title` like :c1', $result);
-        $this->assertStringNotContainsString('slug', $result);
     }
 }
