@@ -23,7 +23,6 @@ use Cake\Routing\Router;
 use ErrorException;
 use MeCms\Core\Plugin;
 use MeTools\Command\Command;
-use Tools\Filesystem;
 
 /**
  * Fixes ElFinder
@@ -54,16 +53,15 @@ class FixElFinderCommand extends Command
             return;
         }
 
-        $Filesystem = new Filesystem();
-        $autoload = $Filesystem->concatenate(APP, 'vendor', 'autoload.php');
+        $autoload = APP . 'vendor' . DS . 'autoload.php';
         $origin = Plugin::path('MeCms', 'config' . DS . 'elfinder' . DS . 'connector.minimal.php');
         $content = str_replace([
             '{{AUTOLOAD_PATH}}',
             '{{UPLOADS_PATH}}',
             '{{UPLOADS_URL}}',
         ], [
-            is_readable($autoload) ? $autoload : $Filesystem->concatenate(ROOT, 'vendor', 'autoload.php'),
-            $Filesystem->addSlashTerm(UPLOADED),
+            is_readable($autoload) ? $autoload : VENDOR . 'autoload.php',
+            UPLOADED,
             Router::url('/files', true),
         ], file_get_contents($origin) ?: '');
         $io->createFile($target, $content);

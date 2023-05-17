@@ -124,7 +124,7 @@ class SystemsController extends AppController
         }
 
         if (empty($sitemap)) {
-            Filesystem::instance()->createFile(SITEMAP, gzencode(SitemapBuilder::generate(), 9));
+            Filesystem::createFile(SITEMAP, gzencode(SitemapBuilder::generate(), 9));
         }
 
         return $this->getResponse()->withFile(SITEMAP);

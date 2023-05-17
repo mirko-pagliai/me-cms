@@ -18,7 +18,6 @@ namespace MeCms\Test\TestCase\Command\Install;
 
 use MeTools\Core\Configure;
 use MeTools\TestSuite\CommandTestCase;
-use Tools\Filesystem;
 
 /**
  * SetPermissionsCommandTest class
@@ -35,7 +34,7 @@ class SetPermissionsCommandTest extends CommandTestCase
         $this->assertExitSuccess();
         $this->assertErrorEmpty();
         foreach (Configure::read('MeCms.WritableDirs') as $expectedDir) {
-            $this->assertOutputContains('Set permissions on `' . Filesystem::instance()->rtr($expectedDir) . '`');
+            $this->assertOutputContains('Set permissions on `' . rtr($expectedDir) . '`');
         }
     }
 }

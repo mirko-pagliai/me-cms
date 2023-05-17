@@ -2,7 +2,8 @@
 ## 2.32 branch
 ### 2.32.1
 * improved the query filter for posts and pages in the admin panel: now the `title` field works for both title and slug;
-* `User::_getLastLogins()` returns an array and no longer a collection.
+* `User::_getLastLogins()` returns an array and no longer a collection;
+* updated for php-tools 1.7.4.
 
 ### 2.32.0
 * as for `me-tools` 2.24.0, it uses `Configure::readFromPlugins()` with `ConfigFiles`, `WritableDirs` and `VendorLinks`

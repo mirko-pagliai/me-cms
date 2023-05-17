@@ -80,14 +80,13 @@ class SystemsController extends AppController
      */
     public function changelogs(): void
     {
-        $Filesystem = new Filesystem();
         $files = [];
 
         foreach (Plugin::all() as $plugin) {
             $file = Plugin::path($plugin, 'CHANGELOG.md');
 
             if (is_readable($file)) {
-                $files[strtolower($plugin)] = $Filesystem->rtr($file);
+                $files[strtolower($plugin)] = rtr($file);
             }
         }
 
@@ -95,7 +94,7 @@ class SystemsController extends AppController
         $file = $this->getRequest()->getQuery('file');
         if ($file && is_string($file) && $files) {
             Exceptionist::arrayKeyExists($file, $files);
-            $filename = $Filesystem->makePathAbsolute($files[$file], ROOT);
+            $filename = Filesystem::makePathAbsolute($files[$file], ROOT);
             $converter = new CommonMarkConverter([
                 'html_input' => 'strip',
                 'allow_unsafe_links' => false,
@@ -137,24 +136,23 @@ class SystemsController extends AppController
     {
         $this->getRequest()->allowMethod(['post', 'delete']);
 
-        $Filesystem = new Filesystem();
         $assetsTarget = getConfigOrFail('Assets.target');
         $exceptions = ['.gitkeep', 'empty'];
         $success = true;
         switch ($type) {
             case 'all':
-                $Filesystem->unlinkRecursive($assetsTarget, $exceptions);
-                $Filesystem->unlinkRecursive(LOGS, $exceptions);
+                Filesystem::unlinkRecursive($assetsTarget, $exceptions);
+                Filesystem::unlinkRecursive(LOGS, $exceptions);
                 $success = self::clearCache() && self::clearSitemap() && (new ThumbManager())->clearAll();
                 break;
             case 'cache':
                 $success = self::clearCache();
                 break;
             case 'assets':
-                $Filesystem->unlinkRecursive($assetsTarget, $exceptions);
+                Filesystem::unlinkRecursive($assetsTarget, $exceptions);
                 break;
             case 'logs':
-                $Filesystem->unlinkRecursive(LOGS, $exceptions);
+                Filesystem::unlinkRecursive(LOGS, $exceptions);
                 break;
             case 'sitemap':
                 $success = self::clearSitemap();

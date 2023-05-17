@@ -50,17 +50,15 @@ class SystemsControllerTest extends ControllerTestCase
         Cache::write('value', 'data');
         Cache::write('valueFromGroup', 'data', 'posts');
 
-        $Filesystem = new Filesystem();
-
         $files = [
             'assets' => getConfigOrFail('Assets.target') . DS . 'asset_file',
             'assets2' => getConfigOrFail('Assets.target') . DS . 'asset_file2',
             'logs' => LOGS . 'log_file',
             'sitemap' => SITEMAP,
-            'thumbs' => $Filesystem->addSlashTerm(THUMBER_TARGET) . md5('a') . '_' . md5('a') . '.jpg',
+            'thumbs' => Filesystem::concatenate(THUMBER_TARGET, md5('a') . '_' . md5('a') . '.jpg'),
         ];
 
-        array_walk($files, fn(string $file) => $Filesystem->createFile($file, str_repeat('a', 255)));
+        array_walk($files, fn(string $file) => Filesystem::createFile($file, str_repeat('a', 255)));
 
         return $files;
     }
@@ -87,7 +85,7 @@ class SystemsControllerTest extends ControllerTestCase
     {
         Cache::clearAll();
 
-        array_map([Filesystem::instance(), 'unlinkRecursive'], [getConfigOrFail('Assets.target'), THUMBER_TARGET]);
+        array_map([Filesystem::class, 'unlinkRecursive'], [getConfigOrFail('Assets.target'), THUMBER_TARGET]);
 
         parent::tearDown();
     }

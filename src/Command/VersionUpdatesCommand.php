@@ -109,8 +109,8 @@ class VersionUpdatesCommand extends Command
      */
     public function deleteOldDirectories(): void
     {
-        Filesystem::instance()->rmdirRecursive(WWW_ROOT . 'fonts');
-        Filesystem::instance()->rmdirRecursive(TMP . 'login');
+        Filesystem::rmdirRecursive(WWW_ROOT . 'fonts');
+        Filesystem::rmdirRecursive(TMP . 'login');
     }
 
     /**

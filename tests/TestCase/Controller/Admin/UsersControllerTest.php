@@ -306,7 +306,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertSessionEmpty('Auth.User.picture');
 
         //Creates some files that simulate previous user pictures. These files will be deleted before upload
-        array_map([new Filesystem(), 'createFile'], [$expectedPicture, USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
+        array_map([Filesystem::class, 'createFile'], [$expectedPicture, USER_PICTURES . '1.jpeg', USER_PICTURES . '1.png']);
 
         //POST request. This works
         $file = $this->createImageToUpload();

@@ -25,7 +25,6 @@ use Cake\Utility\Inflector;
 use MeCms\Core\Plugin;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Tools\Filesystem;
 
 /**
  * A utility to handle static pages
@@ -39,13 +38,13 @@ class StaticPage
 
     /**
      * Gets all the existing paths
-     * @return array<array-key, string>
+     * @return string[]
      */
     public static function getPaths(): array
     {
         return Cache::remember('paths', function (): array {
-            $paths = array_map(fn(string $plugin): array => [$plugin, Plugin::templatePath($plugin) . 'StaticPages'], Plugin::all(['mecms_core' => false]));
-            array_unshift($paths, ['App', array_value_first(App::path('templates')) . 'StaticPages']);
+            $paths = array_map(fn(string $plugin): array => [$plugin, Plugin::templatePath($plugin) . 'StaticPages' . DS], Plugin::all(['mecms_core' => false]));
+            array_unshift($paths, ['App', array_value_first(App::path('templates')) . 'StaticPages' . DS]);
 
             return array_clean(array_combine(array_column($paths, 0), array_column($paths, 1)), 'file_exists');
         }, 'static_pages');
@@ -65,7 +64,7 @@ class StaticPage
 
         return collection(array_values(iterator_to_array($files)))->map(fn(SplFileInfo $file): Entity => new Entity([
             'filename' => pathinfo($file->getPathname(), PATHINFO_FILENAME),
-            'path' => Filesystem::instance()->rtr($file->getPathname()),
+            'path' => rtr($file->getPathname()),
             'slug' => $getSlugFn($file->getRelativePathname()),
             'title' => self::getTitle($file->getPathname()),
             'modified' => new FrozenTime($file->getMTime()),
@@ -93,7 +92,7 @@ class StaticPage
             $patterns[] = $filename;
             foreach (self::getPaths() as $plugin => $path) {
                 foreach ($patterns as $pattern) {
-                    if (is_readable(Filesystem::instance()->concatenate($path, $pattern . '.' . self::EXTENSION))) {
+                    if (is_readable($path . $pattern . '.' . self::EXTENSION)) {
                         return ($plugin != 'App' ? $plugin . '.' : '') . DS . 'StaticPages' . DS . $pattern;
                     }
                 }

@@ -37,9 +37,8 @@ class FixElFinderCommandTest extends CommandTestCase
     {
         $command = 'me_cms.fix_el_finder -v';
 
-        $Filesystem = new Filesystem();
-        $connector = $Filesystem->concatenate(ELFINDER, 'php', 'connector.minimal.php');
-        $elfinderCke = $Filesystem->concatenate(ELFINDER, 'elfinder-cke.html');
+        $connector = Filesystem::concatenate(ELFINDER, 'php', 'connector.minimal.php');
+        $elfinderCke = Filesystem::concatenate(ELFINDER, 'elfinder-cke.html');
         array_map('unlink', array_filter([$connector, $elfinderCke], 'file_exists'));
 
         $this->exec($command);
@@ -49,7 +48,7 @@ class FixElFinderCommandTest extends CommandTestCase
         $this->assertOutputContains('Creating file ' . $connector);
         $this->assertOutputContains('<success>Wrote</success> `' . $connector . '`');
         $connectorContent = file_get_contents($connector) ?: '';
-        $this->assertStringContainsString('require_once \'' . Filesystem::instance()->concatenate(APP, 'vendor', 'autoload.php') . '\';', $connectorContent);
+        $this->assertStringContainsString('require_once \'' . Filesystem::concatenate(APP, 'vendor', 'autoload.php') . '\';', $connectorContent);
         $this->assertStringContainsString('\'path\' => \'' . UPLOADED . '\'', $connectorContent);
         $this->assertStringContainsString('\'URL\' => \'' . Router::url('/files', true) . '\'', $connectorContent);
 
@@ -60,8 +59,8 @@ class FixElFinderCommandTest extends CommandTestCase
         //File already exists
         $this->exec($command);
         $this->assertExitSuccess();
-        $this->assertOutputContains('File or directory `' . $Filesystem->rtr($connector) . '` already exists');
-        $this->assertOutputContains('File or directory `' . $Filesystem->rtr($elfinderCke) . '` already exists');
+        $this->assertOutputContains('File or directory `' . rtr($connector) . '` already exists');
+        $this->assertOutputContains('File or directory `' . rtr($elfinderCke) . '` already exists');
 
         //With an exception
         $Command = $this->createPartialMock(FixElFinderCommand::class, ['createElfinderCke']);

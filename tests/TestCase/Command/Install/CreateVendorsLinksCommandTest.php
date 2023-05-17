@@ -31,15 +31,13 @@ class CreateVendorsLinksCommandTest extends CommandTestCase
      */
     public function testExecute(): void
     {
-        $Filesystem = new Filesystem();
-
-        $expectedLinks = array_map(fn(string $link): string => $Filesystem->concatenate(WWW_ROOT, 'vendor', $link), Configure::read('MeCms.VendorLinks'));
-        $expectedLinks = array_map(fn(string $link): string => file_exists($link) ? $link : $Filesystem->createFile($link), $expectedLinks);
+        $expectedLinks = array_map(fn(string $link): string => Filesystem::concatenate(WWW_ROOT, 'vendor', $link), Configure::read('MeCms.VendorLinks'));
+        $expectedLinks = array_map(fn(string $link): string => file_exists($link) ? $link : Filesystem::createFile($link), $expectedLinks);
 
         $this->exec('me_cms.create_vendors_links -v');
         $this->assertExitSuccess();
         foreach ($expectedLinks as $expectedLink) {
-            $this->assertOutputContains('File or directory `' . $Filesystem->rtr($expectedLink) . '` already exists');
+            $this->assertOutputContains('File or directory `' . rtr($expectedLink) . '` already exists');
         }
     }
 }
