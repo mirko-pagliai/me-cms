@@ -113,7 +113,7 @@ Cache::setConfig([
 ]);
 
 if (!getenv('db_dsn')) {
-    putenv('db_dsn=mysql://travis@localhost/test?encoding=utf8&quoteIdentifiers=true');
+    putenv('db_dsn=mysql://travis@localhost/test?encoding=utf8');
     if (getenv('driver_test') == 'sqlite') {
         putenv('db_dsn=sqlite:///' . TMP . 'test.sq3');
     } elseif (getenv('driver_test') == 'postgres') {
