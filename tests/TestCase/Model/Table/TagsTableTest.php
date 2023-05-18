@@ -36,7 +36,6 @@ class TagsTableTest extends TableTestCase
     ];
 
     /**
-     * Test for `buildRules()` method
      * @test
      * @uses \MeCms\Model\Table\TagsTable::buildRules()
      */
@@ -82,7 +81,7 @@ class TagsTableTest extends TableTestCase
         $sql = $query->sql();
         $this->assertTrue($query->getValueBinder()->bindings()[':c0']['value']);
         $this->assertInstanceOf(FrozenTime::class, $query->getValueBinder()->bindings()[':c1']['value']);
-        $this->assertSqlEndsWith('FROM tags Tags INNER JOIN posts_tags PostsTags ON Tags.id = PostsTags.tag_id INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Posts.id = PostsTags.post_id)', $sql);
+        $this->assertStringEndsWith('FROM tags Tags INNER JOIN posts_tags PostsTags ON Tags.id = PostsTags.tag_id INNER JOIN posts Posts ON (Posts.active = :c0 AND Posts.created <= :c1 AND Posts.id = PostsTags.post_id)', $sql);
     }
 
     /**
@@ -92,7 +91,7 @@ class TagsTableTest extends TableTestCase
     public function testQueryFromFilter(): void
     {
         $query = $this->Table->queryFromFilter($this->Table->find(), ['name' => 'test']);
-        $this->assertSqlEndsWith('FROM tags Tags WHERE tag like :c0', $query->sql());
+        $this->assertStringEndsWith('FROM tags Tags WHERE tag like :c0', $query->sql());
         $this->assertEquals('%test%', $query->getValueBinder()->bindings()[':c0']['value']);
     }
 }

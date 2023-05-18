@@ -93,8 +93,8 @@ class AddUserCommandTest extends CommandTestCase
         $this->assertErrorContains('Field `password`: the password should contain at least one symbol');
         $this->assertErrorContains('Field `password_repeat`: passwords don\'t match');
 
-        //Tries with no groups
-        $Users->Groups->deleteAll(['id IS NOT' => null]);
+        //Tries with no user groups
+        $Users->UsersGroups->deleteAll(['id IS NOT' => null]);
         $this->_in = null;
         $this->exec('me_cms.add_user -v');
         $this->assertExitSuccess();

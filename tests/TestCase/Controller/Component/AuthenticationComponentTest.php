@@ -59,7 +59,7 @@ class AuthenticationComponentTest extends ComponentTestCase
             /** @var \MeCms\Model\Table\UsersTable $UsersTable */
             $UsersTable = $this->getTable('MeCms.Users');
             /** @var \MeCms\Model\Entity\User $User */
-            $User = $UsersTable->findByGroupId(2)->contain(['Groups' => ['fields' => ['name']]])->firstOrFail();
+            $User = $UsersTable->findByGroupId(2)->contain(['UsersGroups' => ['fields' => ['name']]])->firstOrFail();
             $this->User = $User;
         }
 

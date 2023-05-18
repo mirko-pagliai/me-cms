@@ -27,9 +27,9 @@ use Tools\Exceptionist;
 class IdentityHelper extends CakeIdentityHelper
 {
     /**
-     * Checks whether the logged user belongs to a group.
+     * Checks whether the logged user belongs to a user group.
      *
-     * If you compare with several groups, it will check that at least one matches.
+     * If you compare with several user groups, it will check that at least one matches.
      * @param string ...$group User group
      * @return bool
      * @throws \ErrorException

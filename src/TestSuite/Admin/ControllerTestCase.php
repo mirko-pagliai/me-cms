@@ -92,10 +92,11 @@ abstract class ControllerTestCase extends BaseControllerTestCase
     }
 
     /**
-     * Assert that all groups are authorized to perform `$action`, calling `isAuthorized()` method for the current controller
+     * Assert that all user groups are authorized to perform `$action`, calling `isAuthorized()` method for the current controller
      * @param string $action Action name
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @todo should become `assertAllUserGroupsAreAuthorized()`
      */
     protected function assertAllGroupsAreAuthorized(string $action, string $message = ''): void
     {

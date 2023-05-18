@@ -34,7 +34,7 @@ class AddUserCommand extends Command
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
         return $parser->setDescription(__d('me_cms', 'Adds an user'))
-            ->addOption('group', ['short' => 'g', 'help' => __d('me_cms', 'Group ID')]);
+            ->addOption('group', ['short' => 'g', 'help' => __d('me_cms', 'User Group ID')]);
     }
 
     /**
@@ -49,7 +49,7 @@ class AddUserCommand extends Command
         /** @var \MeCms\Model\Table\UsersTable $Users */
         $Users = $this->getTableLocator()->get('MeCms.Users');
 
-        $groups = $Users->Groups->find('list')->all();
+        $groups = $Users->UsersGroups->find('list')->all();
         if ($groups->isEmpty()) {
             return $io->error(__d('me_cms', 'Before you can manage users, you have to create at least a user group'));
         }
@@ -68,10 +68,10 @@ class AddUserCommand extends Command
             $user[$field] = $io->ask($question);
         }
 
-        //Asks for group, if not passed as option
+        //Asks for user group, if not passed as option
         $user['group_id'] = $args->getOption('group');
         if (!$user['group_id']) {
-            //Formats groups
+            //Formats user groups
             foreach ($groups as $id => $group) {
                 $groups[$id] = [(string)$id, $group];
             }
@@ -88,7 +88,7 @@ class AddUserCommand extends Command
             }
         }
 
-        //Checks the group IDs
+        //Checks the user group
         if (!array_key_exists((string)$user['group_id'], $groups)) {
             return $io->error(__d('me_cms', 'Invalid group ID'));
         }
