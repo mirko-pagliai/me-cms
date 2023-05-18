@@ -49,7 +49,7 @@ class UsersCommand extends Command
         $Users = $this->getTableLocator()->get('MeCms.Users');
 
         return $Users->find()
-            ->contain('Groups')
+            ->contain('UsersGroups')
             ->formatResults(fn(CollectionInterface $results): CollectionInterface => $results->map(function (User $user): array {
                 $result = array_map(fn(string $key): string => (string)$user->get($key), ['id', 'username', 'full_name', 'email', 'post_count', 'created']);
                 $result['group'] = $user->get('group')->get('label') ?: $user->get('group');

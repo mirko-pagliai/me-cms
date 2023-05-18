@@ -117,9 +117,10 @@ class UsersTableTest extends TableTestCase
         $this->assertEquals('username', $this->Table->getDisplayField());
         $this->assertEquals('id', $this->Table->getPrimaryKey());
 
-        $this->assertBelongsTo($this->Table->Groups);
-        $this->assertEquals('group_id', $this->Table->Groups->getForeignKey());
-        $this->assertEquals('INNER', $this->Table->Groups->getJoinType());
+        $this->assertBelongsTo($this->Table->UsersGroups);
+        $this->assertEquals('group_id', $this->Table->UsersGroups->getForeignKey());
+        $this->assertEquals('INNER', $this->Table->UsersGroups->getJoinType());
+        $this->assertSame('group', $this->Table->UsersGroups->getProperty());
 
         $this->assertHasMany($this->Table->Posts);
         $this->assertEquals('user_id', $this->Table->Posts->getForeignKey());
@@ -164,7 +165,7 @@ class UsersTableTest extends TableTestCase
     public function testFindAuth(): void
     {
         $query = $this->Table->find('auth');
-        $this->assertStringEndsWith('FROM users Users INNER JOIN users_groups Groups ON Groups.id = Users.group_id', $query->sql());
+        $this->assertStringEndsWith('FROM users Users INNER JOIN users_groups UsersGroups ON UsersGroups.id = Users.group_id', $query->sql());
     }
 
     /**
