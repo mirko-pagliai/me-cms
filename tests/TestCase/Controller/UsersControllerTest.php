@@ -276,12 +276,11 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. No existing mail address and user pending email
-        foreach (['wrongMail@example.it', 'gamma@test.com'] as $wrongEmail) {
-            $this->post($url, ['email' => $wrongEmail, 'email_repeat' => $wrongEmail]);
+        foreach (['wrongMail@example.it', 'gamma@test.com'] as $email) {
+            $this->post($url, compact('email') + ['email_repeat' => $email]);
             $this->assertResponseOkAndNotEmpty();
             $this->assertResponseContains('No account found');
-            $this->assertLogContains('Forgot password request: invalid email `' . $wrongEmail . '`', 'users');
-            $this->deleteLog('users');
+            $this->assertLogContains('Forgot password request: invalid email `' . $email . '`', 'users');
         }
 
         //POST request. This request is valid
