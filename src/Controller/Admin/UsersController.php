@@ -44,7 +44,7 @@ class UsersController extends AppController
         }
 
         if ($this->getRequest()->is('action', ['index', 'add', 'edit'])) {
-            $groups = $this->Users->Groups->getList()->all();
+            $groups = $this->Users->UsersGroups->getList()->all();
             if ($groups->isEmpty()) {
                 $this->Flash->alert(__d('me_cms', 'You must first create an user group'));
 
@@ -86,7 +86,7 @@ class UsersController extends AppController
      */
     public function index(): void
     {
-        $query = $this->Users->find()->contain(['Groups' => ['fields' => ['id', 'label']]]);
+        $query = $this->Users->find()->contain(['UsersGroups' => ['fields' => ['id', 'label']]]);
 
         $this->paginate['order'] = ['username' => 'ASC'];
 
@@ -103,7 +103,7 @@ class UsersController extends AppController
     public function view(string $id): void
     {
         $user = $this->Users->findById($id)
-            ->contain(['Groups' => ['fields' => ['id', 'label']]])
+            ->contain(['UsersGroups' => ['fields' => ['id', 'label']]])
             ->firstOrFail();
 
         $this->set(compact('user'));

@@ -71,7 +71,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertEmpty($this->viewVariable('groups'));
 
         //Deletes all categories
-        $this->Table->Groups->deleteAll(['id IS NOT' => null]);
+        $this->Table->UsersGroups->deleteAll(['id IS NOT' => null]);
 
         //`add` and `edit` actions don't work
         foreach (['index', 'add', 'edit'] as $action) {

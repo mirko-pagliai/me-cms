@@ -26,6 +26,7 @@ use MeTools\Command\Command;
 /**
  * Creates the user groups
  * @property \MeCms\Model\Table\UsersGroupsTable $UsersGroups
+ * @todo should become `CreateUsersGroupsCommand`
  */
 class CreateGroupsCommand extends Command
 {
@@ -55,7 +56,7 @@ class CreateGroupsCommand extends Command
             return $io->error(__d('me_cms', 'Some user groups already exist'));
         }
 
-        //Truncates the table (this resets IDs), then saves groups
+        //Truncates the table (this resets IDs), then saves user groups
         $command = 'TRUNCATE TABLE `%s`';
         $connection = $UsersGroups->getConnection();
         if ($connection->getDriver() instanceof Sqlite) {
