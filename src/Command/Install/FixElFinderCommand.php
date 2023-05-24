@@ -45,6 +45,7 @@ class FixElFinderCommand extends Command
      * @return void
      * @throws \ErrorException
      * @since 2.29.2
+     * @todo the file could be copied
      */
     protected function createConnectorMinimal(ConsoleIo $io): void
     {
@@ -73,6 +74,7 @@ class FixElFinderCommand extends Command
      * @return void
      * @throws \ErrorException
      * @since 2.29.2
+     * @todo the file could be copied
      */
     protected function createElfinderCke(ConsoleIo $io): void
     {
@@ -89,17 +91,19 @@ class FixElFinderCommand extends Command
      * Fixes ElFinder
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
-     * @return int|null The exit code or null for success
+     * @return int
      */
-    public function execute(Arguments $args, ConsoleIo $io): ?int
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
         try {
             $this->createConnectorMinimal($io);
             $this->createElfinderCke($io);
         } catch (ErrorException $e) {
-            return $io->error($e->getMessage());
+            $io->error($e->getMessage());
+
+            return self::CODE_ERROR;
         }
 
-        return null;
+        return self::CODE_SUCCESS;
     }
 }
