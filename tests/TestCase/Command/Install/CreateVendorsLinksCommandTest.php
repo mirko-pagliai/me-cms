@@ -37,9 +37,9 @@ class CreateVendorsLinksCommandTest extends CommandTestCase
         $this->exec('me_cms.create_vendors_links -v');
         $Filesystem->remove(WWW_VENDOR);
         $this->assertExitSuccess();
-        $expectedLinks = array_map(fn(string $target): string => WWW_VENDOR . $target, Configure::read('MeCms.VendorLinks'));
-        foreach ($expectedLinks as $expectedLink) {
-            $this->assertOutputContains('Link to `' . rtr($expectedLink) . '` has been created');
+        foreach (Configure::read('MeCms.VendorLinks') as $expectedOrigin => $expectedTarget) {
+            $expectedOrigin = VENDOR . $expectedOrigin;
+            $this->assertOutputContains(file_exists($expectedOrigin) ? 'Link to `' . rtr(WWW_VENDOR . $expectedTarget) . '` has been created' : 'File or directory `' . rtr($expectedOrigin) . '` does not exist');
         }
         $this->assertErrorEmpty();
     }
