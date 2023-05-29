@@ -19,7 +19,7 @@ if (!defined('ADMIN_PREFIX')) {
 
 //Sets the default ElFinder path
 if (!defined('ELFINDER')) {
-    define('ELFINDER', WWW_ROOT . 'vendor' . DS . 'elfinder' . DS);
+    define('ELFINDER', WWW_VENDOR . 'elfinder' . DS);
 }
 
 //Sets the datetime format for MySql

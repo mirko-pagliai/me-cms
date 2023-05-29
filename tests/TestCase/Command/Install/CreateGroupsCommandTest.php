@@ -19,9 +19,6 @@ use MeTools\TestSuite\CommandTestCase;
 
 /**
  * CreateGroupsCommandTest class
- * @property \MeCms\Command\Install\CreateGroupsCommand $Command
- * @property \Cake\Console\TestSuite\StubConsoleOutput|null $_err
- * @property \Cake\Console\TestSuite\StubConsoleInput|null $_in
  */
 class CreateGroupsCommandTest extends CommandTestCase
 {

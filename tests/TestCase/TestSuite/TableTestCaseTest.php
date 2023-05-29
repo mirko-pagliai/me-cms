@@ -87,6 +87,6 @@ class TableTestCaseTest extends TestCase
         $TableTestCase->assertHasMany($TableTestCase->Table->Posts);
 
         $this->expectAssertionFailed('Failed asserting that `MeCms\Model\Table\UsersGroupsTable` is an instance of `Cake\ORM\Association\HasMany`');
-        $TableTestCase->assertHasMany($TableTestCase->Table->Groups);
+        $TableTestCase->assertHasMany($TableTestCase->Table->UsersGroups);
     }
 }

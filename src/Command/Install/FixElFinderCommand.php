@@ -23,7 +23,6 @@ use Cake\Routing\Router;
 use ErrorException;
 use MeCms\Core\Plugin;
 use MeTools\Command\Command;
-use Tools\Filesystem;
 
 /**
  * Fixes ElFinder
@@ -46,6 +45,7 @@ class FixElFinderCommand extends Command
      * @return void
      * @throws \ErrorException
      * @since 2.29.2
+     * @todo the file could be copied
      */
     protected function createConnectorMinimal(ConsoleIo $io): void
     {
@@ -54,16 +54,15 @@ class FixElFinderCommand extends Command
             return;
         }
 
-        $Filesystem = new Filesystem();
-        $autoload = $Filesystem->concatenate(APP, 'vendor', 'autoload.php');
+        $autoload = APP . 'vendor' . DS . 'autoload.php';
         $origin = Plugin::path('MeCms', 'config' . DS . 'elfinder' . DS . 'connector.minimal.php');
         $content = str_replace([
             '{{AUTOLOAD_PATH}}',
             '{{UPLOADS_PATH}}',
             '{{UPLOADS_URL}}',
         ], [
-            is_readable($autoload) ? $autoload : $Filesystem->concatenate(ROOT, 'vendor', 'autoload.php'),
-            $Filesystem->addSlashTerm(UPLOADED),
+            is_readable($autoload) ? $autoload : VENDOR . 'autoload.php',
+            UPLOADED,
             Router::url('/files', true),
         ], file_get_contents($origin) ?: '');
         $io->createFile($target, $content);
@@ -75,6 +74,7 @@ class FixElFinderCommand extends Command
      * @return void
      * @throws \ErrorException
      * @since 2.29.2
+     * @todo the file could be copied
      */
     protected function createElfinderCke(ConsoleIo $io): void
     {
@@ -91,17 +91,19 @@ class FixElFinderCommand extends Command
      * Fixes ElFinder
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console io
-     * @return int|null The exit code or null for success
+     * @return int
      */
-    public function execute(Arguments $args, ConsoleIo $io): ?int
+    public function execute(Arguments $args, ConsoleIo $io): int
     {
         try {
             $this->createConnectorMinimal($io);
             $this->createElfinderCke($io);
         } catch (ErrorException $e) {
-            return $io->error($e->getMessage());
+            $io->error($e->getMessage());
+
+            return self::CODE_ERROR;
         }
 
-        return null;
+        return self::CODE_SUCCESS;
     }
 }

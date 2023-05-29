@@ -34,7 +34,7 @@ class UserTest extends EntityTestCase
     {
         parent::tearDown();
 
-        Filesystem::instance()->unlinkRecursive(USER_PICTURES, 'empty', true);
+        Filesystem::unlinkRecursive(USER_PICTURES, 'empty', true);
         if (is_writable(WWW_ROOT . 'img' . DS . 'no-avatar.jpg')) {
             unlink(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
         }
@@ -92,13 +92,12 @@ class UserTest extends EntityTestCase
     {
         $this->assertEquals('MeCms.no-avatar.jpg', $this->Entity->set('id', 1)->get('picture'));
 
-        $Filesystem = new Filesystem();
-        $Filesystem->createFile(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
+        Filesystem::createFile(WWW_ROOT . 'img' . DS . 'no-avatar.jpg');
         $this->assertEquals('no-avatar.jpg', $this->Entity->get('picture'));
 
         $id = 0;
         foreach (['jpg', 'jpeg', 'gif', 'png', 'JPEG'] as $extension) {
-            $Filesystem->createFile(WWW_ROOT . 'img' . DS . 'users' . DS . ++$id . '.' . $extension);
+            Filesystem::createFile(WWW_ROOT . 'img' . DS . 'users' . DS . ++$id . '.' . $extension);
             $this->assertEquals('users' . DS . $id . '.' . $extension, $this->Entity->set('id', $id)->get('picture'));
         }
     }

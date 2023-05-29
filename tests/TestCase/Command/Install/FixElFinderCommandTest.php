@@ -18,7 +18,6 @@ namespace MeCms\Test\TestCase\Command\Install;
 
 use Cake\Console\ConsoleIo;
 use Cake\Console\TestSuite\StubConsoleOutput;
-use Cake\Routing\Router;
 use ErrorException;
 use MeCms\Command\Install\FixElFinderCommand;
 use MeTools\TestSuite\CommandTestCase;
@@ -35,39 +34,52 @@ class FixElFinderCommandTest extends CommandTestCase
      */
     public function testExecute(): void
     {
-        $command = 'me_cms.fix_el_finder -v';
-
         $Filesystem = new Filesystem();
-        $connector = $Filesystem->concatenate(ELFINDER, 'php', 'connector.minimal.php');
-        $elfinderCke = $Filesystem->concatenate(ELFINDER, 'elfinder-cke.html');
-        array_map('unlink', array_filter([$connector, $elfinderCke], 'file_exists'));
+        $Filesystem->mkdir(WWW_VENDOR);
+        $command = 'me_cms.fix_el_finder -v';
+        $connector = ELFINDER . 'php' . DS . 'connector.minimal.php';
+        $elfinderCke = ELFINDER . 'elfinder-cke.html';
 
+        /**
+         * Runs and creates files
+         */
         $this->exec($command);
-        $this->assertExitSuccess();
-        $this->assertErrorEmpty();
 
-        $this->assertOutputContains('Creating file ' . $connector);
-        $this->assertOutputContains('<success>Wrote</success> `' . $connector . '`');
+        $this->assertFileExists($connector);
         $connectorContent = file_get_contents($connector) ?: '';
-        $this->assertStringContainsString('require_once \'' . Filesystem::instance()->concatenate(APP, 'vendor', 'autoload.php') . '\';', $connectorContent);
+        $this->assertStringContainsString('require_once \'' . APP . 'vendor' . DS . 'autoload.php' . '\';', $connectorContent);
         $this->assertStringContainsString('\'path\' => \'' . UPLOADED . '\'', $connectorContent);
-        $this->assertStringContainsString('\'URL\' => \'' . Router::url('/files', true) . '\'', $connectorContent);
+        $this->assertStringContainsString('\'URL\' => \'http://localhost/files\'', $connectorContent);
 
-        $this->assertOutputContains('Creating file ' . $elfinderCke);
-        $this->assertOutputContains('<success>Wrote</success> `' . $elfinderCke . '`');
+        $this->assertFileExists($elfinderCke);
         $this->assertStringContainsString('getFileCallback', file_get_contents($elfinderCke) ?: '');
 
-        //File already exists
+        $this->assertExitSuccess();
+        $this->assertOutputContains('Creating file ' . $connector);
+        $this->assertOutputContains('<success>Wrote</success> `' . $connector . '`');
+        $this->assertOutputContains('Creating file ' . $elfinderCke);
+        $this->assertOutputContains('<success>Wrote</success> `' . $elfinderCke . '`');
+        $this->assertErrorEmpty();
+
+        /**
+         * Runs again. Files already exist
+         */
         $this->exec($command);
         $this->assertExitSuccess();
-        $this->assertOutputContains('File or directory `' . $Filesystem->rtr($connector) . '` already exists');
-        $this->assertOutputContains('File or directory `' . $Filesystem->rtr($elfinderCke) . '` already exists');
+        $this->assertOutputContains('File or directory `' . rtr($connector) . '` already exists');
+        $this->assertOutputContains('File or directory `' . rtr($elfinderCke) . '` already exists');
+        $this->assertErrorEmpty();
 
-        //With an exception
+        /**
+         * Runs, with an exception
+         */
         $Command = $this->createPartialMock(FixElFinderCommand::class, ['createElfinderCke']);
         $Command->method('createElfinderCke')->willThrowException(new ErrorException('Exception message'));
         $this->_err = new StubConsoleOutput();
-        $this->assertSame(0, $Command->run([], new ConsoleIo(new StubConsoleOutput(), $this->_err)));
+        $this->_exitCode = $Command->run([], new ConsoleIo(null, $this->_err));
+        $this->assertExitError();
         $this->assertErrorContains('Exception message');
+
+        $Filesystem->remove(WWW_VENDOR);
     }
 }

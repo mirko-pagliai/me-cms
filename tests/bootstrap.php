@@ -41,6 +41,7 @@ define('APP', TEST_APP . 'TestApp' . DS);
 define('APP_DIR', 'TestApp');
 define('WEBROOT_DIR', 'webroot');
 define('WWW_ROOT', APP . 'webroot' . DS);
+define('WWW_VENDOR', WWW_ROOT . 'vendor' . DS);
 define('TMP', sys_get_temp_dir() . DS . 'me_cms' . DS);
 define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP . 'cache' . DS);
@@ -113,7 +114,7 @@ Cache::setConfig([
 ]);
 
 if (!getenv('db_dsn')) {
-    putenv('db_dsn=mysql://travis@localhost/test?encoding=utf8&quoteIdentifiers=true');
+    putenv('db_dsn=mysql://travis@localhost/test?encoding=utf8');
     if (getenv('driver_test') == 'sqlite') {
         putenv('db_dsn=sqlite:///' . TMP . 'test.sq3');
     } elseif (getenv('driver_test') == 'postgres') {

@@ -50,7 +50,7 @@ class GroupsCommandTest extends CommandTestCase
         $this->assertExitSuccess();
         array_walk($expectedRows, [$this, 'assertOutputContainsRow']);
 
-        //Deletes all groups
+        //Deletes all user groups
         $UsersGroups->deleteAll(['id IS NOT' => null]);
         $this->exec('me_cms.groups');
         $this->assertExitSuccess();

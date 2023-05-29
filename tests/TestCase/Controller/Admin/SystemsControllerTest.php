@@ -17,7 +17,6 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\I18n\I18n;
-use MeCms\Controller\Admin\SystemsController;
 use MeCms\TestSuite\Admin\ControllerTestCase;
 use Tools\Filesystem;
 
@@ -50,17 +49,15 @@ class SystemsControllerTest extends ControllerTestCase
         Cache::write('value', 'data');
         Cache::write('valueFromGroup', 'data', 'posts');
 
-        $Filesystem = new Filesystem();
-
         $files = [
             'assets' => getConfigOrFail('Assets.target') . DS . 'asset_file',
             'assets2' => getConfigOrFail('Assets.target') . DS . 'asset_file2',
             'logs' => LOGS . 'log_file',
             'sitemap' => SITEMAP,
-            'thumbs' => $Filesystem->addSlashTerm(THUMBER_TARGET) . md5('a') . '_' . md5('a') . '.jpg',
+            'thumbs' => Filesystem::concatenate(THUMBER_TARGET, md5('a') . '_' . md5('a') . '.jpg'),
         ];
 
-        array_walk($files, fn(string $file) => $Filesystem->createFile($file, str_repeat('a', 255)));
+        array_walk($files, fn(string $file) => Filesystem::createFile($file, str_repeat('a', 255)));
 
         return $files;
     }
@@ -87,15 +84,14 @@ class SystemsControllerTest extends ControllerTestCase
     {
         Cache::clearAll();
 
-        array_map([Filesystem::instance(), 'unlinkRecursive'], [getConfigOrFail('Assets.target'), THUMBER_TARGET]);
+        array_map([Filesystem::class, 'unlinkRecursive'], [getConfigOrFail('Assets.target'), THUMBER_TARGET]);
 
         parent::tearDown();
     }
 
     /**
-     * Tests for `isAuthorized()` method
-     * @uses \MeCms\Controller\Admin\SystemsController::isAuthorized()
      * @test
+     * @uses \MeCms\Controller\Admin\SystemsController::isAuthorized()
      */
     public function testIsAuthorized(): void
     {
@@ -105,29 +101,28 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `browser()` method
-     * @uses \MeCms\Controller\Admin\SystemsController::browser()
      * @test
+     * @uses \MeCms\Controller\Admin\SystemsController::browser()
      */
     public function testBrowser(): void
     {
+        $elfinderConnector = ELFINDER . 'php' . DS . 'connector.minimal.php';
+        Filesystem::createFile($elfinderConnector);
+
         $this->get($this->url + ['action' => 'browser']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
         $this->assertStringEndsWith('elfinder/elfinder.html', $this->viewVariable('explorer'));
 
-        /** @var \MeCms\Controller\Admin\SystemsController&\PHPUnit\Framework\MockObject\MockObject $Controller */
-        $Controller = $this->getMockBuilder(SystemsController::class)->onlyMethods(['elFinderExists'])->getMock();
-        $Controller->method('elFinderExists')->willReturn(false);
-        $this->_response = $Controller->browser();
+        Filesystem::instance()->remove(WWW_VENDOR);
+        $this->get($this->url + ['action' => 'browser']);
         $this->assertRedirect(['_name' => 'dashboard']);
         $this->assertFlashMessage('ElFinder not available');
     }
 
     /**
-     * Tests for `changelogs()` method
-     * @uses \MeCms\Controller\Admin\SystemsController::changelogs()
      * @test
+     * @uses \MeCms\Controller\Admin\SystemsController::changelogs()
      */
     public function testChangelogs(): void
     {
@@ -153,9 +148,8 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `tmpCleaner()` method
-     * @uses \MeCms\Controller\Admin\SystemsController::tmpCleaner()
      * @test
+     * @uses \MeCms\Controller\Admin\SystemsController::tmpCleaner()
      */
     public function testTmpCleaner(): void
     {
@@ -195,9 +189,8 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `tmpViewer()` method
-     * @uses \MeCms\Controller\Admin\SystemsController::tmpViewer()
      * @test
+     * @uses \MeCms\Controller\Admin\SystemsController::tmpViewer()
      */
     public function testTmpViewer(): void
     {

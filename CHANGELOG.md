@@ -1,5 +1,13 @@
 # 2.x branch
 ## 2.32 branch
+### 2.32.2
+* the `UsersTable` belongs to `UsersGroups` and no longer to `Groups` (the name of the association has changed). This
+  avoids using a reserved word for mysql. The property name (`group`) remained unchanged;
+* `assertSqlEndsWith()` and `assertSqlEndsNotWith()` methods have been replaced with `assertStringEndsWith()` and
+  `assertStringEndsNotWith()`. The `quoteIdentifiers` option for tests has been disabled;
+* requires `axllent/jquery` and no longer `components/jquery`;
+* updated for me-tools 2.24.1.
+
 ### 2.32.1
 * improved the query filter for posts and pages in the admin panel: now the `title` field works for both title and slug;
 * `User::_getLastLogins()` returns an array and no longer a collection.

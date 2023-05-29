@@ -28,8 +28,8 @@ use MeCms\ORM\Query;
 
 /**
  * Users model
- * @property \MeCms\Model\Table\UsersGroupsTable&\Cake\ORM\Association\BelongsTo $Groups
  * @property \MeCms\Model\Table\PostsTable&\Cake\ORM\Association\HasMany $Posts
+ * @property \MeCms\Model\Table\UsersGroupsTable&\Cake\ORM\Association\BelongsTo $UsersGroups
  * @property \MeCms\Model\Table\TokensTable&\Cake\ORM\Association\HasMany $Tokens
  * @method \MeCms\ORM\Query findByActiveAndBanned(bool $isActive, bool $isBanned)
  * @method \MeCms\ORM\Query findActiveByEmail(string $email)
@@ -82,7 +82,7 @@ class UsersTable extends AppTable
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        return $rules->add($rules->existsIn(['group_id'], 'Groups', I18N_SELECT_VALID_OPTION))
+        return $rules->add($rules->existsIn(['group_id'], 'UsersGroups', I18N_SELECT_VALID_OPTION))
             ->add($rules->isUnique(['email'], I18N_VALUE_ALREADY_USED))
             ->add($rules->isUnique(['username'], I18N_VALUE_ALREADY_USED));
     }
@@ -106,7 +106,7 @@ class UsersTable extends AppTable
      */
     public function findAuth(Query $query): Query
     {
-        return $query->contain([$this->Groups->getAlias() => ['fields' => ['name']]]);
+        return $query->contain([$this->UsersGroups->getAlias() => ['fields' => ['name']]]);
     }
 
     /**
@@ -157,15 +157,16 @@ class UsersTable extends AppTable
         $this->setDisplayField('username');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Groups', ['className' => UsersGroupsTable::class])
+        $this->belongsTo('UsersGroups', ['className' => UsersGroupsTable::class])
             ->setForeignKey('group_id')
-            ->setJoinType('INNER');
+            ->setJoinType('INNER')
+            ->setProperty('group');
 
         $this->hasMany('Posts', ['className' => PostsTable::class])->setForeignKey('user_id');
         $this->hasMany('Tokens', ['className' => TokensTable::class])->setForeignKey('user_id');
 
         $this->addBehavior('Timestamp');
-        $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
+        $this->addBehavior('CounterCache', ['UsersGroups' => ['user_count']]);
 
         $this->_validatorClass = UserValidator::class;
     }

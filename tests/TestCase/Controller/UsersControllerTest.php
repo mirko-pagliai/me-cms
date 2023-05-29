@@ -143,11 +143,11 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. For now, data are invalid
-        $wrongEmail = 'wrongEmail@example.com';
-        $this->post($url, ['email' => $wrongEmail, 'email_repeat' => $wrongEmail]);
+        $email = 'wrongEmail@example.com';
+        $this->post($url, compact('email') + ['email_repeat' => $email]);
         $this->assertResponseOkAndNotEmpty();
         $this->assertResponseContains('No valid account was found');
-        $this->assertLogContains('Resend activation request: invalid email `' . $wrongEmail . '`', 'users');
+        $this->assertLogContains('Resend activation request: invalid email `' . $email . '`', LOGS . 'users.log');
 
         //POST request. Now, data are valid
         $this->post($url, ['email' => 'gamma@test.com', 'email_repeat' => 'gamma@test.com']);
@@ -241,7 +241,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertResponseOkAndNotEmpty();
         $this->assertSessionEmpty('Auth');
         $this->assertFlashMessage('Invalid username or password');
-        $this->assertLogContains('Failed login: username `wrong`, password `wrong`', 'users');
+        $this->assertLogContains('Failed login: username `wrong`, password `wrong`', LOGS . 'users.log');
     }
 
     /**
@@ -276,12 +276,11 @@ class UsersControllerTest extends ControllerTestCase
         $this->assertInstanceOf(User::class, $this->viewVariable('user'));
 
         //POST request. No existing mail address and user pending email
-        foreach (['wrongMail@example.it', 'gamma@test.com'] as $wrongEmail) {
-            $this->post($url, ['email' => $wrongEmail, 'email_repeat' => $wrongEmail]);
+        foreach (['wrongMail@example.it', 'gamma@test.com'] as $email) {
+            $this->post($url, compact('email') + ['email_repeat' => $email]);
             $this->assertResponseOkAndNotEmpty();
             $this->assertResponseContains('No account found');
-            $this->assertLogContains('Forgot password request: invalid email `' . $wrongEmail . '`', 'users');
-            $this->deleteLog('users');
+            $this->assertLogContains('Forgot password request: invalid email `' . $email . '`', LOGS . 'users.log');
         }
 
         //POST request. This request is valid

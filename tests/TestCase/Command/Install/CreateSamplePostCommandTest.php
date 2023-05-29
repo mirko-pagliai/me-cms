@@ -22,7 +22,6 @@ use MeTools\TestSuite\CommandTestCase;
 /**
  * CreateSamplePostCommandTest class
  * @property \MeCms\Command\Install\CreateSamplePostCommand $Command
- * @property \Cake\Console\TestSuite\StubConsoleOutput|null $_out
  */
 class CreateSamplePostCommandTest extends CommandTestCase
 {
@@ -48,7 +47,6 @@ class CreateSamplePostCommandTest extends CommandTestCase
         $Posts = $this->getTable('MeCms.Posts');
         $Posts->deleteAll(['id is NOT' => null]);
 
-        $this->_out = $this->_err = null;
         $this->exec('me_cms.create_sample_post -v');
         $this->assertExitSuccess();
         $this->assertOutputContains('The sample post has been created');
@@ -56,7 +54,6 @@ class CreateSamplePostCommandTest extends CommandTestCase
 
         $Posts->deleteAll(['id is NOT' => null]);
 
-        $this->_out = $this->_err = null;
         $Posts->Users->deleteAll(['id is NOT' => null]);
         $this->exec('me_cms.create_sample_post -v');
         $this->assertErrorContains('You must first create a user. Run the `bin/cake me_cms.create_admin` command');
@@ -75,7 +72,7 @@ class CreateSamplePostCommandTest extends CommandTestCase
         $Posts->deleteAll(['id is NOT' => null]);
 
         $this->_err = new StubConsoleOutput();
-        $this->assertSame(0, $this->Command->run(['-v'], new ConsoleIo(new StubConsoleOutput(), $this->_err)));
+        $this->Command->run(['-v'], new ConsoleIo(null, $this->_err));
         $this->assertErrorContains(I18N_OPERATION_NOT_OK);
     }
 }

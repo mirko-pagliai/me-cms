@@ -109,7 +109,7 @@ class ViewTest extends TestCase
         $this->assertFalse($this->View->elementExistsInApp('topbar'));
 
         $file = APP . 'templates' . DS . 'element' . DS . 'topbar.php';
-        Filesystem::instance()->createFile($file);
+        Filesystem::createFile($file);
         $this->assertTrue($this->View->elementExistsInApp('topbar'));
         unlink($file);
     }
@@ -123,7 +123,7 @@ class ViewTest extends TestCase
         //Disable widgets, sets title, creates a favicon, then renders
         Configure::write('Widgets.general', []);
         $this->View->set('title', 'title from controller');
-        Filesystem::instance()->createFile(WWW_ROOT . 'favicon.ico');
+        Filesystem::createFile(WWW_ROOT . 'favicon.ico');
         $this->View->loadHelper('MeCms.Widget');
         $result = $this->View->render('StaticPages/page-from-app', 'MeCms.default');
 

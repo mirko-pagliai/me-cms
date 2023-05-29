@@ -23,12 +23,10 @@ if (!extension_loaded('zip')) {
     trigger_error('You must enable the zip extension', E_USER_ERROR);
 }
 
-foreach (Configure::readFromPlugins('WritableDirs') as $dir) {
-    if (!file_exists($dir)) {
-        @mkdir($dir, 0777, true);
-    }
+foreach (array_filter(Configure::readFromPlugins('WritableDirs'), fn(string $dir): bool => !file_exists($dir)) as $dir) {
+    @mkdir($dir, 0777, true);
     if (!is_writeable($dir)) {
-        trigger_error(sprintf('Directory %s not writeable', $dir), E_USER_ERROR);
+        trigger_error('Directory `' . $dir . '` not writeable', E_USER_ERROR);
     }
 }
 
@@ -36,10 +34,8 @@ if (PHP_SAPI === 'cli') {
     return;
 }
 
-if (!in_array('mod_expires', apache_get_modules())) {
-    trigger_error('You must enable the expires module', E_USER_ERROR);
-}
-
-if (!in_array('mod_rewrite', apache_get_modules())) {
-    trigger_error('You must enable the rewrite module', E_USER_ERROR);
+foreach (['mod_expires', 'mod_rewrite'] as $module) {
+    if (!in_array($module, apache_get_modules())) {
+        trigger_error('You must enable the `' . $module . '` module', E_USER_ERROR);
+    }
 }
