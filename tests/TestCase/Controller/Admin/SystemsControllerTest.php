@@ -17,7 +17,6 @@ namespace MeCms\Test\TestCase\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\I18n\I18n;
-use MeCms\Controller\Admin\SystemsController;
 use MeCms\TestSuite\Admin\ControllerTestCase;
 use Tools\Filesystem;
 
