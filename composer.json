@@ -44,6 +44,7 @@
         "psalm/phar": "^4.24"
     },
     "conflict": {
+        "components/jquery": "*",
         "newerton/fancy-box": "*",
         "studio-42/elfinder": "<= 2.1.58",
         "sunhater/kcfinder": "*",
