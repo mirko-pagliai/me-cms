@@ -5,6 +5,7 @@
   avoids using a reserved word for mysql. The property name (`group`) remained unchanged;
 * `assertSqlEndsWith()` and `assertSqlEndsNotWith()` methods have been replaced with `assertStringEndsWith()` and
   `assertStringEndsNotWith()`. The `quoteIdentifiers` option for tests has been disabled;
+* requires `axllent/jquery` and no longer `components/jquery`;
 * updated for me-tools 2.24.1.
 
 ### 2.32.1

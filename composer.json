@@ -20,6 +20,7 @@
         "cakephp/cakephp": "^4.4",
         "cakephp/authentication": "^2.0",
         "cakephp/authorization": "^2.1",
+        "axllent/jquery": "^3.6",
         "dereuromark/cakephp-feed": "^2.0",
         "donatj/phpuseragentparser": "^v1",
         "enyo/dropzone": "^5.1",
@@ -33,8 +34,7 @@
         "mirko-pagliai/me-tools": "~2.24.1",
         "mirko-pagliai/php-thumber": "^1.4.1",
         "twbs/bootstrap": "^5.2.2",
-        "wyrihaximus/minify-html": "^2.0",
-        "components/jquery": "^3.6"
+        "wyrihaximus/minify-html": "^2.0"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^4.0",
