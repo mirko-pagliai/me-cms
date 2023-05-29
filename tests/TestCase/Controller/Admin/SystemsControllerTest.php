@@ -91,9 +91,8 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `isAuthorized()` method
-     * @uses \MeCms\Controller\Admin\SystemsController::isAuthorized()
      * @test
+     * @uses \MeCms\Controller\Admin\SystemsController::isAuthorized()
      */
     public function testIsAuthorized(): void
     {
@@ -103,29 +102,28 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `browser()` method
-     * @uses \MeCms\Controller\Admin\SystemsController::browser()
      * @test
+     * @uses \MeCms\Controller\Admin\SystemsController::browser()
      */
     public function testBrowser(): void
     {
+        $elfinderConnector = ELFINDER . 'php' . DS . 'connector.minimal.php';
+        Filesystem::createFile($elfinderConnector);
+
         $this->get($this->url + ['action' => 'browser']);
         $this->assertResponseOkAndNotEmpty();
         $this->assertTemplate('Admin' . DS . 'Systems' . DS . 'browser.php');
         $this->assertStringEndsWith('elfinder/elfinder.html', $this->viewVariable('explorer'));
 
-        /** @var \MeCms\Controller\Admin\SystemsController&\PHPUnit\Framework\MockObject\MockObject $Controller */
-        $Controller = $this->getMockBuilder(SystemsController::class)->onlyMethods(['elFinderExists'])->getMock();
-        $Controller->method('elFinderExists')->willReturn(false);
-        $this->_response = $Controller->browser();
+        Filesystem::instance()->remove(WWW_VENDOR);
+        $this->get($this->url + ['action' => 'browser']);
         $this->assertRedirect(['_name' => 'dashboard']);
         $this->assertFlashMessage('ElFinder not available');
     }
 
     /**
-     * Tests for `changelogs()` method
-     * @uses \MeCms\Controller\Admin\SystemsController::changelogs()
      * @test
+     * @uses \MeCms\Controller\Admin\SystemsController::changelogs()
      */
     public function testChangelogs(): void
     {
@@ -151,9 +149,8 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `tmpCleaner()` method
-     * @uses \MeCms\Controller\Admin\SystemsController::tmpCleaner()
      * @test
+     * @uses \MeCms\Controller\Admin\SystemsController::tmpCleaner()
      */
     public function testTmpCleaner(): void
     {
@@ -193,9 +190,8 @@ class SystemsControllerTest extends ControllerTestCase
     }
 
     /**
-     * Tests for `tmpViewer()` method
-     * @uses \MeCms\Controller\Admin\SystemsController::tmpViewer()
      * @test
+     * @uses \MeCms\Controller\Admin\SystemsController::tmpViewer()
      */
     public function testTmpViewer(): void
     {

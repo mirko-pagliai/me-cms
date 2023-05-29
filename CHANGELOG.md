@@ -5,7 +5,7 @@
   avoids using a reserved word for mysql. The property name (`group`) remained unchanged;
 * `assertSqlEndsWith()` and `assertSqlEndsNotWith()` methods have been replaced with `assertStringEndsWith()` and
   `assertStringEndsNotWith()`. The `quoteIdentifiers` option for tests has been disabled;
-* updated for php-tools 1.7.4.
+* updated for me-tools 2.24.1.
 
 ### 2.32.1
 * improved the query filter for posts and pages in the admin panel: now the `title` field works for both title and slug;

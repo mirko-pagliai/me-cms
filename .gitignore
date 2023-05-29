@@ -9,5 +9,4 @@ composer.lock
 coverage/
 plugins/
 tests/test_app/TestApp/webroot/img
-tests/test_app/TestApp/webroot/vendor
 vendor/
