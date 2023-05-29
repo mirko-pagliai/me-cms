@@ -31,11 +31,9 @@ class CreateVendorsLinksCommandTest extends CommandTestCase
      */
     public function testExecute(): void
     {
-        $Filesystem = new Filesystem();
-        $Filesystem->mkdir(WWW_VENDOR);
-
+        Filesystem::instance()->mkdir(WWW_VENDOR);
         $this->exec('me_cms.create_vendors_links -v');
-        $Filesystem->remove(WWW_VENDOR);
+        Filesystem::instance()->remove(WWW_VENDOR);
         $this->assertExitSuccess();
         foreach (Configure::read('MeCms.VendorLinks') as $expectedOrigin => $expectedTarget) {
             $expectedOrigin = VENDOR . $expectedOrigin;
